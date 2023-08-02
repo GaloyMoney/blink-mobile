@@ -33,7 +33,7 @@ export const DeviceAccountFailModal: React.FC<DeviceAccountFailModalProps> = ({
       }
       primaryButtonTitle={LL.GetStartedScreen.registerPhoneAccount()}
       primaryButtonOnPress={navigateToPhoneLogin}
-      secondaryButtonTitle={LL.GetStartedScreen.exploreWalletInstead()}
+      secondaryButtonTitle={LL.GetStartedScreen.exploreWallet()}
       secondaryButtonOnPress={navigateToHomeScreen}
     />
   )

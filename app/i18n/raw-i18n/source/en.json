@@ -26,6 +26,9 @@
         "stablesatsTag": "Choose this to maintain a stable USD value.",
         "bitcoinTag": "Choose this to be on a Bitcoin standard."
     },
+    "NoteInput": {
+        "addNote": "Add note"
+    },
     "AuthenticationScreen": {
         "authenticationDescription": "Authenticate to continue",
         "setUp": "Set up Biometric Authentication",
@@ -439,9 +442,11 @@
         "quickStart": "Start",
         "exploreWalletInstead": "Explore wallet instead",
         "setupBusinessAccount": "Setup business account",
+        "createAccount": "Create new account",
+        "exploreWallet": "Explore wallet",
+        "logBackInWith": "Log back in with",
         "headline": "Wallet powered by Galoy",
         "startTrialAccount": "Start with a trial account",
-        "iUnderstand": "I understand, continue",
         "startWithTrialAccount": "Start with trial account",
         "registerPhoneAccount": "Register phone account",
         "trialAccountCreationFailed": "Trial account creation failed",
@@ -497,18 +502,19 @@
     "PrimaryScreen": {
         "title": "Home"
     },
-    "ReceiveWrapperScreen": {
+    "ReceiveScreen": {
         "activateNotifications": "Do you want to activate notifications to be notified when the payment has arrived?",
         "copyClipboard": "Invoice has been copied in the clipboard",
         "copyClipboardBitcoin": "Bitcoin address has been copied in the clipboard",
+        "copyClipboardPaycode": "Paycode/LNURL has been copied in the clipboard",
         "invoicePaid": "This invoice has been paid",
         "setNote": "set a note",
         "tapQrCodeCopy": "Tap QR Code to Copy",
         "title": "Receive Bitcoin",
         "usdTitle": "Receive USD",
         "error": "Failed to generate invoice. Please contact support if this problem persists.",
-        "copyInvoice": "Copy Invoice",
-        "shareInvoice": "Share Invoice",
+        "copyInvoice": "Copy",
+        "shareInvoice": "Share",
         "addAmount": "Request Specific Amount",
         "expired": "The invoice has expired",
         "expiresIn": "Expires in",
@@ -522,7 +528,31 @@
         "useALightningInvoice": "Use a Lightning Invoice",
         "setANote": "Set a Note",
         "invoiceAmount": "Invoice Amount",
-        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
+        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats",
+        "lightning": "Lightning",
+        "paycode": "Paycode",
+        "onchain": "Onchain",
+        "bitcoin": "Bitcoin",
+        "stablesats": "Stablesats",
+        "regenerateInvoiceButtonTitle": "Regenerate Invoice",
+        "setUsernameButtonTitle": "Set Username",
+        "invoiceHasExpired": "Invoice has expired",
+        "setUsernameToAcceptViaPaycode": "Set your username to accept via Paycode QR (LNURL) and Lightning Address",
+        "singleUse": "Single Use",
+        "invoiceExpired": "Expired Invoice",
+        "invoiceValidity": {
+            "validFor1Day": "Valid for 1 day",
+            "validForNext": "Valid for next {duration: string}",
+            "validBefore": "Valid before {time: string}",
+            "expiresIn": "Expires in {duration: string}",
+            "expiresNow": "Expires now"
+        },
+        "invoiceHasBeenPaid": "Invoice has been paid",
+        "yourBitcoinOnChainAddress": "Your Bitcoin Onchain Address",
+        "receiveViaInvoice": "Receive via Lightning",
+        "receiveViaPaycode": "Receive via Paycode",
+        "receiveViaOnchain": "Receive via Onchain",
+        "payCodeOrLNURL": "Paycode / LNURL"
     },
     "RedeemBitcoinScreen": {
         "title": "Redeem Bitcoin",
@@ -608,12 +638,13 @@
         "destinationIsRequired": "Destination is required",
         "fee": "network fee",
         "feeCalculationUnsuccessful": "Calculation unsuccessful ⚠️",
-        "input": "Username, invoice, or address",
+        "placeholder": "Username, invoice, or address",
         "invalidUsername": "Invalid username",
         "noAmount": "This invoice doesn't have an amount, so you need to manually specify how much money you want to send",
         "notConfirmed": "Payment has been sent\nbut is not confirmed yet\n\nYou can check the status\nof the payment in Transactions",
         "note": "Note or label",
         "success": "Payment has been sent successfully",
+        "suggestionInput": "Enter your suggestion",
         "max": "Max",
         "maxAmount": "Max Amount",
         "title": "Send Bitcoin",
@@ -623,7 +654,6 @@
     },
     "SettingsScreen": {
         "activated": "Activated",
-        "tapLogIn": "Tap to log in",
         "addressScreen": "Ways to get paid",
         "tapUserName": "Tap to set username",
         "title": "Settings",
@@ -643,19 +673,58 @@
         "nfcNotCompatible": "The information fetch from the card is not a compatible lnurl-withdraw link.",
         "nfcOnlyReceive": "Only receive from NFC is available for now",
         "nfcScanNow": "Scan NFC Now",
-        "nfcNotSupported": "NFC is not supported on this device"
+        "nfcNotSupported": "NFC is not supported on this device",
+        "logInOrCreateAccount": "Log in or create account"
     },
     "AccountScreen": {
         "accountLevel": "Account Level",
-        "logIn": "Log in",
         "upgrade": "Upgrade your account",
         "logOutAndDeleteLocalData": "Log out and clear all local data",
         "IUnderstand": "I understand. Please log me out.",
         "logoutAlertTitle": "Are you sure you want to log out and delete all local data?",
-        "logoutAlertContent": "You will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure to have access to it to log back in",
+        "logoutAlertContentPhone": "You will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure you have access to it to log back in",
+        "logoutAlertContentEmail": "You will need to re-enter your email to log back in.\nyour email is {email: string} so make sure you have access to it to log back in",
+        "logoutAlertContentPhoneEmail": "You will need to re-enter either your phone number or email to log back in.\nyour phone number is {phoneNumber: string} and your email is {email: string} so make sure you have access to those to log back in",
         "usdBalanceWarning": "You have a Stablesats balance of {balance: string}.",
         "btcBalanceWarning": "You have a bitcoin balance of {balance: string}.",
-        "secureYourAccount": "Register to secure your account"
+        "secureYourAccount": "Register to secure your account",
+        "tapToAdd": "Tap to add",
+        "deleteEmailPromptTitle": "Delete email",
+        "deleteEmailPromptContent": "Are you sure you want to delete your email address? you will only be able to log back in with your phone number.",
+        "deletePhonePromptTitle": "Delete phone",
+        "deletePhonePromptContent": "Are you sure you want to delete your phone number? you will only be able to log in back with your email.",
+        "addEmailFirst": "Add an email first",
+        "addPhoneFirst": "Add a phone first",
+        "phoneNumberAuthentication": "Phone number (for login)",
+        "emailAuthentication": "Email (for login)",
+        "removePhone": "Remove phone",
+        "removeEmail": "Remove email",
+        "unverified": "Email is unverified",
+        "unverifiedContent": "Secure your account by verifying your email.",
+        "confirmEmail": "Confirm email",
+        "emailUnverified": "Your email is unverified",
+        "emailUnverifiedContent": "Ensure you can log back into your account by verifying your email. Do you want to do the verification now?",
+        "totp": "Two-factor authentication",
+        "totpDeactivated": "Two-factor authentication has been deactivated",
+        "totpDeleteAlertTitle": "Delete two-factor authentication",
+        "totpDeleteAlertContent": "Are you sure you want to delete your two-factor authentication?"
+    },
+    "TotpRegistrationInitiateScreen": {
+        "title": "Two-factor authentication",
+        "content": "Scan this QR code with your authenticator app. Alternatively, you can manually copy/paste the secret into your authenticator app."
+    },
+    "TotpRegistrationValidateScreen": {
+        "title": "Two-factor authentication",
+        "enter6digitCode": "Enter the 6-digit code from your authenticator app to validate your two-factor authentication.",
+        "success": "Two-factor authentication has been enabled. You will now only be able to log back in with your phone or email AND your two factor authentication.\n\nOnly full KYC accounts may be recovered in the case a user has lost access to their two-factor authentication."
+    },
+    "TotpLoginValidateScreen": {
+        "title": "Two-factor authentication",
+        "content": "Enter the 6-digit code from your authenticator app to log in. This code changes every 30 seconds."
+    },
+    "CopySecretComponent": {
+        "button": "Copy secret",
+        "toastMessage": "Secret copied to clipboard!"
     },
     "DefaultWalletScreen": {
         "title": "Default Account",
@@ -741,7 +810,7 @@
         "learn": "I don't mean to badger you, but there's lot more to learn, dig in...",
         "learnToEarn": "Learn to Earn"
     },
-    "PhoneInputScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Account set up",
         "header": "Enter your phone number, and we'll text you an access code.",
         "headerVerify": "Verify you are human",
@@ -754,7 +823,7 @@
         "sms": "Send via SMS",
         "whatsapp": "Send via WhatsApp"
     },
-    "PhoneValidationScreen": {
+    "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Error logging in. Did you use the right code?",
         "errorTooManyAttempts": "Too many attempts. Please try again later.",
         "errorCannotUpgradeToExistingAccount": "This phone account already exists. Please log out of your trial account and then log in with your phone number.",
@@ -763,6 +832,43 @@
         "sendAgain": "Send Again",
         "tryAgain": "Try Again",
         "sendViaOtherChannel": "You selected to receive the code via {channel: string}. You can try receiving via {other: string} instead"
+    },
+    "PhoneRegistrationInitiateScreen": {
+        "title": "Phone set up",
+        "header": "Enter your phone number, and we'll text you an access code.",
+        "headerVerify": "Verify you are human",
+        "errorRequestingCode": "Something went wrong requesting the phone code, please try again later.",
+        "errorInvalidPhoneNumber": "Invalid phone number. Are you sure you entered the right number?",
+        "errorUnsupportedCountry": "We are unable to support customers in your country.",
+        "placeholder": "Phone Number",
+        "verify": "Click to Verify",
+        "sms": "Send via SMS",
+        "whatsapp": "Send via WhatsApp"
+    },
+    "PhoneRegistrationValidateScreen": {
+        "successTitle": "Phone number confirmed"
+    },
+    "EmailRegistrationInitiateScreen": {
+        "title": "Add your email",
+        "header": "Enter your email address, and we'll send you an access code.",
+        "invalidEmail": "Invalid email address. Are you sure you entered the right email?",
+        "send": "Send code",
+        "missingEmailRegistrationId": "Missing email registration id",
+        "placeholder": "hal@finney.org"
+    },
+    "EmailRegistrationValidateScreen": {
+        "header": "To confirm your email address, enter the code we just sent you on {email: string}",
+        "success": "Email {email: string} confirmed successfully"
+    },
+    "EmailLoginInitiateScreen": {
+        "title": "Login via email",
+        "header": "Enter your email address, and we'll send you an access code.",
+        "invalidEmail": "Invalid email address. Are you sure you entered the right email?",
+        "send": "Send code"
+    },
+    "EmailLoginValidateScreen": {
+        "header": "If there is an account attached to {email: string}, you should have received 6 digits code to enter below.\n\nIf you are not receiving anything, it's probably either because this is not the right email, the email is in your spam folder.",
+        "success": "Email {email: string} confirmed successfully"
     },
     "common": {
         "account": "Account",
@@ -783,6 +889,7 @@
         "close": "Close",
         "confirm": "Confirm",
         "convert": "Convert",
+        "codeConfirmation": "Code Confirmation",
         "currency": "Currency",
         "currencySyncIssue": "Currency issue. Refresh needed",
         "csvExport": "Export transactions as CSV",
@@ -807,13 +914,16 @@
         "loggedOut": "You have been logged out.",
         "logout": "Log Out",
         "minutes": "minutes",
+        "errorAuthToken": "Missing auth token",
         "needWallet": "Log in or create an account to access your wallet",
         "next": "Next",
         "No": "No",
         "note": "Note",
         "notification": "Notification",
         "ok": "OK",
+        "or": "or",
         "openWallet": "Open Wallet",
+        "phone": "Phone",
         "phoneNumber": "Phone Number",
         "rate": "Rate",
         "reauth": "Your session has expired. Please log in again.",
@@ -828,6 +938,7 @@
         "shareBitcoin": "Share Bitcoin Address",
         "shareLightning": "Share Lightning Invoice",
         "soon": "Coming soon!",
+        "submit": "Submit",
         "success": "Success!",
         "stablesatsUsd": "Stablesats USD",
         "to": "To",
@@ -878,9 +989,11 @@
         "joinTheCommunity": "Join the community",
         "whatsapp": "WhatsApp",
         "email": "Email",
+        "enjoyingApp": "Enjoying the app?",
         "statusPage": "Status Page",
         "telegram": "Telegram",
         "mattermost": "Mattermost",
+        "thankYouText": "Thank you for the feedback, would you like to suggest an improvement?",
         "defaultEmailSubject": "{bankName: string} - Support",
         "defaultSupportMessage": "Hey there! I need some help with {bankName: string}, I'm using the version {version: string} on {os: string}.",
         "emailCopied": "email {email: string} copied to clipboard",

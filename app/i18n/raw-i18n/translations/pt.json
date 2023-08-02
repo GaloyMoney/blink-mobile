@@ -479,7 +479,7 @@
     "PrimaryScreen": {
         "title": "Home"
     },
-    "ReceiveWrapperScreen": {
+    "ReceiveScreen": {
         "activateNotifications": "Deseja ativar as notificações para ser avisado quando o pagamento chegar?",
         "copyClipboard": "A fatura foi copiada na área de transferência",
         "copyClipboardBitcoin": "O endereço Bitcoin foi copiado na área de transferência",
@@ -723,7 +723,7 @@
         "learn": "Eu não quero te atormentar, mas há muito mais para aprender, cavar...",
         "learnToEarn": "Aprenda a ganhar"
     },
-    "PhoneInputScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Criação de conta",
         "header": "Digite seu número de telefone e enviaremos um código de acesso por mensagem de texto.",
         "headerVerify": "Verifique que você é um humano",
@@ -736,7 +736,7 @@
         "sms": "Enviar via SMS",
         "whatsapp": "Enviar via WhatsApp"
     },
-    "PhoneValidationScreen": {
+    "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Erro ao entrar. Você o código correto?",
         "errorTooManyAttempts": "Demasiada tentativas. Por favor tente novamente mais tarde.",
         "errorCannotUpgradeToExistingAccount": "Esta conta de telefone já existe. Saia da sua conta de teste e entre com o seu número de telefone.",

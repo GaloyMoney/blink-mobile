@@ -172,6 +172,17 @@ mutation deviceNotificationTokenCreate($input: DeviceNotificationTokenCreateInpu
   }
 }
 
+mutation feedbackSubmit($input: FeedbackSubmitInput!) {
+  feedbackSubmit(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    success
+    __typename
+  }
+}
+
 mutation intraLedgerPaymentSend($input: IntraLedgerPaymentSendInput!) {
   intraLedgerPaymentSend(input: $input) {
     errors {
@@ -406,6 +417,66 @@ mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
   }
 }
 
+mutation userEmailDelete {
+  userEmailDelete {
+    errors {
+      message
+      __typename
+    }
+    me {
+      id
+      phone
+      totpEnabled
+      email {
+        address
+        verified
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+mutation userEmailRegistrationInitiate($input: UserEmailRegistrationInitiateInput!) {
+  userEmailRegistrationInitiate(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    emailRegistrationId
+    me {
+      id
+      email {
+        address
+        verified
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+mutation userEmailRegistrationValidate($input: UserEmailRegistrationValidateInput!) {
+  userEmailRegistrationValidate(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    me {
+      id
+      email {
+        address
+        verified
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
 mutation userLogin($input: UserLoginInput!) {
   userLogin(input: $input) {
     errors {
@@ -414,6 +485,7 @@ mutation userLogin($input: UserLoginInput!) {
       __typename
     }
     authToken
+    totpRequired
     __typename
   }
 }
@@ -427,6 +499,112 @@ mutation userLoginUpgrade($input: UserLoginUpgradeInput!) {
     }
     success
     authToken
+    __typename
+  }
+}
+
+mutation userPhoneDelete {
+  userPhoneDelete {
+    errors {
+      message
+      __typename
+    }
+    me {
+      id
+      phone
+      totpEnabled
+      email {
+        address
+        verified
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+mutation userPhoneRegistrationInitiate($input: UserPhoneRegistrationInitiateInput!) {
+  userPhoneRegistrationInitiate(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    success
+    __typename
+  }
+}
+
+mutation userPhoneRegistrationValidate($input: UserPhoneRegistrationValidateInput!) {
+  userPhoneRegistrationValidate(input: $input) {
+    errors {
+      message
+      code
+      __typename
+    }
+    me {
+      id
+      phone
+      email {
+        address
+        verified
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+mutation userTotpDelete($input: UserTotpDeleteInput!) {
+  userTotpDelete(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    me {
+      id
+      phone
+      totpEnabled
+      email {
+        address
+        verified
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+mutation userTotpRegistrationInitiate($input: UserTotpRegistrationInitiateInput!) {
+  userTotpRegistrationInitiate(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    totpRegistrationId
+    totpSecret
+    __typename
+  }
+}
+
+mutation userTotpRegistrationValidate($input: UserTotpRegistrationValidateInput!) {
+  userTotpRegistrationValidate(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    me {
+      totpEnabled
+      phone
+      email {
+        address
+        verified
+        __typename
+      }
+      __typename
+    }
     __typename
   }
 }
@@ -504,8 +682,15 @@ query accountScreen {
   me {
     id
     phone
+    totpEnabled
+    email {
+      address
+      verified
+      __typename
+    }
     defaultAccount {
       id
+      level
       wallets {
         id
         balance
@@ -646,6 +831,10 @@ query displayCurrency {
   }
 }
 
+query feedbackModalShown {
+  feedbackModalShown @client
+}
+
 query hasPromptedSetDefaultAccount {
   hasPromptedSetDefaultAccount @client
 }
@@ -664,6 +853,11 @@ query homeAuthed {
     language
     username
     phone
+    email {
+      address
+      verified
+      __typename
+    }
     defaultAccount {
       id
       level
@@ -801,6 +995,37 @@ query onChainUsdTxFeeAsBtcDenominated($walletId: WalletId!, $address: OnChainAdd
   }
 }
 
+query paymentRequest {
+  globals {
+    network
+    feesInformation {
+      deposit {
+        minBankFee
+        minBankFeeThreshold
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+  me {
+    id
+    username
+    defaultAccount {
+      id
+      wallets {
+        id
+        balance
+        walletCurrency
+        __typename
+      }
+      defaultWalletId
+      __typename
+    }
+    __typename
+  }
+}
+
 query quizSats {
   quizQuestions {
     id
@@ -830,74 +1055,6 @@ query realtimePrice {
         }
         __typename
       }
-      __typename
-    }
-    __typename
-  }
-}
-
-query receiveBtc {
-  globals {
-    network
-    feesInformation {
-      deposit {
-        minBankFee
-        minBankFeeThreshold
-        __typename
-      }
-      __typename
-    }
-    __typename
-  }
-  me {
-    id
-    defaultAccount {
-      id
-      wallets {
-        id
-        balance
-        walletCurrency
-        __typename
-      }
-      __typename
-    }
-    __typename
-  }
-}
-
-query receiveUsd {
-  globals {
-    network
-    __typename
-  }
-  me {
-    id
-    defaultAccount {
-      id
-      wallets {
-        id
-        balance
-        walletCurrency
-        __typename
-      }
-      __typename
-    }
-    __typename
-  }
-}
-
-query receiveWrapperScreen {
-  me {
-    id
-    defaultAccount {
-      id
-      wallets {
-        id
-        balance
-        walletCurrency
-        __typename
-      }
-      defaultWalletId
       __typename
     }
     __typename
@@ -1095,6 +1252,13 @@ query supportedCountries {
       supportedAuthChannels
       __typename
     }
+    __typename
+  }
+}
+
+query totpRegistrationScreen {
+  me {
+    username
     __typename
   }
 }

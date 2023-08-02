@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 // eslint-disable-next-line camelcase
 import { useFragment_experimental } from "@apollo/client"
 import { TransactionDate } from "@app/components/transaction-date"
-import { descriptionDisplay } from "@app/components/transaction-item"
+import { useDescriptionDisplay } from "@app/components/transaction-item"
 import { WalletSummary } from "@app/components/wallet-summary"
 import {
   SettlementVia,
@@ -108,6 +108,11 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   const { LL } = useI18nContext()
   const { formatCurrency } = useDisplayCurrency()
 
+  const description = useDescriptionDisplay({
+    tx,
+    bankName: galoyInstance.name,
+  })
+
   // FIXME doesn't work with storybook
   // TODO: translation
   if (!tx || Object.keys(tx).length === 0)
@@ -127,10 +132,6 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   } = tx
 
   const isReceive = tx.direction === "RECEIVE"
-  const description = descriptionDisplay({
-    tx,
-    bankName: galoyInstance.name,
-  })
 
   const walletCurrency = settlementCurrency as WalletCurrency
   const spendOrReceiveText = isReceive

@@ -436,7 +436,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Flash;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.2.86;
+				MARKETING_VERSION = 2.2.104;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -469,7 +469,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Flash;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.2.86;
+				MARKETING_VERSION = 2.2.104;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

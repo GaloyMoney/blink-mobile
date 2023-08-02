@@ -20,6 +20,12 @@
         "howToUseYourPaycodeExplainer": "Vous pouvez imprimer votre Code de paiement (techniquement c’est une adresse lnurl-pay) et l’afficher dans votre entreprise pour recevoir des paiements. Les particuliers peuvent vous payer en le scannant avec un portefeuille utilisant Lightning.\n\nCependant, il faut savoir que certains portefeuilles ne peuvent pas scanner un Code de paiement comme par exemple : ",
         "howToUseYourCashRegisterExplainer": "Accepter que des personnes collectent des paiements via le lien du terminal de paiement, sans avoir accès à votre portefeuille.\n\nIls peuvent créer des factures et les paiements seront envoyés directement à votre portefeuille\n{bankName: string}."
     },
+    "SetAccountModal": {
+        "title": "Définir le compte par défaut",
+        "description": "Ce compte sera d’abord sélectionné pour envoyer et recevoir des paiements. Il peut être modifié à tout moment.",
+        "stablesatsTag": "Choisir ceci pour garder un montant stable du dollar US.",
+        "bitcoinTag": "Choisir ceci pour être dans le standard Bitcoin."
+    },
     "AuthenticationScreen": {
         "authenticationDescription": "Authentifiez-vous pour continuer",
         "setUp": "Configurez l’authentification biométrique",
@@ -481,7 +487,7 @@
     "PrimaryScreen": {
         "title": "Accueil"
     },
-    "ReceiveWrapperScreen": {
+    "ReceiveScreen": {
         "activateNotifications": "Souhaitez-vous activer les notifications pour être prévenu lorsque le paiement est bien parvenu ?",
         "copyClipboard": "La facture a été copiée dans le presse-papier",
         "copyClipboardBitcoin": "L’adresse Bitcoin a été copiée dans le presse-papier",
@@ -489,7 +495,7 @@
         "setNote": "Ajouter un message",
         "tapQrCodeCopy": "Touchez le code QR pour le copier",
         "title": "Recevoir des Bitcoin",
-        "usdTitle": "Recevoir des Dollar US",
+        "usdTitle": "Recevoir des dollars US",
         "error": "Impossible de générer la facture. Merci de contacter le support si le problème persiste.",
         "copyInvoice": "Copier la facture",
         "shareInvoice": "Partager la facture",
@@ -510,7 +516,7 @@
     },
     "RedeemBitcoinScreen": {
         "title": "Échanger des Bitcoin",
-        "usdTitle": "Recevoir des Dollars US",
+        "usdTitle": "Recevoir des dollars US",
         "error": "Impossible de générer la facture. Merci de contacter le support si le problème persiste.",
         "redeemingError": "Impossible d’échanger des Bitcoin. Merci de contacter le support si le problème persiste.",
         "submissionError": "Impossible de soumettre la demande de retrait. Merci de contacter le support si le problème persiste.",
@@ -656,8 +662,8 @@
         "DEFAULT": "Par défaut (OS)"
     },
     "StablesatsModal": {
-        "header": "Avec Stablesats, vous avez à présent un compte en Dollar US ajouté à votre portefeuille !",
-        "body": "Vous pouvez l’utiliser pour envoyer et recevoir des bitcoins, et instantanément transférer la valeur entre votre compte BTC et Dollar US. La valeur du Dollar US ne fluctuera pas avec le prix du bitcoin. Cette fonction n’est pas compatible avec le système bancaire traditionnel.",
+        "header": "Avec Stablesats, vous avez à présent un compte en dollar US ajouté à votre portefeuille !",
+        "body": "Vous pouvez l’utiliser pour envoyer et recevoir des bitcoins, et instantanément transférer la valeur entre votre compte BTC et Dollar US. La valeur du dollar US ne fluctuera pas avec le prix du bitcoin. Cette fonction n’est pas compatible avec le système bancaire traditionnel.",
         "termsAndConditions": "Lire les Termes & Conditions.",
         "learnMore": "En savoir plus sur Stablesats"
     },
@@ -725,7 +731,7 @@
         "learn": "Je ne veux pas insister mais il y a beaucoup plus à apprendre...",
         "learnToEarn": "Apprendre à gagner"
     },
-    "PhoneInputScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Compte créé",
         "header": "Saisissez votre numéro de téléphone pour recevoir le code d’accès par SMS.",
         "headerVerify": "Vérifiez que vous êtes un humain",
@@ -738,7 +744,7 @@
         "sms": "Envoyer par SMS",
         "whatsapp": "Envoyer via WhatsApp"
     },
-    "PhoneValidationScreen": {
+    "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Erreur de connexion. Avez-vous saisi correctement le code ?",
         "errorTooManyAttempts": "Trop de tentatives. Merci d’essayer ultérieurement.",
         "errorCannotUpgradeToExistingAccount": "Ce compte associé au téléphone existe déjà. Merci de vous déconnecter de votre compte test puis de vous connecter avec votre numéro de téléphone.",
@@ -812,13 +818,14 @@
         "shareLightning": "Partager la facture Lightning",
         "soon": "Bientôt disponible !",
         "success": "Succès !",
+        "stablesatsUsd": "Stablesats en dollar US",
         "to": "À",
         "total": "Total",
         "transactions": "Transactions",
         "transactionsError": "Erreur de chargement des transactions",
         "tryAgain": "Essayer à nouveau",
         "type": "Type",
-        "usdAccount": "Compte USD",
+        "usdAccount": "Compte en dollar US",
         "username": "Identifiant",
         "usernameRequired": "Un identifiant est requis",
         "backupAccount": "Sauvegarde / Mise à jour du compte",

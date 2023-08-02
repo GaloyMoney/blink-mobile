@@ -143,6 +143,9 @@ export const createCache = () =>
           colorScheme: {
             read: (value) => value ?? "system",
           },
+          feedbackModalShown: {
+            read: (value) => value ?? false,
+          },
           hasPromptedSetDefaultAccount: {
             read: (value) => value ?? false,
           },

@@ -30,8 +30,22 @@ import {
   ConversionDetailsScreen,
   ConversionSuccessScreen,
 } from "@app/screens/conversion-flow"
+import {
+  EmailLoginInitiateScreen,
+  EmailLoginValidateScreen,
+} from "@app/screens/email-login-screen"
+import {
+  EmailRegistrationInitiateScreen,
+  EmailRegistrationValidateScreen,
+} from "@app/screens/email-registration-screen"
 import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
-import ReceiveWrapperScreen from "@app/screens/receive-bitcoin-screen/receive-wrapper"
+import {
+  PhoneLoginInitiateScreen,
+  PhoneLoginValidationScreen,
+} from "@app/screens/phone-auth-screen"
+import { PhoneRegistrationInitiateScreen } from "@app/screens/phone-auth-screen/phone-registration-input"
+import { PhoneRegistrationValidateScreen } from "@app/screens/phone-auth-screen/phone-registration-validation"
+import ReceiveScreen from "@app/screens/receive-bitcoin-screen/receive-screen"
 import RedeemBitcoinDetailScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-detail-screen"
 import RedeemBitcoinResultScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-result-screen"
 import SendBitcoinConfirmationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-confirmation-screen"
@@ -39,7 +53,17 @@ import SendBitcoinDestinationScreen from "@app/screens/send-bitcoin-screen/send-
 import SendBitcoinDetailsScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-details-screen"
 import SendBitcoinSuccessScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-success-screen"
 import { AccountScreen } from "@app/screens/settings-screen/account-screen"
+import { DefaultWalletScreen } from "@app/screens/settings-screen/default-wallet"
+import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
+import { ThemeScreen } from "@app/screens/settings-screen/theme-screen"
 import { TransactionLimitsScreen } from "@app/screens/settings-screen/transaction-limits-screen"
+import {
+  TotpLoginValidateScreen,
+  TotpRegistrationInitiateScreen,
+  TotpRegistrationValidateScreen,
+} from "@app/screens/totp-screen"
+import { testProps } from "@app/utils/testProps"
+import { makeStyles, useTheme } from "@rneui/themed"
 import { ScanningQRCodeScreen } from "../screens/send-bitcoin-screen"
 import { SettingsScreen } from "../screens/settings-screen"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
@@ -53,13 +77,6 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
-import { PhoneInputScreen } from "@app/screens/phone-auth-screen/phone-input"
-import { PhoneValidationScreen } from "@app/screens/phone-auth-screen"
-import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
-import { makeStyles, useTheme } from "@rneui/themed"
-import { DefaultWalletScreen } from "@app/screens/settings-screen/default-wallet"
-import { ThemeScreen } from "@app/screens/settings-screen/theme-screen"
-import { testProps } from "@app/utils/testProps"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -158,9 +175,9 @@ export const RootStack = () => {
       />
       <RootNavigator.Screen
         name="receiveBitcoin"
-        component={ReceiveWrapperScreen}
+        component={ReceiveScreen}
         options={{
-          title: LL.ReceiveWrapperScreen.title(),
+          title: LL.ReceiveScreen.title(),
         }}
       />
       <RootNavigator.Screen
@@ -275,9 +292,23 @@ export const RootStack = () => {
       />
       <RootNavigator.Screen
         name="phoneFlow"
-        component={PhoneValidationNavigator}
+        component={PhoneLoginNavigator}
         options={{
-          title: LL.PhoneInputScreen.title(),
+          title: LL.PhoneLoginInitiateScreen.title(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="phoneRegistrationInitiate"
+        options={{
+          title: LL.common.phoneNumber(),
+        }}
+        component={PhoneRegistrationInitiateScreen}
+      />
+      <RootNavigator.Screen
+        name="phoneRegistrationValidate"
+        component={PhoneRegistrationValidateScreen}
+        options={{
+          title: LL.common.codeConfirmation(),
         }}
       />
       <RootNavigator.Screen
@@ -313,6 +344,55 @@ export const RootStack = () => {
         component={TransactionLimitsScreen}
         options={{
           title: LL.common.transactionLimits(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="emailRegistrationInitiate"
+        component={EmailRegistrationInitiateScreen}
+        options={{
+          title: LL.EmailRegistrationInitiateScreen.title(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="emailRegistrationValidate"
+        component={EmailRegistrationValidateScreen}
+        options={{
+          title: LL.common.codeConfirmation(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="emailLoginInitiate"
+        component={EmailLoginInitiateScreen}
+        options={{
+          title: LL.EmailLoginInitiateScreen.title(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="emailLoginValidate"
+        component={EmailLoginValidateScreen}
+        options={{
+          title: LL.common.codeConfirmation(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="totpRegistrationInitiate"
+        component={TotpRegistrationInitiateScreen}
+        options={{
+          title: LL.TotpRegistrationInitiateScreen.title(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="totpRegistrationValidate"
+        component={TotpRegistrationValidateScreen}
+        options={{
+          title: LL.TotpRegistrationValidateScreen.title(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="totpLoginValidate"
+        component={TotpLoginValidateScreen}
+        options={{
+          title: LL.TotpLoginValidateScreen.title(),
         }}
       />
     </RootNavigator.Navigator>
@@ -366,21 +446,21 @@ export const ContactNavigator = () => {
 }
 const StackPhoneValidation = createStackNavigator<PhoneValidationStackParamList>()
 
-export const PhoneValidationNavigator = () => {
+export const PhoneLoginNavigator = () => {
   const { LL } = useI18nContext()
   return (
     <StackPhoneValidation.Navigator>
       <StackPhoneValidation.Screen
-        name="phoneInput"
+        name="phoneLoginInitiate"
         options={{
           headerShown: false,
           title: LL.common.phoneNumber(),
         }}
-        component={PhoneInputScreen}
+        component={PhoneLoginInitiateScreen}
       />
       <StackPhoneValidation.Screen
-        name="phoneValidation"
-        component={PhoneValidationScreen}
+        name="phoneLoginValidate"
+        component={PhoneLoginValidationScreen}
         options={{
           headerShown: false,
         }}

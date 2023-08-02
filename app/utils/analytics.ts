@@ -6,7 +6,7 @@ import {
   WalletCurrency,
 } from "@app/graphql/generated"
 import { ValidatePhoneCodeErrorsType } from "@app/screens/phone-auth-screen"
-import { PaymentRequestType } from "@app/screens/receive-bitcoin-screen/payment-requests/index.types"
+import { InvoiceType } from "@app/screens/receive-bitcoin-screen/payment/index.types"
 import { ParseDestinationResult } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
 import { PaymentType as ParsedPaymentType } from "@galoymoney/client"
 import analytics from "@react-native-firebase/analytics"
@@ -37,7 +37,7 @@ export const logGetStartedAction = ({
   action,
   createDeviceAccountEnabled,
 }: {
-  action: "log_in" | "create_device_account" | "explore_wallet"
+  action: "log_in" | "create_device_account" | "explore_wallet" | "login_with_email"
   createDeviceAccountEnabled: boolean
 }) => {
   analytics().logEvent("get_started_action", {
@@ -62,6 +62,10 @@ export const logStartCaptcha = () => {
 
 export const logUpgradeLoginAttempt = () => {
   analytics().logEvent("upgrade_login_attempt")
+}
+
+export const logAddPhoneAttempt = () => {
+  analytics().logEvent("add_phone_attempt")
 }
 
 export const logUpgradeLoginSuccess = () => {
@@ -134,7 +138,7 @@ export const logConversionResult = (params: LogConversionResultParams) => {
 }
 
 type LogGeneratePaymentRequestParams = {
-  paymentType: PaymentRequestType
+  paymentType: InvoiceType
   hasAmount: boolean
   receivingWallet: WalletCurrency
 }
@@ -170,5 +174,15 @@ export const logToastShown = (params: LogToastShownParams) => {
     message: params.message,
     type: params.type,
     is_translated: params.isTranslated,
+  })
+}
+
+type LogAppFeedbackParams = {
+  isEnjoingApp: boolean
+}
+
+export const logAppFeedback = (params: LogAppFeedbackParams) => {
+  analytics().logEvent("app_feedback", {
+    is_enjoying_app: params.isEnjoingApp,
   })
 }

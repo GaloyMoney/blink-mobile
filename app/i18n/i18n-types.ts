@@ -16,6 +16,7 @@ export type Locales =
 	| 'es'
 	| 'fr'
 	| 'hr'
+	| 'hy'
 	| 'it'
 	| 'ms'
 	| 'nl'
@@ -136,6 +137,12 @@ type RootTranslation = {
 		 * C​h​o​o​s​e​ ​t​h​i​s​ ​t​o​ ​b​e​ ​o​n​ ​a​ ​B​i​t​c​o​i​n​ ​s​t​a​n​d​a​r​d​.
 		 */
 		bitcoinTag: string
+	}
+	NoteInput: {
+		/**
+		 * A​d​d​ ​n​o​t​e
+		 */
+		addNote: string
 	}
 	AuthenticationScreen: {
 		/**
@@ -1414,13 +1421,25 @@ type RootTranslation = {
 		 */
 		logInCreateAccount: string
 		/**
+<<<<<<< HEAD
 		 * S​t​a​r​t
 		 */
 		quickStart: string
 		/**
 		 * E​x​p​l​o​r​e​ ​w​a​l​l​e​t​ ​i​n​s​t​e​a​d
+=======
+		 * C​r​e​a​t​e​ ​n​e​w​ ​a​c​c​o​u​n​t
+>>>>>>> upstream/main
 		 */
-		exploreWalletInstead: string
+		createAccount: string
+		/**
+		 * E​x​p​l​o​r​e​ ​w​a​l​l​e​t
+		 */
+		exploreWallet: string
+		/**
+		 * L​o​g​ ​b​a​c​k​ ​i​n​ ​w​i​t​h
+		 */
+		logBackInWith: string
 		/**
 		 * S​e​t​u​p​ ​b​u​s​i​n​e​s​s​ ​a​c​c​o​u​n​t
 		 */
@@ -1433,10 +1452,6 @@ type RootTranslation = {
 		 * S​t​a​r​t​ ​w​i​t​h​ ​a​ ​t​r​i​a​l​ ​a​c​c​o​u​n​t
 		 */
 		startTrialAccount: string
-		/**
-		 * I​ ​u​n​d​e​r​s​t​a​n​d​,​ ​c​o​n​t​i​n​u​e
-		 */
-		iUnderstand: string
 		/**
 		 * S​t​a​r​t​ ​w​i​t​h​ ​t​r​i​a​l​ ​a​c​c​o​u​n​t
 		 */
@@ -1620,7 +1635,7 @@ type RootTranslation = {
 		 */
 		title: string
 	}
-	ReceiveWrapperScreen: {
+	ReceiveScreen: {
 		/**
 		 * D​o​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​a​c​t​i​v​a​t​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​t​o​ ​b​e​ ​n​o​t​i​f​i​e​d​ ​w​h​e​n​ ​t​h​e​ ​p​a​y​m​e​n​t​ ​h​a​s​ ​a​r​r​i​v​e​d​?
 		 */
@@ -1633,6 +1648,10 @@ type RootTranslation = {
 		 * B​i​t​c​o​i​n​ ​a​d​d​r​e​s​s​ ​h​a​s​ ​b​e​e​n​ ​c​o​p​i​e​d​ ​i​n​ ​t​h​e​ ​c​l​i​p​b​o​a​r​d
 		 */
 		copyClipboardBitcoin: string
+		/**
+		 * P​a​y​c​o​d​e​/​L​N​U​R​L​ ​h​a​s​ ​b​e​e​n​ ​c​o​p​i​e​d​ ​i​n​ ​t​h​e​ ​c​l​i​p​b​o​a​r​d
+		 */
+		copyClipboardPaycode: string
 		/**
 		 * T​h​i​s​ ​i​n​v​o​i​c​e​ ​h​a​s​ ​b​e​e​n​ ​p​a​i​d
 		 */
@@ -1658,11 +1677,11 @@ type RootTranslation = {
 		 */
 		error: string
 		/**
-		 * C​o​p​y​ ​I​n​v​o​i​c​e
+		 * C​o​p​y
 		 */
 		copyInvoice: string
 		/**
-		 * S​h​a​r​e​ ​I​n​v​o​i​c​e
+		 * S​h​a​r​e
 		 */
 		shareInvoice: string
 		/**
@@ -1723,6 +1742,99 @@ type RootTranslation = {
 		 * @param {string} minBankFeeThreshold
 		 */
 		fees: RequiredParams<'minBankFee' | 'minBankFeeThreshold'>
+		/**
+		 * L​i​g​h​t​n​i​n​g
+		 */
+		lightning: string
+		/**
+		 * P​a​y​c​o​d​e
+		 */
+		paycode: string
+		/**
+		 * O​n​c​h​a​i​n
+		 */
+		onchain: string
+		/**
+		 * B​i​t​c​o​i​n
+		 */
+		bitcoin: string
+		/**
+		 * S​t​a​b​l​e​s​a​t​s
+		 */
+		stablesats: string
+		/**
+		 * R​e​g​e​n​e​r​a​t​e​ ​I​n​v​o​i​c​e
+		 */
+		regenerateInvoiceButtonTitle: string
+		/**
+		 * S​e​t​ ​U​s​e​r​n​a​m​e
+		 */
+		setUsernameButtonTitle: string
+		/**
+		 * I​n​v​o​i​c​e​ ​h​a​s​ ​e​x​p​i​r​e​d
+		 */
+		invoiceHasExpired: string
+		/**
+		 * S​e​t​ ​y​o​u​r​ ​u​s​e​r​n​a​m​e​ ​t​o​ ​a​c​c​e​p​t​ ​v​i​a​ ​P​a​y​c​o​d​e​ ​Q​R​ ​(​L​N​U​R​L​)​ ​a​n​d​ ​L​i​g​h​t​n​i​n​g​ ​A​d​d​r​e​s​s
+		 */
+		setUsernameToAcceptViaPaycode: string
+		/**
+		 * S​i​n​g​l​e​ ​U​s​e
+		 */
+		singleUse: string
+		/**
+		 * E​x​p​i​r​e​d​ ​I​n​v​o​i​c​e
+		 */
+		invoiceExpired: string
+		invoiceValidity: {
+			/**
+			 * V​a​l​i​d​ ​f​o​r​ ​1​ ​d​a​y
+			 */
+			validFor1Day: string
+			/**
+			 * V​a​l​i​d​ ​f​o​r​ ​n​e​x​t​ ​{​d​u​r​a​t​i​o​n​}
+			 * @param {string} duration
+			 */
+			validForNext: RequiredParams<'duration'>
+			/**
+			 * V​a​l​i​d​ ​b​e​f​o​r​e​ ​{​t​i​m​e​}
+			 * @param {string} time
+			 */
+			validBefore: RequiredParams<'time'>
+			/**
+			 * E​x​p​i​r​e​s​ ​i​n​ ​{​d​u​r​a​t​i​o​n​}
+			 * @param {string} duration
+			 */
+			expiresIn: RequiredParams<'duration'>
+			/**
+			 * E​x​p​i​r​e​s​ ​n​o​w
+			 */
+			expiresNow: string
+		}
+		/**
+		 * I​n​v​o​i​c​e​ ​h​a​s​ ​b​e​e​n​ ​p​a​i​d
+		 */
+		invoiceHasBeenPaid: string
+		/**
+		 * Y​o​u​r​ ​B​i​t​c​o​i​n​ ​O​n​c​h​a​i​n​ ​A​d​d​r​e​s​s
+		 */
+		yourBitcoinOnChainAddress: string
+		/**
+		 * R​e​c​e​i​v​e​ ​v​i​a​ ​L​i​g​h​t​n​i​n​g
+		 */
+		receiveViaInvoice: string
+		/**
+		 * R​e​c​e​i​v​e​ ​v​i​a​ ​P​a​y​c​o​d​e
+		 */
+		receiveViaPaycode: string
+		/**
+		 * R​e​c​e​i​v​e​ ​v​i​a​ ​O​n​c​h​a​i​n
+		 */
+		receiveViaOnchain: string
+		/**
+		 * P​a​y​c​o​d​e​ ​/​ ​L​N​U​R​L
+		 */
+		payCodeOrLNURL: string
 	}
 	RedeemBitcoinScreen: {
 		/**
@@ -2067,7 +2179,7 @@ type RootTranslation = {
 		/**
 		 * U​s​e​r​n​a​m​e​,​ ​i​n​v​o​i​c​e​,​ ​o​r​ ​a​d​d​r​e​s​s
 		 */
-		input: string
+		placeholder: string
 		/**
 		 * I​n​v​a​l​i​d​ ​u​s​e​r​n​a​m​e
 		 */
@@ -2092,6 +2204,10 @@ type RootTranslation = {
 		 * P​a​y​m​e​n​t​ ​h​a​s​ ​b​e​e​n​ ​s​e​n​t​ ​s​u​c​c​e​s​s​f​u​l​l​y
 		 */
 		success: string
+		/**
+		 * E​n​t​e​r​ ​y​o​u​r​ ​s​u​g​g​e​s​t​i​o​n
+		 */
+		suggestionInput: string
 		/**
 		 * M​a​x
 		 */
@@ -2122,10 +2238,6 @@ type RootTranslation = {
 		 * A​c​t​i​v​a​t​e​d
 		 */
 		activated: string
-		/**
-		 * T​a​p​ ​t​o​ ​l​o​g​ ​i​n
-		 */
-		tapLogIn: string
 		/**
 		 * W​a​y​s​ ​t​o​ ​g​e​t​ ​p​a​i​d
 		 */
@@ -2207,16 +2319,16 @@ type RootTranslation = {
 		 * N​F​C​ ​i​s​ ​n​o​t​ ​s​u​p​p​o​r​t​e​d​ ​o​n​ ​t​h​i​s​ ​d​e​v​i​c​e
 		 */
 		nfcNotSupported: string
+		/**
+		 * L​o​g​ ​i​n​ ​o​r​ ​c​r​e​a​t​e​ ​a​c​c​o​u​n​t
+		 */
+		logInOrCreateAccount: string
 	}
 	AccountScreen: {
 		/**
 		 * A​c​c​o​u​n​t​ ​L​e​v​e​l
 		 */
 		accountLevel: string
-		/**
-		 * L​o​g​ ​i​n
-		 */
-		logIn: string
 		/**
 		 * U​p​g​r​a​d​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t
 		 */
@@ -2235,10 +2347,23 @@ type RootTranslation = {
 		logoutAlertTitle: string
 		/**
 		 * Y​o​u​ ​w​i​l​l​ ​n​e​e​d​ ​t​o​ ​r​e​-​e​n​t​e​r​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n​.​
-	​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​i​s​ ​{​p​h​o​n​e​N​u​m​b​e​r​}​ ​s​o​ ​m​a​k​e​ ​s​u​r​e​ ​t​o​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​i​t​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n
+	​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​i​s​ ​{​p​h​o​n​e​N​u​m​b​e​r​}​ ​s​o​ ​m​a​k​e​ ​s​u​r​e​ ​y​o​u​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​i​t​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n
 		 * @param {string} phoneNumber
 		 */
-		logoutAlertContent: RequiredParams<'phoneNumber'>
+		logoutAlertContentPhone: RequiredParams<'phoneNumber'>
+		/**
+		 * Y​o​u​ ​w​i​l​l​ ​n​e​e​d​ ​t​o​ ​r​e​-​e​n​t​e​r​ ​y​o​u​r​ ​e​m​a​i​l​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n​.​
+	​y​o​u​r​ ​e​m​a​i​l​ ​i​s​ ​{​e​m​a​i​l​}​ ​s​o​ ​m​a​k​e​ ​s​u​r​e​ ​y​o​u​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​i​t​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n
+		 * @param {string} email
+		 */
+		logoutAlertContentEmail: RequiredParams<'email'>
+		/**
+		 * Y​o​u​ ​w​i​l​l​ ​n​e​e​d​ ​t​o​ ​r​e​-​e​n​t​e​r​ ​e​i​t​h​e​r​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​o​r​ ​e​m​a​i​l​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n​.​
+	​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​i​s​ ​{​p​h​o​n​e​N​u​m​b​e​r​}​ ​a​n​d​ ​y​o​u​r​ ​e​m​a​i​l​ ​i​s​ ​{​e​m​a​i​l​}​ ​s​o​ ​m​a​k​e​ ​s​u​r​e​ ​y​o​u​ ​h​a​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​t​h​o​s​e​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n
+		 * @param {string} email
+		 * @param {string} phoneNumber
+		 */
+		logoutAlertContentPhoneEmail: RequiredParams<'email' | 'phoneNumber'>
 		/**
 		 * Y​o​u​ ​h​a​v​e​ ​a​ ​S​t​a​b​l​e​s​a​t​s​ ​b​a​l​a​n​c​e​ ​o​f​ ​{​b​a​l​a​n​c​e​}​.
 		 * @param {string} balance
@@ -2253,6 +2378,132 @@ type RootTranslation = {
 		 * R​e​g​i​s​t​e​r​ ​t​o​ ​s​e​c​u​r​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t
 		 */
 		secureYourAccount: string
+		/**
+		 * T​a​p​ ​t​o​ ​a​d​d
+		 */
+		tapToAdd: string
+		/**
+		 * D​e​l​e​t​e​ ​e​m​a​i​l
+		 */
+		deleteEmailPromptTitle: string
+		/**
+		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​?​ ​y​o​u​ ​w​i​l​l​ ​o​n​l​y​ ​b​e​ ​a​b​l​e​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n​ ​w​i​t​h​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​.
+		 */
+		deleteEmailPromptContent: string
+		/**
+		 * D​e​l​e​t​e​ ​p​h​o​n​e
+		 */
+		deletePhonePromptTitle: string
+		/**
+		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​?​ ​y​o​u​ ​w​i​l​l​ ​o​n​l​y​ ​b​e​ ​a​b​l​e​ ​t​o​ ​l​o​g​ ​i​n​ ​b​a​c​k​ ​w​i​t​h​ ​y​o​u​r​ ​e​m​a​i​l​.
+		 */
+		deletePhonePromptContent: string
+		/**
+		 * A​d​d​ ​a​n​ ​e​m​a​i​l​ ​f​i​r​s​t
+		 */
+		addEmailFirst: string
+		/**
+		 * A​d​d​ ​a​ ​p​h​o​n​e​ ​f​i​r​s​t
+		 */
+		addPhoneFirst: string
+		/**
+		 * P​h​o​n​e​ ​n​u​m​b​e​r​ ​(​f​o​r​ ​l​o​g​i​n​)
+		 */
+		phoneNumberAuthentication: string
+		/**
+		 * E​m​a​i​l​ ​(​f​o​r​ ​l​o​g​i​n​)
+		 */
+		emailAuthentication: string
+		/**
+		 * R​e​m​o​v​e​ ​p​h​o​n​e
+		 */
+		removePhone: string
+		/**
+		 * R​e​m​o​v​e​ ​e​m​a​i​l
+		 */
+		removeEmail: string
+		/**
+		 * E​m​a​i​l​ ​i​s​ ​u​n​v​e​r​i​f​i​e​d
+		 */
+		unverified: string
+		/**
+		 * S​e​c​u​r​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t​ ​b​y​ ​v​e​r​i​f​y​i​n​g​ ​y​o​u​r​ ​e​m​a​i​l​.
+		 */
+		unverifiedContent: string
+		/**
+		 * C​o​n​f​i​r​m​ ​e​m​a​i​l
+		 */
+		confirmEmail: string
+		/**
+		 * Y​o​u​r​ ​e​m​a​i​l​ ​i​s​ ​u​n​v​e​r​i​f​i​e​d
+		 */
+		emailUnverified: string
+		/**
+		 * E​n​s​u​r​e​ ​y​o​u​ ​c​a​n​ ​l​o​g​ ​b​a​c​k​ ​i​n​t​o​ ​y​o​u​r​ ​a​c​c​o​u​n​t​ ​b​y​ ​v​e​r​i​f​y​i​n​g​ ​y​o​u​r​ ​e​m​a​i​l​.​ ​D​o​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​o​ ​t​h​e​ ​v​e​r​i​f​i​c​a​t​i​o​n​ ​n​o​w​?
+		 */
+		emailUnverifiedContent: string
+		/**
+		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
+		 */
+		totp: string
+		/**
+		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​ ​h​a​s​ ​b​e​e​n​ ​d​e​a​c​t​i​v​a​t​e​d
+		 */
+		totpDeactivated: string
+		/**
+		 * D​e​l​e​t​e​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
+		 */
+		totpDeleteAlertTitle: string
+		/**
+		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​?
+		 */
+		totpDeleteAlertContent: string
+	}
+	TotpRegistrationInitiateScreen: {
+		/**
+		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
+		 */
+		title: string
+		/**
+		 * S​c​a​n​ ​t​h​i​s​ ​Q​R​ ​c​o​d​e​ ​w​i​t​h​ ​y​o​u​r​ ​a​u​t​h​e​n​t​i​c​a​t​o​r​ ​a​p​p​.​ ​A​l​t​e​r​n​a​t​i​v​e​l​y​,​ ​y​o​u​ ​c​a​n​ ​m​a​n​u​a​l​l​y​ ​c​o​p​y​/​p​a​s​t​e​ ​t​h​e​ ​s​e​c​r​e​t​ ​i​n​t​o​ ​y​o​u​r​ ​a​u​t​h​e​n​t​i​c​a​t​o​r​ ​a​p​p​.
+		 */
+		content: string
+	}
+	TotpRegistrationValidateScreen: {
+		/**
+		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
+		 */
+		title: string
+		/**
+		 * E​n​t​e​r​ ​t​h​e​ ​6​-​d​i​g​i​t​ ​c​o​d​e​ ​f​r​o​m​ ​y​o​u​r​ ​a​u​t​h​e​n​t​i​c​a​t​o​r​ ​a​p​p​ ​t​o​ ​v​a​l​i​d​a​t​e​ ​y​o​u​r​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​.
+		 */
+		enter6digitCode: string
+		/**
+		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​ ​h​a​s​ ​b​e​e​n​ ​e​n​a​b​l​e​d​.​ ​Y​o​u​ ​w​i​l​l​ ​n​o​w​ ​o​n​l​y​ ​b​e​ ​a​b​l​e​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n​ ​w​i​t​h​ ​y​o​u​r​ ​p​h​o​n​e​ ​o​r​ ​e​m​a​i​l​ ​A​N​D​ ​y​o​u​r​ ​t​w​o​ ​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​.​
+	​
+	​O​n​l​y​ ​f​u​l​l​ ​K​Y​C​ ​a​c​c​o​u​n​t​s​ ​m​a​y​ ​b​e​ ​r​e​c​o​v​e​r​e​d​ ​i​n​ ​t​h​e​ ​c​a​s​e​ ​a​ ​u​s​e​r​ ​h​a​s​ ​l​o​s​t​ ​a​c​c​e​s​s​ ​t​o​ ​t​h​e​i​r​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​.
+		 */
+		success: string
+	}
+	TotpLoginValidateScreen: {
+		/**
+		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
+		 */
+		title: string
+		/**
+		 * E​n​t​e​r​ ​t​h​e​ ​6​-​d​i​g​i​t​ ​c​o​d​e​ ​f​r​o​m​ ​y​o​u​r​ ​a​u​t​h​e​n​t​i​c​a​t​o​r​ ​a​p​p​ ​t​o​ ​l​o​g​ ​i​n​.​ ​T​h​i​s​ ​c​o​d​e​ ​c​h​a​n​g​e​s​ ​e​v​e​r​y​ ​3​0​ ​s​e​c​o​n​d​s​.
+		 */
+		content: string
+	}
+	CopySecretComponent: {
+		/**
+		 * C​o​p​y​ ​s​e​c​r​e​t
+		 */
+		button: string
+		/**
+		 * S​e​c​r​e​t​ ​c​o​p​i​e​d​ ​t​o​ ​c​l​i​p​b​o​a​r​d​!
+		 */
+		toastMessage: string
 	}
 	DefaultWalletScreen: {
 		/**
@@ -2522,7 +2773,7 @@ type RootTranslation = {
 		 */
 		learnToEarn: string
 	}
-	PhoneInputScreen: {
+	PhoneLoginInitiateScreen: {
 		/**
 		 * A​c​c​o​u​n​t​ ​s​e​t​ ​u​p
 		 */
@@ -2568,7 +2819,7 @@ type RootTranslation = {
 		 */
 		whatsapp: string
 	}
-	PhoneValidationScreen: {
+	PhoneLoginValidationScreen: {
 		/**
 		 * E​r​r​o​r​ ​l​o​g​g​i​n​g​ ​i​n​.​ ​D​i​d​ ​y​o​u​ ​u​s​e​ ​t​h​e​ ​r​i​g​h​t​ ​c​o​d​e​?
 		 */
@@ -2605,6 +2856,124 @@ type RootTranslation = {
 		 * @param {string} other
 		 */
 		sendViaOtherChannel: RequiredParams<'channel' | 'other'>
+	}
+	PhoneRegistrationInitiateScreen: {
+		/**
+		 * P​h​o​n​e​ ​s​e​t​ ​u​p
+		 */
+		title: string
+		/**
+		 * E​n​t​e​r​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​,​ ​a​n​d​ ​w​e​'​l​l​ ​t​e​x​t​ ​y​o​u​ ​a​n​ ​a​c​c​e​s​s​ ​c​o​d​e​.
+		 */
+		header: string
+		/**
+		 * V​e​r​i​f​y​ ​y​o​u​ ​a​r​e​ ​h​u​m​a​n
+		 */
+		headerVerify: string
+		/**
+		 * S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​ ​r​e​q​u​e​s​t​i​n​g​ ​t​h​e​ ​p​h​o​n​e​ ​c​o​d​e​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​ ​l​a​t​e​r​.
+		 */
+		errorRequestingCode: string
+		/**
+		 * I​n​v​a​l​i​d​ ​p​h​o​n​e​ ​n​u​m​b​e​r​.​ ​A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​e​n​t​e​r​e​d​ ​t​h​e​ ​r​i​g​h​t​ ​n​u​m​b​e​r​?
+		 */
+		errorInvalidPhoneNumber: string
+		/**
+		 * W​e​ ​a​r​e​ ​u​n​a​b​l​e​ ​t​o​ ​s​u​p​p​o​r​t​ ​c​u​s​t​o​m​e​r​s​ ​i​n​ ​y​o​u​r​ ​c​o​u​n​t​r​y​.
+		 */
+		errorUnsupportedCountry: string
+		/**
+		 * P​h​o​n​e​ ​N​u​m​b​e​r
+		 */
+		placeholder: string
+		/**
+		 * C​l​i​c​k​ ​t​o​ ​V​e​r​i​f​y
+		 */
+		verify: string
+		/**
+		 * S​e​n​d​ ​v​i​a​ ​S​M​S
+		 */
+		sms: string
+		/**
+		 * S​e​n​d​ ​v​i​a​ ​W​h​a​t​s​A​p​p
+		 */
+		whatsapp: string
+	}
+	PhoneRegistrationValidateScreen: {
+		/**
+		 * P​h​o​n​e​ ​n​u​m​b​e​r​ ​c​o​n​f​i​r​m​e​d
+		 */
+		successTitle: string
+	}
+	EmailRegistrationInitiateScreen: {
+		/**
+		 * A​d​d​ ​y​o​u​r​ ​e​m​a​i​l
+		 */
+		title: string
+		/**
+		 * E​n​t​e​r​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​,​ ​a​n​d​ ​w​e​'​l​l​ ​s​e​n​d​ ​y​o​u​ ​a​n​ ​a​c​c​e​s​s​ ​c​o​d​e​.
+		 */
+		header: string
+		/**
+		 * I​n​v​a​l​i​d​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​.​ ​A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​e​n​t​e​r​e​d​ ​t​h​e​ ​r​i​g​h​t​ ​e​m​a​i​l​?
+		 */
+		invalidEmail: string
+		/**
+		 * S​e​n​d​ ​c​o​d​e
+		 */
+		send: string
+		/**
+		 * M​i​s​s​i​n​g​ ​e​m​a​i​l​ ​r​e​g​i​s​t​r​a​t​i​o​n​ ​i​d
+		 */
+		missingEmailRegistrationId: string
+		/**
+		 * h​a​l​@​f​i​n​n​e​y​.​o​r​g
+		 */
+		placeholder: string
+	}
+	EmailRegistrationValidateScreen: {
+		/**
+		 * T​o​ ​c​o​n​f​i​r​m​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​,​ ​e​n​t​e​r​ ​t​h​e​ ​c​o​d​e​ ​w​e​ ​j​u​s​t​ ​s​e​n​t​ ​y​o​u​ ​o​n​ ​{​e​m​a​i​l​}
+		 * @param {string} email
+		 */
+		header: RequiredParams<'email'>
+		/**
+		 * E​m​a​i​l​ ​{​e​m​a​i​l​}​ ​c​o​n​f​i​r​m​e​d​ ​s​u​c​c​e​s​s​f​u​l​l​y
+		 * @param {string} email
+		 */
+		success: RequiredParams<'email'>
+	}
+	EmailLoginInitiateScreen: {
+		/**
+		 * L​o​g​i​n​ ​v​i​a​ ​e​m​a​i​l
+		 */
+		title: string
+		/**
+		 * E​n​t​e​r​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​,​ ​a​n​d​ ​w​e​'​l​l​ ​s​e​n​d​ ​y​o​u​ ​a​n​ ​a​c​c​e​s​s​ ​c​o​d​e​.
+		 */
+		header: string
+		/**
+		 * I​n​v​a​l​i​d​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​.​ ​A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​e​n​t​e​r​e​d​ ​t​h​e​ ​r​i​g​h​t​ ​e​m​a​i​l​?
+		 */
+		invalidEmail: string
+		/**
+		 * S​e​n​d​ ​c​o​d​e
+		 */
+		send: string
+	}
+	EmailLoginValidateScreen: {
+		/**
+		 * I​f​ ​t​h​e​r​e​ ​i​s​ ​a​n​ ​a​c​c​o​u​n​t​ ​a​t​t​a​c​h​e​d​ ​t​o​ ​{​e​m​a​i​l​}​,​ ​y​o​u​ ​s​h​o​u​l​d​ ​h​a​v​e​ ​r​e​c​e​i​v​e​d​ ​6​ ​d​i​g​i​t​s​ ​c​o​d​e​ ​t​o​ ​e​n​t​e​r​ ​b​e​l​o​w​.​
+	​
+	​I​f​ ​y​o​u​ ​a​r​e​ ​n​o​t​ ​r​e​c​e​i​v​i​n​g​ ​a​n​y​t​h​i​n​g​,​ ​i​t​'​s​ ​p​r​o​b​a​b​l​y​ ​e​i​t​h​e​r​ ​b​e​c​a​u​s​e​ ​t​h​i​s​ ​i​s​ ​n​o​t​ ​t​h​e​ ​r​i​g​h​t​ ​e​m​a​i​l​,​ ​t​h​e​ ​e​m​a​i​l​ ​i​s​ ​i​n​ ​y​o​u​r​ ​s​p​a​m​ ​f​o​l​d​e​r​.
+		 * @param {string} email
+		 */
+		header: RequiredParams<'email'>
+		/**
+		 * E​m​a​i​l​ ​{​e​m​a​i​l​}​ ​c​o​n​f​i​r​m​e​d​ ​s​u​c​c​e​s​s​f​u​l​l​y
+		 * @param {string} email
+		 */
+		success: RequiredParams<'email'>
 	}
 	common: {
 		/**
@@ -2681,6 +3050,10 @@ type RootTranslation = {
 		 * C​o​n​v​e​r​t
 		 */
 		convert: string
+		/**
+		 * C​o​d​e​ ​C​o​n​f​i​r​m​a​t​i​o​n
+		 */
+		codeConfirmation: string
 		/**
 		 * C​u​r​r​e​n​c​y
 		 */
@@ -2778,6 +3151,10 @@ type RootTranslation = {
 		 */
 		minutes: string
 		/**
+		 * M​i​s​s​i​n​g​ ​a​u​t​h​ ​t​o​k​e​n
+		 */
+		errorAuthToken: string
+		/**
 		 * L​o​g​ ​i​n​ ​o​r​ ​c​r​e​a​t​e​ ​a​n​ ​a​c​c​o​u​n​t​ ​t​o​ ​a​c​c​e​s​s​ ​y​o​u​r​ ​w​a​l​l​e​t
 		 */
 		needWallet: string
@@ -2802,9 +3179,17 @@ type RootTranslation = {
 		 */
 		ok: string
 		/**
+		 * o​r
+		 */
+		or: string
+		/**
 		 * O​p​e​n​ ​W​a​l​l​e​t
 		 */
 		openWallet: string
+		/**
+		 * P​h​o​n​e
+		 */
+		phone: string
 		/**
 		 * P​h​o​n​e​ ​N​u​m​b​e​r
 		 */
@@ -2861,6 +3246,10 @@ type RootTranslation = {
 		 * C​o​m​i​n​g​ ​s​o​o​n​!
 		 */
 		soon: string
+		/**
+		 * S​u​b​m​i​t
+		 */
+		submit: string
 		/**
 		 * S​u​c​c​e​s​s​!
 		 */
@@ -3036,6 +3425,10 @@ type RootTranslation = {
 		 */
 		email: string
 		/**
+		 * E​n​j​o​y​i​n​g​ ​t​h​e​ ​a​p​p​?
+		 */
+		enjoyingApp: string
+		/**
 		 * S​t​a​t​u​s​ ​P​a​g​e
 		 */
 		statusPage: string
@@ -3047,6 +3440,10 @@ type RootTranslation = {
 		 * M​a​t​t​e​r​m​o​s​t
 		 */
 		mattermost: string
+		/**
+		 * T​h​a​n​k​ ​y​o​u​ ​f​o​r​ ​t​h​e​ ​f​e​e​d​b​a​c​k​,​ ​w​o​u​l​d​ ​y​o​u​ ​l​i​k​e​ ​t​o​ ​s​u​g​g​e​s​t​ ​a​n​ ​i​m​p​r​o​v​e​m​e​n​t​?
+		 */
+		thankYouText: string
 		/**
 		 * {​b​a​n​k​N​a​m​e​}​ ​-​ ​S​u​p​p​o​r​t
 		 * @param {string} bankName
@@ -3286,6 +3683,12 @@ export type TranslationFunctions = {
 		 * Choose this to be on a Bitcoin standard.
 		 */
 		bitcoinTag: () => LocalizedString
+	}
+	NoteInput: {
+		/**
+		 * Add note
+		 */
+		addNote: () => LocalizedString
 	}
 	AuthenticationScreen: {
 		/**
@@ -4564,8 +4967,17 @@ export type TranslationFunctions = {
 		quickStart: () => LocalizedString
 		/**
 		 * Explore wallet instead
+		 * Create new account
 		 */
-		exploreWalletInstead: () => LocalizedString
+		createAccount: () => LocalizedString
+		/**
+		 * Explore wallet
+		 */
+		exploreWallet: () => LocalizedString
+		/**
+		 * Log back in with
+		 */
+		logBackInWith: () => LocalizedString
 		/**
 		 * Setup business account
 		 */
@@ -4578,10 +4990,6 @@ export type TranslationFunctions = {
 		 * Start with a trial account
 		 */
 		startTrialAccount: () => LocalizedString
-		/**
-		 * I understand, continue
-		 */
-		iUnderstand: () => LocalizedString
 		/**
 		 * Start with trial account
 		 */
@@ -4764,7 +5172,7 @@ export type TranslationFunctions = {
 		 */
 		title: () => LocalizedString
 	}
-	ReceiveWrapperScreen: {
+	ReceiveScreen: {
 		/**
 		 * Do you want to activate notifications to be notified when the payment has arrived?
 		 */
@@ -4777,6 +5185,10 @@ export type TranslationFunctions = {
 		 * Bitcoin address has been copied in the clipboard
 		 */
 		copyClipboardBitcoin: () => LocalizedString
+		/**
+		 * Paycode/LNURL has been copied in the clipboard
+		 */
+		copyClipboardPaycode: () => LocalizedString
 		/**
 		 * This invoice has been paid
 		 */
@@ -4802,11 +5214,11 @@ export type TranslationFunctions = {
 		 */
 		error: () => LocalizedString
 		/**
-		 * Copy Invoice
+		 * Copy
 		 */
 		copyInvoice: () => LocalizedString
 		/**
-		 * Share Invoice
+		 * Share
 		 */
 		shareInvoice: () => LocalizedString
 		/**
@@ -4865,6 +5277,96 @@ export type TranslationFunctions = {
 		 * {minBankFee} sats fees for onchain payment below {minBankFeeThreshold} sats
 		 */
 		fees: (arg: { minBankFee: string, minBankFeeThreshold: string }) => LocalizedString
+		/**
+		 * Lightning
+		 */
+		lightning: () => LocalizedString
+		/**
+		 * Paycode
+		 */
+		paycode: () => LocalizedString
+		/**
+		 * Onchain
+		 */
+		onchain: () => LocalizedString
+		/**
+		 * Bitcoin
+		 */
+		bitcoin: () => LocalizedString
+		/**
+		 * Stablesats
+		 */
+		stablesats: () => LocalizedString
+		/**
+		 * Regenerate Invoice
+		 */
+		regenerateInvoiceButtonTitle: () => LocalizedString
+		/**
+		 * Set Username
+		 */
+		setUsernameButtonTitle: () => LocalizedString
+		/**
+		 * Invoice has expired
+		 */
+		invoiceHasExpired: () => LocalizedString
+		/**
+		 * Set your username to accept via Paycode QR (LNURL) and Lightning Address
+		 */
+		setUsernameToAcceptViaPaycode: () => LocalizedString
+		/**
+		 * Single Use
+		 */
+		singleUse: () => LocalizedString
+		/**
+		 * Expired Invoice
+		 */
+		invoiceExpired: () => LocalizedString
+		invoiceValidity: {
+			/**
+			 * Valid for 1 day
+			 */
+			validFor1Day: () => LocalizedString
+			/**
+			 * Valid for next {duration}
+			 */
+			validForNext: (arg: { duration: string }) => LocalizedString
+			/**
+			 * Valid before {time}
+			 */
+			validBefore: (arg: { time: string }) => LocalizedString
+			/**
+			 * Expires in {duration}
+			 */
+			expiresIn: (arg: { duration: string }) => LocalizedString
+			/**
+			 * Expires now
+			 */
+			expiresNow: () => LocalizedString
+		}
+		/**
+		 * Invoice has been paid
+		 */
+		invoiceHasBeenPaid: () => LocalizedString
+		/**
+		 * Your Bitcoin Onchain Address
+		 */
+		yourBitcoinOnChainAddress: () => LocalizedString
+		/**
+		 * Receive via Lightning
+		 */
+		receiveViaInvoice: () => LocalizedString
+		/**
+		 * Receive via Paycode
+		 */
+		receiveViaPaycode: () => LocalizedString
+		/**
+		 * Receive via Onchain
+		 */
+		receiveViaOnchain: () => LocalizedString
+		/**
+		 * Paycode / LNURL
+		 */
+		payCodeOrLNURL: () => LocalizedString
 	}
 	RedeemBitcoinScreen: {
 		/**
@@ -5182,7 +5684,7 @@ export type TranslationFunctions = {
 		/**
 		 * Username, invoice, or address
 		 */
-		input: () => LocalizedString
+		placeholder: () => LocalizedString
 		/**
 		 * Invalid username
 		 */
@@ -5207,6 +5709,10 @@ export type TranslationFunctions = {
 		 * Payment has been sent successfully
 		 */
 		success: () => LocalizedString
+		/**
+		 * Enter your suggestion
+		 */
+		suggestionInput: () => LocalizedString
 		/**
 		 * Max
 		 */
@@ -5237,10 +5743,6 @@ export type TranslationFunctions = {
 		 * Activated
 		 */
 		activated: () => LocalizedString
-		/**
-		 * Tap to log in
-		 */
-		tapLogIn: () => LocalizedString
 		/**
 		 * Ways to get paid
 		 */
@@ -5321,16 +5823,16 @@ export type TranslationFunctions = {
 		 * NFC is not supported on this device
 		 */
 		nfcNotSupported: () => LocalizedString
+		/**
+		 * Log in or create account
+		 */
+		logInOrCreateAccount: () => LocalizedString
 	}
 	AccountScreen: {
 		/**
 		 * Account Level
 		 */
 		accountLevel: () => LocalizedString
-		/**
-		 * Log in
-		 */
-		logIn: () => LocalizedString
 		/**
 		 * Upgrade your account
 		 */
@@ -5349,9 +5851,19 @@ export type TranslationFunctions = {
 		logoutAlertTitle: () => LocalizedString
 		/**
 		 * You will need to re-enter your phone number to log back in.
-	your phone number is {phoneNumber} so make sure to have access to it to log back in
+	your phone number is {phoneNumber} so make sure you have access to it to log back in
 		 */
-		logoutAlertContent: (arg: { phoneNumber: string }) => LocalizedString
+		logoutAlertContentPhone: (arg: { phoneNumber: string }) => LocalizedString
+		/**
+		 * You will need to re-enter your email to log back in.
+	your email is {email} so make sure you have access to it to log back in
+		 */
+		logoutAlertContentEmail: (arg: { email: string }) => LocalizedString
+		/**
+		 * You will need to re-enter either your phone number or email to log back in.
+	your phone number is {phoneNumber} and your email is {email} so make sure you have access to those to log back in
+		 */
+		logoutAlertContentPhoneEmail: (arg: { email: string, phoneNumber: string }) => LocalizedString
 		/**
 		 * You have a Stablesats balance of {balance}.
 		 */
@@ -5364,6 +5876,132 @@ export type TranslationFunctions = {
 		 * Register to secure your account
 		 */
 		secureYourAccount: () => LocalizedString
+		/**
+		 * Tap to add
+		 */
+		tapToAdd: () => LocalizedString
+		/**
+		 * Delete email
+		 */
+		deleteEmailPromptTitle: () => LocalizedString
+		/**
+		 * Are you sure you want to delete your email address? you will only be able to log back in with your phone number.
+		 */
+		deleteEmailPromptContent: () => LocalizedString
+		/**
+		 * Delete phone
+		 */
+		deletePhonePromptTitle: () => LocalizedString
+		/**
+		 * Are you sure you want to delete your phone number? you will only be able to log in back with your email.
+		 */
+		deletePhonePromptContent: () => LocalizedString
+		/**
+		 * Add an email first
+		 */
+		addEmailFirst: () => LocalizedString
+		/**
+		 * Add a phone first
+		 */
+		addPhoneFirst: () => LocalizedString
+		/**
+		 * Phone number (for login)
+		 */
+		phoneNumberAuthentication: () => LocalizedString
+		/**
+		 * Email (for login)
+		 */
+		emailAuthentication: () => LocalizedString
+		/**
+		 * Remove phone
+		 */
+		removePhone: () => LocalizedString
+		/**
+		 * Remove email
+		 */
+		removeEmail: () => LocalizedString
+		/**
+		 * Email is unverified
+		 */
+		unverified: () => LocalizedString
+		/**
+		 * Secure your account by verifying your email.
+		 */
+		unverifiedContent: () => LocalizedString
+		/**
+		 * Confirm email
+		 */
+		confirmEmail: () => LocalizedString
+		/**
+		 * Your email is unverified
+		 */
+		emailUnverified: () => LocalizedString
+		/**
+		 * Ensure you can log back into your account by verifying your email. Do you want to do the verification now?
+		 */
+		emailUnverifiedContent: () => LocalizedString
+		/**
+		 * Two-factor authentication
+		 */
+		totp: () => LocalizedString
+		/**
+		 * Two-factor authentication has been deactivated
+		 */
+		totpDeactivated: () => LocalizedString
+		/**
+		 * Delete two-factor authentication
+		 */
+		totpDeleteAlertTitle: () => LocalizedString
+		/**
+		 * Are you sure you want to delete your two-factor authentication?
+		 */
+		totpDeleteAlertContent: () => LocalizedString
+	}
+	TotpRegistrationInitiateScreen: {
+		/**
+		 * Two-factor authentication
+		 */
+		title: () => LocalizedString
+		/**
+		 * Scan this QR code with your authenticator app. Alternatively, you can manually copy/paste the secret into your authenticator app.
+		 */
+		content: () => LocalizedString
+	}
+	TotpRegistrationValidateScreen: {
+		/**
+		 * Two-factor authentication
+		 */
+		title: () => LocalizedString
+		/**
+		 * Enter the 6-digit code from your authenticator app to validate your two-factor authentication.
+		 */
+		enter6digitCode: () => LocalizedString
+		/**
+		 * Two-factor authentication has been enabled. You will now only be able to log back in with your phone or email AND your two factor authentication.
+
+	Only full KYC accounts may be recovered in the case a user has lost access to their two-factor authentication.
+		 */
+		success: () => LocalizedString
+	}
+	TotpLoginValidateScreen: {
+		/**
+		 * Two-factor authentication
+		 */
+		title: () => LocalizedString
+		/**
+		 * Enter the 6-digit code from your authenticator app to log in. This code changes every 30 seconds.
+		 */
+		content: () => LocalizedString
+	}
+	CopySecretComponent: {
+		/**
+		 * Copy secret
+		 */
+		button: () => LocalizedString
+		/**
+		 * Secret copied to clipboard!
+		 */
+		toastMessage: () => LocalizedString
 	}
 	DefaultWalletScreen: {
 		/**
@@ -5629,7 +6267,7 @@ export type TranslationFunctions = {
 		 */
 		learnToEarn: () => LocalizedString
 	}
-	PhoneInputScreen: {
+	PhoneLoginInitiateScreen: {
 		/**
 		 * Account set up
 		 */
@@ -5675,7 +6313,7 @@ export type TranslationFunctions = {
 		 */
 		whatsapp: () => LocalizedString
 	}
-	PhoneValidationScreen: {
+	PhoneLoginValidationScreen: {
 		/**
 		 * Error logging in. Did you use the right code?
 		 */
@@ -5708,6 +6346,120 @@ export type TranslationFunctions = {
 		 * You selected to receive the code via {channel}. You can try receiving via {other} instead
 		 */
 		sendViaOtherChannel: (arg: { channel: string, other: string }) => LocalizedString
+	}
+	PhoneRegistrationInitiateScreen: {
+		/**
+		 * Phone set up
+		 */
+		title: () => LocalizedString
+		/**
+		 * Enter your phone number, and we'll text you an access code.
+		 */
+		header: () => LocalizedString
+		/**
+		 * Verify you are human
+		 */
+		headerVerify: () => LocalizedString
+		/**
+		 * Something went wrong requesting the phone code, please try again later.
+		 */
+		errorRequestingCode: () => LocalizedString
+		/**
+		 * Invalid phone number. Are you sure you entered the right number?
+		 */
+		errorInvalidPhoneNumber: () => LocalizedString
+		/**
+		 * We are unable to support customers in your country.
+		 */
+		errorUnsupportedCountry: () => LocalizedString
+		/**
+		 * Phone Number
+		 */
+		placeholder: () => LocalizedString
+		/**
+		 * Click to Verify
+		 */
+		verify: () => LocalizedString
+		/**
+		 * Send via SMS
+		 */
+		sms: () => LocalizedString
+		/**
+		 * Send via WhatsApp
+		 */
+		whatsapp: () => LocalizedString
+	}
+	PhoneRegistrationValidateScreen: {
+		/**
+		 * Phone number confirmed
+		 */
+		successTitle: () => LocalizedString
+	}
+	EmailRegistrationInitiateScreen: {
+		/**
+		 * Add your email
+		 */
+		title: () => LocalizedString
+		/**
+		 * Enter your email address, and we'll send you an access code.
+		 */
+		header: () => LocalizedString
+		/**
+		 * Invalid email address. Are you sure you entered the right email?
+		 */
+		invalidEmail: () => LocalizedString
+		/**
+		 * Send code
+		 */
+		send: () => LocalizedString
+		/**
+		 * Missing email registration id
+		 */
+		missingEmailRegistrationId: () => LocalizedString
+		/**
+		 * hal@finney.org
+		 */
+		placeholder: () => LocalizedString
+	}
+	EmailRegistrationValidateScreen: {
+		/**
+		 * To confirm your email address, enter the code we just sent you on {email}
+		 */
+		header: (arg: { email: string }) => LocalizedString
+		/**
+		 * Email {email} confirmed successfully
+		 */
+		success: (arg: { email: string }) => LocalizedString
+	}
+	EmailLoginInitiateScreen: {
+		/**
+		 * Login via email
+		 */
+		title: () => LocalizedString
+		/**
+		 * Enter your email address, and we'll send you an access code.
+		 */
+		header: () => LocalizedString
+		/**
+		 * Invalid email address. Are you sure you entered the right email?
+		 */
+		invalidEmail: () => LocalizedString
+		/**
+		 * Send code
+		 */
+		send: () => LocalizedString
+	}
+	EmailLoginValidateScreen: {
+		/**
+		 * If there is an account attached to {email}, you should have received 6 digits code to enter below.
+
+	If you are not receiving anything, it's probably either because this is not the right email, the email is in your spam folder.
+		 */
+		header: (arg: { email: string }) => LocalizedString
+		/**
+		 * Email {email} confirmed successfully
+		 */
+		success: (arg: { email: string }) => LocalizedString
 	}
 	common: {
 		/**
@@ -5782,6 +6534,10 @@ export type TranslationFunctions = {
 		 * Convert
 		 */
 		convert: () => LocalizedString
+		/**
+		 * Code Confirmation
+		 */
+		codeConfirmation: () => LocalizedString
 		/**
 		 * Currency
 		 */
@@ -5879,6 +6635,10 @@ export type TranslationFunctions = {
 		 */
 		minutes: () => LocalizedString
 		/**
+		 * Missing auth token
+		 */
+		errorAuthToken: () => LocalizedString
+		/**
 		 * Log in or create an account to access your wallet
 		 */
 		needWallet: () => LocalizedString
@@ -5903,9 +6663,17 @@ export type TranslationFunctions = {
 		 */
 		ok: () => LocalizedString
 		/**
+		 * or
+		 */
+		or: () => LocalizedString
+		/**
 		 * Open Wallet
 		 */
 		openWallet: () => LocalizedString
+		/**
+		 * Phone
+		 */
+		phone: () => LocalizedString
 		/**
 		 * Phone Number
 		 */
@@ -5962,6 +6730,10 @@ export type TranslationFunctions = {
 		 * Coming soon!
 		 */
 		soon: () => LocalizedString
+		/**
+		 * Submit
+		 */
+		submit: () => LocalizedString
 		/**
 		 * Success!
 		 */
@@ -6136,6 +6908,10 @@ export type TranslationFunctions = {
 		 */
 		email: () => LocalizedString
 		/**
+		 * Enjoying the app?
+		 */
+		enjoyingApp: () => LocalizedString
+		/**
 		 * Status Page
 		 */
 		statusPage: () => LocalizedString
@@ -6147,6 +6923,10 @@ export type TranslationFunctions = {
 		 * Mattermost
 		 */
 		mattermost: () => LocalizedString
+		/**
+		 * Thank you for the feedback, would you like to suggest an improvement?
+		 */
+		thankYouText: () => LocalizedString
 		/**
 		 * {bankName} - Support
 		 */

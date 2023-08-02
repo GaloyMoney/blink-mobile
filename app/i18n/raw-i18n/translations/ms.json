@@ -479,7 +479,7 @@
     "PrimaryScreen": {
         "title": "Rumah"
     },
-    "ReceiveWrapperScreen": {
+    "ReceiveScreen": {
         "activateNotifications": "Anda nak aktifkan notifikasi jika terima bayaran?",
         "copyClipboard": "Invois telah disalin pada clipboard",
         "copyClipboardBitcoin": "Alamat bitcoin telah disalin ke dalam clipboard",
@@ -723,7 +723,7 @@
         "learn": "Aku taknak la memaksa kau, tapi banyak lagi yang perlu kau belajar...",
         "learnToEarn": "Belajar untuk dapat ganjaran"
     },
-    "PhoneInputScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Tetapkan akaun anda",
         "header": "Masukkan nombor telefon anda, kami akan hantar pesanan kepada a nda kod akses ",
         "headerVerify": "Buktikan anda bukanlah haiwan",
@@ -736,7 +736,7 @@
         "sms": "Hantar melalui SMS",
         "whatsapp": "Hantar melalui WhatsApp"
     },
-    "PhoneValidationScreen": {
+    "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Tak dapat nak log masuk. Anda pasti dah masukkan kod yang betul?",
         "errorTooManyAttempts": "Terlalu banyak percubaan. Cuba lagi nanti",
         "errorCannotUpgradeToExistingAccount": "Akaun menggunakan nombor telefon ini dah ada. Sila log keluar dari akaun percubaan anda, dan cuba log masuk semula dengan nombor telefon lain",

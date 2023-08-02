@@ -20,6 +20,12 @@
         "howToUseYourPaycodeExplainer": "Du kannst deinen Paycode ausdrucken und in deinem Laden aushängen, um Zahlungen zu empfangen (technisch gesehen handelt es sich um eine LNURL-Adresse). Kunden können dich bezahlen, indem sie den Code mit einer Lightning-Wallet scannen.\n\nSei dir jedoch bitte bewusst, dass noch nicht alle Wallets Paycodes unterstützen, wie zum Beispiel:",
         "howToUseYourCashRegisterExplainer": "Ermögliche es Personen, Zahlungen über den Kassen-Link zu empfangen, ohne ihnen Zugang zu deiner Wallet zu geben.\n\nSie können Invoices erstellen und die Zahlungen werden direkt an deine {bankName: string} Wallet gesendet."
     },
+    "SetAccountModal": {
+        "title": "Standard Account festlegen",
+        "description": "Dieser Account wird zunächst für das Senden und Empfangen von Zahlungen ausgewählt. Diese Einstellung kann jederzeit geändert werden.",
+        "stablesatsTag": "Auswählen, um den USD Betrag stabil zu halten.",
+        "bitcoinTag": "Auswählen, um auf den Bitcoin Standard zu wechseln."
+    },
     "AuthenticationScreen": {
         "authenticationDescription": "Authentifizieren zum Fortfahren",
         "setUp": "Biometrische Authentifizierung einrichten",
@@ -479,7 +485,7 @@
     "PrimaryScreen": {
         "title": "Home"
     },
-    "ReceiveWrapperScreen": {
+    "ReceiveScreen": {
         "activateNotifications": "Möchtest Du die Benachrichtigungen aktivieren, um zu sehen, wenn die Zahlung eingegangen ist?",
         "copyClipboard": "Invoice wurde in die Zwischenablage kopiert",
         "copyClipboardBitcoin": "Bitcoin Adresse wurde in die Zwischenablage kopiert",
@@ -723,7 +729,7 @@
         "learn": "Ich will dich nicht bedrängen, aber es gibt noch viel mehr zu lernen, mach mit …",
         "learnToEarn": "Lernen und verdienen"
     },
-    "PhoneInputScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Account einrichten",
         "header": "Gib deine Telefonnumer an und wir senden dir einen Zugangscode.",
         "headerVerify": "Bestätige, dass Du ein Mensch bist",
@@ -736,7 +742,7 @@
         "sms": "Per SMS senden",
         "whatsapp": "Via WhatsApp senden"
     },
-    "PhoneValidationScreen": {
+    "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Fehler beim Login. Hast Du den richtigen Code verwendet?",
         "errorTooManyAttempts": "Zu viele Versuche. Bitte versuche es später erneut.",
         "errorCannotUpgradeToExistingAccount": "Dieser Telefon-Account existiert bereits. Bitte logge dich aus deinem Demo-Account aus und logge dich dann mit deiner Telefonnummer wieder ein.",
@@ -810,6 +816,7 @@
         "shareLightning": "Lightning Invoice teilen",
         "soon": "Bald verfügbar!",
         "success": "Erfolgreich!",
+        "stablesatsUsd": "Stablesats USD",
         "to": "An",
         "total": "Gesamt",
         "transactions": "Transaktionen",

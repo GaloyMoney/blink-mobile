@@ -20,7 +20,10 @@ export type CustomModalProps = {
   primaryButtonDisabled?: boolean
   secondaryButtonTitle?: string
   secondaryButtonOnPress?: () => void
+  showCloseIconButton?: boolean
   minHeight?: string
+  titleMaxWidth?: string
+  titleTextAlignment?: "auto" | "center" | "left" | "right" | "justify"
 }
 
 const CustomModal: React.FC<CustomModalProps> = ({
@@ -30,6 +33,8 @@ const CustomModal: React.FC<CustomModalProps> = ({
   title,
   body,
   minHeight,
+  titleMaxWidth,
+  titleTextAlignment,
   primaryButtonTitle,
   nonScrollingContent,
   primaryButtonOnPress,
@@ -38,10 +43,13 @@ const CustomModal: React.FC<CustomModalProps> = ({
   primaryButtonDisabled,
   secondaryButtonTitle,
   secondaryButtonOnPress,
+  showCloseIconButton = true,
 }) => {
   const styles = useStyles({
     hasPrimaryButtonTextAbove: Boolean(primaryButtonTextAbove),
     minHeight,
+    titleMaxWidth,
+    titleTextAlignment,
   })
   const {
     theme: { mode, colors },
@@ -55,9 +63,11 @@ const CustomModal: React.FC<CustomModalProps> = ({
       avoidKeyboard={true}
     >
       <View style={styles.container}>
-        <TouchableOpacity style={styles.closeIcon} onPress={toggleModal}>
-          <GaloyIcon name="close" size={30} color={colors.grey0} />
-        </TouchableOpacity>
+        {showCloseIconButton && (
+          <TouchableOpacity style={styles.closeIcon} onPress={toggleModal}>
+            <GaloyIcon name="close" size={30} color={colors.grey0} />
+          </TouchableOpacity>
+        )}
         <ScrollView
           style={styles.modalCard}
           persistentScrollbar={true}
@@ -103,6 +113,8 @@ export default CustomModal
 type UseStylesProps = {
   hasPrimaryButtonTextAbove: boolean
   minHeight?: string
+  titleTextAlignment?: "auto" | "center" | "left" | "right" | "justify"
+  titleMaxWidth?: string
 }
 
 const useStyles = makeStyles(({ colors }, props: UseStylesProps) => ({
@@ -130,8 +142,8 @@ const useStyles = makeStyles(({ colors }, props: UseStylesProps) => ({
     fontSize: 24,
     fontWeight: Platform.OS === "ios" ? "600" : "700",
     lineHeight: 32,
-    maxWidth: "80%",
-    textAlign: "center",
+    maxWidth: props.titleMaxWidth || "80%",
+    textAlign: props.titleTextAlignment || "center",
     color: colors.black,
     marginBottom: 10,
   },

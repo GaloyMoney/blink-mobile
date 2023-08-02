@@ -33,7 +33,7 @@ pushd repo
 yarn install
 
 echo browserstack_app_id:$BROWSERSTACK_APP_ID
-GALOY_TEST_TOKENS=$GALOY_TEST_TOKENS && GALOY_TOKEN_2=$GALOY_TOKEN_2 && yarn test:browserstack:ios | tee browserstack_output.log
+GALOY_TEST_TOKENS=$GALOY_TEST_TOKENS && GALOY_TOKEN_2=$GALOY_TOKEN_2 && MAILSLURP_API_KEY=$MAILSLURP_API_KEY && yarn test:browserstack:ios | tee browserstack_output.log
 error_code=$?
 SESSION_ID=$(cat browserstack_output.log | grep sessionId | head -n1 | sed -n "s/^.*'\(.*\)'.*$/\1/ p")
 echo "Session ID"

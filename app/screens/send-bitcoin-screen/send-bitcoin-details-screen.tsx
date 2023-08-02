@@ -1,5 +1,4 @@
 import { gql } from "@apollo/client"
-import NoteIcon from "@app/assets/icons/note.svg"
 import { AmountInput } from "@app/components/amount-input/amount-input"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { Screen } from "@app/components/screen"
@@ -28,7 +27,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { NavigationProp, RouteProp, useNavigation } from "@react-navigation/native"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import React, { useEffect, useState } from "react"
-import { TextInput, TouchableWithoutFeedback, View } from "react-native"
+import { TouchableWithoutFeedback, View } from "react-native"
 import ReactNativeModal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { testProps } from "../../utils/testProps"
@@ -38,6 +37,7 @@ import { SendBitcoinDetailsExtraInfo } from "./send-bitcoin-details-extra-info"
 import { requestInvoice, utils } from "lnurl-pay"
 import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 import { getBtcWallet, getDefaultWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+import { NoteInput } from "@app/components/note-input"
 
 gql`
   query sendBitcoinDetailsScreen {
@@ -57,9 +57,7 @@ gql`
       }
     }
   }
-`
 
-gql`
   query sendBitcoinWithdrawalLimits {
     me {
       id
@@ -75,9 +73,7 @@ gql`
       }
     }
   }
-`
 
-gql`
   query sendBitcoinInternalLimits {
     me {
       id
@@ -499,25 +495,13 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
         </View>
         <View style={styles.fieldContainer}>
           <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
-          <View style={styles.fieldBackground}>
-            <View style={styles.noteContainer}>
-              <View style={styles.noteIconContainer}>
-                <NoteIcon style={styles.noteIcon} />
-              </View>
-              <TextInput
-                style={styles.noteInput}
-                placeholder={LL.SendBitcoinScreen.note()}
-                placeholderTextColor={colors.grey3}
-                onChangeText={(text) =>
-                  paymentDetail.setMemo && setPaymentDetail(paymentDetail.setMemo(text))
-                }
-                value={paymentDetail.memo || ""}
-                editable={paymentDetail.canSetMemo}
-                selectTextOnFocus
-                maxLength={500}
-              />
-            </View>
-          </View>
+          <NoteInput
+            onChangeText={(text) =>
+              paymentDetail.setMemo && setPaymentDetail(paymentDetail.setMemo(text))
+            }
+            value={paymentDetail.memo || ""}
+            editable={paymentDetail.canSetMemo}
+          />
         </View>
         <SendBitcoinDetailsExtraInfo
           errorMessage={asyncErrorMessage}
@@ -625,23 +609,6 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "center",
     alignItems: "center",
   },
-  noteContainer: {
-    flex: 1,
-    flexDirection: "row",
-  },
-  noteIconContainer: {
-    marginRight: 12,
-    justifyContent: "center",
-    alignItems: "flex-start",
-  },
-  noteIcon: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  noteInput: {
-    flex: 1,
-    color: colors.black,
-  },
   buttonContainer: {
     flex: 1,
     justifyContent: "flex-end",
@@ -664,5 +631,6 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 8,
+    height: 18,
   },
 }))

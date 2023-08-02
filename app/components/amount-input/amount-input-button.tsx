@@ -12,6 +12,8 @@ export type AmountInputButtonProps = {
   disabled?: boolean
   secondaryValue?: string
   primaryTextTestProps?: string
+  showValuesIfDisabled?: boolean
+  big?: boolean
 } & PressableProps
 
 export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
@@ -22,6 +24,8 @@ export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
   disabled,
   secondaryValue,
   primaryTextTestProps,
+  showValuesIfDisabled = true,
+  big = true,
   ...props
 }) => {
   const {
@@ -46,6 +50,7 @@ export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
       case disabled:
         colorStyles = {
           backgroundColor: colors.grey5,
+          opacity: 0.5,
         }
         break
       default:
@@ -58,11 +63,18 @@ export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
       paddingVertical: 8,
       paddingHorizontal: 12,
       borderRadius: 8,
-      minHeight: 60,
+      minHeight: big ? 60 : 50,
       justifyContent: "center",
     }
 
     return [colorStyles, sizeStyles]
+  }
+
+  /* eslint-disable no-param-reassign */
+  // hide values if disabled
+  if (!showValuesIfDisabled) {
+    value = ""
+    secondaryValue = ""
   }
 
   const primaryText = value || placeholder || ""
@@ -71,7 +83,7 @@ export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
     <Pressable {...props} style={pressableStyle} disabled={disabled}>
       <View style={styles.contentContainerStyle}>
         <Text
-          type="p1"
+          type="p2"
           color={error ? colors.error : undefined}
           numberOfLines={1}
           ellipsizeMode="middle"

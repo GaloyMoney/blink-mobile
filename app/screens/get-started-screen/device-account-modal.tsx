@@ -33,7 +33,7 @@ const DEVICE_ACCOUNT_CREDENTIALS_KEY = "device-account"
 export type DeviceAccountModalProps = {
   isVisible: boolean
   closeModal: () => void
-  appCheckToken: string
+  appCheckToken: string | undefined
 }
 
 export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
@@ -93,7 +93,7 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
         method: "POST",
         headers: {
           Authorization: `Basic ${auth}`,
-          Appcheck: appCheckToken,
+          Appcheck: appCheckToken || "undefined",
         },
       })
 
@@ -101,15 +101,15 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
         result: string | undefined
       } = await res.json()
 
-      const sessionToken = data.result
+      const authToken = data.result
 
-      if (!sessionToken) {
+      if (!authToken) {
         throw new Error("Error getting session token")
       }
 
       logCreatedDeviceAccount()
       analytics().logLogin({ method: "device" })
-      saveToken(sessionToken)
+      saveToken(authToken)
       navigation.replace("Primary")
       closeModal()
     } catch (error) {

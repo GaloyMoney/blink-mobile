@@ -40,14 +40,12 @@ const useAppCheckToken = ({
       return
     }
 
-    const tryGetAppCheckToken = async (): Promise<void> => {
+    ;(async () => {
       setLoading(true)
       const result = await getAppCheckToken()
       setToken(result)
       setLoading(false)
-    }
-
-    tryGetAppCheckToken()
+    })()
   }, [skip])
 
   return [token, loading]

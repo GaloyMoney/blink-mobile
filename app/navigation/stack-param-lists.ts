@@ -72,11 +72,20 @@ export type RootStackParamList = {
     displayAmount: MoneyAmount<DisplayCurrency>
   }
   phoneFlow: undefined
+  phoneRegistrationInitiate: undefined
+  phoneRegistrationValidate: { phone: string; channel: PhoneCodeChannelType }
   transactionDetail: { txid: string }
   transactionHistory?: undefined
   Earn: undefined
   accountScreen: undefined
   transactionLimitsScreen: undefined
+  emailRegistrationInitiate: undefined
+  emailRegistrationValidate: { email: string; emailRegistrationId: string }
+  emailLoginInitiate: undefined
+  emailLoginValidate: { email: string; emailLoginId: string }
+  totpRegistrationInitiate: undefined
+  totpRegistrationValidate: { totpRegistrationId: string }
+  totpLoginValidate: { authToken: string }
 }
 
 export type ChatStackParamList = {
@@ -96,12 +105,13 @@ export type ContactStackParamList = {
 
 export type PhoneValidationStackParamList = {
   Primary: undefined
-  phoneInput: undefined
-  phoneValidation: { phone: string; channel: PhoneCodeChannelType }
+  phoneLoginInitiate: undefined
+  phoneLoginValidate: { phone: string; channel: PhoneCodeChannelType }
   authentication: {
     screenPurpose: AuthenticationScreenPurpose
   }
   Home: undefined
+  totpLoginValidate: { authToken: string }
 }
 
 export type PrimaryStackParamList = {

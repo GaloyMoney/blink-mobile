@@ -479,7 +479,7 @@
     "PrimaryScreen": {
         "title": "Ekhaya"
     },
-    "ReceiveWrapperScreen": {
+    "ReceiveScreen": {
         "activateNotifications": "Ngaba uyafuna ukwenza izaziso zisebenze xa intlawulo ifikile?",
         "copyClipboard": "I-invoyisi ikhutshelwe kwibhodi eqhotyoshwayo",
         "copyClipboardBitcoin": "Idilesi yeBitcoin ikhutshelwe kwibhodi eqhotyoshwayo",
@@ -723,7 +723,7 @@
         "learn": "I don't mean to badger you, but there's lot more to learn, dig in...",
         "learnToEarn": "Learn to Earn"
     },
-    "PhoneInputScreen": {
+    "PhoneLoginInitiateScreen": {
         "title": "Account set up",
         "header": "Enter your phone number, and we'll text you an access code.",
         "headerVerify": "Verify you are human",
@@ -736,7 +736,7 @@
         "sms": "Send via SMS",
         "whatsapp": "Send via WhatsApp"
     },
-    "PhoneValidationScreen": {
+    "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Error logging in. Did you use the right code?",
         "errorTooManyAttempts": "Too many attempts. Please try again later.",
         "errorCannotUpgradeToExistingAccount": "This phone account already exists. Please log out of your trial account and then log in with your phone number.",

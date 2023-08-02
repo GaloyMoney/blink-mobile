@@ -1,14 +1,20 @@
 import { gql } from "@apollo/client"
 import { Screen } from "@app/components/screen"
-import { useAccountDeleteMutation, useAccountScreenQuery } from "@app/graphql/generated"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
+import {
+  useAccountDeleteMutation,
+  useAccountScreenQuery,
+  useBetaQuery,
+  useUserEmailDeleteMutation,
+  useUserEmailRegistrationInitiateMutation,
+  useUserPhoneDeleteMutation,
+  useUserTotpDeleteMutation,
+} from "@app/graphql/generated"
 import { AccountLevel, useLevel } from "@app/graphql/level-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import useLogout from "@app/hooks/use-logout"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
-import { isIos } from "@app/utils/helper"
 import { StackNavigationProp } from "@react-navigation/stack"
 import React from "react"
 import { Alert, TextInput, View } from "react-native"
@@ -18,22 +24,25 @@ import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import Modal from "react-native-modal"
 import { CONTACT_EMAIL_ADDRESS } from "@app/config"
 import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
-import { LocalizedString } from "typesafe-i18n"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { useShowWarningSecureAccount } from "./show-warning-secure-account"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
-
-type Props = {
-  navigation: StackNavigationProp<RootStackParamList, "accountScreen">
-}
+import { useNavigation } from "@react-navigation/native"
+import { useAppConfig } from "@app/hooks"
 
 gql`
   query accountScreen {
     me {
       id
       phone
+      totpEnabled
+      email {
+        address
+        verified
+      }
       defaultAccount {
         id
+        level
         wallets {
           id
           balance
@@ -51,13 +60,68 @@ gql`
       success
     }
   }
+
+  mutation userEmailDelete {
+    userEmailDelete {
+      errors {
+        message
+      }
+      me {
+        id
+        phone
+        totpEnabled
+        email {
+          address
+          verified
+        }
+      }
+    }
+  }
+
+  mutation userPhoneDelete {
+    userPhoneDelete {
+      errors {
+        message
+      }
+      me {
+        id
+        phone
+        totpEnabled
+        email {
+          address
+          verified
+        }
+      }
+    }
+  }
+
+  mutation userTotpDelete($input: UserTotpDeleteInput!) {
+    userTotpDelete(input: $input) {
+      errors {
+        message
+      }
+      me {
+        id
+        phone
+        totpEnabled
+        email {
+          address
+          verified
+        }
+      }
+    }
+  }
 `
 
-export const AccountScreen = ({ navigation }: Props) => {
-  const isAuthed = useIsAuthed()
+export const AccountScreen = () => {
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "accountScreen">>()
+
   const { logout } = useLogout()
   const { LL } = useI18nContext()
   const styles = useStyles()
+  const { appConfig } = useAppConfig()
+  const authToken = appConfig.token
 
   const {
     theme: { colors },
@@ -66,6 +130,9 @@ export const AccountScreen = ({ navigation }: Props) => {
   const { isAtLeastLevelZero, currentLevel, isAtLeastLevelOne } = useLevel()
 
   const [deleteAccount] = useAccountDeleteMutation()
+  const [emailDeleteMutation] = useUserEmailDeleteMutation()
+  const [phoneDeleteMutation] = useUserPhoneDeleteMutation()
+  const [totpDeleteMutation] = useUserTotpDeleteMutation()
 
   const [text, setText] = React.useState("")
   const [modalVisible, setModalVisible] = React.useState(false)
@@ -74,8 +141,22 @@ export const AccountScreen = ({ navigation }: Props) => {
   const closeUpgradeAccountModal = () => setUpgradeAccountModalVisible(false)
   const openUpgradeAccountModal = () => setUpgradeAccountModalVisible(true)
 
-  const { data } = useAccountScreenQuery({ fetchPolicy: "cache-first", skip: !isAuthed })
-  const phoneNumber = data?.me?.phone || "unknown"
+  const { data } = useAccountScreenQuery({
+    fetchPolicy: "cache-and-network",
+    skip: !isAtLeastLevelZero,
+  })
+
+  const email = data?.me?.email?.address
+  const emailVerified = Boolean(email) && Boolean(data?.me?.email?.verified)
+  const emailUnverified = Boolean(email) && !data?.me?.email?.verified
+  const phoneVerified = Boolean(data?.me?.phone)
+  const phoneAndEmailVerified = phoneVerified && emailVerified
+  const emailString = String(email)
+  const totpEnabled = Boolean(data?.me?.totpEnabled)
+
+  const showWarningSecureAccount = useShowWarningSecureAccount()
+
+  const [setEmailMutation] = useUserEmailRegistrationInitiateMutation()
 
   const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
   const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
@@ -102,22 +183,92 @@ export const AccountScreen = ({ navigation }: Props) => {
     balancePositive = true
   }
 
-  const logoutAlert = () =>
+  const dataBeta = useBetaQuery()
+  const beta = dataBeta.data?.beta ?? false
+
+  const deletePhonePrompt = async () => {
     Alert.alert(
-      LL.AccountScreen.logoutAlertTitle(),
-      LL.AccountScreen.logoutAlertContent({ phoneNumber }),
+      LL.AccountScreen.deletePhonePromptTitle(),
+      LL.AccountScreen.deletePhonePromptContent(),
       [
+        { text: LL.common.cancel(), onPress: () => {} },
         {
-          text: LL.common.cancel(),
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-        {
-          text: LL.AccountScreen.IUnderstand(),
-          onPress: logoutAction,
+          text: LL.common.yes(),
+          onPress: async () => {
+            deletePhone()
+          },
         },
       ],
     )
+  }
+
+  const deleteEmailPrompt = async () => {
+    Alert.alert(
+      LL.AccountScreen.deleteEmailPromptTitle(),
+      LL.AccountScreen.deleteEmailPromptContent(),
+      [
+        { text: LL.common.cancel(), onPress: () => {} },
+        {
+          text: LL.common.yes(),
+          onPress: async () => {
+            deleteEmail()
+          },
+        },
+      ],
+    )
+  }
+
+  const deletePhone = async () => {
+    try {
+      await phoneDeleteMutation()
+    } catch (err) {
+      let message = ""
+      if (err instanceof Error) {
+        message = err?.message
+      }
+      Alert.alert(LL.common.error(), message)
+    }
+  }
+
+  const deleteEmail = async () => {
+    try {
+      await emailDeleteMutation()
+    } catch (err) {
+      let message = ""
+      if (err instanceof Error) {
+        message = err?.message
+      }
+      Alert.alert(LL.common.error(), message)
+    }
+  }
+
+  const logoutAlert = () => {
+    const logAlertContent = () => {
+      const phoneNumber = String(data?.me?.phone)
+      if (phoneAndEmailVerified) {
+        return LL.AccountScreen.logoutAlertContentPhoneEmail({
+          phoneNumber,
+          email: emailString,
+        })
+      } else if (emailVerified) {
+        return LL.AccountScreen.logoutAlertContentEmail({ email: emailString })
+      }
+      // phone verified
+      return LL.AccountScreen.logoutAlertContentPhone({ phoneNumber })
+    }
+
+    Alert.alert(LL.AccountScreen.logoutAlertTitle(), logAlertContent(), [
+      {
+        text: LL.common.cancel(),
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: LL.AccountScreen.IUnderstand(),
+        onPress: logoutAction,
+      },
+    ])
+  }
 
   const logoutAction = async () => {
     try {
@@ -128,7 +279,7 @@ export const AccountScreen = ({ navigation }: Props) => {
           onPress: () =>
             navigation.reset({
               index: 0,
-              routes: [{ name: "Primary" }],
+              routes: [{ name: "getStarted" }],
             }),
         },
       ])
@@ -171,7 +322,7 @@ export const AccountScreen = ({ navigation }: Props) => {
             onPress: () =>
               navigation.reset({
                 index: 0,
-                routes: [{ name: "Primary" }],
+                routes: [{ name: "getStarted" }],
               }),
           },
         ])
@@ -192,23 +343,79 @@ export const AccountScreen = ({ navigation }: Props) => {
     }
   }
 
-  let identitySettingTitle: LocalizedString
-  let identitySettingAction: (() => void) | undefined
-  switch (currentLevel) {
-    case AccountLevel.NonAuth:
-      identitySettingTitle = LL.GetStartedScreen.logInCreateAccount()
-      identitySettingAction = () => navigation.navigate("getStarted")
-      break
-    case AccountLevel.Zero:
-      identitySettingTitle = LL.common.backupAccount()
-      identitySettingAction = openUpgradeAccountModal
-      break
-    default:
-      identitySettingTitle = LL.common.phoneNumber()
-      break
+  const tryConfirmEmailAgain = async (email: string) => {
+    try {
+      await emailDeleteMutation({
+        // to avoid flacky behavior
+        // this could lead to inconsistent state if delete works but set fails
+        fetchPolicy: "no-cache",
+      })
+
+      const { data } = await setEmailMutation({
+        variables: { input: { email } },
+      })
+
+      const errors = data?.userEmailRegistrationInitiate.errors
+      if (errors && errors.length > 0) {
+        Alert.alert(errors[0].message)
+      }
+
+      const emailRegistrationId = data?.userEmailRegistrationInitiate.emailRegistrationId
+
+      if (emailRegistrationId) {
+        navigation.navigate("emailRegistrationValidate", {
+          emailRegistrationId,
+          email,
+        })
+      } else {
+        console.warn("no flow returned")
+      }
+    } catch (err) {
+      console.error(err, "error in setEmailMutation")
+    } finally {
+      // setLoading(false)
+    }
   }
 
-  const showWarningSecureAccount = useShowWarningSecureAccount()
+  const confirmEmailAgain = async () => {
+    if (email) {
+      Alert.alert(
+        LL.AccountScreen.emailUnverified(),
+        LL.AccountScreen.emailUnverifiedContent(),
+        [
+          { text: LL.common.cancel(), onPress: () => {} },
+          {
+            text: LL.common.ok(),
+            onPress: () => tryConfirmEmailAgain(email),
+          },
+        ],
+      )
+    } else {
+      console.error("email not set, wrong flow")
+    }
+  }
+
+  const totpDelete = async () => {
+    Alert.alert(
+      LL.AccountScreen.totpDeleteAlertTitle(),
+      LL.AccountScreen.totpDeleteAlertContent(),
+      [
+        { text: LL.common.cancel(), onPress: () => {} },
+        {
+          text: LL.common.ok(),
+          onPress: async () => {
+            const res = await totpDeleteMutation({ variables: { input: { authToken } } })
+            if (res.data?.userTotpDelete?.me?.totpEnabled === false) {
+              Alert.alert(LL.AccountScreen.totpDeactivated())
+            } else {
+              console.log(res.data?.userTotpDelete.errors)
+              Alert.alert(LL.common.error(), res.data?.userTotpDelete?.errors[0]?.message)
+            }
+          },
+        },
+      ],
+    )
+  }
 
   const accountSettingsList: SettingRow[] = [
     {
@@ -220,29 +427,92 @@ export const AccountScreen = ({ navigation }: Props) => {
       greyed: true,
     },
     {
-      category: identitySettingTitle,
-      id: "identity",
-      icon: "person-outline",
-
-      subTitleText: isAtLeastLevelOne
-        ? phoneNumber
-        : showWarningSecureAccount
-        ? LL.AccountScreen.secureYourAccount()
-        : "",
-      chevronLogo: showWarningSecureAccount ? "alert-circle-outline" : undefined,
-      chevronColor: showWarningSecureAccount ? colors.primary : undefined,
-      chevronSize: showWarningSecureAccount ? 24 : undefined,
-      action: identitySettingAction,
-      enabled: !isAtLeastLevelOne,
-      greyed: isAtLeastLevelOne,
-    },
-    {
       category: LL.common.transactionLimits(),
       id: "limits",
       icon: "custom-info-icon",
       action: () => navigation.navigate("transactionLimitsScreen"),
       enabled: isAtLeastLevelZero,
       greyed: !isAtLeastLevelZero,
+      styleDivider: true,
+    },
+
+    {
+      category: LL.common.backupAccount(),
+      id: "upgrade-to-level-one",
+      icon: "person-outline",
+      subTitleText: showWarningSecureAccount ? LL.AccountScreen.secureYourAccount() : "",
+      chevronLogo: showWarningSecureAccount ? "alert-circle-outline" : undefined,
+      chevronColor: showWarningSecureAccount ? colors.primary : undefined,
+      chevronSize: showWarningSecureAccount ? 24 : undefined,
+      action: openUpgradeAccountModal,
+      enabled: true,
+      hidden: currentLevel !== AccountLevel.Zero,
+      styleDivider: true,
+    },
+
+    {
+      category: LL.AccountScreen.phoneNumberAuthentication(),
+      id: "phone",
+      icon: "call-outline",
+      subTitleText: data?.me?.phone,
+      action: phoneVerified
+        ? deletePhonePrompt
+        : () => navigation.navigate("phoneRegistrationInitiate"),
+      enabled: phoneAndEmailVerified || !phoneVerified,
+      chevronLogo: phoneAndEmailVerified ? "close-circle-outline" : undefined,
+      chevronColor: phoneAndEmailVerified ? colors.red : undefined,
+      chevronSize: phoneAndEmailVerified ? 28 : undefined,
+      hidden: !isAtLeastLevelOne,
+    },
+
+    {
+      category: LL.AccountScreen.emailAuthentication(),
+      id: "email",
+      icon: "mail-outline",
+      subTitleText: email ?? LL.AccountScreen.tapToAdd(),
+      action: phoneAndEmailVerified
+        ? deleteEmailPrompt
+        : () => navigation.navigate("emailRegistrationInitiate"),
+      enabled: phoneAndEmailVerified || !emailUnverified,
+      chevronLogo: phoneAndEmailVerified ? "close-circle-outline" : undefined,
+      chevronColor: phoneAndEmailVerified ? colors.red : undefined,
+      chevronSize: phoneAndEmailVerified ? 28 : undefined,
+      styleDivider: !emailUnverified,
+    },
+    {
+      category: LL.AccountScreen.unverified(),
+      id: "confirm-email",
+      icon: "checkmark-circle-outline",
+      subTitleText: LL.AccountScreen.unverifiedContent(),
+      action: confirmEmailAgain,
+      enabled: Boolean(emailUnverified),
+      chevron: false,
+      dangerous: true,
+      hidden: !emailUnverified,
+    },
+    {
+      category: LL.AccountScreen.removeEmail(),
+      id: "remove-email",
+      icon: "trash-outline",
+      action: deleteEmailPrompt,
+      enabled: Boolean(emailUnverified),
+      chevron: false,
+      styleDivider: true,
+      hidden: !emailUnverified,
+    },
+    {
+      category: LL.AccountScreen.totp(),
+      id: "totp",
+      icon: "lock-closed-outline",
+      action: totpEnabled
+        ? totpDelete
+        : () => navigation.navigate("totpRegistrationInitiate"),
+      enabled: true,
+      chevronLogo: totpEnabled ? "close-circle-outline" : undefined,
+      chevronColor: totpEnabled ? colors.red : undefined,
+      chevronSize: totpEnabled ? 28 : undefined,
+      styleDivider: true,
+      hidden: !beta,
     },
   ]
 
@@ -252,22 +522,24 @@ export const AccountScreen = ({ navigation }: Props) => {
       id: "logout",
       icon: "ios-log-out",
       action: logoutAlert,
-      enabled: isAuthed,
-      greyed: !isAuthed,
-      hidden: !isAuthed,
+      enabled: true,
+      greyed: false,
+      chevron: false,
+      styleDivider: true,
     })
   }
 
-  if (isIos || currentLevel === AccountLevel.Zero) {
+  if (currentLevel !== AccountLevel.NonAuth) {
     accountSettingsList.push({
       category: LL.support.deleteAccount(),
       id: "deleteAccount",
-      icon: "close-circle-outline",
+      icon: "trash-outline",
       dangerous: true,
       action: deleteAccountAction,
-      enabled: isAuthed,
-      greyed: !isAuthed,
-      hidden: !isAuthed,
+      chevron: false,
+      enabled: true,
+      greyed: false,
+      styleDivider: true,
     })
   }
 
