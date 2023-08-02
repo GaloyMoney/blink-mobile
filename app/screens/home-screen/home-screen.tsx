@@ -63,11 +63,6 @@ gql`
           balance
           walletCurrency
         }
-        externalWallets {
-          id
-          balance
-          walletCurrency
-        }
       }
     }
   }

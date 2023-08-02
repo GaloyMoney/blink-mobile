@@ -95,8 +95,7 @@ const WalletOverview: React.FC<Props> = ({
   if (isAuthed) {
     const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
     const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
-    // const extBtcWallet = getBtcWallet(data?.me?.defaultAccount?.externalWallets)
-    const extUsdWallet = getUsdWallet(data?.me?.defaultAccount?.externalWallets)
+    const extUsdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
     const btcWalletBalance = toBtcMoneyAmount(btcWallet?.balance ?? NaN)
 
@@ -171,7 +170,7 @@ const WalletOverview: React.FC<Props> = ({
               } else {
                 Alert.alert(
                   "Business Account Required",
-                  "Please sign up for a Business Account to access the to Cash Out Screen.",
+                  "Please sign up for a Business Account to access the Cash Out Screen.",
                 )
               }
             }}

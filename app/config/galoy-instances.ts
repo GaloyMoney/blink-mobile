@@ -71,8 +71,8 @@ export const GALOY_INSTANCES: readonly GaloyInstance[] = [
   {
     id: "Staging",
     name: "Staging",
-    graphqlUri: "http:///development.lnflash.me:4002/ibex/graphql",
-    graphqlWsUri: "ws:///development.lnflash.me:4002/ibex/graphql",
+    graphqlUri: "http:///development.lnflash.me:4002/graphql",
+    graphqlWsUri: "ws:///development.lnflash.me:4002/graphql",
     posUrl: "http:///development.lnflash.me",
     lnAddressHostname: "/development.lnflash.me",
     blockExplorer: "https://mempool.space/signet/tx/",

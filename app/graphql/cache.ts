@@ -1,25 +1,10 @@
 import { InMemoryCache, gql } from "@apollo/client"
-import {
-  Account,
-  MyWalletsFragmentDoc,
-  MyExtWalletsFragmentDoc,
-  ExternalWallet,
-  Wallet,
-  WalletCurrency,
-} from "./generated"
+import { Account, MyWalletsFragmentDoc, Wallet, WalletCurrency } from "./generated"
 import { relayStylePagination } from "@apollo/client/utilities"
 
 gql`
   fragment MyWallets on ConsumerAccount {
     wallets {
-      id
-      balance
-      walletCurrency
-    }
-  }
-
-  fragment MyExtWallets on ConsumerAccount {
-    externalWallets {
       id
       balance
       walletCurrency
@@ -70,29 +55,11 @@ const getWallets = ({
   return account.wallets
 }
 
-const getExtWallets = ({
-  readField,
-  cache,
-}: getWalletsInputs): readonly ExternalWallet[] | undefined => {
-  const id = readField("id")
-  const key = `ConsumerAccount:${id}`
-  const account: Account | null = cache.readFragment({
-    id: key,
-    fragment: MyExtWalletsFragmentDoc,
-  })
-  console.log("key", key)
-  console.log({ account })
-  if (account === null) {
-    return undefined
-  }
-  return account.externalWallets
-}
-
 export const createCache = () =>
   new InMemoryCache({
     possibleTypes: {
       // TODO: add other possible types
-      Wallet: ["BTCWallet", "UsdWallet", "ExternalWallet"],
+      Wallet: ["BTCWallet", "UsdWallet"],
       Account: ["ConsumerAccount"],
     },
     typePolicies: {
@@ -160,17 +127,6 @@ export const createCache = () =>
               // https://www.apollographql.com/docs/react/caching/advanced-topics#cache-redirects
               return wallets.find(
                 (wallet) => wallet.walletCurrency === WalletCurrency.Btc,
-              )
-            },
-          },
-          ibexWallet: {
-            read: (_, { readField, cache }): ExternalWallet | undefined => {
-              const wallets = getExtWallets({ readField, cache })
-              if (wallets === undefined || wallets.length === 0) {
-                return undefined
-              }
-              return wallets.find(
-                (wallet) => wallet.walletCurrency === WalletCurrency.Usd,
               )
             },
           },

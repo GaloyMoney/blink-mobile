@@ -1421,15 +1421,19 @@ type RootTranslation = {
 		 */
 		logInCreateAccount: string
 		/**
-<<<<<<< HEAD
 		 * S​t​a​r​t
 		 */
 		quickStart: string
 		/**
 		 * E​x​p​l​o​r​e​ ​w​a​l​l​e​t​ ​i​n​s​t​e​a​d
-=======
+		 */
+		exploreWalletInstead: string
+		/**
+		 * S​e​t​u​p​ ​b​u​s​i​n​e​s​s​ ​a​c​c​o​u​n​t
+		 */
+		setupBusinessAccount: string
+		/**
 		 * C​r​e​a​t​e​ ​n​e​w​ ​a​c​c​o​u​n​t
->>>>>>> upstream/main
 		 */
 		createAccount: string
 		/**
@@ -1440,10 +1444,6 @@ type RootTranslation = {
 		 * L​o​g​ ​b​a​c​k​ ​i​n​ ​w​i​t​h
 		 */
 		logBackInWith: string
-		/**
-		 * S​e​t​u​p​ ​b​u​s​i​n​e​s​s​ ​a​c​c​o​u​n​t
-		 */
-		setupBusinessAccount: string
 		/**
 		 * W​a​l​l​e​t​ ​p​o​w​e​r​e​d​ ​b​y​ ​G​a​l​o​y
 		 */
@@ -2525,7 +2525,7 @@ type RootTranslation = {
 		 */
 		title: string
 		/**
-		 * P​i​c​k​ ​y​o​u​r​ ​p​r​e​f​e​r​r​e​d​ ​t​h​e​m​e​ ​f​o​r​ ​u​s​i​n​g​ ​B​l​i​n​k​,​ ​o​r​ ​c​h​o​o​s​e​ ​t​o​ ​k​e​e​p​ ​i​t​ ​s​y​n​c​e​d​ ​w​i​t​h​ ​y​o​u​r​ ​s​y​s​t​e​m​ ​s​e​t​t​i​n​g​s​.
+		 * P​i​c​k​ ​y​o​u​r​ ​p​r​e​f​e​r​r​e​d​ ​t​h​e​m​e​ ​f​o​r​ ​u​s​i​n​g​ ​F​l​a​s​h​,​ ​o​r​ ​c​h​o​o​s​e​ ​t​o​ ​k​e​e​p​ ​i​t​ ​s​y​n​c​e​d​ ​w​i​t​h​ ​y​o​u​r​ ​s​y​s​t​e​m​ ​s​e​t​t​i​n​g​s​.
 		 */
 		info: string
 		/**
@@ -4967,6 +4967,13 @@ export type TranslationFunctions = {
 		quickStart: () => LocalizedString
 		/**
 		 * Explore wallet instead
+		 */
+		exploreWalletInstead: () => LocalizedString
+		/**
+		 * Setup business account
+		 */
+		setupBusinessAccount: () => LocalizedString
+		/**
 		 * Create new account
 		 */
 		createAccount: () => LocalizedString
@@ -4978,10 +4985,6 @@ export type TranslationFunctions = {
 		 * Log back in with
 		 */
 		logBackInWith: () => LocalizedString
-		/**
-		 * Setup business account
-		 */
-		setupBusinessAccount: () => LocalizedString
 		/**
 		 * Wallet powered by Galoy
 		 */

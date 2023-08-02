@@ -1,13 +1,3 @@
-fragment MyExtWallets on ConsumerAccount {
-  externalWallets {
-    id
-    balance
-    walletCurrency
-    __typename
-  }
-  __typename
-}
-
 fragment MyWallets on ConsumerAccount {
   wallets {
     id
@@ -1310,12 +1300,6 @@ query walletOverviewScreen {
     defaultAccount {
       id
       wallets {
-        id
-        balance
-        walletCurrency
-        __typename
-      }
-      externalWallets {
         id
         balance
         walletCurrency

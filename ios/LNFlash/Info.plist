@@ -29,7 +29,7 @@
 			<string>Client</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.72279297366-feuhvvmtop8ba5j0sgjbu4pubqa6cnfh</string>
+				<string>com.googleusercontent.apps.806646140435-gimosr7835q4040lcg9nslnprsdcq27a</string>
 			</array>
 		</dict>
 		<dict>
@@ -39,7 +39,7 @@
 			<array>
 				<string>lightning</string>
 				<string>bitcoin</string>
-				<string>bitcoinbeach</string>
+				<string>flash</string>
 				<string>lapp</string>
 			</array>
 		</dict>
@@ -47,30 +47,30 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>ln.bitcoinbeach.com</string>
+			<string>lnflash.me</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>ln.bitcoinbeach.com</string>
+				<string>lnflash.me</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>pay.bbw.sv</string>
+			<string>pay.lnflash.me</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>pay.bbw.sv</string>
+				<string>pay.lnflash.me</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>pay.mainnet.galoy.io</string>
+			<string>pay.flashapp.me</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>pay.mainnet.galoy.io</string>
+				<string>pay.flashapp.me</string>
 			</array>
 		</dict>
 	</array>
