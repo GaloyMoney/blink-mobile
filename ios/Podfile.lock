@@ -2,7 +2,7 @@ PODS:
   - boost (1.76.0)
   - BreezSDK (0.1.2):
     - React-Core
-  - BVLinearGradient (2.7.3):
+  - BVLinearGradient (2.8.1):
     - React-Core
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.71.12)
@@ -543,7 +543,7 @@ PODS:
     - React-perflogger (= 0.71.12)
   - RNBootSplash (4.7.5):
     - React-Core
-  - RNCAsyncStorage (1.19.0):
+  - RNCAsyncStorage (1.19.1):
     - React-Core
   - RNCClipboard (1.11.2):
     - React-Core
@@ -578,7 +578,7 @@ PODS:
     - RNFBApp
   - RNFileViewer (2.1.5):
     - React-Core
-  - RNGestureHandler (2.12.0):
+  - RNGestureHandler (2.12.1):
     - React-Core
   - RNImageCropPicker (0.39.0):
     - React-Core
@@ -589,7 +589,7 @@ PODS:
     - React-Core
     - React-RCTImage
     - TOCropViewController
-  - RNKeychain (8.1.1):
+  - RNKeychain (8.1.2):
     - React-Core
   - RNLocalize (2.2.6):
     - React-Core
@@ -627,7 +627,7 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.22.1):
+  - RNScreens (3.23.0):
     - React-Core
     - React-RCTImage
   - RNSecureRandom (1.0.1):
@@ -642,7 +642,7 @@ PODS:
   - vision-camera-code-scanner (0.2.0):
     - GoogleMLKit/BarcodeScanning
     - React-Core
-  - VisionCamera (2.15.4):
+  - VisionCamera (2.15.5):
     - React
     - React-callinvoker
     - React-Core
@@ -927,7 +927,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
   BreezSDK: 16240fc4ee7490d92b60049834c8e6b5dc37a907
-  BVLinearGradient: fbe308a1d19a8133f69e033abc85d8008644f5e3
+  BVLinearGradient: 421743791a59d259aec53f4c58793aad031da2ca
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: 4eb7ee83e8d0ad7e20a829485295ff48823c4e4c
   FBReactNativeSpec: b24809f97ae83c786928d56b732957195b4fa390
@@ -1005,7 +1005,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 7902246857a4ead4166869e6c42d4df329ff721d
   ReactCommon: a6d1c76b9e10b439e41db225263341240e1cda9f
   RNBootSplash: 85f6b879c080e958afdb4c62ee04497b05fd7552
-  RNCAsyncStorage: 4b98ac3c64efa4e35c1197cb0c5ca5e9f5d4c666
+  RNCAsyncStorage: f47fe18526970a69c34b548883e1aeceb115e3e1
   RNCClipboard: 3f0451a8100393908bea5c5c5b16f96d45f30bfc
   RNDateTimePicker: 65e1d202799460b286ff5e741d8baf54695e8abd
   RNDeviceInfo: 5795b418ed3451ebcaf39384e6cf51f60cb931c9
@@ -1016,22 +1016,22 @@ SPEC CHECKSUMS:
   RNFBMessaging: 4b8cb1215465bacca36d0fcfc2f51e7e2aa1bc91
   RNFBRemoteConfig: 3d309cbc1f89b25fb3c57ebd3daa909162749cc3
   RNFileViewer: ce7ca3ac370e18554d35d6355cffd7c30437c592
-  RNGestureHandler: dec4645026e7401a0899f2846d864403478ff6a5
+  RNGestureHandler: c0d04458598fcb26052494ae23dda8f8f5162b13
   RNImageCropPicker: 14fe1c29298fb4018f3186f455c475ab107da332
-  RNKeychain: ff836453cba46938e0e9e4c22e43d43fa2c90333
+  RNKeychain: a65256b6ca6ba6976132cc4124b238a5b13b3d9c
   RNLocalize: d4b8af4e442d4bcca54e68fc687a2129b4d71a81
   RNQrGenerator: 90461ba3ca88c1d38ef73da50fade35d9648215d
   RNRate: ef3bcff84f39bb1d1e41c5593d3eea4aab2bd73a
   RNReactNativeHapticFeedback: afa5bf2794aecbb2dba2525329253da0d66656df
   RNReanimated: f186e85d9f28c9383d05ca39e11dd194f59093ec
-  RNScreens: 50ffe2fa2342eabb2d0afbe19f7c1af286bc7fb3
+  RNScreens: 6a8a3c6b808aa48dca1780df7b73ea524f602c63
   RNSecureRandom: 07efbdf2cd99efe13497433668e54acd7df49fef
   RNShare: d82e10f6b7677f4b0048c23709bd04098d5aee6c
   RNSVG: 80584470ff1ffc7994923ea135a3e5ad825546b9
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   vision-camera-code-scanner: dda884a7f3ec8243a2a6d6489b91860648371bca
-  VisionCamera: c6356b309f7b8e185b7be2e703ec67bb35acf345
+  VisionCamera: a510a31cf8eaa037cda618c3f4b741a4cfac45f0
   Yoga: 39310a10944fc864a7550700de349183450f8aaa
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 

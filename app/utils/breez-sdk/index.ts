@@ -1,4 +1,4 @@
-import { INVITE_CODE, API_KEY } from "@env"
+import { INVITE_CODE, MNEMONIC_WORDS, API_KEY } from "@env"
 import {
   defaultConfig,
   EnvironmentType,
@@ -40,7 +40,10 @@ const getMnemonic = async (): Promise<string> => {
     if (credentials) {
       return credentials.password
     }
-    const mnemonic = bip39.generateMnemonic(128)
+
+    // Generate mnemonic and store it in the keychain
+    // For development, we use a fixed mnemonic stored in .env
+    const mnemonic = MNEMONIC_WORDS // bip39.generateMnemonic(128)
     await Keychain.setGenericPassword(KEYCHAIN_MNEMONIC_KEY, mnemonic, {
       service: KEYCHAIN_MNEMONIC_KEY,
     })

@@ -49,11 +49,6 @@ gql`
           balance
           walletCurrency
         }
-        externalWallets {
-          id
-          balance
-          walletCurrency
-        }
       }
     }
   }
@@ -87,7 +82,7 @@ const WalletOverview: React.FC<Props> = ({
   const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
     useDisplayCurrency()
 
-  const breezBalance = useBreezBalance()
+  const breezBalance = 0 // useBreezBalance()
   let btcInDisplayCurrencyFormatted: string | undefined = "$-0.01"
   let usdInDisplayCurrencyFormatted: string | undefined = "$-0.01"
   let extBtcInDisplayCurrencyFormatted: string | undefined = "$-0.01"
