@@ -567,7 +567,7 @@ const en: BaseTranslation = {
       expiresNow: "Expires now",
     },
     invoiceHasBeenPaid: "Invoice has been paid",
-    yourBitcoinOnChainAddress: "Your Bitcoin Onchain Address",
+    onChainAddress: "Onchain Address",
     receiveViaInvoice: "Receive via Lightning",
     receiveViaPaycode: "Receive via Paycode",
     receiveViaOnchain: "Receive via Onchain",

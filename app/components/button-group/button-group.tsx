@@ -97,9 +97,9 @@ const useStyles = makeStyles(
       justifyContent: "space-between",
       padding: 10,
       paddingVertical: 14,
-      marginRight: last ? 0 : 6,
+      marginRight: last ? 0 : 10,
       borderRadius: 8,
-      backgroundColor: selected ? colors.grey4 : colors.grey5,
+      backgroundColor: colors.grey5,
     },
     text: {
       fontSize: 16,
