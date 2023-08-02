@@ -19,7 +19,7 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 // import Breez SDK Wallet
-import useBreezBalance from "@app/hooks/useBreezBalance"
+// import useBreezBalance from "@app/hooks/useBreezBalance"
 
 const Loader = () => {
   const styles = useStyles()
@@ -82,7 +82,7 @@ const WalletOverview: React.FC<Props> = ({
   const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
     useDisplayCurrency()
 
-  const breezBalance = useBreezBalance()
+  const breezBalance = 0 // useBreezBalance()
   let btcInDisplayCurrencyFormatted: string | undefined = "$-0.01"
   let usdInDisplayCurrencyFormatted: string | undefined = "$-0.01"
   let extBtcInDisplayCurrencyFormatted: string | undefined = "$-0.01"

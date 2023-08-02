@@ -3,7 +3,7 @@ module.exports = {
     includes: ["app/**/*.{ts,tsx,js,jsx,graphql}"],
     service: {
       name: `galoy`,
-      url: `http://localhost:4000/graphql`,
+      url: `http://100.116.189.124:4000/graphql`,
     },
   },
 }

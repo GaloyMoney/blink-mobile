@@ -8,10 +8,10 @@
 	<true/>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:ln.bitcoinbeach.com</string>
-		<string>applinks:pay.bbw.sv</string>
-		<string>applinks:pay.mainnet.galoy.io</string>
-		<string>applinks:pay.blink.sv</string>
+		<string>applinks:lnflash.me</string>
+		<string>applinks:pay.lnflash.me</string>
+		<string>applinks:pay.flashapp.me</string>
+		<string>applinks:pay.getflash.io</string>
 	</array>
 	<key>com.apple.developer.authentication-services.autofill-credential-provider</key>
 	<true/>
