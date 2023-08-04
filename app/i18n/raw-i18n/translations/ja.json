@@ -492,7 +492,7 @@
     "ReceiveScreen": {
         "activateNotifications": "送金が完了したら通知を受け取るようにしますか？",
         "copyClipboard": "インボイスがクリップボードにコピーされました",
-        "copyClipboardBitcoin": "ビットコインアドレスがクリップボードにコピーされました",
+        "copyClipboardBitcoin": "ビットコイン・アドレスがクリップボードにコピーされました",
         "copyClipboardPaycode": "ペイコード/LNURLがクリップボードにコピーされました",
         "invoicePaid": "このインボイスは支払済みです",
         "setNote": "メモを追加",
