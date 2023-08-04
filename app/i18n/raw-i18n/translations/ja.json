@@ -553,7 +553,7 @@
         "redeemAmountFrom": "換金額：{amountToRedeem: string} 換金先：{domain: string}"
     },
     "ScanningQRCodeScreen": {
-        "invalidContent": "無効な情報：\n\n{found: string}\n\nこれは有効なビットコインアドレスまたはライトニング・インボイスではありません。",
+        "invalidContent": "無効な情報：\n\n{found: string}\n\nこれは有効なビットコイン・アドレスまたはライトニング・インボイスではありません。",
         "expiredContent": "無効な情報：\n\n{found: string}\n\n有効期限切れのインボイスです",
         "invalidTitle": "無効なQRコード",
         "noQrCode": "QRコードは見つかりませんでした",
