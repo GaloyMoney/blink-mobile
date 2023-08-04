@@ -763,7 +763,7 @@
         "noTransaction": "トランザクションがありません",
         "title": "トランザクション",
         "recentTransactions": "最近のトランザクション",
-        "transactionHistoryTitle": "取引履歴"
+        "transactionHistoryTitle": "トランザクション履歴"
     },
     "TransferScreen": {
         "title": "送金",
@@ -772,7 +772,7 @@
     "UpgradeAccountModal": {
         "title": "アカウントをアップグレードする",
         "backUpFunds": "資産のバックアップ",
-        "higherLimits": "取引限度額を引き上げる",
+        "higherLimits": "トランザクション限度額を引き上げる",
         "receiveOnchain": "オンチェーンでビットコインを受け取る",
         "onlyAPhoneNumber": "手軽で簡単な電話番号認証",
         "letsGo": "レッツゴー！",
