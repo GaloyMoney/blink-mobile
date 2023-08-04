@@ -787,7 +787,7 @@
             "addressUnavailable": "申し訳ありませんが、このアドレスは既に使われています",
             "unknownError": "不明なエラーが発生しました。時間をあけてもう一度トライしてみてください"
         },
-        "receiveMoney": "このアドレスで他のライトニングウォレットや{bankName: string}ユーザーからお金を受け取ります。",
+        "receiveMoney": "このアドレスで他のライトニング・ウォレットや{bankName: string}ユーザーからお金を受け取ります。",
         "itCannotBeChanged": "あとから変更することはできません"
     },
     "WelcomeFirstScreen": {
