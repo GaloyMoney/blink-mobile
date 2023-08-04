@@ -755,12 +755,12 @@
         "internalSend": "{bankName: string}ユーザーに送信する",
         "error": "現時点では制限を取得できません",
         "contactUsMessageBody": "こんにちは。私の{bankName: string}アカウントのトランザクション限度額を引き上げたいと考えています。",
-        "contactUsMessageSubject": "取引限度額の引き上げをリクエストする",
+        "contactUsMessageSubject": "トランザクション限度額の引き上げをリクエストする",
         "contactSupportToPerformKyc": "サポートに連絡して手動KYCを実行し、限度額を引き上げてください",
         "increaseLimits": "限度額を引き上げる"
     },
     "TransactionScreen": {
-        "noTransaction": "取引履歴がありません",
+        "noTransaction": "トランザクションがありません",
         "title": "取引履歴",
         "recentTransactions": "最近の取引履歴",
         "transactionHistoryTitle": "取引履歴"
