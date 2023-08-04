@@ -859,7 +859,7 @@
     },
     "common": {
         "account": "アカウント",
-        "transactionLimits": "取引限度額",
+        "transactionLimits": "トランザクション限度額",
         "activateWallet": "ウォレットを有効化する",
         "amountRequired": "金額の入力は必要です",
         "back": "戻る",
@@ -879,7 +879,7 @@
         "codeConfirmation": "コード認証",
         "currency": "通貨",
         "currencySyncIssue": "通貨の読み込みに失敗しました。リロードしてください。",
-        "csvExport": "取引履歴をCSVにエクスポートする",
+        "csvExport": "トランザクションをCSVにエクスポートする",
         "date": "日付",
         "description": "説明",
         "domain": "ドメイン",
