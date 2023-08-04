@@ -937,7 +937,7 @@
         "username": "ユーザー名",
         "usernameRequired": "ユーザー名は必須です",
         "backupAccount": "バックアップ/アカウントをアップグレード",
-        "viewTransaction": "取引履歴を見る",
+        "viewTransaction": "トランザクションを見る",
         "yes": "はい",
         "pending": "保留",
         "today": "今日",
