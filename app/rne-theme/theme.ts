@@ -9,12 +9,12 @@ const theme = createTheme({
   components: {
     Button: {
       containerStyle: {
-        borderRadius: 50,
+        borderRadius: 12,
       },
       buttonStyle: {
         paddingHorizontal: 32,
         paddingVertical: 8,
-        borderRadius: 50,
+        borderRadius: 12,
       },
     },
     Text: (props, { colors }) => {
