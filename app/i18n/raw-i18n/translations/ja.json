@@ -583,7 +583,7 @@
         "title": "送金する",
         "totalLabel": "総額：",
         "totalExceed": "合計金額が{balance: string}を超えています",
-        "maxFeeSelected": "これはこの取引で請求される手数料の上限です。 お取引完了後に、手数料は少なくなる場合があります。",
+        "maxFeeSelected": "これは今回のトランザクションで請求される手数料の上限です。 お取引完了後に、手数料は少なくなる場合があります。",
         "feeError": "手数料の計算に失敗しました"
     },
     "SendBitcoinDestinationScreen": {
