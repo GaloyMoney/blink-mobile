@@ -44,7 +44,7 @@
         "title": "連絡先"
     },
     "ContactDetailsScreen": {
-        "title": "{username: string}との取引履歴"
+        "title": "{username: string}とのトランザクション"
     },
     "ConversionDetailsScreen": {
         "title": "両替",
