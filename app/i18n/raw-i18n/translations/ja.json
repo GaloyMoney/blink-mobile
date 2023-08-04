@@ -524,7 +524,7 @@
         "regenerateInvoiceButtonTitle": "インボイスを再発行する",
         "setUsernameButtonTitle": "ユーザー名を設定する",
         "invoiceHasExpired": "インボイスの有効期限が切れました",
-        "setUsernameToAcceptViaPaycode": "ユーザー名をペイコードQR（LNURL）とライトニングアドレスに設定する",
+        "setUsernameToAcceptViaPaycode": "ユーザー名をペイコードQR（LNURL）とライトニング・アドレスに設定する",
         "singleUse": "単回使用",
         "invoiceExpired": "有効期限切れのインボイスです",
         "invoiceValidity": {
