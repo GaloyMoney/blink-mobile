@@ -761,8 +761,8 @@
     },
     "TransactionScreen": {
         "noTransaction": "トランザクションがありません",
-        "title": "取引履歴",
-        "recentTransactions": "最近の取引履歴",
+        "title": "トランザクション",
+        "recentTransactions": "最近のトランザクション",
         "transactionHistoryTitle": "取引履歴"
     },
     "TransferScreen": {
