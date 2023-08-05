@@ -426,7 +426,7 @@
         "unlockQuestion": "アンロックするには、質問に答えてください：",
         "youEarned": "獲得しました",
         "registerTitle": "アカウントのアップグレードが必要です",
-        "registerContent": "サトシを獲得するために電話番号を登録する"
+        "registerContent": "satsを獲得するために電話番号を登録する"
     },
     "GetStartedScreen": {
         "logInCreateAccount": "ログイン / アカウント作成",
