@@ -672,7 +672,7 @@
         "logoutAlertContentPhone": "再度ログインするには、電話番号を再入力する必要があります。\nあなたの電話番号は{phoneNumber: string}です。再ログインするには、この電話番号が使用できることを確認してください。",
         "logoutAlertContentEmail": "再ログインするには、メールアドレスを再入力する必要があります。\nあなたのメールアドレスは {email: string} です。再ログインするには、このメールアドレスが使用できることを確認してください。",
         "logoutAlertContentPhoneEmail": "再ログインするには、電話番号またはメールアドレスを再入力する必要があります。\nあなたの電話番号は{phoneNumber: string}、メールアドレスは{email: string}です。再ログインするには、このうちのどれかが使用きることを確認してください。",
-        "usdBalanceWarning": "ステーブルサトシの残高は{balance: string}です。",
+        "usdBalanceWarning": "ステーブル satsの残高は{balance: string}です。",
         "btcBalanceWarning": "あなたのビットコイン残高は{balance: string}です。",
         "secureYourAccount": "アカウントを保護するために、アカウント登録してください",
         "tapToAdd": "タップして追加",
