@@ -60,7 +60,7 @@
         "message": "両替が完了しました"
     },
     "EarnScreen": {
-        "earnSats": "{formattedNumber|sats}獲得する",
+        "earnSats": "{formattedNumber|sats}を獲得する",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "ビットコインって何？",
