@@ -420,7 +420,7 @@
         "quizComplete": "クイズ完了  {amount: number} sats 獲得",
         "reviewQuiz": "クイズの復習",
         "satAccumulated": "累計 sats",
-        "satsEarned": "{formattedNumber|sats}獲得する",
+        "satsEarned": "{formattedNumber|sats}を獲得しました",
         "sectionsCompleted": "完了しました",
         "title": "獲得する",
         "unlockQuestion": "アンロックするには、質問に答えてください：",
