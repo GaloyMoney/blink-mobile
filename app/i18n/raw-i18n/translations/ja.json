@@ -520,7 +520,7 @@
         "paycode": "ペイコード",
         "onchain": "オンチェーン",
         "bitcoin": "ビットコイン",
-        "stablesats": "ステーブルサトシ",
+        "stablesats": "ステーブル sats",
         "regenerateInvoiceButtonTitle": "インボイスを再発行する",
         "setUsernameButtonTitle": "ユーザー名を設定する",
         "invoiceHasExpired": "インボイスの有効期限が切れました",
