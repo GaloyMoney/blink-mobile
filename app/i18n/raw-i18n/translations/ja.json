@@ -419,7 +419,7 @@
         "phoneNumberNeeded": "電話番号は必須です",
         "quizComplete": "クイズ完了  {amount: number} sats 獲得",
         "reviewQuiz": "クイズの復習",
-        "satAccumulated": "累計サトシ",
+        "satAccumulated": "累計 sats",
         "satsEarned": "{formattedNumber|sats}獲得する",
         "sectionsCompleted": "完了しました",
         "title": "獲得する",
