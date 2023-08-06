@@ -798,7 +798,7 @@
         "learnToEarn": "Learn to Earn（学んで稼ぐ）"
     },
     "PhoneLoginInitiateScreen": {
-        "title": "アカウント設定",
+        "title": "ウォレット設定",
         "header": "電話番号を入力すると、アクセスコードをSMSでお知らせします。",
         "headerVerify": "私はロボットではありません",
         "errorRequestingCaptcha": "「私はロボットではありません」の認証に失敗しました。時間をあけてもう一度トライしてみてください。",
