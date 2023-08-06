@@ -813,7 +813,7 @@
     "PhoneLoginValidationScreen": {
         "errorLoggingIn": "ログインエラーです。正しいコードを入力しましたか？",
         "errorTooManyAttempts": "トライ回数が多すぎます。時間をあけてもう一度トライしてみてください。",
-        "errorCannotUpgradeToExistingAccount": "この電話番号での同録はすでに存在します。 トライアルアカウントからログアウトし、この電話番号で再ログインしてください。",
+        "errorCannotUpgradeToExistingAccount": "この電話番号での同録はすでに存在します。 トライアルウォレットからログアウトし、この電話番号で再ログインしてください。",
         "header": "電話番号を認証するには、{channel: string}から{phoneNumber: string}にお送りしたコードを入力してください",
         "placeholder": "6桁のコード",
         "sendAgain": "もう一度送る",
