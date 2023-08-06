@@ -607,7 +607,7 @@
             "title": "このアドレスに、あなたは一度も送金したことがありません。",
             "body1": "受金者がお伝えした{bankName: string}アドレスが正しいことを確認してください",
             "bold2bold": "他のウォレットのユーザー名ではありません。",
-            "body3": "そうでない場合は、「{lnAddress: string}アドレスを持つ{bankName: string}口座に送金されます。\n\nアドレスの最初の部分のスペルも確認してください。例えば、jackieとjack1eは2つの異なるアドレスです。",
+            "body3": "そうでない場合は、{lnAddress: string}アドレスを持つ{bankName: string}口座に送金されます。\n\nアドレスの最初の部分のスペルも確認してください。例えば、jackieとjack1eは2つの異なるアドレスです。",
             "warning": "{bankName: string}アドレスを誤って入力した場合、{bankName: string}はトランザクションを取り消すことができません。",
             "checkBox": "{lnAddress: string}は正しいアドレスです。",
             "confirmButton": "間違いありません"
