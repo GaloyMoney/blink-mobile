@@ -865,7 +865,7 @@
         "back": "戻る",
         "backHome": "ホームに戻る",
         "bank": "銀行",
-        "bankAccount": "キャッシュアカウント",
+        "bankAccount": "キャッシュ口座",
         "bankAdvice": "{bankName: string} 通知",
         "bankInfo": "{bankName: string} 情報",
         "beta": "ベータ",
