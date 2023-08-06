@@ -53,7 +53,7 @@
     "ConversionConfirmationScreen": {
         "title": "ご確認ください",
         "youreConverting": "両替しています",
-        "receivingAccount": "受金口座"
+        "receivingAccount": "受金ウォレット"
     },
     "ConversionSuccessScreen": {
         "title": "両替完了",
