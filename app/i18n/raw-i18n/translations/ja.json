@@ -740,8 +740,8 @@
         "paid": "送金先/送金元",
         "received": "受金完了",
         "spent": "送金完了",
-        "receivingAccount": "受金アカウント",
-        "sendingAccount": "送金アカウント",
+        "receivingAccount": "受金口座",
+        "sendingAccount": "送金口座",
         "txNotBroadcast": "あなたのトランザクションは現在保留中ですが、すぐにビットコインネットワークに反映されます。"
     },
     "TransactionLimitsScreen": {
