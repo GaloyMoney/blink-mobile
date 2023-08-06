@@ -430,7 +430,7 @@
     },
     "GetStartedScreen": {
         "logInCreateAccount": "ログイン / ウォレット作成",
-        "createAccount": "ウォレットを作成する",
+        "createAccount": "新たにウォレットを作成する",
         "exploreWallet": "ウォレットを見つける",
         "logBackInWith": "でログインし直す",
         "headline": "Galoyが提供するウォレット",
