@@ -438,7 +438,7 @@
         "startWithTrialAccount": "トライアルウォレットではじめる",
         "registerPhoneAccount": "電話番号でウォレット登録する",
         "trialAccountCreationFailed": "トライアルウォレットの作成に失敗しました",
-        "trialAccountCreationFailedMessage": "トライアルアカウントを作成できませんでした。後でもう一度お試しいただくか、電話番号を入力してアカウント登録してください。",
+        "trialAccountCreationFailedMessage": "トライアルウォレットの作成に失敗しました。後でもう一度お試しいただくか、電話番号を入力してアカウント登録してください。",
         "trialAccountHasLimits": "トライアルアカウントには制限があります",
         "trialAccountLimits": {
             "noBackup": "バックアップオプションがありません",
