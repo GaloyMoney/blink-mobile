@@ -988,7 +988,7 @@
         "typeDelete": "アカウントを削除するには、\"{delete: string}\"と入力してください",
         "finalConfirmationAccountDeletionTitle": "アカウントを削除して、本当によろしいでしょうか？",
         "finalConfirmationAccountDeletionMessage": "本当にアカウントを削除しますか？このアクションは取り消すことができません。",
-        "deleteAccountBalanceWarning": "アカウントを削除すると、現在の残高にアクセスできなくなります。本当によろしいですか？",
+        "deleteAccountBalanceWarning": "アカウントを削除すると、現在の口座残高にアクセスできなくなります。本当によろしいですか？",
         "deleteAccountConfirmation": "あなたのアカウントは削除されました。\n\n規制要件に関連する保護観察期間が終了すると、あなたのアカウントに関連する残りのデータは永久に削除されます。",
         "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
         "deleteAccountError": "エラーが発生しました。お問い合わせは{email: string}までお願いします。",
