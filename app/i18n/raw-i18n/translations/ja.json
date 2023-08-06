@@ -754,7 +754,7 @@
         "stablesatTransfers": "ステーブル satsによる送金",
         "internalSend": "{bankName: string}ユーザーに送信する",
         "error": "現時点では制限を取得できません",
-        "contactUsMessageBody": "こんにちは。私の{bankName: string}アカウントのトランザクション限度額を引き上げたいと考えています。",
+        "contactUsMessageBody": "Hi, I will like to increase the transaction limits of my {bankName: string} account.",
         "contactUsMessageSubject": "トランザクション限度額の引き上げをリクエストする",
         "contactSupportToPerformKyc": "サポートに連絡して手動KYCを実行し、限度額を引き上げてください",
         "increaseLimits": "限度額を引き上げる"
