@@ -438,7 +438,7 @@
         "startWithTrialAccount": "トライアルアカウントではじめる",
         "registerPhoneAccount": "電話番号でアカウント登録する",
         "trialAccountCreationFailed": "トライアルアカウントの作成に失敗しました",
-        "trialAccountCreationFailedMessage": "残念ながら、トライアルアカウントを作成できませんでした。後でもう一度お試しいただくか、電話番号を入力してアカウントを作成してください。",
+        "trialAccountCreationFailedMessage": "トライアルアカウントを作成できませんでした。後でもう一度お試しいただくか、電話番号を入力してアカウント登録してください。",
         "trialAccountHasLimits": "トライアルアカウントには制限があります",
         "trialAccountLimits": {
             "noBackup": "バックアップオプションがありません",
