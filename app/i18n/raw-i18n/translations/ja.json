@@ -936,7 +936,7 @@
         "usdAccount": "米ドルウォレット",
         "username": "ユーザー名",
         "usernameRequired": "ユーザー名は必須です",
-        "backupAccount": "アカウントをバックアップ/アップグレードする",
+        "backupAccount": "ウォレットをバックアップ/アップグレードする",
         "viewTransaction": "トランザクションを見る",
         "yes": "はい",
         "pending": "保留",
