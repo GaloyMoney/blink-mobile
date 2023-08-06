@@ -687,7 +687,7 @@
         "removePhone": "電話番号を削除する",
         "removeEmail": "メールアドレスを削除する",
         "unverified": "未承認のメールアドレスです",
-        "unverifiedContent": "メールアドレスを認証してアカウントを保護します。",
+        "unverifiedContent": "メールアドレスを認証してウォレットを保護します。",
         "confirmEmail": "メールアドレスを追加する",
         "emailUnverified": "あなたのメールアドレスは未確認です",
         "emailUnverifiedContent": "メールアドレスを認証して、アカウントに再ログインできることを確認してください。 今すぐ認証しますか？",
