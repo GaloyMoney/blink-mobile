@@ -462,7 +462,7 @@
         "scan": "スキャン",
         "updateAvailable": "新しいアップデートがあります。\n今すぐ更新をタップして、アップデートしてください",
         "useLightning": "私たちはライトニング・ネットワークを使っています。",
-        "myAccounts": "マイアカウント"
+        "myAccounts": "口座情報"
     },
     "PinScreen": {
         "attemptsRemaining": "PINコードが間違っています。残り{attemptsRemaining: number}回トライできます。",
