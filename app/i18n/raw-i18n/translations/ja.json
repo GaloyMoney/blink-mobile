@@ -933,7 +933,7 @@
         "transactionsError": "トランザクションの読み込みエラー",
         "tryAgain": "再トライする",
         "type": "入力する",
-        "usdAccount": "米ドルアカウント",
+        "usdAccount": "米ドル口座",
         "username": "ユーザー名",
         "usernameRequired": "ユーザー名は必須です",
         "backupAccount": "バックアップ/アカウントをアップグレード",
