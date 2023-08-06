@@ -665,7 +665,7 @@
     },
     "AccountScreen": {
         "accountLevel": "ウォレットレベル",
-        "upgrade": "アカウントをアップグレードする",
+        "upgrade": "ウォレットをアップグレードする",
         "logOutAndDeleteLocalData": "ログアウトしてすべてのローカルデータをクリアします",
         "IUnderstand": "わかりました。 ログアウトしてください。",
         "logoutAlertTitle": "ログアウトしてすべてのローカル データを削除してもよろしいですか？",
