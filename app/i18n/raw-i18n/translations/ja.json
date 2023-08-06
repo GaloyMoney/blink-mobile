@@ -429,7 +429,7 @@
         "registerContent": "satsを獲得するために電話番号を登録する"
     },
     "GetStartedScreen": {
-        "logInCreateAccount": "ログイン / 新規ウォレット作成",
+        "logInCreateAccount": "ログイン / ウォレット作成",
         "createAccount": "ウォレットを作成する",
         "exploreWallet": "ウォレットを見つける",
         "logBackInWith": "でログインし直す",
