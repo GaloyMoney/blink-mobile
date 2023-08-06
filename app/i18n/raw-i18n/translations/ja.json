@@ -439,7 +439,7 @@
         "registerPhoneAccount": "電話番号でウォレット登録する",
         "trialAccountCreationFailed": "トライアルウォレットの作成に失敗しました",
         "trialAccountCreationFailedMessage": "トライアルウォレットの作成に失敗しました。後でもう一度お試しいただくか、電話番号を入力してアカウント登録してください。",
-        "trialAccountHasLimits": "トライアルアカウントには制限があります",
+        "trialAccountHasLimits": "トライアルウォレットには制限があります",
         "trialAccountLimits": {
             "noBackup": "バックアップオプションがありません",
             "sendingLimit": "1日あたりの送金上限を引き下げる",
