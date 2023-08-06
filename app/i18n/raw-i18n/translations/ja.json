@@ -944,7 +944,7 @@
         "yesterday": "昨日",
         "thisMonth": "今月",
         "prevMonths": "先月",
-        "problemMaybeReauth": "リクエストに失敗しました。1分後に再トライしてください。問題が解決しない場合は、一旦ログアウトし、再ログインすることをお勧めします。設定＞アカウント＞ログアウトで、ログアウトできます。",
+        "problemMaybeReauth": "リクエストに失敗しました。1分後に再トライしてください。問題が解決しない場合は、一旦ログアウトし、再ログインすることをお勧めします。設定 ＞ウォレット ＞ログアウトで、ログアウトできます。",
         "warning": "警告"
     },
     "errors": {
@@ -983,7 +983,7 @@
         "defaultEmailSubject": "{bankName: string} - サポート",
         "defaultSupportMessage": "Hey there! I need some help with {bankName: string}, I'm using the version {version: string} on {os: string}.",
         "emailCopied": "メールアドレス{email: string}がクリップボードにコピーされました",
-        "deleteAccount": "アカウントを削除する",
+        "deleteAccount": "ウォレットを削除する",
         "delete": "削除",
         "typeDelete": "アカウントを削除するには、\"{delete: string}\"と入力してください",
         "finalConfirmationAccountDeletionTitle": "アカウントを削除して、本当によろしいでしょうか？",
