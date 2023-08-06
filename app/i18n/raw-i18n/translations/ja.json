@@ -674,7 +674,7 @@
         "logoutAlertContentPhoneEmail": "再ログインするには、電話番号またはメールアドレスを再入力する必要があります。\nあなたの電話番号は{phoneNumber: string}、メールアドレスは{email: string}です。再ログインするには、このうちのどれかが使用きることを確認してください。",
         "usdBalanceWarning": "ステーブル satsの残高は{balance: string}です。",
         "btcBalanceWarning": "あなたのビットコイン残高は{balance: string}です。",
-        "secureYourAccount": "アカウントを保護するために、アカウント登録してください",
+        "secureYourAccount": "ウォレットを保護するために登録してください",
         "tapToAdd": "タップして追加",
         "deleteEmailPromptTitle": "メールアドレスを削除する",
         "deleteEmailPromptContent": "メールアドレスを削除してもよろしいですか？電話番号でのみ再ログインできます。",
