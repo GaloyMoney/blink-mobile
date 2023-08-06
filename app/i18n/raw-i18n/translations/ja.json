@@ -936,7 +936,7 @@
         "usdAccount": "米ドル口座",
         "username": "ユーザー名",
         "usernameRequired": "ユーザー名は必須です",
-        "backupAccount": "バックアップ/アカウントをアップグレード",
+        "backupAccount": "アカウントをバックアップ/アップグレードする",
         "viewTransaction": "トランザクションを見る",
         "yes": "はい",
         "pending": "保留",
