@@ -425,11 +425,11 @@
         "title": "獲得する",
         "unlockQuestion": "アンロックするには、質問に答えてください：",
         "youEarned": "獲得しました",
-        "registerTitle": "アカウントのアップグレードが必要です",
+        "registerTitle": "ウォレットのアップグレードが必要です",
         "registerContent": "satsを獲得するために電話番号を登録する"
     },
     "GetStartedScreen": {
-        "logInCreateAccount": "ログイン / アカウント作成",
+        "logInCreateAccount": "ログイン / ウォレット作成",
         "createAccount": "アカウントを作成する",
         "exploreWallet": "ウォレットを見つける",
         "logBackInWith": "でログインし直す",
