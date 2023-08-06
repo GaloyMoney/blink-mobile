@@ -58,8 +58,10 @@ export const GaloySliderButton: React.FunctionComponent<GaloySliderComponentProp
         loading={loading}
         disabled={disabled}
         buttonSize={60}
-        buttonColor={colors.primary3}
+        initialColor={colors.primary3Disabled}
+        finalColor={colors.primary3}
         borderRadius={100}
+        textStyle={styles.sliderTextStyle}
         onVerified={onSlidingComplete}
         iconColor={colors.primary4}
         icon={

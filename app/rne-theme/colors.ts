@@ -17,6 +17,7 @@ const light = {
 
   primary: "#fc5805",
   primary3: "#fd800b",
+  primary3Disabled: "#fec085",
   primary4: "#fe990d",
   primary5: "#ffad0d",
 
@@ -63,6 +64,7 @@ const dark = {
 
   primary: "#ffad0d",
   primary3: "#fe990d",
+  primary3Disabled: "#ffcc86",
   primary4: "#fd800b",
   primary5: "#fc5805",
 

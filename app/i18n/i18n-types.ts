@@ -1972,6 +1972,10 @@ type RootTranslation = {
 		 * F​a​i​l​e​d​ ​t​o​ ​c​a​l​c​u​l​a​t​e​ ​f​e​e
 		 */
 		feeError: string
+		/**
+		 * Slide to Confirm
+		 */
+		slideToConfirm: string
 	}
 	SendBitcoinDestinationScreen: {
 		/**
@@ -5453,6 +5457,10 @@ export type TranslationFunctions = {
 		 * Failed to calculate fee
 		 */
 		feeError: () => LocalizedString
+		/**
+		 * Slide to Confirm
+		 */
+		slideToConfirm: () => LocalizedString
 	}
 	SendBitcoinDestinationScreen: {
 		/**

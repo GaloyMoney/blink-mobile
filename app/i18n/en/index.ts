@@ -625,6 +625,7 @@ const en: BaseTranslation = {
     maxFeeSelected:
       "This is the maximum fee you will be charged for this transaction.  It may end up being less once the payment has been made.",
     feeError: "Failed to calculate fee",
+    slideToConfirm: "Slide to Confirm",
   },
   SendBitcoinDestinationScreen: {
     usernameNowAddress:

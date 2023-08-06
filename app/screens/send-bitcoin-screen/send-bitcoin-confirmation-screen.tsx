@@ -330,8 +330,9 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
         <View style={styles.buttonContainer}>
           <GaloySliderButton
             loading={sendPaymentLoading}
-            initialText={LL.SendBitcoinConfirmationScreen.title()}
+            initialText={LL.SendBitcoinConfirmationScreen.slideToConfirm()}
             callback={handleSendPayment || undefined}
+            disabled={!handleSendPayment || !validAmount || hasAttemptedSend}
           />
         </View>
       </View>

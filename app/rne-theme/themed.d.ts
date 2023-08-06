@@ -22,6 +22,7 @@ declare module "@rneui/themed" {
     _sky: string
 
     primary3: string
+    primary3Disabled: string
     primary4: string
     primary5: string
     error9: string

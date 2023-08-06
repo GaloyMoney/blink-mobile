@@ -122,7 +122,7 @@
     "react-native-secure-key-store": "^2.0.9",
     "react-native-securerandom": "^1.0.1",
     "react-native-share": "^8.1.0",
-    "react-native-slider-icon-button": "^0.1.12",
+    "react-native-slider-icon-button": "^0.1.14",
     "react-native-svg": "^13.9.0",
     "react-native-toast-message": "^2.1.5",
     "react-native-vector-icons": "^9.1.0",
