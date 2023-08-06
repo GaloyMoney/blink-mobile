@@ -770,7 +770,7 @@
         "percentageToConvert": "%を換える"
     },
     "UpgradeAccountModal": {
-        "title": "アカウントをアップグレードする",
+        "title": "ウォレットをアップグレードする",
         "backUpFunds": "資産のバックアップ",
         "higherLimits": "トランザクション限度額を引き上げる",
         "receiveOnchain": "オンチェーンでビットコインを受け取る",
