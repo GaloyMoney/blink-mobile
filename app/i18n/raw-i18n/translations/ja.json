@@ -661,10 +661,10 @@
         "nfcOnlyReceive": "現時点ではNFCから受金のみ利用可能です",
         "nfcScanNow": "いますぐNFCをスキャンする",
         "nfcNotSupported": "このデバイスでは NFC がサポートされていません",
-        "logInOrCreateAccount": "ログインまたはアカウントを作成"
+        "logInOrCreateAccount": "ログインまたはウォレットを作成"
     },
     "AccountScreen": {
-        "accountLevel": "アカウントレベル",
+        "accountLevel": "ウォレットレベル",
         "upgrade": "アカウントをアップグレードする",
         "logOutAndDeleteLocalData": "ログアウトしてすべてのローカルデータをクリアします",
         "IUnderstand": "わかりました。 ログアウトしてください。",
