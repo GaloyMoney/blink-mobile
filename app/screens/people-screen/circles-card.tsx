@@ -1,31 +1,37 @@
-import { View } from "react-native"
+import { TouchableOpacity, View } from "react-native"
 
 import { makeStyles, Text } from "@rneui/themed"
+import { useNavigation } from "@react-navigation/native"
+import { PeopleStackParamList } from "@app/navigation/stack-param-lists"
+import { StackNavigationProp } from "@react-navigation/stack"
 
 export const CirclesCard = () => {
   const styles = useStyles()
+  const navigation = useNavigation<StackNavigationProp<PeopleStackParamList>>()
 
   return (
-    <View style={styles.container}>
-      <View>
-        <View style={styles.blinkCircles}>
-          <Text type="h2">Blink Circles</Text>
+    <TouchableOpacity onPress={() => navigation.navigate("circlesDashboard")}>
+      <View style={styles.container}>
+        <View>
+          <View style={styles.blinkCircles}>
+            <Text type="h2">Blink Circles</Text>
+          </View>
+          <View style={styles.separator}></View>
         </View>
-        <View style={styles.separator}></View>
+        <View>
+          <Text type="p2" style={styles.textCenter}>
+            Your circles grow as you onboard people to Blink – keep going!
+          </Text>
+        </View>
+        <View style={styles.pointsContainer}>
+          <Text style={styles.pointsNumber}>740</Text>
+          <Text style={styles.pointsText} type="p2">
+            points
+          </Text>
+        </View>
+        <View style={styles.backdropCircle}></View>
       </View>
-      <View>
-        <Text type="p2" style={styles.textCenter}>
-          Your circles grow as you onboard people to Blink – keep going!
-        </Text>
-      </View>
-      <View style={styles.pointsContainer}>
-        <Text style={styles.pointsNumber}>740</Text>
-        <Text style={styles.pointsText} type="p2">
-          points
-        </Text>
-      </View>
-      <View style={styles.backdropCircle}></View>
-    </View>
+    </TouchableOpacity>
   )
 }
 

@@ -94,6 +94,7 @@ export type PeopleStackParamList = {
   phoneFlow: undefined
   sendBitcoinDestination: { username: string }
   transactionDetail: { txid: string }
+  circlesDashboard: undefined
 }
 
 export type PhoneValidationStackParamList = {

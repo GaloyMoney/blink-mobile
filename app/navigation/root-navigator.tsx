@@ -75,6 +75,10 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
+import {
+  CirclesDashboardHeaderRight,
+  CirclesDashboardScreen,
+} from "@app/screens/people-screen/circles-dashboard-screen"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -401,8 +405,22 @@ const StackContacts = createStackNavigator<PeopleStackParamList>()
 
 export const ContactNavigator = () => {
   const { LL } = useI18nContext()
+  const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
+
   return (
-    <StackContacts.Navigator>
+    <StackContacts.Navigator
+      screenOptions={{
+        gestureEnabled: true,
+        headerBackTitle: LL.common.back(),
+        headerStyle: styles.headerStyle,
+        headerTitleStyle: styles.title,
+        headerBackTitleStyle: styles.title,
+        headerTintColor: colors.black,
+      }}
+    >
       <StackContacts.Screen
         name="peopleHome"
         component={PeopleScreen}
@@ -415,6 +433,14 @@ export const ContactNavigator = () => {
         name="contactDetail"
         component={ContactsDetailScreen}
         options={{ headerShown: false }}
+      />
+      <StackContacts.Screen
+        name="circlesDashboard"
+        component={CirclesDashboardScreen}
+        options={{
+          title: "My Circles",
+          headerRight: () => <CirclesDashboardHeaderRight />,
+        }}
       />
     </StackContacts.Navigator>
   )
