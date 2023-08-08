@@ -12,26 +12,12 @@ import { PeopleStackParamList } from "../../navigation/stack-param-lists"
 import { testProps } from "../../utils/testProps"
 import { toastShow } from "../../utils/toast"
 
-import { gql } from "@apollo/client"
 import { useContactsQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import { CirclesCard } from "./circles-card"
-
-gql`
-  query contacts {
-    me {
-      id
-      contacts {
-        id
-        username
-        alias
-        transactionsCount
-      }
-    }
-  }
-`
+import { ContactsCard } from "./contacts-card"
 
 export const PeopleScreen: React.FC = () => {
   const styles = useStyles()
@@ -42,26 +28,12 @@ export const PeopleScreen: React.FC = () => {
   const navigation =
     useNavigation<StackNavigationProp<PeopleStackParamList, "peopleHome">>()
 
-  const isAuthed = useIsAuthed()
-
   const { LL } = useI18nContext()
-
-  const { loading, data, error } = useContactsQuery({
-    skip: !isAuthed,
-    fetchPolicy: "cache-and-network",
-  })
-
-  if (error) {
-    toastShow({ message: error.message })
-  }
-
-  const contacts: Contact[] = useMemo(() => {
-    return data?.me?.contacts.slice() ?? []
-  }, [data])
 
   return (
     <Screen style={styles.screen} preset="scroll">
       <CirclesCard />
+      <ContactsCard />
     </Screen>
   )
 }

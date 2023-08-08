@@ -37,7 +37,6 @@ const useStyles = makeStyles(({ colors }) => ({
     marginBottom: 20,
     borderRadius: 12,
     padding: 12,
-    justifyContent: "center",
     rowGap: 14,
     position: "relative",
     overflow: "hidden",
