@@ -14,7 +14,7 @@ import { Screen } from "../../components/screen"
 import { ContactTransactions } from "./contact-transactions"
 
 import type {
-  ContactStackParamList,
+  PeopleStackParamList,
   RootStackParamList,
 } from "../../navigation/stack-param-lists"
 import { makeStyles, Text, useTheme, Input } from "@rneui/themed"
@@ -22,7 +22,7 @@ import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { isIos } from "@app/utils/helper"
 
 type ContactDetailProps = {
-  route: RouteProp<ContactStackParamList, "contactDetail">
+  route: RouteProp<PeopleStackParamList, "contactDetail">
 }
 
 export const ContactsDetailScreen: React.FC<ContactDetailProps> = ({ route }) => {

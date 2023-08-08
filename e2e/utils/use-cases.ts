@@ -38,7 +38,7 @@ export const clickOnSetting = async (title: string) => {
 
 export const Tab = {
   Home: LL.HomeScreen.title(),
-  Contacts: LL.ContactsScreen.title(),
+  People: LL.PeopleScreen.title(),
   Map: LL.MapScreen.title(),
   Earn: LL.EarnScreen.title(),
 } as const

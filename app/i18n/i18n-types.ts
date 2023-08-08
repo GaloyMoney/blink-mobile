@@ -170,7 +170,11 @@ type RootTranslation = {
 		 */
 		usePin: string
 	}
-	ContactsScreen: {
+	PeopleScreen: {
+		/**
+		 * P​e​o​p​l​e
+		 */
+		title: string
 		/**
 		 * N​o​ ​C​o​n​t​a​c​t​s​ ​F​o​u​n​d
 		 */
@@ -183,10 +187,6 @@ type RootTranslation = {
 		 * N​o​ ​c​o​n​t​a​c​t​s​ ​m​a​t​c​h​i​n​g​ ​y​o​u​r​ ​s​e​a​r​c​h​ ​w​e​r​e​ ​f​o​u​n​d​.
 		 */
 		noMatchingContacts: string
-		/**
-		 * C​o​n​t​a​c​t​s
-		 */
-		title: string
 	}
 	ContactDetailsScreen: {
 		/**
@@ -3671,7 +3671,11 @@ export type TranslationFunctions = {
 		 */
 		usePin: () => LocalizedString
 	}
-	ContactsScreen: {
+	PeopleScreen: {
+		/**
+		 * People
+		 */
+		title: () => LocalizedString
 		/**
 		 * No Contacts Found
 		 */
@@ -3684,10 +3688,6 @@ export type TranslationFunctions = {
 		 * No contacts matching your search were found.
 		 */
 		noMatchingContacts: () => LocalizedString
-		/**
-		 * Contacts
-		 */
-		title: () => LocalizedString
 	}
 	ContactDetailsScreen: {
 		/**

@@ -7,7 +7,7 @@ import {
   AuthenticationScreen,
 } from "../screens/authentication-screen"
 import { PinScreen } from "../screens/authentication-screen/pin-screen"
-import { ContactsDetailScreen, ContactsScreen } from "../screens/contacts-screen"
+import { ContactsDetailScreen, PeopleScreen } from "../screens/people-screen"
 import { DeveloperScreen } from "../screens/developer-screen"
 import { EarnMapScreen } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
@@ -70,7 +70,7 @@ import { SecurityScreen } from "../screens/settings-screen/security-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionHistoryScreen } from "../screens/transaction-history/transaction-history-screen"
 import {
-  ContactStackParamList,
+  PeopleStackParamList,
   PhoneValidationStackParamList,
   PrimaryStackParamList,
   RootStackParamList,
@@ -397,17 +397,17 @@ export const RootStack = () => {
   )
 }
 
-const StackContacts = createStackNavigator<ContactStackParamList>()
+const StackContacts = createStackNavigator<PeopleStackParamList>()
 
 export const ContactNavigator = () => {
   const { LL } = useI18nContext()
   return (
     <StackContacts.Navigator>
       <StackContacts.Screen
-        name="contactList"
-        component={ContactsScreen}
+        name="peopleHome"
+        component={PeopleScreen}
         options={{
-          title: LL.ContactsScreen.title(),
+          title: LL.PeopleScreen.title(),
           headerShown: false,
         }}
       />
@@ -481,15 +481,15 @@ export const PrimaryNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Contacts"
+        name="People"
         component={ContactNavigator}
         options={{
           headerShown: false,
-          title: LL.ContactsScreen.title(),
-          tabBarAccessibilityLabel: LL.ContactsScreen.title(),
-          tabBarTestID: LL.ContactsScreen.title(),
+          title: LL.PeopleScreen.title(),
+          tabBarAccessibilityLabel: LL.PeopleScreen.title(),
+          tabBarTestID: LL.PeopleScreen.title(),
           tabBarIcon: ({ color }) => (
-            <ContactsIcon {...testProps("Contacts")} color={color} />
+            <ContactsIcon {...testProps(LL.PeopleScreen.title())} color={color} />
           ),
         }}
       />

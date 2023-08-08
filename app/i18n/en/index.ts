@@ -46,12 +46,12 @@ const en: BaseTranslation = {
     unlock: "Unlock",
     usePin: "Use PIN",
   },
-  ContactsScreen: {
+  PeopleScreen: {
+    title: "People",
     noContactsTitle: "No Contacts Found",
     noContactsYet:
       "Send or receive a payment using a username and contacts will automatically be added here",
     noMatchingContacts: "No contacts matching your search were found.",
-    title: "Contacts",
   },
   ContactDetailsScreen: {
     title: "Transactions with {username: string}",
