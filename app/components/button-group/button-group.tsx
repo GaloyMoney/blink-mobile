@@ -18,11 +18,10 @@ type ButtonForButtonGroupProps = {
 const ButtonForButtonGroup: React.FC<
   ButtonForButtonGroupProps & {
     selected: boolean
-    last: boolean
     onPress: () => void
   }
-> = ({ text, icon, selected, last, onPress }) => {
-  const styles = useStyles({ selected: Boolean(selected), last: Boolean(last) })
+> = ({ text, icon, selected, onPress }) => {
+  const styles = useStyles({ selected: Boolean(selected) })
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.button}>
@@ -58,7 +57,6 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
 }) => {
   const styles = useStyles()
   const selectedButton = buttons.find(({ id }) => id === selectedId)
-  const lastButtonId = buttons[buttons.length - 1].id
 
   return (
     <View style={[styles.buttonGroup, style]}>
@@ -73,42 +71,34 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
               }
             }}
             selected={selectedId === props.id}
-            last={props.id === lastButtonId}
           />
         ))}
       {disabled && selectedButton && (
-        <ButtonForButtonGroup
-          {...selectedButton}
-          selected={true}
-          onPress={() => {}}
-          last={true}
-        />
+        <ButtonForButtonGroup {...selectedButton} selected={true} onPress={() => {}} />
       )}
     </View>
   )
 }
 
-const useStyles = makeStyles(
-  ({ colors }, { selected, last }: { selected: boolean; last: boolean }) => ({
-    button: {
-      flex: 1,
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between",
-      padding: 10,
-      paddingVertical: 14,
-      marginRight: last ? 0 : 10,
-      borderRadius: 8,
-      backgroundColor: colors.grey5,
-    },
-    text: {
-      fontSize: 16,
-      color: selected ? colors.primary : colors.grey1,
-    },
-    buttonGroup: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-    },
-  }),
-)
+const useStyles = makeStyles(({ colors }, { selected }: { selected: boolean }) => ({
+  button: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 10,
+    paddingVertical: 14,
+    borderRadius: 8,
+    backgroundColor: colors.grey5,
+  },
+  text: {
+    fontSize: 16,
+    color: selected ? colors.primary : colors.grey1,
+  },
+  buttonGroup: {
+    flexDirection: "row",
+    columnGap: 10,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+}))
