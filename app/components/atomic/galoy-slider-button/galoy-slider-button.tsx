@@ -15,6 +15,11 @@ type GaloySliderComponentProps = {
   initialText: string
   slidingText?: string
   completedText?: string
+  initialColor?: string
+  finalColor?: string
+  buttonSize: number
+  borderRadius?: number
+  iconColor?: string
 }
 
 export const GaloySliderButton: React.FunctionComponent<GaloySliderComponentProps> = (
@@ -24,7 +29,7 @@ export const GaloySliderButton: React.FunctionComponent<GaloySliderComponentProp
     theme: { colors },
   } = useTheme()
   const styles = useStyles(props)
-  const { disabled, loading, initialText, completedText, slidingText, callback } = props
+  const { disabled, loading, initialText, completedText, slidingText, callback, initialColor, finalColor, buttonSize, borderRadius, iconColor } = props
 
   const [sliderText, setSliderText] = useState(initialText)
 
@@ -57,13 +62,13 @@ export const GaloySliderButton: React.FunctionComponent<GaloySliderComponentProp
       <RNSliderIconButton
         loading={loading}
         disabled={disabled}
-        buttonSize={60}
-        initialColor={colors.primary3Disabled}
-        finalColor={colors.primary3}
-        borderRadius={100}
+        buttonSize={buttonSize}
+        initialColor={initialColor}
+        finalColor={finalColor}
+        borderRadius={borderRadius}
         textStyle={styles.sliderTextStyle}
         onVerified={onSlidingComplete}
-        iconColor={colors.primary4}
+        iconColor={iconColor}
         icon={
           <View>
             <GaloyIcon size={30} name="arrow-right" />

@@ -333,6 +333,11 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
             initialText={LL.SendBitcoinConfirmationScreen.slideToConfirm()}
             callback={handleSendPayment || undefined}
             disabled={!handleSendPayment || !validAmount || hasAttemptedSend}
+            initialColor={colors.primary3Disabled}
+            finalColor={colors.primary3}
+            buttonSize={60}
+            borderRadius={100}
+            iconColor={colors.primary3}
           />
         </View>
       </View>

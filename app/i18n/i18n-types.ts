@@ -1973,7 +1973,7 @@ type RootTranslation = {
 		 */
 		feeError: string
 		/**
-		 * Slide to Confirm
+		 * S​l​i​d​e​ ​t​o​ ​C​o​n​f​i​r​m
 		 */
 		slideToConfirm: string
 	}
