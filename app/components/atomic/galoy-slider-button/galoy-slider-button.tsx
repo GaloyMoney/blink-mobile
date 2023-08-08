@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { View, Text } from "react-native"
 
-import { makeStyles, useTheme } from "@rneui/themed"
+import { makeStyles } from "@rneui/themed"
 
 import { GaloyIcon } from "../galoy-icon"
 import RNSliderIconButton from "react-native-slider-icon-button"
@@ -25,11 +25,20 @@ type GaloySliderComponentProps = {
 export const GaloySliderButton: React.FunctionComponent<GaloySliderComponentProps> = (
   props,
 ) => {
-  const {
-    theme: { colors },
-  } = useTheme()
   const styles = useStyles(props)
-  const { disabled, loading, initialText, completedText, slidingText, callback, initialColor, finalColor, buttonSize, borderRadius, iconColor } = props
+  const {
+    disabled,
+    loading,
+    initialText,
+    completedText,
+    slidingText,
+    callback,
+    initialColor,
+    finalColor,
+    buttonSize,
+    borderRadius,
+    iconColor,
+  } = props
 
   const [sliderText, setSliderText] = useState(initialText)
 
