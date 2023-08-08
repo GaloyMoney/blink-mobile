@@ -27,6 +27,23 @@ gql`
   }
 `
 
+// TODO placeholder for testing codegen
+gql`
+  query myWelcomeProfile {
+    me {
+      id
+      defaultAccount {
+        ... on ConsumerAccount {
+          id
+          welcomeProfile {
+            innerCircleAllTimeCount
+          }
+        }
+      }
+    }
+  }
+`
+
 export const useQuizServer = (
   { fetchPolicy }: { fetchPolicy: WatchQueryFetchPolicy } = {
     fetchPolicy: "cache-first",

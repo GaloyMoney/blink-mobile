@@ -73,15 +73,6 @@ gql`
       success
     }
   }
-
-  query supportedCountries {
-    globals {
-      supportedCountries {
-        id
-        supportedAuthChannels
-      }
-    }
-  }
 `
 
 export const useRequestPhoneCodeRegistration = (): UseRequestPhoneCodeReturn => {

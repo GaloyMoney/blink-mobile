@@ -929,6 +929,24 @@ query myUserId {
   }
 }
 
+query myWelcomeProfile {
+  me {
+    id
+    defaultAccount {
+      ... on ConsumerAccount {
+        id
+        welcomeProfile {
+          innerCircleAllTimeCount
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
 query network {
   globals {
     network
