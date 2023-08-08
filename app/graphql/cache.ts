@@ -92,5 +92,10 @@ export const createCache = () =>
           transactions: relayStylePagination(),
         },
       },
+      Account: {
+        fields: {
+          transactions: relayStylePagination(),
+        },
+      },
     },
   })
