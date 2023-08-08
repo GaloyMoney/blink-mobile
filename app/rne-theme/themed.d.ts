@@ -32,6 +32,7 @@ declare module "@rneui/themed" {
     loaderBackground: string
 
     backdropWhite: string
+    backdropWhiter: string
   }
 
   export interface TextProps {

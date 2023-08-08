@@ -33,6 +33,7 @@ const light = {
   loaderBackground: "#f3f3f3",
 
   backdropWhite: "rgba(0, 0, 0, 0.06)",
+  backdropWhiter: "rgba(0, 0, 0, 0.12)",
 
   green: "#00A700",
 
@@ -81,6 +82,7 @@ const dark = {
   loaderForeground: "#3c3b3b",
 
   backdropWhite: "rgba(255, 255, 255, 0.06)",
+  backdropWhiter: "rgba(255, 255, 255, 0.12)",
   
   green: "#00A700",
 
