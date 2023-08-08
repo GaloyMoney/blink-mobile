@@ -21,7 +21,7 @@ const ButtonForButtonGroup: React.FC<
     onPress: () => void
   }
 > = ({ text, icon, selected, onPress }) => {
-  const styles = useStyles(Boolean(selected))
+  const styles = useStyles({ selected: Boolean(selected) })
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.button}>
@@ -80,17 +80,16 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
   )
 }
 
-const useStyles = makeStyles(({ colors }, selected: boolean) => ({
+const useStyles = makeStyles(({ colors }, { selected }: { selected: boolean }) => ({
   button: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     padding: 10,
-    paddingVertical: 15,
-    marginHorizontal: 3,
-    borderRadius: 5,
-    backgroundColor: selected ? colors.grey4 : colors.grey5,
+    paddingVertical: 14,
+    borderRadius: 8,
+    backgroundColor: colors.grey5,
   },
   text: {
     fontSize: 16,
@@ -98,6 +97,7 @@ const useStyles = makeStyles(({ colors }, selected: boolean) => ({
   },
   buttonGroup: {
     flexDirection: "row",
+    columnGap: 10,
     justifyContent: "space-between",
     alignItems: "center",
   },
