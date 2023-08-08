@@ -198,4 +198,10 @@ export const swipeButton = async (title: string) => {
   const startY = location.y + size.height / 2
 
   const endX = location.x + size.width - thumbWidth
+  await driver.touchAction([
+    { action: "press", x: startX, y: startY },
+    { action: "wait", ms: 1000 },
+    { action: "moveTo", x: endX, y: startY },
+    "release",
+  ]);
 }
