@@ -203,5 +203,5 @@ export const swipeButton = async (title: string) => {
     { action: "wait", ms: 1000 },
     { action: "moveTo", x: endX, y: startY },
     "release",
-  ]);
+  ])
 }
