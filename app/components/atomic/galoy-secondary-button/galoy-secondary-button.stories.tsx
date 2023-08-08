@@ -19,14 +19,14 @@ export const Default = () => (
       <GaloySecondaryButton disabled title="Disabled" />
     </UseCase>
     <UseCase text="Icon Left">
-      <GaloySecondaryButton iconName="contact" iconPosition="left" title="Icon Left" />
+      <GaloySecondaryButton iconName="people" iconPosition="left" title="Icon Left" />
     </UseCase>
     <UseCase text="Icon Right">
-      <GaloySecondaryButton iconName="contact" iconPosition="right" title="Icon Right" />
+      <GaloySecondaryButton iconName="people" iconPosition="right" title="Icon Right" />
     </UseCase>
     <UseCase text="Grey Icon Right">
       <GaloySecondaryButton
-        iconName="contact"
+        iconName="people"
         grey
         iconPosition="right"
         title="Grey Button"

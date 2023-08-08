@@ -15,7 +15,7 @@ import Check from "@app/assets/icons-redesign/check.svg"
 import Close from "@app/assets/icons-redesign/close.svg"
 import CloseCrossWithBackground from "@app/assets/icons-redesign/close-cross-with-background.svg"
 import Coins from "@app/assets/icons-redesign/coins.svg"
-import Contact from "@app/assets/icons-redesign/contact.svg"
+import People from "@app/assets/icons/people.svg"
 import CopyPaste from "@app/assets/icons-redesign/copy-paste.svg"
 import Dollar from "@app/assets/icons-redesign/dollar.svg"
 import EyeSlash from "@app/assets/icons-redesign/eye-slash.svg"
@@ -66,7 +66,7 @@ export const icons = {
   "close": Close,
   "close-cross-with-background": CloseCrossWithBackground,
   "coins": Coins,
-  "contact": Contact,
+  "people": People,
   "copy-paste": CopyPaste,
   "dollar": Dollar,
   "eye-slash": EyeSlash,

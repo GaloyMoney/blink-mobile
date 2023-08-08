@@ -18,7 +18,7 @@ import { MapScreen } from "../screens/map-screen/map-screen"
 
 import { PriceHistoryScreen } from "../screens/price/price-history-screen"
 
-import ContactsIcon from "@app/assets/icons/contacts.svg"
+import PeopleIcon from "@app/assets/icons/people.svg"
 import HomeIcon from "@app/assets/icons/home.svg"
 import LearnIcon from "@app/assets/icons/learn.svg"
 import MapIcon from "@app/assets/icons/map.svg"
@@ -489,7 +489,7 @@ export const PrimaryNavigator = () => {
           tabBarAccessibilityLabel: LL.PeopleScreen.title(),
           tabBarTestID: LL.PeopleScreen.title(),
           tabBarIcon: ({ color }) => (
-            <ContactsIcon {...testProps(LL.PeopleScreen.title())} color={color} />
+            <PeopleIcon {...testProps(LL.PeopleScreen.title())} color={color} />
           ),
         }}
       />

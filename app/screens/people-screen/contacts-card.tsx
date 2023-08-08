@@ -113,6 +113,6 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "space-between",
     alignItems: "center",
     paddingTop: 3,
-    paddingBottom: 8,
+    paddingBottom: 6,
   },
 }))
