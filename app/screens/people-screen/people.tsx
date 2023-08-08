@@ -17,6 +17,7 @@ import { useContactsQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
+import { CirclesCard } from "./circles-card"
 
 gql`
   query contacts {
@@ -58,7 +59,15 @@ export const PeopleScreen: React.FC = () => {
     return data?.me?.contacts.slice() ?? []
   }, [data])
 
-  return <Screen></Screen>
+  return (
+    <Screen style={styles.screen} preset="scroll">
+      <CirclesCard />
+    </Screen>
+  )
 }
 
-const useStyles = makeStyles(({ colors }) => ({}))
+const useStyles = makeStyles(({ colors }) => ({
+  screen: {
+    padding: 24,
+  },
+}))
