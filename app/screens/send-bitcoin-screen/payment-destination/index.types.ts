@@ -72,6 +72,7 @@ export const InvalidDestinationReason = {
   LnurlError: "LnurlError",
   UnknownLightning: "UnknownLightning",
   UnknownOnchain: "UnknownOnchain",
+  WrongDomain: "WrongDomain",
 } as const
 
 export type InvalidDestinationReason =

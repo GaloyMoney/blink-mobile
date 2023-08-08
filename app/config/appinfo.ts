@@ -15,7 +15,12 @@ export const PREFIX_LINKING = [
 ]
 
 // FIXME this should come from globals.lightningAddressDomainAliases
-export const LNURL_DOMAINS = ["ln.bitcoinbeach.com", "pay.bbw.sv", "blink.sv"]
+export const LNURL_DOMAINS = [
+  "ln.bitcoinbeach.com",
+  "pay.bbw.sv",
+  "blink.sv",
+  "pay.blink.sv",
+]
 
 export const ratingOptions = {
   AppleAppID: "1531383905",

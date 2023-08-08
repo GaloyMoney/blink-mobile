@@ -24,7 +24,15 @@ export const resolveIntraledgerDestination = async ({
   accountDefaultWalletQuery,
   myWalletIds,
 }: ResolveIntraledgerDestinationParams): Promise<ParseDestinationResult> => {
-  const { handle } = parsedIntraledgerDestination
+  const { valid, handle } = parsedIntraledgerDestination
+
+  if (!valid) {
+    return {
+      valid: false,
+      invalidReason: InvalidDestinationReason.WrongDomain,
+      invalidPaymentDestination: parsedIntraledgerDestination,
+    }
+  }
 
   const handleWalletId = await getUserWalletId(handle, accountDefaultWalletQuery)
 

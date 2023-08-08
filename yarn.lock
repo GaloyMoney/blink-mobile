@@ -1856,10 +1856,10 @@
     "@formatjs/intl-localematcher" "0.3.0"
     tslib "^2.4.0"
 
-"@galoymoney/client@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.npmjs.org/@galoymoney/client/-/client-0.2.2.tgz#1001cba8b664afa5444e0520ff56343d47300d78"
-  integrity sha512-CoawNFQMSWkSeO3x6a3XUNlsAg8NSE02/iVCVPQQs1F6Ub69+tS9LtKgfg2ayxLSfAfe1Dm/1c0BRQsi8VMUCA==
+"@galoymoney/client@^0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@galoymoney/client/-/client-0.2.5.tgz#5b6c54a1f4cdfbb55fea6ee741202bdb39b18bf6"
+  integrity sha512-HOqIpEzw6bYUFFJfQ30qANS5iN4dKE2sgnK9T2hXNZcRicdxH7nRemR9uSq5Q17Z7Ovl16EbuKiZUxOFd+7MTQ==
 
 "@galoymoney/react-native-geetest-module@^0.1.3":
   version "0.1.5"

@@ -119,6 +119,7 @@ const tryGetIntraLedgerDestinationFromLnurl = ({
       parsedIntraledgerDestination: {
         paymentType: PaymentType.Intraledger,
         handle: intraLedgerHandleFromLnurl,
+        valid: true,
       },
       accountDefaultWalletQuery,
       myWalletIds,
