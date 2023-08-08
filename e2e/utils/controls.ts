@@ -191,10 +191,12 @@ export const swipeButton = async (title: string) => {
   const location = await sliderButton.getLocation()
   const size = await sliderButton.getSize()
 
+  const iosOffsetPercentage = 0.2
+  const iosOffset = size.width * iosOffsetPercentage
   const thumbWidthPercentage = 0.1
 
   const thumbWidth = size.width * thumbWidthPercentage
-  const startX = location.x + thumbWidth / 2
+  const startX = location.x + thumbWidth / 2 + iosOffset
   const startY = location.y + size.height / 2
 
   const endX = location.x + size.width - thumbWidth
