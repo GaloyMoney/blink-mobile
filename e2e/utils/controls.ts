@@ -191,15 +191,11 @@ export const swipeButton = async (title: string) => {
   const location = await sliderButton.getLocation()
   const size = await sliderButton.getSize()
 
-  const offset = size.width * 0.1
-  const startX = location.x + offset
-  const startY = location.y + size.height / 2
-  const endX = size.width
+  const thumbWidthPercentage = 0.1
 
-  await driver.touchAction([
-    { action: "press", x: startX, y: startY },
-    { action: "wait", ms: 1000 },
-    { action: "moveTo", x: endX, y: startY },
-    "release",
-  ])
+  const thumbWidth = size.width * thumbWidthPercentage
+  const startX = location.x + thumbWidth / 2
+  const startY = location.y + size.height / 2
+
+  const endX = location.x + size.width - thumbWidth
 }
