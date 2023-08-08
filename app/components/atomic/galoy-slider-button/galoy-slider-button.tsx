@@ -67,7 +67,7 @@ export const GaloySliderButton: React.FunctionComponent<GaloySliderComponentProp
   }, [initialText, disabled])
 
   return (
-    <View {...testProps(sliderText)}>
+    <View {...testProps(initialText)}>
       <RNSliderIconButton
         loading={loading}
         disabled={disabled}
