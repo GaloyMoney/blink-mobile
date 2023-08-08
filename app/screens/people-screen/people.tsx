@@ -18,6 +18,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import { CirclesCard } from "./circles-card"
 import { ContactsCard } from "./contacts-card"
+import { InviteFriendsCard } from "./invite-friends-card"
 
 export const PeopleScreen: React.FC = () => {
   const styles = useStyles()
@@ -34,6 +35,7 @@ export const PeopleScreen: React.FC = () => {
     <Screen style={styles.screen} preset="scroll">
       <CirclesCard />
       <ContactsCard />
+      <InviteFriendsCard />
     </Screen>
   )
 }
