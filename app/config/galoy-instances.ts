@@ -81,7 +81,7 @@ export const GALOY_INSTANCES: readonly GaloyInstance[] = [
   {
     id: "Local",
     name: "Local",
-    graphqlUri: `http://${scriptHostname()}:5004/graphql`,
+    graphqlUri: `http://${scriptHostname()}:4002/graphql`,
     graphqlWsUri: `ws://${scriptHostname()}:4002/graphqlws`,
     authUrl: `http://${scriptHostname()}:4002`,
     posUrl: `http://${scriptHostname()}:3000`,
