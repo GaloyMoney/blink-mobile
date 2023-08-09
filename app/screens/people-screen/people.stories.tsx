@@ -4,14 +4,13 @@ import { createCache } from "../../graphql/cache"
 import { PeopleScreen } from "./people"
 import { StoryScreen } from "../../../.storybook/views"
 import { Meta } from "@storybook/react-native"
+import mocks from "../../graphql/mocks"
 
 export default {
   title: "People Screen",
   component: PeopleScreen,
   decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
 } as Meta<typeof PeopleScreen>
-
-const mocks = []
 
 export const Empty = () => (
   <MockedProvider mocks={mocks} cache={createCache()}>

@@ -32,6 +32,6 @@ const useStyles = makeStyles(({ colors }) => ({
   iconContainer: {
     display: "flex",
     flexDirection: "row",
-    columnGap: 4,
+    columnGap: 10,
   },
 }))

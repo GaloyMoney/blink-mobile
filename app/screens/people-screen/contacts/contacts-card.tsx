@@ -76,7 +76,7 @@ export const ContactsCard = () => {
       <View style={styles.contactsOuterContainer}>
         {loading && <ActivityIndicator />}
         {contacts.map((contact) => (
-          <Contact key={contact.username} contact={contact as UserContact} />
+          <Contact key={contact.id} contact={contact as UserContact} />
         ))}
       </View>
       <GaloySecondaryButton title="View and manage contacts" />

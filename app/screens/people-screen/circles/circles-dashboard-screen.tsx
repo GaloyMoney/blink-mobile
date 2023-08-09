@@ -75,7 +75,7 @@ export const CirclesDashboardScreen: React.FC = () => {
       </Text>
       <Circle
         heading="Inner circle"
-        value={21}
+        value={Math.floor(Math.random() * 150)}
         minValue={1}
         maxValue={150}
         description="people you onboarded"
@@ -85,7 +85,7 @@ export const CirclesDashboardScreen: React.FC = () => {
       />
       <Circle
         heading="Outer circle"
-        value={459}
+        value={Math.floor(Math.random() * 800)}
         minValue={1}
         maxValue={800}
         description="people onboarded by your inner circle"
