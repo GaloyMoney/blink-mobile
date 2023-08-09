@@ -525,7 +525,7 @@
         "setUsernameButtonTitle": "Stel gebruikersnaam",
         "invoiceHasExpired": "Faktuur het verval",
         "setUsernameToAcceptViaPaycode": "Stel jou gebruikersnaam om te untvang via QR betaalkode (LNURL) en Lightning-adres",
-        "singleUse": "Enkelgebruik",
+        "singleUse": "Een keer",
         "invoiceExpired": "Vervalde faktuur",
         "invoiceValidity": {
             "validFor1Day": "Geldig vir 1 dag",
