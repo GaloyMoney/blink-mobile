@@ -535,7 +535,7 @@
             "expiresNow": "Verval nou"
         },
         "invoiceHasBeenPaid": "Faktuur is betaal",
-        "yourBitcoinOnChainAddress": "Jou Bitcoin-opkettingadres",
+        "onChainAddress": "Opkettingadres",
         "receiveViaInvoice": "Ontvang met Lightning",
         "receiveViaPaycode": "Ontvang met LNURL",
         "receiveViaOnchain": "Ontvang opketting",
