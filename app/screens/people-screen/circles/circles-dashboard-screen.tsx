@@ -1,5 +1,5 @@
 import { View } from "react-native"
-import { Text, makeStyles, useTheme } from "@rneui/themed"
+import { Text, makeStyles } from "@rneui/themed"
 
 import Icon from "react-native-vector-icons/Ionicons"
 
@@ -36,15 +36,12 @@ const Circle: React.FC<CircleProps> = ({
   maxValue = 100,
   tooltip,
 }) => {
-  let styles
-  if (bubble)
-    styles = useStyles({
-      subtitleGreen,
-      circleMinValue: minValue,
-      circleMaxValue: maxValue,
-      circleValue: value,
-    })
-  else styles = useStyles({ subtitleGreen })
+  const styles = useStyles({
+    subtitleGreen,
+    circleMinValue: minValue,
+    circleMaxValue: maxValue,
+    circleValue: value,
+  })
 
   return (
     <View style={styles.circleContainer}>

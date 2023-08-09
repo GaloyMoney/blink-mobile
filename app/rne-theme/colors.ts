@@ -49,7 +49,7 @@ const light = {
 
 const dark = {
   transparent: "rgba(0, 0, 0, 0)",
-  
+
   _white: "#FFFFFF",
   _black: "#000000",
   _lightGrey: "#CFD9E2",
@@ -59,31 +59,31 @@ const dark = {
   _blue: "#3050C4",
   _orange: "#FF7e1c",
   _sky: "#C3CCFF",
-  
+
   // adjusted
   white: "#000000",
   black: "#FFFFFF",
-  
+
   primary: "#ffad0d",
   primary3: "#fe990d",
   primary4: "#fd800b",
   primary5: "#fc5805",
-  
+
   blue5: "#F0F0F7",
-  
+
   grey0: "#FAF9F9", // grey1
   grey1: "#E9E8E8", // grey2
   grey2: "#CCCCCC", // grey3
   grey3: "#949494", // grey5
   grey4: "#393939", // grey8
   grey5: "#1d1d1d", // after grey9
-  
+
   loaderBackground: "#131313",
   loaderForeground: "#3c3b3b",
 
   backdropWhite: "rgba(255, 255, 255, 0.06)",
   backdropWhiter: "rgba(255, 255, 255, 0.12)",
-  
+
   green: "#00A700",
 
   // not adjusted
