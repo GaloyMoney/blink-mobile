@@ -4,11 +4,14 @@ import { makeStyles, Text } from "@rneui/themed"
 import { toastShow } from "@app/utils/toast"
 
 import { gql } from "@apollo/client"
-import { useContactsQuery } from "@app/graphql/generated"
+import { UserContact, useContactsQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useMemo } from "react"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { PeopleStackParamList } from "@app/navigation/stack-param-lists"
 
 gql`
   query contacts {
@@ -24,14 +27,20 @@ gql`
   }
 `
 
-const Contact = ({ username }: { username: string }) => {
+const Contact = ({ contact }: { contact: UserContact }) => {
   const styles = useStyles()
+  const navigation = useNavigation<StackNavigationProp<PeopleStackParamList>>()
 
   return (
     <View>
       <View style={styles.contactContainer}>
-        <Text type="p1">{username}</Text>
-        <GaloyIconButton name="send" size="medium" iconOnly />
+        <Text type="p1">{contact.username}</Text>
+        <GaloyIconButton
+          onPress={() => navigation.navigate("contactDetail", { contact })}
+          name="send"
+          size="medium"
+          iconOnly
+        />
       </View>
       <View style={styles.separator}></View>
     </View>
@@ -66,8 +75,8 @@ export const ContactsCard = () => {
       </View>
       <View style={styles.contactsOuterContainer}>
         {loading && <ActivityIndicator />}
-        {contacts.map(({ username }) => (
-          <Contact key={username} username={username} />
+        {contacts.map((contact) => (
+          <Contact key={contact.username} contact={contact as UserContact} />
         ))}
       </View>
       <GaloySecondaryButton title="View and manage contacts" />
