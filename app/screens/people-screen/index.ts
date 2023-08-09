@@ -1,2 +1,2 @@
 export * from "./people"
-export * from "./contacts-detail"
+export * from "./contacts/contacts-detail"

@@ -16,9 +16,9 @@ import { useContactsQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
-import { CirclesCard } from "./circles-card"
-import { ContactsCard } from "./contacts-card"
-import { InviteFriendsCard } from "./invite-friends-card"
+import { CirclesCard } from "./circles/circles-card"
+import { ContactsCard } from "./contacts/contacts-card"
+import { InviteFriendsCard } from "./circles/invite-friends-card"
 
 export const PeopleScreen: React.FC = () => {
   const styles = useStyles()

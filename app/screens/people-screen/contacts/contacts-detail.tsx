@@ -8,15 +8,15 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 
-import { testProps } from "../../utils/testProps"
-import { CloseCross } from "../../components/close-cross"
-import { Screen } from "../../components/screen"
+import { testProps } from "../../../utils/testProps"
+import { CloseCross } from "../../../components/close-cross"
+import { Screen } from "../../../components/screen"
 import { ContactTransactions } from "./contact-transactions"
 
 import type {
   PeopleStackParamList,
   RootStackParamList,
-} from "../../navigation/stack-param-lists"
+} from "../../../navigation/stack-param-lists"
 import { makeStyles, Text, useTheme, Input } from "@rneui/themed"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { isIos } from "@app/utils/helper"

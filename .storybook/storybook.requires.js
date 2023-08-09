@@ -64,7 +64,7 @@ const getStories = () => {
     "./app/screens/authentication-screen/authentication-check-screen.stories.tsx": require("../app/screens/authentication-screen/authentication-check-screen.stories.tsx"),
     "./app/screens/authentication-screen/authentication-screen.stories.tsx": require("../app/screens/authentication-screen/authentication-screen.stories.tsx"),
     "./app/screens/authentication-screen/pin-screen.stories.tsx": require("../app/screens/authentication-screen/pin-screen.stories.tsx"),
-    "./app/screens/people-screen/contacts-detail.stories.tsx": require("../app/screens/people-screen/contacts-detail.stories.tsx"),
+    "./app/screens/people-screen/contacts/contacts-detail.stories.tsx": require("../app/screens/people-screen/contacts/contacts-detail.stories.tsx"),
     "./app/screens/people-screen/people.stories.tsx": require("../app/screens/people-screen/people.stories.tsx"),
     "./app/screens/conversion-flow/conversion-success-screen.stories.tsx": require("../app/screens/conversion-flow/conversion-success-screen.stories.tsx"),
     "./app/screens/earns-map-screen/earns-map-screen.stories.tsx": require("../app/screens/earns-map-screen/earns-map-screen.stories.tsx"),

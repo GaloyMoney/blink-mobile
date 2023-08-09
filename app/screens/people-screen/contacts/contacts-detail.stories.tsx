@@ -1,8 +1,8 @@
 import * as React from "react"
-import { Story, UseCase } from "../../../.storybook/views"
+import { Story, UseCase } from "../../../../.storybook/views"
 import { ContactsDetailScreenJSX } from "./contacts-detail"
 import { MockedProvider } from "@apollo/client/testing"
-import { createCache } from "../../graphql/cache"
+import { createCache } from "../../../graphql/cache"
 
 const contact = {
   id: "MikeP",

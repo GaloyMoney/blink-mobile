@@ -10,7 +10,6 @@ export const InviteFriendsCard = () => {
     <View style={styles.container}>
       <Text type="p1">Invite Friends</Text>
       <View style={styles.iconContainer}>
-        <GaloyIconButton name="copy-paste" size="medium" iconOnly />
         <GaloyIconButton name="share" size="medium" iconOnly />
         <GaloyIconButton name="qr-code" size="medium" iconOnly />
       </View>
@@ -33,6 +32,6 @@ const useStyles = makeStyles(({ colors }) => ({
   iconContainer: {
     display: "flex",
     flexDirection: "row",
-    columnGap: 2,
+    columnGap: 4,
   },
 }))

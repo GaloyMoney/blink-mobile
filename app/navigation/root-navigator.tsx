@@ -78,7 +78,7 @@ import {
 import {
   CirclesDashboardHeaderRight,
   CirclesDashboardScreen,
-} from "@app/screens/people-screen/circles-dashboard-screen"
+} from "@app/screens/people-screen/circles/circles-dashboard-screen"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
