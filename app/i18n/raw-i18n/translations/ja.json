@@ -535,7 +535,7 @@
             "expiresNow": "有効期限切れ"
         },
         "invoiceHasBeenPaid": "支払済みのインボイス",
-        "yourBitcoinOnChainAddress": "あなたのビットコイン・オンチェーンアドレス",
+        "onChainAddress": "オンチェーン・アドレス",
         "receiveViaInvoice": "ライトニングで受金する",
         "receiveViaPaycode": "ペイコードで受金する",
         "receiveViaOnchain": "オンチェーンで受金する",
