@@ -1,7 +1,6 @@
 overwrite: true
 # schema: "https://raw.githubusercontent.com/GaloyMoney/galoy/main/src/graphql/main/schema.graphql"
-# schema: "../galoy/src/graphql/main/schema.graphql"
-schema: "../blink-circles/dev/apollo-federation/supergraph.graphql"
+schema: "http://localhost:4002/grapqhl" # TODO use when supergraph is updated to include circles "https://mainnet.galoy.io/graphql"
 documents:
   - "app/**/*.ts"
   - "app/**/*.tsx"
@@ -25,7 +24,6 @@ generates:
       strictScalars: true
       nonOptionalTypename: true
       federation: true
-      skipDocumentsValidation: true # TODO ERROR Fragment cannot be spread here as objects of type "Account" can never be of type "ConsumerAccount".
       scalars:
         AccountApiKeyLabel: "string"
         AuthToken: "string"
