@@ -195,7 +195,7 @@ export const swipeButton = async (title: string) => {
 
   const thumbWidth = size.width * thumbWidthPercentage
   const startX = location.x + thumbWidth
-  const startY = location.y + size .height / 2
+  const startY = location.y + size.height / 2
 
   const endX = location.x + size.width
   await driver.touchAction([
