@@ -535,7 +535,7 @@
             "expiresNow": "Expira ahora"
         },
         "invoiceHasBeenPaid": "La factura ya ha sido pagada",
-        "yourBitcoinOnChainAddress": "Tu dirección Bitcoin Onchain",
+        "onChainAddress": "Dirección Onchain",
         "receiveViaInvoice": "Recibir vía Lightning",
         "receiveViaPaycode": "Recibir vía de código de pago",
         "receiveViaOnchain": "Recibir vía Onchain",
