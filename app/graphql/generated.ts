@@ -240,12 +240,6 @@ export type CentAmountPayload = {
   readonly errors: ReadonlyArray<Error>;
 };
 
-export const Circle = {
-  Inner: 'Inner',
-  Outer: 'Outer'
-} as const;
-
-export type Circle = typeof Circle[keyof typeof Circle];
 export type ConsumerAccount = Account & {
   readonly __typename: 'ConsumerAccount';
   readonly btcWallet?: Maybe<BtcWallet>;
@@ -264,7 +258,7 @@ export type ConsumerAccount = Account & {
   readonly transactions?: Maybe<TransactionConnection>;
   readonly usdWallet?: Maybe<UsdWallet>;
   readonly wallets: ReadonlyArray<Wallet>;
-  readonly welcomeProfile: WelcomeProfile;
+  readonly welcomeProfile?: Maybe<WelcomeProfile>;
 };
 
 
@@ -430,14 +424,13 @@ export const InvoicePaymentStatus = {
 export type InvoicePaymentStatus = typeof InvoicePaymentStatus[keyof typeof InvoicePaymentStatus];
 export type Leader = {
   readonly __typename: 'Leader';
-  readonly count: Scalars['Int']['output'];
   readonly name?: Maybe<Scalars['LeaderboardName']['output']>;
+  readonly points: Scalars['Int']['output'];
   readonly rank: Scalars['Int']['output'];
 };
 
 export type Leaderboard = {
   readonly __typename: 'Leaderboard';
-  readonly circle: Circle;
   readonly leaders: ReadonlyArray<Leader>;
   readonly range: WelcomeRange;
 };
@@ -1735,21 +1728,20 @@ export const WalletCurrency = {
 
 export type WalletCurrency = typeof WalletCurrency[keyof typeof WalletCurrency];
 export type WelcomeLeaderboardInput = {
-  readonly circle: Circle;
   readonly range: WelcomeRange;
 };
 
 export type WelcomeProfile = {
   readonly __typename: 'WelcomeProfile';
+  readonly allTimePoints: Scalars['Int']['output'];
+  readonly allTimeRank: Scalars['Int']['output'];
   readonly innerCircleAllTimeCount: Scalars['Int']['output'];
-  readonly innerCircleAllTimeRank: Scalars['Int']['output'];
   readonly innerCircleThisMonthCount: Scalars['Int']['output'];
-  readonly innerCircleThisMonthRank: Scalars['Int']['output'];
   readonly leaderboardName?: Maybe<Scalars['LeaderboardName']['output']>;
   readonly outerCircleAllTimeCount: Scalars['Int']['output'];
-  readonly outerCircleAllTimeRank: Scalars['Int']['output'];
   readonly outerCircleThisMonthCount: Scalars['Int']['output'];
-  readonly outerCircleThisMonthRank: Scalars['Int']['output'];
+  readonly thisMonthPoints: Scalars['Int']['output'];
+  readonly thisMonthRank: Scalars['Int']['output'];
 };
 
 export const WelcomeRange = {
@@ -5989,7 +5981,6 @@ export type ResolversTypes = {
   CaptchaRequestAuthCodeInput: CaptchaRequestAuthCodeInput;
   CentAmount: ResolverTypeWrapper<Scalars['CentAmount']['output']>;
   CentAmountPayload: ResolverTypeWrapper<CentAmountPayload>;
-  Circle: Circle;
   ConsumerAccount: ResolverTypeWrapper<ConsumerAccount>;
   Contact: ResolverTypeWrapper<Contact>;
   ContactAlias: ResolverTypeWrapper<Scalars['ContactAlias']['output']>;
@@ -6461,7 +6452,7 @@ export type ConsumerAccountResolvers<ContextType = any, ParentType extends Resol
   transactions?: Resolver<Maybe<ResolversTypes['TransactionConnection']>, ParentType, ContextType, Partial<ConsumerAccountTransactionsArgs>>;
   usdWallet?: Resolver<Maybe<ResolversTypes['UsdWallet']>, ParentType, ContextType>;
   wallets?: Resolver<ReadonlyArray<ResolversTypes['Wallet']>, ParentType, ContextType>;
-  welcomeProfile?: Resolver<ResolversTypes['WelcomeProfile'], ParentType, ContextType>;
+  welcomeProfile?: Resolver<Maybe<ResolversTypes['WelcomeProfile']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -6596,14 +6587,13 @@ export interface LanguageScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 }
 
 export type LeaderResolvers<ContextType = any, ParentType extends ResolversParentTypes['Leader'] = ResolversParentTypes['Leader']> = {
-  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['LeaderboardName']>, ParentType, ContextType>;
+  points?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   rank?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type LeaderboardResolvers<ContextType = any, ParentType extends ResolversParentTypes['Leaderboard'] = ResolversParentTypes['Leaderboard']> = {
-  circle?: Resolver<ResolversTypes['Circle'], ParentType, ContextType>;
   leaders?: Resolver<ReadonlyArray<ResolversTypes['Leader']>, ParentType, ContextType>;
   range?: Resolver<ResolversTypes['WelcomeRange'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -7195,15 +7185,15 @@ export interface WalletIdScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 }
 
 export type WelcomeProfileResolvers<ContextType = any, ParentType extends ResolversParentTypes['WelcomeProfile'] = ResolversParentTypes['WelcomeProfile']> = {
+  allTimePoints?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  allTimeRank?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   innerCircleAllTimeCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  innerCircleAllTimeRank?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   innerCircleThisMonthCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  innerCircleThisMonthRank?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   leaderboardName?: Resolver<Maybe<ResolversTypes['LeaderboardName']>, ParentType, ContextType>;
   outerCircleAllTimeCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  outerCircleAllTimeRank?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   outerCircleThisMonthCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  outerCircleThisMonthRank?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  thisMonthPoints?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  thisMonthRank?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

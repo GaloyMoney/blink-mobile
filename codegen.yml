@@ -1,6 +1,6 @@
 overwrite: true
 # schema: "https://raw.githubusercontent.com/GaloyMoney/galoy/main/src/graphql/main/schema.graphql"
-schema: "http://localhost:4002/graphql" # TODO use when supergraph is updated to include circles "https://mainnet.galoy.io/graphql"
+schema: "https://api.blink.sv/graphql" # "http://localhost:4002/graphql" TODO use localhost until the supergraph is updated to include circles
 documents:
   - "app/**/*.ts"
   - "app/**/*.tsx"
