@@ -808,7 +808,7 @@
         "placeholder": "電話番号",
         "verify": "タップして認証する",
         "sms": "SMSで送金する",
-        "whatsapp": "WatsAppで送金する"
+        "whatsapp": "WhatsAppで送金する"
     },
     "PhoneLoginValidationScreen": {
         "errorLoggingIn": "ログインエラーです。正しいコードを入力しましたか？",
