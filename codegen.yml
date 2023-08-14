@@ -1,6 +1,6 @@
 overwrite: true
 # schema: "https://raw.githubusercontent.com/GaloyMoney/galoy/main/src/graphql/main/schema.graphql"
-schema: "https://api.blink.sv/graphql" # "http://localhost:4002/graphql" TODO use localhost until the supergraph is updated to include circles
+schema: "https://api.staging.galoy.io/graphql" # "http://localhost:4002/graphql"
 documents:
   - "app/**/*.ts"
   - "app/**/*.tsx"
