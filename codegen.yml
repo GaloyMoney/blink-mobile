@@ -1,6 +1,6 @@
 overwrite: true
+schema: "https://api.staging.galoy.io/graphql"
 # schema: "https://raw.githubusercontent.com/GaloyMoney/galoy/main/src/graphql/main/schema.graphql"
-schema: "https://api.staging.galoy.io/graphql" # "http://localhost:4002/graphql"
 documents:
   - "app/**/*.ts"
   - "app/**/*.tsx"
