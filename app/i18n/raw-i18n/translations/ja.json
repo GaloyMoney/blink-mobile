@@ -691,7 +691,7 @@
         "confirmEmail": "メールアドレスを追加する",
         "emailUnverified": "あなたのメールアドレスは未確認です",
         "emailUnverifiedContent": "メールアドレスを認証して、ウォレットに再ログインできることを確認してください。 今すぐ認証しますか？",
-        "totp": "2要素認証 (2FA)",
+        "totp": "2要素認証（2FA）",
         "totpDeactivated": "2要素認証（2FA）が無効化されました",
         "totpDeleteAlertTitle": "2要素認証（2FA）を削除する",
         "totpDeleteAlertContent": "二段階認証を削除してもよろしいですか？"
