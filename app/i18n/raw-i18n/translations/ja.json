@@ -694,10 +694,10 @@
         "totp": "2要素認証（2FA）",
         "totpDeactivated": "2要素認証（2FA）が無効化されました",
         "totpDeleteAlertTitle": "2要素認証（2FA）を削除する",
-        "totpDeleteAlertContent": "二段階認証を削除してもよろしいですか？"
+        "totpDeleteAlertContent": "2要素認証（2FA）を削除してもよろしいですか？"
     },
     "TotpRegistrationInitiateScreen": {
-        "title": "二段階認証",
+        "title": "2要素認証（2FA）",
         "content": "二段階認証アプリでこの QR コードをスキャンします。 または、シークレットコードを手動でコピーして認証アプリに貼り付けるコードできます。"
     },
     "TotpRegistrationValidateScreen": {
