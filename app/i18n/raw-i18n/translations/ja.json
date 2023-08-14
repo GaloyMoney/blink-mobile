@@ -702,7 +702,7 @@
     },
     "TotpRegistrationValidateScreen": {
         "title": "2要素認証（2FA）",
-        "enter6digitCode": "2要素認証（2FA）アプリから 6 桁のコードを入力後に承認してください。",
+        "enter6digitCode": "2要素認証（2FA）アプリから 6 桁のコードを入力後に、2要素認証を承認してください。",
         "success": "2要素認証（2FA）が有効になりました。 電話番号またはメールアドレスと2要素認証を使用してのみ再ログインできるようになります。\n\nあなたが2要素認証へのアクセスを失った場合、完全なKYCウォレットのみ再ログインできます。"
     },
     "TotpLoginValidateScreen": {
