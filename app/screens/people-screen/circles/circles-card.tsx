@@ -4,10 +4,13 @@ import { makeStyles, Text } from "@rneui/themed"
 import { useNavigation } from "@react-navigation/native"
 import { PeopleStackParamList } from "@app/navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
+import { useCirclesQuery } from "@app/graphql/generated"
 
 export const CirclesCard = () => {
   const styles = useStyles()
   const navigation = useNavigation<StackNavigationProp<PeopleStackParamList>>()
+
+  const { data } = useCirclesQuery()
 
   return (
     <TouchableOpacity onPress={() => navigation.navigate("circlesDashboard")}>
@@ -24,7 +27,9 @@ export const CirclesCard = () => {
           </Text>
         </View>
         <View style={styles.pointsContainer}>
-          <Text style={styles.pointsNumber}>740</Text>
+          <Text style={styles.pointsNumber}>
+            {data?.me?.defaultAccount.welcomeProfile?.allTimePoints}
+          </Text>
           <Text style={styles.pointsText} type="p2">
             points
           </Text>
