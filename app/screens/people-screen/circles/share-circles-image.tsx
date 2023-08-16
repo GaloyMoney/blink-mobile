@@ -67,6 +67,7 @@ export const CirclesDashboardHeaderRight: React.FC = () => {
 
       const shareOptions = {
         fileName: `${data?.me?.username}'s Blink Circles`,
+        title: `${data?.me?.username}'s Blink Circles`,
         message: `${data?.me?.username}'s Blink Circles`,
         url: uri,
         type: "image/jpeg",
@@ -110,7 +111,7 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
             angle={216}
             angleCenter={{ x: 0.5, y: 0.5 }}
           >
-            <Text type="p2" color={colors._black} bold>
+            <Text type="h2" color={colors._black} bold>
               {username}'s
             </Text>
             <Text type="p1" color={colors._black}>
@@ -209,7 +210,7 @@ const useStyles = makeStyles(({ colors }) => ({
   usernameContainer: {
     position: "absolute",
     top: -2,
-    left: -8,
+    left: -12,
   },
   usernameContainerGrad: {
     paddingHorizontal: 48,
