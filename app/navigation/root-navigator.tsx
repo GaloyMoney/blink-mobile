@@ -21,6 +21,8 @@ import { PriceHistoryScreen } from "../screens/price/price-history-screen"
 import HomeIcon from "@app/assets/icons/home.svg"
 import LearnIcon from "@app/assets/icons/learn.svg"
 import MapIcon from "@app/assets/icons/map.svg"
+import Globe from "@app/assets/icons-redesign/globe.svg"
+
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import {
@@ -61,7 +63,7 @@ import {
   TotpRegistrationValidateScreen,
 } from "@app/screens/totp-screen"
 import { testProps } from "@app/utils/testProps"
-import { makeStyles, useTheme } from "@rneui/themed"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { ScanningQRCodeScreen } from "../screens/send-bitcoin-screen"
 import { SettingsScreen } from "../screens/settings-screen"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
@@ -77,6 +79,7 @@ import {
 import { CirclesDashboardScreen } from "@app/screens/people-screen/circles/circles-dashboard-screen"
 import { AllContactsScreen } from "@app/screens/people-screen/contacts/all-contacts"
 import { PeopleTabIcon } from "@app/screens/people-screen/tab-icon"
+import { WebViewScreen } from "@app/screens/webview/webview"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -543,6 +546,19 @@ export const PrimaryNavigator = () => {
           tabBarAccessibilityLabel: LL.EarnScreen.title(),
           tabBarTestID: LL.EarnScreen.title(),
           tabBarIcon: ({ color }) => <LearnIcon {...testProps("Earn")} color={color} />,
+        }}
+      />
+      <Tab.Screen
+        name="Web"
+        component={WebViewScreen}
+        options={{
+          title: "Web",
+          headerShown: true,
+          headerLeftLabelVisible: true,
+          headerLeft: () => <Text>test</Text>,
+          tabBarAccessibilityLabel: "Web",
+          tabBarTestID: "Web",
+          tabBarIcon: ({ color }) => <Globe {...testProps("Earn")} color={color} />,
         }}
       />
     </Tab.Navigator>
