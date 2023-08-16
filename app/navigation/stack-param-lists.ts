@@ -91,10 +91,8 @@ export type RootStackParamList = {
 export type PeopleStackParamList = {
   peopleHome: undefined
   contactDetail: { contact: Contact }
-  phoneFlow: undefined
-  sendBitcoinDestination: { username: string }
-  transactionDetail: { txid: string }
   circlesDashboard: undefined
+  allContacts: undefined
 }
 
 export type PhoneValidationStackParamList = {

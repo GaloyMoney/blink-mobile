@@ -79,6 +79,7 @@ import {
   CirclesDashboardHeaderRight,
   CirclesDashboardScreen,
 } from "@app/screens/people-screen/circles/circles-dashboard-screen"
+import { AllContactsScreen } from "@app/screens/people-screen/contacts/all-contacts"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -433,6 +434,13 @@ export const ContactNavigator = () => {
         name="contactDetail"
         component={ContactsDetailScreen}
         options={{ headerShown: false }}
+      />
+      <StackContacts.Screen
+        name="allContacts"
+        component={AllContactsScreen}
+        options={{
+          title: LL.PeopleScreen.allContacts(),
+        }}
       />
       <StackContacts.Screen
         name="circlesDashboard"

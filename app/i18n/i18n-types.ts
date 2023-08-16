@@ -187,6 +187,14 @@ type RootTranslation = {
 		 * N​o​ ​c​o​n​t​a​c​t​s​ ​m​a​t​c​h​i​n​g​ ​y​o​u​r​ ​s​e​a​r​c​h​ ​w​e​r​e​ ​f​o​u​n​d​.
 		 */
 		noMatchingContacts: string
+		/**
+		 * A​l​l​ ​C​o​n​t​a​c​t​s
+		 */
+		allContacts: string
+		/**
+		 * V​i​e​w​ ​a​l​l​ ​c​o​n​t​a​c​t​s
+		 */
+		viewAllContacts: string
 	}
 	ContactDetailsScreen: {
 		/**
@@ -3688,6 +3696,14 @@ export type TranslationFunctions = {
 		 * No contacts matching your search were found.
 		 */
 		noMatchingContacts: () => LocalizedString
+		/**
+		 * All Contacts
+		 */
+		allContacts: () => LocalizedString
+		/**
+		 * View all contacts
+		 */
+		viewAllContacts: () => LocalizedString
 	}
 	ContactDetailsScreen: {
 		/**

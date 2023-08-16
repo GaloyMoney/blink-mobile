@@ -52,6 +52,8 @@ const en: BaseTranslation = {
     noContactsYet:
       "Send or receive a payment using a username and contacts will automatically be added here",
     noMatchingContacts: "No contacts matching your search were found.",
+    allContacts: "All Contacts",
+    viewAllContacts: "View all contacts"
   },
   ContactDetailsScreen: {
     title: "Transactions with {username: string}",

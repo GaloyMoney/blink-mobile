@@ -11,7 +11,11 @@ import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { PeopleStackParamList } from "@app/navigation/stack-param-lists"
+import {
+  PeopleStackParamList,
+  RootStackParamList,
+} from "@app/navigation/stack-param-lists"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 gql`
   query contacts {
@@ -30,12 +34,17 @@ gql`
 const Contact = ({ contact }: { contact: UserContact }) => {
   const styles = useStyles()
   const navigation = useNavigation<StackNavigationProp<PeopleStackParamList>>()
+  const rootNavigation = navigation.getParent<StackNavigationProp<RootStackParamList>>()
 
   return (
     <View style={styles.contactContainer}>
       <Text type="p1">{contact.username}</Text>
       <GaloyIconButton
-        onPress={() => navigation.navigate("contactDetail", { contact })}
+        onPress={() =>
+          rootNavigation.navigate("sendBitcoinDestination", {
+            username: contact.username,
+          })
+        }
         name="send"
         size="medium"
         iconOnly
@@ -47,7 +56,10 @@ const Contact = ({ contact }: { contact: UserContact }) => {
 export const ContactsCard = () => {
   const styles = useStyles()
 
+  const { LL } = useI18nContext()
+
   const isAuthed = useIsAuthed()
+  const navigation = useNavigation<StackNavigationProp<PeopleStackParamList>>()
 
   const { loading, data, error } = useContactsQuery({
     skip: !isAuthed,
@@ -76,7 +88,10 @@ export const ContactsCard = () => {
           <Contact key={contact.id} contact={contact as UserContact} />
         ))}
       </View>
-      <GaloySecondaryButton title="View all contacts" />
+      <GaloySecondaryButton
+        title={LL.PeopleScreen.viewAllContacts()}
+        onPress={() => navigation.navigate("allContacts")}
+      />
     </View>
   )
 }

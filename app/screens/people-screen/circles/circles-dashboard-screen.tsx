@@ -47,7 +47,7 @@ export const CirclesDashboardScreen: React.FC = () => {
         description="points"
         subtitle="4 degrees of separation achieved"
         tooltip="Total how much of an impact you are making"
-        countUpDuration={1}
+        countUpDuration={1.5}
       />
       <InviteFriendsCard />
     </Screen>
