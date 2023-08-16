@@ -873,6 +873,13 @@ query homeUnauthed {
   }
 }
 
+query invite {
+  me {
+    username
+    __typename
+  }
+}
+
 query language {
   me {
     id

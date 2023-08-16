@@ -2368,6 +2368,30 @@ export type BusinessMapMarkersQuery = {
   } | null> | null
 }
 
+export type InviteQueryVariables = Exact<{ [key: string]: never }>
+
+export type InviteQuery = {
+  readonly __typename: "Query"
+  readonly me?: { readonly __typename: "User"; readonly username?: string | null } | null
+}
+
+export type ContactsQueryVariables = Exact<{ [key: string]: never }>
+
+export type ContactsQuery = {
+  readonly __typename: "Query"
+  readonly me?: {
+    readonly __typename: "User"
+    readonly id: string
+    readonly contacts: ReadonlyArray<{
+      readonly __typename: "UserContact"
+      readonly id: string
+      readonly username: string
+      readonly alias?: string | null
+      readonly transactionsCount: number
+    }>
+  } | null
+}
+
 export type TransactionListForContactQueryVariables = Exact<{
   username: Scalars["Username"]
   first?: InputMaybe<Scalars["Int"]>
@@ -2445,21 +2469,6 @@ export type TransactionListForContactQuery = {
 }
 
 export type ContactsQueryVariables = Exact<{ [key: string]: never }>
-
-export type ContactsQuery = {
-  readonly __typename: "Query"
-  readonly me?: {
-    readonly __typename: "User"
-    readonly id: string
-    readonly contacts: ReadonlyArray<{
-      readonly __typename: "UserContact"
-      readonly id: string
-      readonly username: string
-      readonly alias?: string | null
-      readonly transactionsCount: number
-    }>
-  } | null
-}
 
 export type UserContactUpdateAliasMutationVariables = Exact<{
   input: UserContactUpdateAliasInput
@@ -5381,6 +5390,94 @@ export type BusinessMapMarkersQueryResult = Apollo.QueryResult<
   BusinessMapMarkersQuery,
   BusinessMapMarkersQueryVariables
 >
+export const InviteDocument = gql`
+  query invite {
+    me {
+      username
+    }
+  }
+`
+
+/**
+ * __useInviteQuery__
+ *
+ * To run a query within a React component, call `useInviteQuery` and pass it any options that fit your needs.
+ * When your component renders, `useInviteQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useInviteQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useInviteQuery(
+  baseOptions?: Apollo.QueryHookOptions<InviteQuery, InviteQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<InviteQuery, InviteQueryVariables>(InviteDocument, options)
+}
+export function useInviteLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<InviteQuery, InviteQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<InviteQuery, InviteQueryVariables>(InviteDocument, options)
+}
+export type InviteQueryHookResult = ReturnType<typeof useInviteQuery>
+export type InviteLazyQueryHookResult = ReturnType<typeof useInviteLazyQuery>
+export type InviteQueryResult = Apollo.QueryResult<InviteQuery, InviteQueryVariables>
+export const ContactsDocument = gql`
+  query contacts {
+    me {
+      id
+      contacts {
+        id
+        username
+        alias
+        transactionsCount
+      }
+    }
+  }
+`
+
+/**
+ * __useContactsQuery__
+ *
+ * To run a query within a React component, call `useContactsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useContactsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useContactsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useContactsQuery(
+  baseOptions?: Apollo.QueryHookOptions<ContactsQuery, ContactsQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<ContactsQuery, ContactsQueryVariables>(ContactsDocument, options)
+}
+export function useContactsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ContactsQuery, ContactsQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<ContactsQuery, ContactsQueryVariables>(
+    ContactsDocument,
+    options,
+  )
+}
+export type ContactsQueryHookResult = ReturnType<typeof useContactsQuery>
+export type ContactsLazyQueryHookResult = ReturnType<typeof useContactsLazyQuery>
+export type ContactsQueryResult = Apollo.QueryResult<
+  ContactsQuery,
+  ContactsQueryVariables
+>
 export const TransactionListForContactDocument = gql`
   query transactionListForContact(
     $username: Username!
@@ -5454,56 +5551,6 @@ export type TransactionListForContactLazyQueryHookResult = ReturnType<
 export type TransactionListForContactQueryResult = Apollo.QueryResult<
   TransactionListForContactQuery,
   TransactionListForContactQueryVariables
->
-export const ContactsDocument = gql`
-  query contacts {
-    me {
-      id
-      contacts {
-        id
-        username
-        alias
-        transactionsCount
-      }
-    }
-  }
-`
-
-/**
- * __useContactsQuery__
- *
- * To run a query within a React component, call `useContactsQuery` and pass it any options that fit your needs.
- * When your component renders, `useContactsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useContactsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useContactsQuery(
-  baseOptions?: Apollo.QueryHookOptions<ContactsQuery, ContactsQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<ContactsQuery, ContactsQueryVariables>(ContactsDocument, options)
-}
-export function useContactsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<ContactsQuery, ContactsQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<ContactsQuery, ContactsQueryVariables>(
-    ContactsDocument,
-    options,
-  )
-}
-export type ContactsQueryHookResult = ReturnType<typeof useContactsQuery>
-export type ContactsLazyQueryHookResult = ReturnType<typeof useContactsLazyQuery>
-export type ContactsQueryResult = Apollo.QueryResult<
-  ContactsQuery,
-  ContactsQueryVariables
 >
 export const UserContactUpdateAliasDocument = gql`
   mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {

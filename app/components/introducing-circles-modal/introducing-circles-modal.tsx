@@ -2,7 +2,6 @@ import * as React from "react"
 import { Pressable, View } from "react-native"
 import Modal from "react-native-modal"
 
-import { useI18nContext } from "@app/i18n/i18n-react"
 import { makeStyles, useTheme, Text } from "@rneui/themed"
 
 import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
@@ -58,7 +57,6 @@ type Props = {
 }
 
 export const IntroducingCirclesModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
-  const { LL } = useI18nContext()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const primaryNavigator =
     navigation.getParent<BottomTabNavigationProp<PrimaryStackParamList>>()
