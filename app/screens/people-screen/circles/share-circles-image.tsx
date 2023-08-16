@@ -11,6 +11,7 @@ import { captureRef } from "react-native-view-shot"
 import Share from "react-native-share"
 import { Circle } from "@app/components/circle"
 import { LinearGradient } from "react-native-linear-gradient"
+import crashlytics from "@react-native-firebase/crashlytics"
 
 gql`
   query CirclesShares {
@@ -68,14 +69,13 @@ export const CirclesDashboardHeaderRight: React.FC = () => {
       const shareOptions = {
         fileName: `${data?.me?.username}'s Blink Circles`,
         title: `${data?.me?.username}'s Blink Circles`,
-        message: `${data?.me?.username}'s Blink Circles`,
         url: uri,
         type: "image/jpeg",
       }
 
-      Share.open(shareOptions)
+      await Share.open(shareOptions)
     } catch (error) {
-      console.error("Error sharing image:", error)
+      crashlytics().log("User didn't share")
     }
   }
 

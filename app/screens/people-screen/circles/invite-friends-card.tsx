@@ -10,6 +10,7 @@ import { useInviteQuery } from "@app/graphql/generated"
 
 import crashlytics from "@react-native-firebase/crashlytics"
 import { InviteModal } from "@app/components/invite-modal"
+import { getInviteLink } from "./helpers"
 
 gql`
   query invite {
@@ -18,8 +19,6 @@ gql`
     }
   }
 `
-
-export const getInviteLink = (username: string) => `https://get.blink.sv/${username}`
 
 export const InviteFriendsCard = () => {
   const styles = useStyles()

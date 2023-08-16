@@ -49,6 +49,8 @@ export const CirclesDashboardScreen: React.FC = () => {
       </View>
     )
 
+  const welcomeProfile = data?.me?.defaultAccount.welcomeProfile
+
   return (
     <Screen style={styles.screen} preset="scroll">
       <Text style={styles.description} type="p2">
@@ -56,33 +58,41 @@ export const CirclesDashboardScreen: React.FC = () => {
       </Text>
       <Circle
         heading="Inner circle"
-        value={data?.me?.defaultAccount.welcomeProfile.innerCircleAllTimeCount}
+        value={welcomeProfile.innerCircleAllTimeCount}
         minValue={1}
         maxValue={840}
-        description="people you onboarded"
-        subtitle="+3 this month"
+        description="people you welcomed"
+        subtitle={
+          welcomeProfile.innerCircleThisMonthCount > 0
+            ? `+ ${welcomeProfile.innerCircleThisMonthCount} this month`
+            : ""
+        }
         subtitleGreen
         bubble
-        countUpDuration={1}
+        countUpDuration={1.2}
       />
       <Circle
         heading="Outer circle"
         value={data?.me?.defaultAccount.welcomeProfile.outerCircleAllTimeCount}
         minValue={1}
         maxValue={420}
-        description="people onboarded by your inner circle"
-        subtitle="+34 this month"
+        description="people welcomed by your circle"
+        subtitle={
+          welcomeProfile.outerCircleThisMonthCount > 0
+            ? `+ ${welcomeProfile.outerCircleThisMonthCount} this month`
+            : ""
+        }
         subtitleGreen
         bubble
-        countUpDuration={1}
+        countUpDuration={1.2}
       />
       <Circle
         heading="Your sphere"
         value={data?.me?.defaultAccount.welcomeProfile.allTimePoints}
         description="points"
-        subtitle="4 degrees of separation achieved"
+        subtitle={`You're #${welcomeProfile.thisMonthRank} this month and #${welcomeProfile.allTimeRank} all time!`}
         tooltip="Total how much of an impact you are making"
-        countUpDuration={1.5}
+        countUpDuration={1.8}
       />
       <InviteFriendsCard />
     </Screen>
