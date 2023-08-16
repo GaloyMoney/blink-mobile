@@ -66,7 +66,7 @@ export const Circle: React.FC<CircleProps> = ({
           </View>
         )}
       </View>
-      <Text style={styles.circleSubtitle}>{subtitle}</Text>
+      {subtitle && <Text style={styles.circleSubtitle}>{subtitle}</Text>}
     </View>
   )
 }
@@ -83,7 +83,7 @@ const useStyles = makeStyles(
         flexDirection: "row",
         columnGap: 10,
         justifyContent: "flex-start",
-        alignItems: "flex-end",
+        alignItems: "center",
         marginBottom: 4,
         position: "relative",
         width: "100%",
@@ -95,8 +95,9 @@ const useStyles = makeStyles(
         textAlign: "center",
       },
       circleDescription: {
-        maxWidth: "40%",
+        maxWidth: "35%",
         marginBottom: 6,
+        lineHeight: 20,
       },
       circleTooltip: {
         marginBottom: 4,
