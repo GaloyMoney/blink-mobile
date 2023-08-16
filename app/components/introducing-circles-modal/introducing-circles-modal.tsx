@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Pressable, View } from "react-native"
+import { View } from "react-native"
 import Modal from "react-native-modal"
 
 import { makeStyles, useTheme, Text } from "@rneui/themed"
@@ -13,11 +13,11 @@ import {
   RootStackParamList,
 } from "@app/navigation/stack-param-lists"
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
+import { GaloyIconButton } from "../atomic/galoy-icon-button"
 
 const useStyles = makeStyles(({ colors }) => ({
   scrollViewStyle: {
     padding: 20,
-    paddingTop: 40,
     display: "flex",
     flexDirection: "column",
     rowGap: 30,
@@ -29,15 +29,16 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   cross: {
     position: "absolute",
-    top: 0,
-    right: 30,
-    padding: 10,
-    marginTop: -10,
+    top: -20,
+    right: 20,
   },
   modalCard: {
     backgroundColor: colors.grey5,
     borderRadius: 16,
-    paddingVertical: 10,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 30,
   },
   cardTitleContainer: {
     flexDirection: "column",
@@ -84,9 +85,9 @@ export const IntroducingCirclesModal: React.FC<Props> = ({ isVisible, setIsVisib
     >
       <View style={styles.modalCard}>
         <View style={styles.scrollViewStyle}>
-          <Pressable style={styles.cross} onPress={acknowledgeModal}>
-            <GaloyIcon name="close" size={22} />
-          </Pressable>
+          <View style={styles.cross}>
+            <GaloyIconButton name="close" size="medium" onPress={acknowledgeModal} />
+          </View>
           <GaloyIcon name="people" color={colors.primary} size={50} />
           <View style={styles.cardTitleContainer}>
             <Text type="h1" bold>

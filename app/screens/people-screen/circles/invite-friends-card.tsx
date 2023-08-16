@@ -3,10 +3,13 @@ import { Alert, Share, View } from "react-native"
 import { makeStyles, Text } from "@rneui/themed"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 
+import { useState } from "react"
+
 import { gql } from "@apollo/client"
 import { useInviteQuery } from "@app/graphql/generated"
 
 import crashlytics from "@react-native-firebase/crashlytics"
+import { InviteModal } from "@app/components/invite-modal"
 
 gql`
   query invite {
@@ -16,10 +19,11 @@ gql`
   }
 `
 
-const getInviteLink = (username: string) => `https://get.blink.sv/${username}`
+export const getInviteLink = (username: string) => `https://get.blink.sv/${username}`
 
 export const InviteFriendsCard = () => {
   const styles = useStyles()
+  const [isInviteModalVisible, setIsInviteModalVisible] = useState(false)
 
   const { data } = useInviteQuery()
 
@@ -47,10 +51,19 @@ export const InviteFriendsCard = () => {
 
   return (
     <View style={styles.container}>
+      <InviteModal
+        isVisible={isInviteModalVisible}
+        setIsVisible={setIsInviteModalVisible}
+      />
       <Text type="p1">Invite Friends</Text>
       <View style={styles.iconContainer}>
         <GaloyIconButton name="share" size="medium" iconOnly onPress={share} />
-        <GaloyIconButton name="qr-code" size="medium" iconOnly />
+        <GaloyIconButton
+          name="qr-code"
+          size="medium"
+          iconOnly
+          onPress={() => setIsInviteModalVisible(true)}
+        />
       </View>
     </View>
   )
