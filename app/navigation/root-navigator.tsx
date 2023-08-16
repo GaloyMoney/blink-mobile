@@ -75,10 +75,8 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
-import {
-  CirclesDashboardHeaderRight,
-  CirclesDashboardScreen,
-} from "@app/screens/people-screen/circles/circles-dashboard-screen"
+import { CirclesDashboardScreen } from "@app/screens/people-screen/circles/circles-dashboard-screen"
+import { CirclesDashboardHeaderRight } from "@app/screens/people-screen/circles/share-circles-image"
 import { AllContactsScreen } from "@app/screens/people-screen/contacts/all-contacts"
 
 const useStyles = makeStyles(({ colors }) => ({

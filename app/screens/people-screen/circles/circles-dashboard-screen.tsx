@@ -1,5 +1,4 @@
 import { Text, makeStyles } from "@rneui/themed"
-import Icon from "react-native-vector-icons/Ionicons"
 
 import { Screen } from "@app/components/screen"
 import { Circle } from "@app/components/circle"
@@ -8,12 +7,6 @@ import { gql } from "@apollo/client"
 import { ActivityIndicator, View } from "react-native"
 import { useCirclesQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-
-export const CirclesDashboardHeaderRight: React.FC = () => {
-  const styles = useStyles()
-
-  return <Icon style={styles.shareButton} name="share-social-outline" />
-}
 
 gql`
   query Circles {
@@ -97,11 +90,6 @@ export const CirclesDashboardScreen: React.FC = () => {
 
 const useStyles = makeStyles(({ colors }) => {
   return {
-    shareButton: {
-      fontSize: 22,
-      color: colors.black,
-      paddingRight: 10,
-    },
     screen: {
       padding: 20,
       display: "flex",

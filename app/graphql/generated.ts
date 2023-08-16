@@ -2538,6 +2538,11 @@ export type CirclesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type CirclesQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly welcomeProfile?: { readonly __typename: 'WelcomeProfile', readonly allTimePoints: number, readonly allTimeRank: number, readonly innerCircleAllTimeCount: number, readonly innerCircleThisMonthCount: number, readonly leaderboardName?: string | null, readonly outerCircleAllTimeCount: number, readonly outerCircleThisMonthCount: number, readonly thisMonthPoints: number, readonly thisMonthRank: number } | null } } | null };
 
+export type CirclesSharesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CirclesSharesQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly welcomeProfile?: { readonly __typename: 'WelcomeProfile', readonly allTimePoints: number, readonly allTimeRank: number, readonly innerCircleAllTimeCount: number, readonly innerCircleThisMonthCount: number, readonly leaderboardName?: string | null, readonly outerCircleAllTimeCount: number, readonly outerCircleThisMonthCount: number, readonly thisMonthPoints: number, readonly thisMonthRank: number } | null } } | null };
+
 export type ContactsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5702,7 +5707,59 @@ export function useCirclesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ci
 export type CirclesQueryHookResult = ReturnType<typeof useCirclesQuery>;
 export type CirclesLazyQueryHookResult = ReturnType<typeof useCirclesLazyQuery>;
 export type CirclesQueryResult = Apollo.QueryResult<CirclesQuery, CirclesQueryVariables>;
+<<<<<<< HEAD
 >>>>>>> 885241ec (feat: fetch from backend)
+=======
+export const CirclesSharesDocument = gql`
+    query CirclesShares {
+  me {
+    username
+    defaultAccount {
+      ... on ConsumerAccount {
+        welcomeProfile {
+          allTimePoints
+          allTimeRank
+          innerCircleAllTimeCount
+          innerCircleThisMonthCount
+          leaderboardName
+          outerCircleAllTimeCount
+          outerCircleThisMonthCount
+          thisMonthPoints
+          thisMonthRank
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCirclesSharesQuery__
+ *
+ * To run a query within a React component, call `useCirclesSharesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCirclesSharesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCirclesSharesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCirclesSharesQuery(baseOptions?: Apollo.QueryHookOptions<CirclesSharesQuery, CirclesSharesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CirclesSharesQuery, CirclesSharesQueryVariables>(CirclesSharesDocument, options);
+      }
+export function useCirclesSharesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CirclesSharesQuery, CirclesSharesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CirclesSharesQuery, CirclesSharesQueryVariables>(CirclesSharesDocument, options);
+        }
+export type CirclesSharesQueryHookResult = ReturnType<typeof useCirclesSharesQuery>;
+export type CirclesSharesLazyQueryHookResult = ReturnType<typeof useCirclesSharesLazyQuery>;
+export type CirclesSharesQueryResult = Apollo.QueryResult<CirclesSharesQuery, CirclesSharesQueryVariables>;
+>>>>>>> 26e415d7 (feat: image is generating)
 export const ContactsDocument = gql`
   query contacts {
     me {
