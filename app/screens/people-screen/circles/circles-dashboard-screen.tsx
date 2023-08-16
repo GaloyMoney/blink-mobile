@@ -6,11 +6,40 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "@app/components/screen"
 import { InviteFriendsCard } from "./invite-friends-card"
 import { ModalTooltip } from "@app/components/modal-tooltip/modal-tooltip"
+import { useCountUp } from "use-count-up"
 
 export const CirclesDashboardHeaderRight: React.FC = () => {
   const styles = useStyles()
 
   return <Icon style={styles.shareButton} name="share-social-outline" />
+}
+
+const getcBackValue = (
+  circleValue?: number,
+  circleMinValue?: number,
+  circleMaxValue?: number,
+) => {
+  let cBackValue = 0
+
+  if (
+    typeof circleValue !== "undefined" &&
+    typeof circleMinValue !== "undefined" &&
+    typeof circleMaxValue !== "undefined"
+  ) {
+    let mappedValue
+    if (circleMinValue <= circleValue && circleValue <= circleMaxValue)
+      mappedValue = easeOut(circleValue, circleMinValue, circleMaxValue) * circleValue
+    else if (circleMinValue > circleValue) mappedValue = circleMinValue
+    else mappedValue = circleMaxValue
+
+    // a to b is the range of pixels for the circle drawn
+    const a = 50
+    const b = 1000
+
+    cBackValue =
+      a + ((mappedValue - circleMinValue) / (circleMaxValue - circleMinValue)) * (b - a)
+  }
+  return cBackValue
 }
 
 type CircleProps = {
@@ -23,6 +52,7 @@ type CircleProps = {
   subtitleGreen?: boolean
   bubble?: boolean
   tooltip?: string
+  countUpDuration?: number
 }
 
 const Circle: React.FC<CircleProps> = ({
@@ -35,13 +65,27 @@ const Circle: React.FC<CircleProps> = ({
   minValue = 1,
   maxValue = 100,
   tooltip,
+  countUpDuration = 0,
 }) => {
   const styles = useStyles({
     subtitleGreen,
-    circleMinValue: minValue,
-    circleMaxValue: maxValue,
-    circleValue: value,
   })
+
+  const { value: countUpValue } = useCountUp({
+    isCounting: true,
+    end: value,
+    duration: countUpDuration,
+  })
+
+  const cBackValue = getcBackValue(Number(countUpValue), minValue, maxValue)
+
+  const cBackStyles = {
+    height: cBackValue,
+    width: cBackValue,
+    borderRadius: cBackValue / 2,
+    marginLeft: -cBackValue / 2,
+    marginTop: -cBackValue / 2,
+  }
 
   return (
     <View style={styles.circleContainer}>
@@ -50,8 +94,8 @@ const Circle: React.FC<CircleProps> = ({
       </Text>
       <View style={styles.circleValueWrapper}>
         <View>
-          <Text style={styles.circleValue}>{value}</Text>
-          {bubble && <View style={styles.circleBubble} />}
+          <Text style={styles.circleValue}>{countUpValue}</Text>
+          {bubble && <View style={[styles.circleBubble, cBackStyles]} />}
         </View>
         <Text style={styles.circleDescription}>{description}</Text>
         {tooltip && (
@@ -75,23 +119,25 @@ export const CirclesDashboardScreen: React.FC = () => {
       </Text>
       <Circle
         heading="Inner circle"
-        value={Math.floor(Math.random() * 150)}
+        value={3}
         minValue={1}
-        maxValue={150}
+        maxValue={840}
         description="people you onboarded"
         subtitle="+3 this month"
         subtitleGreen
         bubble
+        countUpDuration={1}
       />
       <Circle
         heading="Outer circle"
-        value={Math.floor(Math.random() * 800)}
+        value={10}
         minValue={1}
-        maxValue={800}
+        maxValue={420}
         description="people onboarded by your inner circle"
         subtitle="+34 this month"
         subtitleGreen
         bubble
+        countUpDuration={1}
       />
       <Circle
         heading="Your sphere"
@@ -99,6 +145,7 @@ export const CirclesDashboardScreen: React.FC = () => {
         description="points"
         subtitle="4 degrees of separation achieved"
         tooltip="Total how much of an impact you are making"
+        countUpDuration={1}
       />
       <InviteFriendsCard />
     </Screen>
@@ -114,41 +161,7 @@ const easeOut = (x: number, minValue: number, maxValue: number) => {
 }
 
 const useStyles = makeStyles(
-  (
-    { colors },
-    {
-      subtitleGreen,
-      circleMinValue,
-      circleMaxValue,
-      circleValue,
-    }: {
-      subtitleGreen?: boolean
-      circleMinValue?: number
-      circleMaxValue?: number
-      circleValue?: number
-    },
-  ) => {
-    let cBackValue = 0
-
-    if (
-      typeof circleValue !== "undefined" &&
-      typeof circleMinValue !== "undefined" &&
-      typeof circleMaxValue !== "undefined"
-    ) {
-      let mappedValue
-      if (circleMinValue <= circleValue && circleValue <= circleMaxValue)
-        mappedValue = easeOut(circleValue, circleMinValue, circleMaxValue) * circleValue
-      else if (circleMinValue > circleValue) mappedValue = circleMinValue
-      else mappedValue = circleMaxValue
-
-      // a to b is the range of pixels for the circle drawn
-      const a = 50
-      const b = 300
-
-      cBackValue =
-        a + ((mappedValue - circleMinValue) / (circleMaxValue - circleMinValue)) * (b - a)
-    }
-
+  ({ colors }, { subtitleGreen }: { subtitleGreen?: boolean }) => {
     return {
       shareButton: {
         fontSize: 22,
@@ -181,6 +194,8 @@ const useStyles = makeStyles(
       circleValue: {
         fontWeight: "700",
         fontSize: 48,
+        minWidth: 40,
+        textAlign: "center",
       },
       circleDescription: {
         maxWidth: "40%",
@@ -195,13 +210,8 @@ const useStyles = makeStyles(
       circleBubble: {
         position: "absolute",
         backgroundColor: colors.backdropWhiter,
-        height: cBackValue,
-        width: cBackValue,
-        borderRadius: cBackValue / 2,
         top: "50%",
         left: "50%",
-        marginLeft: -cBackValue / 2,
-        marginTop: -cBackValue / 2,
       },
     }
   },

@@ -32,17 +32,14 @@ const Contact = ({ contact }: { contact: UserContact }) => {
   const navigation = useNavigation<StackNavigationProp<PeopleStackParamList>>()
 
   return (
-    <View>
-      <View style={styles.contactContainer}>
-        <Text type="p1">{contact.username}</Text>
-        <GaloyIconButton
-          onPress={() => navigation.navigate("contactDetail", { contact })}
-          name="send"
-          size="medium"
-          iconOnly
-        />
-      </View>
-      <View style={styles.separator}></View>
+    <View style={styles.contactContainer}>
+      <Text type="p1">{contact.username}</Text>
+      <GaloyIconButton
+        onPress={() => navigation.navigate("contactDetail", { contact })}
+        name="send"
+        size="medium"
+        iconOnly
+      />
     </View>
   )
 }
@@ -69,7 +66,7 @@ export const ContactsCard = () => {
     <View style={styles.container}>
       <View>
         <View style={styles.contacts}>
-          <Text type="h2">Contacts</Text>
+          <Text type="h2">Recent Contacts</Text>
         </View>
         <View style={[styles.separator, styles.spaceTop]}></View>
       </View>
@@ -79,7 +76,7 @@ export const ContactsCard = () => {
           <Contact key={contact.id} contact={contact as UserContact} />
         ))}
       </View>
-      <GaloySecondaryButton title="View and manage contacts" />
+      <GaloySecondaryButton title="View all contacts" />
     </View>
   )
 }
@@ -122,6 +119,5 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "space-between",
     alignItems: "center",
     paddingTop: 3,
-    paddingBottom: 6,
   },
 }))
