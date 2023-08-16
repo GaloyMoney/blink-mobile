@@ -622,6 +622,7 @@ mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
 query Circles {
   me {
     defaultAccount {
+      id
       ... on ConsumerAccount {
         welcomeProfile {
           allTimePoints

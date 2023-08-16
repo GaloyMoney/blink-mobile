@@ -12,6 +12,7 @@ gql`
   query Circles {
     me {
       defaultAccount {
+        id
         ... on ConsumerAccount {
           welcomeProfile {
             allTimePoints
