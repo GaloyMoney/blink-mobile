@@ -619,6 +619,30 @@ mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
   }
 }
 
+query Circles {
+  me {
+    defaultAccount {
+      ... on ConsumerAccount {
+        welcomeProfile {
+          allTimePoints
+          allTimeRank
+          innerCircleAllTimeCount
+          innerCircleThisMonthCount
+          leaderboardName
+          outerCircleAllTimeCount
+          outerCircleThisMonthCount
+          thisMonthPoints
+          thisMonthRank
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
 query accountDefaultWallet($username: Username!) {
   accountDefaultWallet(username: $username) {
     id

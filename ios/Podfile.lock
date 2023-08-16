@@ -443,6 +443,8 @@ PODS:
     - React-Core
   - react-native-slider (4.4.2):
     - React-Core
+  - react-native-view-shot (3.7.0):
+    - React-Core
   - React-perflogger (0.71.8)
   - React-RCTActionSheet (0.71.8):
     - React-Core/RCTActionSheetHeaders (= 0.71.8)
@@ -667,6 +669,7 @@ DEPENDENCIES:
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-secure-key-store (from `../node_modules/react-native-secure-key-store`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
+  - react-native-view-shot (from `../node_modules/react-native-view-shot`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -801,6 +804,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-secure-key-store"
   react-native-slider:
     :path: "../node_modules/@react-native-community/slider"
+  react-native-view-shot:
+    :path: "../node_modules/react-native-view-shot"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -941,6 +946,7 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: 39c2d8be3328df5d437ac1700f4f3a4f75716acc
   react-native-secure-key-store: 910e6df6bc33cb790aba6ee24bc7818df1fe5898
   react-native-slider: 33b8d190b59d4f67a541061bb91775d53d617d9d
+  react-native-view-shot: f5507655f122e6b104888a11130f267a427f0d57
   React-perflogger: d21f182895de9d1b077f8a3cd00011095c8c9100
   React-RCTActionSheet: 0151f83ef92d2a7139bba7dfdbc8066632a6d47b
   React-RCTAnimation: 5ec9c0705bb2297549c120fe6473aa3e4a01e215

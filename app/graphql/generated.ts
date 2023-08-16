@@ -47,10 +47,17 @@ export type Scalars = {
   /** Feedback shared with our user */
   Feedback: { input: string; output: string }
   /** Hex-encoded string of 32 bytes */
+<<<<<<< HEAD
   Hex32Bytes: { input: string; output: string }
   Language: { input: string; output: string }
   LeaderboardName: { input: string; output: string }
   LnPaymentPreImage: { input: string; output: string }
+=======
+  Hex32Bytes: string;
+  Language: string;
+  LeaderboardName: string;
+  LnPaymentPreImage: string;
+>>>>>>> 885241ec (feat: fetch from backend)
   /** BOLT11 lightning invoice payment request with the amount included */
   LnPaymentRequest: { input: string; output: string }
   LnPaymentSecret: { input: string; output: string }
@@ -261,11 +268,20 @@ export type ConsumerAccount = Account & {
   readonly quiz: ReadonlyArray<Quiz>
   readonly realtimePrice: RealtimePrice
   /** A list of all transactions associated with walletIds optionally passed. */
+<<<<<<< HEAD
   readonly transactions?: Maybe<TransactionConnection>
   readonly usdWallet?: Maybe<UsdWallet>
   readonly wallets: ReadonlyArray<Wallet>
   readonly welcomeProfile?: Maybe<WelcomeProfile>
 }
+=======
+  readonly transactions?: Maybe<TransactionConnection>;
+  readonly usdWallet?: Maybe<UsdWallet>;
+  readonly wallets: ReadonlyArray<Wallet>;
+  readonly welcomeProfile?: Maybe<WelcomeProfile>;
+};
+
+>>>>>>> 885241ec (feat: fetch from backend)
 
 export type ConsumerAccountCsvTransactionsArgs = {
   walletIds: ReadonlyArray<Scalars["WalletId"]["input"]>
@@ -444,6 +460,23 @@ export type Leaderboard = {
   readonly range: WelcomeRange
 }
 
+<<<<<<< HEAD
+=======
+export type InvoicePaymentStatus = typeof InvoicePaymentStatus[keyof typeof InvoicePaymentStatus];
+export type Leader = {
+  readonly __typename: 'Leader';
+  readonly name?: Maybe<Scalars['LeaderboardName']>;
+  readonly points: Scalars['Int'];
+  readonly rank: Scalars['Int'];
+};
+
+export type Leaderboard = {
+  readonly __typename: 'Leaderboard';
+  readonly leaders: ReadonlyArray<Leader>;
+  readonly range: WelcomeRange;
+};
+
+>>>>>>> 885241ec (feat: fetch from backend)
 export type LnInvoice = {
   readonly __typename: "LnInvoice"
   readonly paymentHash: Scalars["PaymentHash"]["output"]
@@ -932,6 +965,7 @@ export type OnChainAddressPayload = {
 }
 
 export type OnChainPaymentSendAllInput = {
+<<<<<<< HEAD
   readonly address: Scalars["OnChainAddress"]["input"]
   readonly memo?: InputMaybe<Scalars["Memo"]["input"]>
   readonly speed?: InputMaybe<PayoutSpeed>
@@ -945,6 +979,21 @@ export type OnChainPaymentSendInput = {
   readonly speed?: InputMaybe<PayoutSpeed>
   readonly walletId: Scalars["WalletId"]["input"]
 }
+=======
+  readonly address: Scalars['OnChainAddress'];
+  readonly memo?: InputMaybe<Scalars['Memo']>;
+  readonly speed?: InputMaybe<PayoutSpeed>;
+  readonly walletId: Scalars['WalletId'];
+};
+
+export type OnChainPaymentSendInput = {
+  readonly address: Scalars['OnChainAddress'];
+  readonly amount: Scalars['SatAmount'];
+  readonly memo?: InputMaybe<Scalars['Memo']>;
+  readonly speed?: InputMaybe<PayoutSpeed>;
+  readonly walletId: Scalars['WalletId'];
+};
+>>>>>>> 885241ec (feat: fetch from backend)
 
 export type OnChainTxFee = {
   readonly __typename: "OnChainTxFee"
@@ -965,6 +1014,7 @@ export type OnChainUpdate = {
 }
 
 export type OnChainUsdPaymentSendAsBtcDenominatedInput = {
+<<<<<<< HEAD
   readonly address: Scalars["OnChainAddress"]["input"]
   readonly amount: Scalars["SatAmount"]["input"]
   readonly memo?: InputMaybe<Scalars["Memo"]["input"]>
@@ -979,6 +1029,22 @@ export type OnChainUsdPaymentSendInput = {
   readonly speed?: InputMaybe<PayoutSpeed>
   readonly walletId: Scalars["WalletId"]["input"]
 }
+=======
+  readonly address: Scalars['OnChainAddress'];
+  readonly amount: Scalars['SatAmount'];
+  readonly memo?: InputMaybe<Scalars['Memo']>;
+  readonly speed?: InputMaybe<PayoutSpeed>;
+  readonly walletId: Scalars['WalletId'];
+};
+
+export type OnChainUsdPaymentSendInput = {
+  readonly address: Scalars['OnChainAddress'];
+  readonly amount: Scalars['CentAmount'];
+  readonly memo?: InputMaybe<Scalars['Memo']>;
+  readonly speed?: InputMaybe<PayoutSpeed>;
+  readonly walletId: Scalars['WalletId'];
+};
+>>>>>>> 885241ec (feat: fetch from backend)
 
 export type OnChainUsdTxFee = {
   readonly __typename: "OnChainUsdTxFee"
@@ -1144,10 +1210,18 @@ export type Query = {
   /** Returns 1 Sat and 1 Usd Cent price for the given currency */
   readonly realtimePrice: RealtimePrice
   /** @deprecated will be migrated to AccountDefaultWalletId */
+<<<<<<< HEAD
   readonly userDefaultWalletId: Scalars["WalletId"]["output"]
   readonly usernameAvailable?: Maybe<Scalars["Boolean"]["output"]>
   readonly welcomeLeaderboard: Leaderboard
 }
+=======
+  readonly userDefaultWalletId: Scalars['WalletId'];
+  readonly usernameAvailable?: Maybe<Scalars['Boolean']>;
+  readonly welcomeLeaderboard: Leaderboard;
+};
+
+>>>>>>> 885241ec (feat: fetch from backend)
 
 export type QueryAccountDefaultWalletArgs = {
   username: Scalars["Username"]["input"]
@@ -1167,6 +1241,7 @@ export type QueryLnInvoicePaymentStatusArgs = {
 }
 
 export type QueryOnChainTxFeeArgs = {
+<<<<<<< HEAD
   address: Scalars["OnChainAddress"]["input"]
   amount: Scalars["SatAmount"]["input"]
   speed?: InputMaybe<PayoutSpeed>
@@ -1186,6 +1261,30 @@ export type QueryOnChainUsdTxFeeAsBtcDenominatedArgs = {
   speed?: InputMaybe<PayoutSpeed>
   walletId: Scalars["WalletId"]["input"]
 }
+=======
+  address: Scalars['OnChainAddress'];
+  amount: Scalars['SatAmount'];
+  speed?: InputMaybe<PayoutSpeed>;
+  walletId: Scalars['WalletId'];
+};
+
+
+export type QueryOnChainUsdTxFeeArgs = {
+  address: Scalars['OnChainAddress'];
+  amount: Scalars['CentAmount'];
+  speed?: InputMaybe<PayoutSpeed>;
+  walletId: Scalars['WalletId'];
+};
+
+
+export type QueryOnChainUsdTxFeeAsBtcDenominatedArgs = {
+  address: Scalars['OnChainAddress'];
+  amount: Scalars['SatAmount'];
+  speed?: InputMaybe<PayoutSpeed>;
+  walletId: Scalars['WalletId'];
+};
+
+>>>>>>> 885241ec (feat: fetch from backend)
 
 export type QueryRealtimePriceArgs = {
   currency?: InputMaybe<Scalars["DisplayCurrency"]["input"]>
@@ -1202,6 +1301,11 @@ export type QueryUsernameAvailableArgs = {
 export type QueryWelcomeLeaderboardArgs = {
   input: WelcomeLeaderboardInput
 }
+
+
+export type QueryWelcomeLeaderboardArgs = {
+  input: WelcomeLeaderboardInput;
+};
 
 export type Quiz = {
   readonly __typename: "Quiz"
@@ -1683,10 +1787,38 @@ export const WalletCurrency = {
   Usd: "USD",
 } as const
 
+<<<<<<< HEAD
 export type WalletCurrency = (typeof WalletCurrency)[keyof typeof WalletCurrency]
 export type WelcomeLeaderboardInput = {
   readonly range: WelcomeRange
 }
+=======
+export type WalletCurrency = typeof WalletCurrency[keyof typeof WalletCurrency];
+export type WelcomeLeaderboardInput = {
+  readonly range: WelcomeRange;
+};
+
+export type WelcomeProfile = {
+  readonly __typename: 'WelcomeProfile';
+  readonly allTimePoints: Scalars['Int'];
+  readonly allTimeRank: Scalars['Int'];
+  readonly innerCircleAllTimeCount: Scalars['Int'];
+  readonly innerCircleThisMonthCount: Scalars['Int'];
+  readonly leaderboardName?: Maybe<Scalars['LeaderboardName']>;
+  readonly outerCircleAllTimeCount: Scalars['Int'];
+  readonly outerCircleThisMonthCount: Scalars['Int'];
+  readonly thisMonthPoints: Scalars['Int'];
+  readonly thisMonthRank: Scalars['Int'];
+};
+
+export const WelcomeRange = {
+  AllTime: 'AllTime',
+  ThisMonth: 'ThisMonth'
+} as const;
+
+export type WelcomeRange = typeof WelcomeRange[keyof typeof WelcomeRange];
+export type MobileUpdateQueryVariables = Exact<{ [key: string]: never; }>;
+>>>>>>> 885241ec (feat: fetch from backend)
 
 export type WelcomeProfile = {
   readonly __typename: "WelcomeProfile"
@@ -1746,6 +1878,11 @@ export type BalanceHeaderQuery = {
     }
   } | null
 }
+
+export type InviteQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type InviteQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null } | null };
 
 export type BtcPriceListQueryVariables = Exact<{
   range: PriceGraphRange
@@ -2377,6 +2514,7 @@ export type InviteQuery = {
 
 export type ContactsQueryVariables = Exact<{ [key: string]: never }>
 
+<<<<<<< HEAD
 export type ContactsQuery = {
   readonly __typename: "Query"
   readonly me?: {
@@ -2391,6 +2529,20 @@ export type ContactsQuery = {
     }>
   } | null
 }
+=======
+
+export type BusinessMapMarkersQuery = { readonly __typename: 'Query', readonly businessMapMarkers?: ReadonlyArray<{ readonly __typename: 'MapMarker', readonly username?: string | null, readonly mapInfo: { readonly __typename: 'MapInfo', readonly title: string, readonly coordinates: { readonly __typename: 'Coordinates', readonly longitude: number, readonly latitude: number } } } | null> | null };
+
+export type CirclesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CirclesQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly welcomeProfile?: { readonly __typename: 'WelcomeProfile', readonly allTimePoints: number, readonly allTimeRank: number, readonly innerCircleAllTimeCount: number, readonly innerCircleThisMonthCount: number, readonly leaderboardName?: string | null, readonly outerCircleAllTimeCount: number, readonly outerCircleThisMonthCount: number, readonly thisMonthPoints: number, readonly thisMonthRank: number } | null } } | null };
+
+export type ContactsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ContactsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly contacts: ReadonlyArray<{ readonly __typename: 'UserContact', readonly id: string, readonly username: string, readonly alias?: string | null, readonly transactionsCount: number }> } | null };
+>>>>>>> 885241ec (feat: fetch from backend)
 
 export type TransactionListForContactQueryVariables = Exact<{
   username: Scalars["Username"]
@@ -2991,6 +3143,7 @@ export type LnNoAmountUsdInvoiceFeeProbeMutation = {
 }
 
 export type OnChainTxFeeQueryVariables = Exact<{
+<<<<<<< HEAD
   walletId: Scalars["WalletId"]["input"]
   address: Scalars["OnChainAddress"]["input"]
   amount: Scalars["SatAmount"]["input"]
@@ -3028,6 +3181,33 @@ export type OnChainUsdTxFeeAsBtcDenominatedQuery = {
     readonly amount: number
   }
 }
+=======
+  walletId: Scalars['WalletId'];
+  address: Scalars['OnChainAddress'];
+  amount: Scalars['SatAmount'];
+}>;
+
+
+export type OnChainTxFeeQuery = { readonly __typename: 'Query', readonly onChainTxFee: { readonly __typename: 'OnChainTxFee', readonly amount: number } };
+
+export type OnChainUsdTxFeeQueryVariables = Exact<{
+  walletId: Scalars['WalletId'];
+  address: Scalars['OnChainAddress'];
+  amount: Scalars['CentAmount'];
+}>;
+
+
+export type OnChainUsdTxFeeQuery = { readonly __typename: 'Query', readonly onChainUsdTxFee: { readonly __typename: 'OnChainUsdTxFee', readonly amount: number } };
+
+export type OnChainUsdTxFeeAsBtcDenominatedQueryVariables = Exact<{
+  walletId: Scalars['WalletId'];
+  address: Scalars['OnChainAddress'];
+  amount: Scalars['SatAmount'];
+}>;
+
+
+export type OnChainUsdTxFeeAsBtcDenominatedQuery = { readonly __typename: 'Query', readonly onChainUsdTxFeeAsBtcDenominated: { readonly __typename: 'OnChainUsdTxFee', readonly amount: number } };
+>>>>>>> 885241ec (feat: fetch from backend)
 
 export type IntraLedgerPaymentSendMutationVariables = Exact<{
   input: IntraLedgerPaymentSendInput
@@ -3823,6 +4003,7 @@ export const BalanceHeaderDocument = gql`
  *   },
  * });
  */
+<<<<<<< HEAD
 export function useBalanceHeaderQuery(
   baseOptions?: Apollo.QueryHookOptions<BalanceHeaderQuery, BalanceHeaderQueryVariables>,
 ) {
@@ -3852,6 +4033,53 @@ export type BalanceHeaderQueryResult = Apollo.QueryResult<
   BalanceHeaderQuery,
   BalanceHeaderQueryVariables
 >
+=======
+export function useBalanceHeaderQuery(baseOptions?: Apollo.QueryHookOptions<BalanceHeaderQuery, BalanceHeaderQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BalanceHeaderQuery, BalanceHeaderQueryVariables>(BalanceHeaderDocument, options);
+      }
+export function useBalanceHeaderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BalanceHeaderQuery, BalanceHeaderQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BalanceHeaderQuery, BalanceHeaderQueryVariables>(BalanceHeaderDocument, options);
+        }
+export type BalanceHeaderQueryHookResult = ReturnType<typeof useBalanceHeaderQuery>;
+export type BalanceHeaderLazyQueryHookResult = ReturnType<typeof useBalanceHeaderLazyQuery>;
+export type BalanceHeaderQueryResult = Apollo.QueryResult<BalanceHeaderQuery, BalanceHeaderQueryVariables>;
+export const InviteDocument = gql`
+    query invite {
+  me {
+    username
+  }
+}
+    `;
+
+/**
+ * __useInviteQuery__
+ *
+ * To run a query within a React component, call `useInviteQuery` and pass it any options that fit your needs.
+ * When your component renders, `useInviteQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useInviteQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useInviteQuery(baseOptions?: Apollo.QueryHookOptions<InviteQuery, InviteQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<InviteQuery, InviteQueryVariables>(InviteDocument, options);
+      }
+export function useInviteLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<InviteQuery, InviteQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<InviteQuery, InviteQueryVariables>(InviteDocument, options);
+        }
+export type InviteQueryHookResult = ReturnType<typeof useInviteQuery>;
+export type InviteLazyQueryHookResult = ReturnType<typeof useInviteLazyQuery>;
+export type InviteQueryResult = Apollo.QueryResult<InviteQuery, InviteQueryVariables>;
+>>>>>>> 885241ec (feat: fetch from backend)
 export const BtcPriceListDocument = gql`
   query btcPriceList($range: PriceGraphRange!) {
     btcPriceList(range: $range) {
@@ -5356,6 +5584,7 @@ export const BusinessMapMarkersDocument = gql`
  *   },
  * });
  */
+<<<<<<< HEAD
 export function useBusinessMapMarkersQuery(
   baseOptions?: Apollo.QueryHookOptions<
     BusinessMapMarkersQuery,
@@ -5367,6 +5596,38 @@ export function useBusinessMapMarkersQuery(
     BusinessMapMarkersDocument,
     options,
   )
+=======
+export function useBusinessMapMarkersQuery(baseOptions?: Apollo.QueryHookOptions<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>(BusinessMapMarkersDocument, options);
+      }
+export function useBusinessMapMarkersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>(BusinessMapMarkersDocument, options);
+        }
+export type BusinessMapMarkersQueryHookResult = ReturnType<typeof useBusinessMapMarkersQuery>;
+export type BusinessMapMarkersLazyQueryHookResult = ReturnType<typeof useBusinessMapMarkersLazyQuery>;
+export type BusinessMapMarkersQueryResult = Apollo.QueryResult<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>;
+export const CirclesDocument = gql`
+    query Circles {
+  me {
+    defaultAccount {
+      ... on ConsumerAccount {
+        welcomeProfile {
+          allTimePoints
+          allTimeRank
+          innerCircleAllTimeCount
+          innerCircleThisMonthCount
+          leaderboardName
+          outerCircleAllTimeCount
+          outerCircleThisMonthCount
+          thisMonthPoints
+          thisMonthRank
+        }
+      }
+    }
+  }
+>>>>>>> 885241ec (feat: fetch from backend)
 }
 export function useBusinessMapMarkersLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
@@ -5399,20 +5660,21 @@ export const InviteDocument = gql`
 `
 
 /**
- * __useInviteQuery__
+ * __useCirclesQuery__
  *
- * To run a query within a React component, call `useInviteQuery` and pass it any options that fit your needs.
- * When your component renders, `useInviteQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useCirclesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCirclesQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useInviteQuery({
+ * const { data, loading, error } = useCirclesQuery({
  *   variables: {
  *   },
  * });
  */
+<<<<<<< HEAD
 export function useInviteQuery(
   baseOptions?: Apollo.QueryHookOptions<InviteQuery, InviteQueryVariables>,
 ) {
@@ -5428,6 +5690,19 @@ export function useInviteLazyQuery(
 export type InviteQueryHookResult = ReturnType<typeof useInviteQuery>
 export type InviteLazyQueryHookResult = ReturnType<typeof useInviteLazyQuery>
 export type InviteQueryResult = Apollo.QueryResult<InviteQuery, InviteQueryVariables>
+=======
+export function useCirclesQuery(baseOptions?: Apollo.QueryHookOptions<CirclesQuery, CirclesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CirclesQuery, CirclesQueryVariables>(CirclesDocument, options);
+      }
+export function useCirclesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CirclesQuery, CirclesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CirclesQuery, CirclesQueryVariables>(CirclesDocument, options);
+        }
+export type CirclesQueryHookResult = ReturnType<typeof useCirclesQuery>;
+export type CirclesLazyQueryHookResult = ReturnType<typeof useCirclesLazyQuery>;
+export type CirclesQueryResult = Apollo.QueryResult<CirclesQuery, CirclesQueryVariables>;
+>>>>>>> 885241ec (feat: fetch from backend)
 export const ContactsDocument = gql`
   query contacts {
     me {
@@ -6998,6 +7273,7 @@ export type LnNoAmountUsdInvoiceFeeProbeMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
+<<<<<<< HEAD
 export function useLnNoAmountUsdInvoiceFeeProbeMutation(
   baseOptions?: Apollo.MutationHookOptions<
     LnNoAmountUsdInvoiceFeeProbeMutation,
@@ -7009,6 +7285,20 @@ export function useLnNoAmountUsdInvoiceFeeProbeMutation(
     LnNoAmountUsdInvoiceFeeProbeMutation,
     LnNoAmountUsdInvoiceFeeProbeMutationVariables
   >(LnNoAmountUsdInvoiceFeeProbeDocument, options)
+=======
+export function useLnNoAmountUsdInvoiceFeeProbeMutation(baseOptions?: Apollo.MutationHookOptions<LnNoAmountUsdInvoiceFeeProbeMutation, LnNoAmountUsdInvoiceFeeProbeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LnNoAmountUsdInvoiceFeeProbeMutation, LnNoAmountUsdInvoiceFeeProbeMutationVariables>(LnNoAmountUsdInvoiceFeeProbeDocument, options);
+      }
+export type LnNoAmountUsdInvoiceFeeProbeMutationHookResult = ReturnType<typeof useLnNoAmountUsdInvoiceFeeProbeMutation>;
+export type LnNoAmountUsdInvoiceFeeProbeMutationResult = Apollo.MutationResult<LnNoAmountUsdInvoiceFeeProbeMutation>;
+export type LnNoAmountUsdInvoiceFeeProbeMutationOptions = Apollo.BaseMutationOptions<LnNoAmountUsdInvoiceFeeProbeMutation, LnNoAmountUsdInvoiceFeeProbeMutationVariables>;
+export const OnChainTxFeeDocument = gql`
+    query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!) {
+  onChainTxFee(walletId: $walletId, address: $address, amount: $amount) {
+    amount
+  }
+>>>>>>> 885241ec (feat: fetch from backend)
 }
 export type LnNoAmountUsdInvoiceFeeProbeMutationHookResult = ReturnType<
   typeof useLnNoAmountUsdInvoiceFeeProbeMutation
@@ -7049,6 +7339,7 @@ export const OnChainTxFeeDocument = gql`
  *   },
  * });
  */
+<<<<<<< HEAD
 export function useOnChainTxFeeQuery(
   baseOptions: Apollo.QueryHookOptions<OnChainTxFeeQuery, OnChainTxFeeQueryVariables>,
 ) {
@@ -7057,6 +7348,24 @@ export function useOnChainTxFeeQuery(
     OnChainTxFeeDocument,
     options,
   )
+=======
+export function useOnChainTxFeeQuery(baseOptions: Apollo.QueryHookOptions<OnChainTxFeeQuery, OnChainTxFeeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<OnChainTxFeeQuery, OnChainTxFeeQueryVariables>(OnChainTxFeeDocument, options);
+      }
+export function useOnChainTxFeeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<OnChainTxFeeQuery, OnChainTxFeeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<OnChainTxFeeQuery, OnChainTxFeeQueryVariables>(OnChainTxFeeDocument, options);
+        }
+export type OnChainTxFeeQueryHookResult = ReturnType<typeof useOnChainTxFeeQuery>;
+export type OnChainTxFeeLazyQueryHookResult = ReturnType<typeof useOnChainTxFeeLazyQuery>;
+export type OnChainTxFeeQueryResult = Apollo.QueryResult<OnChainTxFeeQuery, OnChainTxFeeQueryVariables>;
+export const OnChainUsdTxFeeDocument = gql`
+    query onChainUsdTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: CentAmount!) {
+  onChainUsdTxFee(walletId: $walletId, address: $address, amount: $amount) {
+    amount
+  }
+>>>>>>> 885241ec (feat: fetch from backend)
 }
 export function useOnChainTxFeeLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
@@ -7106,6 +7415,7 @@ export const OnChainUsdTxFeeDocument = gql`
  *   },
  * });
  */
+<<<<<<< HEAD
 export function useOnChainUsdTxFeeQuery(
   baseOptions: Apollo.QueryHookOptions<
     OnChainUsdTxFeeQuery,
@@ -7117,6 +7427,28 @@ export function useOnChainUsdTxFeeQuery(
     OnChainUsdTxFeeDocument,
     options,
   )
+=======
+export function useOnChainUsdTxFeeQuery(baseOptions: Apollo.QueryHookOptions<OnChainUsdTxFeeQuery, OnChainUsdTxFeeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<OnChainUsdTxFeeQuery, OnChainUsdTxFeeQueryVariables>(OnChainUsdTxFeeDocument, options);
+      }
+export function useOnChainUsdTxFeeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<OnChainUsdTxFeeQuery, OnChainUsdTxFeeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<OnChainUsdTxFeeQuery, OnChainUsdTxFeeQueryVariables>(OnChainUsdTxFeeDocument, options);
+        }
+export type OnChainUsdTxFeeQueryHookResult = ReturnType<typeof useOnChainUsdTxFeeQuery>;
+export type OnChainUsdTxFeeLazyQueryHookResult = ReturnType<typeof useOnChainUsdTxFeeLazyQuery>;
+export type OnChainUsdTxFeeQueryResult = Apollo.QueryResult<OnChainUsdTxFeeQuery, OnChainUsdTxFeeQueryVariables>;
+export const OnChainUsdTxFeeAsBtcDenominatedDocument = gql`
+    query onChainUsdTxFeeAsBtcDenominated($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!) {
+  onChainUsdTxFeeAsBtcDenominated(
+    walletId: $walletId
+    address: $address
+    amount: $amount
+  ) {
+    amount
+  }
+>>>>>>> 885241ec (feat: fetch from backend)
 }
 export function useOnChainUsdTxFeeLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<

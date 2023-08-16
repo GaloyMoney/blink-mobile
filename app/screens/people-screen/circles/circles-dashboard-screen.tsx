@@ -4,6 +4,10 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "@app/components/screen"
 import { Circle } from "@app/components/circle"
 import { InviteFriendsCard } from "./invite-friends-card"
+import { gql } from "@apollo/client"
+import { ActivityIndicator, View } from "react-native"
+import { useCirclesQuery } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 export const CirclesDashboardHeaderRight: React.FC = () => {
   const styles = useStyles()
@@ -11,8 +15,45 @@ export const CirclesDashboardHeaderRight: React.FC = () => {
   return <Icon style={styles.shareButton} name="share-social-outline" />
 }
 
+gql`
+  query Circles {
+    me {
+      defaultAccount {
+        ... on ConsumerAccount {
+          welcomeProfile {
+            allTimePoints
+            allTimeRank
+            innerCircleAllTimeCount
+            innerCircleThisMonthCount
+            leaderboardName
+            outerCircleAllTimeCount
+            outerCircleThisMonthCount
+            thisMonthPoints
+            thisMonthRank
+          }
+        }
+      }
+    }
+  }
+`
+
 export const CirclesDashboardScreen: React.FC = () => {
   const styles = useStyles()
+
+  const isAuthed = useIsAuthed()
+
+  const { data } = useCirclesQuery({
+    skip: !isAuthed,
+    fetchPolicy: "cache-first",
+  })
+
+  if (!data?.me?.defaultAccount.welcomeProfile)
+    return (
+      <View style={styles.activityIndicator}>
+        <ActivityIndicator />
+        <Text>Calculating your circles...</Text>
+      </View>
+    )
 
   return (
     <Screen style={styles.screen} preset="scroll">
@@ -21,7 +62,7 @@ export const CirclesDashboardScreen: React.FC = () => {
       </Text>
       <Circle
         heading="Inner circle"
-        value={3}
+        value={data?.me?.defaultAccount.welcomeProfile.innerCircleAllTimeCount}
         minValue={1}
         maxValue={840}
         description="people you onboarded"
@@ -32,7 +73,7 @@ export const CirclesDashboardScreen: React.FC = () => {
       />
       <Circle
         heading="Outer circle"
-        value={10}
+        value={data?.me?.defaultAccount.welcomeProfile.outerCircleAllTimeCount}
         minValue={1}
         maxValue={420}
         description="people onboarded by your inner circle"
@@ -43,7 +84,7 @@ export const CirclesDashboardScreen: React.FC = () => {
       />
       <Circle
         heading="Your sphere"
-        value={740}
+        value={data?.me?.defaultAccount.welcomeProfile.allTimePoints}
         description="points"
         subtitle="4 degrees of separation achieved"
         tooltip="Total how much of an impact you are making"
@@ -69,6 +110,14 @@ const useStyles = makeStyles(({ colors }) => {
     },
     description: {
       color: colors.grey3,
+    },
+    activityIndicator: {
+      height: "100%",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      rowGap: 10,
     },
   }
 })
