@@ -69,16 +69,9 @@ gql`
     $walletId: WalletId!
     $address: OnChainAddress!
     $amount: SatAmount!
-    $targetConfirmations: TargetConfirmations
   ) {
-    onChainTxFee(
-      walletId: $walletId
-      address: $address
-      amount: $amount
-      targetConfirmations: $targetConfirmations
-    ) {
+    onChainTxFee(walletId: $walletId, address: $address, amount: $amount) {
       amount
-      targetConfirmations
     }
   }
 
@@ -86,16 +79,9 @@ gql`
     $walletId: WalletId!
     $address: OnChainAddress!
     $amount: CentAmount!
-    $targetConfirmations: TargetConfirmations
   ) {
-    onChainUsdTxFee(
-      walletId: $walletId
-      address: $address
-      amount: $amount
-      targetConfirmations: $targetConfirmations
-    ) {
+    onChainUsdTxFee(walletId: $walletId, address: $address, amount: $amount) {
       amount
-      targetConfirmations
     }
   }
 
@@ -103,16 +89,13 @@ gql`
     $walletId: WalletId!
     $address: OnChainAddress!
     $amount: SatAmount!
-    $targetConfirmations: TargetConfirmations
   ) {
     onChainUsdTxFeeAsBtcDenominated(
       walletId: $walletId
       address: $address
       amount: $amount
-      targetConfirmations: $targetConfirmations
     ) {
       amount
-      targetConfirmations
     }
   }
 `
