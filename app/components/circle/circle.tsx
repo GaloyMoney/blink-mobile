@@ -143,7 +143,7 @@ const easeOut = (x: number, minValue: number, maxValue: number) => {
   // Normalize x to 0-1 scale
   const xNorm = (x - minValue) / (maxValue - minValue)
 
-  // Quadratic ease-out formula
+  // ease-out formula
   return (-(xNorm - 1)) ** 4 + 1
 }
 
