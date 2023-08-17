@@ -1928,7 +1928,7 @@ export type BusinessMapMarkersQuery = { readonly __typename: 'Query', readonly b
 export type CirclesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CirclesQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly welcomeProfile?: { readonly __typename: 'WelcomeProfile', readonly allTimePoints: number, readonly allTimeRank: number, readonly innerCircleAllTimeCount: number, readonly innerCircleThisMonthCount: number, readonly leaderboardName?: string | null, readonly outerCircleAllTimeCount: number, readonly outerCircleThisMonthCount: number, readonly thisMonthPoints: number, readonly thisMonthRank: number } | null } } | null };
+export type CirclesQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly welcomeProfile?: { readonly __typename: 'WelcomeProfile', readonly allTimePoints: number, readonly allTimeRank: number, readonly innerCircleAllTimeCount: number, readonly innerCircleThisMonthCount: number, readonly outerCircleAllTimeCount: number, readonly outerCircleThisMonthCount: number, readonly thisMonthPoints: number, readonly thisMonthRank: number } | null } } | null };
 
 export type CirclesSharesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3611,6 +3611,7 @@ export type BusinessMapMarkersQueryResult = Apollo.QueryResult<BusinessMapMarker
 export const CirclesDocument = gql`
     query Circles {
   me {
+    username
     defaultAccount {
       id
       ... on ConsumerAccount {
@@ -3619,7 +3620,6 @@ export const CirclesDocument = gql`
           allTimeRank
           innerCircleAllTimeCount
           innerCircleThisMonthCount
-          leaderboardName
           outerCircleAllTimeCount
           outerCircleThisMonthCount
           thisMonthPoints

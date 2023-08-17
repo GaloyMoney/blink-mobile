@@ -621,6 +621,7 @@ mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
 
 query Circles {
   me {
+    username
     defaultAccount {
       id
       ... on ConsumerAccount {
@@ -629,7 +630,6 @@ query Circles {
           allTimeRank
           innerCircleAllTimeCount
           innerCircleThisMonthCount
-          leaderboardName
           outerCircleAllTimeCount
           outerCircleThisMonthCount
           thisMonthPoints

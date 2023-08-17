@@ -15,6 +15,7 @@ import LonelyImage from "@app/assets/images/lonely.png"
 gql`
   query Circles {
     me {
+      username
       defaultAccount {
         id
         ... on ConsumerAccount {
@@ -23,7 +24,6 @@ gql`
             allTimeRank
             innerCircleAllTimeCount
             innerCircleThisMonthCount
-            leaderboardName
             outerCircleAllTimeCount
             outerCircleThisMonthCount
             thisMonthPoints

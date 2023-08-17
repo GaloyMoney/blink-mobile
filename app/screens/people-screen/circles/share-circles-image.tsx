@@ -1,5 +1,4 @@
-import { gql } from "@apollo/client"
-import { useCirclesSharesQuery, WelcomeProfile } from "@app/graphql/generated"
+import { useCirclesQuery, WelcomeProfile } from "@app/graphql/generated"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { forwardRef, useMemo, useRef } from "react"
 import { View, Share as NativeShare } from "react-native"
@@ -15,35 +14,12 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { getInviteLink } from "./helpers"
 
-gql`
-  query CirclesShares {
-    me {
-      username
-      defaultAccount {
-        ... on ConsumerAccount {
-          welcomeProfile {
-            allTimePoints
-            allTimeRank
-            innerCircleAllTimeCount
-            innerCircleThisMonthCount
-            leaderboardName
-            outerCircleAllTimeCount
-            outerCircleThisMonthCount
-            thisMonthPoints
-            thisMonthRank
-          }
-        }
-      }
-    }
-  }
-`
-
 export const CirclesDashboardHeaderRight: React.FC = () => {
   const shareImgRef = useRef<View | null>(null)
   const styles = useStyles()
   const { LL } = useI18nContext()
 
-  const { data } = useCirclesSharesQuery()
+  const { data } = useCirclesQuery()
   const welcomeProfile = data?.me?.defaultAccount.welcomeProfile
 
   const ShareImg = useMemo(() => {
