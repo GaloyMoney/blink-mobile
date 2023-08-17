@@ -150,7 +150,7 @@ export const HomeScreen: React.FC = () => {
 
   const [modalVisible, setModalVisible] = React.useState(false)
   const [isIntroducingCirclesModalVisible, setIsIntroducingCirclesModalVisible] =
-    React.useState(true)
+    React.useState(false)
   const [isStablesatModalVisible, setIsStablesatModalVisible] = React.useState(false)
   const [isContentVisible, setIsContentVisible] = React.useState(false)
 

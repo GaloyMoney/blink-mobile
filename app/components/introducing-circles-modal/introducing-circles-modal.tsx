@@ -1,4 +1,4 @@
-import * as React from "react"
+import { useEffect } from "react"
 import { View } from "react-native"
 import Modal from "react-native-modal"
 
@@ -15,43 +15,9 @@ import {
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
 import { GaloyIconButton } from "../atomic/galoy-icon-button"
 import { useI18nContext } from "@app/i18n/i18n-react"
-
-const useStyles = makeStyles(({ colors }) => ({
-  scrollViewStyle: {
-    padding: 20,
-    display: "flex",
-    flexDirection: "column",
-    rowGap: 30,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  peopleIcon: {
-    color: colors.primary,
-  },
-  cross: {
-    position: "absolute",
-    top: -20,
-    right: 20,
-  },
-  modalCard: {
-    backgroundColor: colors.grey5,
-    borderRadius: 16,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop: 30,
-  },
-  cardTitleContainer: {
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    rowGap: 10,
-    paddingHorizontal: 10,
-  },
-  cardActionsContainer: {
-    flexDirection: "column",
-  },
-}))
+import { setIntroducingCirclesModalShown } from "@app/graphql/client-only-query"
+import { useApolloClient } from "@apollo/client"
+import { useIntroducingCirclesModalShownQuery } from "@app/graphql/generated"
 
 type Props = {
   isVisible: boolean
@@ -63,6 +29,15 @@ export const IntroducingCirclesModal: React.FC<Props> = ({ isVisible, setIsVisib
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const primaryNavigator =
     navigation.getParent<BottomTabNavigationProp<PrimaryStackParamList>>()
+
+  const client = useApolloClient()
+  const { data } = useIntroducingCirclesModalShownQuery()
+  useEffect(() => {
+    if (!data?.introducingCirclesModalShown) {
+      setIsVisible(true)
+      setIntroducingCirclesModalShown(client)
+    }
+  }, [data, client, setIsVisible])
 
   const {
     theme: { colors },
@@ -110,3 +85,40 @@ export const IntroducingCirclesModal: React.FC<Props> = ({ isVisible, setIsVisib
     </Modal>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  scrollViewStyle: {
+    padding: 20,
+    display: "flex",
+    flexDirection: "column",
+    rowGap: 30,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  peopleIcon: {
+    color: colors.primary,
+  },
+  cross: {
+    position: "absolute",
+    top: -20,
+    right: 20,
+  },
+  modalCard: {
+    backgroundColor: colors.grey5,
+    borderRadius: 16,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 30,
+  },
+  cardTitleContainer: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    rowGap: 10,
+    paddingHorizontal: 10,
+  },
+  cardActionsContainer: {
+    flexDirection: "column",
+  },
+}))

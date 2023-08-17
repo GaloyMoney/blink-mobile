@@ -923,6 +923,10 @@ query homeUnauthed {
   }
 }
 
+query introducingCirclesModalShown {
+  introducingCirclesModalShown @client
+}
+
 query invite {
   me {
     username
