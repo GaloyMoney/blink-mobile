@@ -66,7 +66,7 @@ export const InviteModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
     return 280
   }
 
-  const inviteLink = getInviteLink(data?.me?.username || "")
+  const inviteLink = getInviteLink(data?.me?.username)
 
   const copyToClipboard = () => {
     Clipboard.setString(inviteLink)

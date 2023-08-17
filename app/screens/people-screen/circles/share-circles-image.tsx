@@ -39,7 +39,7 @@ export const CirclesDashboardHeaderRight: React.FC = () => {
   const share = async () => {
     try {
       if (welcomeProfile?.innerCircleAllTimeCount === 0) {
-        const inviteLink = getInviteLink(data?.me?.username || "")
+        const inviteLink = getInviteLink(data?.me?.username)
         await NativeShare.share({ message: inviteLink })
         return
       }
