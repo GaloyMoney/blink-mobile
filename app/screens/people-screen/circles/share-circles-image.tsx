@@ -157,7 +157,13 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
           heading={LL.Circles.yourSphere()}
           value={welcomeProfile.allTimePoints}
           description={LL.Circles.points()}
-          subtitle={LL.Circles.yourRankMessage({
+          subtitle={
+            welcomeProfile.thisMonthPoints > 0
+              ? `+ ${welcomeProfile.thisMonthPoints} ${LL.Circles.thisMonth()}`
+              : ""
+          }
+          subtitleGreen
+          extraSubtitleLine={LL.Circles.yourRankMessage({
             thisMonthRank: welcomeProfile.thisMonthRank,
             allTimeRank: welcomeProfile.allTimeRank,
           })}
@@ -196,7 +202,7 @@ const useStyles = makeStyles(({ colors }) => ({
 
     display: "flex",
     flexDirection: "column",
-    rowGap: 20,
+    rowGap: 18,
     justifyContent: "center",
 
     paddingTop: 100,

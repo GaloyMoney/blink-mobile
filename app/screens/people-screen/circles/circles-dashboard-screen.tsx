@@ -95,7 +95,13 @@ export const CirclesDashboardScreen: React.FC = () => {
         heading={LL.Circles.yourSphere()}
         value={data?.me?.defaultAccount.welcomeProfile.allTimePoints}
         description={LL.Circles.points()}
-        subtitle={LL.Circles.yourRankMessage({
+        subtitle={
+          welcomeProfile.thisMonthPoints > 0
+            ? `+ ${welcomeProfile.thisMonthPoints} ${LL.Circles.thisMonth()}`
+            : ""
+        }
+        subtitleGreen
+        extraSubtitleLine={LL.Circles.yourRankMessage({
           thisMonthRank: welcomeProfile.thisMonthRank,
           allTimeRank: welcomeProfile.allTimeRank,
         })}

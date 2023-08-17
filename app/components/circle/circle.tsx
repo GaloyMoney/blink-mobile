@@ -12,6 +12,7 @@ type CircleProps = {
   description: string
   subtitle: string
   subtitleGreen?: boolean
+  extraSubtitleLine?: string
   bubble?: boolean
   iBtnModal?: React.ReactElement
   iBtnModalEnable?: () => void
@@ -24,6 +25,7 @@ export const Circle: React.FC<CircleProps> = ({
   description,
   subtitle,
   subtitleGreen = false,
+  extraSubtitleLine,
   bubble = false,
   minValue = 1,
   maxValue = 100,
@@ -78,6 +80,9 @@ export const Circle: React.FC<CircleProps> = ({
         <Text style={styles.circleDescription}>{description}</Text>
       </View>
       {subtitle && <Text style={styles.circleSubtitle}>{subtitle}</Text>}
+      {extraSubtitleLine && (
+        <Text style={styles.circleSubtitleExtra}>{extraSubtitleLine}</Text>
+      )}
     </View>
   )
 }
@@ -122,6 +127,7 @@ const useStyles = makeStyles(
       circleSubtitle: {
         color: subtitleGreen ? colors.green : colors.black,
       },
+      circleSubtitleExtra: { color: colors.black, marginTop: 4 },
       circleBubble: {
         position: "absolute",
         backgroundColor: colors.backdropWhiter,
