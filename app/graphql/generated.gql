@@ -644,31 +644,6 @@ query Circles {
   }
 }
 
-query CirclesShares {
-  me {
-    username
-    defaultAccount {
-      ... on ConsumerAccount {
-        welcomeProfile {
-          allTimePoints
-          allTimeRank
-          innerCircleAllTimeCount
-          innerCircleThisMonthCount
-          leaderboardName
-          outerCircleAllTimeCount
-          outerCircleThisMonthCount
-          thisMonthPoints
-          thisMonthRank
-          __typename
-        }
-        __typename
-      }
-      __typename
-    }
-    __typename
-  }
-}
-
 query accountDefaultWallet($username: Username!) {
   accountDefaultWallet(username: $username) {
     id
