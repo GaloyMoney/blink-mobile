@@ -2,7 +2,7 @@ import { gql } from "@apollo/client"
 import { useCirclesSharesQuery, WelcomeProfile } from "@app/graphql/generated"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { forwardRef, useMemo, useRef } from "react"
-import { View } from "react-native"
+import { View, Share as NativeShare } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import Logo from "@app/assets/logo/app-logo-dark.svg"
@@ -13,6 +13,7 @@ import { Circle } from "@app/components/circle"
 import { LinearGradient } from "react-native-linear-gradient"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { getInviteLink } from "./helpers"
 
 gql`
   query CirclesShares {
@@ -43,24 +44,28 @@ export const CirclesDashboardHeaderRight: React.FC = () => {
   const { LL } = useI18nContext()
 
   const { data } = useCirclesSharesQuery()
+  const welcomeProfile = data?.me?.defaultAccount.welcomeProfile
 
   const ShareImg = useMemo(() => {
-    const username = data?.me?.username
-    const welcomeProfile = data?.me?.defaultAccount.welcomeProfile
-
-    if (username && welcomeProfile)
+    if (welcomeProfile)
       return (
         <ShareImageComponent
           ref={shareImgRef}
-          username={data?.me?.username}
-          welcomeProfile={data.me.defaultAccount.welcomeProfile}
+          username={data?.me?.username || ""}
+          welcomeProfile={welcomeProfile}
         />
       )
     return <></>
-  }, [data?.me?.defaultAccount.welcomeProfile, data?.me?.username])
+  }, [data?.me?.username, welcomeProfile])
 
   const share = async () => {
     try {
+      if (welcomeProfile?.innerCircleAllTimeCount === 0) {
+        const inviteLink = getInviteLink(data?.me?.username || "")
+        await NativeShare.share({ message: inviteLink })
+        return
+      }
+
       if (!shareImgRef.current) return
 
       const uri = await captureRef(shareImgRef.current, {
@@ -83,8 +88,8 @@ export const CirclesDashboardHeaderRight: React.FC = () => {
 
   return (
     <>
-      {ShareImg}
       {/* This is rendered off screen */}
+      {ShareImg}
       <Icon onPress={share} style={styles.shareButton} name="share-social-outline" />
     </>
   )
