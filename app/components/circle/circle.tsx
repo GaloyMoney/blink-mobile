@@ -165,7 +165,6 @@ const getcBackValue = (
     else if (circleMinValue > circleValue) mappedValue = circleMinValue
     else mappedValue = circleMaxValue
 
-    // a to b is the range of pixels for the circle drawn
     const circleMinSizePx = 50
     const circleMaxSizePx = 1000
 
