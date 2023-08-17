@@ -1,20 +1,19 @@
 import * as React from "react"
 import { MockedProvider } from "@apollo/client/testing"
 import { createCache } from "../../graphql/cache"
-import { ContactsScreen } from "./contacts"
+import { PeopleScreen } from "./people"
 import { StoryScreen } from "../../../.storybook/views"
 import { Meta } from "@storybook/react-native"
+import mocks from "../../graphql/mocks"
 
 export default {
-  title: "Contacts Screen",
-  component: ContactsScreen,
+  title: "People Screen",
+  component: PeopleScreen,
   decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
-} as Meta<typeof ContactsScreen>
-
-const mocks = []
+} as Meta<typeof PeopleScreen>
 
 export const Empty = () => (
   <MockedProvider mocks={mocks} cache={createCache()}>
-    <ContactsScreen />
+    <PeopleScreen />
   </MockedProvider>
 )

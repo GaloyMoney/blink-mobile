@@ -88,12 +88,11 @@ export type RootStackParamList = {
   totpLoginValidate: { authToken: string }
 }
 
-export type ContactStackParamList = {
-  contactList: undefined
+export type PeopleStackParamList = {
+  peopleHome: undefined
   contactDetail: { contact: Contact }
-  phoneFlow: undefined
-  sendBitcoinDestination: { username: string }
-  transactionDetail: { txid: string }
+  circlesDashboard: undefined
+  allContacts: undefined
 }
 
 export type PhoneValidationStackParamList = {
@@ -109,7 +108,7 @@ export type PhoneValidationStackParamList = {
 
 export type PrimaryStackParamList = {
   Home: undefined
-  Contacts: undefined
+  People: undefined
   Map: undefined
   Earn: undefined
 }

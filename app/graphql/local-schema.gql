@@ -18,6 +18,7 @@ extend type Query {
   colorScheme: String!
   feedbackModalShown: Boolean!
   hasPromptedSetDefaultAccount: Boolean!
+  introducingCirclesModalShown: Boolean!
 }
 
 extend type Account {

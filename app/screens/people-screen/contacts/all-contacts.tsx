@@ -7,10 +7,10 @@ import { ActivityIndicator, Text, View } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 
-import { Screen } from "../../components/screen"
-import { ContactStackParamList } from "../../navigation/stack-param-lists"
-import { testProps } from "../../utils/testProps"
-import { toastShow } from "../../utils/toast"
+import { Screen } from "@app/components/screen"
+import { PeopleStackParamList } from "@app/navigation/stack-param-lists"
+import { testProps } from "@app/utils/testProps"
+import { toastShow } from "@app/utils/toast"
 
 import { gql } from "@apollo/client"
 import { useContactsQuery } from "@app/graphql/generated"
@@ -32,14 +32,13 @@ gql`
   }
 `
 
-export const ContactsScreen: React.FC = () => {
+export const AllContactsScreen: React.FC = () => {
   const styles = useStyles()
   const {
     theme: { colors },
   } = useTheme()
 
-  const navigation =
-    useNavigation<StackNavigationProp<ContactStackParamList, "contactList">>()
+  const navigation = useNavigation<StackNavigationProp<PeopleStackParamList>>()
 
   const isAuthed = useIsAuthed()
 
@@ -136,9 +135,7 @@ export const ContactsScreen: React.FC = () => {
   if (contacts.length > 0) {
     ListEmptyContent = (
       <View style={styles.emptyListNoMatching}>
-        <Text style={styles.emptyListTitle}>
-          {LL.ContactsScreen.noMatchingContacts()}
-        </Text>
+        <Text style={styles.emptyListTitle}>{LL.PeopleScreen.noMatchingContacts()}</Text>
       </View>
     )
   } else if (loading) {
@@ -151,12 +148,12 @@ export const ContactsScreen: React.FC = () => {
     ListEmptyContent = (
       <View style={styles.emptyListNoContacts}>
         <Text
-          {...testProps(LL.ContactsScreen.noContactsTitle())}
+          {...testProps(LL.PeopleScreen.noContactsTitle())}
           style={styles.emptyListTitle}
         >
-          {LL.ContactsScreen.noContactsTitle()}
+          {LL.PeopleScreen.noContactsTitle()}
         </Text>
-        <Text style={styles.emptyListText}>{LL.ContactsScreen.noContactsYet()}</Text>
+        <Text style={styles.emptyListText}>{LL.PeopleScreen.noContactsYet()}</Text>
       </View>
     )
   }

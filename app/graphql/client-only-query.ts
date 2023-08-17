@@ -11,6 +11,8 @@ import {
   HiddenBalanceToolTipQuery,
   HideBalanceDocument,
   HideBalanceQuery,
+  IntroducingCirclesModalShownDocument,
+  IntroducingCirclesModalShownQuery,
 } from "./generated"
 
 export default gql`
@@ -36,6 +38,10 @@ export default gql`
 
   query hasPromptedSetDefaultAccount {
     hasPromptedSetDefaultAccount @client
+  }
+
+  query introducingCirclesModalShown {
+    introducingCirclesModalShown @client
   }
 `
 
@@ -128,5 +134,19 @@ export const setHasPromptedSetDefaultAccount = (client: ApolloClient<unknown>) =
     })
   } catch {
     console.warn("impossible to update hasPromptedSetDefaultAccount")
+  }
+}
+
+export const setIntroducingCirclesModalShown = (client: ApolloClient<unknown>) => {
+  try {
+    client.writeQuery<IntroducingCirclesModalShownQuery>({
+      query: IntroducingCirclesModalShownDocument,
+      data: {
+        __typename: "Query",
+        introducingCirclesModalShown: true,
+      },
+    })
+  } catch {
+    console.warn("unable to update feedbackModalShown")
   }
 }

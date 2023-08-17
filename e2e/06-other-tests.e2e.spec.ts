@@ -52,7 +52,7 @@ describe("Change Language Flow", () => {
 
 describe("Contacts Flow", () => {
   it("Click Contacts Button", async () => {
-    await clickOnBottomTab(Tab.Contacts)
+    await clickOnBottomTab(Tab.People)
   })
 
   it("Check if contacts exists", async () => {

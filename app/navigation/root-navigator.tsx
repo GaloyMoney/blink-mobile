@@ -7,7 +7,7 @@ import {
   AuthenticationScreen,
 } from "../screens/authentication-screen"
 import { PinScreen } from "../screens/authentication-screen/pin-screen"
-import { ContactsDetailScreen, ContactsScreen } from "../screens/contacts-screen"
+import { ContactsDetailScreen, PeopleScreen } from "../screens/people-screen"
 import { DeveloperScreen } from "../screens/developer-screen"
 import { EarnMapScreen } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
@@ -18,7 +18,7 @@ import { MapScreen } from "../screens/map-screen/map-screen"
 
 import { PriceHistoryScreen } from "../screens/price/price-history-screen"
 
-import ContactsIcon from "@app/assets/icons/contacts.svg"
+import PeopleIcon from "@app/assets/icons/people.svg"
 import HomeIcon from "@app/assets/icons/home.svg"
 import LearnIcon from "@app/assets/icons/learn.svg"
 import MapIcon from "@app/assets/icons/map.svg"
@@ -70,11 +70,14 @@ import { SecurityScreen } from "../screens/settings-screen/security-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionHistoryScreen } from "../screens/transaction-history/transaction-history-screen"
 import {
-  ContactStackParamList,
+  PeopleStackParamList,
   PhoneValidationStackParamList,
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
+import { CirclesDashboardScreen } from "@app/screens/people-screen/circles/circles-dashboard-screen"
+import { CirclesDashboardHeaderRight } from "@app/screens/people-screen/circles/share-circles-image"
+import { AllContactsScreen } from "@app/screens/people-screen/contacts/all-contacts"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -397,17 +400,31 @@ export const RootStack = () => {
   )
 }
 
-const StackContacts = createStackNavigator<ContactStackParamList>()
+const StackContacts = createStackNavigator<PeopleStackParamList>()
 
 export const ContactNavigator = () => {
   const { LL } = useI18nContext()
+  const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
+
   return (
-    <StackContacts.Navigator>
+    <StackContacts.Navigator
+      screenOptions={{
+        gestureEnabled: true,
+        headerBackTitle: LL.common.back(),
+        headerStyle: styles.headerStyle,
+        headerTitleStyle: styles.title,
+        headerBackTitleStyle: styles.title,
+        headerTintColor: colors.black,
+      }}
+    >
       <StackContacts.Screen
-        name="contactList"
-        component={ContactsScreen}
+        name="peopleHome"
+        component={PeopleScreen}
         options={{
-          title: LL.ContactsScreen.title(),
+          title: LL.PeopleScreen.title(),
           headerShown: false,
         }}
       />
@@ -415,6 +432,21 @@ export const ContactNavigator = () => {
         name="contactDetail"
         component={ContactsDetailScreen}
         options={{ headerShown: false }}
+      />
+      <StackContacts.Screen
+        name="allContacts"
+        component={AllContactsScreen}
+        options={{
+          title: LL.PeopleScreen.allContacts(),
+        }}
+      />
+      <StackContacts.Screen
+        name="circlesDashboard"
+        component={CirclesDashboardScreen}
+        options={{
+          title: LL.Circles.title(),
+          headerRight: () => <CirclesDashboardHeaderRight />,
+        }}
       />
     </StackContacts.Navigator>
   )
@@ -481,15 +513,15 @@ export const PrimaryNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Contacts"
+        name="People"
         component={ContactNavigator}
         options={{
           headerShown: false,
-          title: LL.ContactsScreen.title(),
-          tabBarAccessibilityLabel: LL.ContactsScreen.title(),
-          tabBarTestID: LL.ContactsScreen.title(),
+          title: LL.PeopleScreen.title(),
+          tabBarAccessibilityLabel: LL.PeopleScreen.title(),
+          tabBarTestID: LL.PeopleScreen.title(),
           tabBarIcon: ({ color }) => (
-            <ContactsIcon {...testProps("Contacts")} color={color} />
+            <PeopleIcon {...testProps(LL.PeopleScreen.title())} color={color} />
           ),
         }}
       />

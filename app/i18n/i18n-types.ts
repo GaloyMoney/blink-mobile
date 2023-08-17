@@ -170,7 +170,15 @@ type RootTranslation = {
 		 */
 		usePin: string
 	}
-	ContactsScreen: {
+	PeopleScreen: {
+		/**
+		 * P​e​o​p​l​e
+		 */
+		title: string
+		/**
+		 * C​o​p​y
+		 */
+		copy: string
 		/**
 		 * N​o​ ​C​o​n​t​a​c​t​s​ ​F​o​u​n​d
 		 */
@@ -184,9 +192,17 @@ type RootTranslation = {
 		 */
 		noMatchingContacts: string
 		/**
-		 * C​o​n​t​a​c​t​s
+		 * A​l​l​ ​C​o​n​t​a​c​t​s
 		 */
-		title: string
+		allContacts: string
+		/**
+		 * V​i​e​w​ ​a​l​l​ ​c​o​n​t​a​c​t​s
+		 */
+		viewAllContacts: string
+		/**
+		 * R​e​c​e​n​t​ ​C​o​n​t​a​c​t​s
+		 */
+		recentContacts: string
 	}
 	ContactDetailsScreen: {
 		/**
@@ -3536,6 +3552,145 @@ type RootTranslation = {
 		 */
 		contactSupport: string
 	}
+	Circles: {
+		/**
+		 * M​y​ ​C​i​r​c​l​e​s
+		 */
+		title: string
+		/**
+		 * B​l​i​n​k​ ​C​i​r​c​l​e​s
+		 */
+		titleBlinkCircles: string
+		/**
+		 * c​i​r​c​l​e​s
+		 */
+		circles: string
+		/**
+		 * Y​o​u​r​ ​c​i​r​c​l​e​s​ ​g​r​o​w​ ​a​s​ ​y​o​u​ ​w​e​l​c​o​m​e​ ​o​t​h​e​r​s​ ​t​o​ ​B​l​i​n​k​ ​-​ ​b​y​ ​s​e​n​d​i​n​g​ ​s​o​m​e​b​o​d​y​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s​.
+		 */
+		circlesExplainer: string
+		/**
+		 * V​i​e​w​ ​M​y​ ​C​i​r​c​l​e​s
+		 */
+		viewMyCircles: string
+		/**
+		 * I​n​t​r​o​d​u​c​i​n​g​ ​C​i​r​c​l​e​s
+		 */
+		introducingCircles: string
+		/**
+		 * C​o​p​i​e​d​ ​I​n​v​i​t​e​ ​L​i​n​k
+		 */
+		copiedInviteLink: string
+		/**
+		 * I​n​v​i​t​e​ ​a​ ​f​r​i​e​n​d​ ​t​o​ ​B​l​i​n​k
+		 */
+		inviteFriendToBlink: string
+		/**
+		 * S​h​a​r​e
+		 */
+		share: string
+		/**
+		 * Y​o​u​r​ ​B​l​i​n​k​ ​C​i​r​c​l​e​s​ ​g​r​o​w​ ​w​h​e​n​ ​y​o​u​ ​s​e​n​d​ ​a​ ​n​e​w​ ​B​l​i​n​k​ ​u​s​e​r​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s​!
+		 */
+		circlesGrowingSatsExplainer: string
+		/**
+		 * Y​o​u​r​ ​c​i​r​c​l​e​s​ ​g​r​o​w​ ​a​s​ ​y​o​u​ ​o​n​b​o​a​r​d​ ​p​e​o​p​l​e​ ​t​o​ ​B​l​i​n​k​ ​-​ ​k​e​e​p​ ​g​o​i​n​g​!
+		 */
+		circlesGrowingKeepGoing: string
+		/**
+		 * p​o​i​n​t​s
+		 */
+		points: string
+		/**
+		 * C​a​l​c​u​l​a​t​i​n​g​ ​y​o​u​r​ ​c​i​r​c​l​e​s​.​.​.
+		 */
+		calculatingYourCircles: string
+		/**
+		 * Y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​g​r​o​w​s​ ​w​h​e​n​ ​y​o​u​ ​s​e​n​d​ ​a​ ​B​l​i​n​k​ ​u​s​e​r​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s​!
+		 */
+		innerCircleExplainer: string
+		/**
+		 * I​n​n​e​r​ ​C​i​r​c​l​e
+		 */
+		innerCircle: string
+		/**
+		 * p​e​o​p​l​e​ ​y​o​u​ ​w​e​l​c​o​m​e​d
+		 */
+		peopleYouWelcomed: string
+		/**
+		 * t​h​i​s​ ​m​o​n​t​h
+		 */
+		thisMonth: string
+		/**
+		 * O​u​t​e​r​ ​c​i​r​c​l​e
+		 */
+		outerCircle: string
+		/**
+		 * p​e​o​p​l​e​ ​w​e​l​c​o​m​e​d​ ​b​y​ ​y​o​u​r​ ​c​i​r​c​l​e
+		 */
+		peopleWelcomedByYourCircle: string
+		/**
+		 * Y​o​u​r​ ​s​p​h​e​r​e
+		 */
+		yourSphere: string
+		/**
+		 * Y​o​u​'​r​e​ ​#​{​t​h​i​s​M​o​n​t​h​R​a​n​k​}​ ​t​h​i​s​ ​m​o​n​t​h​ ​a​n​d​ ​#​{​a​l​l​T​i​m​e​R​a​n​k​}​ ​a​l​l​ ​t​i​m​e​!
+		 * @param {number} allTimeRank
+		 * @param {number} thisMonthRank
+		 */
+		yourRankMessage: RequiredParams<'allTimeRank' | 'thisMonthRank'>
+		/**
+		 * T​o​t​a​l​ ​h​o​w​ ​m​u​c​h​ ​o​f​ ​a​n​ ​i​m​p​a​c​t​ ​y​o​u​ ​a​r​e​ ​m​a​k​i​n​g
+		 */
+		totalImpact: string
+		/**
+		 * I​n​v​i​t​e​ ​a​ ​f​r​i​e​n​d
+		 */
+		inviteFriends: string
+		/**
+		 * B​u​i​l​d​ ​y​o​u​r​ ​c​i​r​c​l​e
+		 */
+		buildYourCircle: string
+		/**
+		 * {​u​s​e​r​n​a​m​e​}​'​s
+		 * @param {string} username
+		 */
+		someones: RequiredParams<'username'>
+		Sphere: {
+			/**
+			 * Y​o​u​r​ ​s​p​h​e​r​e​ ​p​o​i​n​t​s
+			 */
+			yourSpherePoints: string
+			/**
+			 * F​o​r​ ​e​a​c​h​ ​p​e​r​s​o​n​ ​y​o​u​ ​a​n​d​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​w​e​l​c​o​m​e​s​,​ ​y​o​u​ ​r​e​c​e​i​v​e​ ​5​0​ ​p​o​i​n​t​s​.​ ​F​o​r​ ​e​a​c​h​ ​s​u​b​s​e​q​u​e​n​t​ ​p​e​r​s​o​n​ ​y​o​u​r​ ​s​p​h​e​r​e​ ​w​e​l​c​o​m​e​s​,​ ​y​o​u​r​ ​r​e​c​e​i​v​e​ ​h​a​l​f​ ​a​s​ ​m​u​c​h​ ​p​o​i​n​t​s​.​ ​(​2​5​,​ ​1​2​.​5​,​ ​6​.​2​5​)
+			 */
+			spherePointsDescription: string
+			/**
+			 * I​n​n​e​r​ ​c​i​r​c​l​e
+			 */
+			innerCircle: string
+			/**
+			 * O​u​t​e​r​ ​c​i​r​c​l​e
+			 */
+			outerCircle: string
+			/**
+			 * Y​o​u​r​ ​s​p​h​e​r​e
+			 */
+			yourSphere: string
+			/**
+			 * 1​s​t​ ​d​e​g​r​e​e
+			 */
+			firstDegree: string
+			/**
+			 * 2​n​d​ ​d​e​g​r​e​e
+			 */
+			secondDegree: string
+			/**
+			 * 3​r​d​ ​d​e​g​r​e​e
+			 */
+			thirdDegree: string
+		}
+	}
 }
 
 export type TranslationFunctions = {
@@ -3671,7 +3826,15 @@ export type TranslationFunctions = {
 		 */
 		usePin: () => LocalizedString
 	}
-	ContactsScreen: {
+	PeopleScreen: {
+		/**
+		 * People
+		 */
+		title: () => LocalizedString
+		/**
+		 * Copy
+		 */
+		copy: () => LocalizedString
 		/**
 		 * No Contacts Found
 		 */
@@ -3685,9 +3848,17 @@ export type TranslationFunctions = {
 		 */
 		noMatchingContacts: () => LocalizedString
 		/**
-		 * Contacts
+		 * All Contacts
 		 */
-		title: () => LocalizedString
+		allContacts: () => LocalizedString
+		/**
+		 * View all contacts
+		 */
+		viewAllContacts: () => LocalizedString
+		/**
+		 * Recent Contacts
+		 */
+		recentContacts: () => LocalizedString
 	}
 	ContactDetailsScreen: {
 		/**
@@ -6965,6 +7136,142 @@ export type TranslationFunctions = {
 		 * Contact Support
 		 */
 		contactSupport: () => LocalizedString
+	}
+	Circles: {
+		/**
+		 * My Circles
+		 */
+		title: () => LocalizedString
+		/**
+		 * Blink Circles
+		 */
+		titleBlinkCircles: () => LocalizedString
+		/**
+		 * circles
+		 */
+		circles: () => LocalizedString
+		/**
+		 * Your circles grow as you welcome others to Blink - by sending somebody their first sats.
+		 */
+		circlesExplainer: () => LocalizedString
+		/**
+		 * View My Circles
+		 */
+		viewMyCircles: () => LocalizedString
+		/**
+		 * Introducing Circles
+		 */
+		introducingCircles: () => LocalizedString
+		/**
+		 * Copied Invite Link
+		 */
+		copiedInviteLink: () => LocalizedString
+		/**
+		 * Invite a friend to Blink
+		 */
+		inviteFriendToBlink: () => LocalizedString
+		/**
+		 * Share
+		 */
+		share: () => LocalizedString
+		/**
+		 * Your Blink Circles grow when you send a new Blink user their first sats!
+		 */
+		circlesGrowingSatsExplainer: () => LocalizedString
+		/**
+		 * Your circles grow as you onboard people to Blink - keep going!
+		 */
+		circlesGrowingKeepGoing: () => LocalizedString
+		/**
+		 * points
+		 */
+		points: () => LocalizedString
+		/**
+		 * Calculating your circles...
+		 */
+		calculatingYourCircles: () => LocalizedString
+		/**
+		 * Your inner circle grows when you send a Blink user their first sats!
+		 */
+		innerCircleExplainer: () => LocalizedString
+		/**
+		 * Inner Circle
+		 */
+		innerCircle: () => LocalizedString
+		/**
+		 * people you welcomed
+		 */
+		peopleYouWelcomed: () => LocalizedString
+		/**
+		 * this month
+		 */
+		thisMonth: () => LocalizedString
+		/**
+		 * Outer circle
+		 */
+		outerCircle: () => LocalizedString
+		/**
+		 * people welcomed by your circle
+		 */
+		peopleWelcomedByYourCircle: () => LocalizedString
+		/**
+		 * Your sphere
+		 */
+		yourSphere: () => LocalizedString
+		/**
+		 * You're #{thisMonthRank} this month and #{allTimeRank} all time!
+		 */
+		yourRankMessage: (arg: { allTimeRank: number, thisMonthRank: number }) => LocalizedString
+		/**
+		 * Total how much of an impact you are making
+		 */
+		totalImpact: () => LocalizedString
+		/**
+		 * Invite a friend
+		 */
+		inviteFriends: () => LocalizedString
+		/**
+		 * Build your circle
+		 */
+		buildYourCircle: () => LocalizedString
+		/**
+		 * {username}'s
+		 */
+		someones: (arg: { username: string }) => LocalizedString
+		Sphere: {
+			/**
+			 * Your sphere points
+			 */
+			yourSpherePoints: () => LocalizedString
+			/**
+			 * For each person you and your inner circle welcomes, you receive 50 points. For each subsequent person your sphere welcomes, your receive half as much points. (25, 12.5, 6.25)
+			 */
+			spherePointsDescription: () => LocalizedString
+			/**
+			 * Inner circle
+			 */
+			innerCircle: () => LocalizedString
+			/**
+			 * Outer circle
+			 */
+			outerCircle: () => LocalizedString
+			/**
+			 * Your sphere
+			 */
+			yourSphere: () => LocalizedString
+			/**
+			 * 1st degree
+			 */
+			firstDegree: () => LocalizedString
+			/**
+			 * 2nd degree
+			 */
+			secondDegree: () => LocalizedString
+			/**
+			 * 3rd degree
+			 */
+			thirdDegree: () => LocalizedString
+		}
 	}
 }
 

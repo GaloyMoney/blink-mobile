@@ -29,3 +29,6 @@ export const ratingOptions = {
   preferInApp: true,
   openAppStoreIfInAppFails: true,
 }
+
+export const getInviteLink = (username: string | null | undefined) =>
+  `https://get.blink.sv/${username}`

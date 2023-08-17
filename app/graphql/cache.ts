@@ -85,6 +85,9 @@ export const createCache = () =>
           hasPromptedSetDefaultAccount: {
             read: (value) => value ?? false,
           },
+          introducingCirclesModalShown: {
+            read: (value) => value ?? false,
+          },
         },
       },
       Wallet: {

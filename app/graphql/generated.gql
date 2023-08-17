@@ -619,6 +619,55 @@ mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
   }
 }
 
+query Circles {
+  me {
+    username
+    defaultAccount {
+      id
+      ... on ConsumerAccount {
+        welcomeProfile {
+          allTimePoints
+          allTimeRank
+          innerCircleAllTimeCount
+          innerCircleThisMonthCount
+          outerCircleAllTimeCount
+          outerCircleThisMonthCount
+          thisMonthPoints
+          thisMonthRank
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+query ContactsCard {
+  me {
+    id
+    contacts {
+      id
+      username
+      alias
+      transactionsCount
+      transactions(first: 1) {
+        edges {
+          node {
+            createdAt
+            __typename
+          }
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
 query accountDefaultWallet($username: Username!) {
   accountDefaultWallet(username: $username) {
     id
@@ -869,6 +918,17 @@ query homeUnauthed {
     name
     symbol
     fractionDigits
+    __typename
+  }
+}
+
+query introducingCirclesModalShown {
+  introducingCirclesModalShown @client
+}
+
+query invite {
+  me {
+    username
     __typename
   }
 }

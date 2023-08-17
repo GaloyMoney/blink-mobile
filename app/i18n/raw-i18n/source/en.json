@@ -37,11 +37,15 @@
         "unlock": "Unlock",
         "usePin": "Use PIN"
     },
-    "ContactsScreen": {
+    "PeopleScreen": {
+        "title": "People",
+        "copy": "Copy",
         "noContactsTitle": "No Contacts Found",
         "noContactsYet": "Send or receive a payment using a username and contacts will automatically be added here",
         "noMatchingContacts": "No contacts matching your search were found.",
-        "title": "Contacts"
+        "allContacts": "All Contacts",
+        "viewAllContacts": "View all contacts",
+        "recentContacts": "Recent Contacts"
     },
     "ContactDetailsScreen": {
         "title": "Transactions with {username: string}"
@@ -1018,5 +1022,42 @@
         "updateMandatory": "Update is mandatory",
         "tapHereUpdate": "Tap here to update now",
         "contactSupport": "Contact Support"
+    },
+    "Circles": {
+        "title": "My Circles",
+        "titleBlinkCircles": "Blink Circles",
+        "circles": "circles",
+        "circlesExplainer": "Your circles grow as you welcome others to Blink - by sending somebody their first sats.",
+        "viewMyCircles": "View My Circles",
+        "introducingCircles": "Introducing Circles",
+        "copiedInviteLink": "Copied Invite Link",
+        "inviteFriendToBlink": "Invite a friend to Blink",
+        "share": "Share",
+        "circlesGrowingSatsExplainer": "Your Blink Circles grow when you send a new Blink user their first sats!",
+        "circlesGrowingKeepGoing": "Your circles grow as you onboard people to Blink - keep going!",
+        "points": "points",
+        "calculatingYourCircles": "Calculating your circles...",
+        "innerCircleExplainer": "Your inner circle grows when you send a Blink user their first sats!",
+        "innerCircle": "Inner Circle",
+        "peopleYouWelcomed": "people you welcomed",
+        "thisMonth": "this month",
+        "outerCircle": "Outer circle",
+        "peopleWelcomedByYourCircle": "people welcomed by your circle",
+        "yourSphere": "Your sphere",
+        "yourRankMessage": "You're #{thisMonthRank: number} this month and #{allTimeRank: number} all time!",
+        "totalImpact": "Total how much of an impact you are making",
+        "inviteFriends": "Invite a friend",
+        "buildYourCircle": "Build your circle",
+        "someones": "{username: string}'s",
+        "Sphere": {
+            "yourSpherePoints": "Your sphere points",
+            "spherePointsDescription": "For each person you and your inner circle welcomes, you receive 50 points. For each subsequent person your sphere welcomes, your receive half as much points. (25, 12.5, 6.25)",
+            "innerCircle": "Inner circle",
+            "outerCircle": "Outer circle",
+            "yourSphere": "Your sphere",
+            "firstDegree": "1st degree",
+            "secondDegree": "2nd degree",
+            "thirdDegree": "3rd degree"
+        }
     }
 }
