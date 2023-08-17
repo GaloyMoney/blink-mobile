@@ -65,7 +65,9 @@ export const CirclesDashboardScreen: React.FC = () => {
         {LL.Circles.innerCircleExplainer()}
       </Text>
       {isLonely ? (
-        <Image source={LonelyImage} style={styles.lonelyImage} resizeMode="contain" />
+        <View style={styles.lonelyImageContainer}>
+          <Image source={LonelyImage} style={styles.lonelyImage} resizeMode="repeat" />
+        </View>
       ) : (
         <>
           <Circle
@@ -152,8 +154,14 @@ const useStyles = makeStyles(({ colors }) => {
       rowGap: 10,
     },
     lonelyImage: {
+      // width: 51 * 8,
+      // height: 49 * 8,
+    },
+    lonelyImageContainer: {
       width: "100%",
-      maxHeight: "50%",
+      maxHeight: "40%",
+      overflow: "hidden",
+      borderRadius: 10,
     },
   }
 })
