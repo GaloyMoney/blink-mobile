@@ -114,7 +114,7 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
           heading={LL.Circles.innerCircle()}
           value={welcomeProfile.innerCircleAllTimeCount}
           minValue={1}
-          maxValue={840}
+          maxValue={180}
           description={LL.Circles.peopleYouWelcomed()}
           subtitle={
             welcomeProfile.innerCircleThisMonthCount > 0
@@ -129,7 +129,7 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
           heading={LL.Circles.outerCircle()}
           value={welcomeProfile.outerCircleAllTimeCount}
           minValue={1}
-          maxValue={420}
+          maxValue={180}
           description={LL.Circles.peopleWelcomedByYourCircle()}
           subtitle={
             welcomeProfile.outerCircleThisMonthCount > 0
