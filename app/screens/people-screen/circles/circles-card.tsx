@@ -5,10 +5,12 @@ import { useNavigation } from "@react-navigation/native"
 import { PeopleStackParamList } from "@app/navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { useCirclesQuery } from "@app/graphql/generated"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 export const CirclesCard = () => {
   const styles = useStyles()
   const navigation = useNavigation<StackNavigationProp<PeopleStackParamList>>()
+  const { LL } = useI18nContext()
 
   const { data } = useCirclesQuery()
 
@@ -17,13 +19,13 @@ export const CirclesCard = () => {
       <View style={styles.container}>
         <View>
           <View style={styles.blinkCircles}>
-            <Text type="h2">Blink Circles</Text>
+            <Text type="h2">{LL.Circles.titleBlinkCircles()}</Text>
           </View>
           <View style={styles.separator}></View>
         </View>
         <View>
           <Text type="p2" style={styles.textCenter}>
-            Your circles grow as you onboard people to Blink – keep going!
+            {LL.Circles.circlesGrowingKeepGoing()}
           </Text>
         </View>
         <View style={styles.pointsContainer}>
@@ -31,7 +33,7 @@ export const CirclesCard = () => {
             {data?.me?.defaultAccount.welcomeProfile?.allTimePoints}
           </Text>
           <Text style={styles.pointsText} type="p2">
-            points
+            {LL.Circles.points()}
           </Text>
         </View>
         <View style={styles.backdropCircle}></View>

@@ -14,6 +14,7 @@ import {
 } from "@app/navigation/stack-param-lists"
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs"
 import { GaloyIconButton } from "../atomic/galoy-icon-button"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 const useStyles = makeStyles(({ colors }) => ({
   scrollViewStyle: {
@@ -58,6 +59,7 @@ type Props = {
 }
 
 export const IntroducingCirclesModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
+  const { LL } = useI18nContext()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const primaryNavigator =
     navigation.getParent<BottomTabNavigationProp<PrimaryStackParamList>>()
@@ -91,16 +93,16 @@ export const IntroducingCirclesModal: React.FC<Props> = ({ isVisible, setIsVisib
           <GaloyIcon name="people" color={colors.primary} size={50} />
           <View style={styles.cardTitleContainer}>
             <Text type="h1" bold>
-              Introducing Circles
+              {LL.Circles.introducingCircles()}
             </Text>
-            <Text type="p1">
-              Your circles grow as you welcome others to Blink – by sending somebody their
-              first sats.
-            </Text>
+            <Text type="p1">{LL.Circles.circlesExplainer()}</Text>
           </View>
           <View style={styles.cardActionsContainer}>
             <View>
-              <GaloyPrimaryButton title="View My Circles" onPress={navigateToCircles} />
+              <GaloyPrimaryButton
+                title={LL.Circles.viewMyCircles()}
+                onPress={navigateToCircles}
+              />
             </View>
           </View>
         </View>

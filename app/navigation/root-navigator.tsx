@@ -444,7 +444,7 @@ export const ContactNavigator = () => {
         name="circlesDashboard"
         component={CirclesDashboardScreen}
         options={{
-          title: "My Circles",
+          title: LL.Circles.title(),
           headerRight: () => <CirclesDashboardHeaderRight />,
         }}
       />

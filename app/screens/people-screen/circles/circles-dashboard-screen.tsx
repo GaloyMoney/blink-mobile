@@ -7,6 +7,7 @@ import { gql } from "@apollo/client"
 import { ActivityIndicator, View } from "react-native"
 import { useCirclesQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 gql`
   query Circles {
@@ -33,7 +34,7 @@ gql`
 
 export const CirclesDashboardScreen: React.FC = () => {
   const styles = useStyles()
-
+  const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
 
   const { data } = useCirclesQuery({
@@ -45,7 +46,7 @@ export const CirclesDashboardScreen: React.FC = () => {
     return (
       <View style={styles.activityIndicator}>
         <ActivityIndicator />
-        <Text>Calculating your circles...</Text>
+        <Text>{LL.Circles.calculatingYourCircles()}</Text>
       </View>
     )
 
@@ -54,17 +55,17 @@ export const CirclesDashboardScreen: React.FC = () => {
   return (
     <Screen style={styles.screen} preset="scroll">
       <Text style={styles.description} type="p2">
-        Your inner circle grows when you send a Blink user their first sats!
+        {LL.Circles.innerCircleExplainer()}
       </Text>
       <Circle
-        heading="Inner circle"
+        heading={LL.Circles.innerCircle()}
         value={welcomeProfile.innerCircleAllTimeCount}
         minValue={1}
         maxValue={840}
-        description="people you welcomed"
+        description={LL.Circles.peopleYouWelcomed()}
         subtitle={
           welcomeProfile.innerCircleThisMonthCount > 0
-            ? `+ ${welcomeProfile.innerCircleThisMonthCount} this month`
+            ? `+ ${welcomeProfile.innerCircleThisMonthCount} ${LL.Circles.thisMonth()}`
             : ""
         }
         subtitleGreen
@@ -72,14 +73,14 @@ export const CirclesDashboardScreen: React.FC = () => {
         countUpDuration={1.2}
       />
       <Circle
-        heading="Outer circle"
+        heading={LL.Circles.outerCircle()}
         value={data?.me?.defaultAccount.welcomeProfile.outerCircleAllTimeCount}
         minValue={1}
         maxValue={420}
-        description="people welcomed by your circle"
+        description={LL.Circles.peopleWelcomedByYourCircle()}
         subtitle={
           welcomeProfile.outerCircleThisMonthCount > 0
-            ? `+ ${welcomeProfile.outerCircleThisMonthCount} this month`
+            ? `+ ${welcomeProfile.outerCircleThisMonthCount} ${LL.Circles.thisMonth()}`
             : ""
         }
         subtitleGreen
@@ -87,11 +88,14 @@ export const CirclesDashboardScreen: React.FC = () => {
         countUpDuration={1.2}
       />
       <Circle
-        heading="Your sphere"
+        heading={LL.Circles.yourSphere()}
         value={data?.me?.defaultAccount.welcomeProfile.allTimePoints}
-        description="points"
-        subtitle={`You're #${welcomeProfile.thisMonthRank} this month and #${welcomeProfile.allTimeRank} all time!`}
-        tooltip="Total how much of an impact you are making"
+        description={LL.Circles.points()}
+        subtitle={LL.Circles.yourRankMessage({
+          thisMonthRank: welcomeProfile.thisMonthRank,
+          allTimeRank: welcomeProfile.allTimeRank,
+        })}
+        tooltip={LL.Circles.totalImpact()}
         countUpDuration={1.8}
       />
       <InviteFriendsCard />

@@ -78,7 +78,7 @@ export const ContactsCard = () => {
     <View style={styles.container}>
       <View>
         <View style={styles.contacts}>
-          <Text type="h2">Recent Contacts</Text>
+          <Text type="h2">{LL.PeopleScreen.recentContacts()}</Text>
         </View>
         <View style={[styles.separator, styles.spaceTop]}></View>
       </View>

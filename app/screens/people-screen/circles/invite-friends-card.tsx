@@ -11,6 +11,7 @@ import { useInviteQuery } from "@app/graphql/generated"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { InviteModal } from "@app/components/invite-modal"
 import { getInviteLink } from "./helpers"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 gql`
   query invite {
@@ -22,6 +23,7 @@ gql`
 
 export const InviteFriendsCard = () => {
   const styles = useStyles()
+  const { LL } = useI18nContext()
   const [isInviteModalVisible, setIsInviteModalVisible] = useState(false)
 
   const { data } = useInviteQuery()
@@ -54,7 +56,7 @@ export const InviteFriendsCard = () => {
         isVisible={isInviteModalVisible}
         setIsVisible={setIsInviteModalVisible}
       />
-      <Text type="p1">Invite Friends</Text>
+      <Text type="p1">{LL.Circles.inviteFriends()}</Text>
       <View style={styles.iconContainer}>
         <GaloyIconButton name="share" size="medium" iconOnly onPress={share} />
         <GaloyIconButton

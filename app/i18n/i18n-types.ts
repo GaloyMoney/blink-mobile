@@ -195,6 +195,10 @@ type RootTranslation = {
 		 * V​i​e​w​ ​a​l​l​ ​c​o​n​t​a​c​t​s
 		 */
 		viewAllContacts: string
+		/**
+		 * R​e​c​e​n​t​ ​C​o​n​t​a​c​t​s
+		 */
+		recentContacts: string
 	}
 	ContactDetailsScreen: {
 		/**
@@ -3544,6 +3548,106 @@ type RootTranslation = {
 		 */
 		contactSupport: string
 	}
+	Circles: {
+		/**
+		 * M​y​ ​C​i​r​c​l​e​s
+		 */
+		title: string
+		/**
+		 * B​l​i​n​k​ ​C​i​r​c​l​e​s
+		 */
+		titleBlinkCircles: string
+		/**
+		 * c​i​r​c​l​e​s
+		 */
+		circles: string
+		/**
+		 * Y​o​u​r​ ​c​i​r​c​l​e​s​ ​g​r​o​w​ ​a​s​ ​y​o​u​ ​w​e​l​c​o​m​e​ ​o​t​h​e​r​s​ ​t​o​ ​B​l​i​n​k​ ​-​ ​b​y​ ​s​e​n​d​i​n​g​ ​s​o​m​e​b​o​d​y​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s​.
+		 */
+		circlesExplainer: string
+		/**
+		 * V​i​e​w​ ​M​y​ ​C​i​r​c​l​e​s
+		 */
+		viewMyCircles: string
+		/**
+		 * I​n​t​r​o​d​u​c​i​n​g​ ​C​i​r​c​l​e​s
+		 */
+		introducingCircles: string
+		/**
+		 * C​o​p​i​e​d​ ​I​n​v​i​t​e​ ​L​i​n​k
+		 */
+		copiedInviteLink: string
+		/**
+		 * I​n​v​i​t​e​ ​a​ ​f​r​i​e​n​d​ ​t​o​ ​B​l​i​n​k
+		 */
+		inviteFriendToBlink: string
+		/**
+		 * S​h​a​r​e
+		 */
+		share: string
+		/**
+		 * Y​o​u​r​ ​B​l​i​n​k​ ​C​i​r​c​l​e​s​ ​g​r​o​w​ ​w​h​e​n​ ​y​o​u​ ​s​e​n​d​ ​a​ ​n​e​w​ ​B​l​i​n​k​ ​u​s​e​r​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s​!
+		 */
+		circlesGrowingSatsExplainer: string
+		/**
+		 * Y​o​u​r​ ​c​i​r​c​l​e​s​ ​g​r​o​w​ ​a​s​ ​y​o​u​ ​o​n​b​o​a​r​d​ ​p​e​o​p​l​e​ ​t​o​ ​B​l​i​n​k​ ​-​ ​k​e​e​p​ ​g​o​i​n​g​!
+		 */
+		circlesGrowingKeepGoing: string
+		/**
+		 * p​o​i​n​t​s
+		 */
+		points: string
+		/**
+		 * C​a​l​c​u​l​a​t​i​n​g​ ​y​o​u​r​ ​c​i​r​c​l​e​s​.​.​.
+		 */
+		calculatingYourCircles: string
+		/**
+		 * Y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​g​r​o​w​s​ ​w​h​e​n​ ​y​o​u​ ​s​e​n​d​ ​a​ ​B​l​i​n​k​ ​u​s​e​r​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s​!
+		 */
+		innerCircleExplainer: string
+		/**
+		 * I​n​n​e​r​ ​C​i​r​c​l​e
+		 */
+		innerCircle: string
+		/**
+		 * p​e​o​p​l​e​ ​y​o​u​ ​w​e​l​c​o​m​e​d
+		 */
+		peopleYouWelcomed: string
+		/**
+		 * t​h​i​s​ ​m​o​n​t​h
+		 */
+		thisMonth: string
+		/**
+		 * O​u​t​e​r​ ​c​i​r​c​l​e
+		 */
+		outerCircle: string
+		/**
+		 * p​e​o​p​l​e​ ​w​e​l​c​o​m​e​d​ ​b​y​ ​y​o​u​r​ ​c​i​r​c​l​e
+		 */
+		peopleWelcomedByYourCircle: string
+		/**
+		 * Y​o​u​r​ ​s​p​h​e​r​e
+		 */
+		yourSphere: string
+		/**
+		 * Y​o​u​'​r​e​ ​#​{​t​h​i​s​M​o​n​t​h​R​a​n​k​}​ ​t​h​i​s​ ​m​o​n​t​h​ ​a​n​d​ ​#​{​a​l​l​T​i​m​e​R​a​n​k​}​ ​a​l​l​ ​t​i​m​e​!
+		 * @param {number} allTimeRank
+		 * @param {number} thisMonthRank
+		 */
+		yourRankMessage: RequiredParams<'allTimeRank' | 'thisMonthRank'>
+		/**
+		 * T​o​t​a​l​ ​h​o​w​ ​m​u​c​h​ ​o​f​ ​a​n​ ​i​m​p​a​c​t​ ​y​o​u​ ​a​r​e​ ​m​a​k​i​n​g
+		 */
+		totalImpact: string
+		/**
+		 * I​n​v​i​t​e​ ​F​r​i​e​n​d​s
+		 */
+		inviteFriends: string
+		/**
+		 * B​u​i​l​d​ ​y​o​u​r​ ​c​i​r​c​l​e
+		 */
+		buildYourCircle: string
+	}
 }
 
 export type TranslationFunctions = {
@@ -3704,6 +3808,10 @@ export type TranslationFunctions = {
 		 * View all contacts
 		 */
 		viewAllContacts: () => LocalizedString
+		/**
+		 * Recent Contacts
+		 */
+		recentContacts: () => LocalizedString
 	}
 	ContactDetailsScreen: {
 		/**
@@ -6981,6 +7089,104 @@ export type TranslationFunctions = {
 		 * Contact Support
 		 */
 		contactSupport: () => LocalizedString
+	}
+	Circles: {
+		/**
+		 * My Circles
+		 */
+		title: () => LocalizedString
+		/**
+		 * Blink Circles
+		 */
+		titleBlinkCircles: () => LocalizedString
+		/**
+		 * circles
+		 */
+		circles: () => LocalizedString
+		/**
+		 * Your circles grow as you welcome others to Blink - by sending somebody their first sats.
+		 */
+		circlesExplainer: () => LocalizedString
+		/**
+		 * View My Circles
+		 */
+		viewMyCircles: () => LocalizedString
+		/**
+		 * Introducing Circles
+		 */
+		introducingCircles: () => LocalizedString
+		/**
+		 * Copied Invite Link
+		 */
+		copiedInviteLink: () => LocalizedString
+		/**
+		 * Invite a friend to Blink
+		 */
+		inviteFriendToBlink: () => LocalizedString
+		/**
+		 * Share
+		 */
+		share: () => LocalizedString
+		/**
+		 * Your Blink Circles grow when you send a new Blink user their first sats!
+		 */
+		circlesGrowingSatsExplainer: () => LocalizedString
+		/**
+		 * Your circles grow as you onboard people to Blink - keep going!
+		 */
+		circlesGrowingKeepGoing: () => LocalizedString
+		/**
+		 * points
+		 */
+		points: () => LocalizedString
+		/**
+		 * Calculating your circles...
+		 */
+		calculatingYourCircles: () => LocalizedString
+		/**
+		 * Your inner circle grows when you send a Blink user their first sats!
+		 */
+		innerCircleExplainer: () => LocalizedString
+		/**
+		 * Inner Circle
+		 */
+		innerCircle: () => LocalizedString
+		/**
+		 * people you welcomed
+		 */
+		peopleYouWelcomed: () => LocalizedString
+		/**
+		 * this month
+		 */
+		thisMonth: () => LocalizedString
+		/**
+		 * Outer circle
+		 */
+		outerCircle: () => LocalizedString
+		/**
+		 * people welcomed by your circle
+		 */
+		peopleWelcomedByYourCircle: () => LocalizedString
+		/**
+		 * Your sphere
+		 */
+		yourSphere: () => LocalizedString
+		/**
+		 * You're #{thisMonthRank} this month and #{allTimeRank} all time!
+		 */
+		yourRankMessage: (arg: { allTimeRank: number, thisMonthRank: number }) => LocalizedString
+		/**
+		 * Total how much of an impact you are making
+		 */
+		totalImpact: () => LocalizedString
+		/**
+		 * Invite Friends
+		 */
+		inviteFriends: () => LocalizedString
+		/**
+		 * Build your circle
+		 */
+		buildYourCircle: () => LocalizedString
 	}
 }
 
