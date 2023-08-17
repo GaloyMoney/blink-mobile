@@ -23,7 +23,7 @@ import { useInviteQuery } from "@app/graphql/generated"
 import QRCode from "react-native-qrcode-svg"
 import Logo from "@app/assets/logo/blink-logo-icon.png"
 
-import { getInviteLink } from "@app/screens/people-screen/circles/helpers"
+import { getInviteLink } from "@app/config/appinfo"
 import Icon from "react-native-vector-icons/Ionicons"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { toastShow } from "@app/utils/toast"

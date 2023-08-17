@@ -12,7 +12,7 @@ import { Circle } from "@app/components/circle"
 import { LinearGradient } from "react-native-linear-gradient"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { getInviteLink } from "./helpers"
+import { getInviteLink } from "@app/config/appinfo"
 
 export const CirclesDashboardHeaderRight: React.FC = () => {
   const shareImgRef = useRef<View | null>(null)

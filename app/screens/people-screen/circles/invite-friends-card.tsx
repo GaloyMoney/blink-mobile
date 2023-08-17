@@ -10,7 +10,7 @@ import { useInviteQuery } from "@app/graphql/generated"
 
 import crashlytics from "@react-native-firebase/crashlytics"
 import { InviteModal } from "@app/components/invite-modal"
-import { getInviteLink } from "./helpers"
+import { getInviteLink } from "@app/config/appinfo"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
 gql`
