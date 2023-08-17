@@ -118,8 +118,8 @@ export const CirclesDashboardScreen: React.FC = () => {
               thisMonthRank: welcomeProfile.thisMonthRank,
               allTimeRank: welcomeProfile.allTimeRank,
             })}
-            iBtnModalEnable={() => setSpherePointsModalIsVisible(true)}
-            iBtnModal={
+            helpBtnModalEnable={() => setSpherePointsModalIsVisible(true)}
+            helpBtnModal={
               <SpherePointsModal
                 isVisible={spherePointsModalIsVisible}
                 setIsVisible={setSpherePointsModalIsVisible}

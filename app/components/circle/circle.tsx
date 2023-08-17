@@ -14,8 +14,8 @@ type CircleProps = {
   subtitleGreen?: boolean
   extraSubtitleLine?: string
   bubble?: boolean
-  iBtnModal?: React.ReactElement
-  iBtnModalEnable?: () => void
+  helpBtnModal?: React.ReactElement
+  helpBtnModalEnable?: () => void
   countUpDuration?: number
 }
 
@@ -27,10 +27,10 @@ export const Circle: React.FC<CircleProps> = ({
   subtitleGreen = false,
   extraSubtitleLine,
   bubble = false,
-  minValue = 1,
-  maxValue = 100,
-  iBtnModal,
-  iBtnModalEnable,
+  minValue,
+  maxValue,
+  helpBtnModal,
+  helpBtnModalEnable,
   countUpDuration = 0,
 }) => {
   const {
@@ -60,14 +60,14 @@ export const Circle: React.FC<CircleProps> = ({
     <View style={styles.circleContainer}>
       <View style={styles.circleHeading}>
         <Text type="p1">{heading}</Text>
-        {iBtnModal && (
-          <View style={styles.circleTooltip}>
-            {iBtnModal}
+        {helpBtnModal && (
+          <View style={styles.helpBtn}>
+            {helpBtnModal}
             <Icon
               color={colors.primary}
               name="help-circle-outline"
               size={23}
-              onPress={iBtnModalEnable}
+              onPress={helpBtnModalEnable}
             />
           </View>
         )}
@@ -121,7 +121,7 @@ const useStyles = makeStyles(
         marginBottom: 6,
         lineHeight: 20,
       },
-      circleTooltip: {
+      helpBtn: {
         alignSelf: "center",
       },
       circleSubtitle: {
@@ -166,11 +166,13 @@ const getcBackValue = (
     else mappedValue = circleMaxValue
 
     // a to b is the range of pixels for the circle drawn
-    const a = 50
-    const b = 1000
+    const circleMinSizePx = 50
+    const circleMaxSizePx = 1000
 
     cBackValue =
-      a + ((mappedValue - circleMinValue) / (circleMaxValue - circleMinValue)) * (b - a)
+      circleMinSizePx +
+      ((mappedValue - circleMinValue) / (circleMaxValue - circleMinValue)) *
+        (circleMaxSizePx - circleMinSizePx)
   }
   return cBackValue
 }
