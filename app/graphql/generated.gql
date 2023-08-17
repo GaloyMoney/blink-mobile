@@ -644,6 +644,30 @@ query Circles {
   }
 }
 
+query ContactsCard {
+  me {
+    id
+    contacts {
+      id
+      username
+      alias
+      transactionsCount
+      transactions(first: 1) {
+        edges {
+          node {
+            createdAt
+            __typename
+          }
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
 query accountDefaultWallet($username: Username!) {
   accountDefaultWallet(username: $username) {
     id

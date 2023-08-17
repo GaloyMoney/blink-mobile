@@ -1946,6 +1946,11 @@ export type TransactionListForContactQueryVariables = Exact<{
 
 export type TransactionListForContactQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly contactByUsername: { readonly __typename: 'UserContact', readonly transactions?: { readonly __typename: 'TransactionConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null, readonly endCursor?: string | null }, readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly cursor: string, readonly node: { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash?: string | null } } }> | null } | null } } | null };
 
+export type ContactsCardQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ContactsCardQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly contacts: ReadonlyArray<{ readonly __typename: 'UserContact', readonly id: string, readonly username: string, readonly alias?: string | null, readonly transactionsCount: number, readonly transactions?: { readonly __typename: 'TransactionConnection', readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly node: { readonly __typename: 'Transaction', readonly createdAt: number } }> | null } | null }> } | null };
+
 export type UserContactUpdateAliasMutationVariables = Exact<{
   input: UserContactUpdateAliasInput;
 }>;
@@ -3736,6 +3741,53 @@ export function useTransactionListForContactLazyQuery(baseOptions?: Apollo.LazyQ
 export type TransactionListForContactQueryHookResult = ReturnType<typeof useTransactionListForContactQuery>;
 export type TransactionListForContactLazyQueryHookResult = ReturnType<typeof useTransactionListForContactLazyQuery>;
 export type TransactionListForContactQueryResult = Apollo.QueryResult<TransactionListForContactQuery, TransactionListForContactQueryVariables>;
+export const ContactsCardDocument = gql`
+    query ContactsCard {
+  me {
+    id
+    contacts {
+      id
+      username
+      alias
+      transactionsCount
+      transactions(first: 1) {
+        edges {
+          node {
+            createdAt
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useContactsCardQuery__
+ *
+ * To run a query within a React component, call `useContactsCardQuery` and pass it any options that fit your needs.
+ * When your component renders, `useContactsCardQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useContactsCardQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useContactsCardQuery(baseOptions?: Apollo.QueryHookOptions<ContactsCardQuery, ContactsCardQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ContactsCardQuery, ContactsCardQueryVariables>(ContactsCardDocument, options);
+      }
+export function useContactsCardLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ContactsCardQuery, ContactsCardQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ContactsCardQuery, ContactsCardQueryVariables>(ContactsCardDocument, options);
+        }
+export type ContactsCardQueryHookResult = ReturnType<typeof useContactsCardQuery>;
+export type ContactsCardLazyQueryHookResult = ReturnType<typeof useContactsCardLazyQuery>;
+export type ContactsCardQueryResult = Apollo.QueryResult<ContactsCardQuery, ContactsCardQueryVariables>;
 export const UserContactUpdateAliasDocument = gql`
     mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
   userContactUpdateAlias(input: $input) {

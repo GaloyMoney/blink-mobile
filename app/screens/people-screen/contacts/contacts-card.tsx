@@ -4,7 +4,11 @@ import { makeStyles, Text } from "@rneui/themed"
 import { toastShow } from "@app/utils/toast"
 
 import { gql } from "@apollo/client"
-import { UserContact, useContactsQuery } from "@app/graphql/generated"
+import {
+  ContactsCardQuery,
+  UserContact,
+  useContactsCardQuery,
+} from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useMemo } from "react"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
@@ -18,7 +22,7 @@ import {
 import { useI18nContext } from "@app/i18n/i18n-react"
 
 gql`
-  query contacts {
+  query ContactsCard {
     me {
       id
       contacts {
@@ -26,6 +30,13 @@ gql`
         username
         alias
         transactionsCount
+        transactions(first: 1) {
+          edges {
+            node {
+              createdAt
+            }
+          }
+        }
       }
     }
   }
@@ -61,7 +72,7 @@ export const ContactsCard = () => {
   const isAuthed = useIsAuthed()
   const navigation = useNavigation<StackNavigationProp<PeopleStackParamList>>()
 
-  const { loading, data, error } = useContactsQuery({
+  const { loading, data, error } = useContactsCardQuery({
     skip: !isAuthed,
     fetchPolicy: "cache-and-network",
   })
@@ -70,9 +81,7 @@ export const ContactsCard = () => {
     toastShow({ message: error.message })
   }
 
-  const contacts: Contact[] = useMemo(() => {
-    return data?.me?.contacts.slice(0, 3) ?? []
-  }, [data])
+  const contacts = useMemo(() => (data ? getRecentContacts(data) : []), [data])
 
   return (
     <View style={styles.container}>
@@ -82,12 +91,13 @@ export const ContactsCard = () => {
         </View>
         <View style={[styles.separator, styles.spaceTop]}></View>
       </View>
-      {contacts.length === 0 ? (
+      {loading ? (
+        <ActivityIndicator />
+      ) : contacts.length === 0 ? (
         <Text type="p2">{LL.PeopleScreen.noContactsTitle()}</Text>
       ) : (
         <>
           <View style={styles.contactsOuterContainer}>
-            {loading && <ActivityIndicator />}
             {contacts.map((contact) => (
               <Contact key={contact.id} contact={contact as UserContact} />
             ))}
@@ -142,3 +152,23 @@ const useStyles = makeStyles(({ colors }) => ({
     paddingTop: 3,
   },
 }))
+
+// ---- HELPERS ----
+const getRecentContacts = (data: ContactsCardQuery) => {
+  // Extract the contacts
+  const _contacts = data?.me?.contacts || []
+  const contacts = [..._contacts] // Convert from readyonlyarray to regular array
+
+  // Sort contacts by the `createdAt` timestamp in descending order
+  contacts.sort((a, b) => {
+    if (a.transactions?.edges && b.transactions?.edges) {
+      const aDate = a?.transactions?.edges[0]?.node?.createdAt || 0
+      const bDate = b?.transactions?.edges[0]?.node?.createdAt || 0
+      return bDate - aDate
+    }
+    return 0
+  })
+
+  // return top 3
+  return contacts.slice(0, 3)
+}
