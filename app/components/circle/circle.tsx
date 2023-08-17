@@ -1,8 +1,8 @@
 import { View } from "react-native"
-import { Text, makeStyles } from "@rneui/themed"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 
-import { ModalTooltip } from "@app/components/modal-tooltip/modal-tooltip"
 import { useCountUp } from "use-count-up"
+import Icon from "react-native-vector-icons/Ionicons"
 
 type CircleProps = {
   heading: string
@@ -13,7 +13,8 @@ type CircleProps = {
   subtitle: string
   subtitleGreen?: boolean
   bubble?: boolean
-  tooltip?: string
+  iBtnModal?: React.ReactElement
+  iBtnModalEnable?: () => void
   countUpDuration?: number
 }
 
@@ -26,9 +27,13 @@ export const Circle: React.FC<CircleProps> = ({
   bubble = false,
   minValue = 1,
   maxValue = 100,
-  tooltip,
+  iBtnModal,
+  iBtnModalEnable,
   countUpDuration = 0,
 }) => {
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles({
     subtitleGreen,
   })
@@ -51,20 +56,26 @@ export const Circle: React.FC<CircleProps> = ({
 
   return (
     <View style={styles.circleContainer}>
-      <Text style={styles.circleHeading} type="p1">
-        {heading}
-      </Text>
+      <View style={styles.circleHeading}>
+        <Text type="p1">{heading}</Text>
+        {iBtnModal && (
+          <View style={styles.circleTooltip}>
+            {iBtnModal}
+            <Icon
+              color={colors.primary}
+              name="help-circle-outline"
+              size={23}
+              onPress={iBtnModalEnable}
+            />
+          </View>
+        )}
+      </View>
       <View style={styles.circleValueWrapper}>
         <View>
           <Text style={styles.circleValue}>{countUpValue}</Text>
           {bubble && <View style={[styles.circleBubble, cBackStyles]} />}
         </View>
         <Text style={styles.circleDescription}>{description}</Text>
-        {tooltip && (
-          <View style={styles.circleTooltip}>
-            <ModalTooltip type="info" text={tooltip} size={20} />
-          </View>
-        )}
       </View>
       {subtitle && <Text style={styles.circleSubtitle}>{subtitle}</Text>}
     </View>
@@ -77,7 +88,13 @@ const useStyles = makeStyles(
       circleContainer: {
         marginLeft: "10%",
       },
-      circleHeading: { marginBottom: 8 },
+      circleHeading: {
+        marginBottom: 8,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        columnGap: 8,
+      },
       circleValueWrapper: {
         display: "flex",
         flexDirection: "row",
@@ -100,7 +117,7 @@ const useStyles = makeStyles(
         lineHeight: 20,
       },
       circleTooltip: {
-        marginBottom: 4,
+        alignSelf: "center",
       },
       circleSubtitle: {
         color: subtitleGreen ? colors.green : colors.black,

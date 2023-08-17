@@ -8,6 +8,8 @@ import { ActivityIndicator, View } from "react-native"
 import { useCirclesQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { SpherePointsModal } from "@app/components/sphere-points-modal"
+import { useState } from "react"
 
 gql`
   query Circles {
@@ -36,6 +38,8 @@ export const CirclesDashboardScreen: React.FC = () => {
   const styles = useStyles()
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
+
+  const [spherePointsModalIsVisible, setSpherePointsModalIsVisible] = useState(false)
 
   const { data } = useCirclesQuery({
     skip: !isAuthed,
@@ -95,7 +99,13 @@ export const CirclesDashboardScreen: React.FC = () => {
           thisMonthRank: welcomeProfile.thisMonthRank,
           allTimeRank: welcomeProfile.allTimeRank,
         })}
-        tooltip={LL.Circles.totalImpact()}
+        iBtnModalEnable={() => setSpherePointsModalIsVisible(true)}
+        iBtnModal={
+          <SpherePointsModal
+            isVisible={spherePointsModalIsVisible}
+            setIsVisible={setSpherePointsModalIsVisible}
+          />
+        }
         countUpDuration={1.8}
       />
       <InviteFriendsCard />

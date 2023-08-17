@@ -1131,8 +1131,18 @@ const en: BaseTranslation = {
     yourSphere: "Your sphere",
     yourRankMessage: "You're #{thisMonthRank: number} this month and #{allTimeRank: number} all time!",
     totalImpact: "Total how much of an impact you are making",
-    inviteFriends: "Invite Friends",
+    inviteFriends: "Invite a friend",
     buildYourCircle: "Build your circle",
+    Sphere: {
+      yourSpherePoints: "Your sphere points",
+      spherePointsDescription: "For each person you and your inner circle welcomes, you receive 50 points. For each subsequent person your sphere welcomes, your receive half as much points. (25, 12.5, 6.25)",
+      innerCircle: "Inner circle",
+      outerCircle: "Outer circle",
+      yourSphere: "Your sphere",
+      firstDegree: "1st degree",
+      secondDegree: "2nd degree",
+      thirdDegree: "3rd degree",
+    }
   }
 }
 

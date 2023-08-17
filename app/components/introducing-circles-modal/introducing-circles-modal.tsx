@@ -61,7 +61,7 @@ export const IntroducingCirclesModal: React.FC<Props> = ({ isVisible, setIsVisib
       onBackdropPress={acknowledgeModal}
     >
       <View style={styles.modalCard}>
-        <View style={styles.scrollViewStyle}>
+        <View style={styles.containerStyle}>
           <View style={styles.cross}>
             <GaloyIconButton name="close" size="medium" onPress={acknowledgeModal} />
           </View>
@@ -87,7 +87,7 @@ export const IntroducingCirclesModal: React.FC<Props> = ({ isVisible, setIsVisib
 }
 
 const useStyles = makeStyles(({ colors }) => ({
-  scrollViewStyle: {
+  containerStyle: {
     padding: 20,
     display: "flex",
     flexDirection: "column",
