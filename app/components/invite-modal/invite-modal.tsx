@@ -27,6 +27,7 @@ import { getInviteLink } from "@app/screens/people-screen/circles/helpers"
 import Icon from "react-native-vector-icons/Ionicons"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { toastShow } from "@app/utils/toast"
+import { GaloyToast } from "../galoy-toast"
 
 type Props = {
   isVisible: boolean
@@ -125,6 +126,7 @@ export const InviteModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
       backdropColor={colors.white}
       onBackdropPress={acknowledgeModal}
     >
+      <GaloyToast />
       <View style={styles.modalCard}>
         <View style={styles.container}>
           <View style={styles.cardTitleContainer}>
@@ -196,11 +198,7 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "center",
     alignItems: "center",
   },
-  cross: {
-    position: "absolute",
-    top: -5,
-    right: -50,
-  },
+  cross: {},
   qrCard: {
     backgroundColor: colors.black,
     padding: 20,
@@ -216,7 +214,10 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   cardTitleContainer: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
+    width: "100%",
+    alignItems: "center",
+    columnGap: 20,
   },
   cardBodyContainer: {
     marginBottom: 16,
