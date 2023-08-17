@@ -176,6 +176,10 @@ type RootTranslation = {
 		 */
 		title: string
 		/**
+		 * C​o​p​y
+		 */
+		copy: string
+		/**
 		 * N​o​ ​C​o​n​t​a​c​t​s​ ​F​o​u​n​d
 		 */
 		noContactsTitle: string
@@ -3647,6 +3651,11 @@ type RootTranslation = {
 		 * B​u​i​l​d​ ​y​o​u​r​ ​c​i​r​c​l​e
 		 */
 		buildYourCircle: string
+		/**
+		 * {​u​s​e​r​n​a​m​e​}​'​s
+		 * @param {string} username
+		 */
+		someones: RequiredParams<'username'>
 		Sphere: {
 			/**
 			 * Y​o​u​r​ ​s​p​h​e​r​e​ ​p​o​i​n​t​s
@@ -3822,6 +3831,10 @@ export type TranslationFunctions = {
 		 * People
 		 */
 		title: () => LocalizedString
+		/**
+		 * Copy
+		 */
+		copy: () => LocalizedString
 		/**
 		 * No Contacts Found
 		 */
@@ -7221,6 +7234,10 @@ export type TranslationFunctions = {
 		 * Build your circle
 		 */
 		buildYourCircle: () => LocalizedString
+		/**
+		 * {username}'s
+		 */
+		someones: (arg: { username: string }) => LocalizedString
 		Sphere: {
 			/**
 			 * Your sphere points

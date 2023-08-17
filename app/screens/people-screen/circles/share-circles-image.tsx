@@ -20,6 +20,8 @@ export const CirclesDashboardHeaderRight: React.FC = () => {
   const { LL } = useI18nContext()
 
   const { data } = useCirclesQuery()
+
+  const username = data?.me?.username || ""
   const welcomeProfile = data?.me?.defaultAccount.welcomeProfile
 
   const ShareImg = useMemo(() => {
@@ -27,12 +29,12 @@ export const CirclesDashboardHeaderRight: React.FC = () => {
       return (
         <ShareImageComponent
           ref={shareImgRef}
-          username={data?.me?.username || ""}
+          username={username}
           welcomeProfile={welcomeProfile}
         />
       )
     return <></>
-  }, [data?.me?.username, welcomeProfile])
+  }, [username, welcomeProfile])
 
   const share = async () => {
     try {
@@ -49,9 +51,13 @@ export const CirclesDashboardHeaderRight: React.FC = () => {
         quality: 1.0,
       })
 
+      const shareName = `${LL.Circles.someones({
+        username,
+      })} ${LL.Circles.titleBlinkCircles()}`
+
       const shareOptions = {
-        fileName: `${data?.me?.username}'s ${LL.Circles.titleBlinkCircles()}`,
-        title: `${data?.me?.username}'s ${LL.Circles.titleBlinkCircles()}`,
+        fileName: shareName,
+        title: shareName,
         url: uri,
         type: "image/jpeg",
       }
@@ -96,7 +102,7 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
             angleCenter={{ x: 0.5, y: 0.5 }}
           >
             <Text type="h2" color={colors._black} bold>
-              {username}'s
+              {LL.Circles.someones({ username })}
             </Text>
             <Text type="p1" color={colors._black}>
               {LL.Circles.circles()}

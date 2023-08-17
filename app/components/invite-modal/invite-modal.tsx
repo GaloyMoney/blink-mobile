@@ -163,7 +163,7 @@ export const InviteModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
                 <Text color={colors.grey2}>
                   <Icon color={colors.grey2} name="copy-outline" />
                   <Text> </Text>
-                  Copy
+                  {LL.PeopleScreen.copy()}
                 </Text>
               </TouchableOpacity>
             </View>
