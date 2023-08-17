@@ -2263,7 +2263,7 @@
     parse-filepath "^1.0.2"
     tslib "~2.4.0"
 
-"@graphql-codegen/visitor-plugin-common@4.0.1", "@graphql-codegen/visitor-plugin-common@^4.0.0", "@graphql-codegen/visitor-plugin-common@^4.0.1":
+"@graphql-codegen/visitor-plugin-common@4.0.1", "@graphql-codegen/visitor-plugin-common@^4.0.1":
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/visitor-plugin-common/-/visitor-plugin-common-4.0.1.tgz#64e293728b3c186f6767141e41fcdb310e50d367"
   integrity sha512-Bi/1z0nHg4QMsAqAJhds+ForyLtk7A3HQOlkrZNm3xEkY7lcBzPtiOTLBtvziwopBsXUxqeSwVjOOFPLS5Yw1Q==
