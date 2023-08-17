@@ -13,7 +13,6 @@ import {
   SendBitcoinConfirmationScreenDocument,
   SendBitcoinDestinationDocument,
   SendBitcoinDetailsScreenDocument,
-  ContactsDocument,
 } from "./generated"
 
 // TODO: put in __tests__ folder?

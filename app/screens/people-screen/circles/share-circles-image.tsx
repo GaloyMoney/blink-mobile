@@ -12,6 +12,7 @@ import Share from "react-native-share"
 import { Circle } from "@app/components/circle"
 import { LinearGradient } from "react-native-linear-gradient"
 import crashlytics from "@react-native-firebase/crashlytics"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 gql`
   query CirclesShares {
@@ -39,6 +40,7 @@ gql`
 export const CirclesDashboardHeaderRight: React.FC = () => {
   const shareImgRef = useRef<View | null>(null)
   const styles = useStyles()
+  const { LL } = useI18nContext()
 
   const { data } = useCirclesSharesQuery()
 
@@ -67,8 +69,8 @@ export const CirclesDashboardHeaderRight: React.FC = () => {
       })
 
       const shareOptions = {
-        fileName: `${data?.me?.username}'s Blink Circles`,
-        title: `${data?.me?.username}'s Blink Circles`,
+        fileName: `${data?.me?.username}'s ${LL.Circles.titleBlinkCircles()}`,
+        title: `${data?.me?.username}'s ${LL.Circles.titleBlinkCircles()}`,
         url: uri,
         type: "image/jpeg",
       }
@@ -99,6 +101,7 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
     const {
       theme: { colors },
     } = useTheme()
+    const { LL } = useI18nContext()
 
     return (
       <View ref={ref} style={styles.shareContainer}>
@@ -115,22 +118,20 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
               {username}'s
             </Text>
             <Text type="p1" color={colors._black}>
-              circles
+              {LL.Circles.circles()}
             </Text>
           </LinearGradient>
         </View>
-        <Text style={styles.description}>
-          Your inner circle grows when you send a Blink user their first sats.
-        </Text>
+        <Text style={styles.description}>{LL.Circles.innerCircleExplainer()}</Text>
         <Circle
-          heading="Inner circle"
+          heading={LL.Circles.innerCircle()}
           value={welcomeProfile.innerCircleAllTimeCount}
           minValue={1}
           maxValue={840}
-          description="people you welcomed"
+          description={LL.Circles.peopleYouWelcomed()}
           subtitle={
             welcomeProfile.innerCircleThisMonthCount > 0
-              ? `+ ${welcomeProfile.innerCircleThisMonthCount} this month`
+              ? `+ ${welcomeProfile.innerCircleThisMonthCount} ${LL.Circles.thisMonth()}`
               : ""
           }
           subtitleGreen
@@ -138,14 +139,14 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
           countUpDuration={0}
         />
         <Circle
-          heading="Outer circle"
+          heading={LL.Circles.outerCircle()}
           value={welcomeProfile.outerCircleAllTimeCount}
           minValue={1}
           maxValue={420}
-          description="people welcomed by your circle"
+          description={LL.Circles.peopleWelcomedByYourCircle()}
           subtitle={
             welcomeProfile.outerCircleThisMonthCount > 0
-              ? `+ ${welcomeProfile.outerCircleThisMonthCount} this month`
+              ? `+ ${welcomeProfile.outerCircleThisMonthCount} ${LL.Circles.thisMonth()}`
               : ""
           }
           subtitleGreen
@@ -153,14 +154,17 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
           countUpDuration={0}
         />
         <Circle
-          heading="Your sphere"
+          heading={LL.Circles.yourSphere()}
           value={welcomeProfile.allTimePoints}
-          description="points"
-          subtitle={`You're #${welcomeProfile.thisMonthRank} this month and #${welcomeProfile.allTimeRank} all time!`}
+          description={LL.Circles.points()}
+          subtitle={LL.Circles.yourRankMessage({
+            thisMonthRank: welcomeProfile.thisMonthRank,
+            allTimeRank: welcomeProfile.allTimeRank,
+          })}
           countUpDuration={0}
         />
         <Text style={styles.buildUrCircle}>
-          <Text type="p2">Build your circle </Text>
+          <Text type="p2">{LL.Circles.buildYourCircle()} </Text>
           <Text type="p1" color={colors.primary} bold>
             get.blink.sv
           </Text>

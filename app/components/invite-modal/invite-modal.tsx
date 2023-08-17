@@ -71,7 +71,7 @@ export const InviteModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
     Clipboard.setString(inviteLink)
     toastShow({
       type: "success",
-      message: "Copied Invite Link",
+      message: LL.Circles.copiedInviteLink(),
     })
   }
 
@@ -129,7 +129,7 @@ export const InviteModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
         <View style={styles.container}>
           <View style={styles.cardTitleContainer}>
             <Text type="h1" bold>
-              Invite a friend to Blink
+              {LL.Circles.inviteFriendToBlink()}
             </Text>
             <View style={styles.cross}>
               <GaloyIconButton name="close" size="medium" onPress={acknowledgeModal} />
@@ -170,7 +170,7 @@ export const InviteModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
                 <Text color={colors.grey2}>
                   <Icon color={colors.grey2} name="share-outline" />
                   <Text> </Text>
-                  Share
+                  {LL.Circles.share()}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -178,7 +178,7 @@ export const InviteModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
 
           <View style={styles.cardBodyContainer}>
             <Text type="p2" style={styles.textCenter}>
-              Your Blink Circles grow when you send a new Blink user their first sats!
+              {LL.Circles.circlesGrowingSatsExplainer()}
             </Text>
           </View>
         </View>
