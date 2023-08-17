@@ -1,4 +1,4 @@
-import { TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, TouchableOpacity, View } from "react-native"
 
 import { makeStyles, Text } from "@rneui/themed"
 import { useNavigation } from "@react-navigation/native"
@@ -12,7 +12,7 @@ export const CirclesCard = () => {
   const navigation = useNavigation<StackNavigationProp<PeopleStackParamList>>()
   const { LL } = useI18nContext()
 
-  const { data } = useCirclesQuery()
+  const { data, loading } = useCirclesQuery()
 
   return (
     <TouchableOpacity onPress={() => navigation.navigate("circlesDashboard")}>
@@ -29,12 +29,18 @@ export const CirclesCard = () => {
           </Text>
         </View>
         <View style={styles.pointsContainer}>
-          <Text style={styles.pointsNumber}>
-            {data?.me?.defaultAccount.welcomeProfile?.allTimePoints}
-          </Text>
-          <Text style={styles.pointsText} type="p2">
-            {LL.Circles.points()}
-          </Text>
+          {loading ? (
+            <ActivityIndicator />
+          ) : (
+            <>
+              <Text style={styles.pointsNumber}>
+                {data?.me?.defaultAccount.welcomeProfile?.allTimePoints}
+              </Text>
+              <Text style={styles.pointsText} type="p2">
+                {LL.Circles.points()}
+              </Text>
+            </>
+          )}
         </View>
         <View style={styles.backdropCircle}></View>
       </View>
