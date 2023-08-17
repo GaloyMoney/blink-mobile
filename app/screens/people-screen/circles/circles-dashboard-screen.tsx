@@ -4,12 +4,13 @@ import { Screen } from "@app/components/screen"
 import { Circle } from "@app/components/circle"
 import { InviteFriendsCard } from "./invite-friends-card"
 import { gql } from "@apollo/client"
-import { ActivityIndicator, View } from "react-native"
+import { Image, ActivityIndicator, View } from "react-native"
 import { useCirclesQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { SpherePointsModal } from "@app/components/sphere-points-modal"
 import { useState } from "react"
+import LonelyImage from "@app/assets/images/lonely.png"
 
 gql`
   query Circles {
@@ -56,64 +57,76 @@ export const CirclesDashboardScreen: React.FC = () => {
 
   const welcomeProfile = data?.me?.defaultAccount.welcomeProfile
 
+  const isLonely = welcomeProfile.innerCircleAllTimeCount === 0
+
   return (
     <Screen style={styles.screen} preset="scroll">
-      <Text style={styles.description} type="p2">
+      <Text style={styles.description} type={isLonely ? "p1" : "p2"}>
         {LL.Circles.innerCircleExplainer()}
       </Text>
-      <Circle
-        heading={LL.Circles.innerCircle()}
-        value={welcomeProfile.innerCircleAllTimeCount}
-        minValue={1}
-        maxValue={840}
-        description={LL.Circles.peopleYouWelcomed()}
-        subtitle={
-          welcomeProfile.innerCircleThisMonthCount > 0
-            ? `+ ${welcomeProfile.innerCircleThisMonthCount} ${LL.Circles.thisMonth()}`
-            : ""
-        }
-        subtitleGreen
-        bubble
-        countUpDuration={1.2}
-      />
-      <Circle
-        heading={LL.Circles.outerCircle()}
-        value={data?.me?.defaultAccount.welcomeProfile.outerCircleAllTimeCount}
-        minValue={1}
-        maxValue={420}
-        description={LL.Circles.peopleWelcomedByYourCircle()}
-        subtitle={
-          welcomeProfile.outerCircleThisMonthCount > 0
-            ? `+ ${welcomeProfile.outerCircleThisMonthCount} ${LL.Circles.thisMonth()}`
-            : ""
-        }
-        subtitleGreen
-        bubble
-        countUpDuration={1.2}
-      />
-      <Circle
-        heading={LL.Circles.yourSphere()}
-        value={data?.me?.defaultAccount.welcomeProfile.allTimePoints}
-        description={LL.Circles.points()}
-        subtitle={
-          welcomeProfile.thisMonthPoints > 0
-            ? `+ ${welcomeProfile.thisMonthPoints} ${LL.Circles.thisMonth()}`
-            : ""
-        }
-        subtitleGreen
-        extraSubtitleLine={LL.Circles.yourRankMessage({
-          thisMonthRank: welcomeProfile.thisMonthRank,
-          allTimeRank: welcomeProfile.allTimeRank,
-        })}
-        iBtnModalEnable={() => setSpherePointsModalIsVisible(true)}
-        iBtnModal={
-          <SpherePointsModal
-            isVisible={spherePointsModalIsVisible}
-            setIsVisible={setSpherePointsModalIsVisible}
+      {isLonely ? (
+        <Image source={LonelyImage} style={styles.lonelyImage} resizeMode="contain" />
+      ) : (
+        <>
+          <Circle
+            heading={LL.Circles.innerCircle()}
+            value={welcomeProfile.innerCircleAllTimeCount}
+            minValue={1}
+            maxValue={840}
+            description={LL.Circles.peopleYouWelcomed()}
+            subtitle={
+              welcomeProfile.innerCircleThisMonthCount > 0
+                ? `+ ${
+                    welcomeProfile.innerCircleThisMonthCount
+                  } ${LL.Circles.thisMonth()}`
+                : ""
+            }
+            subtitleGreen
+            bubble
+            countUpDuration={1.2}
           />
-        }
-        countUpDuration={1.8}
-      />
+          <Circle
+            heading={LL.Circles.outerCircle()}
+            value={data?.me?.defaultAccount.welcomeProfile.outerCircleAllTimeCount}
+            minValue={1}
+            maxValue={420}
+            description={LL.Circles.peopleWelcomedByYourCircle()}
+            subtitle={
+              welcomeProfile.outerCircleThisMonthCount > 0
+                ? `+ ${
+                    welcomeProfile.outerCircleThisMonthCount
+                  } ${LL.Circles.thisMonth()}`
+                : ""
+            }
+            subtitleGreen
+            bubble
+            countUpDuration={1.2}
+          />
+          <Circle
+            heading={LL.Circles.yourSphere()}
+            value={data?.me?.defaultAccount.welcomeProfile.allTimePoints}
+            description={LL.Circles.points()}
+            subtitle={
+              welcomeProfile.thisMonthPoints > 0
+                ? `+ ${welcomeProfile.thisMonthPoints} ${LL.Circles.thisMonth()}`
+                : ""
+            }
+            subtitleGreen
+            extraSubtitleLine={LL.Circles.yourRankMessage({
+              thisMonthRank: welcomeProfile.thisMonthRank,
+              allTimeRank: welcomeProfile.allTimeRank,
+            })}
+            iBtnModalEnable={() => setSpherePointsModalIsVisible(true)}
+            iBtnModal={
+              <SpherePointsModal
+                isVisible={spherePointsModalIsVisible}
+                setIsVisible={setSpherePointsModalIsVisible}
+              />
+            }
+            countUpDuration={1.8}
+          />
+        </>
+      )}
       <InviteFriendsCard />
     </Screen>
   )
@@ -137,6 +150,10 @@ const useStyles = makeStyles(({ colors }) => {
       justifyContent: "center",
       alignItems: "center",
       rowGap: 10,
+    },
+    lonelyImage: {
+      width: "100%",
+      maxHeight: "50%",
     },
   }
 })
