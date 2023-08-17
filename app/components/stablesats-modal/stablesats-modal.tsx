@@ -21,7 +21,7 @@ const useStyles = makeStyles(({ colors }) => ({
     paddingHorizontal: 12,
   },
   modalCard: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.grey5,
     borderRadius: 16,
     paddingVertical: 18,
   },
@@ -66,8 +66,8 @@ export const StableSatsModal: React.FC<Props> = ({ isVisible, setIsVisible }) =>
   return (
     <Modal
       isVisible={isVisible}
-      backdropOpacity={0.3}
-      backdropColor={colors.grey3}
+      backdropOpacity={0.8}
+      backdropColor={colors.white}
       onBackdropPress={acknowledgeModal}
     >
       <View style={styles.modalCard}>

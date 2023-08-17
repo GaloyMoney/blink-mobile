@@ -74,7 +74,7 @@ export const CirclesDashboardScreen: React.FC = () => {
             heading={LL.Circles.innerCircle()}
             value={welcomeProfile.innerCircleAllTimeCount}
             minValue={1}
-            maxValue={840}
+            maxValue={180}
             description={LL.Circles.peopleYouWelcomed()}
             subtitle={
               welcomeProfile.innerCircleThisMonthCount > 0
@@ -91,7 +91,7 @@ export const CirclesDashboardScreen: React.FC = () => {
             heading={LL.Circles.outerCircle()}
             value={data?.me?.defaultAccount.welcomeProfile.outerCircleAllTimeCount}
             minValue={1}
-            maxValue={420}
+            maxValue={180}
             description={LL.Circles.peopleWelcomedByYourCircle()}
             subtitle={
               welcomeProfile.outerCircleThisMonthCount > 0

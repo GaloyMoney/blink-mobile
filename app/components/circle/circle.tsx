@@ -144,7 +144,7 @@ const easeOut = (x: number, minValue: number, maxValue: number) => {
   const xNorm = (x - minValue) / (maxValue - minValue)
 
   // Quadratic ease-out formula
-  return (-(xNorm - 1)) ** 2 + 1
+  return (-(xNorm - 1)) ** 4 + 1
 }
 
 const getcBackValue = (
