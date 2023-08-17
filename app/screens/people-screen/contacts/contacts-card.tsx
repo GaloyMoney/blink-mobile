@@ -82,16 +82,22 @@ export const ContactsCard = () => {
         </View>
         <View style={[styles.separator, styles.spaceTop]}></View>
       </View>
-      <View style={styles.contactsOuterContainer}>
-        {loading && <ActivityIndicator />}
-        {contacts.map((contact) => (
-          <Contact key={contact.id} contact={contact as UserContact} />
-        ))}
-      </View>
-      <GaloySecondaryButton
-        title={LL.PeopleScreen.viewAllContacts()}
-        onPress={() => navigation.navigate("allContacts")}
-      />
+      {contacts.length === 0 ? (
+        <Text type="p2">{LL.PeopleScreen.noContactsTitle()}</Text>
+      ) : (
+        <>
+          <View style={styles.contactsOuterContainer}>
+            {loading && <ActivityIndicator />}
+            {contacts.map((contact) => (
+              <Contact key={contact.id} contact={contact as UserContact} />
+            ))}
+          </View>
+          <GaloySecondaryButton
+            title={LL.PeopleScreen.viewAllContacts()}
+            onPress={() => navigation.navigate("allContacts")}
+          />
+        </>
+      )}
     </View>
   )
 }
