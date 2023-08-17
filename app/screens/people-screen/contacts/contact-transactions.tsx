@@ -2,7 +2,7 @@ import { gql } from "@apollo/client"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import * as React from "react"
 import { SectionList, Text, View } from "react-native"
-import { TransactionItem } from "../../../components/transaction-item"
+import { TransactionItem } from "@app/components/transaction-item"
 import { toastShow } from "../../../utils/toast"
 
 import { useTransactionListForContactQuery } from "@app/graphql/generated"
