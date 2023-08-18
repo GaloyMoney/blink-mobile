@@ -1135,8 +1135,10 @@ const en: BaseTranslation = {
     copiedInviteLink: "Copied Invite Link",
     inviteFriendToBlink: "Invite a friend to Blink",
     share: "Share",
-    circlesGrowingSatsExplainer:
-      "Your Blink Circles grow when you send a new Blink user their first sats!",
+    circlesGrowingSatsExplainer: {
+      your: "Your",
+      grow: "grow when you send a new Blink user their first sats!",
+    },
     circlesGrowingKeepGoing:
       "Your circles grow as you onboard people to Blink - keep going!",
     points: "points",
@@ -1146,25 +1148,24 @@ const en: BaseTranslation = {
     innerCircle: "Inner Circle",
     peopleYouWelcomed: "people you welcomed",
     thisMonth: "this month",
-    outerCircle: "Outer circle",
+    outerCircle: "Outer Circle",
     peopleWelcomedByYourCircle: "people welcomed by your circle",
-    yourSphere: "Your sphere",
+    yourSphere: "Your Sphere",
     yourRankMessage:
       "You're #{thisMonthRank: number} this month and #{allTimeRank: number} all time!",
-    totalImpact: "Total how much of an impact you are making",
     inviteFriends: "Invite a friend",
     buildYourCircle: "Build your circle",
     someones: "{username: string}'s",
     Sphere: {
       yourSpherePoints: "Your sphere points",
       spherePointsDescription:
-        "For each person you and your inner circle welcomes, you receive 50 points. For each subsequent person your sphere welcomes, your receive half as much points. (25, 12.5, 6.25)",
+        "For each person you and your inner circle welcomes, you receive 50 points. For people added by each further circle, you receive half as many points. (25, 12.5, 6.25)",
       innerCircle: "Inner circle",
       outerCircle: "Outer circle",
       yourSphere: "Your sphere",
-      firstDegree: "1st degree",
-      secondDegree: "2nd degree",
-      thirdDegree: "3rd degree",
+      firstDegree: "Welcomed by you",
+      secondDegree: "Welcomed by your inner circle",
+      thirdDegree: "Welcomed by your 2nd circle",
     },
   },
 }
