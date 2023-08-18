@@ -3,7 +3,8 @@ import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { forwardRef, useMemo, useRef } from "react"
 import { View, Share as NativeShare } from "react-native"
 
-import Logo from "@app/assets/logo/app-logo-dark.svg"
+import LogoDarkMode from "@app/assets/logo/app-logo-dark.svg"
+import LogoLightMode from "@app/assets/logo/blink-logo-light.svg"
 
 import { captureRef } from "react-native-view-shot"
 import Share from "react-native-share"
@@ -79,13 +80,15 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
   forwardRef(({ username, welcomeProfile }, ref) => {
     const styles = useStyles()
     const {
-      theme: { colors },
+      theme: { colors, mode },
     } = useTheme()
     const { LL } = useI18nContext()
 
     const appConfig = useAppConfig().appConfig
     const lnAddressHostname = appConfig.galoyInstance.lnAddressHostname
     const lnAddress = `${username}@${lnAddressHostname}`
+
+    const Logo = mode === "dark" ? LogoDarkMode : LogoLightMode
 
     return (
       <View ref={ref} style={styles.shareContainer}>
@@ -165,21 +168,27 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
     )
   })
 
-const useStyles = makeStyles(({ colors }) => ({
+const useStyles = makeStyles(({ colors, mode }) => ({
   shareContainer: {
     top: -10000,
     left: -10000,
 
     // // /* Enable these and disable top two to debug view
-    // top: -100,
-    // left: -100,
+    // top: 0,
+    // left: "-10%",
     // borderWidth: 1,
     // borderColor: colors.red,
+    // zIndex: 5,
+    // transform: [
+    //   {
+    //     scale: 0.6,
+    //   },
+    // ],
     // // */
 
     height: 560,
     width: 420,
-    backgroundColor: colors.grey5,
+    backgroundColor: mode === "light" ? colors.white : colors.grey5,
     position: "absolute",
 
     display: "flex",
