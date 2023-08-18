@@ -575,6 +575,8 @@ PODS:
     - React-Core
     - React-RCTImage
     - TOCropViewController
+  - RNInAppBrowser (3.7.0):
+    - React-Core
   - RNKeychain (8.1.1):
     - React-Core
   - RNLocalize (2.2.5):
@@ -696,6 +698,7 @@ DEPENDENCIES:
   - "RNFBRemoteConfig (from `../node_modules/@react-native-firebase/remote-config`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
+  - RNInAppBrowser (from `../node_modules/react-native-inappbrowser-reborn`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNQrGenerator (from `../node_modules/rn-qr-generator`)
@@ -858,6 +861,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNImageCropPicker:
     :path: "../node_modules/react-native-image-crop-picker"
+  RNInAppBrowser:
+    :path: "../node_modules/react-native-inappbrowser-reborn"
   RNKeychain:
     :path: "../node_modules/react-native-keychain"
   RNLocalize:
@@ -973,6 +978,7 @@ SPEC CHECKSUMS:
   RNFBRemoteConfig: f888b638ab942ff923b5fa11e24cfbb02a858d21
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
   RNImageCropPicker: 14fe1c29298fb4018f3186f455c475ab107da332
+  RNInAppBrowser: e36d6935517101ccba0e875bac8ad7b0cb655364
   RNKeychain: ff836453cba46938e0e9e4c22e43d43fa2c90333
   RNLocalize: f0fbcea2a28981985dfe468129674f47847787b1
   RNQrGenerator: 90461ba3ca88c1d38ef73da50fade35d9648215d
