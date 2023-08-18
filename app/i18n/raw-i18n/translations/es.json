@@ -37,11 +37,15 @@
         "unlock": "Desbloquear",
         "usePin": "Usar PIN"
     },
-    "ContactsScreen": {
+    "PeopleScreen": {
+        "title": "Gente",
+        "copy": "Copiar",
         "noContactsTitle": "No se encontraron contactos",
         "noContactsYet": "Envíe o reciba un pago utilizando un nombre de usuario y los contactos se agregarán automáticamente aquí",
         "noMatchingContacts": "No se encontraron coincidencias para su búsqueda.",
-        "title": "Contactos"
+        "allContacts": "Contactos",
+        "viewAllContacts": "Ver contactos",
+        "recentContacts": "Contactos recientes"
     },
     "ContactDetailsScreen": {
         "title": "Transacciones con {username: string}"
@@ -1018,5 +1022,42 @@
         "updateMandatory": "La actualización es obligatoria",
         "tapHereUpdate": "Pulse para actualizar ahora",
         "contactSupport": "Contacte con soporte"
+    },
+    "Circles": {
+        "title": "Mis círculos",
+        "titleBlinkCircles": "Círculos Blink",
+        "circles": "círculos",
+        "circlesExplainer": "Tus círculos crecen a medida que les das la bienvenida a Blink a otros, enviándoles a alguien sus primeros sats.",
+        "viewMyCircles": "Ver mis círculos",
+        "introducingCircles": "Introducción a Círculos",
+        "copiedInviteLink": "Enlace de invitación copiado",
+        "inviteFriendToBlink": "Invita a un amigo a Blink",
+        "share": "Compartir",
+        "circlesGrowingSatsExplainer": "¡Tus Blink Circles crecen cuando envías a un nuevo usuario de Blink sus primeros sats!",
+        "circlesGrowingKeepGoing": "Tus círculos crecen a medida que incorporas personas a Blink. ¡Sigue adelante!",
+        "points": "puntos",
+        "calculatingYourCircles": "Calculando tus círculos...",
+        "innerCircleExplainer": "¡Tu círculo crece cuando le envías a un usuario de Blink sus primeros sats!",
+        "innerCircle": "Círculo interno",
+        "peopleYouWelcomed": "personas que iniciaste",
+        "thisMonth": "este mes",
+        "outerCircle": "círculo exterior",
+        "peopleWelcomedByYourCircle": "personas iniciadas por tu círculo",
+        "yourSphere": "Tu Esfera",
+        "yourRankMessage": "¡Eres el #{thisMonthRank: number} este mes y el #{allTimeRank: number} de la historia!",
+        "totalImpact": "Suma cuanto impacto que estás teniendo",
+        "inviteFriends": "Invitar a un amigo",
+        "buildYourCircle": "Construye tu círculo",
+        "someones": "de {username: string}",
+        "Sphere": {
+            "yourSpherePoints": "Puntos de tu esfera",
+            "spherePointsDescription": "Por cada persona que tu y tu círculo íntimo inicien, recibirás 50 puntos. Por cada persona posterior que reciba tu esfera, recibirá la mitad de los puntos. (25, 12.5, 6.25)",
+            "innerCircle": "Círculo interno",
+            "outerCircle": "círculo exterior",
+            "yourSphere": "Tu Esfera",
+            "firstDegree": "1er grado",
+            "secondDegree": "2do grado",
+            "thirdDegree": "3er grado"
+        }
     }
 }
