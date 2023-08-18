@@ -31,6 +31,6 @@ export const ratingOptions = {
 }
 
 export const getInviteLink = (_username: string | null | undefined) => {
-  const username = _username ? `/$(_username}` : ""
+  const username = _username ? `/${_username}` : ""
   return `https://get.blink.sv${username}`
 }
