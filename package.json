@@ -126,7 +126,7 @@
     "react-native-toast-message": "^2.1.5",
     "react-native-vector-icons": "^9.1.0",
     "react-native-view-shot": "^3.7.0",
-    "react-native-vision-camera": "^2.15.4",
+    "react-native-vision-camera": "^2.15.6",
     "react-native-walkthrough-tooltip": "^1.4.0",
     "rn-qr-generator": "^1.2.1",
     "subscriptions-transport-ws": "^0.11.0",
