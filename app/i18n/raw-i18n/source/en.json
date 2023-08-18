@@ -45,7 +45,7 @@
         "noMatchingContacts": "No contacts matching your search were found.",
         "allContacts": "All Contacts",
         "viewAllContacts": "View all contacts",
-        "recentContacts": "Recent Contacts"
+        "frequentContacts": "Frequent Contacts"
     },
     "ContactDetailsScreen": {
         "title": "Transactions with {username: string}"

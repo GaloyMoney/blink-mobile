@@ -30,13 +30,6 @@ gql`
         username
         alias
         transactionsCount
-        transactions(first: 1) {
-          edges {
-            node {
-              createdAt
-            }
-          }
-        }
       }
     }
   }
@@ -81,13 +74,13 @@ export const ContactsCard = () => {
     toastShow({ message: error.message })
   }
 
-  const contacts = useMemo(() => (data ? getRecentContacts(data) : []), [data])
+  const contacts = useMemo(() => (data ? getFrequentContacts(data) : []), [data])
 
   return (
     <View style={styles.container}>
       <View>
         <View style={styles.contacts}>
-          <Text type="h2">{LL.PeopleScreen.recentContacts()}</Text>
+          <Text type="h2">{LL.PeopleScreen.frequentContacts()}</Text>
         </View>
         <View style={[styles.separator, styles.spaceTop]}></View>
       </View>
@@ -154,19 +147,14 @@ const useStyles = makeStyles(({ colors }) => ({
 }))
 
 // ---- HELPERS ----
-const getRecentContacts = (data: ContactsCardQuery) => {
+const getFrequentContacts = (data: ContactsCardQuery) => {
   // Extract the contacts
   const _contacts = data?.me?.contacts || []
   const contacts = [..._contacts] // Convert from readyonlyarray to regular array
 
-  // Sort contacts by the `createdAt` timestamp in descending order
+  // Sort contacts by the `transactionsCount` in descending order
   contacts.sort((a, b) => {
-    if (a.transactions?.edges && b.transactions?.edges) {
-      const aDate = a?.transactions?.edges[0]?.node?.createdAt || 0
-      const bDate = b?.transactions?.edges[0]?.node?.createdAt || 0
-      return bDate - aDate
-    }
-    return 0
+    return b.transactionsCount - a.transactionsCount
   })
 
   // return top 3
