@@ -120,6 +120,7 @@ const useStyles = makeStyles(
         maxWidth: "35%",
         marginBottom: 6,
         lineHeight: 20,
+        color: colors.grey2,
       },
       helpBtn: {
         alignSelf: "center",

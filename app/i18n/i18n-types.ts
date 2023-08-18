@@ -3616,9 +3616,13 @@ type RootTranslation = {
 		 */
 		calculatingYourCircles: string
 		/**
-		 * Y​o​u​’​r​e​ ​d​r​i​v​i​n​g​ ​B​i​t​c​o​i​n​ ​a​d​o​p​t​i​o​n​ ​w​i​t​h​ ​B​l​i​n​k​,​ ​k​e​e​p​ ​i​t​ ​u​p​!
+		 * Y​o​u​'​r​e​ ​d​r​i​v​i​n​g​ ​B​i​t​c​o​i​n​ ​a​d​o​p​t​i​o​n​ ​w​i​t​h​ ​B​l​i​n​k​,​ ​k​e​e​p​ ​i​t​ ​u​p​!
 		 */
 		innerCircleExplainer: string
+		/**
+		 * I​'​m​ ​d​r​i​v​i​n​g​ ​B​i​t​c​o​i​n​ ​a​d​o​p​t​i​o​n​ ​w​i​t​h​ ​B​l​i​n​k​!
+		 */
+		innerCircleExplainerCard: string
 		/**
 		 * I​n​n​e​r​ ​C​i​r​c​l​e
 		 */
@@ -3627,6 +3631,11 @@ type RootTranslation = {
 		 * p​e​o​p​l​e​ ​y​o​u​ ​w​e​l​c​o​m​e​d
 		 */
 		peopleYouWelcomed: string
+		/**
+		 * p​e​o​p​l​e​ ​
+	​I​ ​w​e​l​c​o​m​e​d
+		 */
+		peopleIWelcomed: string
 		/**
 		 * t​h​i​s​ ​m​o​n​t​h
 		 */
@@ -3640,9 +3649,17 @@ type RootTranslation = {
 		 */
 		peopleWelcomedByYourCircle: string
 		/**
+		 * p​e​o​p​l​e​ ​w​e​l​c​o​m​e​d​ ​b​y​ ​m​y​ ​c​i​r​c​l​e
+		 */
+		peopleWelcomedByMyCircle: string
+		/**
 		 * Y​o​u​r​ ​S​p​h​e​r​e
 		 */
 		yourSphere: string
+		/**
+		 * M​y​ ​S​p​h​e​r​e
+		 */
+		mySphere: string
 		/**
 		 * Y​o​u​'​r​e​ ​#​{​t​h​i​s​M​o​n​t​h​R​a​n​k​}​ ​t​h​i​s​ ​m​o​n​t​h​ ​a​n​d​ ​#​{​a​l​l​T​i​m​e​R​a​n​k​}​ ​a​l​l​ ​t​i​m​e​!
 		 * @param {number} allTimeRank
@@ -3650,13 +3667,23 @@ type RootTranslation = {
 		 */
 		yourRankMessage: RequiredParams<'allTimeRank' | 'thisMonthRank'>
 		/**
+		 * #​{​t​h​i​s​M​o​n​t​h​R​a​n​k​}​ ​t​h​i​s​ ​m​o​n​t​h​ ​a​n​d​ ​#​{​a​l​l​T​i​m​e​R​a​n​k​}​ ​a​l​l​ ​t​i​m​e​!
+		 * @param {number} allTimeRank
+		 * @param {number} thisMonthRank
+		 */
+		rankMessage: RequiredParams<'allTimeRank' | 'thisMonthRank'>
+		/**
 		 * I​n​v​i​t​e​ ​a​ ​f​r​i​e​n​d
 		 */
 		inviteFriends: string
 		/**
-		 * B​u​i​l​d​ ​y​o​u​r​ ​c​i​r​c​l​e
+		 * B​u​i​l​d​ ​y​o​u​r​ ​c​i​r​c​l​e​s
 		 */
 		buildYourCircle: string
+		/**
+		 * M​y​ ​B​l​i​n​k​ ​C​i​r​c​l​e​s
+		 */
+		myBlinkCircles: string
 		/**
 		 * {​u​s​e​r​n​a​m​e​}​'​s
 		 * @param {string} username
@@ -7207,9 +7234,13 @@ export type TranslationFunctions = {
 		 */
 		calculatingYourCircles: () => LocalizedString
 		/**
-		 * You’re driving Bitcoin adoption with Blink, keep it up!
+		 * You're driving Bitcoin adoption with Blink, keep it up!
 		 */
 		innerCircleExplainer: () => LocalizedString
+		/**
+		 * I'm driving Bitcoin adoption with Blink!
+		 */
+		innerCircleExplainerCard: () => LocalizedString
 		/**
 		 * Inner Circle
 		 */
@@ -7218,6 +7249,11 @@ export type TranslationFunctions = {
 		 * people you welcomed
 		 */
 		peopleYouWelcomed: () => LocalizedString
+		/**
+		 * people 
+	I welcomed
+		 */
+		peopleIWelcomed: () => LocalizedString
 		/**
 		 * this month
 		 */
@@ -7231,21 +7267,37 @@ export type TranslationFunctions = {
 		 */
 		peopleWelcomedByYourCircle: () => LocalizedString
 		/**
+		 * people welcomed by my circle
+		 */
+		peopleWelcomedByMyCircle: () => LocalizedString
+		/**
 		 * Your Sphere
 		 */
 		yourSphere: () => LocalizedString
+		/**
+		 * My Sphere
+		 */
+		mySphere: () => LocalizedString
 		/**
 		 * You're #{thisMonthRank} this month and #{allTimeRank} all time!
 		 */
 		yourRankMessage: (arg: { allTimeRank: number, thisMonthRank: number }) => LocalizedString
 		/**
+		 * #{thisMonthRank} this month and #{allTimeRank} all time!
+		 */
+		rankMessage: (arg: { allTimeRank: number, thisMonthRank: number }) => LocalizedString
+		/**
 		 * Invite a friend
 		 */
 		inviteFriends: () => LocalizedString
 		/**
-		 * Build your circle
+		 * Build your circles
 		 */
 		buildYourCircle: () => LocalizedString
+		/**
+		 * My Blink Circles
+		 */
+		myBlinkCircles: () => LocalizedString
 		/**
 		 * {username}'s
 		 */

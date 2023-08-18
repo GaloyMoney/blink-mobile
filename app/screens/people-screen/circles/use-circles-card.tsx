@@ -12,6 +12,7 @@ import { LinearGradient } from "react-native-linear-gradient"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { getInviteLink } from "@app/config/appinfo"
+import { useAppConfig } from "@app/hooks"
 
 export const useCirclesCard = () => {
   const shareImgRef = useRef<View | null>(null)
@@ -82,9 +83,13 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
     } = useTheme()
     const { LL } = useI18nContext()
 
+    const appConfig = useAppConfig().appConfig
+    const lnAddressHostname = appConfig.galoyInstance.lnAddressHostname
+    const lnAddress = `${username}@${lnAddressHostname}`
+
     return (
       <View ref={ref} style={styles.shareContainer}>
-        <Logo style={styles.logo} height={80} />
+        <Logo style={styles.logo} height={60} />
         <View style={styles.usernameContainer}>
           <LinearGradient
             style={styles.usernameContainerGrad}
@@ -93,21 +98,23 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
             angle={216}
             angleCenter={{ x: 0.5, y: 0.5 }}
           >
-            <Text type="h2" color={colors._black} bold>
-              {LL.Circles.someones({ username })}
+            <Text type="h1" style={styles.boldText} color={colors._black}>
+              {LL.Circles.myBlinkCircles()}
             </Text>
-            <Text type="p1" color={colors._black}>
-              {LL.Circles.circles()}
+            <Text type="p2" color={colors._black}>
+              {lnAddress}
             </Text>
           </LinearGradient>
         </View>
-        <Text style={styles.description}>{LL.Circles.innerCircleExplainer()}</Text>
+        <Text type="p2" style={styles.description}>
+          {LL.Circles.innerCircleExplainerCard()}
+        </Text>
         <Circle
           heading={LL.Circles.innerCircle()}
           value={welcomeProfile.innerCircleAllTimeCount}
           minValue={1}
           maxValue={180}
-          description={LL.Circles.peopleYouWelcomed()}
+          description={LL.Circles.peopleIWelcomed()}
           subtitle={
             welcomeProfile.innerCircleThisMonthCount > 0
               ? `+ ${welcomeProfile.innerCircleThisMonthCount} ${LL.Circles.thisMonth()}`
@@ -122,7 +129,7 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
           value={welcomeProfile.outerCircleAllTimeCount}
           minValue={1}
           maxValue={180}
-          description={LL.Circles.peopleWelcomedByYourCircle()}
+          description={LL.Circles.peopleWelcomedByMyCircle()}
           subtitle={
             welcomeProfile.outerCircleThisMonthCount > 0
               ? `+ ${welcomeProfile.outerCircleThisMonthCount} ${LL.Circles.thisMonth()}`
@@ -133,7 +140,7 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
           countUpDuration={0}
         />
         <Circle
-          heading={LL.Circles.yourSphere()}
+          heading={LL.Circles.mySphere()}
           value={welcomeProfile.allTimePoints}
           description={LL.Circles.points()}
           subtitle={
@@ -142,18 +149,18 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
               : ""
           }
           subtitleGreen
-          extraSubtitleLine={LL.Circles.yourRankMessage({
+          extraSubtitleLine={LL.Circles.rankMessage({
             thisMonthRank: welcomeProfile.thisMonthRank,
             allTimeRank: welcomeProfile.allTimeRank,
           })}
           countUpDuration={0}
         />
-        <Text style={styles.buildUrCircle}>
+        <View style={styles.buildUrCircle}>
           <Text type="p2">{LL.Circles.buildYourCircle()} </Text>
-          <Text type="p1" color={colors.primary} bold>
+          <Text type="p1" style={styles.boldText} color={colors.primary}>
             get.blink.sv
           </Text>
-        </Text>
+        </View>
       </View>
     )
   })
@@ -164,14 +171,15 @@ const useStyles = makeStyles(({ colors }) => ({
     left: -10000,
 
     // // /* Enable these and disable top two to debug view
-    // top: 20,
+    // top: -100,
+    // left: -100,
     // borderWidth: 1,
     // borderColor: colors.red,
     // // */
 
-    height: 520,
-    width: 400,
-    backgroundColor: colors.white,
+    height: 560,
+    width: 420,
+    backgroundColor: colors.grey5,
     position: "absolute",
 
     display: "flex",
@@ -187,26 +195,28 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   logo: {
     position: "absolute",
-    padding: 100,
+    padding: 80,
     right: 0,
-    top: -40,
+    bottom: -35,
   },
   usernameContainer: {
     position: "absolute",
-    top: -2,
-    left: -12,
+    minWidth: "80%",
+    top: 0,
+    // left: -12,
   },
   usernameContainerGrad: {
-    paddingHorizontal: 48,
+    paddingHorizontal: 28,
     paddingVertical: 18,
     borderBottomRightRadius: 40,
   },
   description: {
     position: "absolute",
-    top: 140,
+    top: 110,
     right: 30,
-    width: 130,
-    textAlign: "right",
+    width: 140,
+    textAlign: "left",
     color: colors.grey3,
   },
+  boldText: { fontWeight: "700" },
 }))
