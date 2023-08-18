@@ -1135,6 +1135,7 @@ const en: BaseTranslation = {
     inviteFriends: "Invite a friend",
     buildYourCircle: "Build your circle",
     someones: "{username: string}'s",
+    checkBack: "Please check back later. It takes up to a day to calculate your circles",
     Sphere: {
       yourSpherePoints: "Your sphere points",
       spherePointsDescription: "For each person you and your inner circle welcomes, you receive 50 points. For each subsequent person your sphere welcomes, your receive half as much points. (25, 12.5, 6.25)",

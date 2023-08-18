@@ -3656,6 +3656,10 @@ type RootTranslation = {
 		 * @param {string} username
 		 */
 		someones: RequiredParams<'username'>
+		/**
+		 * P​l​e​a​s​e​ ​c​h​e​c​k​ ​b​a​c​k​ ​l​a​t​e​r​.​ ​I​t​ ​t​a​k​e​s​ ​u​p​ ​t​o​ ​a​ ​d​a​y​ ​t​o​ ​c​a​l​c​u​l​a​t​e​ ​y​o​u​r​ ​c​i​r​c​l​e​s
+		 */
+		checkBack: string
 		Sphere: {
 			/**
 			 * Y​o​u​r​ ​s​p​h​e​r​e​ ​p​o​i​n​t​s
@@ -7238,6 +7242,10 @@ export type TranslationFunctions = {
 		 * {username}'s
 		 */
 		someones: (arg: { username: string }) => LocalizedString
+		/**
+		 * Please check back later. It takes up to a day to calculate your circles
+		 */
+		checkBack: () => LocalizedString
 		Sphere: {
 			/**
 			 * Your sphere points

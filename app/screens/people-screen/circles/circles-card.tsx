@@ -34,7 +34,7 @@ export const CirclesCard = () => {
           ) : (
             <>
               <Text style={styles.pointsNumber}>
-                {data?.me?.defaultAccount.welcomeProfile?.allTimePoints}
+                {data?.me?.defaultAccount.welcomeProfile?.allTimePoints ?? 0}
               </Text>
               <Text style={styles.pointsText} type="p2">
                 {LL.Circles.points()}

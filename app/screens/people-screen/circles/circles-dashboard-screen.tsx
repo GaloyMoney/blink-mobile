@@ -42,18 +42,26 @@ export const CirclesDashboardScreen: React.FC = () => {
 
   const [spherePointsModalIsVisible, setSpherePointsModalIsVisible] = useState(false)
 
-  const { data } = useCirclesQuery({
+  const { data, loading } = useCirclesQuery({
     skip: !isAuthed,
     fetchPolicy: "cache-first",
   })
 
-  if (!data?.me?.defaultAccount.welcomeProfile)
+  if (loading)
     return (
       <View style={styles.activityIndicator}>
         <ActivityIndicator />
         <Text>{LL.Circles.calculatingYourCircles()}</Text>
       </View>
     )
+
+  if (!data?.me?.defaultAccount.welcomeProfile) {
+    return (
+      <View style={styles.activityIndicator}>
+        <Text style={styles.checkBackFont}>{LL.Circles.checkBack()}</Text>
+      </View>
+    )
+  }
 
   const welcomeProfile = data?.me?.defaultAccount.welcomeProfile
 
@@ -152,6 +160,11 @@ const useStyles = makeStyles(({ colors }) => {
       justifyContent: "center",
       alignItems: "center",
       rowGap: 10,
+    },
+    checkBackFont: {
+      fontWeight: "600",
+      fontSize: 18,
+      padding: 50,
     },
     lonelyImage: {
       // width: 51 * 8,
