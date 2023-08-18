@@ -1,4 +1,4 @@
-import { ActivityIndicator, TouchableWithoutFeedback, View } from "react-native"
+import { ActivityIndicator, View } from "react-native"
 
 import { makeStyles, Text } from "@rneui/themed"
 import { useNavigation } from "@react-navigation/native"
@@ -16,41 +16,39 @@ export const CirclesCardPeopleHome = () => {
   const { data, loading } = useCirclesQuery()
 
   return (
-    <TouchableWithoutFeedback onPress={() => navigation.navigate("circlesDashboard")}>
-      <View style={styles.container}>
-        <View>
-          <View style={styles.blinkCircles}>
-            <Text type="h2">{LL.Circles.titleBlinkCircles()}</Text>
-          </View>
-          <View style={styles.separator}></View>
+    <View style={styles.container}>
+      <View>
+        <View style={styles.blinkCircles}>
+          <Text type="h2">{LL.Circles.titleBlinkCircles()}</Text>
         </View>
-        <View>
-          <Text type="p2" style={styles.textCenter}>
-            {LL.Circles.circlesGrowingKeepGoing()}
-          </Text>
-        </View>
-        {loading ? (
-          <ActivityIndicator />
-        ) : (
-          <>
-            <View style={styles.pointsContainer}>
-              <Text style={styles.pointsNumber}>
-                {data?.me?.defaultAccount.welcomeProfile?.allTimePoints || 0}
-              </Text>
-              <Text style={styles.pointsText} type="p2">
-                {LL.Circles.points()}
-              </Text>
-            </View>
-            <GaloySecondaryButton
-              style={styles.viewCirclescta}
-              title={LL.Circles.viewMyCircles()}
-              onPress={() => navigation.navigate("circlesDashboard")}
-            />
-          </>
-        )}
-        <View style={styles.backdropCircle}></View>
+        <View style={styles.separator}></View>
       </View>
-    </TouchableWithoutFeedback>
+      <View>
+        <Text type="p2" style={styles.textCenter}>
+          {LL.Circles.circlesGrowingKeepGoing()}
+        </Text>
+      </View>
+      {loading ? (
+        <ActivityIndicator />
+      ) : (
+        <>
+          <View style={styles.pointsContainer}>
+            <Text style={styles.pointsNumber}>
+              {data?.me?.defaultAccount.welcomeProfile?.allTimePoints || 0}
+            </Text>
+            <Text style={styles.pointsText} type="p2">
+              {LL.Circles.points()}
+            </Text>
+          </View>
+          <GaloySecondaryButton
+            style={styles.viewCirclescta}
+            title={LL.Circles.viewMyCircles()}
+            onPress={() => navigation.navigate("circlesDashboard")}
+          />
+        </>
+      )}
+      <View style={styles.backdropCircle}></View>
+    </View>
   )
 }
 

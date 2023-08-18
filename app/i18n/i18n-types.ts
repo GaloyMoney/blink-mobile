@@ -3604,7 +3604,7 @@ type RootTranslation = {
 			grow: string
 		}
 		/**
-		 * Y​o​u​r​ ​c​i​r​c​l​e​s​ ​g​r​o​w​ ​a​s​ ​y​o​u​ ​o​n​b​o​a​r​d​ ​p​e​o​p​l​e​ ​t​o​ ​B​l​i​n​k​ ​-​ ​k​e​e​p​ ​g​o​i​n​g​!
+		 * Y​o​u​r​ ​c​i​r​c​l​e​s​ ​g​r​o​w​ ​a​s​ ​y​o​u​ ​w​e​l​c​o​m​e​ ​p​e​o​p​l​e​ ​t​o​ ​B​l​i​n​k​ ​–​ ​k​e​e​p​ ​g​o​i​n​g​!
 		 */
 		circlesGrowingKeepGoing: string
 		/**
@@ -7222,7 +7222,7 @@ export type TranslationFunctions = {
 			grow: () => LocalizedString
 		}
 		/**
-		 * Your circles grow as you onboard people to Blink - keep going!
+		 * Your circles grow as you welcome people to Blink – keep going!
 		 */
 		circlesGrowingKeepGoing: () => LocalizedString
 		/**
