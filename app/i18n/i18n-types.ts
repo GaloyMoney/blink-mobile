@@ -3586,6 +3586,10 @@ type RootTranslation = {
 		 */
 		inviteFriendToBlink: string
 		/**
+		 * S​h​a​r​e​ ​y​o​u​r​ ​c​i​r​c​l​e​s
+		 */
+		shareCircles: string
+		/**
 		 * S​h​a​r​e
 		 */
 		share: string
@@ -3612,7 +3616,7 @@ type RootTranslation = {
 		 */
 		calculatingYourCircles: string
 		/**
-		 * Y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​g​r​o​w​s​ ​w​h​e​n​ ​y​o​u​ ​s​e​n​d​ ​a​ ​B​l​i​n​k​ ​u​s​e​r​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s​!
+		 * Y​o​u​’​r​e​ ​d​r​i​v​i​n​g​ ​B​i​t​c​o​i​n​ ​a​d​o​p​t​i​o​n​ ​w​i​t​h​ ​B​l​i​n​k​,​ ​k​e​e​p​ ​i​t​ ​u​p​!
 		 */
 		innerCircleExplainer: string
 		/**
@@ -7173,6 +7177,10 @@ export type TranslationFunctions = {
 		 */
 		inviteFriendToBlink: () => LocalizedString
 		/**
+		 * Share your circles
+		 */
+		shareCircles: () => LocalizedString
+		/**
 		 * Share
 		 */
 		share: () => LocalizedString
@@ -7199,7 +7207,7 @@ export type TranslationFunctions = {
 		 */
 		calculatingYourCircles: () => LocalizedString
 		/**
-		 * Your inner circle grows when you send a Blink user their first sats!
+		 * You’re driving Bitcoin adoption with Blink, keep it up!
 		 */
 		innerCircleExplainer: () => LocalizedString
 		/**

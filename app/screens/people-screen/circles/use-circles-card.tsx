@@ -2,7 +2,6 @@ import { useCirclesQuery, WelcomeProfile } from "@app/graphql/generated"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { forwardRef, useMemo, useRef } from "react"
 import { View, Share as NativeShare } from "react-native"
-import Icon from "react-native-vector-icons/Ionicons"
 
 import Logo from "@app/assets/logo/app-logo-dark.svg"
 
@@ -14,9 +13,8 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { getInviteLink } from "@app/config/appinfo"
 
-export const CirclesDashboardHeaderRight: React.FC = () => {
+export const useCirclesCard = () => {
   const shareImgRef = useRef<View | null>(null)
-  const styles = useStyles()
   const { LL } = useI18nContext()
 
   const { data } = useCirclesQuery()
@@ -68,13 +66,7 @@ export const CirclesDashboardHeaderRight: React.FC = () => {
     }
   }
 
-  return (
-    <>
-      {/* This is rendered off screen */}
-      {ShareImg}
-      <Icon onPress={share} style={styles.shareButton} name="share-social-outline" />
-    </>
-  )
+  return { ShareImg, share }
 }
 
 type ShareImageProps = {
@@ -167,11 +159,6 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
   })
 
 const useStyles = makeStyles(({ colors }) => ({
-  shareButton: {
-    fontSize: 22,
-    color: colors.black,
-    paddingRight: 10,
-  },
   shareContainer: {
     top: -10000,
     left: -10000,

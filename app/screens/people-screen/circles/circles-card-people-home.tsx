@@ -7,7 +7,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { useCirclesQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-export const CirclesCard = () => {
+export const CirclesCardPeopleHome = () => {
   const styles = useStyles()
   const navigation = useNavigation<StackNavigationProp<PeopleStackParamList>>()
   const { LL } = useI18nContext()

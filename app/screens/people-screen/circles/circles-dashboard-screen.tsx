@@ -2,7 +2,6 @@ import { Text, makeStyles } from "@rneui/themed"
 
 import { Screen } from "@app/components/screen"
 import { Circle } from "@app/components/circle"
-import { InviteFriendsCard } from "./invite-friends-card"
 import { gql } from "@apollo/client"
 import { Image, ActivityIndicator, View } from "react-native"
 import { useCirclesQuery } from "@app/graphql/generated"
@@ -11,6 +10,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { SpherePointsModal } from "@app/components/sphere-points-modal"
 import { useState } from "react"
 import LonelyImage from "@app/assets/images/lonely.png"
+import { ShareCircles } from "./share-circles-card"
 
 gql`
   query Circles {
@@ -128,7 +128,7 @@ export const CirclesDashboardScreen: React.FC = () => {
           />
         </>
       )}
-      <InviteFriendsCard />
+      <ShareCircles />
     </Screen>
   )
 }

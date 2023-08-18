@@ -2,7 +2,7 @@ import * as React from "react"
 import { makeStyles } from "@rneui/themed"
 
 import { Screen } from "../../components/screen"
-import { CirclesCard } from "./circles/circles-card"
+import { CirclesCardPeopleHome } from "./circles/circles-card-people-home"
 import { ContactsCard } from "./contacts/contacts-card"
 import { InviteFriendsCard } from "./circles/invite-friends-card"
 
@@ -11,7 +11,7 @@ export const PeopleScreen: React.FC = () => {
 
   return (
     <Screen style={styles.screen} preset="scroll">
-      <CirclesCard />
+      <CirclesCardPeopleHome />
       <ContactsCard />
       <InviteFriendsCard />
     </Screen>

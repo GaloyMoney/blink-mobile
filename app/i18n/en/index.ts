@@ -1134,6 +1134,7 @@ const en: BaseTranslation = {
     introducingCircles: "Introducing Circles",
     copiedInviteLink: "Copied Invite Link",
     inviteFriendToBlink: "Invite a friend to Blink",
+    shareCircles: "Share your circles",
     share: "Share",
     circlesGrowingSatsExplainer: {
       your: "Your",
@@ -1143,8 +1144,7 @@ const en: BaseTranslation = {
       "Your circles grow as you onboard people to Blink - keep going!",
     points: "points",
     calculatingYourCircles: "Calculating your circles...",
-    innerCircleExplainer:
-      "Your inner circle grows when you send a Blink user their first sats!",
+    innerCircleExplainer: "You’re driving Bitcoin adoption with Blink, keep it up!",
     innerCircle: "Inner Circle",
     peopleYouWelcomed: "people you welcomed",
     thisMonth: "this month",
