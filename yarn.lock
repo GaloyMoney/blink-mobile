@@ -19616,10 +19616,10 @@ react-native-view-shot@^3.7.0:
   dependencies:
     html2canvas "^1.4.1"
 
-react-native-vision-camera@^2.15.4:
-  version "2.15.4"
-  resolved "https://registry.npmjs.org/react-native-vision-camera/-/react-native-vision-camera-2.15.4.tgz#821f0505fc8c63b87c1ae4697d2bb4f670333576"
-  integrity sha512-SJXSWH1pu4V3Kj4UuX/vSgOxc9d5wb5+nHqBHd+5iUtVyVLEp0F6Jbbaha7tDoU+kUBwonhlwr2o8oV6NZ7Ibg==
+react-native-vision-camera@^2.15.6:
+  version "2.15.6"
+  resolved "https://registry.npmjs.org/react-native-vision-camera/-/react-native-vision-camera-2.15.6.tgz#50fe9b47117a257f2c8bf7c33994fdadb897d091"
+  integrity sha512-TEdriQ2SQAhF7byw7iDaOh8cJm/IECOUofBhcdswtAK9LSqCkVEIhX3pna2L3Obt6evc8zaFnYCVqhvC3UtKRg==
 
 react-native-walkthrough-tooltip@^1.4.0:
   version "1.5.0"
