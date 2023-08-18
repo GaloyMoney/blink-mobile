@@ -207,7 +207,6 @@ export type BtcWalletTransactionsByAddressArgs = {
 
 export type BuildInformation = {
   readonly __typename: 'BuildInformation';
-  readonly buildTime?: Maybe<Scalars['Timestamp']['output']>;
   readonly commitHash?: Maybe<Scalars['String']['output']>;
   readonly helmRevision?: Maybe<Scalars['Int']['output']>;
 };
@@ -6584,7 +6583,6 @@ export type BtcWalletResolvers<ContextType = any, ParentType extends ResolversPa
 };
 
 export type BuildInformationResolvers<ContextType = any, ParentType extends ResolversParentTypes['BuildInformation'] = ResolversParentTypes['BuildInformation']> = {
-  buildTime?: Resolver<Maybe<ResolversTypes['Timestamp']>, ParentType, ContextType>;
   commitHash?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   helmRevision?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
