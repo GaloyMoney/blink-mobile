@@ -838,6 +838,17 @@ query currencyList {
   }
 }
 
+query debugScreen {
+  me {
+    id
+    defaultAccount {
+      id
+      __typename
+    }
+    __typename
+  }
+}
+
 query displayCurrency {
   me {
     id

@@ -248,14 +248,20 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     })
 
   useEffect(() => {
-    // If we scan a QR code encoded with a payment url for a specific user e.g. https://{domain}/{username}
-    // then we want to detect the username as the destination
     if (route.params?.payment) {
       handleChangeText(route.params?.payment)
     }
   }, [route.params?.payment, handleChangeText])
 
   useEffect(() => {
+    if (route.params?.autoValidate) {
+      initiateGoToNextScreen && initiateGoToNextScreen()
+    }
+  }, [route.params?.autoValidate, initiateGoToNextScreen])
+
+  useEffect(() => {
+    // If we scan a QR code encoded with a payment url for a specific user e.g. https://{domain}/{username}
+    // then we want to detect the username as the destination
     if (route.params?.username) {
       handleChangeText(route.params?.username)
     }

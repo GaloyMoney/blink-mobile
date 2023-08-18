@@ -1873,6 +1873,11 @@ export type ConversionScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ConversionScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
 
+export type DebugScreenQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DebugScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string } } | null };
+
 export type QuizSatsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3233,6 +3238,43 @@ export function useConversionScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type ConversionScreenQueryHookResult = ReturnType<typeof useConversionScreenQuery>;
 export type ConversionScreenLazyQueryHookResult = ReturnType<typeof useConversionScreenLazyQuery>;
 export type ConversionScreenQueryResult = Apollo.QueryResult<ConversionScreenQuery, ConversionScreenQueryVariables>;
+export const DebugScreenDocument = gql`
+    query debugScreen {
+  me {
+    id
+    defaultAccount {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useDebugScreenQuery__
+ *
+ * To run a query within a React component, call `useDebugScreenQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDebugScreenQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDebugScreenQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useDebugScreenQuery(baseOptions?: Apollo.QueryHookOptions<DebugScreenQuery, DebugScreenQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DebugScreenQuery, DebugScreenQueryVariables>(DebugScreenDocument, options);
+      }
+export function useDebugScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DebugScreenQuery, DebugScreenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DebugScreenQuery, DebugScreenQueryVariables>(DebugScreenDocument, options);
+        }
+export type DebugScreenQueryHookResult = ReturnType<typeof useDebugScreenQuery>;
+export type DebugScreenLazyQueryHookResult = ReturnType<typeof useDebugScreenLazyQuery>;
+export type DebugScreenQueryResult = Apollo.QueryResult<DebugScreenQuery, DebugScreenQueryVariables>;
 export const QuizSatsDocument = gql`
     query quizSats {
   quizQuestions {
