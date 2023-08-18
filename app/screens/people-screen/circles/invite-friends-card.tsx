@@ -30,7 +30,7 @@ export const InviteFriendsCard = () => {
 
   const share = async () => {
     try {
-      const result = await Share.share({ message: getInviteLink(data.me.username) })
+      const result = await Share.share({ message: getInviteLink(data?.me?.username) })
 
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
