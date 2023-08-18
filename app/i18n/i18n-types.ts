@@ -3586,15 +3586,25 @@ type RootTranslation = {
 		 */
 		inviteFriendToBlink: string
 		/**
+		 * S​h​a​r​e​ ​y​o​u​r​ ​c​i​r​c​l​e​s
+		 */
+		shareCircles: string
+		/**
 		 * S​h​a​r​e
 		 */
 		share: string
+		circlesGrowingSatsExplainer: {
+			/**
+			 * Y​o​u​r
+			 */
+			your: string
+			/**
+			 * g​r​o​w​ ​w​h​e​n​ ​y​o​u​ ​s​e​n​d​ ​a​ ​n​e​w​ ​B​l​i​n​k​ ​u​s​e​r​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s​!
+			 */
+			grow: string
+		}
 		/**
-		 * Y​o​u​r​ ​B​l​i​n​k​ ​C​i​r​c​l​e​s​ ​g​r​o​w​ ​w​h​e​n​ ​y​o​u​ ​s​e​n​d​ ​a​ ​n​e​w​ ​B​l​i​n​k​ ​u​s​e​r​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s​!
-		 */
-		circlesGrowingSatsExplainer: string
-		/**
-		 * Y​o​u​r​ ​c​i​r​c​l​e​s​ ​g​r​o​w​ ​a​s​ ​y​o​u​ ​o​n​b​o​a​r​d​ ​p​e​o​p​l​e​ ​t​o​ ​B​l​i​n​k​ ​-​ ​k​e​e​p​ ​g​o​i​n​g​!
+		 * Y​o​u​r​ ​c​i​r​c​l​e​s​ ​g​r​o​w​ ​a​s​ ​y​o​u​ ​w​e​l​c​o​m​e​ ​p​e​o​p​l​e​ ​t​o​ ​B​l​i​n​k​ ​–​ ​k​e​e​p​ ​g​o​i​n​g​!
 		 */
 		circlesGrowingKeepGoing: string
 		/**
@@ -3606,9 +3616,13 @@ type RootTranslation = {
 		 */
 		calculatingYourCircles: string
 		/**
-		 * Y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​g​r​o​w​s​ ​w​h​e​n​ ​y​o​u​ ​s​e​n​d​ ​a​ ​B​l​i​n​k​ ​u​s​e​r​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s​!
+		 * Y​o​u​'​r​e​ ​d​r​i​v​i​n​g​ ​B​i​t​c​o​i​n​ ​a​d​o​p​t​i​o​n​ ​w​i​t​h​ ​B​l​i​n​k​,​ ​k​e​e​p​ ​i​t​ ​u​p​!
 		 */
 		innerCircleExplainer: string
+		/**
+		 * I​'​m​ ​d​r​i​v​i​n​g​ ​B​i​t​c​o​i​n​ ​a​d​o​p​t​i​o​n​ ​w​i​t​h​ ​B​l​i​n​k​!
+		 */
+		innerCircleExplainerCard: string
 		/**
 		 * I​n​n​e​r​ ​C​i​r​c​l​e
 		 */
@@ -3618,11 +3632,16 @@ type RootTranslation = {
 		 */
 		peopleYouWelcomed: string
 		/**
+		 * p​e​o​p​l​e​ ​
+	​I​ ​w​e​l​c​o​m​e​d
+		 */
+		peopleIWelcomed: string
+		/**
 		 * t​h​i​s​ ​m​o​n​t​h
 		 */
 		thisMonth: string
 		/**
-		 * O​u​t​e​r​ ​c​i​r​c​l​e
+		 * O​u​t​e​r​ ​C​i​r​c​l​e
 		 */
 		outerCircle: string
 		/**
@@ -3630,9 +3649,17 @@ type RootTranslation = {
 		 */
 		peopleWelcomedByYourCircle: string
 		/**
-		 * Y​o​u​r​ ​s​p​h​e​r​e
+		 * p​e​o​p​l​e​ ​w​e​l​c​o​m​e​d​ ​b​y​ ​m​y​ ​c​i​r​c​l​e
+		 */
+		peopleWelcomedByMyCircle: string
+		/**
+		 * Y​o​u​r​ ​S​p​h​e​r​e
 		 */
 		yourSphere: string
+		/**
+		 * M​y​ ​S​p​h​e​r​e
+		 */
+		mySphere: string
 		/**
 		 * Y​o​u​'​r​e​ ​#​{​t​h​i​s​M​o​n​t​h​R​a​n​k​}​ ​t​h​i​s​ ​m​o​n​t​h​ ​a​n​d​ ​#​{​a​l​l​T​i​m​e​R​a​n​k​}​ ​a​l​l​ ​t​i​m​e​!
 		 * @param {number} allTimeRank
@@ -3640,17 +3667,23 @@ type RootTranslation = {
 		 */
 		yourRankMessage: RequiredParams<'allTimeRank' | 'thisMonthRank'>
 		/**
-		 * T​o​t​a​l​ ​h​o​w​ ​m​u​c​h​ ​o​f​ ​a​n​ ​i​m​p​a​c​t​ ​y​o​u​ ​a​r​e​ ​m​a​k​i​n​g
+		 * #​{​t​h​i​s​M​o​n​t​h​R​a​n​k​}​ ​t​h​i​s​ ​m​o​n​t​h​ ​a​n​d​ ​#​{​a​l​l​T​i​m​e​R​a​n​k​}​ ​a​l​l​ ​t​i​m​e​!
+		 * @param {number} allTimeRank
+		 * @param {number} thisMonthRank
 		 */
-		totalImpact: string
+		rankMessage: RequiredParams<'allTimeRank' | 'thisMonthRank'>
 		/**
 		 * I​n​v​i​t​e​ ​a​ ​f​r​i​e​n​d
 		 */
 		inviteFriends: string
 		/**
-		 * B​u​i​l​d​ ​y​o​u​r​ ​c​i​r​c​l​e
+		 * B​u​i​l​d​ ​y​o​u​r​ ​c​i​r​c​l​e​s
 		 */
 		buildYourCircle: string
+		/**
+		 * M​y​ ​B​l​i​n​k​ ​C​i​r​c​l​e​s
+		 */
+		myBlinkCircles: string
 		/**
 		 * {​u​s​e​r​n​a​m​e​}​'​s
 		 * @param {string} username
@@ -3662,7 +3695,7 @@ type RootTranslation = {
 			 */
 			yourSpherePoints: string
 			/**
-			 * F​o​r​ ​e​a​c​h​ ​p​e​r​s​o​n​ ​y​o​u​ ​a​n​d​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​w​e​l​c​o​m​e​s​,​ ​y​o​u​ ​r​e​c​e​i​v​e​ ​5​0​ ​p​o​i​n​t​s​.​ ​F​o​r​ ​e​a​c​h​ ​s​u​b​s​e​q​u​e​n​t​ ​p​e​r​s​o​n​ ​y​o​u​r​ ​s​p​h​e​r​e​ ​w​e​l​c​o​m​e​s​,​ ​y​o​u​r​ ​r​e​c​e​i​v​e​ ​h​a​l​f​ ​a​s​ ​m​u​c​h​ ​p​o​i​n​t​s​.​ ​(​2​5​,​ ​1​2​.​5​,​ ​6​.​2​5​)
+			 * F​o​r​ ​e​a​c​h​ ​p​e​r​s​o​n​ ​y​o​u​ ​a​n​d​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​w​e​l​c​o​m​e​s​,​ ​y​o​u​ ​r​e​c​e​i​v​e​ ​5​0​ ​p​o​i​n​t​s​.​ ​F​o​r​ ​p​e​o​p​l​e​ ​a​d​d​e​d​ ​b​y​ ​e​a​c​h​ ​f​u​r​t​h​e​r​ ​c​i​r​c​l​e​,​ ​y​o​u​ ​r​e​c​e​i​v​e​ ​h​a​l​f​ ​a​s​ ​m​a​n​y​ ​p​o​i​n​t​s​.​ ​(​2​5​,​ ​1​2​.​5​,​ ​6​.​2​5​)
 			 */
 			spherePointsDescription: string
 			/**
@@ -3678,15 +3711,15 @@ type RootTranslation = {
 			 */
 			yourSphere: string
 			/**
-			 * 1​s​t​ ​d​e​g​r​e​e
+			 * W​e​l​c​o​m​e​d​ ​b​y​ ​y​o​u
 			 */
 			firstDegree: string
 			/**
-			 * 2​n​d​ ​d​e​g​r​e​e
+			 * W​e​l​c​o​m​e​d​ ​b​y​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e
 			 */
 			secondDegree: string
 			/**
-			 * 3​r​d​ ​d​e​g​r​e​e
+			 * W​e​l​c​o​m​e​d​ ​b​y​ ​y​o​u​r​ ​2​n​d​ ​c​i​r​c​l​e
 			 */
 			thirdDegree: string
 		}
@@ -7171,15 +7204,25 @@ export type TranslationFunctions = {
 		 */
 		inviteFriendToBlink: () => LocalizedString
 		/**
+		 * Share your circles
+		 */
+		shareCircles: () => LocalizedString
+		/**
 		 * Share
 		 */
 		share: () => LocalizedString
+		circlesGrowingSatsExplainer: {
+			/**
+			 * Your
+			 */
+			your: () => LocalizedString
+			/**
+			 * grow when you send a new Blink user their first sats!
+			 */
+			grow: () => LocalizedString
+		}
 		/**
-		 * Your Blink Circles grow when you send a new Blink user their first sats!
-		 */
-		circlesGrowingSatsExplainer: () => LocalizedString
-		/**
-		 * Your circles grow as you onboard people to Blink - keep going!
+		 * Your circles grow as you welcome people to Blink – keep going!
 		 */
 		circlesGrowingKeepGoing: () => LocalizedString
 		/**
@@ -7191,9 +7234,13 @@ export type TranslationFunctions = {
 		 */
 		calculatingYourCircles: () => LocalizedString
 		/**
-		 * Your inner circle grows when you send a Blink user their first sats!
+		 * You're driving Bitcoin adoption with Blink, keep it up!
 		 */
 		innerCircleExplainer: () => LocalizedString
+		/**
+		 * I'm driving Bitcoin adoption with Blink!
+		 */
+		innerCircleExplainerCard: () => LocalizedString
 		/**
 		 * Inner Circle
 		 */
@@ -7203,11 +7250,16 @@ export type TranslationFunctions = {
 		 */
 		peopleYouWelcomed: () => LocalizedString
 		/**
+		 * people 
+	I welcomed
+		 */
+		peopleIWelcomed: () => LocalizedString
+		/**
 		 * this month
 		 */
 		thisMonth: () => LocalizedString
 		/**
-		 * Outer circle
+		 * Outer Circle
 		 */
 		outerCircle: () => LocalizedString
 		/**
@@ -7215,25 +7267,37 @@ export type TranslationFunctions = {
 		 */
 		peopleWelcomedByYourCircle: () => LocalizedString
 		/**
-		 * Your sphere
+		 * people welcomed by my circle
+		 */
+		peopleWelcomedByMyCircle: () => LocalizedString
+		/**
+		 * Your Sphere
 		 */
 		yourSphere: () => LocalizedString
+		/**
+		 * My Sphere
+		 */
+		mySphere: () => LocalizedString
 		/**
 		 * You're #{thisMonthRank} this month and #{allTimeRank} all time!
 		 */
 		yourRankMessage: (arg: { allTimeRank: number, thisMonthRank: number }) => LocalizedString
 		/**
-		 * Total how much of an impact you are making
+		 * #{thisMonthRank} this month and #{allTimeRank} all time!
 		 */
-		totalImpact: () => LocalizedString
+		rankMessage: (arg: { allTimeRank: number, thisMonthRank: number }) => LocalizedString
 		/**
 		 * Invite a friend
 		 */
 		inviteFriends: () => LocalizedString
 		/**
-		 * Build your circle
+		 * Build your circles
 		 */
 		buildYourCircle: () => LocalizedString
+		/**
+		 * My Blink Circles
+		 */
+		myBlinkCircles: () => LocalizedString
 		/**
 		 * {username}'s
 		 */
@@ -7244,7 +7308,7 @@ export type TranslationFunctions = {
 			 */
 			yourSpherePoints: () => LocalizedString
 			/**
-			 * For each person you and your inner circle welcomes, you receive 50 points. For each subsequent person your sphere welcomes, your receive half as much points. (25, 12.5, 6.25)
+			 * For each person you and your inner circle welcomes, you receive 50 points. For people added by each further circle, you receive half as many points. (25, 12.5, 6.25)
 			 */
 			spherePointsDescription: () => LocalizedString
 			/**
@@ -7260,15 +7324,15 @@ export type TranslationFunctions = {
 			 */
 			yourSphere: () => LocalizedString
 			/**
-			 * 1st degree
+			 * Welcomed by you
 			 */
 			firstDegree: () => LocalizedString
 			/**
-			 * 2nd degree
+			 * Welcomed by your inner circle
 			 */
 			secondDegree: () => LocalizedString
 			/**
-			 * 3rd degree
+			 * Welcomed by your 2nd circle
 			 */
 			thirdDegree: () => LocalizedString
 		}

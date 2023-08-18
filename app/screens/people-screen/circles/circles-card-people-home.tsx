@@ -1,4 +1,4 @@
-import { ActivityIndicator, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, View } from "react-native"
 
 import { makeStyles, Text } from "@rneui/themed"
 import { useNavigation } from "@react-navigation/native"
@@ -6,8 +6,9 @@ import { PeopleStackParamList } from "@app/navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { useCirclesQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 
-export const CirclesCard = () => {
+export const CirclesCardPeopleHome = () => {
   const styles = useStyles()
   const navigation = useNavigation<StackNavigationProp<PeopleStackParamList>>()
   const { LL } = useI18nContext()
@@ -15,36 +16,39 @@ export const CirclesCard = () => {
   const { data, loading } = useCirclesQuery()
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("circlesDashboard")}>
-      <View style={styles.container}>
-        <View>
-          <View style={styles.blinkCircles}>
-            <Text type="h2">{LL.Circles.titleBlinkCircles()}</Text>
-          </View>
-          <View style={styles.separator}></View>
+    <View style={styles.container}>
+      <View>
+        <View style={styles.blinkCircles}>
+          <Text type="h2">{LL.Circles.titleBlinkCircles()}</Text>
         </View>
-        <View>
-          <Text type="p2" style={styles.textCenter}>
-            {LL.Circles.circlesGrowingKeepGoing()}
-          </Text>
-        </View>
-        <View style={styles.pointsContainer}>
-          {loading ? (
-            <ActivityIndicator />
-          ) : (
-            <>
-              <Text style={styles.pointsNumber}>
-                {data?.me?.defaultAccount.welcomeProfile?.allTimePoints || 0}
-              </Text>
-              <Text style={styles.pointsText} type="p2">
-                {LL.Circles.points()}
-              </Text>
-            </>
-          )}
-        </View>
-        <View style={styles.backdropCircle}></View>
+        <View style={styles.separator}></View>
       </View>
-    </TouchableOpacity>
+      <View>
+        <Text type="p2" style={styles.textCenter}>
+          {LL.Circles.circlesGrowingKeepGoing()}
+        </Text>
+      </View>
+      {loading ? (
+        <ActivityIndicator />
+      ) : (
+        <>
+          <View style={styles.pointsContainer}>
+            <Text style={styles.pointsNumber}>
+              {data?.me?.defaultAccount.welcomeProfile?.allTimePoints || 0}
+            </Text>
+            <Text style={styles.pointsText} type="p2">
+              {LL.Circles.points()}
+            </Text>
+          </View>
+          <GaloySecondaryButton
+            style={styles.viewCirclescta}
+            title={LL.Circles.viewMyCircles()}
+            onPress={() => navigation.navigate("circlesDashboard")}
+          />
+        </>
+      )}
+      <View style={styles.backdropCircle}></View>
+    </View>
   )
 }
 
@@ -56,6 +60,7 @@ const useStyles = makeStyles(({ colors }) => ({
     marginBottom: 20,
     borderRadius: 12,
     padding: 12,
+    paddingBottom: 0,
     rowGap: 14,
     position: "relative",
     overflow: "hidden",
@@ -82,7 +87,7 @@ const useStyles = makeStyles(({ colors }) => ({
     columnGap: 10,
   },
   pointsNumber: {
-    color: colors.primary,
+    color: colors.black,
     fontWeight: "700",
     fontSize: 50,
   },
@@ -97,5 +102,8 @@ const useStyles = makeStyles(({ colors }) => ({
     width: 280,
     borderRadius: 280 / 2,
     backgroundColor: colors.backdropWhite,
+  },
+  viewCirclescta: {
+    marginTop: -10,
   },
 }))

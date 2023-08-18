@@ -76,7 +76,6 @@ import {
   RootStackParamList,
 } from "./stack-param-lists"
 import { CirclesDashboardScreen } from "@app/screens/people-screen/circles/circles-dashboard-screen"
-import { CirclesDashboardHeaderRight } from "@app/screens/people-screen/circles/share-circles-image"
 import { AllContactsScreen } from "@app/screens/people-screen/contacts/all-contacts"
 
 const useStyles = makeStyles(({ colors }) => ({
@@ -445,7 +444,6 @@ export const ContactNavigator = () => {
         component={CirclesDashboardScreen}
         options={{
           title: LL.Circles.title(),
-          headerRight: () => <CirclesDashboardHeaderRight />,
         }}
       />
     </StackContacts.Navigator>

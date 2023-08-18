@@ -28,6 +28,9 @@ import Icon from "react-native-vector-icons/Ionicons"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { toastShow } from "@app/utils/toast"
 import { GaloyToast } from "../galoy-toast"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { PeopleStackParamList } from "@app/navigation/stack-param-lists"
 
 type Props = {
   isVisible: boolean
@@ -51,6 +54,8 @@ export const InviteModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
     theme: { colors },
   } = useTheme()
   const styles = useStyles()
+
+  const navigation = useNavigation<StackNavigationProp<PeopleStackParamList>>()
 
   const acknowledgeModal = () => {
     setIsVisible(false)
@@ -178,7 +183,17 @@ export const InviteModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
 
           <View style={styles.cardBodyContainer}>
             <Text type="p2" style={styles.textCenter}>
-              {LL.Circles.circlesGrowingSatsExplainer()}
+              {LL.Circles.circlesGrowingSatsExplainer.your()}{" "}
+              <Text
+                style={styles.underline}
+                onPress={() => {
+                  setIsVisible(false)
+                  navigation.navigate("circlesDashboard")
+                }}
+              >
+                {LL.Circles.titleBlinkCircles()}
+              </Text>{" "}
+              {LL.Circles.circlesGrowingSatsExplainer.grow()}
             </Text>
           </View>
         </View>
@@ -242,5 +257,8 @@ const useStyles = makeStyles(({ colors }) => ({
     flex: 2,
     alignItems: "flex-end",
     marginRight: 10,
+  },
+  underline: {
+    textDecorationLine: "underline",
   },
 }))
