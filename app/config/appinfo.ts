@@ -30,5 +30,7 @@ export const ratingOptions = {
   openAppStoreIfInAppFails: true,
 }
 
-export const getInviteLink = (username: string | null | undefined) =>
-  `https://get.blink.sv/${username}`
+export const getInviteLink = (_username: string | null | undefined) => {
+  const username = _username ? `/$(_username}` : ""
+  return `https://get.blink.sv${username}`
+}
