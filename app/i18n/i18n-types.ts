@@ -200,9 +200,9 @@ type RootTranslation = {
 		 */
 		viewAllContacts: string
 		/**
-		 * R​e​c​e​n​t​ ​C​o​n​t​a​c​t​s
+		 * F​r​e​q​u​e​n​t​ ​C​o​n​t​a​c​t​s
 		 */
-		recentContacts: string
+		frequentContacts: string
 	}
 	ContactDetailsScreen: {
 		/**
@@ -3856,9 +3856,9 @@ export type TranslationFunctions = {
 		 */
 		viewAllContacts: () => LocalizedString
 		/**
-		 * Recent Contacts
+		 * Frequent Contacts
 		 */
-		recentContacts: () => LocalizedString
+		frequentContacts: () => LocalizedString
 	}
 	ContactDetailsScreen: {
 		/**

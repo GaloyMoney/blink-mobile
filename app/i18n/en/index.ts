@@ -55,7 +55,7 @@ const en: BaseTranslation = {
     noMatchingContacts: "No contacts matching your search were found.",
     allContacts: "All Contacts",
     viewAllContacts: "View all contacts",
-    recentContacts: "Recent Contacts",
+    frequentContacts: "Frequent Contacts",
   },
   ContactDetailsScreen: {
     title: "Transactions with {username: string}",
@@ -575,7 +575,7 @@ const en: BaseTranslation = {
     receiveViaInvoice: "Receive via Lightning",
     receiveViaPaycode: "Receive via Paycode",
     receiveViaOnchain: "Receive via Onchain",
-    payCodeOrLNURL: "Paycode / LNURL"
+    payCodeOrLNURL: "Paycode / LNURL",
   },
   RedeemBitcoinScreen: {
     title: "Redeem Bitcoin",
@@ -733,17 +733,22 @@ const en: BaseTranslation = {
     logOutAndDeleteLocalData: "Log out and clear all local data",
     IUnderstand: "I understand. Please log me out.",
     logoutAlertTitle: "Are you sure you want to log out and delete all local data?",
-    logoutAlertContentPhone: "You will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure you have access to it to log back in",
-    logoutAlertContentEmail: "You will need to re-enter your email to log back in.\nyour email is {email: string} so make sure you have access to it to log back in",
-    logoutAlertContentPhoneEmail: "You will need to re-enter either your phone number or email to log back in.\nyour phone number is {phoneNumber: string} and your email is {email: string} so make sure you have access to those to log back in",
+    logoutAlertContentPhone:
+      "You will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure you have access to it to log back in",
+    logoutAlertContentEmail:
+      "You will need to re-enter your email to log back in.\nyour email is {email: string} so make sure you have access to it to log back in",
+    logoutAlertContentPhoneEmail:
+      "You will need to re-enter either your phone number or email to log back in.\nyour phone number is {phoneNumber: string} and your email is {email: string} so make sure you have access to those to log back in",
     usdBalanceWarning: "You have a Stablesats balance of {balance: string}.",
     btcBalanceWarning: "You have a bitcoin balance of {balance: string}.",
     secureYourAccount: "Register to secure your account",
     tapToAdd: "Tap to add",
     deleteEmailPromptTitle: "Delete email",
-    deleteEmailPromptContent: "Are you sure you want to delete your email address? you will only be able to log back in with your phone number.",
+    deleteEmailPromptContent:
+      "Are you sure you want to delete your email address? you will only be able to log back in with your phone number.",
     deletePhonePromptTitle: "Delete phone",
-    deletePhonePromptContent: "Are you sure you want to delete your phone number? you will only be able to log in back with your email.",
+    deletePhonePromptContent:
+      "Are you sure you want to delete your phone number? you will only be able to log in back with your email.",
     addEmailFirst: "Add an email first",
     addPhoneFirst: "Add a phone first",
     phoneNumberAuthentication: "Phone number (for login)",
@@ -754,28 +759,34 @@ const en: BaseTranslation = {
     unverifiedContent: "Secure your account by verifying your email.",
     confirmEmail: "Confirm email",
     emailUnverified: "Your email is unverified",
-    emailUnverifiedContent: "Ensure you can log back into your account by verifying your email. Do you want to do the verification now?",
+    emailUnverifiedContent:
+      "Ensure you can log back into your account by verifying your email. Do you want to do the verification now?",
     totp: "Two-factor authentication",
     totpDeactivated: "Two-factor authentication has been deactivated",
     totpDeleteAlertTitle: "Delete two-factor authentication",
-    totpDeleteAlertContent: "Are you sure you want to delete your two-factor authentication?",
+    totpDeleteAlertContent:
+      "Are you sure you want to delete your two-factor authentication?",
   },
   TotpRegistrationInitiateScreen: {
     title: "Two-factor authentication",
-    content: "Scan this QR code with your authenticator app. Alternatively, you can manually copy/paste the secret into your authenticator app."
+    content:
+      "Scan this QR code with your authenticator app. Alternatively, you can manually copy/paste the secret into your authenticator app.",
   },
   TotpRegistrationValidateScreen: {
     title: "Two-factor authentication",
-    enter6digitCode: "Enter the 6-digit code from your authenticator app to validate your two-factor authentication.",
-    success: "Two-factor authentication has been enabled. You will now only be able to log back in with your phone or email AND your two factor authentication.\n\nOnly full KYC accounts may be recovered in the case a user has lost access to their two-factor authentication.",
+    enter6digitCode:
+      "Enter the 6-digit code from your authenticator app to validate your two-factor authentication.",
+    success:
+      "Two-factor authentication has been enabled. You will now only be able to log back in with your phone or email AND your two factor authentication.\n\nOnly full KYC accounts may be recovered in the case a user has lost access to their two-factor authentication.",
   },
   TotpLoginValidateScreen: {
     title: "Two-factor authentication",
-    content: "Enter the 6-digit code from your authenticator app to log in. This code changes every 30 seconds.",
+    content:
+      "Enter the 6-digit code from your authenticator app to log in. This code changes every 30 seconds.",
   },
   CopySecretComponent: {
     button: "Copy secret",
-    toastMessage: "Secret copied to clipboard!"
+    toastMessage: "Secret copied to clipboard!",
   },
   DefaultWalletScreen: {
     title: "Default Account",
@@ -904,8 +915,10 @@ const en: BaseTranslation = {
     title: "Phone set up",
     header: "Enter your phone number, and we'll text you an access code.",
     headerVerify: "Verify you are human",
-    errorRequestingCode: "Something went wrong requesting the phone code, please try again later.",
-    errorInvalidPhoneNumber: "Invalid phone number. Are you sure you entered the right number?",
+    errorRequestingCode:
+      "Something went wrong requesting the phone code, please try again later.",
+    errorInvalidPhoneNumber:
+      "Invalid phone number. Are you sure you entered the right number?",
     errorUnsupportedCountry: "We are unable to support customers in your country.",
     placeholder: "Phone Number",
     verify: "Click to Verify",
@@ -924,7 +937,8 @@ const en: BaseTranslation = {
     placeholder: "hal@finney.org",
   },
   EmailRegistrationValidateScreen: {
-    header: "To confirm your email address, enter the code we just sent you on {email: string}",
+    header:
+      "To confirm your email address, enter the code we just sent you on {email: string}",
     success: "Email {email: string} confirmed successfully",
   },
   EmailLoginInitiateScreen: {
@@ -934,7 +948,8 @@ const en: BaseTranslation = {
     send: "Send code",
   },
   EmailLoginValidateScreen: {
-    header: "If there is an account attached to {email: string}, you should have received 6 digits code to enter below.\n\nIf you are not receiving anything, it's probably either because this is not the right email, the email is in your spam folder.",
+    header:
+      "If there is an account attached to {email: string}, you should have received 6 digits code to enter below.\n\nIf you are not receiving anything, it's probably either because this is not the right email, the email is in your spam folder.",
     success: "Email {email: string} confirmed successfully",
   },
   common: {
@@ -1113,39 +1128,45 @@ const en: BaseTranslation = {
     title: "My Circles",
     titleBlinkCircles: "Blink Circles",
     circles: "circles",
-    circlesExplainer: "Your circles grow as you welcome others to Blink - by sending somebody their first sats.",
+    circlesExplainer:
+      "Your circles grow as you welcome others to Blink - by sending somebody their first sats.",
     viewMyCircles: "View My Circles",
     introducingCircles: "Introducing Circles",
     copiedInviteLink: "Copied Invite Link",
     inviteFriendToBlink: "Invite a friend to Blink",
     share: "Share",
-    circlesGrowingSatsExplainer: "Your Blink Circles grow when you send a new Blink user their first sats!",
-    circlesGrowingKeepGoing: "Your circles grow as you onboard people to Blink - keep going!",
+    circlesGrowingSatsExplainer:
+      "Your Blink Circles grow when you send a new Blink user their first sats!",
+    circlesGrowingKeepGoing:
+      "Your circles grow as you onboard people to Blink - keep going!",
     points: "points",
     calculatingYourCircles: "Calculating your circles...",
-    innerCircleExplainer: "Your inner circle grows when you send a Blink user their first sats!",
+    innerCircleExplainer:
+      "Your inner circle grows when you send a Blink user their first sats!",
     innerCircle: "Inner Circle",
     peopleYouWelcomed: "people you welcomed",
     thisMonth: "this month",
     outerCircle: "Outer circle",
     peopleWelcomedByYourCircle: "people welcomed by your circle",
     yourSphere: "Your sphere",
-    yourRankMessage: "You're #{thisMonthRank: number} this month and #{allTimeRank: number} all time!",
+    yourRankMessage:
+      "You're #{thisMonthRank: number} this month and #{allTimeRank: number} all time!",
     totalImpact: "Total how much of an impact you are making",
     inviteFriends: "Invite a friend",
     buildYourCircle: "Build your circle",
     someones: "{username: string}'s",
     Sphere: {
       yourSpherePoints: "Your sphere points",
-      spherePointsDescription: "For each person you and your inner circle welcomes, you receive 50 points. For each subsequent person your sphere welcomes, your receive half as much points. (25, 12.5, 6.25)",
+      spherePointsDescription:
+        "For each person you and your inner circle welcomes, you receive 50 points. For each subsequent person your sphere welcomes, your receive half as much points. (25, 12.5, 6.25)",
       innerCircle: "Inner circle",
       outerCircle: "Outer circle",
       yourSphere: "Your sphere",
       firstDegree: "1st degree",
       secondDegree: "2nd degree",
       thirdDegree: "3rd degree",
-    }
-  }
+    },
+  },
 }
 
 export default en

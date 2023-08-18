@@ -1949,7 +1949,7 @@ export type TransactionListForContactQuery = { readonly __typename: 'Query', rea
 export type ContactsCardQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ContactsCardQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly contacts: ReadonlyArray<{ readonly __typename: 'UserContact', readonly id: string, readonly username: string, readonly alias?: string | null, readonly transactionsCount: number, readonly transactions?: { readonly __typename: 'TransactionConnection', readonly edges?: ReadonlyArray<{ readonly __typename: 'TransactionEdge', readonly node: { readonly __typename: 'Transaction', readonly createdAt: number } }> | null } | null }> } | null };
+export type ContactsCardQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly contacts: ReadonlyArray<{ readonly __typename: 'UserContact', readonly id: string, readonly username: string, readonly alias?: string | null, readonly transactionsCount: number }> } | null };
 
 export type UserContactUpdateAliasMutationVariables = Exact<{
   input: UserContactUpdateAliasInput;
@@ -3750,13 +3750,6 @@ export const ContactsCardDocument = gql`
       username
       alias
       transactionsCount
-      transactions(first: 1) {
-        edges {
-          node {
-            createdAt
-          }
-        }
-      }
     }
   }
 }

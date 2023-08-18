@@ -652,16 +652,6 @@ query ContactsCard {
       username
       alias
       transactionsCount
-      transactions(first: 1) {
-        edges {
-          node {
-            createdAt
-            __typename
-          }
-          __typename
-        }
-        __typename
-      }
       __typename
     }
     __typename
