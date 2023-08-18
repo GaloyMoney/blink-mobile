@@ -158,9 +158,10 @@ const useStyles = makeStyles(({ colors }) => {
     },
     lonelyImageContainer: {
       width: "100%",
-      maxHeight: "40%",
+      height: 250,
       overflow: "hidden",
       borderRadius: 10,
+      backgroundColor: "red",
     },
   }
 })
