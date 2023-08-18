@@ -37,11 +37,15 @@
         "unlock": "Kilidi aç",
         "usePin": "PIN kullan"
     },
-    "ContactsScreen": {
+    "PeopleScreen": {
+        "title": "İnsanlar",
+        "copy": "Kopyala",
         "noContactsTitle": "Kontakt bulunamadı",
         "noContactsYet": "Kullanıcı adını kullanarak ödeme alıp/gönderdiğinde kontakt bilgileri otomatik olarak eklenecektir.",
         "noMatchingContacts": "Araman ile eşleşen kontakt bilgisi bulunamadı.",
-        "title": "Kontaktlar"
+        "allContacts": "Tüm Kişiler",
+        "viewAllContacts": "Tüm kişileri görüntüle",
+        "frequentContacts": "Sık Kullanılan Kişiler"
     },
     "ContactDetailsScreen": {
         "title": "{username: string} ile olan işlemler"
@@ -535,7 +539,7 @@
             "expiresNow": "Şimdi süresi doluyor"
         },
         "invoiceHasBeenPaid": "Fatura ödendi",
-        "yourBitcoinOnChainAddress": "Bitcoin Onchain Adresin",
+        "onChainAddress": "Onchain Adresi",
         "receiveViaInvoice": "Lightning aracılığı ile al",
         "receiveViaPaycode": "Ödeme Kodu ile al",
         "receiveViaOnchain": "Onchain ile al",
@@ -1018,5 +1022,51 @@
         "updateMandatory": "Güncelleme gerekli",
         "tapHereUpdate": "Güncellemek için buraya tıkla",
         "contactSupport": "Desteğe danışınız"
+    },
+    "Circles": {
+        "title": "Çevrem",
+        "titleBlinkCircles": "Blink Çevrem",
+        "circles": "çevreler",
+        "circlesExplainer": "Çevren diğer insanları Blink'e ilk satlarını göndererek karşıladığında genişler.",
+        "viewMyCircles": "Çevremi Görüntüle",
+        "introducingCircles": "Çevrelere Giriş",
+        "copiedInviteLink": "Davet Linki Kopyalandı",
+        "inviteFriendToBlink": "Blink'e bir arkadaşını davet et",
+        "shareCircles": "Çevreni paylaş",
+        "share": "Paylaş",
+        "circlesGrowingSatsExplainer": {
+            "your": "Senin",
+            "grow": "yeni Blink kullanıcılarına ilk satlarını gönderdiğinde büyür!"
+        },
+        "circlesGrowingKeepGoing": "Çevren insanları Blink'e davet etmenle büyür. Devam et!",
+        "points": "puanlar",
+        "calculatingYourCircles": "Çevren hesaplanıyor...",
+        "innerCircleExplainer": "Blink ile Bitcoin adaptasyonunu artırıyorsun. Devam et!",
+        "innerCircleExplainerCard": "Blink ile Bitcoin adaptasyonunu artırıyorum!",
+        "innerCircle": "Yakın Çevre",
+        "peopleYouWelcomed": "karşıladığın insanlar",
+        "peopleIWelcomed": "karşıladığım\ninsanlar",
+        "thisMonth": "bu ay",
+        "outerCircle": "Uzak Çevre",
+        "peopleWelcomedByYourCircle": "çevrenize kabul edilen insanlar",
+        "peopleWelcomedByMyCircle": "çevreme kabul edilen insanlar",
+        "yourSphere": "Senin Küren",
+        "mySphere": "Benim Kürem",
+        "yourRankMessage": "Bu ay {thisMonthRank: number}. ve tüm zamanlarda {allTimeRank: number}. sıradasın!",
+        "rankMessage": " Bu ay {thisMonthRank: number}. ve tüm zamanlarda {allTimeRank: number}.",
+        "inviteFriends": "Bir arkadaşını davet et",
+        "buildYourCircle": "Çevreni oluştur",
+        "myBlinkCircles": "Blink Çevrem",
+        "someones": "{username: string}'in",
+        "Sphere": {
+            "yourSpherePoints": "Kürenin puanı",
+            "spherePointsDescription": "Senin ya da çevrenin karşıladığı her bir kişi için 50 puan alacaksın. Sana daha uzak çevrelerden insanlar eklendiğinde alacağın puanın yarısını alırsın. (25, 12.5, 6.25)",
+            "innerCircle": "Yakın Çevre",
+            "outerCircle": "Uzak Çevre",
+            "yourSphere": "Küren",
+            "firstDegree": "Senin tarafından karşılandı",
+            "secondDegree": "İç çevren tarafından karşılandı",
+            "thirdDegree": "2. çevren tarafından çağrıldı"
+        }
     }
 }
