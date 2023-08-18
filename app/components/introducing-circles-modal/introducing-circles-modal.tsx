@@ -70,7 +70,9 @@ export const IntroducingCirclesModal: React.FC<Props> = ({ isVisible, setIsVisib
             <Text type="h1" bold>
               {LL.Circles.introducingCircles()}
             </Text>
-            <Text type="p1">{LL.Circles.circlesExplainer()}</Text>
+            <Text style={styles.textCenter} type="p1">
+              {LL.Circles.circlesExplainer()}
+            </Text>
           </View>
           <View style={styles.cardActionsContainer}>
             <View>
@@ -120,5 +122,8 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   cardActionsContainer: {
     flexDirection: "column",
+  },
+  textCenter: {
+    textAlign: "center",
   },
 }))

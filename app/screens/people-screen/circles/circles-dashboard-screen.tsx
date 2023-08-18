@@ -42,12 +42,12 @@ export const CirclesDashboardScreen: React.FC = () => {
 
   const [spherePointsModalIsVisible, setSpherePointsModalIsVisible] = useState(false)
 
-  const { data } = useCirclesQuery({
+  const { data, loading } = useCirclesQuery({
     skip: !isAuthed,
     fetchPolicy: "cache-first",
   })
 
-  if (!data?.me?.defaultAccount.welcomeProfile)
+  if (loading)
     return (
       <View style={styles.activityIndicator}>
         <ActivityIndicator />
@@ -56,8 +56,7 @@ export const CirclesDashboardScreen: React.FC = () => {
     )
 
   const welcomeProfile = data?.me?.defaultAccount.welcomeProfile
-
-  const isLonely = welcomeProfile.innerCircleAllTimeCount === 0
+  const isLonely = !welcomeProfile || welcomeProfile.innerCircleAllTimeCount === 0
 
   return (
     <Screen style={styles.screen} preset="scroll">
@@ -159,9 +158,10 @@ const useStyles = makeStyles(({ colors }) => {
     },
     lonelyImageContainer: {
       width: "100%",
-      maxHeight: "40%",
+      height: 250,
       overflow: "hidden",
       borderRadius: 10,
+      backgroundColor: "red",
     },
   }
 })

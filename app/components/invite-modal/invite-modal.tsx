@@ -98,7 +98,6 @@ export const InviteModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
   }
 
   const share = async () => {
-    if (!data?.me?.username) return
     try {
       const result = await Share.share({ message: inviteLink })
 
@@ -126,7 +125,6 @@ export const InviteModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
       backdropColor={colors.white}
       onBackdropPress={acknowledgeModal}
     >
-      <GaloyToast />
       <View style={styles.modalCard}>
         <View style={styles.container}>
           <View style={styles.cardTitleContainer}>
@@ -185,6 +183,7 @@ export const InviteModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
           </View>
         </View>
       </View>
+      <GaloyToast />
     </Modal>
   )
 }
