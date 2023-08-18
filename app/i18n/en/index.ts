@@ -1141,7 +1141,7 @@ const en: BaseTranslation = {
       grow: "grow when you send a new Blink user their first sats!",
     },
     circlesGrowingKeepGoing:
-      "Your circles grow as you onboard people to Blink - keep going!",
+      "Your circles grow as you welcome people to Blink – keep going!",
     points: "points",
     calculatingYourCircles: "Calculating your circles...",
     innerCircleExplainer: "You're driving Bitcoin adoption with Blink, keep it up!",
