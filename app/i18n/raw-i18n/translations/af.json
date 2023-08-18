@@ -37,15 +37,11 @@
         "unlock": "Ontsluit",
         "usePin": "Gebruik PIN"
     },
-    "PeopleScreen": {
-        "title": "Mense",
-        "copy": "Dra oor",
+    "ContactsScreen": {
         "noContactsTitle": "Geen kontakte gevind nie",
-        "noContactsYet": "Stuur of ontvang van betalings deur 'n gebruikersnaam of kontakte te gebruik, sal outomaties hier bygevoeg word",
+        "noContactsYet": "Stuur of ontvang betalings deur van gebruikersname of kontakte gebruik te maak sal outomaties hier bygevoeg word",
         "noMatchingContacts": "Geen kontakte wat ooreenstem met jou soektog nie",
-        "allContacts": "Alle Kontakte",
-        "viewAllContacts": "Sien alle kontakte",
-        "recentContacts": "Onlangse Kontakte"
+        "title": "Kontakte"
     },
     "ContactDetailsScreen": {
         "title": "Transaksies met {username:string}"
@@ -1022,42 +1018,5 @@
         "updateMandatory": "Opgradering is verpligtent ",
         "tapHereUpdate": "Tik hier om op te gradeer",
         "contactSupport": "Kontak Ondersteuning"
-    },
-    "Circles": {
-        "title": "My Sirkels",
-        "titleBlinkCircles": "Blink Sirkels",
-        "circles": "sirkels",
-        "circlesExplainer": "Jou sirkels groei soos jy ander by Blink verwelkom deur aan iemand hul eerste sats te stuur.",
-        "viewMyCircles": "Sien my sirkels",
-        "introducingCircles": "Bekendstelling van Sirkels",
-        "copiedInviteLink": "Uitnodigingskakel oorgedra",
-        "inviteFriendToBlink": "Nooi 'n vriend uit na Blink",
-        "share": "Deel",
-        "circlesGrowingSatsExplainer": "Jou Blink-sirkels groei wanneer jy aan 'n nuwe Blink-gebruiker sats stuur",
-        "circlesGrowingKeepGoing": "Jou sirkels groei soos jy mense na Blink verwys - gaan voort!",
-        "points": "punte",
-        "calculatingYourCircles": "Bereken jou sirkels....",
-        "innerCircleExplainer": "Jou binnesirkel groei wanneer jy sats na 'n nuwe Blink-gebruiker stuur",
-        "innerCircle": "Binnesirkel",
-        "peopleYouWelcomed": "Mense wat jy verwelkom het",
-        "thisMonth": "Hierdie maand",
-        "outerCircle": "Buitesirkel",
-        "peopleWelcomedByYourCircle": "Mense deur jou sirkel verwelkom",
-        "yourSphere": "Jou sfeer",
-        "yourRankMessage": "Jou #{thisMonthRank: number} hierdie maand en #{allTimeRank: number} algeheel!",
-        "totalImpact": "Hoeveel impak jy maak",
-        "inviteFriends": "Nooi 'n vriend",
-        "buildYourCircle": "Bou jou sirkel",
-        "someones": "{username: string} sin",
-        "Sphere": {
-            "yourSpherePoints": "Jou sfeerpunte",
-            "spherePointsDescription": "Vir elke persoon wat jy en jou binnesirkel verwelkom, ontvang jy 50 punte. Vir elke opvolgende persoon wat jou sfeer verwelkom, ontvang jy die helfte. (25, 12.5, 6.25)",
-            "innerCircle": "Binnesirkel",
-            "outerCircle": "Buitesirkel",
-            "yourSphere": "Jou sfeer",
-            "firstDegree": "1ste graad",
-            "secondDegree": "2de graad",
-            "thirdDegree": "3de graad"
-        }
     }
 }
