@@ -32,6 +32,7 @@ export type RootStackParamList = {
   sendBitcoinDestination: {
     payment?: string
     username?: string
+    autoValidate?: boolean
   }
   sendBitcoinDetails: {
     paymentDestination: PaymentDestination
@@ -111,4 +112,5 @@ export type PrimaryStackParamList = {
   People: undefined
   Map: undefined
   Earn: undefined
+  Web: undefined
 }
