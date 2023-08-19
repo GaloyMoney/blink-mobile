@@ -62,6 +62,7 @@ const useStyles = makeStyles(({ colors }) => ({
     padding: 12,
     paddingBottom: 0,
     rowGap: 14,
+    justifyContent: "center",
     position: "relative",
     overflow: "hidden",
   },
@@ -102,6 +103,7 @@ const useStyles = makeStyles(({ colors }) => ({
     width: 280,
     borderRadius: 280 / 2,
     backgroundColor: colors.backdropWhite,
+    zIndex: -10,
   },
   viewCirclescta: {
     marginTop: -10,
