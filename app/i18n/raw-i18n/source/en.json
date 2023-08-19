@@ -1057,16 +1057,6 @@
         "inviteFriends": "Invite a friend",
         "buildYourCircle": "Build your circles",
         "myBlinkCircles": "My Blink Circles",
-        "someones": "{username: string}'s",
-        "Sphere": {
-            "yourSpherePoints": "Your sphere points",
-            "spherePointsDescription": "For each person you and your inner circle welcomes, you receive 50 points. For people added by each further circle, you receive half as many points. (25, 12.5, 6.25)",
-            "innerCircle": "Inner circle",
-            "outerCircle": "Outer circle",
-            "yourSphere": "Your sphere",
-            "firstDegree": "Welcomed by you",
-            "secondDegree": "Welcomed by your inner circle",
-            "thirdDegree": "Welcomed by your 2nd circle"
-        }
+        "someones": "{username: string}'s"
     }
 }

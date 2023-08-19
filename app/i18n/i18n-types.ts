@@ -3689,40 +3689,6 @@ type RootTranslation = {
 		 * @param {string} username
 		 */
 		someones: RequiredParams<'username'>
-		Sphere: {
-			/**
-			 * Y​o​u​r​ ​s​p​h​e​r​e​ ​p​o​i​n​t​s
-			 */
-			yourSpherePoints: string
-			/**
-			 * F​o​r​ ​e​a​c​h​ ​p​e​r​s​o​n​ ​y​o​u​ ​a​n​d​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​w​e​l​c​o​m​e​s​,​ ​y​o​u​ ​r​e​c​e​i​v​e​ ​5​0​ ​p​o​i​n​t​s​.​ ​F​o​r​ ​p​e​o​p​l​e​ ​a​d​d​e​d​ ​b​y​ ​e​a​c​h​ ​f​u​r​t​h​e​r​ ​c​i​r​c​l​e​,​ ​y​o​u​ ​r​e​c​e​i​v​e​ ​h​a​l​f​ ​a​s​ ​m​a​n​y​ ​p​o​i​n​t​s​.​ ​(​2​5​,​ ​1​2​.​5​,​ ​6​.​2​5​)
-			 */
-			spherePointsDescription: string
-			/**
-			 * I​n​n​e​r​ ​c​i​r​c​l​e
-			 */
-			innerCircle: string
-			/**
-			 * O​u​t​e​r​ ​c​i​r​c​l​e
-			 */
-			outerCircle: string
-			/**
-			 * Y​o​u​r​ ​s​p​h​e​r​e
-			 */
-			yourSphere: string
-			/**
-			 * W​e​l​c​o​m​e​d​ ​b​y​ ​y​o​u
-			 */
-			firstDegree: string
-			/**
-			 * W​e​l​c​o​m​e​d​ ​b​y​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e
-			 */
-			secondDegree: string
-			/**
-			 * W​e​l​c​o​m​e​d​ ​b​y​ ​y​o​u​r​ ​2​n​d​ ​c​i​r​c​l​e
-			 */
-			thirdDegree: string
-		}
 	}
 }
 
@@ -7302,40 +7268,6 @@ export type TranslationFunctions = {
 		 * {username}'s
 		 */
 		someones: (arg: { username: string }) => LocalizedString
-		Sphere: {
-			/**
-			 * Your sphere points
-			 */
-			yourSpherePoints: () => LocalizedString
-			/**
-			 * For each person you and your inner circle welcomes, you receive 50 points. For people added by each further circle, you receive half as many points. (25, 12.5, 6.25)
-			 */
-			spherePointsDescription: () => LocalizedString
-			/**
-			 * Inner circle
-			 */
-			innerCircle: () => LocalizedString
-			/**
-			 * Outer circle
-			 */
-			outerCircle: () => LocalizedString
-			/**
-			 * Your sphere
-			 */
-			yourSphere: () => LocalizedString
-			/**
-			 * Welcomed by you
-			 */
-			firstDegree: () => LocalizedString
-			/**
-			 * Welcomed by your inner circle
-			 */
-			secondDegree: () => LocalizedString
-			/**
-			 * Welcomed by your 2nd circle
-			 */
-			thirdDegree: () => LocalizedString
-		}
 	}
 }
 
