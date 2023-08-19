@@ -7,8 +7,6 @@ import { Image, ActivityIndicator, View } from "react-native"
 import { useCirclesQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { SpherePointsModal } from "@app/components/sphere-points-modal"
-import { useState } from "react"
 import LonelyImage from "@app/assets/images/lonely.png"
 import { ShareCircles } from "./share-circles-card"
 
@@ -39,8 +37,6 @@ export const CirclesDashboardScreen: React.FC = () => {
   const styles = useStyles()
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
-
-  const [spherePointsModalIsVisible, setSpherePointsModalIsVisible] = useState(false)
 
   const { data, loading } = useCirclesQuery({
     skip: !isAuthed,
@@ -103,29 +99,12 @@ export const CirclesDashboardScreen: React.FC = () => {
             bubble
             countUpDuration={1.2}
           />
-          <Circle
-            heading={LL.Circles.yourSphere()}
-            value={data?.me?.defaultAccount.welcomeProfile.allTimePoints}
-            description={LL.Circles.points()}
-            subtitle={
-              welcomeProfile.thisMonthPoints > 0
-                ? `+ ${welcomeProfile.thisMonthPoints} ${LL.Circles.thisMonth()}`
-                : ""
-            }
-            subtitleGreen
-            extraSubtitleLine={LL.Circles.yourRankMessage({
+          <Text style={styles.textCenter} type="p2">
+            {LL.Circles.yourRankMessage({
               thisMonthRank: welcomeProfile.thisMonthRank,
               allTimeRank: welcomeProfile.allTimeRank,
             })}
-            helpBtnModalEnable={() => setSpherePointsModalIsVisible(true)}
-            helpBtnModal={
-              <SpherePointsModal
-                isVisible={spherePointsModalIsVisible}
-                setIsVisible={setSpherePointsModalIsVisible}
-              />
-            }
-            countUpDuration={1.8}
-          />
+          </Text>
         </>
       )}
       <ShareCircles />
@@ -144,6 +123,9 @@ const useStyles = makeStyles(({ colors }) => {
     description: {
       color: colors.grey3,
     },
+    textCenter: {
+      textAlign: "center",
+    },
     activityIndicator: {
       height: "100%",
       display: "flex",
@@ -152,10 +134,7 @@ const useStyles = makeStyles(({ colors }) => {
       alignItems: "center",
       rowGap: 10,
     },
-    lonelyImage: {
-      // width: 51 * 8,
-      // height: 49 * 8,
-    },
+    lonelyImage: {},
     lonelyImageContainer: {
       width: "100%",
       height: 250,
