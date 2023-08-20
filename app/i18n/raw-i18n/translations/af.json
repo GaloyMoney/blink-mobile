@@ -37,11 +37,15 @@
         "unlock": "Ontsluit",
         "usePin": "Gebruik PIN"
     },
-    "ContactsScreen": {
+    "PeopleScreen": {
+        "title": "Mense",
+        "copy": "Dra oor",
         "noContactsTitle": "Geen kontakte gevind nie",
-        "noContactsYet": "Stuur of ontvang betalings deur van gebruikersname of kontakte gebruik te maak sal outomaties hier bygevoeg word",
+        "noContactsYet": "Stuur of ontvang van betalings deur 'n gebruikersnaam of kontakte te gebruik, sal outomaties hier bygevoeg word",
         "noMatchingContacts": "Geen kontakte wat ooreenstem met jou soektog nie",
-        "title": "Kontakte"
+        "allContacts": "Alle Kontakte",
+        "viewAllContacts": "Sien alle kontakte",
+        "frequentContacts": "Gereelde kontakte"
     },
     "ContactDetailsScreen": {
         "title": "Transaksies met {username:string}"
@@ -1018,5 +1022,41 @@
         "updateMandatory": "Opgradering is verpligtent ",
         "tapHereUpdate": "Tik hier om op te gradeer",
         "contactSupport": "Kontak Ondersteuning"
+    },
+    "Circles": {
+        "title": "My Sirkels",
+        "titleBlinkCircles": "Blink Sirkels",
+        "circles": "sirkels",
+        "circlesExplainer": "Jou sirkels groei soos jy ander by Blink verwelkom deur aan iemand hul eerste sats te stuur.",
+        "viewMyCircles": "Sien my sirkels",
+        "introducingCircles": "Bekendstelling van Sirkels",
+        "copiedInviteLink": "Uitnodigingskakel oorgedra",
+        "inviteFriendToBlink": "Nooi 'n vriend uit na Blink",
+        "shareCircles": "Deel jou sirkels",
+        "share": "Deel",
+        "circlesGrowingSatsExplainer": {
+            "your": "Jou",
+            "grow": "groei wanneer jy aan 'n nuwe Blink-gebruiker hul eerste sats stuur!"
+        },
+        "circlesGrowingKeepGoing": "Jou sirkels groei soos wat jy mense verwelkom by Blink - doen so voort!",
+        "points": "punte",
+        "calculatingYourCircles": "Bereken jou sirkels....",
+        "innerCircleExplainer": "Jy help Bitcoin-aanneming saam met Blink - Hou aan! ",
+        "innerCircleExplainerCard": "Ek bevorder Bitcoin-aanneming met Blink!",
+        "innerCircle": "Binnesirkel",
+        "peopleYouWelcomed": "Mense wat jy verwelkom het",
+        "peopleIWelcomed": "mense \nwat ek verwelkom het",
+        "thisMonth": "Hierdie maand",
+        "outerCircle": "Buitesirkel",
+        "peopleWelcomedByYourCircle": "Mense deur jou sirkel verwelkom",
+        "peopleWelcomedByMyCircle": "mense deur my sirkels verwelkom",
+        "yourSphere": "Jou Sfere",
+        "mySphere": "My Sfere",
+        "yourRankMessage": "Jou #{thisMonthRank: number} hierdie maand en #{allTimeRank: number} algeheel!",
+        "rankMessage": "#{thisMonthRank: number} hierdie maand en #{allTimeRank: number} algeheel!",
+        "inviteFriends": "Nooi 'n vriend",
+        "buildYourCircle": "Bou jou sirkels",
+        "myBlinkCircles": "My Blink Sirkels",
+        "someones": "{username: string} sin"
     }
 }
