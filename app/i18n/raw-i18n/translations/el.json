@@ -37,11 +37,15 @@
         "unlock": "Ξεκλειδώστε",
         "usePin": "Δώστε το PIN"
     },
-    "ContactsScreen": {
+    "PeopleScreen": {
+        "title": "Άνθρωποι ",
+        "copy": "Αντιγραφή",
         "noContactsTitle": "Δεν Βρέθηκαν Επαφές",
         "noContactsYet": "Στείλτε ή λάβετε μια πληρωμή χρησιμοποιώντας το όνομα χρήστη και οι επαφές θα προστεθούν αυτόματα εδώ",
         "noMatchingContacts": "Δεν βρέθηκαν επαφές που να ταιριάζουν με την αναζήτησή σας.",
-        "title": "Επαφές"
+        "allContacts": "Όλες οι Επαφές",
+        "viewAllContacts": "Δείτε όλες τις επαφές",
+        "frequentContacts": "Συχνές Επαφές"
     },
     "ContactDetailsScreen": {
         "title": "Συναλλαγές με {username: string}"
@@ -535,7 +539,7 @@
             "expiresNow": "Λήγει τώρα"
         },
         "invoiceHasBeenPaid": "Το τιμολόγιο έχει πληρωθεί ",
-        "yourBitcoinOnChainAddress": "Η διεύθυνση Bitcoin On-chain",
+        "onChainAddress": "Διευθύνσεις on-chain",
         "receiveViaInvoice": "Λήψη μέσω Lightning",
         "receiveViaPaycode": "Λήψη μέσω Paycode",
         "receiveViaOnchain": "Λήψη μέσω On-chain",
@@ -1018,5 +1022,41 @@
         "updateMandatory": "Η Ενημέρωση είναι υποχρεωτική",
         "tapHereUpdate": "Πατήστε εδώ για να ανανεώσετε τώρα",
         "contactSupport": "Επικοινωνήστε με την Υποστήριξη"
+    },
+    "Circles": {
+        "title": "Οι Κύκλοι Μου",
+        "titleBlinkCircles": "Οι Κύκλοι της Blink",
+        "circles": "κύκλοι",
+        "circlesExplainer": "Οι κύκλοι σας μεγαλώνουν καθώς καλωσορίζετε άλλους στην Blink - στέλνοντας σε κάποιον τα πρώτα του sats.",
+        "viewMyCircles": "Προβολή των Kύκλων μου",
+        "introducingCircles": "Παρουσίαση των Kύκλων",
+        "copiedInviteLink": "Σύνδεσμος Πρόσκλησης Αντιγράφηκε",
+        "inviteFriendToBlink": "Προσκαλέστε έναν φίλο στην Blink",
+        "shareCircles": "Μοιραστείτε τους κύκλους σας",
+        "share": "Μοιραστείτε",
+        "circlesGrowingSatsExplainer": {
+            "your": "Οι Δικοί σας",
+            "grow": "μεγαλώνετε όταν στέλνετε σε έναν νέο χρήστη της Blink τα πρώτα του sats!"
+        },
+        "circlesGrowingKeepGoing": "Οι κύκλοι σας μεγαλώνουν καθώς καλωσορίζετε ανθρώπους στην Blink - συνεχίστε!",
+        "points": "πόντοι",
+        "calculatingYourCircles": "Υπολογισμός των κύκλων σας...",
+        "innerCircleExplainer": "Προωθείτε την υιοθέτηση του Bitcoin με την Blink, συνεχίστε έτσι!",
+        "innerCircleExplainerCard": "Προωθώ την υιοθέτηση του Bitcoin με την Blink!",
+        "innerCircle": "Εσωτερικός Κύκλος",
+        "peopleYouWelcomed": "άνθρωποι που καλωσορίσατε",
+        "peopleIWelcomed": "άνθρωποι\nπου καλωσόρισα",
+        "thisMonth": "αυτόν τον μήνα",
+        "outerCircle": "Εξωτερικός Κύκλος",
+        "peopleWelcomedByYourCircle": "άτομα που καλωσορίζει ο κύκλος σας",
+        "peopleWelcomedByMyCircle": "άτομα που καλωσορίζει ο κύκλος μου",
+        "yourSphere": "Η Σφαίρα σας",
+        "mySphere": "Η Σφαίρα μου",
+        "yourRankMessage": "Είστε #{thisMonthRank: αριθμός} αυτόν τον μήνα και #{allTimeRank: αριθμός} όλες τις φορές!",
+        "rankMessage": "#{thisMonthRank: αριθμός} αυτόν τον μήνα και #{allTimeRank: αριθμός} όλες τις φορές!",
+        "inviteFriends": "Προσκαλέστε ένα φίλο",
+        "buildYourCircle": "Κτίστε τους κύκλους σας",
+        "myBlinkCircles": "Οι κύκλοι μου στην Blink",
+        "someones": "{όνομα χρήστη: string} του"
     }
 }
