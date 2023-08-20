@@ -1057,16 +1057,6 @@
         "inviteFriends": "Bir arkadaşını davet et",
         "buildYourCircle": "Çevreni oluştur",
         "myBlinkCircles": "Blink Çevrem",
-        "someones": "{username: string}'in",
-        "Sphere": {
-            "yourSpherePoints": "Kürenin puanı",
-            "spherePointsDescription": "Senin ya da çevrenin karşıladığı her bir kişi için 50 puan alacaksın. Sana daha uzak çevrelerden insanlar eklendiğinde alacağın puanın yarısını alırsın. (25, 12.5, 6.25)",
-            "innerCircle": "Yakın Çevre",
-            "outerCircle": "Uzak Çevre",
-            "yourSphere": "Küren",
-            "firstDegree": "Senin tarafından karşılandı",
-            "secondDegree": "İç çevren tarafından karşılandı",
-            "thirdDegree": "2. çevren tarafından çağrıldı"
-        }
+        "someones": "{username: string}'in"
     }
 }
