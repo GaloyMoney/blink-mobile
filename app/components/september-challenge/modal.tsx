@@ -47,6 +47,7 @@ export const SeptemberChallengeModal: React.FC<Props> = ({ isVisible, setIsVisib
     <Modal
       isVisible={isVisible}
       backdropOpacity={0.8}
+      backdropTransitionOutTiming={0}
       backdropColor={colors.white}
       onBackdropPress={acknowledgeModal}
     >

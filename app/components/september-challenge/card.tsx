@@ -62,7 +62,7 @@ export const SeptemberChallengeCard: React.FC = () => {
     return () => clearInterval(t)
   }, [setCountDown])
 
-  if (Date.now() < new Date("10/1/2023").getTime()) return <></>
+  if (Date.now() > OCT_1_EPOCH) return <></>
 
   return (
     <TouchableOpacity onPress={openModal}>
@@ -78,7 +78,10 @@ export const SeptemberChallengeCard: React.FC = () => {
           <Text type="p2">
             {LL.Circles.septChallenge.description({
               innerCircle:
-                data?.me?.defaultAccount.welcomeProfile?.innerCircleThisMonthCount || 0,
+                Date.now() < SEPT_1_EPOCH
+                  ? data?.me?.defaultAccount.welcomeProfile?.innerCircleThisMonthCount ||
+                    0
+                  : 0,
             })}
           </Text>
         </View>
