@@ -6,8 +6,8 @@ import { useEffect, useState } from "react"
 import { SeptemberChallengeModal } from "./modal"
 import { useCirclesQuery } from "@app/graphql/generated"
 
-const SEPT_1_EPOCH = 1693526400000
-const OCT_1_EPOCH = 1696118400000
+export const SEPT_1_EPOCH = 1693526400000
+export const OCT_1_EPOCH = 1696118400000
 
 function secondsToDDMMSS(totalSeconds: number) {
   if (totalSeconds < 0) return ""
