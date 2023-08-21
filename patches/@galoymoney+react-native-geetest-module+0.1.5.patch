@@ -1,5 +1,5 @@
 diff --git a/node_modules/@galoymoney/react-native-geetest-module/android/build.gradle b/node_modules/@galoymoney/react-native-geetest-module/android/build.gradle
-index 2807ece..82de152 100644
+index 2807ece..9f5026e 100644
 --- a/node_modules/@galoymoney/react-native-geetest-module/android/build.gradle
 +++ b/node_modules/@galoymoney/react-native-geetest-module/android/build.gradle
 @@ -6,7 +6,7 @@ buildscript {
