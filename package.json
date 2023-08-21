@@ -237,7 +237,7 @@
     "typescript": "^4.9.5",
     "webdriverio": "8.3.2",
     "yalc": "^1.0.0-pre.53"
-  },
+  }, 
   "peerDependencies": {
     "solidarity": "^2.3.1"
   },
