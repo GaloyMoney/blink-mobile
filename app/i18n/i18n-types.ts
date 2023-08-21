@@ -3612,6 +3612,10 @@ type RootTranslation = {
 		 */
 		points: string
 		/**
+		 * Y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​g​r​o​w​s​ ​w​h​e​n​ ​y​o​u​ ​s​e​n​d​ ​a​ ​B​l​i​n​k​ ​u​s​e​r​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s​!
+		 */
+		innerCircleGrow: string
+		/**
 		 * C​a​l​c​u​l​a​t​i​n​g​ ​y​o​u​r​ ​c​i​r​c​l​e​s​.​.​.
 		 */
 		calculatingYourCircles: string
@@ -3689,6 +3693,11 @@ type RootTranslation = {
 		 * @param {string} username
 		 */
 		someones: RequiredParams<'username'>
+		/**
+		 * B​i​t​c​o​i​n​ ​a​d​o​p​t​i​o​n​ ​i​s​ ​a​ ​g​r​o​u​p​ ​e​f​f​o​r​t​.​
+	​I​n​v​i​t​e​ ​a​ ​f​r​i​e​n​d​ ​a​n​d​ ​s​e​n​d​ ​t​h​e​m​ ​s​a​t​s​ ​t​o​ ​s​t​a​r​t​ ​b​u​i​l​d​i​n​g​ ​y​o​u​r​ ​c​i​r​c​l​e​s​.
+		 */
+		groupEffort: string
 	}
 }
 
@@ -7196,6 +7205,10 @@ export type TranslationFunctions = {
 		 */
 		points: () => LocalizedString
 		/**
+		 * Your inner circle grows when you send a Blink user their first sats!
+		 */
+		innerCircleGrow: () => LocalizedString
+		/**
 		 * Calculating your circles...
 		 */
 		calculatingYourCircles: () => LocalizedString
@@ -7268,6 +7281,11 @@ export type TranslationFunctions = {
 		 * {username}'s
 		 */
 		someones: (arg: { username: string }) => LocalizedString
+		/**
+		 * Bitcoin adoption is a group effort.
+	Invite a friend and send them sats to start building your circles.
+		 */
+		groupEffort: () => LocalizedString
 	}
 }
 

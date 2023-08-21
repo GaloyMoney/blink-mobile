@@ -1143,6 +1143,7 @@ const en: BaseTranslation = {
     circlesGrowingKeepGoing:
       "Your circles grow as you welcome people to Blink – keep going!",
     points: "points",
+    innerCircleGrow: "Your inner circle grows when you send a Blink user their first sats!",
     calculatingYourCircles: "Calculating your circles...",
     innerCircleExplainer: "You're driving Bitcoin adoption with Blink, keep it up!",
     innerCircleExplainerCard: "I'm driving Bitcoin adoption with Blink!",
@@ -1163,6 +1164,7 @@ const en: BaseTranslation = {
     buildYourCircle: "Build your circles",
     myBlinkCircles: "My Blink Circles",
     someones: "{username: string}'s",
+    groupEffort: "Bitcoin adoption is a group effort.\nInvite a friend and send them sats to start building your circles."
   },
 }
 
