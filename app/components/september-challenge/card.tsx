@@ -77,7 +77,7 @@ export const SeptemberChallengeCard: React.FC = () => {
           </View>
           <Text type="p2">
             {LL.Circles.septChallenge.description({
-              number:
+              innerCircle:
                 data?.me?.defaultAccount.welcomeProfile?.innerCircleThisMonthCount || 0,
             })}
           </Text>

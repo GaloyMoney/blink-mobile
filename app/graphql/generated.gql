@@ -626,11 +626,13 @@ query Circles {
       id
       ... on ConsumerAccount {
         welcomeProfile {
+          allTimePoints
+          allTimeRank
           innerCircleAllTimeCount
           innerCircleThisMonthCount
           outerCircleAllTimeCount
           outerCircleThisMonthCount
-          allTimeRank
+          thisMonthPoints
           thisMonthRank
           __typename
         }

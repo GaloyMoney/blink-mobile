@@ -126,7 +126,12 @@ const useStyles = makeStyles(
         alignSelf: "center",
       },
       circleSubtitle: {
-        color: subtitleGreen ? colors.green : colors.black,
+        textAlign: "left",
+        backgroundColor: subtitleGreen ? colors.green : colors.black,
+        maxWidth: "50%",
+        borderRadius: 10,
+        paddingHorizontal: 10,
+        overflow: "hidden",
       },
       circleSubtitleExtra: { color: colors.black, marginTop: 4 },
       circleBubble: {

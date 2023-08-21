@@ -78,7 +78,7 @@ export const CirclesDashboardScreen: React.FC = () => {
               welcomeProfile.innerCircleThisMonthCount > 0
                 ? `+ ${
                     welcomeProfile.innerCircleThisMonthCount
-                  } ${LL.Circles.thisMonth()}`
+                  } ${LL.Circles.thisMonth()}; rank: #${welcomeProfile.thisMonthRank}`
                 : ""
             }
             subtitleGreen

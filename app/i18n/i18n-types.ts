@@ -3704,11 +3704,11 @@ type RootTranslation = {
 			 */
 			title: string
 			/**
-			 * I​n​n​e​r​ ​C​i​r​c​l​e​ ​{​n​u​m​b​e​r​}​/​2​1​ ​-​ ​E​a​r​n​ ​$​2​1​
+			 * I​n​n​e​r​ ​C​i​r​c​l​e​ ​{​i​n​n​e​r​C​i​r​c​l​e​}​/​2​1​ ​-​ ​E​a​r​n​ ​$​2​1​
 		​T​o​p​ ​3​ ​-​ ​W​i​n​ ​t​i​c​k​e​t​s​ ​t​o​ ​A​d​o​p​t​i​n​g​ ​B​i​t​c​o​i​n​!
-			 * @param {string} number
+			 * @param {number} innerCircle
 			 */
-			description: RequiredParams<'number'>
+			description: RequiredParams<'innerCircle'>
 			/**
 			 * G​r​o​w​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​2​1​ ​p​e​o​p​l​e​ ​i​n​ ​S​e​p​t​e​m​b​e​r​ ​a​n​d​ ​g​e​t​ ​$​2​1​ ​t​o​ ​y​o​u​r​ ​S​t​a​b​l​e​s​a​t​s​ ​a​c​c​o​u​n​t​.​ ​T​o​p​ ​3​ ​w​i​n​ ​t​i​c​k​e​t​s​ ​t​o​ ​A​d​o​p​t​i​n​g​ ​B​i​t​c​o​i​n​!
 			 */
@@ -7324,10 +7324,10 @@ export type TranslationFunctions = {
 			 */
 			title: () => LocalizedString
 			/**
-			 * Inner Circle {number}/21 - Earn $21
+			 * Inner Circle {innerCircle}/21 - Earn $21
 		Top 3 - Win tickets to Adopting Bitcoin!
 			 */
-			description: (arg: { number: string }) => LocalizedString
+			description: (arg: { innerCircle: number }) => LocalizedString
 			/**
 			 * Grow your inner circle by 21 people in September and get $21 to your Stablesats account. Top 3 win tickets to Adopting Bitcoin!
 			 */

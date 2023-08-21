@@ -1932,7 +1932,7 @@ export type BusinessMapMarkersQuery = { readonly __typename: 'Query', readonly b
 export type CirclesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CirclesQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly welcomeProfile?: { readonly __typename: 'WelcomeProfile', readonly innerCircleAllTimeCount: number, readonly innerCircleThisMonthCount: number, readonly outerCircleAllTimeCount: number, readonly outerCircleThisMonthCount: number, readonly allTimeRank: number, readonly thisMonthRank: number } | null } } | null };
+export type CirclesQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly welcomeProfile?: { readonly __typename: 'WelcomeProfile', readonly allTimePoints: number, readonly allTimeRank: number, readonly innerCircleAllTimeCount: number, readonly innerCircleThisMonthCount: number, readonly outerCircleAllTimeCount: number, readonly outerCircleThisMonthCount: number, readonly thisMonthPoints: number, readonly thisMonthRank: number } | null } } | null };
 
 export type ContactsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3657,11 +3657,13 @@ export const CirclesDocument = gql`
       id
       ... on ConsumerAccount {
         welcomeProfile {
+          allTimePoints
+          allTimeRank
           innerCircleAllTimeCount
           innerCircleThisMonthCount
           outerCircleAllTimeCount
           outerCircleThisMonthCount
-          allTimeRank
+          thisMonthPoints
           thisMonthRank
         }
       }
