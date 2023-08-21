@@ -19,7 +19,9 @@ export const useCirclesCard = () => {
   const shareImgRef = useRef<View | null>(null)
   const { LL } = useI18nContext()
 
-  const { data } = useCirclesQuery()
+  const { data } = useCirclesQuery({
+    fetchPolicy: "network-only",
+  })
 
   const username = data?.me?.username || ""
   const welcomeProfile = data?.me?.defaultAccount.welcomeProfile

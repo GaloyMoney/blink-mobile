@@ -13,7 +13,9 @@ export const CirclesCardPeopleHome = () => {
   const navigation = useNavigation<StackNavigationProp<PeopleStackParamList>>()
   const { LL } = useI18nContext()
 
-  const { data, loading } = useCirclesQuery()
+  const { data, loading } = useCirclesQuery({
+    fetchPolicy: "network-only",
+  })
 
   const peopleInInnerCircle =
     data?.me?.defaultAccount.welcomeProfile?.innerCircleAllTimeCount || 0

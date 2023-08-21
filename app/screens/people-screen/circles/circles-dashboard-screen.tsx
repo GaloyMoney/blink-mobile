@@ -8,6 +8,7 @@ import { useCirclesQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { ShareCircles } from "./share-circles-card"
+import { SeptemberChallengeCard } from "@app/components/september-challenge"
 
 gql`
   query Circles {
@@ -39,7 +40,7 @@ export const CirclesDashboardScreen: React.FC = () => {
 
   const { data, loading } = useCirclesQuery({
     skip: !isAuthed,
-    fetchPolicy: "cache-first",
+    fetchPolicy: "network-only",
   })
 
   if (loading)
@@ -82,7 +83,7 @@ export const CirclesDashboardScreen: React.FC = () => {
             }
             subtitleGreen
             bubble
-            countUpDuration={1.2}
+            countUpDuration={1.8}
           />
           <Circle
             heading={LL.Circles.outerCircle()}
@@ -99,7 +100,7 @@ export const CirclesDashboardScreen: React.FC = () => {
             }
             subtitleGreen
             bubble
-            countUpDuration={1.2}
+            countUpDuration={1.8}
           />
           <Text style={styles.textCenter} type="p2">
             {LL.Circles.yourRankMessage({
@@ -109,6 +110,7 @@ export const CirclesDashboardScreen: React.FC = () => {
           </Text>
         </>
       )}
+      <SeptemberChallengeCard />
       <ShareCircles />
     </Screen>
   )
