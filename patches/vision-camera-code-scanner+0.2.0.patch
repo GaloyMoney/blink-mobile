@@ -7,7 +7,7 @@ index b6bd964..5904709 100644
  
          dependencies {
 -            classpath 'com.android.tools.build:gradle:4.2.1'
-+            classpath 'com.android.tools.build:gradle:7.3.1'
++            classpath 'com.android.tools.build:gradle:7.4.1'
          }
      }
  }
@@ -17,13 +17,13 @@ index b6bd964..5904709 100644
  android {
 -    compileSdkVersion safeExtGet('VisionCameraCodeScanner_compileSdkVersion', 30)
 -    ndkVersion "21.4.7075529"
-+    compileSdkVersion safeExtGet('VisionCameraCodeScanner_compileSdkVersion', 33)
++    compileSdkVersion safeExtGet('VisionCameraCodeScanner_compileSdkVersion', 34)
 +    ndkVersion "23.1.7779620"
      defaultConfig {
 -        minSdkVersion safeExtGet('VisionCameraCodeScanner_minSdkVersion', 21)
 -        targetSdkVersion safeExtGet('VisionCameraCodeScanner_targetSdkVersion', 31)
 +        minSdkVersion safeExtGet('VisionCameraCodeScanner_minSdkVersion', 23)
-+        targetSdkVersion safeExtGet('VisionCameraCodeScanner_targetSdkVersion', 33)
++        targetSdkVersion safeExtGet('VisionCameraCodeScanner_targetSdkVersion', 34)
          versionCode 1
          versionName "1.0"
  
