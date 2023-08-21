@@ -1,5 +1,5 @@
 diff --git a/node_modules/vision-camera-code-scanner/android/build.gradle b/node_modules/vision-camera-code-scanner/android/build.gradle
-index b6bd964..954d4dd 100644
+index b6bd964..5904709 100644
 --- a/node_modules/vision-camera-code-scanner/android/build.gradle
 +++ b/node_modules/vision-camera-code-scanner/android/build.gradle
 @@ -6,7 +6,7 @@ buildscript {
@@ -7,7 +7,7 @@ index b6bd964..954d4dd 100644
  
          dependencies {
 -            classpath 'com.android.tools.build:gradle:4.2.1'
-+            classpath 'com.android.tools.build:gradle'
++            classpath 'com.android.tools.build:gradle:7.3.1'
          }
      }
  }
@@ -17,13 +17,13 @@ index b6bd964..954d4dd 100644
  android {
 -    compileSdkVersion safeExtGet('VisionCameraCodeScanner_compileSdkVersion', 30)
 -    ndkVersion "21.4.7075529"
-+    compileSdkVersion safeExtGet('VisionCameraCodeScanner_compileSdkVersion', 34)
++    compileSdkVersion safeExtGet('VisionCameraCodeScanner_compileSdkVersion', 33)
 +    ndkVersion "23.1.7779620"
      defaultConfig {
 -        minSdkVersion safeExtGet('VisionCameraCodeScanner_minSdkVersion', 21)
 -        targetSdkVersion safeExtGet('VisionCameraCodeScanner_targetSdkVersion', 31)
 +        minSdkVersion safeExtGet('VisionCameraCodeScanner_minSdkVersion', 23)
-+        targetSdkVersion safeExtGet('VisionCameraCodeScanner_targetSdkVersion', 34)
++        targetSdkVersion safeExtGet('VisionCameraCodeScanner_targetSdkVersion', 33)
          versionCode 1
          versionName "1.0"
  

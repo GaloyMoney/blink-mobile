@@ -1,5 +1,5 @@
 diff --git a/node_modules/@galoymoney/react-native-geetest-module/android/build.gradle b/node_modules/@galoymoney/react-native-geetest-module/android/build.gradle
-index 2807ece..9f5026e 100644
+index 2807ece..82de152 100644
 --- a/node_modules/@galoymoney/react-native-geetest-module/android/build.gradle
 +++ b/node_modules/@galoymoney/react-native-geetest-module/android/build.gradle
 @@ -6,7 +6,7 @@ buildscript {
@@ -7,7 +7,7 @@ index 2807ece..9f5026e 100644
  
          dependencies {
 -            classpath 'com.android.tools.build:gradle:3.5.3'
-+            classpath "com.android.tools.build:gradle"
++            classpath "com.android.tools.build:gradle:7.3.1"
          }
      }
  }
@@ -17,13 +17,13 @@ index 2807ece..9f5026e 100644
  android {
 -    compileSdkVersion safeExtGet('GeetestModule_compileSdkVersion', 29)
 -    buildToolsVersion safeExtGet('GeetestModule_buildToolsVersion', '29.0.2')
-+    compileSdkVersion safeExtGet('GeetestModule_compileSdkVersion', 34)
-+    buildToolsVersion safeExtGet('GeetestModule_buildToolsVersion', "34.0.0")
++    compileSdkVersion safeExtGet('GeetestModule_compileSdkVersion', 33)
++    buildToolsVersion safeExtGet('GeetestModule_buildToolsVersion', "33.0.0")
      defaultConfig {
 -        minSdkVersion safeExtGet('GeetestModule_minSdkVersion', 16)
 -        targetSdkVersion safeExtGet('GeetestModule_targetSdkVersion', 29)
 +        minSdkVersion safeExtGet('GeetestModule_minSdkVersion', 23)
-+        targetSdkVersion safeExtGet('GeetestModule_targetSdkVersion', 34)
++        targetSdkVersion safeExtGet('GeetestModule_targetSdkVersion', 33)
          versionCode 1
          versionName "1.0"
  
