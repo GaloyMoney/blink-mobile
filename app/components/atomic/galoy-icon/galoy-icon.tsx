@@ -46,6 +46,7 @@ import WarningWithBackground from "@app/assets/icons-redesign/warning-with-backg
 import PaymentSuccess from "@app/assets/icons-redesign/payment-success.svg"
 import PaymentPending from "@app/assets/icons-redesign/payment-pending.svg"
 import PaymentError from "@app/assets/icons-redesign/payment-error.svg"
+import Rank from "@app/assets/icons/rank.svg"
 import Note from "@app/assets/icons/note.svg"
 import { makeStyles, useTheme } from "@rneui/themed"
 import { StyleProp, View, ViewStyle } from "react-native"
@@ -84,6 +85,7 @@ export const icons = {
   "menu": Menu,
   "pencil": Pencil,
   "note": Note,
+  "rank": Rank,
   "qr-code": QrCode,
   "question": Question,
   "receive": Receive,

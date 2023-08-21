@@ -19,7 +19,9 @@ export const useCirclesCard = () => {
   const shareImgRef = useRef<View | null>(null)
   const { LL } = useI18nContext()
 
-  const { data } = useCirclesQuery()
+  const { data } = useCirclesQuery({
+    fetchPolicy: "network-only",
+  })
 
   const username = data?.me?.username || ""
   const welcomeProfile = data?.me?.defaultAccount.welcomeProfile
@@ -98,7 +100,7 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
             style={styles.usernameContainerGrad}
             colors={["#FB5607", "#FFBE0B"]}
             useAngle={true}
-            angle={216}
+            angle={190}
             angleCenter={{ x: 0.5, y: 0.5 }}
           >
             <Text type="h1" style={styles.boldText} color={colors._black}>
@@ -142,22 +144,12 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
           bubble
           countUpDuration={0}
         />
-        <Circle
-          heading={LL.Circles.mySphere()}
-          value={welcomeProfile.allTimePoints}
-          description={LL.Circles.points()}
-          subtitle={
-            welcomeProfile.thisMonthPoints > 0
-              ? `+ ${welcomeProfile.thisMonthPoints} ${LL.Circles.thisMonth()}`
-              : ""
-          }
-          subtitleGreen
-          extraSubtitleLine={LL.Circles.rankMessage({
+        <Text style={styles.rankText} type="p3" bold>
+          {LL.Circles.rankMessage({
             thisMonthRank: welcomeProfile.thisMonthRank,
             allTimeRank: welcomeProfile.allTimeRank,
           })}
-          countUpDuration={0}
-        />
+        </Text>
         <View style={styles.buildUrCircle}>
           <Text type="p2">{LL.Circles.buildYourCircle()} </Text>
           <Text type="p1" style={styles.boldText} color={colors.primary}>
@@ -168,27 +160,27 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
     )
   })
 
-const useStyles = makeStyles(({ colors, mode }) => ({
+const useStyles = makeStyles(({ colors }) => ({
   shareContainer: {
     top: -10000,
     left: -10000,
 
     // // /* Enable these and disable top two to debug view
     // top: 0,
-    // left: "-10%",
+    // left: "10%",
     // borderWidth: 1,
     // borderColor: colors.red,
     // zIndex: 5,
     // transform: [
     //   {
-    //     scale: 0.6,
+    //     scale: 0.8,
     //   },
     // ],
-    // // */
+    // */
 
-    height: 560,
-    width: 420,
-    backgroundColor: mode === "light" ? colors.white : colors.grey5,
+    height: 480,
+    width: (480 * 3) / 4,
+    backgroundColor: colors._black,
     position: "absolute",
 
     display: "flex",
@@ -200,6 +192,7 @@ const useStyles = makeStyles(({ colors, mode }) => ({
     overflow: "hidden",
   },
   buildUrCircle: {
+    marginTop: 10,
     paddingHorizontal: 40,
   },
   logo: {
@@ -213,6 +206,7 @@ const useStyles = makeStyles(({ colors, mode }) => ({
     minWidth: "80%",
     top: 0,
     // left: -12,
+    zIndex: 20,
   },
   usernameContainerGrad: {
     paddingHorizontal: 28,
@@ -221,11 +215,14 @@ const useStyles = makeStyles(({ colors, mode }) => ({
   },
   description: {
     position: "absolute",
-    top: 110,
-    right: 30,
-    width: 140,
+    top: 120,
+    right: 20,
+    width: 120,
     textAlign: "left",
     color: colors.grey3,
   },
   boldText: { fontWeight: "700" },
+  rankText: {
+    paddingHorizontal: 40,
+  },
 }))

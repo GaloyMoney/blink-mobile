@@ -3,12 +3,12 @@ import { Text, makeStyles } from "@rneui/themed"
 import { Screen } from "@app/components/screen"
 import { Circle } from "@app/components/circle"
 import { gql } from "@apollo/client"
-import { Image, ActivityIndicator, View } from "react-native"
+import { ActivityIndicator, View } from "react-native"
 import { useCirclesQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import LonelyImage from "@app/assets/images/lonely.png"
 import { ShareCircles } from "./share-circles-card"
+import { SeptemberChallengeCard } from "@app/components/september-challenge"
 
 gql`
   query Circles {
@@ -40,7 +40,7 @@ export const CirclesDashboardScreen: React.FC = () => {
 
   const { data, loading } = useCirclesQuery({
     skip: !isAuthed,
-    fetchPolicy: "cache-first",
+    fetchPolicy: "network-only",
   })
 
   if (loading)
@@ -57,11 +57,14 @@ export const CirclesDashboardScreen: React.FC = () => {
   return (
     <Screen style={styles.screen} preset="scroll">
       <Text style={styles.description} type={isLonely ? "p1" : "p2"}>
-        {LL.Circles.innerCircleExplainer()}
+        {isLonely ? LL.Circles.innerCircleGrow() : LL.Circles.innerCircleExplainer()}
       </Text>
       {isLonely ? (
-        <View style={styles.lonelyImageContainer}>
-          <Image source={LonelyImage} style={styles.lonelyImage} resizeMode="repeat" />
+        <View style={styles.groupContainer}>
+          <View style={styles.circle} />
+          <Text type="p1" style={styles.groupEffort}>
+            {LL.Circles.groupEffort()}
+          </Text>
         </View>
       ) : (
         <>
@@ -75,12 +78,12 @@ export const CirclesDashboardScreen: React.FC = () => {
               welcomeProfile.innerCircleThisMonthCount > 0
                 ? `+ ${
                     welcomeProfile.innerCircleThisMonthCount
-                  } ${LL.Circles.thisMonth()}`
+                  } ${LL.Circles.thisMonth()}; rank: #${welcomeProfile.thisMonthRank}`
                 : ""
             }
             subtitleGreen
             bubble
-            countUpDuration={1.2}
+            countUpDuration={1.8}
           />
           <Circle
             heading={LL.Circles.outerCircle()}
@@ -97,7 +100,7 @@ export const CirclesDashboardScreen: React.FC = () => {
             }
             subtitleGreen
             bubble
-            countUpDuration={1.2}
+            countUpDuration={1.8}
           />
           <Text style={styles.textCenter} type="p2">
             {LL.Circles.yourRankMessage({
@@ -107,6 +110,7 @@ export const CirclesDashboardScreen: React.FC = () => {
           </Text>
         </>
       )}
+      <SeptemberChallengeCard />
       <ShareCircles />
     </Screen>
   )
@@ -134,13 +138,23 @@ const useStyles = makeStyles(({ colors }) => {
       alignItems: "center",
       rowGap: 10,
     },
-    lonelyImage: {},
-    lonelyImageContainer: {
-      width: "100%",
-      height: 250,
-      overflow: "hidden",
-      borderRadius: 10,
-      backgroundColor: "red",
+    groupContainer: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: "40%",
+      marginBottom: "10%",
+    },
+    groupEffort: {
+      textAlign: "center",
+      color: colors.grey3,
+    },
+    circle: {
+      position: "absolute",
+      height: 150,
+      width: 150,
+      borderRadius: 75,
+      backgroundColor: colors.backdropWhite,
     },
   }
 })

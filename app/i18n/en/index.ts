@@ -1143,6 +1143,7 @@ const en: BaseTranslation = {
     circlesGrowingKeepGoing:
       "Your circles grow as you welcome people to Blink – keep going!",
     points: "points",
+    innerCircleGrow: "Your inner circle grows when you send a Blink user their first sats!",
     calculatingYourCircles: "Calculating your circles...",
     innerCircleExplainer: "You're driving Bitcoin adoption with Blink, keep it up!",
     innerCircleExplainerCard: "I'm driving Bitcoin adoption with Blink!",
@@ -1163,6 +1164,16 @@ const en: BaseTranslation = {
     buildYourCircle: "Build your circles",
     myBlinkCircles: "My Blink Circles",
     someones: "{username: string}'s",
+    groupEffort: "Bitcoin adoption is a group effort.\nInvite a friend and send them sats to start building your circles.",
+    septChallenge: {
+      title: "September Challenge!",
+      description: "Inner Circle {innerCircle: number}/21 - Earn $21\nTop 3 - Win tickets to Adopting Bitcoin!",
+      details: "Grow your inner circle by 21 people in September and get $21 to your Stablesats account. Top 3 win tickets to Adopting Bitcoin!",
+      peopleWelcomedSoFar: "people welcomed so far",
+      yourRank: "your rank",
+      reminder: "Reminder: Your inner circle grows when you send a new Blink user their first sats",
+      fullDetails: "Full details at"
+    }
   },
 }
 

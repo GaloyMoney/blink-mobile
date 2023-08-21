@@ -13,7 +13,13 @@ export const CirclesCardPeopleHome = () => {
   const navigation = useNavigation<StackNavigationProp<PeopleStackParamList>>()
   const { LL } = useI18nContext()
 
-  const { data, loading } = useCirclesQuery()
+  const { data, loading } = useCirclesQuery({
+    fetchPolicy: "network-only",
+  })
+
+  const peopleInInnerCircle =
+    data?.me?.defaultAccount.welcomeProfile?.innerCircleAllTimeCount || 0
+  const isLonely = peopleInInnerCircle === 0
 
   return (
     <View style={styles.container}>
@@ -23,23 +29,24 @@ export const CirclesCardPeopleHome = () => {
         </View>
         <View style={styles.separator}></View>
       </View>
-      <View>
-        <Text type="p2" style={styles.textCenter}>
-          {LL.Circles.circlesGrowingKeepGoing()}
-        </Text>
-      </View>
+
       {loading ? (
         <ActivityIndicator />
       ) : (
         <>
-          <View style={styles.pointsContainer}>
-            <Text style={styles.pointsNumber}>
-              {data?.me?.defaultAccount.welcomeProfile?.allTimePoints || 0}
-            </Text>
-            <Text style={styles.pointsText} type="p2">
-              {LL.Circles.points()}
+          <View>
+            <Text type={isLonely ? "p1" : "p2"} style={styles.textCenter}>
+              {isLonely ? LL.Circles.groupEffort() : LL.Circles.circlesGrowingKeepGoing()}
             </Text>
           </View>
+          {!isLonely && (
+            <View style={styles.pointsContainer}>
+              <Text style={styles.pointsNumber}>{peopleInInnerCircle}</Text>
+              <Text style={styles.pointsText} type="p2">
+                {LL.Circles.peopleYouWelcomed()}
+              </Text>
+            </View>
+          )}
           <GaloySecondaryButton
             style={styles.viewCirclescta}
             title={LL.Circles.viewMyCircles()}
@@ -94,6 +101,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   pointsText: {
     paddingBottom: 8,
+    maxWidth: 80,
   },
   backdropCircle: {
     position: "absolute",

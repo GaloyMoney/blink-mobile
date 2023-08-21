@@ -3612,6 +3612,10 @@ type RootTranslation = {
 		 */
 		points: string
 		/**
+		 * Y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​g​r​o​w​s​ ​w​h​e​n​ ​y​o​u​ ​s​e​n​d​ ​a​ ​B​l​i​n​k​ ​u​s​e​r​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s​!
+		 */
+		innerCircleGrow: string
+		/**
 		 * C​a​l​c​u​l​a​t​i​n​g​ ​y​o​u​r​ ​c​i​r​c​l​e​s​.​.​.
 		 */
 		calculatingYourCircles: string
@@ -3689,6 +3693,43 @@ type RootTranslation = {
 		 * @param {string} username
 		 */
 		someones: RequiredParams<'username'>
+		/**
+		 * B​i​t​c​o​i​n​ ​a​d​o​p​t​i​o​n​ ​i​s​ ​a​ ​g​r​o​u​p​ ​e​f​f​o​r​t​.​
+	​I​n​v​i​t​e​ ​a​ ​f​r​i​e​n​d​ ​a​n​d​ ​s​e​n​d​ ​t​h​e​m​ ​s​a​t​s​ ​t​o​ ​s​t​a​r​t​ ​b​u​i​l​d​i​n​g​ ​y​o​u​r​ ​c​i​r​c​l​e​s​.
+		 */
+		groupEffort: string
+		septChallenge: {
+			/**
+			 * S​e​p​t​e​m​b​e​r​ ​C​h​a​l​l​e​n​g​e​!
+			 */
+			title: string
+			/**
+			 * I​n​n​e​r​ ​C​i​r​c​l​e​ ​{​i​n​n​e​r​C​i​r​c​l​e​}​/​2​1​ ​-​ ​E​a​r​n​ ​$​2​1​
+		​T​o​p​ ​3​ ​-​ ​W​i​n​ ​t​i​c​k​e​t​s​ ​t​o​ ​A​d​o​p​t​i​n​g​ ​B​i​t​c​o​i​n​!
+			 * @param {number} innerCircle
+			 */
+			description: RequiredParams<'innerCircle'>
+			/**
+			 * G​r​o​w​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​2​1​ ​p​e​o​p​l​e​ ​i​n​ ​S​e​p​t​e​m​b​e​r​ ​a​n​d​ ​g​e​t​ ​$​2​1​ ​t​o​ ​y​o​u​r​ ​S​t​a​b​l​e​s​a​t​s​ ​a​c​c​o​u​n​t​.​ ​T​o​p​ ​3​ ​w​i​n​ ​t​i​c​k​e​t​s​ ​t​o​ ​A​d​o​p​t​i​n​g​ ​B​i​t​c​o​i​n​!
+			 */
+			details: string
+			/**
+			 * p​e​o​p​l​e​ ​w​e​l​c​o​m​e​d​ ​s​o​ ​f​a​r
+			 */
+			peopleWelcomedSoFar: string
+			/**
+			 * y​o​u​r​ ​r​a​n​k
+			 */
+			yourRank: string
+			/**
+			 * R​e​m​i​n​d​e​r​:​ ​Y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​g​r​o​w​s​ ​w​h​e​n​ ​y​o​u​ ​s​e​n​d​ ​a​ ​n​e​w​ ​B​l​i​n​k​ ​u​s​e​r​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s
+			 */
+			reminder: string
+			/**
+			 * F​u​l​l​ ​d​e​t​a​i​l​s​ ​a​t
+			 */
+			fullDetails: string
+		}
 	}
 }
 
@@ -7196,6 +7237,10 @@ export type TranslationFunctions = {
 		 */
 		points: () => LocalizedString
 		/**
+		 * Your inner circle grows when you send a Blink user their first sats!
+		 */
+		innerCircleGrow: () => LocalizedString
+		/**
 		 * Calculating your circles...
 		 */
 		calculatingYourCircles: () => LocalizedString
@@ -7268,6 +7313,42 @@ export type TranslationFunctions = {
 		 * {username}'s
 		 */
 		someones: (arg: { username: string }) => LocalizedString
+		/**
+		 * Bitcoin adoption is a group effort.
+	Invite a friend and send them sats to start building your circles.
+		 */
+		groupEffort: () => LocalizedString
+		septChallenge: {
+			/**
+			 * September Challenge!
+			 */
+			title: () => LocalizedString
+			/**
+			 * Inner Circle {innerCircle}/21 - Earn $21
+		Top 3 - Win tickets to Adopting Bitcoin!
+			 */
+			description: (arg: { innerCircle: number }) => LocalizedString
+			/**
+			 * Grow your inner circle by 21 people in September and get $21 to your Stablesats account. Top 3 win tickets to Adopting Bitcoin!
+			 */
+			details: () => LocalizedString
+			/**
+			 * people welcomed so far
+			 */
+			peopleWelcomedSoFar: () => LocalizedString
+			/**
+			 * your rank
+			 */
+			yourRank: () => LocalizedString
+			/**
+			 * Reminder: Your inner circle grows when you send a new Blink user their first sats
+			 */
+			reminder: () => LocalizedString
+			/**
+			 * Full details at
+			 */
+			fullDetails: () => LocalizedString
+		}
 	}
 }
 
