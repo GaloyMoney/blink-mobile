@@ -1,11 +1,9 @@
-import { useApolloClient } from "@apollo/client"
+import { gql, useApolloClient } from "@apollo/client"
 import { GaloyInput } from "@app/components/atomic/galoy-input"
 import { GALOY_INSTANCES, possibleGaloyInstanceNames } from "@app/config"
 import { activateBeta } from "@app/graphql/client-only-query"
-import { useBetaQuery, useLevelQuery } from "@app/graphql/generated"
+import { useBetaQuery, useDebugScreenQuery, useLevelQuery } from "@app/graphql/generated"
 import { useAppConfig } from "@app/hooks/use-app-config"
-import { i18nObject } from "@app/i18n/i18n-util"
-import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Button, Text, makeStyles } from "@rneui/themed"
@@ -16,6 +14,17 @@ import { usePriceConversion } from "../../hooks"
 import useLogout from "../../hooks/use-logout"
 import { addDeviceToken } from "../../utils/notifications"
 import { testProps } from "../../utils/testProps"
+
+gql`
+  query debugScreen {
+    me {
+      id
+      defaultAccount {
+        id
+      }
+    }
+  }
+`
 
 const usingHermes = typeof HermesInternal === "object" && HermesInternal !== null
 
@@ -30,6 +39,9 @@ export const DeveloperScreen: React.FC = () => {
 
   const { data: dataLevel } = useLevelQuery({ fetchPolicy: "cache-only" })
   const level = String(dataLevel?.me?.defaultAccount?.level)
+
+  const { data: dataDebug } = useDebugScreenQuery()
+  const accountId = dataDebug?.me?.defaultAccount?.id
 
   const [newToken, setNewToken] = React.useState(token)
   const currentGaloyInstance = appConfig.galoyInstance
@@ -151,20 +163,14 @@ export const DeveloperScreen: React.FC = () => {
                 crashlytics().crash()
               }}
             />
-            <Button
-              title="Error toast with translation"
-              containerStyle={styles.button}
-              {...testProps("Error Toast")}
-              onPress={() => {
-                toastShow({
-                  message: (translations) => translations.errors.generic(),
-                  currentTranslation: i18nObject("es"),
-                })
-              }}
-            />
           </>
         )}
         <View>
+          <Text style={styles.textHeader}>Account info</Text>
+          <Text>AccountId: </Text>
+          <Text selectable>{accountId}</Text>
+          <Text>Level: {level}</Text>
+          <Text>Token Present: {String(Boolean(token))}</Text>
           <Text style={styles.textHeader}>Environment Information</Text>
           <Text selectable>Galoy Instance: {appConfig.galoyInstance.id}</Text>
           <Text selectable>GQL_URL: {appConfig.galoyInstance.graphqlUri}</Text>
@@ -176,8 +182,6 @@ export const DeveloperScreen: React.FC = () => {
           <Text selectable>
             USD per 1 sat: {usdPerSat ? `$${usdPerSat}` : "No price data"}
           </Text>
-          <Text>Token Present: {String(Boolean(token))}</Text>
-          <Text>Level: {level}</Text>
           <Text>Hermes: {String(Boolean(usingHermes))}</Text>
           <Button
             {...testProps("Save Changes")}
