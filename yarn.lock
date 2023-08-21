@@ -22723,7 +22723,7 @@ tsutils@^3.21.0:
 
 tsx@^3.12.7:
   version "3.12.7"
-  resolved "https://registry.yarnpkg.com/tsx/-/tsx-3.12.7.tgz#b3b8b0fc79afc8260d1e14f9e995616c859a91e9"
+  resolved "https://registry.npmjs.org/tsx/-/tsx-3.12.7.tgz#b3b8b0fc79afc8260d1e14f9e995616c859a91e9"
   integrity sha512-C2Ip+jPmqKd1GWVQDvz/Eyc6QJbGfE7NrR3fx5BpEHMZsEHoIxHL1j+lKdGobr8ovEyqeNkPLSKp6SCSOt7gmw==
   dependencies:
     "@esbuild-kit/cjs-loader" "^2.4.2"
