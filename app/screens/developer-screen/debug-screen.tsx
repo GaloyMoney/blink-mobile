@@ -8,12 +8,13 @@ import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Button, Text, makeStyles } from "@rneui/themed"
 import * as React from "react"
-import { Alert, DevSettings, View } from "react-native"
+import { Alert, DevSettings, Linking, View } from "react-native"
 import { Screen } from "../../components/screen"
 import { usePriceConversion } from "../../hooks"
 import useLogout from "../../hooks/use-logout"
 import { addDeviceToken } from "../../utils/notifications"
 import { testProps } from "../../utils/testProps"
+import { InAppBrowser } from "react-native-inappbrowser-reborn"
 
 gql`
   query debugScreen {
@@ -39,6 +40,8 @@ export const DeveloperScreen: React.FC = () => {
 
   const { data: dataLevel } = useLevelQuery({ fetchPolicy: "cache-only" })
   const level = String(dataLevel?.me?.defaultAccount?.level)
+
+  const [url, setUrl] = React.useState("http://localhost:3001")
 
   const { data: dataDebug } = useDebugScreenQuery()
   const accountId = dataDebug?.me?.defaultAccount?.id
@@ -90,6 +93,52 @@ export const DeveloperScreen: React.FC = () => {
       setNewToken("")
     }
   }, [newGaloyInstance, currentGaloyInstance, token])
+
+  const openInAppBrowser = async () => {
+    try {
+      if (await InAppBrowser.isAvailable()) {
+        const result = await InAppBrowser.open(url, {
+          // iOS Properties
+          dismissButtonStyle: "cancel",
+          preferredBarTintColor: "#453AA4",
+          preferredControlTintColor: "white",
+          readerMode: false,
+          animated: true,
+          modalPresentationStyle: "fullScreen",
+          modalTransitionStyle: "coverVertical",
+          modalEnabled: true,
+          enableBarCollapsing: false,
+          // Android Properties
+          showTitle: true,
+          toolbarColor: "#6200EE",
+          secondaryToolbarColor: "black",
+          navigationBarColor: "black",
+          navigationBarDividerColor: "white",
+          enableUrlBarHiding: true,
+          enableDefaultShare: true,
+          forceCloseOnRedirection: false,
+          // Specify full animation resource identifier(package:anim/name)
+          // or only resource name(in case of animation bundled with app).
+          animations: {
+            startEnter: "slide_in_right",
+            startExit: "slide_out_left",
+            endEnter: "slide_in_left",
+            endExit: "slide_out_right",
+          },
+          headers: {
+            "my-custom-header": "my custom header value",
+          },
+          hasBackButton: true,
+        })
+        // await this.sleep(800)
+        Alert.alert(JSON.stringify(result))
+      } else Linking.openURL(url)
+    } catch (error) {
+      if (error instanceof Error) {
+        Alert.alert(error.message)
+      }
+    }
+  }
 
   const handleSave = async () => {
     await logout(false)
@@ -165,6 +214,19 @@ export const DeveloperScreen: React.FC = () => {
             />
           </>
         )}
+        <GaloyInput
+          {...testProps("Url in app browser")}
+          label="Url in app browser"
+          value={url}
+          onChangeText={setUrl}
+          selectTextOnFocus
+        />
+        <Button
+          title="Open in app browser"
+          containerStyle={styles.button}
+          {...testProps("Open in app browser")}
+          onPress={openInAppBrowser}
+        />
         <View>
           <Text style={styles.textHeader}>Account info</Text>
           <Text>AccountId: </Text>
