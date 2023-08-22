@@ -45,7 +45,7 @@
         "noMatchingContacts": "No se encontraron coincidencias para su búsqueda.",
         "allContacts": "Contactos",
         "viewAllContacts": "Ver contactos",
-        "recentContacts": "Contactos recientes"
+        "frequentContacts": "Contactos Frecuentes"
     },
     "ContactDetailsScreen": {
         "title": "Transacciones con {username: string}"
@@ -1032,32 +1032,42 @@
         "introducingCircles": "Introducción a Círculos",
         "copiedInviteLink": "Enlace de invitación copiado",
         "inviteFriendToBlink": "Invita a un amigo a Blink",
+        "shareCircles": "Comparte tus círculos",
         "share": "Compartir",
-        "circlesGrowingSatsExplainer": "¡Tus Blink Circles crecen cuando envías a un nuevo usuario de Blink sus primeros sats!",
-        "circlesGrowingKeepGoing": "Tus círculos crecen a medida que incorporas personas a Blink. ¡Sigue adelante!",
+        "circlesGrowingSatsExplainer": {
+            "your": "Tu",
+            "grow": "Crece cuando le envías a un nuevo usuario de Blink sus primeros sats."
+        },
+        "circlesGrowingKeepGoing": "Tus círculos crecen a medida que les das la bienvenida a Blink, ¡sigue adelante!",
         "points": "puntos",
+        "innerCircleGrow": "¡Tu círculo crece cuando le envías a un usuario de Blink sus primeros sats!",
         "calculatingYourCircles": "Calculando tus círculos...",
-        "innerCircleExplainer": "¡Tu círculo crece cuando le envías a un usuario de Blink sus primeros sats!",
+        "innerCircleExplainer": "Estás impulsando la adopción de Bitcoin con Blink, ¡Sigue así!",
+        "innerCircleExplainerCard": "¡Estoy impulsando la adopción de Bitcoin con Blink!",
         "innerCircle": "Círculo interno",
         "peopleYouWelcomed": "personas que iniciaste",
+        "peopleIWelcomed": "gente\nYo di la bienvenida",
         "thisMonth": "este mes",
-        "outerCircle": "círculo exterior",
+        "outerCircle": "Círculo Exterior",
         "peopleWelcomedByYourCircle": "personas iniciadas por tu círculo",
+        "peopleWelcomedByMyCircle": "gente agregada por mi círculo",
         "yourSphere": "Tu Esfera",
+        "mySphere": "Mi Esfera",
         "yourRankMessage": "¡Eres el #{thisMonthRank: number} este mes y el #{allTimeRank: number} de la historia!",
-        "totalImpact": "Suma cuanto impacto que estás teniendo",
+        "rankMessage": "#{thisMonthRank: number} este mes y #{allTimeRank: number} ¡de todos los tiempos!",
         "inviteFriends": "Invitar a un amigo",
-        "buildYourCircle": "Construye tu círculo",
+        "buildYourCircle": "Construye tus círculos",
+        "myBlinkCircles": "Mis círculos en Blink",
         "someones": "de {username: string}",
-        "Sphere": {
-            "yourSpherePoints": "Puntos de tu esfera",
-            "spherePointsDescription": "Por cada persona que tu y tu círculo íntimo inicien, recibirás 50 puntos. Por cada persona posterior que reciba tu esfera, recibirá la mitad de los puntos. (25, 12.5, 6.25)",
-            "innerCircle": "Círculo interno",
-            "outerCircle": "círculo exterior",
-            "yourSphere": "Tu Esfera",
-            "firstDegree": "1er grado",
-            "secondDegree": "2do grado",
-            "thirdDegree": "3er grado"
+        "groupEffort": "La adopción de Bitcoin es un esfuerzo de grupo.\nInvita a un amigo y envíale sats para comenzar a construir tus círculos.",
+        "septChallenge": {
+            "title": "¡Reto de septiembre!",
+            "description": "Círculo Interno {innerCircle: number}/21 - Gana $21\nTop 3 - ¡Gane boletos para Adopting Bitcoin!",
+            "details": "Has crecer tu círculo íntimo en 21 personas en septiembre y obtenga $21 en tu cuenta de Stablesats. ¡Los 3 mejores ganan boletos para \"Adopting Bitcoin 2023\"!",
+            "peopleWelcomedSoFar": "gente bienvenida hasta ahora",
+            "yourRank": "Tu puesto",
+            "reminder": "Recordatorio: tu círculo interno crece cuando envías a un nuevo usuario de Blink sus primeros sats",
+            "fullDetails": "Detalles completos en"
         }
     }
 }
