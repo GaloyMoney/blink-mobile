@@ -478,6 +478,7 @@ export const AccountScreen = () => {
       chevronColor: phoneAndEmailVerified ? colors.red : undefined,
       chevronSize: phoneAndEmailVerified ? 28 : undefined,
       styleDivider: !emailUnverified,
+      hidden: !isAtLeastLevelOne,
     },
     {
       category: LL.AccountScreen.unverified(),
