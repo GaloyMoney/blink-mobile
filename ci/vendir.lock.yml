@@ -2,14 +2,14 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'fix: git cliff config should be pulled from pipeline-tasks (#4)'
-      sha: fc36c9834e4da8374728298ffd362b7bc1280bc5
+      commitTitle: 'chore: more generic test-on-docker-host'
+      sha: 0c17e2d69a71a42b83b8fbd0136abd27b8d97a74
     path: .
-  path: tasks/vendor
+  path: ../.github/workflows/vendor
 - contents:
   - git:
-      commitTitle: 'fix: git cliff config should be pulled from pipeline-tasks (#4)'
-      sha: fc36c9834e4da8374728298ffd362b7bc1280bc5
+      commitTitle: 'chore: more generic test-on-docker-host'
+      sha: 0c17e2d69a71a42b83b8fbd0136abd27b8d97a74
     path: .
-  path: config/vendor
+  path: ./vendor
 kind: LockConfig
