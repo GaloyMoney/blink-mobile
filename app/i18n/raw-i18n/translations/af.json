@@ -1053,7 +1053,7 @@
         "peopleWelcomedByMyCircle": "mense deur my sirkels verwelkom",
         "yourSphere": "Jou Sfere",
         "mySphere": "My Sfere",
-        "yourRankMessage": "Jou #{thisMonthRank: number} hierdie maand en #{allTimeRank: number} algeheel!",
+        "yourRankMessage": "Jy is #{thisMonthRank: number} hierdie maand en #{allTimeRank: number} algeheel!",
         "rankMessage": "#{thisMonthRank: number} hierdie maand en #{allTimeRank: number} algeheel!",
         "inviteFriends": "Nooi 'n vriend",
         "buildYourCircle": "Bou jou sirkels",
