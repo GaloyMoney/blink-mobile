@@ -1040,6 +1040,7 @@
         },
         "circlesGrowingKeepGoing": "Jou sirkels groei soos wat jy mense verwelkom by Blink - doen so voort!",
         "points": "punte",
+        "innerCircleGrow": "Jou binnesirkel groei wanneer jy sats na 'n nuwe Blink-gebruiker stuur",
         "calculatingYourCircles": "Bereken jou sirkels....",
         "innerCircleExplainer": "Jy help Bitcoin-aanneming saam met Blink - Hou aan! ",
         "innerCircleExplainerCard": "Ek bevorder Bitcoin-aanneming met Blink!",
@@ -1057,6 +1058,16 @@
         "inviteFriends": "Nooi 'n vriend",
         "buildYourCircle": "Bou jou sirkels",
         "myBlinkCircles": "My Blink Sirkels",
-        "someones": "{username: string} sin"
+        "someones": "{username: string} sin",
+        "groupEffort": "Bitcoin-aanneming is 'n spanpoging.\nNooi 'n vriend en stuur sats om jou sirkels te bou",
+        "septChallenge": {
+            "title": "September Uitdaging!",
+            "description": "Binnesirkel {innerCircle: number}/21 - Verdien $21\nTop 3 - Wen kaartjies na Adopting Bitcoin!",
+            "details": "Groei jou binnesirkel met 21 mense in Septeember en kry $21 by jou Stablesats-rekening. Top 3 wen kaartjies na Adopting Bitcoin!",
+            "peopleWelcomedSoFar": "mense reeds verwelkom",
+            "yourRank": "Jou rang",
+            "reminder": "Herhindering: Jou binnesirkel groei wanneer jy die eerste sats na 'n nuwe Blink-gebruiker stuur",
+            "fullDetails": "Volle besonderhede"
+        }
     }
 }
