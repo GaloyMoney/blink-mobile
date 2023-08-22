@@ -1040,6 +1040,7 @@
         },
         "circlesGrowingKeepGoing": "Çevren insanları Blink'e davet etmenle büyür. Devam et!",
         "points": "puanlar",
+        "innerCircleGrow": "Her bir Blink kullanıcısına ilk satını yolladığında yakın çevren genişler!",
         "calculatingYourCircles": "Çevren hesaplanıyor...",
         "innerCircleExplainer": "Blink ile Bitcoin adaptasyonunu artırıyorsun. Devam et!",
         "innerCircleExplainerCard": "Blink ile Bitcoin adaptasyonunu artırıyorum!",
@@ -1057,6 +1058,16 @@
         "inviteFriends": "Bir arkadaşını davet et",
         "buildYourCircle": "Çevreni oluştur",
         "myBlinkCircles": "Blink Çevrem",
-        "someones": "{username: string}'in"
+        "someones": "{username: string}'in",
+        "groupEffort": "Bitcoin adaptasyonu bir ekip işidir.\nArkadaşlarını davet et ve çevreni genişletmek için onlara ilk satlarını gönder.",
+        "septChallenge": {
+            "title": "Eylül Meydan Okuması!",
+            "description": "Yakın Çevre {innerCircle: number}/21 - 21 $ Kazan\nİlk 3 - Adopting Bitcoin'e bilet kazanın!",
+            "details": "Eylül ayında yakın çevrenizi 21 kişiye kadar genişletin ve 21 dolar Stablesats hesabınıza yatsın. İlk 3 kişi Adopting Bitcoin'e bilet kazanacak!",
+            "peopleWelcomedSoFar": "şimdiye kadar karşılanan insanlar",
+            "yourRank": "rütbeniz",
+            "reminder": "Hatırlatıcı: Yakın çevreniz ueni Blink kullanıcılarına ilk satlarını gönderdiğinizde genişler.",
+            "fullDetails": "Tüm detaylar şurada"
+        }
     }
 }
