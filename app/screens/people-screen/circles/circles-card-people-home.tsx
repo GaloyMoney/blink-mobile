@@ -7,6 +7,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { useCirclesQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
+import { PressableCard } from "@app/components/pressable-card"
 
 export const CirclesCardPeopleHome = () => {
   const styles = useStyles()
@@ -21,41 +22,47 @@ export const CirclesCardPeopleHome = () => {
     data?.me?.defaultAccount.welcomeProfile?.innerCircleAllTimeCount || 0
   const isLonely = peopleInInnerCircle === 0
 
-  return (
-    <View style={styles.container}>
-      <View>
-        <View style={styles.blinkCircles}>
-          <Text type="h2">{LL.Circles.titleBlinkCircles()}</Text>
-        </View>
-        <View style={styles.separator}></View>
-      </View>
+  const openBlinkCirclesDashboard = () => navigation.navigate("circlesDashboard")
 
-      {loading ? (
-        <ActivityIndicator />
-      ) : (
-        <>
-          <View>
-            <Text type={isLonely ? "p1" : "p2"} style={styles.textCenter}>
-              {isLonely ? LL.Circles.groupEffort() : LL.Circles.circlesGrowingKeepGoing()}
-            </Text>
+  return (
+    <PressableCard onPress={openBlinkCirclesDashboard}>
+      <View style={styles.container}>
+        <View>
+          <View style={styles.blinkCircles}>
+            <Text type="h2">{LL.Circles.titleBlinkCircles()}</Text>
           </View>
-          {!isLonely && (
-            <View style={styles.pointsContainer}>
-              <Text style={styles.pointsNumber}>{peopleInInnerCircle}</Text>
-              <Text style={styles.pointsText} type="p2">
-                {LL.Circles.peopleYouWelcomed()}
+          <View style={styles.separator}></View>
+        </View>
+
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <>
+            <View>
+              <Text type={isLonely ? "p1" : "p2"} style={styles.textCenter}>
+                {isLonely
+                  ? LL.Circles.groupEffort()
+                  : LL.Circles.circlesGrowingKeepGoing()}
               </Text>
             </View>
-          )}
-          <GaloySecondaryButton
-            style={styles.viewCirclescta}
-            title={LL.Circles.viewMyCircles()}
-            onPress={() => navigation.navigate("circlesDashboard")}
-          />
-        </>
-      )}
-      <View style={styles.backdropCircle}></View>
-    </View>
+            {!isLonely && (
+              <View style={styles.pointsContainer}>
+                <Text style={styles.pointsNumber}>{peopleInInnerCircle}</Text>
+                <Text style={styles.pointsText} type="p2">
+                  {LL.Circles.peopleYouWelcomed()}
+                </Text>
+              </View>
+            )}
+            <GaloySecondaryButton
+              style={styles.viewCirclescta}
+              title={LL.Circles.viewMyCircles()}
+              onPress={openBlinkCirclesDashboard}
+            />
+          </>
+        )}
+        <View style={styles.backdropCircle}></View>
+      </View>
+    </PressableCard>
   )
 }
 
