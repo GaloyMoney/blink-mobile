@@ -1,10 +1,7 @@
 import * as React from "react"
 import {
   Alert,
-  Animated,
-  Easing,
   Platform,
-  Pressable,
   Share,
   TouchableOpacity,
   View,
@@ -31,6 +28,7 @@ import { GaloyToast } from "../galoy-toast"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { PeopleStackParamList } from "@app/navigation/stack-param-lists"
+import { PressableCard } from "../pressable-card"
 
 type Props = {
   isVisible: boolean
@@ -81,27 +79,6 @@ export const InviteModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
     })
   }
 
-  const scaleAnim = React.useRef(new Animated.Value(1)).current
-
-  const breatheIn = () => {
-    Animated.timing(scaleAnim, {
-      toValue: 0.95,
-      duration: 200,
-      useNativeDriver: true,
-      easing: Easing.inOut(Easing.quad),
-    }).start()
-  }
-
-  const breatheOut = () => {
-    copyToClipboard()
-    Animated.timing(scaleAnim, {
-      toValue: 1,
-      duration: 100,
-      useNativeDriver: true,
-      easing: Easing.inOut(Easing.quad),
-    }).start()
-  }
-
   const share = async () => {
     try {
       const result = await Share.share({ message: inviteLink })
@@ -128,6 +105,7 @@ export const InviteModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
       isVisible={isVisible}
       backdropOpacity={0.8}
       backdropColor={colors.white}
+      backdropTransitionOutTiming={0}
       onBackdropPress={acknowledgeModal}
     >
       <View style={styles.modalCard}>
@@ -140,21 +118,19 @@ export const InviteModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
               <GaloyIconButton name="close" size="medium" onPress={acknowledgeModal} />
             </View>
           </View>
-          <Pressable onPressIn={breatheIn} onPressOut={breatheOut}>
-            <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-              <View style={styles.qrCard}>
-                <QRCode
-                  size={getQrSize()}
-                  value={inviteLink}
-                  logoBackgroundColor="white"
-                  ecl={"M"}
-                  logo={Logo}
-                  logoSize={60}
-                  logoBorderRadius={10}
-                />
-              </View>
-            </Animated.View>
-          </Pressable>
+          <PressableCard onPress={copyToClipboard}>
+            <View style={styles.qrCard}>
+              <QRCode
+                size={getQrSize()}
+                value={inviteLink}
+                logoBackgroundColor="white"
+                ecl={"M"}
+                logo={Logo}
+                logoSize={60}
+                logoBorderRadius={10}
+              />
+            </View>
+          </PressableCard>
 
           <View style={styles.qrMetadata}>
             <Text type="p3">{inviteLink}</Text>

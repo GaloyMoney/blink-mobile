@@ -128,10 +128,9 @@ const useStyles = makeStyles(
       circleSubtitle: {
         textAlign: "left",
         backgroundColor: subtitleGreen ? colors.green : colors.black,
-        maxWidth: "50%",
         borderRadius: 10,
         paddingHorizontal: 10,
-        overflow: "hidden",
+        alignSelf: "flex-start",
       },
       circleSubtitleExtra: { color: colors.black, marginTop: 4 },
       circleBubble: {

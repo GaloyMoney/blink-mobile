@@ -58,6 +58,7 @@ export const IntroducingCirclesModal: React.FC<Props> = ({ isVisible, setIsVisib
       isVisible={isVisible}
       backdropOpacity={0.8}
       backdropColor={colors.white}
+      backdropTransitionOutTiming={0}
       onBackdropPress={acknowledgeModal}
     >
       <View style={styles.modalCard}>
