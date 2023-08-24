@@ -43,7 +43,7 @@ export const Tab = {
   Earn: LL.EarnScreen.title(),
 } as const
 
-export type Tab = (typeof Tab)[keyof typeof Tab]
+export type Tab = typeof Tab[keyof typeof Tab]
 
 export const clickOnBottomTab = async (tab: Tab) => {
   await clickButton(tab)

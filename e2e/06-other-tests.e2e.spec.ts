@@ -13,6 +13,7 @@ import {
   waitTillTextDisplayed,
   waitTillScreenTitleShowing,
   isScreenTitleShowing,
+  clickButton,
 } from "./utils"
 
 loadLocale("en")
@@ -50,9 +51,13 @@ describe("Change Language Flow", () => {
   })
 })
 
-describe("Contacts Flow", () => {
-  it("Click Contacts Button", async () => {
+describe("People Flow", () => {
+  it("Click People Button", async () => {
     await clickOnBottomTab(Tab.People)
+  })
+
+  it("Click all contacts", async () => {
+    await clickButton(LL.PeopleScreen.viewAllContacts())
   })
 
   it("Check if contacts exists", async () => {

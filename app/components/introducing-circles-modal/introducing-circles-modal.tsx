@@ -65,12 +65,7 @@ export const IntroducingCirclesModal: React.FC<Props> = ({ isVisible, setIsVisib
       <View style={styles.modalCard}>
         <View style={styles.containerStyle}>
           <View style={styles.cross}>
-            <GaloyIconButton
-              {...testProps("close-introducing-circles-modal")}
-              name="close"
-              size="medium"
-              onPress={acknowledgeModal}
-            />
+            <GaloyIconButton name="close" size="medium" onPress={acknowledgeModal} />
           </View>
           <GaloyIcon name="people" color={colors.primary} size={50} />
           <View style={styles.cardTitleContainer}>

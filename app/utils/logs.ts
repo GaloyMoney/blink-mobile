@@ -1,4 +1,6 @@
 import { LogBox } from "react-native"
+import Config from "react-native-config"
 
 // Interferes in tests
-LogBox.ignoreLogs(["[GraphQL error]: Message: Not authenticated"])
+
+if (Config.IGNORE_LOGS) LogBox.ignoreLogs(["[GraphQL error]:"])
