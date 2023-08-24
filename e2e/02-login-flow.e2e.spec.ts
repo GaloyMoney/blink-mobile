@@ -80,6 +80,9 @@ describe("Login Flow", () => {
 
   it("click Save Changes", async () => {
     await clickButton("Save Changes")
+
+    await clickButton("close-introducing-circles-modal")
+
     await waitTillTextDisplayed("Token Present: true")
   })
 
@@ -144,6 +147,8 @@ describe("Login Flow", () => {
   })
 
   it("set staging environment again", async () => {
+    await clickButton("close-introducing-circles-modal")
+
     const buildButton = await $(selector("logo-button", "Other"))
     await buildButton.waitForDisplayed({ timeout })
     await buildButton.click()
@@ -191,5 +196,7 @@ describe("Login Flow", () => {
     await codeInput.waitForDisplayed({ timeout })
     await codeInput.click()
     await codeInput.setValue(code)
+
+    await clickButton("close-introducing-circles-modal")
   })
 })

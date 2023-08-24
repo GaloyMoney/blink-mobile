@@ -18,6 +18,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { setIntroducingCirclesModalShown } from "@app/graphql/client-only-query"
 import { useApolloClient } from "@apollo/client"
 import { useIntroducingCirclesModalShownQuery } from "@app/graphql/generated"
+import { testProps } from "@app/utils/testProps"
 
 type Props = {
   isVisible: boolean
@@ -64,7 +65,12 @@ export const IntroducingCirclesModal: React.FC<Props> = ({ isVisible, setIsVisib
       <View style={styles.modalCard}>
         <View style={styles.containerStyle}>
           <View style={styles.cross}>
-            <GaloyIconButton name="close" size="medium" onPress={acknowledgeModal} />
+            <GaloyIconButton
+              {...testProps("close-introducing-circles-modal")}
+              name="close"
+              size="medium"
+              onPress={acknowledgeModal}
+            />
           </View>
           <GaloyIcon name="people" color={colors.primary} size={50} />
           <View style={styles.cardTitleContainer}>
