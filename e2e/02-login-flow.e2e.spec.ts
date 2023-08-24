@@ -86,8 +86,6 @@ describe("Login Flow", () => {
   })
 
   it("are we logged in?", async () => {
-    await sleep(5000) // sometimes the window takes a bit to load
-
     // scroll up for small screens
     await scrollUp()
     await scrollUp()
