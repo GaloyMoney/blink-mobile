@@ -14,7 +14,6 @@ import {
   waitTillScreenTitleShowing,
   isScreenTitleShowing,
   clickButton,
-  sleep,
 } from "./utils"
 
 loadLocale("en")

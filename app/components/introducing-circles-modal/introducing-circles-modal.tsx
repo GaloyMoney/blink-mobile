@@ -18,7 +18,6 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { setIntroducingCirclesModalShown } from "@app/graphql/client-only-query"
 import { useApolloClient } from "@apollo/client"
 import { useIntroducingCirclesModalShownQuery } from "@app/graphql/generated"
-import { testProps } from "@app/utils/testProps"
 
 type Props = {
   isVisible: boolean
