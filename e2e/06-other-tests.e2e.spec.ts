@@ -14,6 +14,7 @@ import {
   waitTillScreenTitleShowing,
   isScreenTitleShowing,
   clickButton,
+  sleep,
 } from "./utils"
 
 loadLocale("en")
@@ -88,6 +89,17 @@ describe("People Flow", () => {
     // pause to wait for contact details to load
     await browser.pause(2000)
     await $(selector("contact-detail-icon", "Other")).isDisplayed()
+  })
+
+  it("Go back to People home", async () => {
+    await clickOnBottomTab(Tab.People)
+    await clickOnBottomTab(Tab.People)
+  })
+
+  it("Blink circles dashboard", async () => {
+    await clickButton(LL.Circles.viewMyCircles())
+
+    await waitTillTextDisplayed(LL.Circles.groupEffort())
   })
 
   it("Go back to main screen", async () => {

@@ -16,12 +16,8 @@ import {
   getFirstEmail,
   getSecondEmail,
   clickAlertLastButton,
+  sleep,
 } from "./utils"
-
-const sleep = (ms: number): Promise<void> =>
-  new Promise((resolve) => {
-    setTimeout(resolve, ms)
-  })
 
 describe("Login Flow", () => {
   loadLocale("en")
@@ -90,7 +86,7 @@ describe("Login Flow", () => {
   })
 
   it("are we logged in?", async () => {
-    await sleep(1000) // sometimes the window takes a bit to load
+    await sleep(5000) // sometimes the window takes a bit to load
 
     // scroll up for small screens
     await scrollUp()
@@ -148,6 +144,8 @@ describe("Login Flow", () => {
   })
 
   it("set staging environment again", async () => {
+    await clickIcon("close")
+
     const buildButton = await $(selector("logo-button", "Other"))
     await buildButton.waitForDisplayed({ timeout })
     await buildButton.click()
