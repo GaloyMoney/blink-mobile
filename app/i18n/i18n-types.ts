@@ -3698,6 +3698,10 @@ type RootTranslation = {
 	​I​n​v​i​t​e​ ​a​ ​f​r​i​e​n​d​ ​a​n​d​ ​s​e​n​d​ ​t​h​e​m​ ​s​a​t​s​ ​t​o​ ​s​t​a​r​t​ ​b​u​i​l​d​i​n​g​ ​y​o​u​r​ ​c​i​r​c​l​e​s​.
 		 */
 		groupEffort: string
+		/**
+		 * I​'​m​ ​d​r​i​v​i​n​g​ ​B​i​t​c​o​i​n​ ​a​d​o​p​t​i​o​n​ ​u​s​i​n​g​ ​B​l​i​n​k​.
+		 */
+		drivingAdoption: string
 		septChallenge: {
 			/**
 			 * S​e​p​t​e​m​b​e​r​ ​C​h​a​l​l​e​n​g​e​!
@@ -7318,6 +7322,10 @@ export type TranslationFunctions = {
 	Invite a friend and send them sats to start building your circles.
 		 */
 		groupEffort: () => LocalizedString
+		/**
+		 * I'm driving Bitcoin adoption using Blink.
+		 */
+		drivingAdoption: () => LocalizedString
 		septChallenge: {
 			/**
 			 * September Challenge!
