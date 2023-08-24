@@ -76,7 +76,7 @@ describe("Login Flow", () => {
 
   it("click Save Changes", async () => {
     await clickButton("Save Changes")
-    // await clickIcon("close")
+    if (process.env.E2E_DEVICE !== "ios") await clickIcon("close")
 
     await waitTillTextDisplayed("Token Present: true")
   })
