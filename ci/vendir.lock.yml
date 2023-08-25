@@ -2,14 +2,14 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'fix: git cliff config should be pulled from pipeline-tasks (#4)'
-      sha: fc36c9834e4da8374728298ffd362b7bc1280bc5
+      commitTitle: 'feat: allow public or private repo selection (#34)'
+      sha: 53fc9dd805d3574d200e8e6e99f856c0912b52a8
     path: .
-  path: tasks/vendor
+  path: ../.github/workflows/vendor
 - contents:
   - git:
-      commitTitle: 'fix: git cliff config should be pulled from pipeline-tasks (#4)'
-      sha: fc36c9834e4da8374728298ffd362b7bc1280bc5
+      commitTitle: 'feat: allow public or private repo selection (#34)'
+      sha: 53fc9dd805d3574d200e8e6e99f856c0912b52a8
     path: .
-  path: config/vendor
+  path: ./vendor
 kind: LockConfig
