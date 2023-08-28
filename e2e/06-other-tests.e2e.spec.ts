@@ -96,7 +96,9 @@ describe("People Flow", () => {
   })
 
   it("Blink circles dashboard", async () => {
-    await clickButton(LL.Circles.viewMyCircles())
+    const button = await $(selector(LL.Circles.viewMyCircles(), "Other"))
+    await button.waitForEnabled({ timeout })
+    await button.click()
 
     await waitTillTextDisplayed(LL.Circles.groupEffort())
   })
