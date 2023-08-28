@@ -1060,6 +1060,7 @@
         "myBlinkCircles": "My Blink Circles",
         "someones": "{username: string}'s",
         "groupEffort": "Bitcoin adoption is a group effort.\nInvite a friend and send them sats to start building your circles.",
+        "drivingAdoption": "I'm driving Bitcoin adoption using Blink.",
         "septChallenge": {
             "title": "September Challenge!",
             "description": "Inner Circle {innerCircle: number}/21 - Earn $21\nTop 3 - Win tickets to Adopting Bitcoin!",

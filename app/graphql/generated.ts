@@ -1163,6 +1163,7 @@ export type Query = {
   readonly hasPromptedSetDefaultAccount: Scalars['Boolean']['output'];
   readonly hiddenBalanceToolTip: Scalars['Boolean']['output'];
   readonly hideBalance: Scalars['Boolean']['output'];
+  readonly innerCircleValue: Scalars['Int']['output'];
   readonly introducingCirclesModalShown: Scalars['Boolean']['output'];
   readonly lnInvoicePaymentStatus: LnInvoicePaymentStatusPayload;
   readonly me?: Maybe<User>;
@@ -1838,6 +1839,11 @@ export type IntroducingCirclesModalShownQueryVariables = Exact<{ [key: string]: 
 
 
 export type IntroducingCirclesModalShownQuery = { readonly __typename: 'Query', readonly introducingCirclesModalShown: boolean };
+
+export type InnerCircleValueQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type InnerCircleValueQuery = { readonly __typename: 'Query', readonly innerCircleValue: number };
 
 export type TransactionFragment = { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly paymentSecret?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash?: string | null } };
 
@@ -3007,6 +3013,38 @@ export function useIntroducingCirclesModalShownLazyQuery(baseOptions?: Apollo.La
 export type IntroducingCirclesModalShownQueryHookResult = ReturnType<typeof useIntroducingCirclesModalShownQuery>;
 export type IntroducingCirclesModalShownLazyQueryHookResult = ReturnType<typeof useIntroducingCirclesModalShownLazyQuery>;
 export type IntroducingCirclesModalShownQueryResult = Apollo.QueryResult<IntroducingCirclesModalShownQuery, IntroducingCirclesModalShownQueryVariables>;
+export const InnerCircleValueDocument = gql`
+    query innerCircleValue {
+  innerCircleValue @client
+}
+    `;
+
+/**
+ * __useInnerCircleValueQuery__
+ *
+ * To run a query within a React component, call `useInnerCircleValueQuery` and pass it any options that fit your needs.
+ * When your component renders, `useInnerCircleValueQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useInnerCircleValueQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useInnerCircleValueQuery(baseOptions?: Apollo.QueryHookOptions<InnerCircleValueQuery, InnerCircleValueQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<InnerCircleValueQuery, InnerCircleValueQueryVariables>(InnerCircleValueDocument, options);
+      }
+export function useInnerCircleValueLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<InnerCircleValueQuery, InnerCircleValueQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<InnerCircleValueQuery, InnerCircleValueQueryVariables>(InnerCircleValueDocument, options);
+        }
+export type InnerCircleValueQueryHookResult = ReturnType<typeof useInnerCircleValueQuery>;
+export type InnerCircleValueLazyQueryHookResult = ReturnType<typeof useInnerCircleValueLazyQuery>;
+export type InnerCircleValueQueryResult = Apollo.QueryResult<InnerCircleValueQuery, InnerCircleValueQueryVariables>;
 export const NetworkDocument = gql`
     query network {
   globals {
@@ -7091,6 +7129,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   hasPromptedSetDefaultAccount?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   hiddenBalanceToolTip?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   hideBalance?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  innerCircleValue?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   introducingCirclesModalShown?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   lnInvoicePaymentStatus?: Resolver<ResolversTypes['LnInvoicePaymentStatusPayload'], ParentType, ContextType, RequireFields<QueryLnInvoicePaymentStatusArgs, 'input'>>;
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;

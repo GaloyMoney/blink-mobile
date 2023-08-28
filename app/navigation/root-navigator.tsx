@@ -18,7 +18,6 @@ import { MapScreen } from "../screens/map-screen/map-screen"
 
 import { PriceHistoryScreen } from "../screens/price/price-history-screen"
 
-import PeopleIcon from "@app/assets/icons/people.svg"
 import HomeIcon from "@app/assets/icons/home.svg"
 import LearnIcon from "@app/assets/icons/learn.svg"
 import MapIcon from "@app/assets/icons/map.svg"
@@ -77,6 +76,7 @@ import {
 } from "./stack-param-lists"
 import { CirclesDashboardScreen } from "@app/screens/people-screen/circles/circles-dashboard-screen"
 import { AllContactsScreen } from "@app/screens/people-screen/contacts/all-contacts"
+import { PeopleTabIcon } from "@app/screens/people-screen/tab-icon"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -518,8 +518,8 @@ export const PrimaryNavigator = () => {
           title: LL.PeopleScreen.title(),
           tabBarAccessibilityLabel: LL.PeopleScreen.title(),
           tabBarTestID: LL.PeopleScreen.title(),
-          tabBarIcon: ({ color }) => (
-            <PeopleIcon {...testProps(LL.PeopleScreen.title())} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <PeopleTabIcon color={color} focused={focused} />
           ),
         }}
       />

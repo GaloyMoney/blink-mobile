@@ -62,6 +62,7 @@ export const useCirclesCard = () => {
         title: shareName,
         url: uri,
         type: "image/jpeg",
+        message: `${LL.Circles.drivingAdoption()} #blinkcircles`,
       }
 
       await Share.open(shareOptions)

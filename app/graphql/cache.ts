@@ -88,6 +88,9 @@ export const createCache = () =>
           introducingCirclesModalShown: {
             read: (value) => value ?? false,
           },
+          innerCircleValue: {
+            read: (value) => value ?? -1,
+          },
         },
       },
       Wallet: {

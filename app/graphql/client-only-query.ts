@@ -11,6 +11,8 @@ import {
   HiddenBalanceToolTipQuery,
   HideBalanceDocument,
   HideBalanceQuery,
+  InnerCircleValueDocument,
+  InnerCircleValueQuery,
   IntroducingCirclesModalShownDocument,
   IntroducingCirclesModalShownQuery,
 } from "./generated"
@@ -42,6 +44,10 @@ export default gql`
 
   query introducingCirclesModalShown {
     introducingCirclesModalShown @client
+  }
+
+  query innerCircleValue {
+    innerCircleValue @client
   }
 `
 
@@ -147,6 +153,23 @@ export const setIntroducingCirclesModalShown = (client: ApolloClient<unknown>) =
       },
     })
   } catch {
-    console.warn("unable to update feedbackModalShown")
+    console.warn("unable to update introducingCirclesModalShown")
+  }
+}
+
+export const setInnerCircleCachedValue = (
+  client: ApolloClient<unknown>,
+  innerCircleValue: number,
+) => {
+  try {
+    client.writeQuery<InnerCircleValueQuery>({
+      query: InnerCircleValueDocument,
+      data: {
+        __typename: "Query",
+        innerCircleValue,
+      },
+    })
+  } catch {
+    console.warn("unable to update InnerCircleValueDocument")
   }
 }

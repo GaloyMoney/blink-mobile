@@ -79,9 +79,9 @@ export const SeptemberChallengeCard: React.FC = () => {
             {LL.Circles.septChallenge.description({
               innerCircle:
                 Date.now() < SEPT_1_EPOCH
-                  ? data?.me?.defaultAccount.welcomeProfile?.innerCircleThisMonthCount ||
-                    0
-                  : 0,
+                  ? 0
+                  : data?.me?.defaultAccount.welcomeProfile?.innerCircleThisMonthCount ||
+                    0,
             })}
           </Text>
         </View>
