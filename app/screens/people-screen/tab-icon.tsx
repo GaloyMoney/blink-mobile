@@ -32,8 +32,11 @@ export const PeopleTabIcon: React.FC<TabIconProps> = ({ color, focused }) => {
     const innerCircleRealValue =
       networkData?.me?.defaultAccount.welcomeProfile?.innerCircleAllTimeCount || -1
 
-    if (innerCircleCachedValue === -1 || innerCircleRealValue === -1)
-      return setHidden(true)
+    if (innerCircleCachedValue === -1 && innerCircleRealValue === -1) {
+      setHidden(false)
+      setInnerCircleCachedValue(client, 0)
+      return
+    }
 
     setHidden(innerCircleRealValue === innerCircleCachedValue)
     setInnerCircleCachedValue(client, innerCircleRealValue)
