@@ -1,4 +1,4 @@
-import { Text, makeStyles } from "@rneui/themed"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 
 import { Screen } from "@app/components/screen"
 import { Circle } from "@app/components/circle"
@@ -9,6 +9,9 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { ShareCircles } from "./share-circles-card"
 import { SeptemberChallengeCard } from "@app/components/september-challenge"
+
+import LogoDarkMode from "@app/assets/logo/app-logo-dark.svg"
+import LogoLightMode from "@app/assets/logo/blink-logo-light.svg"
 
 gql`
   query Circles {
@@ -34,6 +37,9 @@ gql`
 `
 
 export const CirclesDashboardScreen: React.FC = () => {
+  const {
+    theme: { mode },
+  } = useTheme()
   const styles = useStyles()
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
@@ -54,11 +60,16 @@ export const CirclesDashboardScreen: React.FC = () => {
   const welcomeProfile = data?.me?.defaultAccount.welcomeProfile
   const isLonely = !welcomeProfile || welcomeProfile.innerCircleAllTimeCount === 0
 
+  const Logo = mode === "dark" ? LogoDarkMode : LogoLightMode
+
   return (
     <Screen style={styles.screen} preset="scroll">
       <Text style={styles.description} type={isLonely ? "p1" : "p2"}>
         {isLonely ? LL.Circles.innerCircleGrow() : LL.Circles.innerCircleExplainer()}
       </Text>
+      <View style={styles.logoContainer}>
+        <Logo height={60} />
+      </View>
       {isLonely ? (
         <View style={styles.groupContainer}>
           <View style={styles.circle} />
@@ -155,6 +166,13 @@ const useStyles = makeStyles(({ colors }) => {
       width: 150,
       borderRadius: 75,
       backgroundColor: colors.backdropWhite,
+    },
+    logoContainer: {
+      top: 90,
+      left: "60%",
+      width: "50%",
+      height: "100%",
+      position: "absolute",
     },
   }
 })
