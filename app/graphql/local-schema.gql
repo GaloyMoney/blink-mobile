@@ -19,6 +19,7 @@ extend type Query {
   feedbackModalShown: Boolean!
   hasPromptedSetDefaultAccount: Boolean!
   introducingCirclesModalShown: Boolean!
+  innerCircleValue: Int!
 }
 
 extend type Account {

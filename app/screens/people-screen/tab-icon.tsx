@@ -1,8 +1,12 @@
+import { useApolloClient } from "@apollo/client"
 import PeopleIcon from "@app/assets/icons/people.svg"
+import { setInnerCircleCachedValue } from "@app/graphql/client-only-query"
+import { useCirclesQuery, useInnerCircleValueQuery } from "@app/graphql/generated"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
 import { makeStyles } from "@rneui/themed"
+import { useEffect, useState } from "react"
 import { View } from "react-native"
 
 type TabIconProps = {
@@ -14,14 +18,45 @@ export const PeopleTabIcon: React.FC<TabIconProps> = ({ color, focused }) => {
   const { LL } = useI18nContext()
   const styles = useStyles()
 
+  const [hidden, setHidden] = useState(true)
+
+  const { data: cachedData } = useInnerCircleValueQuery()
+  const { data: networkData } = useCirclesQuery({
+    fetchPolicy: "network-only",
+  })
+
+  const client = useApolloClient()
+
+  useEffect(() => {
+    const innerCircleCachedValue = cachedData?.innerCircleValue || -1
+    const innerCircleRealValue =
+      networkData?.me?.defaultAccount.welcomeProfile?.innerCircleAllTimeCount || -1
+
+    if (innerCircleCachedValue === -1 || innerCircleRealValue === -1)
+      return setHidden(true)
+
+    setHidden(innerCircleRealValue === innerCircleCachedValue)
+    setInnerCircleCachedValue(client, innerCircleRealValue)
+  }, [cachedData, networkData, setHidden, client])
+
   return (
     <View>
-      <View
-        style={[styles.notificationDot, focused ? styles.notificationDotHighlight : {}]}
-      />
-      <View
-        style={[styles.notificationRing, focused ? styles.notificationRingHighlight : {}]}
-      />
+      {!hidden && (
+        <>
+          <View
+            style={[
+              styles.notificationDot,
+              focused ? styles.notificationDotHighlight : {},
+            ]}
+          />
+          <View
+            style={[
+              styles.notificationRing,
+              focused ? styles.notificationRingHighlight : {},
+            ]}
+          />
+        </>
+      )}
       <PeopleIcon {...testProps(LL.PeopleScreen.title())} color={color} />
     </View>
   )
