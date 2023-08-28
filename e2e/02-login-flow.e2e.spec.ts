@@ -142,7 +142,7 @@ describe("Login Flow", () => {
   })
 
   it("set staging environment again", async () => {
-    await clickIcon("close")
+    if (process.env.E2E_DEVICE !== "ios") await clickIcon("close")
 
     const buildButton = await $(selector("logo-button", "Other"))
     await buildButton.waitForDisplayed({ timeout })
