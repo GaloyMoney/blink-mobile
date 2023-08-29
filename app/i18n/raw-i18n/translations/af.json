@@ -1060,6 +1060,7 @@
         "myBlinkCircles": "My Blink Sirkels",
         "someones": "{username: string} sin",
         "groupEffort": "Bitcoin-aanneming is 'n spanpoging.\nNooi 'n vriend en stuur sats om jou sirkels te bou",
+        "drivingAdoption": "Ek dryf Bitcoin-aanneming deur Blink",
         "septChallenge": {
             "title": "September Uitdaging!",
             "description": "Binnesirkel {innerCircle: number}/21 - Verdien $21\nTop 3 - Wen kaartjies na Adopting Bitcoin!",
