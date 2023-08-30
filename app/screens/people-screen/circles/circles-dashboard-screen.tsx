@@ -1,9 +1,8 @@
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 
-import { Screen } from "@app/components/screen"
-import { Circle } from "@app/components/circle"
+import { Circle, CircleRef } from "@app/components/circle"
 import { gql } from "@apollo/client"
-import { ActivityIndicator, View } from "react-native"
+import { ActivityIndicator, RefreshControl, ScrollView, View } from "react-native"
 import { useCirclesQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -12,6 +11,7 @@ import { SeptemberChallengeCard } from "@app/components/september-challenge"
 
 import LogoDarkMode from "@app/assets/logo/app-logo-dark.svg"
 import LogoLightMode from "@app/assets/logo/blink-logo-light.svg"
+import { useRef } from "react"
 
 gql`
   query Circles {
@@ -38,16 +38,29 @@ gql`
 
 export const CirclesDashboardScreen: React.FC = () => {
   const {
-    theme: { mode },
+    theme: { mode, colors },
   } = useTheme()
   const styles = useStyles()
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
 
-  const { data, loading } = useCirclesQuery({
+  const innerCircleRef = useRef<CircleRef | null>(null)
+  const outerCircleRef = useRef<CircleRef | null>(null)
+
+  const {
+    data,
+    loading,
+    refetch: refetchCirclesData,
+  } = useCirclesQuery({
     skip: !isAuthed,
     fetchPolicy: "network-only",
   })
+
+  const refetch = async () => {
+    refetchCirclesData()
+    innerCircleRef.current?.reset()
+    outerCircleRef.current?.reset()
+  }
 
   if (loading)
     return (
@@ -63,7 +76,17 @@ export const CirclesDashboardScreen: React.FC = () => {
   const Logo = mode === "dark" ? LogoDarkMode : LogoLightMode
 
   return (
-    <Screen style={styles.screen} preset="scroll">
+    <ScrollView
+      contentContainerStyle={[styles.screen]}
+      refreshControl={
+        <RefreshControl
+          refreshing={loading}
+          onRefresh={refetch}
+          colors={[colors.primary]} // Android refresh indicator colors
+          tintColor={colors.primary} // iOS refresh indicator color
+        />
+      }
+    >
       <Text style={styles.description} type={isLonely ? "p1" : "p2"}>
         {isLonely ? LL.Circles.innerCircleGrow() : LL.Circles.innerCircleExplainer()}
       </Text>
@@ -80,6 +103,7 @@ export const CirclesDashboardScreen: React.FC = () => {
       ) : (
         <>
           <Circle
+            ref={innerCircleRef}
             heading={LL.Circles.innerCircle()}
             value={welcomeProfile.innerCircleAllTimeCount}
             minValue={1}
@@ -97,6 +121,7 @@ export const CirclesDashboardScreen: React.FC = () => {
             countUpDuration={1.8}
           />
           <Circle
+            ref={outerCircleRef}
             heading={LL.Circles.outerCircle()}
             value={data?.me?.defaultAccount.welcomeProfile.outerCircleAllTimeCount}
             minValue={1}
@@ -123,7 +148,7 @@ export const CirclesDashboardScreen: React.FC = () => {
       )}
       <SeptemberChallengeCard />
       <ShareCircles />
-    </Screen>
+    </ScrollView>
   )
 }
 

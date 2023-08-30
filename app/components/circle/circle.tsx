@@ -4,6 +4,7 @@ import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { useCountUp } from "use-count-up"
 import Icon from "react-native-vector-icons/Ionicons"
 import { testProps } from "@app/utils/testProps"
+import { forwardRef, useImperativeHandle } from "react"
 
 type CircleProps = {
   heading: string
@@ -20,75 +21,104 @@ type CircleProps = {
   countUpDuration?: number
 }
 
-export const Circle: React.FC<CircleProps> = ({
-  heading,
-  value,
-  description,
-  subtitle,
-  subtitleGreen = false,
-  extraSubtitleLine,
-  bubble = false,
-  minValue,
-  maxValue,
-  helpBtnModal,
-  helpBtnModalEnable,
-  countUpDuration = 0,
-}) => {
-  const {
-    theme: { colors },
-  } = useTheme()
-  const styles = useStyles({
-    subtitleGreen,
-  })
+export type CircleRef = {
+  reset: () => void
+}
 
-  const { value: countUpValue } = useCountUp({
-    isCounting: true,
-    end: value,
-    duration: countUpDuration,
-  })
+// eslint-disable-next-line react/display-name
+export const Circle = forwardRef<CircleRef, CircleProps>(
+  (
+    {
+      heading,
+      value,
+      description,
+      subtitle,
+      subtitleGreen = false,
+      extraSubtitleLine,
+      bubble = false,
+      minValue,
+      maxValue,
+      helpBtnModal,
+      helpBtnModalEnable,
+      countUpDuration = 0,
+    },
+    ref,
+  ) => {
+    const {
+      theme: { colors },
+    } = useTheme()
+    const styles = useStyles({
+      subtitleGreen,
+    })
 
-  const cBackValue = getcBackValue(Number(countUpValue), minValue, maxValue)
+    const { value: countUpValue, reset } = useCountUp({
+      isCounting: true,
+      end: value,
+      duration: countUpDuration,
+    })
 
-  const cBackStyles = {
-    height: cBackValue,
-    width: cBackValue,
-    borderRadius: cBackValue / 2,
-    marginLeft: -cBackValue / 2,
-    marginTop: -cBackValue / 2,
-  }
+    useImperativeHandle(
+      ref,
+      () => ({
+        reset,
+      }),
+      [reset],
+    )
 
-  return (
-    <View style={styles.circleContainer}>
-      <View style={styles.circleHeading}>
-        <Text type="p1">{heading}</Text>
-        {helpBtnModal && (
-          <View style={styles.helpBtn}>
-            {helpBtnModal}
-            <Icon
-              color={colors.primary}
-              name="help-circle-outline"
-              size={23}
-              onPress={helpBtnModalEnable}
-            />
+    const cBackValue = getcBackValue(Number(countUpValue), minValue, maxValue)
+
+    const cBackStyles = {
+      height: cBackValue,
+      width: cBackValue,
+      borderRadius: cBackValue / 2,
+      marginLeft: -cBackValue / 2,
+      marginTop: -cBackValue / 2,
+    }
+
+    return (
+      <View style={styles.circleContainer}>
+        <View style={styles.circleHeading}>
+          <Text type="p1">{heading}</Text>
+          {helpBtnModal && (
+            <View style={styles.helpBtn}>
+              {helpBtnModal}
+              <Icon
+                color={colors.primary}
+                name="help-circle-outline"
+                size={23}
+                onPress={helpBtnModalEnable}
+              />
+            </View>
+          )}
+        </View>
+        <View style={styles.circleValueWrapper}>
+          <View>
+            <Text style={styles.circleValue}>{countUpValue}</Text>
+            {bubble && <View style={[styles.circleBubble, cBackStyles]} />}
           </View>
+          <Text style={styles.circleDescription}>{description}</Text>
+        </View>
+        {subtitle && <Text style={styles.circleSubtitle}>{subtitle}</Text>}
+        {extraSubtitleLine && (
+          <Text style={styles.circleSubtitleExtra}>{extraSubtitleLine}</Text>
+        )}
+        <View style={styles.circleValueWrapper}>
+          <View>
+            <Text {...testProps(`${heading}-value`)} style={styles.circleValue}>
+              {countUpValue}
+            </Text>
+            {bubble && <View style={[styles.circleBubble, cBackStyles]} />}
+          </View>
+          <Text style={styles.circleDescription}>{description}</Text>
+        </View>
+        {subtitle && <Text style={styles.circleSubtitle}>{subtitle}</Text>}
+        {extraSubtitleLine && (
+          <Text style={styles.circleSubtitleExtra}>{extraSubtitleLine}</Text>
         )}
       </View>
-      <View style={styles.circleValueWrapper}>
-        <View>
-          <Text {...testProps(`${heading}-value`)} style={styles.circleValue}>
-            {countUpValue}
-          </Text>
-          {bubble && <View style={[styles.circleBubble, cBackStyles]} />}
-        </View>
-        <Text style={styles.circleDescription}>{description}</Text>
-      </View>
-      {subtitle && <Text style={styles.circleSubtitle}>{subtitle}</Text>}
-      {extraSubtitleLine && (
-        <Text style={styles.circleSubtitleExtra}>{extraSubtitleLine}</Text>
-      )}
-    </View>
-  )
-}
+    )
+  },
+)
 
 const useStyles = makeStyles(
   ({ colors }, { subtitleGreen }: { subtitleGreen?: boolean }) => {
