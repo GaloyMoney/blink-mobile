@@ -8,6 +8,8 @@ import { useCirclesQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { PressableCard } from "@app/components/pressable-card"
+import { useCountUp } from "use-count-up"
+import { getcBackValue } from "@app/components/circle"
 
 export const CirclesCardPeopleHome = () => {
   const styles = useStyles()
@@ -15,12 +17,26 @@ export const CirclesCardPeopleHome = () => {
   const { LL } = useI18nContext()
 
   const { data, loading } = useCirclesQuery({
-    fetchPolicy: "network-only",
+    fetchPolicy: "cache-and-network",
   })
 
   const peopleInInnerCircle =
     data?.me?.defaultAccount.welcomeProfile?.innerCircleAllTimeCount || 0
   const isLonely = peopleInInnerCircle === 0
+
+  const { value: peopleInInnerCircleCountUp } = useCountUp({
+    isCounting: !loading,
+    end: peopleInInnerCircle,
+    duration: 1.2,
+  })
+
+  const cBackValue = getcBackValue(Number(peopleInInnerCircleCountUp), 1, 100, 250, 360)
+
+  const cBackStyles = {
+    height: cBackValue,
+    width: cBackValue,
+    borderRadius: cBackValue / 2,
+  }
 
   const openBlinkCirclesDashboard = () => navigation.navigate("circlesDashboard")
 
@@ -35,7 +51,22 @@ export const CirclesCardPeopleHome = () => {
         </View>
 
         {loading ? (
-          <ActivityIndicator />
+          <>
+            <View>
+              <Text type={isLonely ? "p1" : "p2"} style={styles.textCenter}>
+                {LL.Circles.circlesGrowingKeepGoing()}
+              </Text>
+            </View>
+            <View style={styles.pointsContainer}>
+              <ActivityIndicator />
+            </View>
+            <GaloySecondaryButton
+              disabled
+              style={styles.viewCirclescta}
+              title={LL.Circles.viewMyCircles()}
+              onPress={() => {}}
+            />
+          </>
         ) : (
           <>
             <View>
@@ -47,7 +78,7 @@ export const CirclesCardPeopleHome = () => {
             </View>
             {!isLonely && (
               <View style={styles.pointsContainer}>
-                <Text style={styles.pointsNumber}>{peopleInInnerCircle}</Text>
+                <Text style={styles.pointsNumber}>{peopleInInnerCircleCountUp}</Text>
                 <Text style={styles.pointsText} type="p2">
                   {LL.Circles.peopleYouWelcomed()}
                 </Text>
@@ -60,7 +91,7 @@ export const CirclesCardPeopleHome = () => {
             />
           </>
         )}
-        <View style={styles.backdropCircle}></View>
+        <View style={[styles.backdropCircle, cBackStyles]}></View>
       </View>
     </PressableCard>
   )
@@ -98,8 +129,9 @@ const useStyles = makeStyles(({ colors }) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "flex-end",
+    alignItems: "center",
     columnGap: 10,
+    minHeight: 62,
   },
   pointsNumber: {
     color: colors.black,
@@ -114,9 +146,6 @@ const useStyles = makeStyles(({ colors }) => ({
     position: "absolute",
     right: -150,
     bottom: -150,
-    height: 280,
-    width: 280,
-    borderRadius: 280 / 2,
     backgroundColor: colors.backdropWhite,
     zIndex: -10,
   },

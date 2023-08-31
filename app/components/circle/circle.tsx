@@ -93,17 +93,6 @@ export const Circle = forwardRef<CircleRef, CircleProps>(
         </View>
         <View style={styles.circleValueWrapper}>
           <View>
-            <Text style={styles.circleValue}>{countUpValue}</Text>
-            {bubble && <View style={[styles.circleBubble, cBackStyles]} />}
-          </View>
-          <Text style={styles.circleDescription}>{description}</Text>
-        </View>
-        {subtitle && <Text style={styles.circleSubtitle}>{subtitle}</Text>}
-        {extraSubtitleLine && (
-          <Text style={styles.circleSubtitleExtra}>{extraSubtitleLine}</Text>
-        )}
-        <View style={styles.circleValueWrapper}>
-          <View>
             <Text {...testProps(`${heading}-value`)} style={styles.circleValue}>
               {countUpValue}
             </Text>
@@ -142,12 +131,14 @@ const useStyles = makeStyles(
         marginBottom: 4,
         position: "relative",
         width: "100%",
+        paddingTop: 4,
       },
       circleValue: {
         fontWeight: "700",
         fontSize: 48,
-        minWidth: 40,
+        minWidth: 60,
         textAlign: "center",
+        height: 60,
       },
       circleDescription: {
         maxWidth: "35%",
@@ -172,6 +163,19 @@ const useStyles = makeStyles(
         top: "50%",
         left: "50%",
       },
+      loaderContainer: {
+        flex: 1,
+        justifyContent: "flex-end",
+        alignItems: "flex-end",
+        height: 45,
+        marginTop: 5,
+      },
+      loaderBackground: {
+        color: colors.loaderBackground,
+      },
+      loaderForefound: {
+        color: colors.loaderForeground,
+      },
     }
   },
 )
@@ -185,10 +189,13 @@ const easeOut = (x: number, minValue: number, maxValue: number) => {
   return (-(xNorm - 1)) ** 4 + 1
 }
 
-const getcBackValue = (
+export const getcBackValue = (
   circleValue?: number,
   circleMinValue?: number,
   circleMaxValue?: number,
+  circleMinSizePx = 50,
+  circleMaxSizePx = 1000,
+  // eslint-disable-next-line max-params
 ) => {
   let cBackValue = 0
 
@@ -202,9 +209,6 @@ const getcBackValue = (
       mappedValue = easeOut(circleValue, circleMinValue, circleMaxValue) * circleValue
     else if (circleMinValue > circleValue) mappedValue = circleMinValue
     else mappedValue = circleMaxValue
-
-    const circleMinSizePx = 50
-    const circleMaxSizePx = 1000
 
     cBackValue =
       circleMinSizePx +

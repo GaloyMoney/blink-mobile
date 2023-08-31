@@ -2,7 +2,7 @@ import { Text, makeStyles, useTheme } from "@rneui/themed"
 
 import { Circle, CircleRef } from "@app/components/circle"
 import { gql } from "@apollo/client"
-import { ActivityIndicator, RefreshControl, ScrollView, View } from "react-native"
+import { RefreshControl, ScrollView, View } from "react-native"
 import { useCirclesQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -11,7 +11,7 @@ import { SeptemberChallengeCard } from "@app/components/september-challenge"
 
 import LogoDarkMode from "@app/assets/logo/app-logo-dark.svg"
 import LogoLightMode from "@app/assets/logo/blink-logo-light.svg"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 
 gql`
   query Circles {
@@ -47,28 +47,20 @@ export const CirclesDashboardScreen: React.FC = () => {
   const innerCircleRef = useRef<CircleRef | null>(null)
   const outerCircleRef = useRef<CircleRef | null>(null)
 
-  const {
-    data,
-    loading,
-    refetch: refetchCirclesData,
-  } = useCirclesQuery({
+  const [loading, setLoading] = useState(false)
+
+  const { data, refetch: refetchCirclesData } = useCirclesQuery({
     skip: !isAuthed,
-    fetchPolicy: "network-only",
+    fetchPolicy: "cache-first",
   })
 
   const refetch = async () => {
-    refetchCirclesData()
+    setLoading(true)
+    await refetchCirclesData()
+    setLoading(false)
     innerCircleRef.current?.reset()
     outerCircleRef.current?.reset()
   }
-
-  if (loading)
-    return (
-      <View style={styles.activityIndicator}>
-        <ActivityIndicator />
-        <Text>{LL.Circles.calculatingYourCircles()}</Text>
-      </View>
-    )
 
   const welcomeProfile = data?.me?.defaultAccount.welcomeProfile
   const isLonely = !welcomeProfile || welcomeProfile.innerCircleAllTimeCount === 0
@@ -90,9 +82,11 @@ export const CirclesDashboardScreen: React.FC = () => {
       <Text style={styles.description} type={isLonely ? "p1" : "p2"}>
         {isLonely ? LL.Circles.innerCircleGrow() : LL.Circles.innerCircleExplainer()}
       </Text>
-      <View style={styles.logoContainer}>
-        <Logo height={60} />
-      </View>
+      {!isLonely && (
+        <View style={styles.logoContainer}>
+          <Logo height={60} />
+        </View>
+      )}
       {isLonely ? (
         <View style={styles.groupContainer}>
           <View style={styles.circle} />
