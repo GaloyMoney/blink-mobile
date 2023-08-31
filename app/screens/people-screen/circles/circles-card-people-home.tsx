@@ -61,10 +61,9 @@ export const CirclesCardPeopleHome = () => {
               <ActivityIndicator />
             </View>
             <GaloySecondaryButton
-              disabled
               style={styles.viewCirclescta}
               title={LL.Circles.viewMyCircles()}
-              onPress={() => {}}
+              onPress={openBlinkCirclesDashboard}
             />
           </>
         ) : (
