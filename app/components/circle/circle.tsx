@@ -3,6 +3,7 @@ import { Text, makeStyles, useTheme } from "@rneui/themed"
 
 import { useCountUp } from "use-count-up"
 import Icon from "react-native-vector-icons/Ionicons"
+import { testProps } from "@app/utils/testProps"
 
 type CircleProps = {
   heading: string
@@ -74,7 +75,9 @@ export const Circle: React.FC<CircleProps> = ({
       </View>
       <View style={styles.circleValueWrapper}>
         <View>
-          <Text style={styles.circleValue}>{countUpValue}</Text>
+          <Text {...testProps(`${heading}-value`)} style={styles.circleValue}>
+            {countUpValue}
+          </Text>
           {bubble && <View style={[styles.circleBubble, cBackStyles]} />}
         </View>
         <Text style={styles.circleDescription}>{description}</Text>

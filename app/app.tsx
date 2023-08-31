@@ -28,6 +28,7 @@ import { detectDefaultLocale } from "./utils/locale-detector"
 import { ThemeSyncGraphql } from "./utils/theme-sync"
 import { NetworkErrorComponent } from "./graphql/network-error-component"
 import { FeatureFlagContextProvider } from "./config/feature-flags-context"
+import "./utils/logs"
 
 // FIXME should we only load the currently used local?
 // this would help to make the app load faster

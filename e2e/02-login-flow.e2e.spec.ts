@@ -16,12 +16,8 @@ import {
   getFirstEmail,
   getSecondEmail,
   clickAlertLastButton,
+  sleep,
 } from "./utils"
-
-const sleep = (ms: number): Promise<void> =>
-  new Promise((resolve) => {
-    setTimeout(resolve, ms)
-  })
 
 describe("Login Flow", () => {
   loadLocale("en")
@@ -80,6 +76,8 @@ describe("Login Flow", () => {
 
   it("click Save Changes", async () => {
     await clickButton("Save Changes")
+    if (process.env.E2E_DEVICE !== "ios") await clickIcon("close")
+
     await waitTillTextDisplayed("Token Present: true")
   })
 
@@ -144,6 +142,8 @@ describe("Login Flow", () => {
   })
 
   it("set staging environment again", async () => {
+    if (process.env.E2E_DEVICE !== "ios") await clickIcon("close")
+
     const buildButton = await $(selector("logo-button", "Other"))
     await buildButton.waitForDisplayed({ timeout })
     await buildButton.click()
@@ -191,5 +191,7 @@ describe("Login Flow", () => {
     await codeInput.waitForDisplayed({ timeout })
     await codeInput.click()
     await codeInput.setValue(code)
+
+    await clickIcon("close")
   })
 })

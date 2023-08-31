@@ -2,6 +2,7 @@ import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
 import {
   clickButton,
+  clickIcon,
   payTestUsername,
   resetDisplayCurrency,
   resetEmail,
@@ -42,5 +43,7 @@ describe("Welcome Screen Flow", () => {
 
   it("loads and clicks 'Explore wallet instead'", async () => {
     await clickButton(LL.GetStartedScreen.exploreWallet())
+
+    await clickIcon("close")
   })
 })

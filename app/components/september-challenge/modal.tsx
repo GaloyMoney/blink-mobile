@@ -9,7 +9,8 @@ import { GaloyIconButton } from "../atomic/galoy-icon-button"
 import { GaloyToast } from "../galoy-toast"
 import { GaloyIcon } from "../atomic/galoy-icon"
 import { useCirclesQuery } from "@app/graphql/generated"
-import { OCT_1_EPOCH, SEPT_1_EPOCH } from "./card"
+
+import { OCT_1_EPOCH, SEPT_1_EPOCH } from "./dates"
 
 const CHALLENGE_PAGE = "blink.sv/circles"
 const CHALLENGE_PAGE_URL = "https://blink.sv/circles"

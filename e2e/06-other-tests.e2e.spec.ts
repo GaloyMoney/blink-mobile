@@ -13,6 +13,7 @@ import {
   waitTillTextDisplayed,
   waitTillScreenTitleShowing,
   isScreenTitleShowing,
+  clickButton,
 } from "./utils"
 
 loadLocale("en")
@@ -50,9 +51,13 @@ describe("Change Language Flow", () => {
   })
 })
 
-describe("Contacts Flow", () => {
-  it("Click Contacts Button", async () => {
+describe("People Flow", () => {
+  it("Click People Button", async () => {
     await clickOnBottomTab(Tab.People)
+  })
+
+  it("Click all contacts", async () => {
+    await clickButton(LL.PeopleScreen.viewAllContacts())
   })
 
   it("Check if contacts exists", async () => {
@@ -83,6 +88,19 @@ describe("Contacts Flow", () => {
     // pause to wait for contact details to load
     await browser.pause(2000)
     await $(selector("contact-detail-icon", "Other")).isDisplayed()
+  })
+
+  it("Go back to People home", async () => {
+    await clickOnBottomTab(Tab.People)
+    await clickOnBottomTab(Tab.People)
+  })
+
+  it("Blink circles dashboard", async () => {
+    const button = await $(selector(LL.Circles.viewMyCircles(), "Other"))
+    await button.waitForEnabled({ timeout })
+    await button.click()
+
+    await waitTillTextDisplayed(LL.Circles.groupEffort())
   })
 
   it("Go back to main screen", async () => {
