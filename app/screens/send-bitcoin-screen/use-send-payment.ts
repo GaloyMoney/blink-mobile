@@ -114,15 +114,18 @@ gql`
   }
 `
 
-const getUuid = () => {
-  const randomBytes = Array.from({ length: 16 }, () => Math.floor(Math.random() * 256))
-  return uuidv4({ random: randomBytes })
+const useGetUuid = () => {
+  const randomUuid = useMemo(() => {
+    const randomBytes = Array.from({ length: 16 }, () => Math.floor(Math.random() * 256))
+    return uuidv4({ random: randomBytes })
+  }, [])
+  return randomUuid
 }
 
 export const useSendPayment = (
   sendPaymentMutation?: SendPaymentMutation | null,
 ): UseSendPaymentResult => {
-  const idempotencyKey = getUuid()
+  const idempotencyKey = useGetUuid()
 
   const options = {
     refetchQueries: [HomeAuthedDocument],
