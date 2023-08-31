@@ -37,11 +37,15 @@
         "unlock": "ロックを解除",
         "usePin": "PINを有効にする"
     },
-    "ContactsScreen": {
+    "PeopleScreen": {
+        "title": "つながり",
+        "copy": "コピー",
         "noContactsTitle": "連絡先が登録されていません",
         "noContactsYet": "ユーザー名を使って送受金すると、連絡先に自動登録されます",
         "noMatchingContacts": "連絡先には登録されていません",
-        "title": "連絡先"
+        "allContacts": "すべての連絡先",
+        "viewAllContacts": "すべての連絡先を見る",
+        "frequentContacts": "よく使う連絡先"
     },
     "ContactDetailsScreen": {
         "title": "{username: string}とのトランザクション"
@@ -1018,5 +1022,53 @@
         "updateMandatory": "アプリの更新が必要です",
         "tapHereUpdate": "タップして今すぐ更新する",
         "contactSupport": "サポートの連絡先"
+    },
+    "Circles": {
+        "title": "あなたのサークル",
+        "titleBlinkCircles": "Blinkサークル",
+        "circles": "サークル",
+        "circlesExplainer": "お友だちをBlinkに招待することであなたのサークルが広がります。",
+        "viewMyCircles": "あなたのサークルを見る",
+        "introducingCircles": "サークルの紹介",
+        "copiedInviteLink": "紹介リンクをコピーしました",
+        "inviteFriendToBlink": "お友だちをBlinkに招待する",
+        "shareCircles": "サークルを共有する",
+        "share": "共有",
+        "circlesGrowingSatsExplainer": {
+            "your": "あなたの",
+            "grow": "新しいBlinkユーザーに最初のサトシを送るとあなたのサークルが広がります！"
+        },
+        "circlesGrowingKeepGoing": "お友だちをBlinkに招待することであなたのサークルが広がります。その調子！",
+        "points": "ポイント",
+        "innerCircleGrow": "Blinkユーザーに最初のサトシを送ることであなたのインナーサークルが広がります！",
+        "calculatingYourCircles": "あなたのサークルを計算中...",
+        "innerCircleExplainer": "Blinkと一緒にあなたはビットコインの普及に貢献しています。その調子！",
+        "innerCircleExplainerCard": "Blinkと一緒にビットコインの普及を応援しています！",
+        "innerCircle": "インナーサークル",
+        "peopleYouWelcomed": "あなたが招待したお友だち",
+        "peopleIWelcomed": "お友だち \nあなたが招待した",
+        "thisMonth": "今月",
+        "outerCircle": "アウターサークル",
+        "peopleWelcomedByYourCircle": "あなたのサークルによって招待されたお友だち",
+        "peopleWelcomedByMyCircle": "あなたのサークルによって招待されたお友だち",
+        "yourSphere": "あなたのスフィア",
+        "mySphere": "あなたのスフィア",
+        "yourRankMessage": "あなたのランキング：今月#{thisMonthRank: number}番目 ／ 全期間：#{allTimeRank: number}番目！",
+        "rankMessage": "今月：#{thisMonthRank: number}番目 ／ 全期間：#{allTimeRank: number}番目！",
+        "inviteFriends": "お友だちを招待する",
+        "buildYourCircle": "サークルを広げる",
+        "myBlinkCircles": "あなたのBlinkサークル",
+        "someones": "{username: string}さんの",
+        "groupEffort": "ビットコインの普及にはチームワークが不可欠です。\nお友だちを招待し、あなたのサークルを広げるためにサトシを送ろう。",
+        "drivingAdoption": "Blinkと一緒にビットコインの普及を応援しています！",
+        "septChallenge": {
+            "title": "9月のチャレンジ！",
+            "description": "インナーサークル {innerCircle: number}/21 - $21獲得\nトップ3 - Adopting Bitcoinのチケットを獲得できます!",
+            "details": "9月までにを21人のお友だちをインナーサークルに招待することで、$21分のステイブル satsを獲得できます。さらにトップ3にランクインすると、Adopting Bitcoinのチケットをプレゼント！",
+            "peopleWelcomedSoFar": "最近招待したお友だち",
+            "yourRank": "あなたのランキング",
+            "reminder": "リマインダー：新しいBlinkユーザーに最初のサトシを送るとあなたのインナーサークルが広がります！",
+            "fullDetails": "詳細はこちら："
+        }
     }
 }
