@@ -715,7 +715,6 @@ export type Mutation = {
   readonly userPhoneRegistrationValidate: UserPhoneRegistrationValidatePayload;
   /** @deprecated Use QuizCompletedMutation instead */
   readonly userQuizQuestionUpdateCompleted: UserQuizQuestionUpdateCompletedPayload;
-  readonly userRequestAuthCode: SuccessPayload;
   readonly userTotpDelete: UserTotpDeletePayload;
   readonly userTotpRegistrationInitiate: UserTotpRegistrationInitiatePayload;
   readonly userTotpRegistrationValidate: UserTotpRegistrationValidatePayload;
@@ -902,11 +901,6 @@ export type MutationUserPhoneRegistrationValidateArgs = {
 
 export type MutationUserQuizQuestionUpdateCompletedArgs = {
   input: UserQuizQuestionUpdateCompletedInput;
-};
-
-
-export type MutationUserRequestAuthCodeArgs = {
-  input: UserRequestAuthCodeInput;
 };
 
 
@@ -1622,11 +1616,6 @@ export type UserQuizQuestionUpdateCompletedPayload = {
   readonly __typename: 'UserQuizQuestionUpdateCompletedPayload';
   readonly errors: ReadonlyArray<Error>;
   readonly userQuizQuestion?: Maybe<UserQuizQuestion>;
-};
-
-export type UserRequestAuthCodeInput = {
-  readonly channel?: InputMaybe<PhoneCodeChannelType>;
-  readonly phone: Scalars['Phone']['input'];
 };
 
 export type UserTotpDeleteInput = {
@@ -6384,7 +6373,6 @@ export type ResolversTypes = {
   UserQuizQuestion: ResolverTypeWrapper<UserQuizQuestion>;
   UserQuizQuestionUpdateCompletedInput: UserQuizQuestionUpdateCompletedInput;
   UserQuizQuestionUpdateCompletedPayload: ResolverTypeWrapper<UserQuizQuestionUpdateCompletedPayload>;
-  UserRequestAuthCodeInput: UserRequestAuthCodeInput;
   UserTotpDeleteInput: UserTotpDeleteInput;
   UserTotpDeletePayload: ResolverTypeWrapper<UserTotpDeletePayload>;
   UserTotpRegistrationInitiateInput: UserTotpRegistrationInitiateInput;
@@ -6566,7 +6554,6 @@ export type ResolversParentTypes = {
   UserQuizQuestion: UserQuizQuestion;
   UserQuizQuestionUpdateCompletedInput: UserQuizQuestionUpdateCompletedInput;
   UserQuizQuestionUpdateCompletedPayload: UserQuizQuestionUpdateCompletedPayload;
-  UserRequestAuthCodeInput: UserRequestAuthCodeInput;
   UserTotpDeleteInput: UserTotpDeleteInput;
   UserTotpDeletePayload: UserTotpDeletePayload;
   UserTotpRegistrationInitiateInput: UserTotpRegistrationInitiateInput;
@@ -6977,7 +6964,6 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   userPhoneRegistrationInitiate?: Resolver<ResolversTypes['SuccessPayload'], ParentType, ContextType, RequireFields<MutationUserPhoneRegistrationInitiateArgs, 'input'>>;
   userPhoneRegistrationValidate?: Resolver<ResolversTypes['UserPhoneRegistrationValidatePayload'], ParentType, ContextType, RequireFields<MutationUserPhoneRegistrationValidateArgs, 'input'>>;
   userQuizQuestionUpdateCompleted?: Resolver<ResolversTypes['UserQuizQuestionUpdateCompletedPayload'], ParentType, ContextType, RequireFields<MutationUserQuizQuestionUpdateCompletedArgs, 'input'>>;
-  userRequestAuthCode?: Resolver<ResolversTypes['SuccessPayload'], ParentType, ContextType, RequireFields<MutationUserRequestAuthCodeArgs, 'input'>>;
   userTotpDelete?: Resolver<ResolversTypes['UserTotpDeletePayload'], ParentType, ContextType, RequireFields<MutationUserTotpDeleteArgs, 'input'>>;
   userTotpRegistrationInitiate?: Resolver<ResolversTypes['UserTotpRegistrationInitiatePayload'], ParentType, ContextType, RequireFields<MutationUserTotpRegistrationInitiateArgs, 'input'>>;
   userTotpRegistrationValidate?: Resolver<ResolversTypes['UserTotpRegistrationValidatePayload'], ParentType, ContextType, RequireFields<MutationUserTotpRegistrationValidateArgs, 'input'>>;
