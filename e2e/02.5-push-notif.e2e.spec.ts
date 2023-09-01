@@ -1,5 +1,11 @@
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { clickBackButton, getAccountId, adminSendPushNotification } from "./utils"
+import {
+  clickBackButton,
+  getAccountId,
+  adminSendPushNotification,
+  waitTillTextDisplayed,
+} from "./utils"
+import messaging, { FirebaseMessagingTypes } from "@react-native-firebase/messaging"
 
 describe("Push Notification", () => {
   loadLocale("en")
@@ -8,6 +14,16 @@ describe("Push Notification", () => {
     const accountId = await getAccountId()
     if (accountId) {
       await adminSendPushNotification(accountId)
+      messaging().onMessage(
+        async (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
+          const notificationType = remoteMessage.data?.notificationType
+          if (notificationType === "InnerCircleGrew") {
+            // eslint-disable-next-line no-alert
+            alert("InnerCircleGrew")
+          }
+        },
+      )
+      waitTillTextDisplayed("InnerCircleGrew")
     }
   })
 
