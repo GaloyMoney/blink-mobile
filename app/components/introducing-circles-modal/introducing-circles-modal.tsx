@@ -9,6 +9,7 @@ import { GaloyIcon } from "../atomic/galoy-icon"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import {
+  PeopleStackParamList,
   PrimaryStackParamList,
   RootStackParamList,
 } from "@app/navigation/stack-param-lists"
@@ -29,6 +30,7 @@ export const IntroducingCirclesModal: React.FC<Props> = ({ isVisible, setIsVisib
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const primaryNavigator =
     navigation.getParent<BottomTabNavigationProp<PrimaryStackParamList>>()
+  const peopleNavigator = useNavigation<StackNavigationProp<PeopleStackParamList>>()
 
   const client = useApolloClient()
   const { data } = useIntroducingCirclesModalShownQuery()
@@ -51,6 +53,7 @@ export const IntroducingCirclesModal: React.FC<Props> = ({ isVisible, setIsVisib
   const navigateToCircles = () => {
     setIsVisible(false)
     primaryNavigator.navigate("People")
+    setTimeout(() => peopleNavigator.navigate("circlesDashboard"), 100)
   }
 
   return (
