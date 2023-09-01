@@ -283,7 +283,7 @@ export const getAccountId = async () => {
 export const adminSendPushNotification = async (accountId: string) => {
   if (adminToken) {
     const client = createGaloyServerClient(adminConfig)(adminToken)
-    const result = await client.mutate<unknown>({
+    const result = await client.mutate({
       variables: {
         input: {
           accountId,
