@@ -13,7 +13,7 @@ import { useCirclesQuery } from "@app/graphql/generated"
 import { OCT_1_EPOCH, SEPT_1_EPOCH } from "./dates"
 
 const CHALLENGE_PAGE = "blink.sv/circles"
-const CHALLENGE_PAGE_URL = "https://blink.sv/circles"
+const CHALLENGE_PAGE_URL = "https://www.blink.sv/circles"
 
 type Props = {
   isVisible: boolean

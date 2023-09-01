@@ -19,9 +19,7 @@ export const useCirclesCard = () => {
   const shareImgRef = useRef<View | null>(null)
   const { LL } = useI18nContext()
 
-  const { data } = useCirclesQuery({
-    fetchPolicy: "network-only",
-  })
+  const { data } = useCirclesQuery()
 
   const username = data?.me?.username || ""
   const welcomeProfile = data?.me?.defaultAccount.welcomeProfile
@@ -62,7 +60,7 @@ export const useCirclesCard = () => {
         title: shareName,
         url: uri,
         type: "image/jpeg",
-        message: `${LL.Circles.drivingAdoption()} #blinkcircles`,
+        message: `${LL.Circles.drivingAdoption()} #blinkcircles @blinkbtc`,
       }
 
       await Share.open(shareOptions)
