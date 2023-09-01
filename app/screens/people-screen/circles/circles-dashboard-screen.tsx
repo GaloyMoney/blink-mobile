@@ -12,6 +12,7 @@ import { SeptemberChallengeCard } from "@app/components/september-challenge"
 import LogoDarkMode from "@app/assets/logo/app-logo-dark.svg"
 import LogoLightMode from "@app/assets/logo/blink-logo-light.svg"
 import { useRef, useState } from "react"
+import { InviteFriendsCard } from "./invite-friends-card"
 
 gql`
   query Circles {
@@ -141,7 +142,7 @@ export const CirclesDashboardScreen: React.FC = () => {
         </>
       )}
       <SeptemberChallengeCard />
-      <ShareCircles />
+      {isLonely ? <InviteFriendsCard /> : <ShareCircles />}
     </ScrollView>
   )
 }
