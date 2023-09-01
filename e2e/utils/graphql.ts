@@ -42,11 +42,6 @@ const config = {
   graphqlUrl: "https://api.staging.galoy.io/graphql",
 }
 
-const adminConfig = {
-  network: "signet",
-  graphqlUrl: "https://admin-api.staging.galoy.io/graphql",
-}
-
 const createGaloyServerClient = (config: Config) => (authToken: string) => {
   const httpLink = createHttpLink({
     uri: config.graphqlUrl,
@@ -82,8 +77,6 @@ if (authTokens === undefined) {
 }
 
 export const userToken = getRandomToken(authTokens)
-
-const adminToken = process.env.ADMIN_AUTH_TOKEN || null
 
 const receiverToken = process.env.GALOY_TOKEN_2 || ""
 
@@ -268,46 +261,4 @@ export const resetDisplayCurrency = async () => {
     fetchPolicy: "no-cache",
   })
   return result
-}
-
-export const getAccountId = async () => {
-  const client = createGaloyServerClient(config)(userToken)
-  const accountResult = await client.query<WalletsQuery>({
-    query: WalletsDocument,
-    fetchPolicy: "no-cache",
-  })
-  const accountId = accountResult.data.me?.defaultAccount.id
-  return accountId
-}
-
-export const adminSendPushNotification = async (accountId: string) => {
-  if (adminToken) {
-    const client = createGaloyServerClient(adminConfig)(adminToken)
-    const result = await client.mutate({
-      variables: {
-        input: {
-          accountId,
-          body: "Somebody was just added to your inner circle.",
-          title: "Your Blink Circles are growing!",
-          data: {
-            notificationType: "InnerCircleGrew",
-          },
-        },
-      },
-      mutation: gql`
-        mutation ($input: AdminPushNotificationSendInput!) {
-          adminPushNotificationSend(input: $input) {
-            success
-            errors {
-              code
-              message
-            }
-          }
-        }
-      `,
-      fetchPolicy: "no-cache",
-    })
-    return result
-  }
-  return false
 }
