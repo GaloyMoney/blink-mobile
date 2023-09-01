@@ -271,7 +271,7 @@ export const resetDisplayCurrency = async () => {
 }
 
 export const getAccountId = async () => {
-  const client = createGaloyServerClient(config)(receiverToken)
+  const client = createGaloyServerClient(config)(userToken)
   const accountResult = await client.query<WalletsQuery>({
     query: WalletsDocument,
     fetchPolicy: "no-cache",

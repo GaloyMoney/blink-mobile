@@ -77,7 +77,6 @@ import {
 import { CirclesDashboardScreen } from "@app/screens/people-screen/circles/circles-dashboard-screen"
 import { AllContactsScreen } from "@app/screens/people-screen/contacts/all-contacts"
 import { PeopleTabIcon } from "@app/screens/people-screen/tab-icon"
-import usePushNotificationRouter from "@app/hooks/use-push-notification-router"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -486,8 +485,6 @@ export const PrimaryNavigator = () => {
   const { LL } = useI18nContext()
   // The cacheId is updated after every mutation that affects current user data (balanace, contacts, ...)
   // It's used to re-mount this component and thus reset what's cached in Apollo (and React)
-
-  usePushNotificationRouter()
 
   return (
     <Tab.Navigator
