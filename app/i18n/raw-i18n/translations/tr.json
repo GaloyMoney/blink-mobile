@@ -1066,7 +1066,7 @@
             "description": "Yakın Çevre {innerCircle: number}/21 - 21 $ Kazan\nİlk 3 - Adopting Bitcoin'e bilet kazanın!",
             "details": "Eylül ayında yakın çevrenizi 21 kişiye kadar genişletin ve 21 dolar Stablesats hesabınıza yatsın. İlk 3 kişi Adopting Bitcoin'e bilet kazanacak!",
             "peopleWelcomedSoFar": "şimdiye kadar karşılanan insanlar",
-            "yourRank": "rütbeniz",
+            "yourRank": "sıralamanız",
             "reminder": "Uyarı: Yakın çevreniz yeni Blink kullanıcılarına ilk SAT'larını gönderdiğinizde genişler.",
             "fullDetails": "Tüm detaylar şurada"
         }
