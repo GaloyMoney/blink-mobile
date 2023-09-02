@@ -765,7 +765,7 @@
     },
     "TransactionScreen": {
         "noTransaction": "Gösterilecek işlem bulunamadı",
-        "title": "İşlemle",
+        "title": "İşlemler",
         "recentTransactions": "Güncel işlemler",
         "transactionHistoryTitle": "İşlem Geçmişi"
     },
