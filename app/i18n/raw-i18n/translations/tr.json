@@ -137,7 +137,7 @@
                         ],
                         "feedback": [
                             "Bu kesinlikle doğru cevap!",
-                            "Bunun doğru olmadığını biliyorsun. Tekrar deneyin.",
+                            "Bunun doğru olmadığını biliyorsun. Tekrar dene.",
                             "Yanlış, hiç kimse bir Bitcoin'i kopyalama veya çoğaltmayı beceremez. "
                         ],
                         "question": "Eğer Bitcoin dijital bir paraysa, o zaman birisi onu kopyalayarak bedavadan para yaratamaz mı?",
