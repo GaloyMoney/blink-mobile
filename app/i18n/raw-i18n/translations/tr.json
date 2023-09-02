@@ -470,7 +470,7 @@
     },
     "PinScreen": {
         "attemptsRemaining": "Yanlış PIN kodu. Kalan deneme hakkınız: {attemptsRemaining: number}",
-        "oneAttemptRemaining": "Yanlış PIN kodu. Kalan deneme hakkınız: 1. ",
+        "oneAttemptRemaining": "Yanlış PIN kodu. Kalan deneme hakkınız: 1",
         "setPin": "PIN kodunu ayarla",
         "setPinFailedMatch": "Pin kodu eşleşmedi - PIN kodunu ayarla",
         "storePinFailed": "Pin'in kaydedilemedi.",
