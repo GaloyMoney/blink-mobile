@@ -396,7 +396,7 @@
                             "Yanlış. Bitcoin gerçekten de \"açık kaynaklı\" bir yazılım olmasına - ya da halka ücretsiz olarak sunulmasına - rağmen yine de son derece güvenlidir."
                         ],
                         "question": "Bitcoin ağı güvenli midir?",
-                        "text": "Bitcoin ağı bugün 100 milyar doların üzerinde bir değere sahiptir. Buna göre, paranın asla çalınmaması için ağın çok güvenli olması gerekir.\n\nBitcoin dünyanın ilk kripto para birimi olarak bilinmektedir.\n\nİsmin \"crypto\" kısmı kriptografiden (şifreleme) gelmektedir. Basitçe söylemek gerekirse, kriptografi bilgiyi çok karmaşık matematik fonksiyonları aracılığıyla korur.\n\nÇoğu insan farkında değil ama Bitcoin aslında dünyadaki en güvenli bilgisayar ağı!\n\n(Bitcoin \"hack \"lerini duymuş olabilirsiniz . Bir sonraki testte bunları çürüteceğiz)",
+                        "text": "Bitcoin ağı bugün 100 milyar doların üzerinde bir değere sahiptir. Buna göre, paranın asla çalınmaması için ağın çok güvenli olması gerekir.\n\nBitcoin dünyanın ilk kripto para birimi olarak bilinmektedir.\n\nİsmin \"kripto\" kısmı kriptografiden (şifreleme) gelmektedir. Basitçe söylemek gerekirse, kriptografi bilgiyi çok karmaşık matematik fonksiyonları aracılığıyla korur.\n\nÇoğu insan farkında değil ama Bitcoin aslında dünyadaki en güvenli bilgisayar ağı!\n\n(Bitcoin \"hack \"lerini duymuş olabilirsiniz . Bir sonraki testte bunları çürüteceğiz)",
                         "title": "Karakteristik özellik #5: Güvenlik -- 1. Kısım"
                     },
                     "securePartTwo": {
