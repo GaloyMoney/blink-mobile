@@ -140,7 +140,7 @@
                             "Bunun doğru olmadığını biliyorsun. Tekrar dene.",
                             "Yanlış, hiç kimse bir Bitcoin'i kopyalama veya çoğaltmayı beceremez. "
                         ],
-                        "question": "Eğer Bitcoin dijital bir paraysa, o zaman birisi onu kopyalayarak bedavadan para yaratamaz mı?",
+                        "question": "Eğer Bitcoin dijital para ise, birisi onu kopyalayıp karşılıksız para yaratamaz mı?",
                         "text": "Bitcoin'in ortaya koyduğu değer hiçbir şekilde kopyalanamaz. Bu sebepten dolayı Bitcoin çok kuvvetli bir buluştur. \n\nÇoğu dijital dosya -ister bir iPhone fotoğrafı, MP3 şarıkısı veya Microsoft Word dökümanı olsun- kolaylıkla kopyalanıp tekrardan paylaşılabilir.\n\nBitcoin yazılımı, sahte Bitcoin yaratılmasını -çifte harcamayı- önlemek için vardır. Dijital paranızı nasıl kopyalamaya karşı koruduğunu ileride detaylı olarak anlatacağız.",
                         "title": "Eğer Bitcoin dijital bir paraysa, o zaman birisi onu kopyalayarak bedavadan para yaratamaz mı?"
                     }
