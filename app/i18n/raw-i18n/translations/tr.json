@@ -132,7 +132,7 @@
                     "copyBitcoin": {
                         "answers": [
                             "Hayır, bitcoinin değerini kopyalamak imkansızdır.",
-                            "Bitcoin'lerini dijital bir fotoğrafı kopylar gibi kolaylıkla kopyalayabilirsin",
+                            "Bitcoin'lerini dijital bir fotoğrafı kopyalar gibi kolaylıkla kopyalayabilirsin",
                             "Evet, ama bitcoini kopyalamak çok özel bilgisayarlar gerektirir"
                         ],
                         "feedback": [
