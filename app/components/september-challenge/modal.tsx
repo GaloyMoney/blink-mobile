@@ -29,7 +29,7 @@ export const SeptemberChallengeModal: React.FC<Props> = ({ isVisible, setIsVisib
   const styles = useStyles()
 
   const { data } = useCirclesQuery({
-    fetchPolicy: "network-only",
+    fetchPolicy: "cache-first",
   })
 
   const isLonely =
