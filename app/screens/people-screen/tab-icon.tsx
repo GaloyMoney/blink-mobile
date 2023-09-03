@@ -22,7 +22,7 @@ export const PeopleTabIcon: React.FC<TabIconProps> = ({ color, focused }) => {
 
   const { data: cachedData } = useInnerCircleValueQuery()
   const { data: networkData } = useCirclesQuery({
-    fetchPolicy: "network-only",
+    fetchPolicy: "cache-first",
   })
 
   const client = useApolloClient()
