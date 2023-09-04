@@ -44,6 +44,7 @@ export type InvoiceData = (
   | PayCodeInvoiceData
 ) & {
   getFullUriFn: GetFullUriFn
+  getCopyableInvoiceFn: GetCopyableInvoiceFn
 }
 export type LightningInvoiceData = (LnInvoice | LnNoAmountInvoice) & {
   invoiceType: typeof Invoice.Lightning
@@ -62,6 +63,7 @@ export type PayCodeInvoiceData = {
 }
 
 // Misc
+export type GetCopyableInvoiceFn = () => string
 export type GetFullUriFn = (params: { uppercase?: boolean; prefix?: boolean }) => string
 export type GetFullUriInput = {
   input: string
@@ -127,6 +129,7 @@ type BasePaymentRequestCreationData<T extends WalletCurrency> = {
   username?: string
   setUsername: (username: string) => PaymentRequestCreationData<T>
   posUrl: string
+  lnAddressHostname: string
 
   network: Network
 }
@@ -138,6 +141,7 @@ export type BaseCreatePaymentRequestCreationDataParams<T extends WalletCurrency>
   convertMoneyAmount: ConvertMoneyAmount
   username?: string
   posUrl: string
+  lnAddressHostname: string
   receivingWalletDescriptor?: WalletDescriptor<T>
   memo?: string
   unitOfAccountAmount?: MoneyAmount<WalletOrDisplayCurrency>

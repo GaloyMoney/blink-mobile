@@ -7,6 +7,7 @@ import {
   PaymentRequestState,
   PaymentRequestStateType,
   PaymentRequestInformation,
+  GetCopyableInvoiceFn,
 } from "./index.types"
 import { BtcMoneyAmount } from "@app/types/amounts"
 import { getPaymentRequestFullUri, prToDateString } from "./helpers"
@@ -54,12 +55,14 @@ export const createPaymentRequest = (
           uppercase,
           prefix,
         })
+      const getCopyableInvoiceFn: GetCopyableInvoiceFn = () => address || ""
 
       info = {
         data: address
           ? {
               invoiceType: Invoice.OnChain,
               getFullUriFn,
+              getCopyableInvoiceFn,
               address,
               amount: pr.settlementAmount as BtcMoneyAmount,
               memo: pr.memo,
@@ -97,6 +100,7 @@ export const createPaymentRequest = (
           uppercase,
           prefix,
         })
+      const getCopyableInvoiceFn: GetCopyableInvoiceFn = () => getFullUriFn({})
 
       info = {
         data: data?.lnNoAmountInvoiceCreate.invoice
@@ -104,6 +108,7 @@ export const createPaymentRequest = (
               invoiceType: Invoice.Lightning,
               ...data?.lnNoAmountInvoiceCreate.invoice,
               expiresAt: dateString ? new Date(dateString) : undefined,
+              getCopyableInvoiceFn,
               getFullUriFn,
             }
           : undefined,
@@ -141,6 +146,7 @@ export const createPaymentRequest = (
           uppercase,
           prefix,
         })
+      const getCopyableInvoiceFn: GetCopyableInvoiceFn = () => getFullUriFn({})
 
       info = {
         data: data?.lnInvoiceCreate.invoice
@@ -148,6 +154,7 @@ export const createPaymentRequest = (
               invoiceType: Invoice.Lightning,
               ...data?.lnInvoiceCreate.invoice,
               expiresAt: dateString ? new Date(dateString) : undefined,
+              getCopyableInvoiceFn,
               getFullUriFn,
             }
           : undefined,
@@ -184,6 +191,7 @@ export const createPaymentRequest = (
           uppercase,
           prefix,
         })
+      const getCopyableInvoiceFn: GetCopyableInvoiceFn = () => getFullUriFn({})
 
       info = {
         data: data?.lnUsdInvoiceCreate.invoice
@@ -191,6 +199,7 @@ export const createPaymentRequest = (
               invoiceType: Invoice.Lightning,
               ...data?.lnUsdInvoiceCreate.invoice,
               expiresAt: dateString ? new Date(dateString) : undefined,
+              getCopyableInvoiceFn,
               getFullUriFn,
             }
           : undefined,
@@ -228,11 +237,14 @@ export const createPaymentRequest = (
           uppercase,
           prefix,
         })
+      const getCopyableInvoiceFn: GetCopyableInvoiceFn = () =>
+        `${pr.username}@${pr.lnAddressHostname}`
 
       info = {
         data: {
           invoiceType: Invoice.PayCode,
           username: pr.username,
+          getCopyableInvoiceFn,
           getFullUriFn,
         },
         applicationErrors: undefined,

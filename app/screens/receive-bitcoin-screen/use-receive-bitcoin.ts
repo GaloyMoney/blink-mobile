@@ -196,12 +196,13 @@ export const useReceiveBitcoin = () => {
           convertMoneyAmount: _convertMoneyAmount,
           username: username || undefined,
           posUrl,
+          lnAddressHostname,
           network: data.globals?.network,
         }
       setPRCD(createPaymentRequestCreationData(initialPRParams))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [_convertMoneyAmount, defaultWallet, bitcoinWallet, username])
+  }, [_convertMoneyAmount, defaultWallet, bitcoinWallet, username, lnAddressHostname])
 
   // Initialize Payment Request
   useLayoutEffect(() => {
@@ -314,7 +315,7 @@ export const useReceiveBitcoin = () => {
       return {}
     }
 
-    const paymentFullUri = pr.info?.data?.getFullUriFn({})
+    const paymentFullUri = pr.info?.data?.getCopyableInvoiceFn()
 
     const copyToClipboard = () => {
       if (!paymentFullUri) return
