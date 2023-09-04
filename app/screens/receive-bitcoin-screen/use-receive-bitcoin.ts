@@ -419,27 +419,22 @@ export const useReceiveBitcoin = () => {
     pr?.state !== PaymentRequestState.Paid
   ) {
     if (expiresInSeconds > 60 * 60 * 23)
-      extraDetails = `${LL.ReceiveScreen.singleUse()} | ${LL.ReceiveScreen.invoiceValidity.validFor1Day()}`
+      extraDetails = `${LL.ReceiveScreen.invoiceValidity.validFor1Day()}`
     else if (expiresInSeconds > 60 * 60 * 6)
-      extraDetails = `${LL.ReceiveScreen.singleUse()} | ${LL.ReceiveScreen.invoiceValidity.validForNext(
-        { duration: secondsToH(expiresInSeconds) },
-      )}`
+      extraDetails = `${LL.ReceiveScreen.invoiceValidity.validForNext({
+        duration: secondsToH(expiresInSeconds),
+      })}`
     else if (expiresInSeconds > 60 * 2)
-      extraDetails = `${LL.ReceiveScreen.singleUse()} | ${LL.ReceiveScreen.invoiceValidity.validBefore(
-        {
-          time: generateFutureLocalTime(expiresInSeconds),
-        },
-      )}`
+      extraDetails = `${LL.ReceiveScreen.invoiceValidity.validBefore({
+        time: generateFutureLocalTime(expiresInSeconds),
+      })}`
     else if (expiresInSeconds > 0)
-      extraDetails = `${LL.ReceiveScreen.singleUse()} | ${LL.ReceiveScreen.invoiceValidity.expiresIn(
-        {
-          duration: secondsToHMS(expiresInSeconds),
-        },
-      )}`
+      extraDetails = `${LL.ReceiveScreen.invoiceValidity.expiresIn({
+        duration: secondsToHMS(expiresInSeconds),
+      })}`
     else if (pr?.state === PaymentRequestState.Expired)
       extraDetails = LL.ReceiveScreen.invoiceExpired()
-    else
-      extraDetails = `${LL.ReceiveScreen.singleUse()} | ${LL.ReceiveScreen.invoiceValidity.expiresNow()}`
+    else extraDetails = `${LL.ReceiveScreen.invoiceValidity.expiresNow()}`
   } else if (prcd.type === "Lightning" && pr?.state === PaymentRequestState.Paid) {
     extraDetails = LL.ReceiveScreen.invoiceHasBeenPaid()
   } else if (prcd.type === "OnChain" && pr?.info?.data?.invoiceType === "OnChain") {

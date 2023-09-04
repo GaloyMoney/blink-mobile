@@ -90,6 +90,7 @@ const useStyles = makeStyles(({ colors }, { selected }: { selected: boolean }) =
     paddingVertical: 14,
     borderRadius: 8,
     backgroundColor: colors.grey5,
+    height: "100%",
   },
   text: {
     fontSize: 16,
