@@ -766,6 +766,9 @@ const en: BaseTranslation = {
     totpDeleteAlertTitle: "Delete two-factor authentication",
     totpDeleteAlertContent:
       "Are you sure you want to delete your two-factor authentication?",
+    copiedAccountId: "Copied your account ID to clipboard",
+    yourAccountId: "Your Account ID",
+    copy: "Copy"
   },
   TotpRegistrationInitiateScreen: {
     title: "Two-factor authentication",
@@ -1114,7 +1117,7 @@ const en: BaseTranslation = {
     minAmountNotMet: "Amount must be at least {minAmount: string}.",
   },
   AmountInputButton: {
-    tapToSetAmount: "Tap to set amount",
+    tapToSetAmount: "Set amount",
   },
   AppUpdate: {
     needToUpdateSupportMessage:

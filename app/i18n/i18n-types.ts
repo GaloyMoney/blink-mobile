@@ -2434,6 +2434,18 @@ type RootTranslation = {
 		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​?
 		 */
 		totpDeleteAlertContent: string
+		/**
+		 * C​o​p​i​e​d​ ​y​o​u​r​ ​a​c​c​o​u​n​t​ ​I​D​ ​t​o​ ​c​l​i​p​b​o​a​r​d
+		 */
+		copiedAccountId: string
+		/**
+		 * Y​o​u​r​ ​A​c​c​o​u​n​t​ ​I​D
+		 */
+		yourAccountId: string
+		/**
+		 * C​o​p​y
+		 */
+		copy: string
 	}
 	TotpRegistrationInitiateScreen: {
 		/**
@@ -3525,7 +3537,7 @@ type RootTranslation = {
 	}
 	AmountInputButton: {
 		/**
-		 * T​a​p​ ​t​o​ ​s​e​t​ ​a​m​o​u​n​t
+		 * S​e​t​ ​a​m​o​u​n​t
 		 */
 		tapToSetAmount: string
 	}
@@ -6090,6 +6102,18 @@ export type TranslationFunctions = {
 		 * Are you sure you want to delete your two-factor authentication?
 		 */
 		totpDeleteAlertContent: () => LocalizedString
+		/**
+		 * Copied your account ID to clipboard
+		 */
+		copiedAccountId: () => LocalizedString
+		/**
+		 * Your Account ID
+		 */
+		yourAccountId: () => LocalizedString
+		/**
+		 * Copy
+		 */
+		copy: () => LocalizedString
 	}
 	TotpRegistrationInitiateScreen: {
 		/**
@@ -7156,7 +7180,7 @@ export type TranslationFunctions = {
 	}
 	AmountInputButton: {
 		/**
-		 * Tap to set amount
+		 * Set amount
 		 */
 		tapToSetAmount: () => LocalizedString
 	}

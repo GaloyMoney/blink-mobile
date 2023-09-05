@@ -7,6 +7,7 @@ import {
   PaymentRequestState,
   PaymentRequestStateType,
   PaymentRequestInformation,
+  GetCopyableInvoiceFn,
 } from "./index.types"
 import { BtcMoneyAmount } from "@app/types/amounts"
 import { getPaymentRequestFullUri, prToDateString } from "./helpers"
@@ -54,12 +55,14 @@ export const createPaymentRequest = (
           uppercase,
           prefix,
         })
+      const getCopyableInvoiceFn: GetCopyableInvoiceFn = () => address || ""
 
       info = {
         data: address
           ? {
               invoiceType: Invoice.OnChain,
               getFullUriFn,
+              getCopyableInvoiceFn,
               address,
               amount: pr.settlementAmount as BtcMoneyAmount,
               memo: pr.memo,
@@ -97,6 +100,7 @@ export const createPaymentRequest = (
           uppercase,
           prefix,
         })
+      const getCopyableInvoiceFn: GetCopyableInvoiceFn = () => getFullUriFn({})
 
       info = {
         data: data?.lnNoAmountInvoiceCreate.invoice
@@ -104,6 +108,7 @@ export const createPaymentRequest = (
               invoiceType: Invoice.Lightning,
               ...data?.lnNoAmountInvoiceCreate.invoice,
               expiresAt: dateString ? new Date(dateString) : undefined,
+              getCopyableInvoiceFn,
               getFullUriFn,
             }
           : undefined,
@@ -141,6 +146,7 @@ export const createPaymentRequest = (
           uppercase,
           prefix,
         })
+      const getCopyableInvoiceFn: GetCopyableInvoiceFn = () => getFullUriFn({})
 
       info = {
         data: data?.lnInvoiceCreate.invoice
@@ -148,6 +154,7 @@ export const createPaymentRequest = (
               invoiceType: Invoice.Lightning,
               ...data?.lnInvoiceCreate.invoice,
               expiresAt: dateString ? new Date(dateString) : undefined,
+              getCopyableInvoiceFn,
               getFullUriFn,
             }
           : undefined,
@@ -184,6 +191,7 @@ export const createPaymentRequest = (
           uppercase,
           prefix,
         })
+      const getCopyableInvoiceFn: GetCopyableInvoiceFn = () => getFullUriFn({})
 
       info = {
         data: data?.lnUsdInvoiceCreate.invoice
@@ -191,6 +199,7 @@ export const createPaymentRequest = (
               invoiceType: Invoice.Lightning,
               ...data?.lnUsdInvoiceCreate.invoice,
               expiresAt: dateString ? new Date(dateString) : undefined,
+              getCopyableInvoiceFn,
               getFullUriFn,
             }
           : undefined,
@@ -200,12 +209,22 @@ export const createPaymentRequest = (
 
       // Paycode
     } else if (pr.type === Invoice.PayCode && pr.username) {
+      const queryStringForAmount =
+        pr.unitOfAccountAmount === undefined || pr.unitOfAccountAmount.amount === 0
+          ? ""
+          : `amount=${pr.unitOfAccountAmount?.amount}&currency=${pr.unitOfAccountAmount?.currencyCode}`
+
       const lnurl: string = await new Promise((resolve) => {
         resolve(
           bech32.encode(
             "lnurl",
             bech32.toWords(
-              Buffer.from(`${pr.posUrl}/.well-known/lnurlp/${pr.username}`, "utf8"),
+              Buffer.from(
+                `${pr.posUrl}/.well-known/lnurlp/${pr.username}${
+                  queryStringForAmount ? `?${queryStringForAmount}` : ""
+                }`,
+                "utf8",
+              ),
             ),
             1500,
           ),
@@ -218,21 +237,21 @@ export const createPaymentRequest = (
         setTimeout(r, 50)
       })
 
-      const webURL = `${pr.posUrl}/${pr.username}`
-      const qrCodeURL = webURL.toUpperCase() + "?lightning=" + lnurl.toUpperCase()
-
       const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
         getPaymentRequestFullUri({
           type: Invoice.PayCode,
-          input: qrCodeURL,
+          input: lnurl.toUpperCase(),
           uppercase,
           prefix,
         })
+      const getCopyableInvoiceFn: GetCopyableInvoiceFn = () =>
+        `${pr.username}@${pr.lnAddressHostname}`
 
       info = {
         data: {
           invoiceType: Invoice.PayCode,
           username: pr.username,
+          getCopyableInvoiceFn,
           getFullUriFn,
         },
         applicationErrors: undefined,

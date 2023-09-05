@@ -27,4 +27,5 @@ export const defaultParams: BaseCreatePaymentRequestCreationDataParams<WalletCur
   convertMoneyAmount: convertMoneyAmountFn,
   network: "mainnet",
   posUrl: "pos-url",
+  lnAddressHostname: "ln-addr-host",
 }
