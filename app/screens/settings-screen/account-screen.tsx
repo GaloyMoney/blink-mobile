@@ -29,6 +29,7 @@ import { useShowWarningSecureAccount } from "./show-warning-secure-account"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { useNavigation } from "@react-navigation/native"
 import { useAppConfig } from "@app/hooks"
+import { AccountId } from "./account-id"
 
 gql`
   query accountScreen {
@@ -582,6 +583,7 @@ export const AccountScreen = () => {
       keyboardShouldPersistTaps="handled"
       keyboardOffset="navigationHeader"
     >
+      <AccountId />
       {accountSettingsList.map((setting) => (
         <SettingsRow setting={setting} key={setting.id} />
       ))}

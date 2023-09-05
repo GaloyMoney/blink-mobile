@@ -43,7 +43,7 @@ export const GaloySecondaryButton: FunctionComponent<GaloySecondaryButtonProps> 
       TouchableComponent={TouchableHighlight}
       buttonStyle={styles.buttonStyle}
       disabledStyle={styles.disabledStyle}
-      titleStyle={styles.buttonTitleStyle}
+      titleStyle={[styles.buttonTitleStyle, props.titleStyle]}
       disabledTitleStyle={styles.disabledTitleStyle}
       loadingProps={{
         color: colors.primary,
