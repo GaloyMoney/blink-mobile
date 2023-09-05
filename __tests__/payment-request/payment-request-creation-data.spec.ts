@@ -64,7 +64,7 @@ describe("create payment request creation data", () => {
 
     expect(prcd.canUsePaycode).toBe(true)
     expect(prcd.username).toBe("test-username")
-    expect(prcd.canSetAmount).toBe(false)
+    expect(prcd.canSetAmount).toBe(true)
     expect(prcd.canSetMemo).toBe(false)
     expect(prcd.canSetReceivingWalletDescriptor).toBe(false)
     expect(prcd.receivingWalletDescriptor).toBe(btcWalletDescriptor)
