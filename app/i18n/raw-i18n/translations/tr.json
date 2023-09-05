@@ -107,8 +107,8 @@
                         ],
                         "feedback": [
                             "Doğru. 5 sats daha kazandınız.",
-                            "Yanlış, en azından hala doğru değil.",
-                            "Yanlış, tekrardan deneyiniz."
+                            "Yanlış, Şey... en azından henüz doğru değil ;)",
+                            "Yanlış, Lütfen tekrar deneyiniz."
                         ],
                         "question": "Bitcoinler nerede durur?",
                         "text": "Bitcoin yeni bir para formudur. Dünyanın her noktasında, isteyen herkes istediği her zaman Bitcoin'i kullanabilir.\n\nHerhangi bir hükümete veya bölgeye bağlı değildir. Kağıt paralara, metal paralara ya da plastik kartlara ihtiyaç duymaz.\n\nHer şey %100 dijitaldir ve Bitcoin internet üzerinde çalışan bilgisayarlardan oluşan bir ağdır. \n\nBitcoin'inizi telefon ya da bilgisayarınızda çalıştırdığınız bir yazılım ile kolayca yönetebilirsiniz.",
@@ -121,7 +121,7 @@
                             "Fransa Hükümeti"
                         ],
                         "feedback": [
-                            "Bu doğru. Bitcoin'i mümkün kılan dünyanın her yerinde insanların bilgisayar ve telefonlarında Bitcoin yaızılımı çalıştırmalarıdır. ",
+                            "Bu doğru. Bitcoin'i mümkün kılan dünyanın her yerinde insanların bilgisayar ve telefonlarında Bitcoin yazılımını çalıştırmalarıdır. ",
                             "Muhteşem bir düşünce ama doğru değil!",
                             "Yanlış, Bitcoin'i kontrol eden bir firma veya devlet yoktur. "
                         ],
@@ -132,17 +132,17 @@
                     "copyBitcoin": {
                         "answers": [
                             "Hayır, bitcoinin değerini kopyalamak imkansızdır.",
-                            "Bitcoin'lerini dijital bir fotoğrafı kopylar gibi kolaylıkla kopyalayabilirsin",
+                            "Bitcoin'lerini dijital bir fotoğrafı kopyalar gibi kolaylıkla kopyalayabilirsin",
                             "Evet, ama bitcoini kopyalamak çok özel bilgisayarlar gerektirir"
                         ],
                         "feedback": [
                             "Bu kesinlikle doğru cevap!",
-                            "Bunun doğru olmadığını biliyorsun. Tekrar deneyin.",
+                            "Bunun doğru olmadığını biliyorsun. Tekrar dene.",
                             "Yanlış, hiç kimse bir Bitcoin'i kopyalama veya çoğaltmayı beceremez. "
                         ],
-                        "question": "Eğer Bitcoin dijital bir paraysa, o zaman birisi onu kopyalayarak bedavadan para yaratamaz mı?",
+                        "question": "Eğer Bitcoin dijital para ise, birisi onu kopyalayıp karşılıksız para yaratamaz mı?",
                         "text": "Bitcoin'in ortaya koyduğu değer hiçbir şekilde kopyalanamaz. Bu sebepten dolayı Bitcoin çok kuvvetli bir buluştur. \n\nÇoğu dijital dosya -ister bir iPhone fotoğrafı, MP3 şarıkısı veya Microsoft Word dökümanı olsun- kolaylıkla kopyalanıp tekrardan paylaşılabilir.\n\nBitcoin yazılımı, sahte Bitcoin yaratılmasını -çifte harcamayı- önlemek için vardır. Dijital paranızı nasıl kopyalamaya karşı koruduğunu ileride detaylı olarak anlatacağız.",
-                        "title": "Eğer Bitcoin dijital bir paraysa, o zaman birisi onu kopyalayarak bedavadan para yaratamaz mı?"
+                        "title": "Eğer Bitcoin dijital para ise, birisi onu kopyalayıp karşılıksız para yaratamaz mı?"
                     }
                 }
             },
@@ -157,8 +157,8 @@
                         ],
                         "feedback": [
                             "Doğru. Paranın işe yaramasının sebebi budur. ",
-                            "Öyle öğretmiş olabilir ama yine de bu sorunun doğru cevabı seçtiğiniz cevap değil!",
-                            "Hayır. Eskiden Amerikan dolarlarınızı altın karşılığında değiştirebiliyordunuz artık değiştirilmiyor. "
+                            "Öyle öğretmiş olabilir ama yine de bu sorunun doğru cevabı bu değil!",
+                            "Hayır. Geçmişte ABD dolarını altınla değiştirebilirdiniz. Artık öyle bir durum söz konusu değil."
                         ],
                         "question": "Paranın neden değeri vardır?",
                         "text": "Para insanların güvenini gerektirir.\n\nİnsanlar ceplerindeki Amerikan Doları banknotlarına güvenir. Bankalarındaki dijital olarak gösterilen sayılara da güvenir. Aldıkları hediye kartlarının karşılığında mağazadan ürün alabileceklerine de güvenir.\n\nPara insanların anında ürün veya hizmet almasını sağlar.",
@@ -168,14 +168,14 @@
                         "answers": [
                             "İhtiyaçların eşleşmesi",
                             "Gece ve gündüzün eşleşmesi",
-                            "Ayın güneşi bloklaması durumu"
+                            "Ayın güneşi engellemesi durumu"
                         ],
                         "feedback": [
-                            "Evet, doğru. Para kolaylıkla istediğin şeyi almanı kolaylaştırır, değiş-tokuşta oluşan fiyatlama zorluğunu ortadan kaldırır.",
+                            "Bu doğru. Para, ödeme biçimi konusunda anlaşmazlığa düşmeden bir şeyi kolayca satın almanızı sağlar",
                             "Hayır, bunun doğru cevap olmadığını sen de biliyorsun.",
                             "Tam olarak değil, biz ona güneş tutulması diyoruz 🌚"
                         ],
-                        "question": "Para hangi rastlantıyı çözer?",
+                        "question": "Para hangi çakışmaları çözer?",
                         "text": "Yüzyıllar önce, para bulunmadan önce, insanlar değiş tokuş yapardı - ya da ellerinde değerli bir ürün varsa onu bir servise karşı takas ederlerdi.\n\nDiyelim ki yerel restoranınızda yemek yemek istiyorsunuz ve karşılığında restoran sahibine karşılığında süpürge teklif ettiniz. Restoran sahibi bunu kabul etmeyip karşılığında 3 adet şapka vermenizi isteyebilirdi.\n\nBu takasın gerçekleşmesinin ne kadar zor ve verimsiz olduğunu kolayca hayal edebilirsiniz.\n\nBir de bunun para ile ne kadar kolaylaştığını düşünün, yemek karşılığı verdiğiniz 200 lirayı restoran sahibi kolayca kabul edebilir.",
                         "title": "Para 'ihtiyaçaların eşleşmesi' durumunu çözer. Peki bu nedir?"
                     },
@@ -247,7 +247,7 @@
                     "WhatIsFiat": {
                         "answers": [
                             "Belirli bir ülkedeki Ulusal hükümetin emriyle oluşturulur.",
-                            "Local bankanızın yöneticisi tarafından.",
+                            "Yerel bankanızın yöneticisi tarafından.",
                             "Monopoly parası"
                         ],
                         "feedback": [
@@ -396,7 +396,7 @@
                             "Yanlış. Bitcoin gerçekten de \"açık kaynaklı\" bir yazılım olmasına - ya da halka ücretsiz olarak sunulmasına - rağmen yine de son derece güvenlidir."
                         ],
                         "question": "Bitcoin ağı güvenli midir?",
-                        "text": "Bitcoin ağı bugün 100 milyar doların üzerinde bir değere sahiptir. Buna göre, paranın asla çalınmaması için ağın çok güvenli olması gerekir.\n\nBitcoin dünyanın ilk kripto para birimi olarak bilinmektedir.\n\nİsmin \"crypto\" kısmı kriptografiden (şifreleme) gelmektedir. Basitçe söylemek gerekirse, kriptografi bilgiyi çok karmaşık matematik fonksiyonları aracılığıyla korur.\n\nÇoğu insan farkında değil ama Bitcoin aslında dünyadaki en güvenli bilgisayar ağı!\n\n(Bitcoin \"hack \"lerini duymuş olabilirsiniz . Bir sonraki testte bunları çürüteceğiz)",
+                        "text": "Bitcoin ağı bugün 100 milyar doların üzerinde bir değere sahiptir. Buna göre, paranın asla çalınmaması için ağın çok güvenli olması gerekir.\n\nBitcoin dünyanın ilk kripto para birimi olarak bilinmektedir.\n\nİsmin \"kripto\" kısmı kriptografiden (şifreleme) gelmektedir. Basitçe söylemek gerekirse, kriptografi bilgiyi çok karmaşık matematik fonksiyonları aracılığıyla korur.\n\nÇoğu insan farkında değil ama Bitcoin aslında dünyadaki en güvenli bilgisayar ağı!\n\n(Bitcoin \"hack \"lerini duymuş olabilirsiniz . Bir sonraki testte bunları çürüteceğiz)",
                         "title": "Karakteristik özellik #5: Güvenlik -- 1. Kısım"
                     },
                     "securePartTwo": {
@@ -411,7 +411,7 @@
                             "Hayır saçmalama, bunun doğru cevap olmadığını biliyorsun."
                         ],
                         "question": "Bitcoin hiç hacklendi mi?",
-                        "text": "Açık konuşmak gerekirse: Bitcoin ağının kendisi hiçbir zaman hacklenmedi. Bir kez bile.\n\nO zaman tam olarak ne hacklendi?\n\nUygun güvenliğe sahip olmayan bazı dijital cüzdanlar.\n\nTıpkı fiziksel bir cüzdanın fiat para birimini (kağıt banknotlar şeklinde) tutması gibi, dijital cüzdanlar da bir miktar bitcoin tutar.\n\nFiziksel dünyada suçlular bankaları soyar ve liralarla ile uzaklaşırlar. Birinin bir bankayı soymuş olmasının Türk Lirasının istikrarlı ya da güvenilir bir para olup olmadığıyla hiçbir ilişkisi yoktur.\n\nBenzer şekilde, bazı bilgisayar korsanları, banka soygununun çevrimiçi eşdeğeri olan güvensiz dijital cüzdanlardan bitcoin çalmıştır.\n\nBununla birlikte, bitcoin ağının hiçbir zaman saldırıya uğramadığını veya tehlikeye atılmadığını bilmek önemlidir!",
+                        "text": "Açık konuşmak gerekirse: Bitcoin ağının kendisi hiçbir zaman hacklenmedi. Bir kez bile.\n\nO zaman tam olarak ne hacklendi?\n\nYeterince güvenliğe sahip olmayan bazı dijital cüzdanlar.\n\nTıpkı fiziksel bir cüzdanın fiat para birimini (kağıt banknotlar şeklinde) tutması gibi, dijital cüzdanlar da bir miktar bitcoin tutar.\n\nFiziksel dünyada suçlular bankaları soyar ve liralarla ile uzaklaşırlar. Birinin bir bankayı soymuş olmasının Türk Lirasının istikrarlı ya da güvenilir bir para olup olmadığıyla hiçbir ilişkisi yoktur.\n\nBenzer şekilde, bazı bilgisayar korsanları, banka soygununun çevrimiçi eşdeğeri olan güvensiz dijital cüzdanlardan bitcoin çalmıştır.\n\nBununla birlikte, bitcoin ağının hiçbir zaman saldırıya uğramadığını veya tehlikeye atılmadığını bilmek önemlidir!",
                         "title": "Karakteristik özellik #5: 2. Kısım"
                     }
                 }
@@ -470,7 +470,7 @@
     },
     "PinScreen": {
         "attemptsRemaining": "Yanlış PIN kodu. Kalan deneme hakkınız: {attemptsRemaining: number}",
-        "oneAttemptRemaining": "Yanlış PIN kodu. Kalan deneme hakkınız: 1. ",
+        "oneAttemptRemaining": "Yanlış PIN kodu. Kalan deneme hakkınız: 1",
         "setPin": "PIN kodunu ayarla",
         "setPinFailedMatch": "Pin kodu eşleşmedi - PIN kodunu ayarla",
         "storePinFailed": "Pin'in kaydedilemedi.",
@@ -765,7 +765,7 @@
     },
     "TransactionScreen": {
         "noTransaction": "Gösterilecek işlem bulunamadı",
-        "title": "İşlemle",
+        "title": "İşlemler",
         "recentTransactions": "Güncel işlemler",
         "transactionHistoryTitle": "İşlem Geçmişi"
     },
@@ -1040,9 +1040,9 @@
         },
         "circlesGrowingKeepGoing": "Çevren insanları Blink'e davet etmenle büyür. Devam et!",
         "points": "puanlar",
-        "innerCircleGrow": "Her bir Blink kullanıcısına ilk satını yolladığında yakın çevren genişler!",
+        "innerCircleGrow": "Her bir Blink kullanıcısına ilk SAT'ını yolladığında yakın çevren genişler!",
         "calculatingYourCircles": "Çevren hesaplanıyor...",
-        "innerCircleExplainer": "Blink ile Bitcoin adaptasyonunu artırıyorsun. Devam et!",
+        "innerCircleExplainer": "Blink ile Bitcoin'in yaygınlaşmasını sağlıyorsun. Devam et!",
         "innerCircleExplainerCard": "Blink ile Bitcoin adaptasyonunu artırıyorum!",
         "innerCircle": "Yakın Çevre",
         "peopleYouWelcomed": "karşıladığın insanlar",
@@ -1059,14 +1059,15 @@
         "buildYourCircle": "Çevreni oluştur",
         "myBlinkCircles": "Blink Çevrem",
         "someones": "{username: string}'in",
-        "groupEffort": "Bitcoin adaptasyonu bir ekip işidir.\nArkadaşlarını davet et ve çevreni genişletmek için onlara ilk satlarını gönder.",
+        "groupEffort": "Bitcoin'i yaymak bir ekip işidir.\nArkadaşlarını davet et ve çevreni genişletmek için onlara ilk satlarını gönder.",
+        "drivingAdoption": "Blink'i kullanarak Bitcoin'i yaygınlaştırıyorum.",
         "septChallenge": {
             "title": "Eylül Meydan Okuması!",
             "description": "Yakın Çevre {innerCircle: number}/21 - 21 $ Kazan\nİlk 3 - Adopting Bitcoin'e bilet kazanın!",
             "details": "Eylül ayında yakın çevrenizi 21 kişiye kadar genişletin ve 21 dolar Stablesats hesabınıza yatsın. İlk 3 kişi Adopting Bitcoin'e bilet kazanacak!",
             "peopleWelcomedSoFar": "şimdiye kadar karşılanan insanlar",
-            "yourRank": "rütbeniz",
-            "reminder": "Hatırlatıcı: Yakın çevreniz ueni Blink kullanıcılarına ilk satlarını gönderdiğinizde genişler.",
+            "yourRank": "sıralamanız",
+            "reminder": "Uyarı: Yakın çevreniz yeni Blink kullanıcılarına ilk SAT'larını gönderdiğinizde genişler.",
             "fullDetails": "Tüm detaylar şurada"
         }
     }
