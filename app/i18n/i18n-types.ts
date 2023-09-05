@@ -3715,7 +3715,7 @@ type RootTranslation = {
 			 */
 			description: RequiredParams<'innerCircle'>
 			/**
-			 * G​r​o​w​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​2​1​ ​p​e​o​p​l​e​ ​i​n​ ​S​e​p​t​e​m​b​e​r​ ​a​n​d​ ​g​e​t​ ​$​2​1​ ​t​o​ ​y​o​u​r​ ​S​t​a​b​l​e​s​a​t​s​ ​a​c​c​o​u​n​t​.​ ​T​o​p​ ​3​ ​w​i​n​ ​t​i​c​k​e​t​s​ ​t​o​ ​A​d​o​p​t​i​n​g​ ​B​i​t​c​o​i​n​!
+			 * G​r​o​w​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​2​1​ ​p​e​o​p​l​e​ ​i​n​ ​S​e​p​t​e​m​b​e​r​ ​a​n​d​ ​s​h​a​r​e​ ​o​n​ ​s​o​c​i​a​l​ ​w​i​t​h​ ​#​b​l​i​n​k​c​i​r​c​l​e​s​ ​t​o​ ​g​e​t​ ​$​2​1​ ​t​o​ ​y​o​u​r​ ​S​t​a​b​l​e​s​a​t​s​ ​a​c​c​o​u​n​t​.​ ​T​o​p​ ​3​ ​w​i​n​ ​t​i​c​k​e​t​s​ ​t​o​ ​A​d​o​p​t​i​n​g​ ​B​i​t​c​o​i​n​!
 			 */
 			details: string
 			/**
@@ -7338,7 +7338,7 @@ export type TranslationFunctions = {
 			 */
 			description: (arg: { innerCircle: number }) => LocalizedString
 			/**
-			 * Grow your inner circle by 21 people in September and get $21 to your Stablesats account. Top 3 win tickets to Adopting Bitcoin!
+			 * Grow your inner circle by 21 people in September and share on social with #blinkcircles to get $21 to your Stablesats account. Top 3 win tickets to Adopting Bitcoin!
 			 */
 			details: () => LocalizedString
 			/**

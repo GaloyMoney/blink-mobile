@@ -1173,7 +1173,7 @@ const en: BaseTranslation = {
       description:
         "Inner Circle {innerCircle: number}/21 - Earn $21\nTop 3 - Win tickets to Adopting Bitcoin!",
       details:
-        "Grow your inner circle by 21 people in September and get $21 to your Stablesats account. Top 3 win tickets to Adopting Bitcoin!",
+        "Grow your inner circle by 21 people in September and share on social with #blinkcircles to get $21 to your Stablesats account. Top 3 win tickets to Adopting Bitcoin!",
       peopleWelcomedSoFar: "people welcomed so far",
       yourRank: "your rank",
       reminder:
