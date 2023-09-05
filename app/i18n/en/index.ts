@@ -1114,7 +1114,7 @@ const en: BaseTranslation = {
     minAmountNotMet: "Amount must be at least {minAmount: string}.",
   },
   AmountInputButton: {
-    tapToSetAmount: "Tap to set amount",
+    tapToSetAmount: "Set amount",
   },
   AppUpdate: {
     needToUpdateSupportMessage:

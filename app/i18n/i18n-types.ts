@@ -3525,7 +3525,7 @@ type RootTranslation = {
 	}
 	AmountInputButton: {
 		/**
-		 * T​a​p​ ​t​o​ ​s​e​t​ ​a​m​o​u​n​t
+		 * S​e​t​ ​a​m​o​u​n​t
 		 */
 		tapToSetAmount: string
 	}
@@ -7156,7 +7156,7 @@ export type TranslationFunctions = {
 	}
 	AmountInputButton: {
 		/**
-		 * Tap to set amount
+		 * Set amount
 		 */
 		tapToSetAmount: () => LocalizedString
 	}
