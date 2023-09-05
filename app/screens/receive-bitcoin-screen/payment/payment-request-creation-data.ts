@@ -37,12 +37,11 @@ export const createPaymentRequestCreationData = <T extends WalletCurrency>(
   const permissions = {
     canSetReceivingWalletDescriptor: false,
     canSetMemo: false,
-    canSetAmount: false,
+    canSetAmount: true,
   }
   if (type === Invoice.Lightning || type === Invoice.OnChain) {
     permissions.canSetReceivingWalletDescriptor = true
     permissions.canSetMemo = true
-    permissions.canSetAmount = true
   }
 
   // Permission based sets

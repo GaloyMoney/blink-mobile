@@ -177,10 +177,29 @@ const ReceiveScreen = () => {
 
         <TouchableOpacity onPress={request.copyToClipboard}>
           <View style={styles.extraDetails}>
-            {request.readablePaymentRequest && (
-              <Text {...testProps("readable-payment-request")}>
-                {request.readablePaymentRequest}
-              </Text>
+            {request.readablePaymentRequest ? (
+              request.type === Invoice.OnChain ? (
+                <View style={styles.btcHighContainer}>
+                  <Text style={styles.btcHigh}>
+                    {request.readablePaymentRequest.slice(0, 6)}
+                  </Text>
+                  <Text style={styles.btcLow}>
+                    {request.readablePaymentRequest.substring(
+                      6,
+                      request.readablePaymentRequest.length - 6,
+                    )}
+                  </Text>
+                  <Text style={styles.btcHigh}>
+                    {request.readablePaymentRequest.slice(-6)}
+                  </Text>
+                </View>
+              ) : (
+                <Text {...testProps("readable-payment-request")}>
+                  {request.readablePaymentRequest}
+                </Text>
+              )
+            ) : (
+              <></>
             )}
           </View>
         </TouchableOpacity>
@@ -288,7 +307,7 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 15,
-    minHeight: 20,
+    minHeight: 24,
   },
   invoiceActions: {
     flexDirection: "row",
@@ -306,6 +325,20 @@ const useStyles = makeStyles(({ colors }) => ({
     marginRight: 10,
   },
   onchainCharges: { marginTop: 10, alignItems: "center" },
+  btcHighContainer: {
+    display: "flex",
+    flexDirection: "row",
+    columnGap: 4,
+    alignItems: "flex-end",
+  },
+  btcHigh: {
+    fontWeight: "700",
+    fontSize: 18,
+  },
+  btcLow: {
+    fontSize: 10,
+    marginBottom: 2,
+  },
 }))
 
 export default withMyLnUpdateSub(ReceiveScreen)

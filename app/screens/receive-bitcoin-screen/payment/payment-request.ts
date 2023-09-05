@@ -209,12 +209,22 @@ export const createPaymentRequest = (
 
       // Paycode
     } else if (pr.type === Invoice.PayCode && pr.username) {
+      const queryStringForAmount =
+        pr.unitOfAccountAmount === undefined || pr.unitOfAccountAmount.amount === 0
+          ? ""
+          : `amount=${pr.unitOfAccountAmount?.amount}&currency=${pr.unitOfAccountAmount?.currencyCode}`
+
       const lnurl: string = await new Promise((resolve) => {
         resolve(
           bech32.encode(
             "lnurl",
             bech32.toWords(
-              Buffer.from(`${pr.posUrl}/.well-known/lnurlp/${pr.username}`, "utf8"),
+              Buffer.from(
+                `${pr.posUrl}/.well-known/lnurlp/${pr.username}${
+                  queryStringForAmount ? `?${queryStringForAmount}` : ""
+                }`,
+                "utf8",
+              ),
             ),
             1500,
           ),
@@ -227,13 +237,10 @@ export const createPaymentRequest = (
         setTimeout(r, 50)
       })
 
-      const webURL = `${pr.posUrl}/${pr.username}`
-      const qrCodeURL = webURL.toUpperCase() + "?lightning=" + lnurl.toUpperCase()
-
       const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
         getPaymentRequestFullUri({
           type: Invoice.PayCode,
-          input: qrCodeURL,
+          input: lnurl.toUpperCase(),
           uppercase,
           prefix,
         })

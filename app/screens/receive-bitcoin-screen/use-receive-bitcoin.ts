@@ -438,10 +438,8 @@ export const useReceiveBitcoin = () => {
     else extraDetails = `${LL.ReceiveScreen.invoiceValidity.expiresNow()}`
   } else if (prcd.type === "Lightning" && pr?.state === PaymentRequestState.Paid) {
     extraDetails = LL.ReceiveScreen.invoiceHasBeenPaid()
-  } else if (prcd.type === "OnChain" && pr?.info?.data?.invoiceType === "OnChain") {
-    extraDetails = LL.ReceiveScreen.onChainAddress()
   } else if (prcd.type === "PayCode" && pr?.info?.data?.invoiceType === "PayCode") {
-    extraDetails = LL.ReceiveScreen.payCodeOrLNURL()
+    extraDetails = "LNURL"
   }
 
   let readablePaymentRequest = ""
