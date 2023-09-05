@@ -20,6 +20,15 @@
         "howToUseYourPaycodeExplainer": "Cetak kod bayaran anda (secara teknikalnya, ini adalah alamat lnurl-pay) dan sila pamerkan di perniagaan anda untuk terima bayaran. Para pelanggan boleh membayar anda dengan mengimbasnya dengan dompet LN  .\n\nAkan tetapi, bukan semua jenis dompet boleh mengimbasnya seperti:",
         "howToUseYourCashRegisterExplainer": "Benarkan individu lain untuk terima bayaran melalui pautan Cash Register, tanpa akses ke dompet anda\n\nMereka boleh membuat invois baru dan bayaran akan dihantar terus ke dompet {bankName: string} anda."
     },
+    "SetAccountModal": {
+        "title": "Tetapkan akaun utama",
+        "description": "Untuk permulaan, akaun ini ditetapkan sebagai tempat menerima dan membuat pembayaran. Ia boleh ditukar pada bila bila masa jika perlu",
+        "stablesatsTag": "Pilih ini untuk mengekalkan nilai USD",
+        "bitcoinTag": "Pilih ini untuk penetapan nilai standard Bitcoin"
+    },
+    "NoteInput": {
+        "addNote": "tambah nota catatan"
+    },
     "AuthenticationScreen": {
         "authenticationDescription": "Pengesahan anda diperlukan",
         "setUp": "Tetapkan pengesahan Biometrik",
@@ -28,11 +37,15 @@
         "unlock": "Buka",
         "usePin": "Gunakan PIN"
     },
-    "ContactsScreen": {
+    "PeopleScreen": {
+        "title": "Kenalan",
+        "copy": "Salin",
         "noContactsTitle": "Tiada kenalan ditemui",
         "noContactsYet": "Hantar atau terima bayaran dengan menggunakan nama pengguna dan kenalan secara automatik akan ditambah di sini",
         "noMatchingContacts": "Tiada kenalan dijumpai ",
-        "title": "Kenalan"
+        "allContacts": "Semua kenalan",
+        "viewAllContacts": "Lihat semua kenalan",
+        "frequentContacts": "Kenalan yang kerap dihubungi"
     },
     "ContactDetailsScreen": {
         "title": "Transaksi dengan pengguna {username: string}"
@@ -421,10 +434,11 @@
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Daftar masuk / Buat akaun baharu",
-        "exploreWalletInstead": "Teroka dompet anda",
+        "createAccount": "Buat akaun baru",
+        "exploreWallet": "Teroka dompet wallet",
+        "logBackInWith": "Log masuk semula dengan",
         "headline": "Dompet dikuasakan oleh Galoy",
         "startTrialAccount": "Mulakan dengan akaun percubaan",
-        "iUnderstand": "Saya faham, teruskan",
         "startWithTrialAccount": "Mulakan dengan akaun percubaan",
         "registerPhoneAccount": "Daftarkan nombor telefon",
         "trialAccountCreationFailed": "Akaun percubaan anda gagal dibuat",
@@ -483,14 +497,15 @@
         "activateNotifications": "Anda nak aktifkan notifikasi jika terima bayaran?",
         "copyClipboard": "Invois telah disalin pada clipboard",
         "copyClipboardBitcoin": "Alamat bitcoin telah disalin ke dalam clipboard",
+        "copyClipboardPaycode": "Kod bayaran/LNURL telah disalin pada papan klip",
         "invoicePaid": "Invois ini telah dibayar",
         "setNote": "Beri pesanan",
         "tapQrCodeCopy": "Tekan untuk salin kod QR",
         "title": "Terima bitcoin",
         "usdTitle": "Terima dalam USD",
         "error": "Gagal untuk menjana invois. Sila berhubung dengan tim sokongan\njika masalah ini tetap berlaku",
-        "copyInvoice": "Salin semula invois",
-        "shareInvoice": "Kongsikan invois",
+        "copyInvoice": "Salin",
+        "shareInvoice": "Kongsi",
         "addAmount": "Mohon amaun yang spesifik",
         "expired": "Invois ni telah tamat tempoh",
         "expiresIn": "Tamat tempoh dalam",
@@ -504,7 +519,31 @@
         "useALightningInvoice": "Gunakan invois LN",
         "setANote": "Tetapkan pesanan",
         "invoiceAmount": "Amaun invois",
-        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
+        "fees": "{minBankFee: string} cas sats dikenakan untuk bayaran dengan onchain di bawah {minBankFeeThreshold: string} sats",
+        "lightning": "Lightning ",
+        "paycode": "Kod bayaran",
+        "onchain": "Chain Utama. On Chain",
+        "bitcoin": "Bitcoin ",
+        "stablesats": "Stablesats",
+        "regenerateInvoiceButtonTitle": "Jana semula invois",
+        "setUsernameButtonTitle": "Tetapkan Nama Pengguna",
+        "invoiceHasExpired": "Invois telah luput",
+        "setUsernameToAcceptViaPaycode": "Tetapkan id pengguna anda untuk terima melalui Paycode QR (LNURL) dan alamat Lightning ",
+        "singleUse": "Kegunaan sekali sahaja",
+        "invoiceExpired": "Invois telah tamat tempoh",
+        "invoiceValidity": {
+            "validFor1Day": "Sah untuk 1 hari sahaja",
+            "validForNext": "sah untuk {tempoh: string}",
+            "validBefore": "Sah sebelum {masa: string}",
+            "expiresIn": "Akan tamat dalam {tempoh: string}",
+            "expiresNow": "Tamat tempoh sekarang"
+        },
+        "invoiceHasBeenPaid": "Invois telah dibayar",
+        "onChainAddress": "Alamat Onchain",
+        "receiveViaInvoice": "Terima melalui Lightning ",
+        "receiveViaPaycode": "Terima melalui Kod bayaran",
+        "receiveViaOnchain": "Terima melalui Onchain",
+        "payCodeOrLNURL": "Kod bayaran/LNURL"
     },
     "RedeemBitcoinScreen": {
         "title": "Tebus bitcoin",
@@ -590,12 +629,13 @@
         "destinationIsRequired": "Destinasi penghantaran adalah wajib",
         "fee": "cas yang dikenakan dalam rangkaian",
         "feeCalculationUnsuccessful": "Pengiraan tak berjaya ⚠️",
-        "input": "ID pengguna, invois, atau alamat LN",
+        "placeholder": "ID pengguna, invois, atau alamat LN",
         "invalidUsername": "ID pengguna tidak betul",
         "noAmount": "Invois ini tiada nilai amaun, anda perlu masukkan secara manual dan tentukan berapa jumlah wang yang ingin dihantar",
         "notConfirmed": "Bayaran telah dibuat\ntapi belum dapat pengesahan lagi\n\nAnda boleh periksa status\npembayaran dalam transaksi",
         "note": "Pesanan atau label",
         "success": "Bayaran telah berjaya dilakukan ",
+        "suggestionInput": "Masukkan cadangan anda",
         "max": "Maksimum",
         "maxAmount": "Amaun maksimum",
         "title": "Hantar bitcoin",
@@ -605,7 +645,6 @@
     },
     "SettingsScreen": {
         "activated": "Telah diaktifkan",
-        "tapLogIn": "Tekan untuk log masuk",
         "addressScreen": "Cara untuk terima bayaran",
         "tapUserName": "Tekan untuk tetapkan ID pengguna",
         "title": "Tetapan",
@@ -625,19 +664,58 @@
         "nfcNotCompatible": "Maklumat yang diambil dari kad tidak sepadan dengan pautan lnurl-pengeluaran",
         "nfcOnlyReceive": "Hanya terima dari NFC sahaja yang boleh sekarang",
         "nfcScanNow": "Imbas NFC sekarang",
-        "nfcNotSupported": "Gajet ini tidak menyokong NFC"
+        "nfcNotSupported": "Gajet ini tidak menyokong NFC",
+        "logInOrCreateAccount": "Log masuk atau buat akaun"
     },
     "AccountScreen": {
         "accountLevel": "Peringkat akaun",
-        "logIn": "Log masuk",
         "upgrade": "Naik taraf akaun anda",
         "logOutAndDeleteLocalData": "Log keluar, dan hapus semua data",
         "IUnderstand": "Aku faham. Tolong aku log keluar",
         "logoutAlertTitle": "Anda pasti nak log keluar dan padam semua data yang ada?",
-        "logoutAlertContent": "Anda dikehendaki untuk masukkan semula nombor telefon untuk tujuan log masuk\nNombor telefon anda {nombortelefon: string}, pastikan anda mempunyai akses untuk log masuk semula",
+        "logoutAlertContentPhone": "Anda perlu untuk masukkan semula nombor telefon untuk log masuk.\nNombor telefon anda {Nombortelefon: string} sila pastikan anda mempunyai akses kepada nombor tersebut untuk log masuk",
+        "logoutAlertContentEmail": "Anda perlu memasukkan semula emel untuk log masuk.\nemel anda adalah {emel: string}. Sila pastikan anda mempunyai akses kepadanya untuk log masuk",
+        "logoutAlertContentPhoneEmail": "Anda perlu untuk masukkan semula nombor telefon atau emel untuk log masuk.\nNombor telefon anda {nomborteledon: string} dan emel anda adalah {emel: string} jadi pastikan anda mempunyai akses ke atasnya intuk log masik",
         "usdBalanceWarning": "Baki stablesats anda adalah {baki: string}",
         "btcBalanceWarning": "Baki Bitcoin anda {baki: string}",
-        "secureYourAccount": "Daftar untuk dapatkan akaun anda"
+        "secureYourAccount": "Daftar untuk dapatkan akaun anda",
+        "tapToAdd": "Tekan untuk tambah",
+        "deleteEmailPromptTitle": "Padam emel",
+        "deleteEmailPromptContent": "Anda pasti nak hapuskan alamat emel anda? Anda hanya boleh log masuk selepas ini dengan menggunakan nombor telefon.",
+        "deletePhonePromptTitle": "Padam telefon",
+        "deletePhonePromptContent": "Anda pasti nak buang nombor telefon anda? anda hanya boleh log masuk selepas ini dengan menggunakan emel",
+        "addEmailFirst": "Pertamanya, tambah emel ",
+        "addPhoneFirst": "Tambah telefon dahulu",
+        "phoneNumberAuthentication": "Nombor telefon (untuk log maauk)",
+        "emailAuthentication": "Emel (untuk log masuk)",
+        "removePhone": "Buang telefon",
+        "removeEmail": "Buang emel",
+        "unverified": "Emel belum disahkan",
+        "unverifiedContent": "Sahkan akaun anda melalui pengesahan emel",
+        "confirmEmail": "Sahkan emel",
+        "emailUnverified": "Emel anda belum disahkan",
+        "emailUnverifiedContent": "Sila pastikan anda boleh log masuk kembali ke akaun anda dengan mengesahkan emel. Anda mahu laksanakan pengesahan sekarang? ",
+        "totp": "Pengesahan dua kali",
+        "totpDeactivated": "Pengesahan dua kali telah pun diaktifkan",
+        "totpDeleteAlertTitle": "Buang pengesahan dua kali",
+        "totpDeleteAlertContent": "Adakah anda pasti mahu membuang pengesahan dua kali ini?"
+    },
+    "TotpRegistrationInitiateScreen": {
+        "title": "Pengesahan dua kali",
+        "content": "Imbas Kod QR dengan aplikasi authenticator anda. Sebagai alternatif, anda boleh salin/tampal kata rahsia ke dalam aplikasi authenticator anda"
+    },
+    "TotpRegistrationValidateScreen": {
+        "title": "Pengesahan dua kali",
+        "enter6digitCode": "Masukkan kod 6 digit dari aplikasi Authenticator anda untuk mengesahkan pengesahan dua kali",
+        "success": "Pengesahan dua kali telah diaktifkan. Anda hanya boleh log masuk kembali dengan nombor telefon atau emel anda DAN pengesahan dua kali anda.\n\nHanya akaun yang telah melalui proses penuh KYC sahaja yang dapat dipulihkan sekiranya pengguna hilang pengesahan dua kali mereka."
+    },
+    "TotpLoginValidateScreen": {
+        "title": "Pengesahan dua kali",
+        "content": "Masukkan 6 kod digit daripada aplikasi pengesahan anda untuk log masuk. Kod tersebut akan berubah setiap 30 saat."
+    },
+    "CopySecretComponent": {
+        "button": "salin kata rahsia",
+        "toastMessage": "Kata rahsia telah disalin pada papan klip!"
     },
     "DefaultWalletScreen": {
         "title": "Akaun tetap",
@@ -746,6 +824,43 @@
         "tryAgain": "Cuba lagi",
         "sendViaOtherChannel": "Anda memilih untuk terima kod melalui {saluran: string}. Anda juga boleh mencuba untuk menerimanya melalui {lainlain: string}"
     },
+    "PhoneRegistrationInitiateScreen": {
+        "title": "Tetapkan telefon anda",
+        "header": "Masukkan nombor telefon anda, kami akan hantar pesanan kepada a nda kod akses ",
+        "headerVerify": "Buktikan anda bukanlah haiwan",
+        "errorRequestingCode": "Sesuatu berlaku ketika ingin dapatkan kod telefon, sila cuba lagi",
+        "errorInvalidPhoneNumber": "Nombor telefon salah. Betulkah nombor telefon telah dimasukkan dengan betul?",
+        "errorUnsupportedCountry": "Sokongan kami buat pengguna di negara anda tak dapat kami jalankan.",
+        "placeholder": "Nombor telefon",
+        "verify": "Tekan untuk pengesahan",
+        "sms": "Hantar melalui SMS",
+        "whatsapp": "Hantar melalui WhatsApp"
+    },
+    "PhoneRegistrationValidateScreen": {
+        "successTitle": "Nombor telefon telah disahkan"
+    },
+    "EmailRegistrationInitiateScreen": {
+        "title": "Masukkan emel anda",
+        "header": "Masukkan emel anda, kami akan hantar kod akses melaluinya",
+        "invalidEmail": "Emel tidak tepat. Betulkan anda telah memasukkan emel dengan betul?",
+        "send": "Hantar Kod",
+        "missingEmailRegistrationId": "ID email pendaftaran telah hilang",
+        "placeholder": "hal@finney.org"
+    },
+    "EmailRegistrationValidateScreen": {
+        "header": "Untuk sahkan emel anda, sila masukkan kod yang baru sahaja kami hantar ke {emel: string}",
+        "success": "Emel {emel: string} telah berjaya disahkan"
+    },
+    "EmailLoginInitiateScreen": {
+        "title": "Log masuk menggunakan email",
+        "header": "Masukkan emel anda, kami akan hantar kod akses melaluinya",
+        "invalidEmail": "Emel tidak tepat. Betulkan anda telah memasukkan emel dengan betul?",
+        "send": "Hantar Kod"
+    },
+    "EmailLoginValidateScreen": {
+        "header": "Jika ada akaun yang menggunakan alamat {emel: string}, anda perlu menerima kod 6 digit untuk masuk\n\nJika anda tidak menerimanya, ia mungkin disebabkan bukan emel yang betul, emel tersebut ada di dalam fail spam.",
+        "success": "Emel {emel: string} telah berjaya disahkan"
+    },
     "common": {
         "account": "Akaun",
         "transactionLimits": "Had transaksi",
@@ -765,6 +880,7 @@
         "close": "Keluar",
         "confirm": "Pasti",
         "convert": "Penukaran",
+        "codeConfirmation": "Pengesahan kod",
         "currency": "Matawang",
         "currencySyncIssue": "Masalah matawang. refresh semula",
         "csvExport": "Eksport transaksi kepada fail csv",
@@ -789,13 +905,16 @@
         "loggedOut": "Anda telah log keluar",
         "logout": "Log keluar",
         "minutes": "minit",
+        "errorAuthToken": "token pengesahan hilang",
         "needWallet": "Log masuk untuk buat akaun dan akses dompet anda",
         "next": "Teruskan",
         "No": "Tidak",
         "note": "Nota",
         "notification": "Pemberitahuan",
         "ok": "Baiklah",
+        "or": "atau",
         "openWallet": "Buka Dompet",
+        "phone": "Telefon",
         "phoneNumber": "Nombor telefon",
         "rate": "Rating",
         "reauth": "Sesi anda dah tamat. Sila log masuk semula.",
@@ -809,7 +928,9 @@
         "shareBitcoin": "Kongsi alamat bitcoin",
         "shareLightning": "Kongsi Invois Lightning ",
         "soon": "Akan datang!",
+        "submit": "Hantar",
         "success": "Berjaya!",
+        "stablesatsUsd": "Stablesats USD",
         "to": "Kepada",
         "total": "Jumlah keseluruhan",
         "transactions": "Transaksi",
@@ -858,9 +979,11 @@
         "joinTheCommunity": "Jadi sebahagian daripada komuniti",
         "whatsapp": "WhatsApp",
         "email": "Emel",
+        "enjoyingApp": "Seronok menggunakan aplikasi ini?",
         "statusPage": "Status Halaman",
         "telegram": "Telegram",
         "mattermost": "Paling penting",
+        "thankYouText": "Terima kasih atas maklum balas anda, bolehkah anda cadangkan kepada kami beberapa penambah baikan?",
         "defaultEmailSubject": "Sokongan - {NamaBank: string}",
         "defaultSupportMessage": "Hai! Saya perlukan bantuan daripada {NamaBank: string}, Saya menggunakan versi {version: string} pada {os: string}.",
         "emailCopied": "emel {emel: string} telah disalin ke clipboard",
@@ -871,7 +994,7 @@
         "finalConfirmationAccountDeletionMessage": "Anda pasti nak lupuskan akaun anda? Anda ini tidak boleh berpatah balik dengan keputusan ini.",
         "deleteAccountBalanceWarning": "Melupuskan akaun anda akan mengakibatkan kehilangan akses anda pada baki semasa. Anda pasti nak teruskan juga?",
         "deleteAccountConfirmation": "Anda telah memutuskan untuk memadam akaun anda.\n\nSekiranya tempoh percubaan berkenaan dengan keperluan regulasi telah tamat, baki data yang berkaitan dengan akaun anda akan dipadam selamanya.",
-        "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
+        "deleteAccountFromPhone": "Hai!, sila nyah aktifkan akaun saya. Nombor telefon saya adalah {phoneNumber: string}.",
         "deleteAccountError": "Sesuatu yang salah telah berlaku  Hubungi {emel: string} untuk bantuan lanjut.",
         "bye": "Selamat tinggal!"
     },
@@ -899,5 +1022,53 @@
         "updateMandatory": "Kemaskini adalah wajib",
         "tapHereUpdate": "Tekan sini untuk kemaskini sekarang",
         "contactSupport": "Hubungi pasukan sokongan"
+    },
+    "Circles": {
+        "title": "Kumpulan Kecilku",
+        "titleBlinkCircles": "Kumpulan Kecil Blink",
+        "circles": "kumpulan kecil",
+        "circlesExplainer": "Kumpulan kecil anda akan berkembang sekiranya anda menjemput kenalan anda ke Blink - Dengan menghantarkan sats pertama buat mereka ",
+        "viewMyCircles": "Lihat kumpulan kecil aku",
+        "introducingCircles": "Memperkenalkan Kumpulan Kecil",
+        "copiedInviteLink": "Link jemputan telah disalin",
+        "inviteFriendToBlink": "Jemput kenalan anda gunakan Blink",
+        "shareCircles": "Kongsikan kumpulan kecil anda",
+        "share": "Kongsi",
+        "circlesGrowingSatsExplainer": {
+            "your": "Anda",
+            "grow": "Kembangkan kumpulan anda bila anda menghantar sats pertama buat mereka!"
+        },
+        "circlesGrowingKeepGoing": "Kumpulan kecil anda berkembang sekiranya anda menjemput mereka menggunakan Blink – teruskan usaha!",
+        "points": "mata",
+        "innerCircleGrow": "Kumpulan kecil anda berkembang sekiranya anda menghantar sats kepada mereka dengan menggunakan Blink!",
+        "calculatingYourCircles": "Sedang mengira kumpulan kecil anda...",
+        "innerCircleExplainer": "Anda dah mendorong adaptasi Bitcoin dengan Blink, teruskan momentum ini!",
+        "innerCircleExplainerCard": "Aku berkempen untuk adaptasi Bitcoin dengan Blink!",
+        "innerCircle": "Kumpulan Kecil Dalaman",
+        "peopleYouWelcomed": "Kenalan yang anda telah jemput",
+        "peopleIWelcomed": "kenalan\nyang telah menyertai",
+        "thisMonth": "bulan ini",
+        "outerCircle": "Kumpulan Kecil Luar",
+        "peopleWelcomedByYourCircle": "Kenalan yang dijemput oleh kumpulan kecil anda ",
+        "peopleWelcomedByMyCircle": "Kenalan yang dijemput oleh kumpulan kecil saya",
+        "yourSphere": "Lingkungan anda",
+        "mySphere": "Lingkungan saya",
+        "yourRankMessage": "Anda menduduki #{thisMonthRank: number} pada bulan ini dan #{allTimeRank: number} secara keseluruhan!",
+        "rankMessage": "#{thisMonthRank: number} bulan ini dan #{allTimeRank: number} keseluruhan!",
+        "inviteFriends": "Jemput rakan anda",
+        "buildYourCircle": "Kembangkan kumpulan kecil anda",
+        "myBlinkCircles": "Kumpulan kecil dalam Blink saya",
+        "someones": "{pengguna: string}'s",
+        "groupEffort": "Adaptasi Bitcoin adalah sebuah usaha berkumpulan.\nJemput rakan anda dan hantar sats kepada mereka untuk mula membina rangkaian kumpulan kecil anda.",
+        "drivingAdoption": "Aku sedang mengemudi adaptasi Bitcoin menggunakan Blink.",
+        "septChallenge": {
+            "title": "Cabaran September!",
+            "description": "Kumpulan Kecil {innerCircle: number}/21 - Dapatkan $21\n3 Teratas - Menangi tiket ke Adopting Bitcoin!",
+            "details": "Kembangkan kumpulan kecil anda menjadi 21 orang pada September ini dan dapat $21 dalam akaun stablesats anda. 3 yang teratas akan memenangi tiket Adopting Bitcoin!",
+            "peopleWelcomedSoFar": "Kenalan yang telah menyertai setakat ini",
+            "yourRank": "ranking kedudukan anda",
+            "reminder": "Perhatian: Kumpulan kecil anda akan bertambah sekiranya anda menghantar sats kepada pengguna baru Blink ",
+            "fullDetails": "Maklumat penuh di"
+        }
     }
 }
