@@ -698,7 +698,10 @@
         "totp": "2要素認証（2FA）",
         "totpDeactivated": "2要素認証（2FA）が無効化されました",
         "totpDeleteAlertTitle": "2要素認証（2FA）を削除する",
-        "totpDeleteAlertContent": "2要素認証（2FA）を削除してもよろしいですか？"
+        "totpDeleteAlertContent": "2要素認証（2FA）を削除してもよろしいですか？",
+        "copiedAccountId": "Copied your account ID to clipboard",
+        "yourAccountId": "Your Account ID",
+        "copy": "コピー"
     },
     "TotpRegistrationInitiateScreen": {
         "title": "2要素認証（2FA）",
@@ -1014,7 +1017,7 @@
         "minAmountNotMet": "最小限度額{minAmount: string}以上の金額を設定してください."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "タップして金額を設定する"
+        "tapToSetAmount": "Set amount"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "I need to update my app to the latest version. I'm using the {os: string} app with version {version: string}.",
@@ -1064,7 +1067,7 @@
         "septChallenge": {
             "title": "9月のチャレンジ！",
             "description": "インナーサークル {innerCircle: number}/21 - $21獲得\nトップ3 - Adopting Bitcoinのチケットを獲得できます!",
-            "details": "9月までにを21人のお友だちをインナーサークルに招待することで、$21分のステイブル satsを獲得できます。さらにトップ3にランクインすると、Adopting Bitcoinのチケットをプレゼント！",
+            "details": "9月中にインナーサークルを21人に増やし、#blinkcirclesタグと一緒にソーシャルメディアでシェアすると、Stablesatsウォレットに$21が振り込まれます。さらに、上位3名には「Adopting Bitcoin!」のチケットが当たります！",
             "peopleWelcomedSoFar": "最近招待したお友だち",
             "yourRank": "あなたのランキング",
             "reminder": "リマインダー：新しいBlinkユーザーに最初のサトシを送るとあなたのインナーサークルが広がります！",
