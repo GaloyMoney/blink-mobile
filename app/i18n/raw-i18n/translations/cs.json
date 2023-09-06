@@ -37,11 +37,15 @@
         "unlock": "Odemknout",
         "usePin": "Použít PIN"
     },
-    "ContactsScreen": {
+    "PeopleScreen": {
+        "title": "Lidé",
+        "copy": "Kopírovat",
         "noContactsTitle": "Nebyly nalezeny žádné kontakty",
         "noContactsYet": "Odeslat nebo přijmout platbu pomocí uživatelského jména a kontakty se sem automaticky přidají.",
         "noMatchingContacts": "Nebyly nalezeny žádné kontakty odpovídající vašemu vyhledávání.",
-        "title": "Kontakty"
+        "allContacts": "Všechny kontakty",
+        "viewAllContacts": "Zobrazit všechny kontakty",
+        "frequentContacts": "Časté kontakty"
     },
     "ContactDetailsScreen": {
         "title": "Transakce s {username}"
@@ -493,6 +497,7 @@
         "activateNotifications": "Chcete aktivovat oznámení, abyste byli informováni o příchozích platbách?",
         "copyClipboard": "Faktura byla zkopírována do schránky",
         "copyClipboardBitcoin": "Bitcoinová adresa byla zkopírována do schránky",
+        "copyClipboardPaycode": "Paycode/LNURL byl zkopírován do schránky",
         "invoicePaid": "Tato faktura byla uhrazena",
         "setNote": "nastavit poznámku",
         "tapQrCodeCopy": "Klepnutím na QR kód ho zkopírujete",
@@ -534,10 +539,11 @@
             "expiresNow": "Platnost končí nyní"
         },
         "invoiceHasBeenPaid": "Faktura byla uhrazena",
-        "yourBitcoinOnChainAddress": "Vaše Onchain Bitcoin adresa",
+        "onChainAddress": "Adresa Onchain",
         "receiveViaInvoice": "Příjem přes Lightning",
         "receiveViaPaycode": "Příjem přes Paycode",
-        "receiveViaOnchain": "Příjem přes Onchain"
+        "receiveViaOnchain": "Příjem přes Onchain",
+        "payCodeOrLNURL": "Paycode / LNURL"
     },
     "RedeemBitcoinScreen": {
         "title": "Směnit Bitcoin",
@@ -688,7 +694,31 @@
         "unverifiedContent": "Zabezpečte svůj účet ověřením emailu.",
         "confirmEmail": "Potvrďte email",
         "emailUnverified": "Váš e-mail je neověřený",
-        "emailUnverifiedContent": "Ověřením e-mailu zajistěte, abyste se mohli znovu přihlásit ke svému účtu. Chcete provést ověření nyní?"
+        "emailUnverifiedContent": "Ověřením e-mailu zajistěte, abyste se mohli znovu přihlásit ke svému účtu. Chcete provést ověření nyní?",
+        "totp": "Dvoufaktorové ověření",
+        "totpDeactivated": "Dvoufaktorové ověřování bylo deaktivováno",
+        "totpDeleteAlertTitle": "Zmazat dvoufaktorové ověřování",
+        "totpDeleteAlertContent": "Opravdu chcete odstranit dvoufaktorové ověřování?",
+        "copiedAccountId": "Copied your account ID to clipboard",
+        "yourAccountId": "Your Account ID",
+        "copy": "Kopírovat"
+    },
+    "TotpRegistrationInitiateScreen": {
+        "title": "Dvoufaktorové ověření",
+        "content": "Naskenujte tento QR kód pomocí aplikace autentizátoru. Případně můžete tajný kód do aplikace authenticator zkopírovat/vložit ručně."
+    },
+    "TotpRegistrationValidateScreen": {
+        "title": "Dvoufaktorové ověření",
+        "enter6digitCode": "Zadejte 6-místný kód z aplikace autentizátoru a ověřte dvoufaktorové ověření.",
+        "success": "Bylo povoleno dvoufaktorové ověřování. Nyní se budete moci znovu přihlásit pouze pomocí telefonu nebo e-mailu A dvoufaktorového ověření.\n\nV případě, že uživatel ztratil přístup ke svému dvoufaktorovému ověřování, lze obnovit pouze plné účty KYC."
+    },
+    "TotpLoginValidateScreen": {
+        "title": "Dvoufaktorové ověření",
+        "content": "Pro přihlášení zadejte šestimístný kód z aplikace autentizátoru. Tento kód se mění každých 30 sekund."
+    },
+    "CopySecretComponent": {
+        "button": "Kopírování tajemství",
+        "toastMessage": "Tajemství zkopírováno do schránky!"
     },
     "DefaultWalletScreen": {
         "title": "Výchozí účet",
@@ -878,6 +908,7 @@
         "loggedOut": "Byl jste odhlášen.",
         "logout": "Odhlásit",
         "minutes": "minuty",
+        "errorAuthToken": "Chybějící autentizační token",
         "needWallet": "Přihlašte se nebo si založte účet pro přístup k vaší peněžence",
         "next": "Další",
         "No": "Ne",
@@ -986,7 +1017,7 @@
         "minAmountNotMet": "Částka musí být alespoň {minAmount: string}."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Klepnutím nastavte částku"
+        "tapToSetAmount": "Set amount"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Potřebuji aktualizovat aplikaci na nejnovější verzi. Používám aplikaci {os: string} s verzí {version: string}.",
@@ -994,5 +1025,53 @@
         "updateMandatory": "Aktualizace je povinná",
         "tapHereUpdate": "Klepněte zde pro aktualizaci",
         "contactSupport": "Kontaktovat podporu"
+    },
+    "Circles": {
+        "title": "Moje Kruhy",
+        "titleBlinkCircles": "Blink Kruhy",
+        "circles": "kruhy",
+        "circlesExplainer": "Vaše kruhy se rozrostou, když přivítáte ostatní v Blinku - tím, že někomu pošlete jeho první saty.",
+        "viewMyCircles": "Zobrazit Kruhy",
+        "introducingCircles": "Představení Kruhů",
+        "copiedInviteLink": "Zkopírovaný odkaz pozvánky",
+        "inviteFriendToBlink": "Pozvěte přítele do Blink",
+        "shareCircles": "Sdílejte své kruhy",
+        "share": "Sdílet",
+        "circlesGrowingSatsExplainer": {
+            "your": "Tvoje",
+            "grow": "rostou, když pošlete novému uživateli Blinku jeho první saty!"
+        },
+        "circlesGrowingKeepGoing": "Vaše kruhy se rozrůstají, když přiivítatw lidi do Blinku - pokračujte!",
+        "points": "body",
+        "innerCircleGrow": "Váš okruh se rozroste, když pošlete uživateli Blinku jeho první saty!",
+        "calculatingYourCircles": "Výpočet kruhů...",
+        "innerCircleExplainer": "S Blinkem řídíte růst Bitcoinu, pokračujte v tom!",
+        "innerCircleExplainerCard": "Podporuji přijetí Bitcoinu pomocí Blinku!",
+        "innerCircle": "Vnitřní Kruh",
+        "peopleYouWelcomed": "lidi, které jste přivítali",
+        "peopleIWelcomed": "lidé \nkteré jsem přivítal",
+        "thisMonth": "tento měsíc",
+        "outerCircle": "Vnější Kruh",
+        "peopleWelcomedByYourCircle": "lidé přivítaní vaším okruhem",
+        "peopleWelcomedByMyCircle": "lidé přivítaní mojim okruhem",
+        "yourSphere": "Vaše Sféra",
+        "mySphere": "Moje Sféra",
+        "yourRankMessage": "Tento měsíc jste #{thisMonthRank: číslo} a #{allTimeRank: číslo} za celou dobu!",
+        "rankMessage": "#{thisMonthRank: číslo} tento měsíc a #{allTimeRank: číslo} za celou dobu!",
+        "inviteFriends": "Pozvěte přítele do Blinku",
+        "buildYourCircle": "Budujte své kruhy",
+        "myBlinkCircles": "Moje Blink Kruhy",
+        "someones": "{username: string}'s",
+        "groupEffort": "Adopce Bitcoinu je skupinové úsilí.\nPozvěte přítele a pošlete mu sats, abyste začali budovat své kruhy.",
+        "drivingAdoption": "Přijímání bitcoinů řídím pomocí aplikace Blink.",
+        "septChallenge": {
+            "title": "Výzva na září!",
+            "description": "Vnitřní kruh {innerCircle: číslo}/21 - Vydělejte $21\nTop 3 - Vyhrajte vstupenky na Adopting Bitcoin!",
+            "details": "Grow your inner circle by 21 people in September and share on social with #blinkcircles to get $21 to your Stablesats account. Top 3 win tickets to Adopting Bitcoin!",
+            "peopleWelcomedSoFar": "dosud přivítaných osob",
+            "yourRank": "vaše umístnění",
+            "reminder": "Připomínáme: Když pošlete novému uživateli Blinku jeho první saty, váš vnitřní okruh se rozroste.",
+            "fullDetails": "Úplné detaily na"
+        }
     }
 }
