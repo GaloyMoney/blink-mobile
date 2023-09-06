@@ -26,6 +26,9 @@
         "stablesatsTag": "Auswählen, um den USD Betrag stabil zu halten.",
         "bitcoinTag": "Auswählen, um auf den Bitcoin Standard zu wechseln."
     },
+    "NoteInput": {
+        "addNote": "Add note"
+    },
     "AuthenticationScreen": {
         "authenticationDescription": "Authentifizieren zum Fortfahren",
         "setUp": "Biometrische Authentifizierung einrichten",
@@ -34,11 +37,15 @@
         "unlock": "Entsperren",
         "usePin": "PIN nutzen"
     },
-    "ContactsScreen": {
+    "PeopleScreen": {
+        "title": "People",
+        "copy": "Copy",
         "noContactsTitle": "Bislang keine Kontakte",
         "noContactsYet": "Benutze einen Usernamen, um Zahlungen zu senden oder zu empfangen. Nutzer, die etwas gesendet oder empfangen haben, werden hier automatisch hinzugefügt",
         "noMatchingContacts": "Es konnten keine passenden Kontakte gefunden werden.",
-        "title": "Kontakte"
+        "allContacts": "All Contacts",
+        "viewAllContacts": "View all contacts",
+        "frequentContacts": "Frequent Contacts"
     },
     "ContactDetailsScreen": {
         "title": "Transaktionen mit {username}"
@@ -427,10 +434,11 @@
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Einloggen / Account erstellen",
-        "exploreWalletInstead": "Stattdessen Wallet erkunden",
+        "createAccount": "Create new account",
+        "exploreWallet": "Explore wallet",
+        "logBackInWith": "Log back in with",
         "headline": "Wallet zur Verfügung gestellt von Galoy",
         "startTrialAccount": "Mit einem Demo-Account beginnen",
-        "iUnderstand": "Habe ich verstanden, weiter",
         "startWithTrialAccount": "Mit Demo-Account starten",
         "registerPhoneAccount": "Telefon-Account registrieren",
         "trialAccountCreationFailed": "Demo-Account Erstellen fehlgeschlagen",
@@ -489,14 +497,15 @@
         "activateNotifications": "Möchtest Du die Benachrichtigungen aktivieren, um zu sehen, wenn die Zahlung eingegangen ist?",
         "copyClipboard": "Invoice wurde in die Zwischenablage kopiert",
         "copyClipboardBitcoin": "Bitcoin Adresse wurde in die Zwischenablage kopiert",
+        "copyClipboardPaycode": "Paycode/LNURL has been copied in the clipboard",
         "invoicePaid": "Diese Invoice wurde bezahlt",
         "setNote": "Notiz erstellen",
         "tapQrCodeCopy": "Tippe den QR Code um zu kopieren",
         "title": "Bitcoin empfangen",
         "usdTitle": "USD empfangen",
         "error": "Invoice konnte nicht erstellt werden. Bitte kontaktiere den Support, wenn dieses Problem weiterhin besteht.",
-        "copyInvoice": "Invoice kopieren",
-        "shareInvoice": "Invoice teilen",
+        "copyInvoice": "Copy",
+        "shareInvoice": "Teilen",
         "addAmount": "Betrag spezifizieren",
         "expired": "Die Invoice ist abgelaufen",
         "expiresIn": "Läuft ab in",
@@ -510,7 +519,31 @@
         "useALightningInvoice": "Lightning Invoice verwenden",
         "setANote": "Notiz erstellen",
         "invoiceAmount": "Invoice-Betrag",
-        "fees": "{minBankFee: string} Sats Gebühr für On-Chain Zahlungen unterhalb von {minBankFeeThreshold: string} Sats"
+        "fees": "{minBankFee: string} Sats Gebühr für On-Chain Zahlungen unterhalb von {minBankFeeThreshold: string} Sats",
+        "lightning": "Lightning",
+        "paycode": "Paycode",
+        "onchain": "Onchain",
+        "bitcoin": "Bitcoin",
+        "stablesats": "Stablesats",
+        "regenerateInvoiceButtonTitle": "Invoice erneut erstellen",
+        "setUsernameButtonTitle": "Set Username",
+        "invoiceHasExpired": "Invoice has expired",
+        "setUsernameToAcceptViaPaycode": "Set your username to accept via Paycode QR (LNURL) and Lightning Address",
+        "singleUse": "Single Use",
+        "invoiceExpired": "Expired Invoice",
+        "invoiceValidity": {
+            "validFor1Day": "Valid for 1 day",
+            "validForNext": "Valid for next {duration: string}",
+            "validBefore": "Valid before {time: string}",
+            "expiresIn": "Expires in {duration: string}",
+            "expiresNow": "Expires now"
+        },
+        "invoiceHasBeenPaid": "Invoice has been paid",
+        "onChainAddress": "Onchain Address",
+        "receiveViaInvoice": "Receive via Lightning",
+        "receiveViaPaycode": "Receive via Paycode",
+        "receiveViaOnchain": "Receive via Onchain",
+        "payCodeOrLNURL": "Paycode / LNURL"
     },
     "RedeemBitcoinScreen": {
         "title": "Bitcoin einlösen",
@@ -596,12 +629,13 @@
         "destinationIsRequired": "Empfänger ist erforderlich",
         "fee": "Netzwerkgebühr",
         "feeCalculationUnsuccessful": "Konnte nicht berechnet werden ⚠️",
-        "input": "Benutzername, Invoice oder Adresse",
+        "placeholder": "Benutzername, Invoice oder Adresse",
         "invalidUsername": "Ungültiger Benutzername",
         "noAmount": "Diese Invoice hat keinen Betrag, daher musst Du selbst angeben, wie viel Geld Du senden möchtest.",
         "notConfirmed": "Die Zahlung wurde gesendet\naber sie ist noch nicht bestätigt\n\nDu kannst den Status der Zahlung\nim Bereich Transaktionen einsehen",
         "note": "Notiz",
         "success": "Zahlung erfolgreich gesendet",
+        "suggestionInput": "Enter your suggestion",
         "max": "Max",
         "maxAmount": "Maximaler Betrag",
         "title": "Sende Bitcoin",
@@ -611,7 +645,6 @@
     },
     "SettingsScreen": {
         "activated": "Aktiviert",
-        "tapLogIn": "Antippen zum Einloggen",
         "addressScreen": "Zahlungsmöglichkeiten",
         "tapUserName": "Antippen um einen Benutzernamen festzulegen",
         "title": "Einstellungen",
@@ -631,19 +664,61 @@
         "nfcNotCompatible": "Es konnte kein kompatibler LNURL-Link von dieser Karte gelesen werden.",
         "nfcOnlyReceive": "Derzeit kann die NFC-Funktion nur zum Empfangen genutzt werden",
         "nfcScanNow": "NFC jetzt scannen",
-        "nfcNotSupported": "NFC wird auf diesem Gerät nicht unterstützt"
+        "nfcNotSupported": "NFC wird auf diesem Gerät nicht unterstützt",
+        "logInOrCreateAccount": "Log in or create account"
     },
     "AccountScreen": {
         "accountLevel": "Account Level",
-        "logIn": "Einloggen",
         "upgrade": "Deinen Account upgraden",
         "logOutAndDeleteLocalData": "Ausloggen und alle lokalen Daten löschen",
         "IUnderstand": "Verstanden. Bitte logge mich aus.",
         "logoutAlertTitle": "Bist du sicher, dass du dich ausloggen und alle deine lokalen Daten löschen möchtest?",
-        "logoutAlertContent": "Um dich erneut einzuloggen, benötigst du deine Telefonnummer. \nDeine Telefonnummer lautet {phoneNumber: string}. Stelle bitte sicher, dass du Zugriff auf diese hast, um dich erneut einloggen zu können.",
+        "logoutAlertContentPhone": "You will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure you have access to it to log back in",
+        "logoutAlertContentEmail": "You will need to re-enter your email to log back in.\nyour email is {email: string} so make sure you have access to it to log back in",
+        "logoutAlertContentPhoneEmail": "You will need to re-enter either your phone number or email to log back in.\nyour phone number is {phoneNumber: string} and your email is {email: string} so make sure you have access to those to log back in",
         "usdBalanceWarning": "Dein Stablesats Kontostand beträgt {balance: string}.",
         "btcBalanceWarning": "Dein Bitcoin Kontostand beträgt {balance: string}.",
-        "secureYourAccount": "Registriere dich, um deinen Account zu sichern"
+        "secureYourAccount": "Registriere dich, um deinen Account zu sichern",
+        "tapToAdd": "Tap to add",
+        "deleteEmailPromptTitle": "Delete email",
+        "deleteEmailPromptContent": "Are you sure you want to delete your email address? you will only be able to log back in with your phone number.",
+        "deletePhonePromptTitle": "Delete phone",
+        "deletePhonePromptContent": "Are you sure you want to delete your phone number? you will only be able to log in back with your email.",
+        "addEmailFirst": "Add an email first",
+        "addPhoneFirst": "Add a phone first",
+        "phoneNumberAuthentication": "Phone number (for login)",
+        "emailAuthentication": "Email (for login)",
+        "removePhone": "Remove phone",
+        "removeEmail": "Remove email",
+        "unverified": "Email is unverified",
+        "unverifiedContent": "Secure your account by verifying your email.",
+        "confirmEmail": "Confirm email",
+        "emailUnverified": "Your email is unverified",
+        "emailUnverifiedContent": "Ensure you can log back into your account by verifying your email. Do you want to do the verification now?",
+        "totp": "Two-factor authentication",
+        "totpDeactivated": "Two-factor authentication has been deactivated",
+        "totpDeleteAlertTitle": "Delete two-factor authentication",
+        "totpDeleteAlertContent": "Are you sure you want to delete your two-factor authentication?",
+        "copiedAccountId": "Copied your account ID to clipboard",
+        "yourAccountId": "Your Account ID",
+        "copy": "Copy"
+    },
+    "TotpRegistrationInitiateScreen": {
+        "title": "Two-factor authentication",
+        "content": "Scan this QR code with your authenticator app. Alternatively, you can manually copy/paste the secret into your authenticator app."
+    },
+    "TotpRegistrationValidateScreen": {
+        "title": "Two-factor authentication",
+        "enter6digitCode": "Enter the 6-digit code from your authenticator app to validate your two-factor authentication.",
+        "success": "Two-factor authentication has been enabled. You will now only be able to log back in with your phone or email AND your two factor authentication.\n\nOnly full KYC accounts may be recovered in the case a user has lost access to their two-factor authentication."
+    },
+    "TotpLoginValidateScreen": {
+        "title": "Two-factor authentication",
+        "content": "Enter the 6-digit code from your authenticator app to log in. This code changes every 30 seconds."
+    },
+    "CopySecretComponent": {
+        "button": "Copy secret",
+        "toastMessage": "Secret copied to clipboard!"
     },
     "DefaultWalletScreen": {
         "title": "Standard-Konto",
@@ -752,6 +827,43 @@
         "tryAgain": "Erneut versuchen",
         "sendViaOtherChannel": "Du hast ausgewählt, dass du den Code per {channel: string} empfangen möchtest. Du kannst ihn alternativ auch per {other: string} empfangen."
     },
+    "PhoneRegistrationInitiateScreen": {
+        "title": "Phone set up",
+        "header": "Gib deine Telefonnumer an und wir senden dir einen Zugangscode.",
+        "headerVerify": "Bestätige, dass Du ein Mensch bist",
+        "errorRequestingCode": "Etwas ging schief bei der Abfrage des Telefon Codes. Bitte versuche es später erneut.",
+        "errorInvalidPhoneNumber": "Ungültige Telefonnummer. Bist du dir sicher, dass du die richtige Nummer eingegeben hast?",
+        "errorUnsupportedCountry": "Leider können wir unseren Dienst in deinem Land nicht anbieten.",
+        "placeholder": "Telefonnummer",
+        "verify": "Klicken zur Bestätigung",
+        "sms": "Per SMS senden",
+        "whatsapp": "Via WhatsApp senden"
+    },
+    "PhoneRegistrationValidateScreen": {
+        "successTitle": "Phone number confirmed"
+    },
+    "EmailRegistrationInitiateScreen": {
+        "title": "Add your email",
+        "header": "Enter your email address, and we'll send you an access code.",
+        "invalidEmail": "Invalid email address. Are you sure you entered the right email?",
+        "send": "Send code",
+        "missingEmailRegistrationId": "Missing email registration id",
+        "placeholder": "hal@finney.org"
+    },
+    "EmailRegistrationValidateScreen": {
+        "header": "To confirm your email address, enter the code we just sent you on {email: string}",
+        "success": "Email {email: string} confirmed successfully"
+    },
+    "EmailLoginInitiateScreen": {
+        "title": "Login via email",
+        "header": "Enter your email address, and we'll send you an access code.",
+        "invalidEmail": "Invalid email address. Are you sure you entered the right email?",
+        "send": "Send code"
+    },
+    "EmailLoginValidateScreen": {
+        "header": "If there is an account attached to {email: string}, you should have received 6 digits code to enter below.\n\nIf you are not receiving anything, it's probably either because this is not the right email, the email is in your spam folder.",
+        "success": "Email {email: string} confirmed successfully"
+    },
     "common": {
         "account": "Konto",
         "transactionLimits": "Transaktionslimits",
@@ -771,6 +883,7 @@
         "close": "Schließen",
         "confirm": "Bestätigen",
         "convert": "Konvertieren",
+        "codeConfirmation": "Code Confirmation",
         "currency": "Währung",
         "currencySyncIssue": "Problem mit der Währung. Erneutes Laden erforderlich",
         "csvExport": "Transaktionen als CSV exportieren",
@@ -795,13 +908,16 @@
         "loggedOut": "Du wurdest ausgeloggt.",
         "logout": "Ausloggen",
         "minutes": "Minuten",
+        "errorAuthToken": "Missing auth token",
         "needWallet": "Einloggen oder einen Account erstellen, um deine Wallet zu öffnen",
         "next": "Weiter",
         "No": "Nein",
         "note": "Notiz",
         "notification": "Benachrichtigungen",
         "ok": "OK",
+        "or": "or",
         "openWallet": "Wallet öffnen",
+        "phone": "Telefon",
         "phoneNumber": "Telefonnummer",
         "rate": "Kurs",
         "reauth": "Deine Sitzung ist abgelaufen. Btte logge dich erneut ein.",
@@ -815,6 +931,7 @@
         "shareBitcoin": "Bitcoin Adresse teilen",
         "shareLightning": "Lightning Invoice teilen",
         "soon": "Bald verfügbar!",
+        "submit": "Submit",
         "success": "Erfolgreich!",
         "stablesatsUsd": "Stablesats USD",
         "to": "An",
@@ -865,9 +982,11 @@
         "joinTheCommunity": "Tritt der Community bei",
         "whatsapp": "WhatsApp",
         "email": "Email",
+        "enjoyingApp": "Enjoying the app?",
         "statusPage": "Status-Seite",
         "telegram": "Telegram",
         "mattermost": "Mattermost",
+        "thankYouText": "Thank you for the feedback, would you like to suggest an improvement?",
         "defaultEmailSubject": "{bankName: string} - Support",
         "defaultSupportMessage": "Hey! Ich brauche Hilfe mit {bankName: string}, ich benutze Version {version: string} auf {os: string}.",
         "emailCopied": "E-Mail {email: string} in Zwischenablage kopiert",
@@ -898,7 +1017,7 @@
         "minAmountNotMet": "Der Betrag darf {minAmount: string} nicht unterschreiten."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Tippen, um Betrag festzulegen."
+        "tapToSetAmount": "Set amount"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Ich muss meine App auf die neuste Version updaten. Ich nutze die {os: string} App mit Version {version: string}.",
@@ -906,5 +1025,53 @@
         "updateMandatory": "Das Update ist zwingend erforderlich",
         "tapHereUpdate": "Klicke hier, um jetzt zu updaten",
         "contactSupport": "Support kontaktieren"
+    },
+    "Circles": {
+        "title": "My Circles",
+        "titleBlinkCircles": "Blink Circles",
+        "circles": "circles",
+        "circlesExplainer": "Your circles grow as you welcome others to Blink - by sending somebody their first sats.",
+        "viewMyCircles": "View My Circles",
+        "introducingCircles": "Introducing Circles",
+        "copiedInviteLink": "Copied Invite Link",
+        "inviteFriendToBlink": "Invite a friend to Blink",
+        "shareCircles": "Share your circles",
+        "share": "Teilen",
+        "circlesGrowingSatsExplainer": {
+            "your": "Your",
+            "grow": "grow when you send a new Blink user their first sats!"
+        },
+        "circlesGrowingKeepGoing": "Your circles grow as you welcome people to Blink – keep going!",
+        "points": "points",
+        "innerCircleGrow": "Your inner circle grows when you send a Blink user their first sats!",
+        "calculatingYourCircles": "Calculating your circles...",
+        "innerCircleExplainer": "You're driving Bitcoin adoption with Blink, keep it up!",
+        "innerCircleExplainerCard": "I'm driving Bitcoin adoption with Blink!",
+        "innerCircle": "Inner Circle",
+        "peopleYouWelcomed": "people you welcomed",
+        "peopleIWelcomed": "people \nI welcomed",
+        "thisMonth": "this month",
+        "outerCircle": "Outer Circle",
+        "peopleWelcomedByYourCircle": "people welcomed by your circle",
+        "peopleWelcomedByMyCircle": "people welcomed by my circle",
+        "yourSphere": "Your Sphere",
+        "mySphere": "My Sphere",
+        "yourRankMessage": "You're #{thisMonthRank: number} this month and #{allTimeRank: number} all time!",
+        "rankMessage": "#{thisMonthRank: number} this month and #{allTimeRank: number} all time!",
+        "inviteFriends": "Invite a friend",
+        "buildYourCircle": "Build your circles",
+        "myBlinkCircles": "My Blink Circles",
+        "someones": "{username: string}'s",
+        "groupEffort": "Bitcoin adoption is a group effort.\nInvite a friend and send them sats to start building your circles.",
+        "drivingAdoption": "I'm driving Bitcoin adoption using Blink.",
+        "septChallenge": {
+            "title": "September Challenge!",
+            "description": "Inner Circle {innerCircle: number}/21 - Earn $21\nTop 3 - Win tickets to Adopting Bitcoin!",
+            "details": "Grow your inner circle by 21 people in September and share on social with #blinkcircles to get $21 to your Stablesats account. Top 3 win tickets to Adopting Bitcoin!",
+            "peopleWelcomedSoFar": "people welcomed so far",
+            "yourRank": "your rank",
+            "reminder": "Reminder: Your inner circle grows when you send a new Blink user their first sats",
+            "fullDetails": "Full details at"
+        }
     }
 }
