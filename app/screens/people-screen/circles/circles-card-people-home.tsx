@@ -33,12 +33,6 @@ export const CirclesCardPeopleHome = () => {
 
   const [prevInnerCircleCount, setPrevInnerCircleCount] = useState(peopleInInnerCircle)
 
-  useEffect(() => {
-    if (prevInnerCircleCount !== peopleInInnerCircle) {
-      reset()
-    }
-  }, [prevInnerCircleCount, peopleInInnerCircle])
-
   const { value: peopleInInnerCircleCountUp, reset } = useCountUp({
     isCounting: true,
     start: prevInnerCircleCount,
@@ -48,6 +42,12 @@ export const CirclesCardPeopleHome = () => {
       setPrevInnerCircleCount(peopleInInnerCircle)
     },
   })
+
+  useEffect(() => {
+    if (prevInnerCircleCount !== peopleInInnerCircle) {
+      reset()
+    }
+  }, [prevInnerCircleCount, peopleInInnerCircle, reset])
 
   const cBackValue = getcBackValue(Number(peopleInInnerCircleCountUp), 1, 100, 250, 360)
 
