@@ -1,7 +1,7 @@
 {
     "GaloyAddressScreen": {
         "title": "Rep el pagament utilitzant:",
-        "buttonTitle": "Set your address",
+        "buttonTitle": "Estableix la teva adreça",
         "yourAddress": "La teva {bankName} adreça",
         "notAbleToChange": "No podràs canviar la teva {bankName: string} adreça un cop l'hagis configurat.",
         "addressNotAvailable": "Aquesta {bankName} adreça ja està presa.",
@@ -20,6 +20,15 @@
         "howToUseYourPaycodeExplainer": "You can print your Paycode (technically, this is an lnurl-pay address) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan a Paycode such as:",
         "howToUseYourCashRegisterExplainer": "Allow people to collect payments via the Cash Register link, without accessing your wallet.\n\nThey can create invoices and payments will be sent directly to your {bankName: string} Wallet."
     },
+    "SetAccountModal": {
+        "title": "Estableix el teu compte predeterminat",
+        "description": "This account will be initially selected for sending and receiving payments. It can be changed at any time.",
+        "stablesatsTag": "Tria-ho per mantenir un valor estable en USD.",
+        "bitcoinTag": "Escull-ho per estar en un estàndard de Bitcoin"
+    },
+    "NoteInput": {
+        "addNote": "Afegir nota"
+    },
     "AuthenticationScreen": {
         "authenticationDescription": "Confirma la teva identitat per continuar",
         "setUp": "Configura la identificació biomètrica",
@@ -28,11 +37,15 @@
         "unlock": "Desbloqueja",
         "usePin": "Utilitza el PIN"
     },
-    "ContactsScreen": {
+    "PeopleScreen": {
+        "title": "Gent",
+        "copy": "Copiar",
         "noContactsTitle": "No s'han trobat contactes",
         "noContactsYet": "Envia o rep un pagament utilitzant un nom d'usuari i el contacte s'afegirà automàticament aquí",
         "noMatchingContacts": "No s'ha trobat cap contacte que coincideixi amb la teva cerca.",
-        "title": "Contactes"
+        "allContacts": "Tots els contactes",
+        "viewAllContacts": "Veure tots els contactes",
+        "frequentContacts": "Contactes freqüents"
     },
     "ContactDetailsScreen": {
         "title": "Transaccions amb {username}"
@@ -416,16 +429,17 @@
         "title": "Guanya",
         "unlockQuestion": "Per desbloquejar, respon la pregunta:",
         "youEarned": "Has guanyat",
-        "registerTitle": "Need to upgrade your account",
-        "registerContent": "Register with your phone number to receive sats"
+        "registerTitle": "Necessites actualitzar el teu compte",
+        "registerContent": "Registra't amb el teu número de telèfon per rebre sats"
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Iniciar sessió / crear un compte",
-        "exploreWalletInstead": "Explore wallet instead",
+        "createAccount": "Crea un nou compte",
+        "exploreWallet": "Explora el moneder",
+        "logBackInWith": "Torna a iniciar sessió amb",
         "headline": "Moneder desenvolupat per Galoy",
         "startTrialAccount": "Comença amb un compte de prova",
-        "iUnderstand": "Ho entenc, continua",
-        "startWithTrialAccount": "Start with trial account",
+        "startWithTrialAccount": "començar amb el compte de prova",
         "registerPhoneAccount": "Registra el compte de telèfon",
         "trialAccountCreationFailed": "La creació del compte de prova ha fallat",
         "trialAccountCreationFailedMessage": "Unfortunately, we were unable to create your trial account. Try again later or create an account with a phone number.",
@@ -449,7 +463,7 @@
         "receive": "Rebre",
         "send": "Enviar",
         "title": "Inici",
-        "scan": "Scan",
+        "scan": "Escaneja",
         "updateAvailable": "Hi ha una actualització.\nToca per actualitzar ara",
         "useLightning": "Utilitzem la xaxa Lightning.",
         "myAccounts": "Els meus comptes"
@@ -483,14 +497,15 @@
         "activateNotifications": "Vols activar les notificacions per ser avisat quan arribi el pagament?",
         "copyClipboard": "La factura ha estat copiada al porta-retalls",
         "copyClipboardBitcoin": "L'adreça bitcoin ha estat copiada al porta-retalls",
+        "copyClipboardPaycode": "Paycode/LNURL has been copied in the clipboard",
         "invoicePaid": "Aquesta factura s'ha pagat",
         "setNote": "posa una nota",
         "tapQrCodeCopy": "Toca el codi QR per copiar",
         "title": "Rebre Bitcoin",
         "usdTitle": "Rebre USD",
         "error": "No s'ha pogut generar la factura. Si us plau contacta amb el servei d'assistència si aquest problema persisteix.",
-        "copyInvoice": "Copia la factura",
-        "shareInvoice": "Comparteix la factura",
+        "copyInvoice": "Copiar",
+        "shareInvoice": "Comparteix",
         "addAmount": "Demana l'import específic",
         "expired": "La factura ha caducat",
         "expiresIn": "Caduca en",
@@ -504,7 +519,31 @@
         "useALightningInvoice": "Utilitza una factura Lightning",
         "setANote": "Posa una nota",
         "invoiceAmount": "Import de la factura",
-        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
+        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats",
+        "lightning": "Lightning",
+        "paycode": "Codi de pagament",
+        "onchain": "Onchain",
+        "bitcoin": "Bitcoin",
+        "stablesats": "Stablesats",
+        "regenerateInvoiceButtonTitle": "Tornar a generar la factura",
+        "setUsernameButtonTitle": "Configura el nom d'usuari",
+        "invoiceHasExpired": "La factura ha caducat",
+        "setUsernameToAcceptViaPaycode": "Set your username to accept via Paycode QR (LNURL) and Lightning Address",
+        "singleUse": "Un sol ús",
+        "invoiceExpired": "Factura caducada",
+        "invoiceValidity": {
+            "validFor1Day": "Vàlid per 1 dia",
+            "validForNext": "Vàlid per al proper {duration:string}",
+            "validBefore": "Vàlid abans de {time: string}",
+            "expiresIn": "Caduca en {duration: string}",
+            "expiresNow": "Caduca ara"
+        },
+        "invoiceHasBeenPaid": "La factura ha estat pagada",
+        "onChainAddress": "Adreça Onchain",
+        "receiveViaInvoice": "Rebre via Lightning",
+        "receiveViaPaycode": "Rebre via codi de pagament",
+        "receiveViaOnchain": "Rep via Onchain",
+        "payCodeOrLNURL": "Codi de pagament / LNURL"
     },
     "RedeemBitcoinScreen": {
         "title": "Bescanviar Bitcoin",
@@ -569,7 +608,7 @@
         "unknownOnchain": "No podem analitzar aquesta adreça Bitcoin. Si us plau torna-ho a provar.",
         "newBankAddressUsername": "{lnAddress: string} existeix com a adreça {bankName}, però mai hi has enviat diners.",
         "confirmModal": {
-            "title": "You've never sent money to this address",
+            "title": "Mai has enviat diners a aquesta adreça",
             "body1": "Si us plau, assegura't que el destinatari t'ha donat una adreça {bankName},",
             "bold2bold": "no un nom d'usuari d'un altre moneder.",
             "body3": "En cas contrari, els diners aniran al compte  {bankName} que té l'adreça “{lnAddress}”.\n\nRevisa l'ortografia de la primera part de l'adreça. per exemple. jackie i jack1e són 2 adreces diferents",
@@ -583,21 +622,22 @@
         "amount": "Import",
         "amountExceed": "L'import excedeix el teu saldo {balance}",
         "amountExceedsLimit": "Amount exceeds your remaining daily limit of {limit: string}",
-        "upgradeAccountToIncreaseLimit": "Upgrade your account to increase your limit",
+        "upgradeAccountToIncreaseLimit": "Actualitza el teu compte per incrementar els teus límits",
         "amountIsRequired": "És necessari l'import",
         "cost": "Cost",
         "destination": "Destinació",
         "destinationIsRequired": "La destinació és necessaria",
         "fee": "Comissió de la xarxa",
         "feeCalculationUnsuccessful": "El càlcul ha fallat ⚠️",
-        "input": "Nom d'usuari, factura o adreça",
+        "placeholder": "Nom d'usuari, factura o adreça",
         "invalidUsername": "Nom d'usuari no vàlid",
         "noAmount": "Aquesta factura no té un import, has de especificar manualment quants diners vols enviar.",
         "notConfirmed": "El pagament s'ha enviat\nperò encara no està confirmat\n\nPots consultar l'estat\ndel pagament a Transaccions",
         "note": "Nota o etiqueta",
         "success": "El pagament s'ha enviat correctament",
+        "suggestionInput": "Enter your suggestion",
         "max": "Max",
-        "maxAmount": "Max Amount",
+        "maxAmount": "Import màxim",
         "title": "Envia Bitcoin",
         "failedToFetchLnurlInvoice": "No s'ha pogut obtenir la factura lnurl",
         "lnurlInvoiceIncorrectAmount": "El servidor de lnurl ha enviat una factura amb un import incorrecte.",
@@ -605,7 +645,6 @@
     },
     "SettingsScreen": {
         "activated": "Activat",
-        "tapLogIn": "Toca per entrar",
         "addressScreen": "Maneres de cobrar",
         "tapUserName": "Toca per definir el nom d'usuari",
         "title": "Configuració",
@@ -625,19 +664,61 @@
         "nfcNotCompatible": "The information fetch from the card is not a compatible lnurl-withdraw link.",
         "nfcOnlyReceive": "Only receive from NFC is available for now",
         "nfcScanNow": "Escaneja NFC ara",
-        "nfcNotSupported": "NFC no és compatible amb aquest dispositiu"
+        "nfcNotSupported": "NFC no és compatible amb aquest dispositiu",
+        "logInOrCreateAccount": "Iniciar sessió o crear un compte"
     },
     "AccountScreen": {
         "accountLevel": "Nivell de compte",
-        "logIn": "Iniciar sessió",
         "upgrade": "Millora el teu compte",
-        "logOutAndDeleteLocalData": "Log out and clear all local data",
+        "logOutAndDeleteLocalData": "Tancar la sessió i borrar totes les dades locals",
         "IUnderstand": "Ho entenc. Siusplau tanca la sessió.",
         "logoutAlertTitle": "Are you sure you want to log out and delete all local data?",
-        "logoutAlertContent": "You will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure to have access to it to log back in",
+        "logoutAlertContentPhone": "You will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure you have access to it to log back in",
+        "logoutAlertContentEmail": "You will need to re-enter your email to log back in.\nyour email is {email: string} so make sure you have access to it to log back in",
+        "logoutAlertContentPhoneEmail": "You will need to re-enter either your phone number or email to log back in.\nyour phone number is {phoneNumber: string} and your email is {email: string} so make sure you have access to those to log back in",
         "usdBalanceWarning": "You have a Stablesats balance of {balance: string}.",
         "btcBalanceWarning": "You have a bitcoin balance of {balance: string}.",
-        "secureYourAccount": "Register to secure your account"
+        "secureYourAccount": "Register to secure your account",
+        "tapToAdd": "Tap to add",
+        "deleteEmailPromptTitle": "Esborrar correu electrònic",
+        "deleteEmailPromptContent": "Are you sure you want to delete your email address? you will only be able to log back in with your phone number.",
+        "deletePhonePromptTitle": "Esborrar telèfon",
+        "deletePhonePromptContent": "Are you sure you want to delete your phone number? you will only be able to log in back with your email.",
+        "addEmailFirst": "Primer afegeix un correu electrònic",
+        "addPhoneFirst": "Primer afegeix un telèfon",
+        "phoneNumberAuthentication": "Número de telèfon (per iniciar sessió)",
+        "emailAuthentication": "Correu electrònic (per iniciar sessió)",
+        "removePhone": "Elimina el telèfon",
+        "removeEmail": "Elimina el correu electrònic",
+        "unverified": "El correu electrònic no ha estat verificat",
+        "unverifiedContent": "Secure your account by verifying your email.",
+        "confirmEmail": "Confirma el correu electrònic",
+        "emailUnverified": "El teu correu electrònic no ha estat verificat",
+        "emailUnverifiedContent": "Ensure you can log back into your account by verifying your email. Do you want to do the verification now?",
+        "totp": "Autentificació de dos factors",
+        "totpDeactivated": "L'autentificació de dos factors ha estat desactivada",
+        "totpDeleteAlertTitle": "Esborra l'autentificació de dos factors",
+        "totpDeleteAlertContent": "Are you sure you want to delete your two-factor authentication?",
+        "copiedAccountId": "Copied your account ID to clipboard",
+        "yourAccountId": "Your Account ID",
+        "copy": "Copiar"
+    },
+    "TotpRegistrationInitiateScreen": {
+        "title": "Autentificació de dos factors",
+        "content": "Scan this QR code with your authenticator app. Alternatively, you can manually copy/paste the secret into your authenticator app."
+    },
+    "TotpRegistrationValidateScreen": {
+        "title": "Autentificació de dos factors",
+        "enter6digitCode": "Enter the 6-digit code from your authenticator app to validate your two-factor authentication.",
+        "success": "Two-factor authentication has been enabled. You will now only be able to log back in with your phone or email AND your two factor authentication.\n\nOnly full KYC accounts may be recovered in the case a user has lost access to their two-factor authentication."
+    },
+    "TotpLoginValidateScreen": {
+        "title": "Autentificació de dos factors",
+        "content": "Enter the 6-digit code from your authenticator app to log in. This code changes every 30 seconds."
+    },
+    "CopySecretComponent": {
+        "button": "Copia el secret",
+        "toastMessage": "El secret s'ha copiat al porta-retalls!"
     },
     "DefaultWalletScreen": {
         "title": "Compte predeterminat",
@@ -683,7 +764,7 @@
         "contactUsMessageBody": "Hi, I will like to increase the transaction limits of my {bankName: string} account.",
         "contactUsMessageSubject": "Request To Increase Transaction Limits",
         "contactSupportToPerformKyc": "Contact support to perform manual KYC to increase your limit",
-        "increaseLimits": "Increase your limits"
+        "increaseLimits": "Incrementa els teus límits"
     },
     "TransactionScreen": {
         "noTransaction": "Ho hi ha cap transacció per mostrar",
@@ -698,8 +779,8 @@
     "UpgradeAccountModal": {
         "title": "Millora el teu compte",
         "backUpFunds": "Back up your funds",
-        "higherLimits": "Increase your transaction limits",
-        "receiveOnchain": "Receive bitcoin onchain",
+        "higherLimits": "Incrementa els teus límits de transacció",
+        "receiveOnchain": "Rep bitcoin onchain",
         "onlyAPhoneNumber": "Quick and easy phone number verification",
         "letsGo": "Anem!",
         "stayInTrialMode": "Mantenir-se en mode de prova"
@@ -746,6 +827,43 @@
         "tryAgain": "Torna-ho a intentar",
         "sendViaOtherChannel": "You selected to receive the code via {channel: string}. You can try receiving via {other: string} instead"
     },
+    "PhoneRegistrationInitiateScreen": {
+        "title": "Phone set up",
+        "header": "Introdueix el teu número de telèfon, i t'enviarem un codi d'accés.",
+        "headerVerify": "Verifica que ets una persona",
+        "errorRequestingCode": "Something went wrong requesting the phone code, please try again later.",
+        "errorInvalidPhoneNumber": "Invalid phone number. Are you sure you entered the right number?",
+        "errorUnsupportedCountry": "We are unable to support customers in your country.",
+        "placeholder": "Número de telèfon",
+        "verify": "Clica per verificar",
+        "sms": "Envia per SMS",
+        "whatsapp": "Envia per WhatsApp"
+    },
+    "PhoneRegistrationValidateScreen": {
+        "successTitle": "número de telèfon confirmat"
+    },
+    "EmailRegistrationInitiateScreen": {
+        "title": "Afegeix el teu correu electrònic",
+        "header": "Enter your email address, and we'll send you an access code.",
+        "invalidEmail": "Invalid email address. Are you sure you entered the right email?",
+        "send": "Enviar codi",
+        "missingEmailRegistrationId": "Missing email registration id",
+        "placeholder": "hal@finney.org"
+    },
+    "EmailRegistrationValidateScreen": {
+        "header": "To confirm your email address, enter the code we just sent you on {email: string}",
+        "success": "Email {email: string} confirmed successfully"
+    },
+    "EmailLoginInitiateScreen": {
+        "title": "Inicia sessió via correu electrònic",
+        "header": "Enter your email address, and we'll send you an access code.",
+        "invalidEmail": "Invalid email address. Are you sure you entered the right email?",
+        "send": "Enviar codi"
+    },
+    "EmailLoginValidateScreen": {
+        "header": "If there is an account attached to {email: string}, you should have received 6 digits code to enter below.\n\nIf you are not receiving anything, it's probably either because this is not the right email, the email is in your spam folder.",
+        "success": "Email {email: string} confirmed successfully"
+    },
     "common": {
         "account": "Compte",
         "transactionLimits": "Límits de transacció",
@@ -765,6 +883,7 @@
         "close": "Tanca",
         "confirm": "Confirma",
         "convert": "Converteix",
+        "codeConfirmation": "Codi de confirmació",
         "currency": "Moneda",
         "currencySyncIssue": "Currency issue. Refresh needed",
         "csvExport": "Exporta les transaccions com a CSV",
@@ -789,13 +908,16 @@
         "loggedOut": "Has tancat la sessió.",
         "logout": "Sortir",
         "minutes": "minuts",
+        "errorAuthToken": "Missing auth token",
         "needWallet": "Log in or create an account to access your wallet",
         "next": "Següent",
         "No": "No",
         "note": "Nota",
         "notification": "Notificació",
         "ok": "D'acord",
+        "or": "o",
         "openWallet": "Obrir el moneder",
+        "phone": "Telèfon",
         "phoneNumber": "Número de telèfon",
         "rate": "Tarifa",
         "reauth": "La teva sessió ha caducat. Si us plau, torna a iniciar la sessió.",
@@ -809,7 +931,9 @@
         "shareBitcoin": "Comparteix l'adreça Bitcoin",
         "shareLightning": "Comparteix la factura Lightning",
         "soon": "Pròximament!",
+        "submit": "Enviar",
         "success": "Èxit!",
+        "stablesatsUsd": "Stablesats USD",
         "to": "a",
         "total": "Total",
         "transactions": "Transaccions",
@@ -858,14 +982,16 @@
         "joinTheCommunity": "Join the community",
         "whatsapp": "WhatsApp",
         "email": "Correu electrònic",
+        "enjoyingApp": "Enjoying the app?",
         "statusPage": "Pàgina d'estat",
         "telegram": "Telegram",
         "mattermost": "Mattermost",
+        "thankYouText": "Thank you for the feedback, would you like to suggest an improvement?",
         "defaultEmailSubject": "{bankName: string} - Suport",
         "defaultSupportMessage": "Hola! Necessito ajuda amb {bankName}, utilitzo la versió {version} de {os}.",
         "emailCopied": "l'adreça electrònica {email} s'ha copiat al porta-retalls",
         "deleteAccount": "Elimina el compte",
-        "delete": "delete",
+        "delete": "esborrar",
         "typeDelete": "Please type \"{delete: string}\" to confirm account deletion",
         "finalConfirmationAccountDeletionTitle": "Final Confirmation Required",
         "finalConfirmationAccountDeletionMessage": "Are you sure you want to delete your account? This action is irreversible.",
@@ -873,7 +999,7 @@
         "deleteAccountConfirmation": "Your account has been written for deletion.\n\nWhen the probation period related to regulatory requirement is over, the remaining data related to your account will be permanently deleted.",
         "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
         "deleteAccountError": "Something went wrong. Contact {email: string} for further assistance.",
-        "bye": "Bye!"
+        "bye": "Adéu!"
     },
     "lnurl": {
         "overLimit": "No pots enviar més que l'import màxim",
@@ -891,7 +1017,7 @@
         "minAmountNotMet": "l'import ha de ser com a mínimt {minAmount}."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Toca per definir l'import"
+        "tapToSetAmount": "Set amount"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Necessito actualitzar l'aplicació a la última versió. Utilitzo  la aplicació per a {os} versió {version}.",
@@ -899,5 +1025,53 @@
         "updateMandatory": "L'actualització és obligatòria",
         "tapHereUpdate": "Prem aquí per actualitzar ara",
         "contactSupport": "Contacta amb suport"
+    },
+    "Circles": {
+        "title": "Els meus Cercles",
+        "titleBlinkCircles": "Cercles de Blink",
+        "circles": "cercles",
+        "circlesExplainer": "Your circles grow as you welcome others to Blink - by sending somebody their first sats.",
+        "viewMyCircles": "Veure els meus cercles",
+        "introducingCircles": "Introduint Cercles",
+        "copiedInviteLink": "Copied Invite Link",
+        "inviteFriendToBlink": "Invite a friend to Blink",
+        "shareCircles": "Share your circles",
+        "share": "Comparteix",
+        "circlesGrowingSatsExplainer": {
+            "your": "El teu",
+            "grow": "grow when you send a new Blink user their first sats!"
+        },
+        "circlesGrowingKeepGoing": "Your circles grow as you welcome people to Blink – keep going!",
+        "points": "punts",
+        "innerCircleGrow": "Your inner circle grows when you send a Blink user their first sats!",
+        "calculatingYourCircles": "Calculating your circles...",
+        "innerCircleExplainer": "You're driving Bitcoin adoption with Blink, keep it up!",
+        "innerCircleExplainerCard": "I'm driving Bitcoin adoption with Blink!",
+        "innerCircle": "Inner Circle",
+        "peopleYouWelcomed": "people you welcomed",
+        "peopleIWelcomed": "people \nI welcomed",
+        "thisMonth": "aquest mes",
+        "outerCircle": "Outer Circle",
+        "peopleWelcomedByYourCircle": "people welcomed by your circle",
+        "peopleWelcomedByMyCircle": "people welcomed by my circle",
+        "yourSphere": "La teva esfera",
+        "mySphere": "La meva esfera",
+        "yourRankMessage": "You're #{thisMonthRank: number} this month and #{allTimeRank: number} all time!",
+        "rankMessage": "#{thisMonthRank: number} this month and #{allTimeRank: number} all time!",
+        "inviteFriends": "Invita un amic",
+        "buildYourCircle": "Crea els teus cercles",
+        "myBlinkCircles": "Els meus Cercles Blink",
+        "someones": "{username: string}'s",
+        "groupEffort": "Bitcoin adoption is a group effort.\nInvite a friend and send them sats to start building your circles.",
+        "drivingAdoption": "I'm driving Bitcoin adoption using Blink.",
+        "septChallenge": {
+            "title": "September Challenge!",
+            "description": "Inner Circle {innerCircle: number}/21 - Earn $21\nTop 3 - Win tickets to Adopting Bitcoin!",
+            "details": "Grow your inner circle by 21 people in September and share on social with #blinkcircles to get $21 to your Stablesats account. Top 3 win tickets to Adopting Bitcoin!",
+            "peopleWelcomedSoFar": "people welcomed so far",
+            "yourRank": "el teu rang",
+            "reminder": "Reminder: Your inner circle grows when you send a new Blink user their first sats",
+            "fullDetails": "Full details at"
+        }
     }
 }
