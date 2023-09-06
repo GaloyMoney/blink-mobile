@@ -1,7 +1,7 @@
 import { ActivityIndicator, View } from "react-native"
 
 import { makeStyles, Text } from "@rneui/themed"
-import { useNavigation } from "@react-navigation/native"
+import { useFocusEffect, useNavigation } from "@react-navigation/native"
 import { PeopleStackParamList } from "@app/navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { useCirclesQuery } from "@app/graphql/generated"
@@ -10,24 +10,43 @@ import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-but
 import { PressableCard } from "@app/components/pressable-card"
 import { useCountUp } from "use-count-up"
 import { getcBackValue } from "@app/components/circle"
+import { useCallback, useEffect, useState } from "react"
 
 export const CirclesCardPeopleHome = () => {
   const styles = useStyles()
   const navigation = useNavigation<StackNavigationProp<PeopleStackParamList>>()
   const { LL } = useI18nContext()
 
-  const { data, loading } = useCirclesQuery({
+  const { data, loading, refetch } = useCirclesQuery({
     fetchPolicy: "cache-and-network",
   })
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch()
+    }, [refetch]),
+  )
 
   const peopleInInnerCircle =
     data?.me?.defaultAccount.welcomeProfile?.innerCircleAllTimeCount || 0
   const isLonely = peopleInInnerCircle === 0
 
-  const { value: peopleInInnerCircleCountUp } = useCountUp({
-    isCounting: !loading,
+  const [prevInnerCircleCount, setPrevInnerCircleCount] = useState(peopleInInnerCircle)
+
+  useEffect(() => {
+    if (prevInnerCircleCount !== peopleInInnerCircle) {
+      reset()
+    }
+  }, [prevInnerCircleCount, peopleInInnerCircle])
+
+  const { value: peopleInInnerCircleCountUp, reset } = useCountUp({
+    isCounting: true,
+    start: prevInnerCircleCount,
     end: peopleInInnerCircle,
     duration: 1.2,
+    onComplete: () => {
+      setPrevInnerCircleCount(peopleInInnerCircle)
+    },
   })
 
   const cBackValue = getcBackValue(Number(peopleInInnerCircleCountUp), 1, 100, 250, 360)
@@ -49,47 +68,30 @@ export const CirclesCardPeopleHome = () => {
           </View>
           <View style={styles.separator}></View>
         </View>
-
-        {loading ? (
-          <>
-            <View>
-              <Text type={isLonely ? "p1" : "p2"} style={styles.textCenter}>
-                {LL.Circles.circlesGrowingKeepGoing()}
-              </Text>
-            </View>
-            <View style={styles.pointsContainer}>
+        <View>
+          <Text type={isLonely ? "p1" : "p2"} style={styles.textCenter}>
+            {isLonely ? LL.Circles.groupEffort() : LL.Circles.circlesGrowingKeepGoing()}
+          </Text>
+        </View>
+        <View style={styles.pointsContainer}>
+          <Text style={styles.pointsNumber}>{peopleInInnerCircleCountUp}</Text>
+          <Text style={styles.pointsText} type="p2">
+            {LL.Circles.peopleYouWelcomed()}
+          </Text>
+        </View>
+        <View style={styles.loadingInfoContainer}>
+          {loading && (
+            <View style={styles.loadingView}>
+              <Text type={"p3"}>{LL.Circles.fetchingLatestCircles()}</Text>
               <ActivityIndicator />
             </View>
-            <GaloySecondaryButton
-              style={styles.viewCirclescta}
-              title={LL.Circles.viewMyCircles()}
-              onPress={openBlinkCirclesDashboard}
-            />
-          </>
-        ) : (
-          <>
-            <View>
-              <Text type={isLonely ? "p1" : "p2"} style={styles.textCenter}>
-                {isLonely
-                  ? LL.Circles.groupEffort()
-                  : LL.Circles.circlesGrowingKeepGoing()}
-              </Text>
-            </View>
-            {!isLonely && (
-              <View style={styles.pointsContainer}>
-                <Text style={styles.pointsNumber}>{peopleInInnerCircleCountUp}</Text>
-                <Text style={styles.pointsText} type="p2">
-                  {LL.Circles.peopleYouWelcomed()}
-                </Text>
-              </View>
-            )}
-            <GaloySecondaryButton
-              style={styles.viewCirclescta}
-              title={LL.Circles.viewMyCircles()}
-              onPress={openBlinkCirclesDashboard}
-            />
-          </>
-        )}
+          )}
+        </View>
+        <GaloySecondaryButton
+          style={styles.viewCirclescta}
+          title={LL.Circles.viewMyCircles()}
+          onPress={openBlinkCirclesDashboard}
+        />
         <View style={[styles.backdropCircle, cBackStyles]}></View>
       </View>
     </PressableCard>
@@ -109,6 +111,14 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "center",
     position: "relative",
     overflow: "hidden",
+  },
+  loadingInfoContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  loadingView: {
+    flexDirection: "row",
+    columnGap: 10,
   },
   blinkCircles: {
     display: "flex",

@@ -1130,6 +1130,7 @@ const en: BaseTranslation = {
   Circles: {
     title: "My Circles",
     titleBlinkCircles: "Blink Circles",
+    fetchingLatestCircles: "Fetching latest circles",
     circles: "circles",
     circlesExplainer:
       "Your circles grow as you welcome others to Blink - by sending somebody their first sats.",
