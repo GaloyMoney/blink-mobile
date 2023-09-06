@@ -524,7 +524,7 @@
         "paycode": "Código de pago",
         "onchain": "Onchain",
         "bitcoin": "Bitcoin",
-        "stablesats": "Stablesats",
+        "stablesats": "Stablesats\n ",
         "regenerateInvoiceButtonTitle": "Regenerar la factura",
         "setUsernameButtonTitle": "Establecer nombre de usuario",
         "invoiceHasExpired": "La factura ha vencido",
@@ -698,7 +698,10 @@
         "totp": "Autenticación de dos factores",
         "totpDeactivated": "La autenticación de dos factores ha sido desactivada",
         "totpDeleteAlertTitle": "Eliminar la autenticación de dos factores",
-        "totpDeleteAlertContent": "¿Está seguro de que desea eliminar su autenticación de dos factores?"
+        "totpDeleteAlertContent": "¿Está seguro de que desea eliminar su autenticación de dos factores?",
+        "copiedAccountId": "Copied your account ID to clipboard",
+        "yourAccountId": "Your Account ID",
+        "copy": "Copiar"
     },
     "TotpRegistrationInitiateScreen": {
         "title": "Autenticación de dos factores",
@@ -1014,7 +1017,7 @@
         "minAmountNotMet": "La cantidad debe ser como mínimo {minAmount}."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Pulse para establecer una cantidad"
+        "tapToSetAmount": "Set amount"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Necesito actualizar la aplicación a la última versión. Utilizo la aplicación para {os} con la versión {version}.",
@@ -1064,7 +1067,7 @@
         "septChallenge": {
             "title": "¡Reto de septiembre!",
             "description": "Círculo Interno {innerCircle: number}/21 - Gana $21\nTop 3 - ¡Gane boletos para Adopting Bitcoin!",
-            "details": "Has crecer tu círculo íntimo en 21 personas en septiembre y obtén $21 en tu cuenta de Stablesats. ¡Los 3 mejores ganan boletos para \"Adopting Bitcoin 2023\"!",
+            "details": "Aumenta tu círculo interno a 21 personas en septiembre y compártelo en las redes sociales con #blinkcircles para obtener 21 $ en tu cuenta de Stablesats. Los 3 mejores ganarán entradas para adopting Bitcoin!",
             "peopleWelcomedSoFar": "gente bienvenida hasta ahora",
             "yourRank": "Tu puesto",
             "reminder": "Recordatorio: tu círculo interno crece cuando envías a un nuevo usuario de Blink sus primeros sats",
