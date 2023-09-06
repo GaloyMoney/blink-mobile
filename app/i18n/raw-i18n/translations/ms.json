@@ -698,7 +698,10 @@
         "totp": "Pengesahan dua kali",
         "totpDeactivated": "Pengesahan dua kali telah pun diaktifkan",
         "totpDeleteAlertTitle": "Buang pengesahan dua kali",
-        "totpDeleteAlertContent": "Adakah anda pasti mahu membuang pengesahan dua kali ini?"
+        "totpDeleteAlertContent": "Adakah anda pasti mahu membuang pengesahan dua kali ini?",
+        "copiedAccountId": "Copied your account ID to clipboard",
+        "yourAccountId": "Your Account ID",
+        "copy": "Salin"
     },
     "TotpRegistrationInitiateScreen": {
         "title": "Pengesahan dua kali",
@@ -1014,7 +1017,7 @@
         "minAmountNotMet": "Amaun minimum mestilah {AmaunMinimum: string}."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Tekan untuk tetapkan amaun"
+        "tapToSetAmount": "Set amount"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Aku perlu kemaskini aplikasi ini kepada yang terkini. Aku gunakan {os: string} dengan versi aplikasi {versi: string}",
@@ -1064,7 +1067,7 @@
         "septChallenge": {
             "title": "Cabaran September!",
             "description": "Kumpulan Kecil {innerCircle: number}/21 - Dapatkan $21\n3 Teratas - Menangi tiket ke Adopting Bitcoin!",
-            "details": "Kembangkan kumpulan kecil anda menjadi 21 orang pada September ini dan dapat $21 dalam akaun stablesats anda. 3 yang teratas akan memenangi tiket Adopting Bitcoin!",
+            "details": "Grow your inner circle by 21 people in September and share on social with #blinkcircles to get $21 to your Stablesats account. Top 3 win tickets to Adopting Bitcoin!",
             "peopleWelcomedSoFar": "Kenalan yang telah menyertai setakat ini",
             "yourRank": "ranking kedudukan anda",
             "reminder": "Perhatian: Kumpulan kecil anda akan bertambah sekiranya anda menghantar sats kepada pengguna baru Blink ",
