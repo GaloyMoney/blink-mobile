@@ -1067,7 +1067,7 @@
         "drivingAdoption": "J’adopte Bitcoin en utilisant Blink.",
         "septChallenge": {
             "title": "Défi de septembre !",
-            "description": "Cercle intime {innerCircle: number}/21 - Gagnez $21\nTop 3 - Gagnez votre billet pour Adopting Bitcoin !",
+            "description": "Cercle interne {innerCircle: number}/21 - Gagnez $21\nTop 3 - Gagnez votre billet pour Adopting Bitcoin !",
             "details": "Augmentez votre cercle intime de 21 personnes en septembre et partagez sur les réseaux sociaux avec l’hashtag #blinkcircles pour recevoir $21 sur votre compte Stablesats. Les 3 finalistes gagneront leur billet pour la conférence Adopting Bitcoin !",
             "peopleWelcomedSoFar": "personnes parrainées pour le moment",
             "yourRank": "votre classement",
