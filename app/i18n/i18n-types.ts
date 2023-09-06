@@ -3575,6 +3575,10 @@ type RootTranslation = {
 		 */
 		titleBlinkCircles: string
 		/**
+		 * F​e​t​c​h​i​n​g​ ​l​a​t​e​s​t​ ​c​i​r​c​l​e​s
+		 */
+		fetchingLatestCircles: string
+		/**
 		 * c​i​r​c​l​e​s
 		 */
 		circles: string
@@ -7215,6 +7219,10 @@ export type TranslationFunctions = {
 		 * Blink Circles
 		 */
 		titleBlinkCircles: () => LocalizedString
+		/**
+		 * Fetching latest circles
+		 */
+		fetchingLatestCircles: () => LocalizedString
 		/**
 		 * circles
 		 */
