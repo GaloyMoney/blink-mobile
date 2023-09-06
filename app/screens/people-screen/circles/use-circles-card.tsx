@@ -1,5 +1,5 @@
 import { useCirclesQuery, WelcomeProfile } from "@app/graphql/generated"
-import { makeStyles, Text, useTheme } from "@rneui/themed"
+import { makeStyles, Text, ThemeProvider, useTheme } from "@rneui/themed"
 import { forwardRef, useMemo, useRef } from "react"
 import { View, Share as NativeShare } from "react-native"
 
@@ -14,6 +14,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { getInviteLink } from "@app/config/appinfo"
 import { useAppConfig } from "@app/hooks"
+import theme from "@app/rne-theme/theme"
 
 export const useCirclesCard = () => {
   const shareImgRef = useRef<View | null>(null)
@@ -27,11 +28,18 @@ export const useCirclesCard = () => {
   const ShareImg = useMemo(() => {
     if (welcomeProfile)
       return (
-        <ShareImageComponent
-          ref={shareImgRef}
-          username={username}
-          welcomeProfile={welcomeProfile}
-        />
+        <ThemeProvider
+          theme={{
+            ...theme,
+            mode: "dark",
+          }}
+        >
+          <ShareImageComponent
+            ref={shareImgRef}
+            username={username}
+            welcomeProfile={welcomeProfile}
+          />
+        </ThemeProvider>
       )
     return <></>
   }, [username, welcomeProfile])
@@ -102,10 +110,10 @@ const ShareImageComponent: React.FC<ShareImageProps & React.RefAttributes<View>>
             angle={190}
             angleCenter={{ x: 0.5, y: 0.5 }}
           >
-            <Text type="h1" style={styles.boldText} color={colors._black}>
+            <Text type="h1" style={styles.boldText} color={colors.white}>
               {LL.Circles.myBlinkCircles()}
             </Text>
-            <Text type="p2" color={colors._black}>
+            <Text type="p2" color={colors.white}>
               {lnAddress}
             </Text>
           </LinearGradient>
@@ -164,7 +172,7 @@ const useStyles = makeStyles(({ colors }) => ({
     top: -10000,
     left: -10000,
 
-    // // /* Enable these and disable top two to debug view
+    // Enable these and disable top two to debug view
     // top: 0,
     // left: "10%",
     // borderWidth: 1,
@@ -175,7 +183,6 @@ const useStyles = makeStyles(({ colors }) => ({
     //     scale: 0.8,
     //   },
     // ],
-    // */
 
     height: 480,
     width: (480 * 3) / 4,
