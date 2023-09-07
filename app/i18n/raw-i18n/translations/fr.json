@@ -538,7 +538,7 @@
             "expiresIn": "Expire dans {duration: string}",
             "expiresNow": "Expire maintenant"
         },
-        "invoiceHasBeenPaid": "La facture a été réglée",
+        "invoiceHasBeenPaid": "La facture a été payée",
         "onChainAddress": "Adresse On-chain",
         "receiveViaInvoice": "Recevoir via Lightning",
         "receiveViaPaycode": "Recevoir via un code de paiement",
