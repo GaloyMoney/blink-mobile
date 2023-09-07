@@ -37,11 +37,15 @@
         "unlock": "Բացել",
         "usePin": "Օգտագործել PIN"
     },
-    "ContactsScreen": {
+    "PeopleScreen": {
+        "title": "Մարդիկ",
+        "copy": "Պատճենել",
         "noContactsTitle": "Կոնտակտներ չեն գտնվել",
         "noContactsYet": "Ուղարկեք կամ ստացեք վճարում օգտանունով, և կոնտակտները ավտոմատ կերպով կավելացվեն այստեղ:",
         "noMatchingContacts": "Ձեր փնտրմանը համապատախան կոնտակտներ չեն գտնվել։",
-        "title": "Կոնտակտներ"
+        "allContacts": "Բոլոր կոնտակտները",
+        "viewAllContacts": "Դիտել բոլոր կոնտակտները",
+        "frequentContacts": "Հաճախակի օգտագործվող կոնտակտներ"
     },
     "ContactDetailsScreen": {
         "title": "Գործառնություններ {username: string}"
@@ -511,14 +515,14 @@
         "shareAddress": "Կիսվել հասցեով",
         "generatingInvoice": "Վճարման հարցման ստեղծում",
         "regenerateInvoice": "Վճարման հարցման վերաստեղծում",
-        "useABitcoinOnchainAddress": "Օգտագործել բլոկչեյն հասցե",
+        "useABitcoinOnchainAddress": "Օգտագործել onchain հասցե",
         "useALightningInvoice": "Օգտագործել Lightning վճարման հարցում",
         "setANote": "Սահմանել նշում",
         "invoiceAmount": "Վճարման հարցման չափ",
         "fees": "{minBankFee: string} սատոշիների վճարներ բլոկչեյնում վճարման համար {minBankFeeThreshold: string} սատոշիներից ստորև",
         "lightning": "Lightning",
         "paycode": "Վճարման ծածկագիր",
-        "onchain": "Բլոկչեյնում",
+        "onchain": "Onchain",
         "bitcoin": "Բիթքոյն",
         "stablesats": "Stableսատեր",
         "regenerateInvoiceButtonTitle": "Վճարման հարցման վերաստեղծում",
@@ -535,10 +539,10 @@
             "expiresNow": "Ժամկետը լրանում է հիմա"
         },
         "invoiceHasBeenPaid": "Վճարման հարցումը կատարվել է",
-        "yourBitcoinOnChainAddress": "Ձեր բլոկչեյնում Ձեր Բիթքոյն հասցեն",
+        "onChainAddress": "Onchain հասցե",
         "receiveViaInvoice": "Ստանալ Lightning-ի միջոցով",
         "receiveViaPaycode": "Ստանալ վճարման ծածկագրի միջոցով",
-        "receiveViaOnchain": "Ստանալ Բլոկչեյնի միջոցով",
+        "receiveViaOnchain": "Ստանալ Onchain-ի միջոցով",
         "payCodeOrLNURL": "Վճարման ծածկագիրը/LNURL"
     },
     "RedeemBitcoinScreen": {
@@ -694,7 +698,10 @@
         "totp": "Երկգործոն նույնականացում",
         "totpDeactivated": "Երկգործոն նույնականացումը դեակտիվացվել է",
         "totpDeleteAlertTitle": "Ջնջել երկգործոն նույնականացումը",
-        "totpDeleteAlertContent": "Դուք վստա՞հ եք, որ ցանկանում եք ջնջել Ձեր երկգործոն նույնականացումը։ "
+        "totpDeleteAlertContent": "Դուք վստա՞հ եք, որ ցանկանում եք ջնջել Ձեր երկգործոն նույնականացումը։ ",
+        "copiedAccountId": "Copied your account ID to clipboard",
+        "yourAccountId": "Your Account ID",
+        "copy": "Պատճենել"
     },
     "TotpRegistrationInitiateScreen": {
         "title": "Երկգործոն նույնականացում",
@@ -773,7 +780,7 @@
         "title": "Թարմացրել Ձեր հաշիվը",
         "backUpFunds": "Պահուստավորել ֆինանսները",
         "higherLimits": "Մեծացնել գործառնությունների սահմանները",
-        "receiveOnchain": "Ստանալ բիթքոյնի բլոկչեյնում",
+        "receiveOnchain": "Ստանալ բիթքոյն բլոկչեյնում",
         "onlyAPhoneNumber": "Հեռախոսահամարի արագ և հեշտ հաստատում ",
         "letsGo": "Գնացի՛նք։",
         "stayInTrialMode": "Մնալ փորձնական ռեժիմում"
@@ -1010,7 +1017,7 @@
         "minAmountNotMet": "Գումարի չափը պետք է լինի առնվազն  {minAmount: string}։ "
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Սեղմել՝ գումարի չափը սահմանելու համար"
+        "tapToSetAmount": "Set amount"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Ես պետք է թարմացնել հավելվածը։ Ես օգտագործում եմ {os: string} հավելվածը {version: string} տարբերակով։ ",
@@ -1018,5 +1025,53 @@
         "updateMandatory": "Թարմացումը պարտադիր է",
         "tapHereUpdate": "Սեղմել՝ հիմա թարմացնելու համար",
         "contactSupport": "Կապ հաստատել աջակցության ծառայության հետ"
+    },
+    "Circles": {
+        "title": "Իմ կապերը",
+        "titleBlinkCircles": "Blink կապեր",
+        "circles": "կապեր",
+        "circlesExplainer": "Ձեր կապերն ավելանում են, երբ Դուք հրավիրում եք այլոց Blink՝ նրանց ուղարկելով իրենց առաջին սատերը։ ",
+        "viewMyCircles": "Դիտել իմ կապերը",
+        "introducingCircles": "Ներկայացնում եք Կապերը",
+        "copiedInviteLink": "Հրավերի հղումը պատճենվել է",
+        "inviteFriendToBlink": "Հրավիրիր ընկերոջդ Blink",
+        "shareCircles": "Կիսվիր քո կապերով",
+        "share": "Կիսվել",
+        "circlesGrowingSatsExplainer": {
+            "your": "Քո",
+            "grow": "Կապերդ ընդլայնիր ուղարկելով նոր Blink օգտատիրոջ իր առաջին սատերը։"
+        },
+        "circlesGrowingKeepGoing": "Քո կապերն ավելանում են այլ մարդկանց Blink հրավիրելուն պես։ Շարունակի՛ր հրավիրել։ ",
+        "points": "բալեր",
+        "innerCircleGrow": "Your inner circle grows when you send a Blink user their first sats!",
+        "calculatingYourCircles": "Calculating your circles...",
+        "innerCircleExplainer": "You're driving Bitcoin adoption with Blink, keep it up!",
+        "innerCircleExplainerCard": "I'm driving Bitcoin adoption with Blink!",
+        "innerCircle": "Inner Circle",
+        "peopleYouWelcomed": "people you welcomed",
+        "peopleIWelcomed": "people \nI welcomed",
+        "thisMonth": "this month",
+        "outerCircle": "Outer Circle",
+        "peopleWelcomedByYourCircle": "people welcomed by your circle",
+        "peopleWelcomedByMyCircle": "people welcomed by my circle",
+        "yourSphere": "Your Sphere",
+        "mySphere": "My Sphere",
+        "yourRankMessage": "You're #{thisMonthRank: number} this month and #{allTimeRank: number} all time!",
+        "rankMessage": "#{thisMonthRank: number} this month and #{allTimeRank: number} all time!",
+        "inviteFriends": "Invite a friend",
+        "buildYourCircle": "Build your circles",
+        "myBlinkCircles": "My Blink Circles",
+        "someones": "{username: string}'s",
+        "groupEffort": "Bitcoin adoption is a group effort.\nInvite a friend and send them sats to start building your circles.",
+        "drivingAdoption": "I'm driving Bitcoin adoption using Blink.",
+        "septChallenge": {
+            "title": "September Challenge!",
+            "description": "Inner Circle {innerCircle: number}/21 - Earn $21\nTop 3 - Win tickets to Adopting Bitcoin!",
+            "details": "Grow your inner circle by 21 people in September and share on social with #blinkcircles to get $21 to your Stablesats account. Top 3 win tickets to Adopting Bitcoin!",
+            "peopleWelcomedSoFar": "people welcomed so far",
+            "yourRank": "your rank",
+            "reminder": "Reminder: Your inner circle grows when you send a new Blink user their first sats",
+            "fullDetails": "Full details at"
+        }
     }
 }
