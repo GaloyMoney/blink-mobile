@@ -645,7 +645,7 @@
     },
     "SettingsScreen": {
         "activated": "Activé",
-        "addressScreen": "Manières d’être payé",
+        "addressScreen": "Moyens de se faire payer",
         "tapUserName": "Appuyez pour définir l’identifiant",
         "title": "Réglages",
         "darkMode": "Mode sombre",
