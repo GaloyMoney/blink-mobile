@@ -698,7 +698,10 @@
         "totp": "İki aşamalı doğrulama",
         "totpDeactivated": "İki aşamalı doğrulama kapatıldı",
         "totpDeleteAlertTitle": "İki aşamalı doğrulamayı sil",
-        "totpDeleteAlertContent": "İki aşamalı doğrulamanızı silmek istediğinize emin misiniz?"
+        "totpDeleteAlertContent": "İki aşamalı doğrulamanızı silmek istediğinize emin misiniz?",
+        "copiedAccountId": "Copied your account ID to clipboard",
+        "yourAccountId": "Your Account ID",
+        "copy": "Kopyala"
     },
     "TotpRegistrationInitiateScreen": {
         "title": "İki aşamalı doğrulama",
@@ -1014,7 +1017,7 @@
         "minAmountNotMet": "Tutar en az {minAmount: string} olmalıdır."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Tutarı ayarlamak için dokunun"
+        "tapToSetAmount": "Set amount"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Uygulamamı en son sürüme güncellemem gerekiyor. {os: string} uygulamasının {version: string} sürümünü kullanıyorum.",
@@ -1064,7 +1067,7 @@
         "septChallenge": {
             "title": "Eylül Meydan Okuması!",
             "description": "Yakın Çevre {innerCircle: number}/21 - 21 $ Kazan\nİlk 3 - Adopting Bitcoin'e bilet kazanın!",
-            "details": "Eylül ayında yakın çevrenizi 21 kişiye kadar genişletin ve 21 dolar Stablesats hesabınıza yatsın. İlk 3 kişi Adopting Bitcoin'e bilet kazanacak!",
+            "details": "Grow your inner circle by 21 people in September and share on social with #blinkcircles to get $21 to your Stablesats account. Top 3 win tickets to Adopting Bitcoin!",
             "peopleWelcomedSoFar": "şimdiye kadar karşılanan insanlar",
             "yourRank": "sıralamanız",
             "reminder": "Uyarı: Yakın çevreniz yeni Blink kullanıcılarına ilk SAT'larını gönderdiğinizde genişler.",
