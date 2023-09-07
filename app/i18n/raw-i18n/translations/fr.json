@@ -24,7 +24,7 @@
         "title": "Définir le compte par défaut",
         "description": "Ce compte sera d’abord sélectionné pour envoyer et recevoir des paiements. Il peut être modifié à tout moment.",
         "stablesatsTag": "Choisir cette option pour garder un montant stable du dollar US.",
-        "bitcoinTag": "Choisir ceci pour être dans le standard Bitcoin."
+        "bitcoinTag": "Choisir cette option pour être dans le standard Bitcoin."
     },
     "NoteInput": {
         "addNote": "Ajouter une note"
