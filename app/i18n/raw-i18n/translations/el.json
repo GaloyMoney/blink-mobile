@@ -698,7 +698,10 @@
         "totp": "Έλεγχος ταυτότητας δύο παραγόντων",
         "totpDeactivated": "Ο έλεγχος ταυτότητας δύο παραγόντων έχει απενεργοποιηθεί",
         "totpDeleteAlertTitle": "Διαγραφή ελέγχου ταυτότητας δύο παραγόντων",
-        "totpDeleteAlertContent": "Είσαστε σίγουροι πως θέλετε να διαγράψετε τον έλεγχο ταυτότητας δύο παραγόντων;"
+        "totpDeleteAlertContent": "Είσαστε σίγουροι πως θέλετε να διαγράψετε τον έλεγχο ταυτότητας δύο παραγόντων;",
+        "copiedAccountId": "Copied your account ID to clipboard",
+        "yourAccountId": "Your Account ID",
+        "copy": "Αντιγραφή"
     },
     "TotpRegistrationInitiateScreen": {
         "title": "Έλεγχος ταυτότητας δύο παραγόντων",
@@ -1014,7 +1017,7 @@
         "minAmountNotMet": "Το ποσό πρέπει να είναι τουλάχιστον {minAmount: string}."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Πατήστε για να ορίσετε ποσό"
+        "tapToSetAmount": "Set amount"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Πρέπει να ενημερώσω την εφαρμογή μου με την τελευταία έκδοση. Χρησιμοποιώ την εφαρμογή {os: string} με έκδοση {version: string}.",
@@ -1040,6 +1043,7 @@
         },
         "circlesGrowingKeepGoing": "Οι κύκλοι σας μεγαλώνουν καθώς καλωσορίζετε ανθρώπους στην Blink - συνεχίστε!",
         "points": "πόντοι",
+        "innerCircleGrow": "Your inner circle grows when you send a Blink user their first sats!",
         "calculatingYourCircles": "Υπολογισμός των κύκλων σας...",
         "innerCircleExplainer": "Προωθείτε την υιοθέτηση του Bitcoin με την Blink, συνεχίστε έτσι!",
         "innerCircleExplainerCard": "Προωθώ την υιοθέτηση του Bitcoin με την Blink!",
@@ -1057,6 +1061,17 @@
         "inviteFriends": "Προσκαλέστε ένα φίλο",
         "buildYourCircle": "Κτίστε τους κύκλους σας",
         "myBlinkCircles": "Οι κύκλοι μου στην Blink",
-        "someones": "{όνομα χρήστη: string} του"
+        "someones": "{όνομα χρήστη: string} του",
+        "groupEffort": "Bitcoin adoption is a group effort.\nInvite a friend and send them sats to start building your circles.",
+        "drivingAdoption": "I'm driving Bitcoin adoption using Blink.",
+        "septChallenge": {
+            "title": "September Challenge!",
+            "description": "Inner Circle {innerCircle: number}/21 - Earn $21\nTop 3 - Win tickets to Adopting Bitcoin!",
+            "details": "Grow your inner circle by 21 people in September and share on social with #blinkcircles to get $21 to your Stablesats account. Top 3 win tickets to Adopting Bitcoin!",
+            "peopleWelcomedSoFar": "people welcomed so far",
+            "yourRank": "your rank",
+            "reminder": "Reminder: Your inner circle grows when you send a new Blink user their first sats",
+            "fullDetails": "Full details at"
+        }
     }
 }
