@@ -718,7 +718,7 @@
     },
     "CopySecretComponent": {
         "button": "Copier le code secret",
-        "toastMessage": "Le code secret à été copié au presse-papiers !"
+        "toastMessage": "Le code secret à été copié dans le presse-papiers !"
     },
     "DefaultWalletScreen": {
         "title": "Compte par défaut",
