@@ -698,7 +698,10 @@
         "totp": "Twee-faktor-verifikasie",
         "totpDeactivated": "Twee-faktor-verifikasie is gedeaktiveer",
         "totpDeleteAlertTitle": "Verwyder twee-faktor-verifikasie",
-        "totpDeleteAlertContent": "Is jy seker jy wil twee-faktor-verifikasie verwyder?"
+        "totpDeleteAlertContent": "Is jy seker jy wil twee-faktor-verifikasie verwyder?",
+        "copiedAccountId": "Jou rekening ID is oorgedra na die knipbord ",
+        "yourAccountId": "Jou rekening ID",
+        "copy": "Dra oor"
     },
     "TotpRegistrationInitiateScreen": {
         "title": "Twee-faktor-verifikasie",
@@ -1014,7 +1017,7 @@
         "minAmountNotMet": "Bedrag moet minstens {minAmount: string} wees."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Tik om bedrag te stel"
+        "tapToSetAmount": "Stel bedrag "
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Ek moet opgradeer na die nuutste weergawe. Ek gebruik tans die {os: string} toepassing met die weergawe {version: string}.",
@@ -1026,6 +1029,7 @@
     "Circles": {
         "title": "My Sirkels",
         "titleBlinkCircles": "Blink Sirkels",
+        "fetchingLatestCircles": "Verkry tans mees onlangse sirkels ",
         "circles": "sirkels",
         "circlesExplainer": "Jou sirkels groei soos jy ander by Blink verwelkom deur aan iemand hul eerste sats te stuur.",
         "viewMyCircles": "Wys my sirkels",
@@ -1064,7 +1068,7 @@
         "septChallenge": {
             "title": "September Uitdaging!",
             "description": "Binnesirkel {innerCircle: number}/21 - Verdien $21\nTop 3 - Wen kaartjies na Adopting Bitcoin!",
-            "details": "Groei jou binnesirkel met 21 mense in Septeember en kry $21 by jou Stablesats-rekening. Top 3 wen kaartjies na Adopting Bitcoin!",
+            "details": "Groei jou binne sirkel met 21 mense in September en deel op sosiale media met #blinkcircles om $21 se Stablesats na jou blink rekening te ontvang. Top 3 wen kaartjies na Adopting Bitcoin! ",
             "peopleWelcomedSoFar": "mense reeds verwelkom",
             "yourRank": "Jou rang",
             "reminder": "Herhindering: Jou binnesirkel groei wanneer jy die eerste sats na 'n nuwe Blink-gebruiker stuur",
