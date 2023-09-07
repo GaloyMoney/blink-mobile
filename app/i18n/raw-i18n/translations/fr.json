@@ -38,7 +38,7 @@
         "usePin": "Utilisez un NIP"
     },
     "PeopleScreen": {
-        "title": "Les personnes",
+        "title": "Cercles",
         "copy": "Copier",
         "noContactsTitle": "Aucun contact trouvé",
         "noContactsYet": "Envoyez ou recevez un paiement en utilisant un nom d’utilisateur et il sera automatiquement ajouté à vos contacts ici",
