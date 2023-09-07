@@ -9,7 +9,7 @@
         "merchantTitle": "Pour les commerçants",
         "yourCashRegister": "Votre terminal de paiement Lightning",
         "yourPaycode": "Votre Code de paiement",
-        "copiedAddressToClipboard": "Adresse copiée {bankName: string} dans le presse-papiers",
+        "copiedAddressToClipboard": "Adresse {bankName: string} copiée dans le presse-papiers",
         "copiedPaycodeToClipboard": "Code de paiement copié dans le presse-papiers",
         "copiedCashRegisterLinkToClipboard": "Lien du terminal de paiement copié au presse-papier",
         "howToUseIt": "Comment l’utiliser ?",
