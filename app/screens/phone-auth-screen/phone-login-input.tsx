@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native"
+import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useEffect } from "react"
@@ -98,7 +98,21 @@ const useStyles = makeStyles(({ colors }) => ({
   loadingView: { flex: 1, justifyContent: "center", alignItems: "center" },
 }))
 
-export const PhoneLoginInitiateScreen: React.FC = () => {
+export const PhoneLoginInitiateType = {
+  Login: "Login",
+  CreateAccount: "CreateAccount",
+} as const
+
+const DisableCountriesForAccountCreation = ["US"]
+
+export type PhoneLoginInitiateType =
+  (typeof PhoneLoginInitiateType)[keyof typeof PhoneLoginInitiateType]
+type PhoneLoginInitiateScreenProps = {
+  route: RouteProp<PhoneValidationStackParamList, "phoneLoginInitiate">
+}
+export const PhoneLoginInitiateScreen: React.FC<PhoneLoginInitiateScreenProps> = ({
+  route,
+}) => {
   const styles = useStyles()
 
   const navigation =
@@ -128,6 +142,11 @@ export const PhoneLoginInitiateScreen: React.FC = () => {
   } = useRequestPhoneCodeLogin()
 
   const { LL } = useI18nContext()
+
+  const isDisabledCountryAndCreateAccount =
+    route.params.type === PhoneLoginInitiateType.CreateAccount &&
+    phoneInputInfo?.countryCode &&
+    DisableCountriesForAccountCreation.includes(phoneInputInfo.countryCode)
 
   useEffect(() => {
     if (status === RequestPhoneCodeStatus.SuccessRequestingCode) {
@@ -172,6 +191,9 @@ export const PhoneLoginInitiateScreen: React.FC = () => {
   if (!isSmsSupported && !isWhatsAppSupported) {
     errorMessage = LL.PhoneLoginInitiateScreen.errorUnsupportedCountry()
   }
+  if (isDisabledCountryAndCreateAccount) {
+    errorMessage = LL.PhoneLoginInitiateScreen.errorUnsupportedCountry()
+  }
 
   let PrimaryButton = undefined
   let SecondaryButton = undefined
@@ -182,6 +204,7 @@ export const PhoneLoginInitiateScreen: React.FC = () => {
           title={LL.PhoneLoginInitiateScreen.sms()}
           loading={captchaLoading && phoneCodeChannel === PhoneCodeChannelType.Sms}
           onPress={() => submitPhoneNumber(PhoneCodeChannelType.Sms)}
+          disabled={isDisabledCountryAndCreateAccount}
         />
       )
       SecondaryButton = (
@@ -190,6 +213,7 @@ export const PhoneLoginInitiateScreen: React.FC = () => {
           containerStyle={styles.whatsAppButton}
           loading={captchaLoading && phoneCodeChannel === PhoneCodeChannelType.Whatsapp}
           onPress={() => submitPhoneNumber(PhoneCodeChannelType.Whatsapp)}
+          disabled={isDisabledCountryAndCreateAccount}
         />
       )
       break
@@ -199,6 +223,7 @@ export const PhoneLoginInitiateScreen: React.FC = () => {
           title={LL.PhoneLoginInitiateScreen.sms()}
           loading={captchaLoading && phoneCodeChannel === PhoneCodeChannelType.Sms}
           onPress={() => submitPhoneNumber(PhoneCodeChannelType.Sms)}
+          disabled={isDisabledCountryAndCreateAccount}
         />
       )
       break
@@ -208,6 +233,7 @@ export const PhoneLoginInitiateScreen: React.FC = () => {
           title={LL.PhoneLoginInitiateScreen.whatsapp()}
           loading={captchaLoading && phoneCodeChannel === PhoneCodeChannelType.Whatsapp}
           onPress={() => submitPhoneNumber(PhoneCodeChannelType.Whatsapp)}
+          disabled={isDisabledCountryAndCreateAccount}
         />
       )
       break
@@ -273,7 +299,6 @@ export const PhoneLoginInitiateScreen: React.FC = () => {
             <ContactSupportButton containerStyle={styles.contactSupportButton} />
           </View>
         )}
-
         <View style={styles.buttonsContainer}>
           {SecondaryButton}
           {PrimaryButton}

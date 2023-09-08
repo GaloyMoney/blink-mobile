@@ -64,4 +64,3 @@ generates:
         _FieldSet: "string"
         EndpointId: "string"
         EndpointUrl: "string"
-        Object: "string"
