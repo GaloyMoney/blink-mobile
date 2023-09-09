@@ -34,6 +34,9 @@ export type Scalars = {
   EmailAddress: { input: string; output: string; }
   /** An id to be passed between registrationInitiate and registrationValidate for confirming email */
   EmailRegistrationId: { input: string; output: string; }
+  EndpointId: { input: string; output: string; }
+  /** Url that will be fetched on events for the account */
+  EndpointUrl: { input: string; output: string; }
   /** Feedback shared with our user */
   Feedback: { input: string; output: string; }
   /** Hex-encoded string of 32 bytes */
@@ -85,6 +88,7 @@ export type Scalars = {
 
 export type Account = {
   readonly btcWallet?: Maybe<BtcWallet>;
+  readonly callbackEndpoints: ReadonlyArray<CallbackEndpoint>;
   readonly csvTransactions: Scalars['String']['output'];
   readonly defaultWallet?: Maybe<Wallet>;
   readonly defaultWalletId: Scalars['WalletId']['output'];
@@ -211,6 +215,27 @@ export type BuildInformation = {
   readonly helmRevision?: Maybe<Scalars['Int']['output']>;
 };
 
+export type CallbackEndpoint = {
+  readonly __typename: 'CallbackEndpoint';
+  readonly id: Scalars['EndpointId']['output'];
+  readonly url: Scalars['EndpointUrl']['output'];
+};
+
+export type CallbackEndpointAddInput = {
+  /** callback endpoint to be called */
+  readonly url: Scalars['EndpointUrl']['input'];
+};
+
+export type CallbackEndpointAddPayload = {
+  readonly __typename: 'CallbackEndpointAddPayload';
+  readonly errors: ReadonlyArray<Error>;
+  readonly id?: Maybe<Scalars['EndpointId']['output']>;
+};
+
+export type CallbackEndpointDeleteInput = {
+  readonly id: Scalars['EndpointId']['input'];
+};
+
 export type CaptchaCreateChallengePayload = {
   readonly __typename: 'CaptchaCreateChallengePayload';
   readonly errors: ReadonlyArray<Error>;
@@ -242,6 +267,7 @@ export type CentAmountPayload = {
 export type ConsumerAccount = Account & {
   readonly __typename: 'ConsumerAccount';
   readonly btcWallet?: Maybe<BtcWallet>;
+  readonly callbackEndpoints: ReadonlyArray<CallbackEndpoint>;
   /** return CSV stream, base64 encoded, of the list of transactions in the wallet */
   readonly csvTransactions: Scalars['String']['output'];
   readonly defaultWallet?: Maybe<Wallet>;
@@ -619,6 +645,8 @@ export type Mutation = {
   readonly accountDelete: AccountDeletePayload;
   readonly accountUpdateDefaultWalletId: AccountUpdateDefaultWalletIdPayload;
   readonly accountUpdateDisplayCurrency: AccountUpdateDisplayCurrencyPayload;
+  readonly callbackEndpointAdd: CallbackEndpointAddPayload;
+  readonly callbackEndpointDelete: SuccessPayload;
   readonly captchaCreateChallenge: CaptchaCreateChallengePayload;
   readonly captchaRequestAuthCode: SuccessPayload;
   readonly deviceNotificationTokenCreate: SuccessPayload;
@@ -731,6 +759,16 @@ export type MutationAccountUpdateDefaultWalletIdArgs = {
 
 export type MutationAccountUpdateDisplayCurrencyArgs = {
   input: AccountUpdateDisplayCurrencyInput;
+};
+
+
+export type MutationCallbackEndpointAddArgs = {
+  input: CallbackEndpointAddInput;
+};
+
+
+export type MutationCallbackEndpointDeleteArgs = {
+  input: CallbackEndpointDeleteInput;
 };
 
 
@@ -6220,6 +6258,10 @@ export type ResolversTypes = {
   AuthTokenPayload: ResolverTypeWrapper<AuthTokenPayload>;
   BTCWallet: ResolverTypeWrapper<BtcWallet>;
   BuildInformation: ResolverTypeWrapper<BuildInformation>;
+  CallbackEndpoint: ResolverTypeWrapper<CallbackEndpoint>;
+  CallbackEndpointAddInput: CallbackEndpointAddInput;
+  CallbackEndpointAddPayload: ResolverTypeWrapper<CallbackEndpointAddPayload>;
+  CallbackEndpointDeleteInput: CallbackEndpointDeleteInput;
   CaptchaCreateChallengePayload: ResolverTypeWrapper<CaptchaCreateChallengePayload>;
   CaptchaCreateChallengeResult: ResolverTypeWrapper<CaptchaCreateChallengeResult>;
   CaptchaRequestAuthCodeInput: CaptchaRequestAuthCodeInput;
@@ -6239,6 +6281,8 @@ export type ResolversTypes = {
   Email: ResolverTypeWrapper<Email>;
   EmailAddress: ResolverTypeWrapper<Scalars['EmailAddress']['output']>;
   EmailRegistrationId: ResolverTypeWrapper<Scalars['EmailRegistrationId']['output']>;
+  EndpointId: ResolverTypeWrapper<Scalars['EndpointId']['output']>;
+  EndpointUrl: ResolverTypeWrapper<Scalars['EndpointUrl']['output']>;
   Error: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['Error']>;
   ExchangeCurrencyUnit: ExchangeCurrencyUnit;
   Feedback: ResolverTypeWrapper<Scalars['Feedback']['output']>;
@@ -6411,6 +6455,10 @@ export type ResolversParentTypes = {
   AuthTokenPayload: AuthTokenPayload;
   BTCWallet: BtcWallet;
   BuildInformation: BuildInformation;
+  CallbackEndpoint: CallbackEndpoint;
+  CallbackEndpointAddInput: CallbackEndpointAddInput;
+  CallbackEndpointAddPayload: CallbackEndpointAddPayload;
+  CallbackEndpointDeleteInput: CallbackEndpointDeleteInput;
   CaptchaCreateChallengePayload: CaptchaCreateChallengePayload;
   CaptchaCreateChallengeResult: CaptchaCreateChallengeResult;
   CaptchaRequestAuthCodeInput: CaptchaRequestAuthCodeInput;
@@ -6430,6 +6478,8 @@ export type ResolversParentTypes = {
   Email: Email;
   EmailAddress: Scalars['EmailAddress']['output'];
   EmailRegistrationId: Scalars['EmailRegistrationId']['output'];
+  EndpointId: Scalars['EndpointId']['output'];
+  EndpointUrl: Scalars['EndpointUrl']['output'];
   Error: ResolversInterfaceTypes<ResolversParentTypes>['Error'];
   Feedback: Scalars['Feedback']['output'];
   FeedbackSubmitInput: FeedbackSubmitInput;
@@ -6582,6 +6632,7 @@ export type DeferDirectiveResolver<Result, Parent, ContextType = any, Args = Def
 export type AccountResolvers<ContextType = any, ParentType extends ResolversParentTypes['Account'] = ResolversParentTypes['Account']> = {
   __resolveType: TypeResolveFn<'ConsumerAccount', ParentType, ContextType>;
   btcWallet?: Resolver<Maybe<ResolversTypes['BTCWallet']>, ParentType, ContextType>;
+  callbackEndpoints?: Resolver<ReadonlyArray<ResolversTypes['CallbackEndpoint']>, ParentType, ContextType>;
   csvTransactions?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<AccountCsvTransactionsArgs, 'walletIds'>>;
   defaultWallet?: Resolver<Maybe<ResolversTypes['Wallet']>, ParentType, ContextType>;
   defaultWalletId?: Resolver<ResolversTypes['WalletId'], ParentType, ContextType>;
@@ -6655,6 +6706,18 @@ export type BuildInformationResolvers<ContextType = any, ParentType extends Reso
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type CallbackEndpointResolvers<ContextType = any, ParentType extends ResolversParentTypes['CallbackEndpoint'] = ResolversParentTypes['CallbackEndpoint']> = {
+  id?: Resolver<ResolversTypes['EndpointId'], ParentType, ContextType>;
+  url?: Resolver<ResolversTypes['EndpointUrl'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CallbackEndpointAddPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['CallbackEndpointAddPayload'] = ResolversParentTypes['CallbackEndpointAddPayload']> = {
+  errors?: Resolver<ReadonlyArray<ResolversTypes['Error']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['EndpointId']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type CaptchaCreateChallengePayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['CaptchaCreateChallengePayload'] = ResolversParentTypes['CaptchaCreateChallengePayload']> = {
   errors?: Resolver<ReadonlyArray<ResolversTypes['Error']>, ParentType, ContextType>;
   result?: Resolver<Maybe<ResolversTypes['CaptchaCreateChallengeResult']>, ParentType, ContextType>;
@@ -6681,6 +6744,7 @@ export type CentAmountPayloadResolvers<ContextType = any, ParentType extends Res
 
 export type ConsumerAccountResolvers<ContextType = any, ParentType extends ResolversParentTypes['ConsumerAccount'] = ResolversParentTypes['ConsumerAccount']> = {
   btcWallet?: Resolver<Maybe<ResolversTypes['BTCWallet']>, ParentType, ContextType>;
+  callbackEndpoints?: Resolver<ReadonlyArray<ResolversTypes['CallbackEndpoint']>, ParentType, ContextType>;
   csvTransactions?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<ConsumerAccountCsvTransactionsArgs, 'walletIds'>>;
   defaultWallet?: Resolver<Maybe<ResolversTypes['Wallet']>, ParentType, ContextType>;
   defaultWalletId?: Resolver<ResolversTypes['WalletId'], ParentType, ContextType>;
@@ -6754,6 +6818,14 @@ export interface EmailAddressScalarConfig extends GraphQLScalarTypeConfig<Resolv
 
 export interface EmailRegistrationIdScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['EmailRegistrationId'], any> {
   name: 'EmailRegistrationId';
+}
+
+export interface EndpointIdScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['EndpointId'], any> {
+  name: 'EndpointId';
+}
+
+export interface EndpointUrlScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['EndpointUrl'], any> {
+  name: 'EndpointUrl';
 }
 
 export type ErrorResolvers<ContextType = any, ParentType extends ResolversParentTypes['Error'] = ResolversParentTypes['Error']> = {
@@ -6927,6 +6999,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   accountDelete?: Resolver<ResolversTypes['AccountDeletePayload'], ParentType, ContextType>;
   accountUpdateDefaultWalletId?: Resolver<ResolversTypes['AccountUpdateDefaultWalletIdPayload'], ParentType, ContextType, RequireFields<MutationAccountUpdateDefaultWalletIdArgs, 'input'>>;
   accountUpdateDisplayCurrency?: Resolver<ResolversTypes['AccountUpdateDisplayCurrencyPayload'], ParentType, ContextType, RequireFields<MutationAccountUpdateDisplayCurrencyArgs, 'input'>>;
+  callbackEndpointAdd?: Resolver<ResolversTypes['CallbackEndpointAddPayload'], ParentType, ContextType, RequireFields<MutationCallbackEndpointAddArgs, 'input'>>;
+  callbackEndpointDelete?: Resolver<ResolversTypes['SuccessPayload'], ParentType, ContextType, RequireFields<MutationCallbackEndpointDeleteArgs, 'input'>>;
   captchaCreateChallenge?: Resolver<ResolversTypes['CaptchaCreateChallengePayload'], ParentType, ContextType>;
   captchaRequestAuthCode?: Resolver<ResolversTypes['SuccessPayload'], ParentType, ContextType, RequireFields<MutationCaptchaRequestAuthCodeArgs, 'input'>>;
   deviceNotificationTokenCreate?: Resolver<ResolversTypes['SuccessPayload'], ParentType, ContextType, RequireFields<MutationDeviceNotificationTokenCreateArgs, 'input'>>;
@@ -7450,6 +7524,8 @@ export type Resolvers<ContextType = any> = {
   AuthTokenPayload?: AuthTokenPayloadResolvers<ContextType>;
   BTCWallet?: BtcWalletResolvers<ContextType>;
   BuildInformation?: BuildInformationResolvers<ContextType>;
+  CallbackEndpoint?: CallbackEndpointResolvers<ContextType>;
+  CallbackEndpointAddPayload?: CallbackEndpointAddPayloadResolvers<ContextType>;
   CaptchaCreateChallengePayload?: CaptchaCreateChallengePayloadResolvers<ContextType>;
   CaptchaCreateChallengeResult?: CaptchaCreateChallengeResultResolvers<ContextType>;
   CentAmount?: GraphQLScalarType;
@@ -7466,6 +7542,8 @@ export type Resolvers<ContextType = any> = {
   Email?: EmailResolvers<ContextType>;
   EmailAddress?: GraphQLScalarType;
   EmailRegistrationId?: GraphQLScalarType;
+  EndpointId?: GraphQLScalarType;
+  EndpointUrl?: GraphQLScalarType;
   Error?: ErrorResolvers<ContextType>;
   Feedback?: GraphQLScalarType;
   FeesInformation?: FeesInformationResolvers<ContextType>;

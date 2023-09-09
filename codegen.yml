@@ -62,3 +62,6 @@ generates:
         join__FieldSet: "string"
         link__Import: "string"
         _FieldSet: "string"
+        EndpointId: "string"
+        EndpointUrl: "string"
+        Object: "string"
