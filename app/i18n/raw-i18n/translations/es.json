@@ -524,7 +524,7 @@
         "paycode": "Código de pago",
         "onchain": "Onchain",
         "bitcoin": "Bitcoin",
-        "stablesats": "Stablesats\n ",
+        "stablesats": "Stablesats",
         "regenerateInvoiceButtonTitle": "Regenerar la factura",
         "setUsernameButtonTitle": "Establecer nombre de usuario",
         "invoiceHasExpired": "La factura ha vencido",
@@ -699,8 +699,8 @@
         "totpDeactivated": "La autenticación de dos factores ha sido desactivada",
         "totpDeleteAlertTitle": "Eliminar la autenticación de dos factores",
         "totpDeleteAlertContent": "¿Está seguro de que desea eliminar su autenticación de dos factores?",
-        "copiedAccountId": "Copied your account ID to clipboard",
-        "yourAccountId": "Your Account ID",
+        "copiedAccountId": "Copiaste la ID de tu cuenta al portapapeles",
+        "yourAccountId": "ID de tu cuenta",
         "copy": "Copiar"
     },
     "TotpRegistrationInitiateScreen": {
@@ -1017,7 +1017,7 @@
         "minAmountNotMet": "La cantidad debe ser como mínimo {minAmount}."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Set amount"
+        "tapToSetAmount": "Fijar cantidad"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Necesito actualizar la aplicación a la última versión. Utilizo la aplicación para {os} con la versión {version}.",
@@ -1029,6 +1029,7 @@
     "Circles": {
         "title": "Mis círculos",
         "titleBlinkCircles": "Círculos Blink",
+        "fetchingLatestCircles": "Obteniendo los últimos círculos",
         "circles": "círculos",
         "circlesExplainer": "Tus círculos crecen a medida que les das la bienvenida a Blink a otros, enviándoles a alguien sus primeros sats.",
         "viewMyCircles": "Ver mis círculos",
