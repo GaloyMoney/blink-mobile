@@ -96,7 +96,7 @@ const ReceiveScreen = () => {
           buttons={[
             {
               id: WalletCurrency.Btc,
-              text: LL.ReceiveScreen.bitcoin(),
+              text: "Bitcoin",
               icon: {
                 selected: <GaloyCurrencyBubble currency="BTC" iconSize={16} />,
                 normal: (
@@ -106,7 +106,7 @@ const ReceiveScreen = () => {
             },
             {
               id: WalletCurrency.Usd,
-              text: LL.ReceiveScreen.stablesats(),
+              text: "Stablesats",
               icon: {
                 selected: <GaloyCurrencyBubble currency="USD" iconSize={16} />,
                 normal: (
@@ -209,13 +209,13 @@ const ReceiveScreen = () => {
           buttons={[
             {
               id: Invoice.Lightning,
-              text: LL.ReceiveScreen.lightning(),
+              text: "Lightning",
               icon: "md-flash",
             },
-            { id: Invoice.PayCode, text: LL.ReceiveScreen.paycode(), icon: "md-at" },
+            { id: Invoice.PayCode, text: "Paycode", icon: "md-at" },
             {
               id: Invoice.OnChain,
-              text: LL.ReceiveScreen.onchain(),
+              text: "Onchain",
               icon: "logo-bitcoin",
             },
           ]}
