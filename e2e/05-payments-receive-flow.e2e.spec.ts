@@ -12,6 +12,7 @@ import {
   clickPressable,
   waitTillPressableDisplayed,
   waitTillOnHomeScreen,
+  scrollUp,
 } from "./utils"
 
 import jimp from "jimp"
@@ -89,6 +90,8 @@ describe("Receive BTC Amount Payment Flow", () => {
   })
 
   it("Capture screenshot and decode QR code to match with invoice", async () => {
+    await scrollUp()
+
     const screenshot = await browser.takeScreenshot()
     const buffer = Buffer.from(screenshot, "base64")
     const image = await jimp.read(buffer)
@@ -157,6 +160,8 @@ describe("Receive BTC Amountless Invoice Payment Flow", () => {
   })
 
   it("Capture screenshot and decode QR code to match with invoice", async () => {
+    await scrollUp()
+
     const screenshot = await browser.takeScreenshot()
     const buffer = Buffer.from(screenshot, "base64")
     const image = await jimp.read(buffer)
@@ -230,6 +235,8 @@ describe("Receive USD Payment Flow", () => {
   })
 
   it("Capture screenshot and decode QR code to match with invoice", async () => {
+    await scrollUp()
+
     const screenshot = await browser.takeScreenshot()
     const buffer = Buffer.from(screenshot, "base64")
     const image = await jimp.read(buffer)
@@ -276,6 +283,8 @@ describe("Receive via Onchain", () => {
     const onchainButton = await $(selector(LL.ReceiveScreen.onchain(), "StaticText"))
     await onchainButton.waitForDisplayed({ timeout })
     await onchainButton.click()
+
+    await browser.pause(5000) // BTC takes a little time to generate QR
   })
 
   it("Click Copy BTC Invoice", async () => {
@@ -308,6 +317,8 @@ describe("Receive via Onchain", () => {
   })
 
   it("Capture screenshot and decode QR code to match with invoice", async () => {
+    await scrollUp()
+
     const screenshot = await browser.takeScreenshot()
     const buffer = Buffer.from(screenshot, "base64")
     const image = await jimp.read(buffer)
@@ -347,6 +358,8 @@ describe("Receive via Onchain on USD", () => {
     const usdInvoiceButton = await $(selector(LL.ReceiveScreen.stablesats(), "Other"))
     await usdInvoiceButton.waitForDisplayed({ timeout })
     await usdInvoiceButton.click()
+
+    await browser.pause(5000) // BTC takes a little time to generate QR
   })
 
   it("Click Copy BTC Invoice", async () => {
@@ -379,6 +392,8 @@ describe("Receive via Onchain on USD", () => {
   })
 
   it("Capture screenshot and decode QR code to match with invoice", async () => {
+    await scrollUp()
+
     const screenshot = await browser.takeScreenshot()
     const buffer = Buffer.from(screenshot, "base64")
     const image = await jimp.read(buffer)
