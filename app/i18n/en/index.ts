@@ -551,11 +551,6 @@ const en: BaseTranslation = {
     invoiceAmount: "Invoice Amount",
     fees:
       "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats",
-    lightning: "Lightning",
-    paycode: "Paycode",
-    onchain: "Onchain",
-    bitcoin: "Bitcoin",
-    stablesats: "Stablesats",
     regenerateInvoiceButtonTitle: "Regenerate Invoice",
     setUsernameButtonTitle: "Set Username",
     invoiceHasExpired: "Invoice has expired",
