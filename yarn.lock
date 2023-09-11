@@ -4025,10 +4025,10 @@
     unbzip2-stream "1.4.3"
     yargs "17.7.1"
 
-"@react-native-async-storage/async-storage@^1.18.1":
-  version "1.18.1"
-  resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.18.1.tgz#b1aea4f07fb1dba3325b857b770671517ddab221"
-  integrity sha512-70aFW8fVCKl+oA1AKPFDpE6s4t9pulj2QeLX+MabEmzfT3urd/3cckv45WJvtocdoIH/oXA3Y+YcCRJCcNa8mA==
+"@react-native-async-storage/async-storage@^1.19.3":
+  version "1.19.3"
+  resolved "https://registry.npmjs.org/@react-native-async-storage/async-storage/-/async-storage-1.19.3.tgz#ad5fe3ed0a82d4624aa4500321c1e09c02daeb46"
+  integrity sha512-CwGfoHCWdPOTPS+2fW6YRE1fFBpT9++ahLEroX5hkgwyoQ+TkmjOaUxixdEIoVua9Pz5EF2pGOIJzqOTMWfBlA==
   dependencies:
     merge-options "^3.0.4"
 
@@ -19780,10 +19780,10 @@ react-native-modal@^13.0.1:
     prop-types "^15.6.2"
     react-native-animatable "1.3.3"
 
-react-native-nfc-manager@^3.14.6:
-  version "3.14.6"
-  resolved "https://registry.npmjs.org/react-native-nfc-manager/-/react-native-nfc-manager-3.14.6.tgz#079cebe0e00bd836d0e733089997bd1e4a061c75"
-  integrity sha512-A86vnMzQ6KzNGoCevI3t7VIju5mAzDeQ5hvGJI7Z7ANtDDfJEDNhqgilxqGi0KX0mDxGEYsctW8GHsJ1Jg/WKQ==
+react-native-nfc-manager@^3.14.8:
+  version "3.14.8"
+  resolved "https://registry.npmjs.org/react-native-nfc-manager/-/react-native-nfc-manager-3.14.8.tgz#8ae9a19b4411c284c3554e2851910ea18adbb074"
+  integrity sha512-ZSvBMN1dDHcYp9RTrNnu6dbEgQpEWZB/PJD3xsWnXpRs1jbReTq2byzdtjNK6wJtUruJ57QG7zXMfm/TKS/I6g==
   dependencies:
     "@expo/config-plugins" "~7.2.2"
 
@@ -19847,10 +19847,10 @@ react-native-safe-area-context@^4.5.0:
   resolved "https://registry.npmjs.org/react-native-safe-area-context/-/react-native-safe-area-context-4.5.0.tgz#9208313236e8f49e1920ac1e2a2c975f03aed284"
   integrity sha512-0WORnk9SkREGUg2V7jHZbuN5x4vcxj/1B0QOcXJjdYWrzZHgLcUzYWWIUecUPJh747Mwjt/42RZDOaFn3L8kPQ==
 
-react-native-screens@^3.19.0:
-  version "3.20.0"
-  resolved "https://registry.npmjs.org/react-native-screens/-/react-native-screens-3.20.0.tgz#4d154177395e5541387d9a05bc2e12e54d2fb5b1"
-  integrity sha512-joWUKWAVHxymP3mL9gYApFHAsbd9L6ZcmpoZa6Sl3W/82bvvNVMqcfP7MeNqVCg73qZ8yL4fW+J/syusHleUgg==
+react-native-screens@^3.25.0:
+  version "3.25.0"
+  resolved "https://registry.npmjs.org/react-native-screens/-/react-native-screens-3.25.0.tgz#cf45e271ce733c9cf782fef8c9b3eb9e53faf01d"
+  integrity sha512-TSC2Ad0hh763I8QT6XxMsPXAagQ+RawDSdFtKRvIz9fCYr96AjRwwaqmYivbqlDywOgcRBkIVynkFtp0ThmlYw==
   dependencies:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
