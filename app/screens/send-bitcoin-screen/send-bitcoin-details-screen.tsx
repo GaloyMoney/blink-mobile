@@ -333,6 +333,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           const result = await requestInvoice({
             lnUrlOrAddress: paymentDetail.destination,
             tokens: utils.toSats(btcAmount.amount),
+            comment: paymentDetail.memo,
           })
           setIsLoadingLnurl(false)
           const invoice = result.invoice
