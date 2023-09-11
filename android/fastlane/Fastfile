@@ -44,17 +44,14 @@ platform :android do
     )
   end
 
-  desc "Deploy a new version to Huawei App Gallery"
+  desc "Deploy the new version to Huawei App Gallery"
   lane :huawei_store_upload do
     huawei_appgallery_connect(
       client_id: ENV["HUAWEI_CLIENT_ID"],
       client_secret: ENV["HUAWEI_CLIENT_SECRET"],
       app_id: ENV["HUAWEI_APP_ID"],
       apk_path: "./app-universal-release.apk",
-      phase_wise_release: true,
-      phase_release_percent: "1",
-      phase_release_description: "Phased Release",
-      submit_for_review: false
+      submit_for_review: true
     )
   end
 
