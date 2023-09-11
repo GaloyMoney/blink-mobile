@@ -445,8 +445,8 @@ PODS:
     - React-Core
   - react-native-view-shot (3.7.0):
     - React-Core
-  - react-native-webview (8.1.1):
-    - React
+  - react-native-webview (13.6.0):
+    - React-Core
   - React-perflogger (0.71.8)
   - React-RCTActionSheet (0.71.8):
     - React-Core/RCTActionSheetHeaders (= 0.71.8)
@@ -957,7 +957,7 @@ SPEC CHECKSUMS:
   react-native-secure-key-store: 910e6df6bc33cb790aba6ee24bc7818df1fe5898
   react-native-slider: 33b8d190b59d4f67a541061bb91775d53d617d9d
   react-native-view-shot: f5507655f122e6b104888a11130f267a427f0d57
-  react-native-webview: 0ec2ca34f52e60892e4a9141508751588d45a518
+  react-native-webview: 669ae162965f629a8d6a4bdd3b99a304d36ef1f2
   React-perflogger: d21f182895de9d1b077f8a3cd00011095c8c9100
   React-RCTActionSheet: 0151f83ef92d2a7139bba7dfdbc8066632a6d47b
   React-RCTAnimation: 5ec9c0705bb2297549c120fe6473aa3e4a01e215
