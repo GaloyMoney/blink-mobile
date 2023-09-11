@@ -65,6 +65,14 @@ export const CirclesCardPeopleHome = () => {
         <View>
           <View style={styles.blinkCircles}>
             <Text type="h2">{LL.Circles.titleBlinkCircles()}</Text>
+            <View style={styles.loadingInfoContainer}>
+              {loading && (
+                <View style={styles.loadingView}>
+                  <Text type={"p3"}>{LL.Circles.fetchingLatestCircles()}</Text>
+                  <ActivityIndicator />
+                </View>
+              )}
+            </View>
           </View>
           <View style={styles.separator}></View>
         </View>
@@ -78,14 +86,6 @@ export const CirclesCardPeopleHome = () => {
           <Text style={styles.pointsText} type="p2">
             {LL.Circles.peopleYouWelcomed()}
           </Text>
-        </View>
-        <View style={styles.loadingInfoContainer}>
-          {loading && (
-            <View style={styles.loadingView}>
-              <Text type={"p3"}>{LL.Circles.fetchingLatestCircles()}</Text>
-              <ActivityIndicator />
-            </View>
-          )}
         </View>
         <GaloySecondaryButton
           style={styles.viewCirclescta}
