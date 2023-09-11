@@ -3583,7 +3583,7 @@ type RootTranslation = {
 		 */
 		circles: string
 		/**
-		 * Y​o​u​r​ ​c​i​r​c​l​e​s​ ​g​r​o​w​ ​a​s​ ​y​o​u​ ​w​e​l​c​o​m​e​ ​o​t​h​e​r​s​ ​t​o​ ​B​l​i​n​k​ ​-​ ​b​y​ ​s​e​n​d​i​n​g​ ​s​o​m​e​b​o​d​y​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s​.
+		 * W​e​l​c​o​m​e​ ​s​o​m​e​o​n​e​ ​t​o​ ​B​l​i​n​k​ ​b​y​ ​s​e​n​d​i​n​g​ ​t​h​e​m​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s​!​ ​Y​o​u​r​ ​c​i​r​c​l​e​s​ ​w​i​l​l​ ​g​r​o​w​ ​w​i​t​h​ ​e​a​c​h​ ​w​e​l​c​o​m​e​.
 		 */
 		circlesExplainer: string
 		/**
@@ -3649,7 +3649,7 @@ type RootTranslation = {
 		 */
 		innerCircle: string
 		/**
-		 * p​e​o​p​l​e​ ​y​o​u​ ​w​e​l​c​o​m​e​d
+		 * p​e​o​p​l​e​ ​w​e​l​c​o​m​e​d​ ​b​y​ ​y​o​u
 		 */
 		peopleYouWelcomed: string
 		/**
@@ -7228,7 +7228,7 @@ export type TranslationFunctions = {
 		 */
 		circles: () => LocalizedString
 		/**
-		 * Your circles grow as you welcome others to Blink - by sending somebody their first sats.
+		 * Welcome someone to Blink by sending them their first sats! Your circles will grow with each welcome.
 		 */
 		circlesExplainer: () => LocalizedString
 		/**
@@ -7294,7 +7294,7 @@ export type TranslationFunctions = {
 		 */
 		innerCircle: () => LocalizedString
 		/**
-		 * people you welcomed
+		 * people welcomed by you
 		 */
 		peopleYouWelcomed: () => LocalizedString
 		/**

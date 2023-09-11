@@ -78,7 +78,7 @@ export const CirclesCardPeopleHome = () => {
         </View>
         <View>
           <Text type={isLonely ? "p1" : "p2"} style={styles.textCenter}>
-            {isLonely ? LL.Circles.groupEffort() : LL.Circles.circlesGrowingKeepGoing()}
+            {LL.Circles.circlesExplainer()}
           </Text>
         </View>
         <View style={styles.pointsContainer}>
@@ -115,6 +115,7 @@ const useStyles = makeStyles(({ colors }) => ({
   loadingInfoContainer: {
     justifyContent: "center",
     alignItems: "center",
+    minHeight: 20,
   },
   loadingView: {
     flexDirection: "row",
