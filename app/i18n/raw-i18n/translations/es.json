@@ -524,7 +524,7 @@
         "paycode": "Código de pago",
         "onchain": "Onchain",
         "bitcoin": "Bitcoin",
-        "stablesats": "Stablesats\n ",
+        "stablesats": "Stablesats",
         "regenerateInvoiceButtonTitle": "Regenerar la factura",
         "setUsernameButtonTitle": "Establecer nombre de usuario",
         "invoiceHasExpired": "La factura ha vencido",
