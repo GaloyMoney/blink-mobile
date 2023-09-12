@@ -15,6 +15,9 @@ import useLogout from "../../hooks/use-logout"
 import { addDeviceToken } from "../../utils/notifications"
 import { testProps } from "../../utils/testProps"
 import { InAppBrowser } from "react-native-inappbrowser-reborn"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 
 gql`
   query debugScreen {
@@ -35,16 +38,24 @@ export const DeveloperScreen: React.FC = () => {
   const { usdPerSat } = usePriceConversion()
   const { logout } = useLogout()
 
+  const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>()
+
   const { appConfig, saveToken, saveTokenAndInstance } = useAppConfig()
   const token = appConfig.token
 
   const { data: dataLevel } = useLevelQuery({ fetchPolicy: "cache-only" })
   const level = String(dataLevel?.me?.defaultAccount?.level)
 
-  const [url, setUrl] = React.useState("http://localhost:3001")
-
   const { data: dataDebug } = useDebugScreenQuery()
   const accountId = dataDebug?.me?.defaultAccount?.id
+
+  const [urlWebView, setUrlWebView] = React.useState("https://fiat.blink.sv")
+  const [urlInAppBrowser, setUrlInAppBrowser] = React.useState("https://kyc.blink.sv")
+
+  React.useEffect(() => {
+    setUrlWebView(`https://fiat.blink.sv?accountId=${accountId}`)
+    setUrlInAppBrowser(`https://kyc.blink.sv?accountId=${accountId}`)
+  }, [accountId])
 
   const [newToken, setNewToken] = React.useState(token)
   const currentGaloyInstance = appConfig.galoyInstance
@@ -97,7 +108,7 @@ export const DeveloperScreen: React.FC = () => {
   const openInAppBrowser = async () => {
     try {
       if (await InAppBrowser.isAvailable()) {
-        const result = await InAppBrowser.open(url, {
+        const result = await InAppBrowser.open(urlInAppBrowser, {
           // iOS Properties
           dismissButtonStyle: "cancel",
           preferredBarTintColor: "#453AA4",
@@ -132,7 +143,7 @@ export const DeveloperScreen: React.FC = () => {
         })
         // await this.sleep(800)
         Alert.alert(JSON.stringify(result))
-      } else Linking.openURL(url)
+      } else Linking.openURL(urlInAppBrowser)
     } catch (error) {
       if (error instanceof Error) {
         Alert.alert(error.message)
@@ -217,8 +228,8 @@ export const DeveloperScreen: React.FC = () => {
         <GaloyInput
           {...testProps("Url in app browser")}
           label="Url in app browser"
-          value={url}
-          onChangeText={setUrl}
+          value={urlInAppBrowser}
+          onChangeText={setUrlInAppBrowser}
           selectTextOnFocus
         />
         <Button
@@ -226,6 +237,23 @@ export const DeveloperScreen: React.FC = () => {
           containerStyle={styles.button}
           {...testProps("Open in app browser")}
           onPress={openInAppBrowser}
+        />
+        <GaloyInput
+          {...testProps("Url webview")}
+          label="Url webview"
+          value={urlWebView}
+          onChangeText={setUrlWebView}
+          selectTextOnFocus
+        />
+        <Button
+          title="Navigate to webview"
+          containerStyle={styles.button}
+          {...testProps("Navigate to webview")}
+          onPress={() =>
+            navigate("webViewDebug", {
+              url: urlWebView,
+            })
+          }
         />
         <View>
           <Text style={styles.textHeader}>Account info</Text>
