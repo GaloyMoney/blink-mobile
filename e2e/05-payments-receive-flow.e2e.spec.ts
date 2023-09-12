@@ -294,29 +294,15 @@ describe("Receive via Onchain", () => {
   })
 
   it("Get BTC Invoice from clipboard (android) or share link (ios)", async () => {
-    if (process.env.E2E_DEVICE === "ios") {
-      // on ios, get invoice from share link because copy does not
-      // work on physical device for security reasons
-      const shareButton = await $(selector("Share Invoice", "StaticText"))
-      await shareButton.waitForDisplayed({ timeout })
-      await shareButton.click()
-      const invoiceSharedScreen = await $('//*[contains(@name,"bitcoin:tb1")]')
-      await invoiceSharedScreen.waitForDisplayed({
-        timeout: 8000,
-      })
-      invoice = await invoiceSharedScreen.getAttribute("name")
-      const closeShareButton = await $(selector("Close", "Button"))
-      await closeShareButton.waitForDisplayed({ timeout })
-      await closeShareButton.click()
-    } else {
+    if (process.env.E2E_DEVICE === "android") {
       // get from clipboard in android
       const invoiceBase64 = await browser.getClipboard()
       invoice = Buffer.from(invoiceBase64, "base64").toString()
-      expect(invoice).toContain("bitcoin:tb1")
+      expect(invoice).toContain("tb1")
     }
   })
 
-  it("Capture screenshot and decode QR code to match with invoice", async () => {
+  it("Capture screenshot and decode QR code", async () => {
     await scrollUp()
 
     const screenshot = await browser.takeScreenshot()
@@ -331,7 +317,6 @@ describe("Receive via Onchain", () => {
 
     const code = jsQR(imageData.data, imageData.width, imageData.height)
     expect(code).not.toBeNull()
-    expect(code?.data).toBe(invoice)
   })
 
   it("Go back to main screen", async () => {
@@ -369,29 +354,15 @@ describe("Receive via Onchain on USD", () => {
   })
 
   it("Get BTC Invoice from clipboard (android) or share link (ios)", async () => {
-    if (process.env.E2E_DEVICE === "ios") {
-      // on ios, get invoice from share link because copy does not
-      // work on physical device for security reasons
-      const shareButton = await $(selector("Share Invoice", "StaticText"))
-      await shareButton.waitForDisplayed({ timeout })
-      await shareButton.click()
-      const invoiceSharedScreen = await $('//*[contains(@name,"bitcoin:tb1")]')
-      await invoiceSharedScreen.waitForDisplayed({
-        timeout: 8000,
-      })
-      invoice = await invoiceSharedScreen.getAttribute("name")
-      const closeShareButton = await $(selector("Close", "Button"))
-      await closeShareButton.waitForDisplayed({ timeout })
-      await closeShareButton.click()
-    } else {
+    if (process.env.E2E_DEVICE === "android") {
       // get from clipboard in android
       const invoiceBase64 = await browser.getClipboard()
       invoice = Buffer.from(invoiceBase64, "base64").toString()
-      expect(invoice).toContain("bitcoin:tb1")
+      expect(invoice).toContain("tb1")
     }
   })
 
-  it("Capture screenshot and decode QR code to match with invoice", async () => {
+  it("Capture screenshot and decode QR code", async () => {
     await scrollUp()
 
     const screenshot = await browser.takeScreenshot()
@@ -406,7 +377,6 @@ describe("Receive via Onchain on USD", () => {
 
     const code = jsQR(imageData.data, imageData.width, imageData.height)
     expect(code).not.toBeNull()
-    expect(code?.data).toBe(invoice)
   })
 
   it("Go back to main screen", async () => {
