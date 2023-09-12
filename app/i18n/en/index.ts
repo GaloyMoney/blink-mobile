@@ -1133,7 +1133,7 @@ const en: BaseTranslation = {
     fetchingLatestCircles: "Fetching latest circles",
     circles: "circles",
     circlesExplainer:
-      "Your circles grow as you welcome others to Blink - by sending somebody their first sats.",
+      "Welcome someone to Blink by sending them their first sats! Your circles will grow with each welcome.",
     viewMyCircles: "View My Circles",
     introducingCircles: "Introducing Circles",
     copiedInviteLink: "Copied Invite Link",
@@ -1153,7 +1153,7 @@ const en: BaseTranslation = {
     innerCircleExplainer: "You're driving Bitcoin adoption with Blink, keep it up!",
     innerCircleExplainerCard: "I'm driving Bitcoin adoption with Blink!",
     innerCircle: "Inner Circle",
-    peopleYouWelcomed: "people you welcomed",
+    peopleYouWelcomed: "people welcomed by you",
     peopleIWelcomed: "people \nI welcomed",
     thisMonth: "this month",
     outerCircle: "Outer Circle",
