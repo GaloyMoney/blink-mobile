@@ -1,31 +1,33 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-// eslint-disable-next-line react-native/split-platform-components
-import { useTheme } from "@rneui/themed"
 import { Alert } from "react-native"
 import { injectJs, onMessageHandler } from "react-native-webln"
 import { WebView } from "react-native-webview"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
+import { RouteProp, useNavigation } from "@react-navigation/native"
+import { makeStyles } from "@rneui/base"
 
-const uri = "http://localhost:3001"
+type WebViewDebugScreenRouteProp = RouteProp<RootStackParamList, "webViewDebug">
 
 type Props = {
-  navigation: StackNavigationProp<RootStackParamList, "Primary">
+  route: WebViewDebugScreenRouteProp
 }
 
-export const WebViewScreen: React.FC<Props> = ({ navigation }) => {
-  const {
-    theme: { colors },
-  } = useTheme()
-  const webview = React.useRef<WebView>()
+export const WebViewScreen: React.FC<Props> = ({ route }) => {
+  const styles = useStyles()
+
+  const { navigate } = useNavigation<StackNavigationProp<RootStackParamList, "Primary">>()
+  const { url } = route.params
+
+  const webview = React.useRef<WebView | null>(null)
   const [jsInjected, setJsInjected] = React.useState(false)
 
   return (
     <Screen>
       <WebView
         ref={webview}
-        source={{ uri }}
+        source={{ uri: url }}
         onLoadStart={() => setJsInjected(false)}
         onLoadProgress={(e) => {
           if (!jsInjected && e.nativeEvent.progress > 0.75) {
@@ -35,38 +37,51 @@ export const WebViewScreen: React.FC<Props> = ({ navigation }) => {
             } else Alert.alert("Error", "Webview not ready")
           }
         }}
-        onMessage={onMessageHandler(webview, {
+        onMessage={onMessageHandler(webview as React.MutableRefObject<WebView>, {
           enable: async () => {
             /* Your implementation goes here */
           },
           getInfo: async () => {
             /* Your implementation goes here */
+            return { node: { alias: "alias", color: "color", pubkey: "pubkey" } }
           },
-          makeInvoice: async (args) => {
+          makeInvoice: async (_args) => {
             /* Your implementation goes here */
+            return { paymentRequest: "paymentRequest" }
           },
           sendPayment: async (paymentRequestStr) => {
-            navigation.navigate("sendBitcoinDestination", {
+            navigate("sendBitcoinDestination", {
               payment: paymentRequestStr,
               autoValidate: true,
             })
+
+            return { preimage: "preimage" }
             /* Your implementation goes here */
           },
-          signMessage: async (message) => {
+          signMessage: async (_message) => {
+            /* Your implementation goes here */
+            return { signature: "signature", message: "message" }
+          },
+          verifyMessage: async (_signature, _message) => {
             /* Your implementation goes here */
           },
-          verifyMessage: async (signature, message) => {
+          keysend: async (_args) => {
             /* Your implementation goes here */
+            return { preimage: "preimage" }
           },
 
           // Non-WebLN
           // Called when an a-tag containing a `lightning:` uri is found on a page
-          foundInvoice: async (paymentRequestStr) => {
-            /* Your implementation goes here */
-          },
+          // foundInvoice: async (paymentRequestStr) => {
+          //   /* Your implementation goes here */
+          // },
         })}
-        style={{ width: "100%", height: "100%", flex: 1 }}
+        style={styles.full}
       />
     </Screen>
   )
 }
+
+const useStyles = makeStyles(() => ({
+  full: { width: "100%", height: "100%", flex: 1 },
+}))

@@ -15,6 +15,9 @@ import useLogout from "../../hooks/use-logout"
 import { addDeviceToken } from "../../utils/notifications"
 import { testProps } from "../../utils/testProps"
 import { InAppBrowser } from "react-native-inappbrowser-reborn"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 
 gql`
   query debugScreen {
@@ -35,13 +38,15 @@ export const DeveloperScreen: React.FC = () => {
   const { usdPerSat } = usePriceConversion()
   const { logout } = useLogout()
 
+  const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>()
+
   const { appConfig, saveToken, saveTokenAndInstance } = useAppConfig()
   const token = appConfig.token
 
   const { data: dataLevel } = useLevelQuery({ fetchPolicy: "cache-only" })
   const level = String(dataLevel?.me?.defaultAccount?.level)
 
-  const [url, setUrl] = React.useState("http://localhost:3001")
+  const [url, setUrl] = React.useState("https://fiat.blink.sv")
 
   const { data: dataDebug } = useDebugScreenQuery()
   const accountId = dataDebug?.me?.defaultAccount?.id
@@ -226,6 +231,16 @@ export const DeveloperScreen: React.FC = () => {
           containerStyle={styles.button}
           {...testProps("Open in app browser")}
           onPress={openInAppBrowser}
+        />
+        <Button
+          title="Navigate to webview"
+          containerStyle={styles.button}
+          {...testProps("Navigate to webview")}
+          onPress={() =>
+            navigate("webViewDebug", {
+              url,
+            })
+          }
         />
         <View>
           <Text style={styles.textHeader}>Account info</Text>
