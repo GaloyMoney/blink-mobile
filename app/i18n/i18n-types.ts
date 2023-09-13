@@ -1719,26 +1719,6 @@ type RootTranslation = {
 		 */
 		fees: RequiredParams<'minBankFee' | 'minBankFeeThreshold'>
 		/**
-		 * L​i​g​h​t​n​i​n​g
-		 */
-		lightning: string
-		/**
-		 * P​a​y​c​o​d​e
-		 */
-		paycode: string
-		/**
-		 * O​n​c​h​a​i​n
-		 */
-		onchain: string
-		/**
-		 * B​i​t​c​o​i​n
-		 */
-		bitcoin: string
-		/**
-		 * S​t​a​b​l​e​s​a​t​s
-		 */
-		stablesats: string
-		/**
 		 * R​e​g​e​n​e​r​a​t​e​ ​I​n​v​o​i​c​e
 		 */
 		regenerateInvoiceButtonTitle: string
@@ -5427,26 +5407,6 @@ export type TranslationFunctions = {
 		 * {minBankFee} sats fees for onchain payment below {minBankFeeThreshold} sats
 		 */
 		fees: (arg: { minBankFee: string, minBankFeeThreshold: string }) => LocalizedString
-		/**
-		 * Lightning
-		 */
-		lightning: () => LocalizedString
-		/**
-		 * Paycode
-		 */
-		paycode: () => LocalizedString
-		/**
-		 * Onchain
-		 */
-		onchain: () => LocalizedString
-		/**
-		 * Bitcoin
-		 */
-		bitcoin: () => LocalizedString
-		/**
-		 * Stablesats
-		 */
-		stablesats: () => LocalizedString
 		/**
 		 * Regenerate Invoice
 		 */

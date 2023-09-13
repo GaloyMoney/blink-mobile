@@ -195,7 +195,7 @@ describe("Receive USD Payment Flow", () => {
   })
 
   it("Click USD invoice button", async () => {
-    const usdInvoiceButton = await $(selector(LL.ReceiveScreen.stablesats(), "Other"))
+    const usdInvoiceButton = await $(selector("Stablesats", "Other"))
     await usdInvoiceButton.waitForDisplayed({ timeout })
     await usdInvoiceButton.click()
   })
@@ -273,7 +273,7 @@ describe("Receive via Onchain", () => {
   })
 
   it("Click Onchain button", async () => {
-    const onchainButton = await $(selector(LL.ReceiveScreen.onchain(), "StaticText"))
+    const onchainButton = await $(selector("Onchain", "StaticText"))
     await onchainButton.waitForDisplayed({ timeout })
     await onchainButton.click()
   })
@@ -338,13 +338,13 @@ describe("Receive via Onchain on USD", () => {
   })
 
   it("Click Onchain button", async () => {
-    const onchainButton = await $(selector(LL.ReceiveScreen.onchain(), "StaticText"))
+    const onchainButton = await $(selector("Onchain", "StaticText"))
     await onchainButton.waitForDisplayed({ timeout })
     await onchainButton.click()
   })
 
   it("Click USD invoice button", async () => {
-    const usdInvoiceButton = await $(selector(LL.ReceiveScreen.stablesats(), "Other"))
+    const usdInvoiceButton = await $(selector("Stablesats", "Other"))
     await usdInvoiceButton.waitForDisplayed({ timeout })
     await usdInvoiceButton.click()
   })
@@ -406,7 +406,7 @@ describe("Receive via Paycode", () => {
   })
 
   it("Click Paycode button", async () => {
-    const paycodeButton = await $(selector(LL.ReceiveScreen.paycode(), "StaticText"))
+    const paycodeButton = await $(selector("Paycode", "StaticText"))
     await paycodeButton.waitForDisplayed({ timeout })
     await paycodeButton.click()
   })
