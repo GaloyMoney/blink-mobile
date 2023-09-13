@@ -18,6 +18,8 @@ import {
 import jimp from "jimp"
 import jsQR from "jsqr"
 
+const WAIT_BEFORE_SCREENSHOT = 3000 // ms
+
 loadLocale("en")
 const LL = i18nObject("en")
 const timeout = 30000
@@ -69,11 +71,12 @@ describe("Receive BTC Amount Payment Flow", () => {
   })
 
   it("Get BTC Invoice from clipboard (android) or share link (ios)", async () => {
+    const shareButton = await $(selector("Share Invoice", "StaticText"))
+    await shareButton.waitForDisplayed({ timeout })
+
     if (process.env.E2E_DEVICE === "ios") {
       // on ios, get invoice from share link because copy does not
       // work on physical device for security reasons
-      const shareButton = await $(selector("Share Invoice", "StaticText"))
-      await shareButton.waitForDisplayed({ timeout })
       await shareButton.click()
       const invoiceSharedScreen = await $('//*[contains(@name,"lntbs")]')
       await invoiceSharedScreen.waitForDisplayed({
@@ -92,6 +95,7 @@ describe("Receive BTC Amount Payment Flow", () => {
   it("Capture screenshot and decode QR code to match with invoice", async () => {
     await scrollUp()
 
+    await browser.pause(WAIT_BEFORE_SCREENSHOT)
     const screenshot = await browser.takeScreenshot()
     const buffer = Buffer.from(screenshot, "base64")
     const image = await jimp.read(buffer)
@@ -137,11 +141,12 @@ describe("Receive BTC Amountless Invoice Payment Flow", () => {
   })
 
   it("Get BTC Invoice from clipboard (android) or share link (ios)", async () => {
+    const shareButton = await $(selector("Share Invoice", "StaticText"))
+    await shareButton.waitForDisplayed({ timeout })
+
     if (process.env.E2E_DEVICE === "ios") {
       // on ios, get invoice from share link because copy does not
       // work on physical device for security reasons
-      const shareButton = await $(selector("Share Invoice", "StaticText"))
-      await shareButton.waitForDisplayed({ timeout })
       await shareButton.click()
       const invoiceSharedScreen = await $('//*[contains(@name,"lntbs")]')
       await invoiceSharedScreen.waitForDisplayed({
@@ -162,6 +167,7 @@ describe("Receive BTC Amountless Invoice Payment Flow", () => {
   it("Capture screenshot and decode QR code to match with invoice", async () => {
     await scrollUp()
 
+    await browser.pause(WAIT_BEFORE_SCREENSHOT)
     const screenshot = await browser.takeScreenshot()
     const buffer = Buffer.from(screenshot, "base64")
     const image = await jimp.read(buffer)
@@ -212,11 +218,12 @@ describe("Receive USD Payment Flow", () => {
   })
 
   it("Get BTC Invoice from clipboard (android) or share link (ios)", async () => {
+    const shareButton = await $(selector("Share Invoice", "StaticText"))
+    await shareButton.waitForDisplayed({ timeout })
+
     if (process.env.E2E_DEVICE === "ios") {
       // on ios, get invoice from share link because copy does not
       // work on physical device for security reasons
-      const shareButton = await $(selector("Share Invoice", "StaticText"))
-      await shareButton.waitForDisplayed({ timeout })
       await shareButton.click()
       const invoiceSharedScreen = await $('//*[contains(@name,"lntbs")]')
       await invoiceSharedScreen.waitForDisplayed({
@@ -237,6 +244,7 @@ describe("Receive USD Payment Flow", () => {
   it("Capture screenshot and decode QR code to match with invoice", async () => {
     await scrollUp()
 
+    await browser.pause(WAIT_BEFORE_SCREENSHOT)
     const screenshot = await browser.takeScreenshot()
     const buffer = Buffer.from(screenshot, "base64")
     const image = await jimp.read(buffer)
@@ -305,6 +313,7 @@ describe("Receive via Onchain", () => {
   it("Capture screenshot and decode QR code", async () => {
     await scrollUp()
 
+    await browser.pause(WAIT_BEFORE_SCREENSHOT)
     const screenshot = await browser.takeScreenshot()
     const buffer = Buffer.from(screenshot, "base64")
     const image = await jimp.read(buffer)
@@ -365,6 +374,7 @@ describe("Receive via Onchain on USD", () => {
   it("Capture screenshot and decode QR code", async () => {
     await scrollUp()
 
+    await browser.pause(WAIT_BEFORE_SCREENSHOT)
     const screenshot = await browser.takeScreenshot()
     const buffer = Buffer.from(screenshot, "base64")
     const image = await jimp.read(buffer)
