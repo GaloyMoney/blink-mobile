@@ -293,7 +293,7 @@ describe("Receive via Onchain", () => {
     await copyInvoiceButton.click()
   })
 
-  it("Get BTC Invoice from clipboard (android) or share link (ios)", async () => {
+  it("Get BTC Invoice from clipboard (android) or skip test (ios)", async () => {
     if (process.env.E2E_DEVICE === "android") {
       // get from clipboard in android
       const invoiceBase64 = await browser.getClipboard()
