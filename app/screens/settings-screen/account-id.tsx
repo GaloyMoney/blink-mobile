@@ -13,7 +13,7 @@ export const AccountId: React.FC = () => {
 
   const styles = useStyles()
 
-  const accountId = data?.me?.id || ""
+  const accountId = data?.me?.defaultAccount?.id || ""
   const last6digitsOfAccountId = accountId?.slice(-6).toUpperCase()
 
   const xs = "********—****—****—****—****** "
