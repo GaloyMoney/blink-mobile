@@ -488,7 +488,8 @@
         "lastWeek": "last week",
         "lastMonth": "last month",
         "lastYear": "last year",
-        "lastFiveYears": "last five years"
+        "lastFiveYears": "last five years",
+        "buyAndSell": "Buy and sell bitcoin"
     },
     "PrimaryScreen": {
         "title": "Home"

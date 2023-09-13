@@ -1604,6 +1604,10 @@ type RootTranslation = {
 		 * l​a​s​t​ ​f​i​v​e​ ​y​e​a​r​s
 		 */
 		lastFiveYears: string
+		/**
+		 * B​u​y​ ​a​n​d​ ​s​e​l​l​ ​b​i​t​c​o​i​n
+		 */
+		buyAndSell: string
 	}
 	PrimaryScreen: {
 		/**
@@ -5295,6 +5299,10 @@ export type TranslationFunctions = {
 		 * last five years
 		 */
 		lastFiveYears: () => LocalizedString
+		/**
+		 * Buy and sell bitcoin
+		 */
+		buyAndSell: () => LocalizedString
 	}
 	PrimaryScreen: {
 		/**

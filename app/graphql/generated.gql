@@ -1057,6 +1057,17 @@ query paymentRequest {
   }
 }
 
+query priceHistoryScreen {
+  me {
+    id
+    defaultAccount {
+      id
+      __typename
+    }
+    __typename
+  }
+}
+
 query quizSats {
   quizQuestions {
     id
