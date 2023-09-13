@@ -8,6 +8,8 @@ import {
   ReceiveDestination,
 } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
 import { WalletDescriptor } from "@app/types/wallets"
+import { PhoneLoginInitiateType } from "@app/screens/phone-auth-screen"
+import { NavigatorScreenParams } from "@react-navigation/native"
 
 export type RootStackParamList = {
   getStarted: undefined
@@ -72,7 +74,7 @@ export type RootStackParamList = {
     settlementAmount: MoneyAmount<typeof WalletCurrency.Btc>
     displayAmount: MoneyAmount<DisplayCurrency>
   }
-  phoneFlow: undefined
+  phoneFlow?: NavigatorScreenParams<PhoneValidationStackParamList>
   phoneRegistrationInitiate: undefined
   phoneRegistrationValidate: { phone: string; channel: PhoneCodeChannelType }
   transactionDetail: { txid: string }
@@ -100,7 +102,9 @@ export type PeopleStackParamList = {
 
 export type PhoneValidationStackParamList = {
   Primary: undefined
-  phoneLoginInitiate: undefined
+  phoneLoginInitiate: {
+    type?: PhoneLoginInitiateType
+  }
   phoneLoginValidate: { phone: string; channel: PhoneCodeChannelType }
   authentication: {
     screenPurpose: AuthenticationScreenPurpose

@@ -15,6 +15,7 @@ import { DeviceAccountModal } from "./device-account-modal"
 import { logGetStartedAction } from "@app/utils/analytics"
 import { useNavigation } from "@react-navigation/native"
 import { testProps } from "@app/utils/testProps"
+import { PhoneLoginInitiateType } from "../phone-auth-screen"
 
 export const GetStartedScreen: React.FC = () => {
   const navigation =
@@ -51,7 +52,21 @@ export const GetStartedScreen: React.FC = () => {
       action: "log_in",
       createDeviceAccountEnabled: Boolean(appCheckToken),
     })
-    navigation.navigate("phoneFlow")
+    navigation.navigate("phoneFlow", {
+      screen: "phoneLoginInitiate",
+      params: { type: PhoneLoginInitiateType.CreateAccount },
+    })
+  }
+
+  const handleLoginWithPhone = () => {
+    logGetStartedAction({
+      action: "log_in",
+      createDeviceAccountEnabled: Boolean(appCheckToken),
+    })
+    navigation.navigate("phoneFlow", {
+      screen: "phoneLoginInitiate",
+      params: { type: PhoneLoginInitiateType.Login },
+    })
   }
 
   const handleExploreWallet = () => {
@@ -97,7 +112,7 @@ export const GetStartedScreen: React.FC = () => {
       <View style={styles.bottom}>
         <GaloyPrimaryButton
           title={LL.GetStartedScreen.createAccount()}
-          onPress={handleCreateAccount}
+          onPress={() => handleCreateAccount()}
           containerStyle={styles.buttonContainer}
         />
         {appCheckToken ? (
@@ -113,7 +128,7 @@ export const GetStartedScreen: React.FC = () => {
         )}
         <View style={styles.loginFooterContainer}>
           <Text type="p2">{LL.GetStartedScreen.logBackInWith()} </Text>
-          <TouchableOpacity activeOpacity={0.5} onPress={handleCreateAccount}>
+          <TouchableOpacity activeOpacity={0.5} onPress={handleLoginWithPhone}>
             <Text type="p2" style={styles.buttonText}>
               {LL.common.phone()}
             </Text>
