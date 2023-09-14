@@ -13,7 +13,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 
 const useStyles = makeStyles((_theme) => ({
   screen: { flex: 1 },
-  button: { padding: 20 },
+  button: { margin: 20 },
 }))
 
 gql`
@@ -49,11 +49,12 @@ export const PriceHistoryScreen: React.FC = () => {
         <GaloyPrimaryButton
           title={LL.PriceHistoryScreen.buyAndSell()}
           onPress={() =>
-            navigate("webViewDebug", {
+            navigate("webView", {
               url: urlWebView,
+              initialTitle: LL.PriceHistoryScreen.buyAndSell(),
             })
           }
-          style={styles.button}
+          containerStyle={styles.button}
         />
       )}
     </Screen>

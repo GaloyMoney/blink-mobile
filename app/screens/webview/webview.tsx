@@ -7,8 +7,9 @@ import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { makeStyles } from "@rneui/base"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
-type WebViewDebugScreenRouteProp = RouteProp<RootStackParamList, "webViewDebug">
+type WebViewDebugScreenRouteProp = RouteProp<RootStackParamList, "webView">
 
 type Props = {
   route: WebViewDebugScreenRouteProp
@@ -18,7 +19,8 @@ export const WebViewScreen: React.FC<Props> = ({ route }) => {
   const styles = useStyles()
 
   const { navigate } = useNavigation<StackNavigationProp<RootStackParamList, "Primary">>()
-  const { url } = route.params
+  const { url, initialTitle } = route.params
+  const { LL } = useI18nContext()
 
   const webview = React.useRef<WebView | null>(null)
   const [jsInjected, setJsInjected] = React.useState(false)
@@ -36,10 +38,18 @@ export const WebViewScreen: React.FC<Props> = ({ route }) => {
   }, [canGoBack, navigation])
 
   React.useEffect(() => {
+    if (!initialTitle) return
+    navigation.setOptions({ title: initialTitle })
+  }, [navigation, initialTitle])
+
+  React.useEffect(() => {
     navigation.setOptions({
-      headerLeft: () => <Button onPress={handleBackPress} title="< Back" />,
+      headerLeft: () => (
+        //                                  FIXME < is not the same as for other screens
+        <Button onPress={handleBackPress} title={`< ${LL.common.back()}`} />
+      ),
     })
-  }, [navigation, handleBackPress])
+  }, [navigation, handleBackPress, LL])
 
   const handleWebViewNavigationStateChange = (newNavState: WebViewNavigation) => {
     setCanGoBack(newNavState.canGoBack)
