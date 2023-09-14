@@ -145,7 +145,7 @@ export const QRView: React.FC<Props> = ({
     if (displayingQR && getFullUri) {
       const uri = getFullUri({ uppercase: true })
       return (
-        <View style={[styles.container, style]}>
+        <View style={[styles.container, style]} {...testProps("QR-Code")}>
           <QRCode
             size={getQrSize()}
             value={uri}
