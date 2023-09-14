@@ -483,6 +483,13 @@ mutation userLoginUpgrade($input: UserLoginUpgradeInput!) {
   }
 }
 
+mutation userLogout($input: UserLogoutInput!) {
+  userLogout(input: $input) {
+    success
+    __typename
+  }
+}
+
 mutation userPhoneDelete {
   userPhoneDelete {
     errors {

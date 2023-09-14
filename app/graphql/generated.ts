@@ -1911,6 +1911,13 @@ export type CaptchaCreateChallengeMutationVariables = Exact<{ [key: string]: nev
 
 export type CaptchaCreateChallengeMutation = { readonly __typename: 'Mutation', readonly captchaCreateChallenge: { readonly __typename: 'CaptchaCreateChallengePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly result?: { readonly __typename: 'CaptchaCreateChallengeResult', readonly id: string, readonly challengeCode: string, readonly newCaptcha: boolean, readonly failbackMode: boolean } | null } };
 
+export type UserLogoutMutationVariables = Exact<{
+  input: UserLogoutInput;
+}>;
+
+
+export type UserLogoutMutation = { readonly __typename: 'Mutation', readonly userLogout: { readonly __typename: 'SuccessPayload', readonly success?: boolean | null } };
+
 export type ConversionScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3276,6 +3283,39 @@ export function useCaptchaCreateChallengeMutation(baseOptions?: Apollo.MutationH
 export type CaptchaCreateChallengeMutationHookResult = ReturnType<typeof useCaptchaCreateChallengeMutation>;
 export type CaptchaCreateChallengeMutationResult = Apollo.MutationResult<CaptchaCreateChallengeMutation>;
 export type CaptchaCreateChallengeMutationOptions = Apollo.BaseMutationOptions<CaptchaCreateChallengeMutation, CaptchaCreateChallengeMutationVariables>;
+export const UserLogoutDocument = gql`
+    mutation userLogout($input: UserLogoutInput!) {
+  userLogout(input: $input) {
+    success
+  }
+}
+    `;
+export type UserLogoutMutationFn = Apollo.MutationFunction<UserLogoutMutation, UserLogoutMutationVariables>;
+
+/**
+ * __useUserLogoutMutation__
+ *
+ * To run a mutation, you first call `useUserLogoutMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserLogoutMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userLogoutMutation, { data, loading, error }] = useUserLogoutMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserLogoutMutation(baseOptions?: Apollo.MutationHookOptions<UserLogoutMutation, UserLogoutMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserLogoutMutation, UserLogoutMutationVariables>(UserLogoutDocument, options);
+      }
+export type UserLogoutMutationHookResult = ReturnType<typeof useUserLogoutMutation>;
+export type UserLogoutMutationResult = Apollo.MutationResult<UserLogoutMutation>;
+export type UserLogoutMutationOptions = Apollo.BaseMutationOptions<UserLogoutMutation, UserLogoutMutationVariables>;
 export const ConversionScreenDocument = gql`
     query conversionScreen {
   me {
