@@ -69,8 +69,6 @@ export type Scalars = {
   SignedAmount: { input: number; output: number; }
   /** A string amount (of a currency) that can be negative (e.g. in a transaction) */
   SignedDisplayMajorAmount: { input: string; output: string; }
-  /** (Positive) Number of blocks in which the transaction is expected to be confirmed */
-  TargetConfirmations: { input: number; output: number; }
   /** Timestamp field, serialized as Unix time (the number of seconds since the Unix epoch) */
   Timestamp: { input: number; output: number; }
   /** A time-based one-time password */
@@ -1013,8 +1011,6 @@ export type OnChainPaymentSendInput = {
 export type OnChainTxFee = {
   readonly __typename: 'OnChainTxFee';
   readonly amount: Scalars['SatAmount']['output'];
-  /** @deprecated Ignored - will be removed */
-  readonly targetConfirmations: Scalars['TargetConfirmations']['output'];
 };
 
 export type OnChainUpdate = {
@@ -1047,8 +1043,6 @@ export type OnChainUsdPaymentSendInput = {
 export type OnChainUsdTxFee = {
   readonly __typename: 'OnChainUsdTxFee';
   readonly amount: Scalars['CentAmount']['output'];
-  /** @deprecated Ignored - will be removed */
-  readonly targetConfirmations: Scalars['TargetConfirmations']['output'];
 };
 
 export type OneDayAccountLimit = AccountLimit & {
@@ -6427,7 +6421,6 @@ export type ResolversTypes = {
   SignedDisplayMajorAmount: ResolverTypeWrapper<Scalars['SignedDisplayMajorAmount']['output']>;
   Subscription: ResolverTypeWrapper<{}>;
   SuccessPayload: ResolverTypeWrapper<SuccessPayload>;
-  TargetConfirmations: ResolverTypeWrapper<Scalars['TargetConfirmations']['output']>;
   Timestamp: ResolverTypeWrapper<Scalars['Timestamp']['output']>;
   TotpCode: ResolverTypeWrapper<Scalars['TotpCode']['output']>;
   TotpRegistrationId: ResolverTypeWrapper<Scalars['TotpRegistrationId']['output']>;
@@ -6617,7 +6610,6 @@ export type ResolversParentTypes = {
   SignedDisplayMajorAmount: Scalars['SignedDisplayMajorAmount']['output'];
   Subscription: {};
   SuccessPayload: SuccessPayload;
-  TargetConfirmations: Scalars['TargetConfirmations']['output'];
   Timestamp: Scalars['Timestamp']['output'];
   TotpCode: Scalars['TotpCode']['output'];
   TotpRegistrationId: Scalars['TotpRegistrationId']['output'];
@@ -7106,7 +7098,6 @@ export type OnChainAddressPayloadResolvers<ContextType = any, ParentType extends
 
 export type OnChainTxFeeResolvers<ContextType = any, ParentType extends ResolversParentTypes['OnChainTxFee'] = ResolversParentTypes['OnChainTxFee']> = {
   amount?: Resolver<ResolversTypes['SatAmount'], ParentType, ContextType>;
-  targetConfirmations?: Resolver<ResolversTypes['TargetConfirmations'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -7126,7 +7117,6 @@ export type OnChainUpdateResolvers<ContextType = any, ParentType extends Resolve
 
 export type OnChainUsdTxFeeResolvers<ContextType = any, ParentType extends ResolversParentTypes['OnChainUsdTxFee'] = ResolversParentTypes['OnChainUsdTxFee']> = {
   amount?: Resolver<ResolversTypes['CentAmount'], ParentType, ContextType>;
-  targetConfirmations?: Resolver<ResolversTypes['TargetConfirmations'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -7341,10 +7331,6 @@ export type SuccessPayloadResolvers<ContextType = any, ParentType extends Resolv
   success?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
-
-export interface TargetConfirmationsScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['TargetConfirmations'], any> {
-  name: 'TargetConfirmations';
-}
 
 export interface TimestampScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Timestamp'], any> {
   name: 'Timestamp';
@@ -7655,7 +7641,6 @@ export type Resolvers<ContextType = any> = {
   SignedDisplayMajorAmount?: GraphQLScalarType;
   Subscription?: SubscriptionResolvers<ContextType>;
   SuccessPayload?: SuccessPayloadResolvers<ContextType>;
-  TargetConfirmations?: GraphQLScalarType;
   Timestamp?: GraphQLScalarType;
   TotpCode?: GraphQLScalarType;
   TotpRegistrationId?: GraphQLScalarType;
