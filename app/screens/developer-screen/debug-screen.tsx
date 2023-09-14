@@ -250,7 +250,7 @@ export const DeveloperScreen: React.FC = () => {
           containerStyle={styles.button}
           {...testProps("Navigate to webview")}
           onPress={() =>
-            navigate("webViewDebug", {
+            navigate("webView", {
               url: urlWebView,
             })
           }

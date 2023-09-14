@@ -1,14 +1,15 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-import { Alert } from "react-native"
+import { Alert, Button } from "react-native"
 import { injectJs, onMessageHandler } from "react-native-webln"
-import { WebView } from "react-native-webview"
+import { WebView, WebViewNavigation } from "react-native-webview"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { makeStyles } from "@rneui/base"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
-type WebViewDebugScreenRouteProp = RouteProp<RootStackParamList, "webViewDebug">
+type WebViewDebugScreenRouteProp = RouteProp<RootStackParamList, "webView">
 
 type Props = {
   route: WebViewDebugScreenRouteProp
@@ -18,10 +19,42 @@ export const WebViewScreen: React.FC<Props> = ({ route }) => {
   const styles = useStyles()
 
   const { navigate } = useNavigation<StackNavigationProp<RootStackParamList, "Primary">>()
-  const { url } = route.params
+  const { url, initialTitle } = route.params
+  const { LL } = useI18nContext()
 
   const webview = React.useRef<WebView | null>(null)
   const [jsInjected, setJsInjected] = React.useState(false)
+
+  const navigation = useNavigation()
+  const [canGoBack, setCanGoBack] = React.useState<boolean>(false)
+
+  const handleBackPress = React.useCallback(() => {
+    if (webview.current && canGoBack) {
+      webview.current.goBack()
+      return
+    }
+
+    navigation.goBack()
+  }, [canGoBack, navigation])
+
+  React.useEffect(() => {
+    if (!initialTitle) return
+    navigation.setOptions({ title: initialTitle })
+  }, [navigation, initialTitle])
+
+  React.useEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        //                                  FIXME < is not the same as for other screens
+        <Button onPress={handleBackPress} title={`< ${LL.common.back()}`} />
+      ),
+    })
+  }, [navigation, handleBackPress, LL])
+
+  const handleWebViewNavigationStateChange = (newNavState: WebViewNavigation) => {
+    setCanGoBack(newNavState.canGoBack)
+    newNavState.title && navigation.setOptions({ title: newNavState.title })
+  }
 
   return (
     <Screen>
@@ -37,6 +70,7 @@ export const WebViewScreen: React.FC<Props> = ({ route }) => {
             } else Alert.alert("Error", "Webview not ready")
           }
         }}
+        onNavigationStateChange={handleWebViewNavigationStateChange}
         onMessage={onMessageHandler(webview as React.MutableRefObject<WebView>, {
           enable: async () => {
             /* Your implementation goes here */

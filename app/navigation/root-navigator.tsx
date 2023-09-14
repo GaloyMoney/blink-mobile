@@ -397,7 +397,13 @@ export const RootStack = () => {
           title: LL.TotpLoginValidateScreen.title(),
         }}
       />
-      <RootNavigator.Screen name="webViewDebug" component={WebViewScreen} />
+      <RootNavigator.Screen
+        name="webView"
+        component={WebViewScreen}
+        options={{
+          title: "WebView", // should be overridden by the navigate action with an initial title
+        }}
+      />
     </RootNavigator.Navigator>
   )
 }

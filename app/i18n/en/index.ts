@@ -518,6 +518,7 @@ const en: BaseTranslation = {
     lastMonth: "last month",
     lastYear: "last year",
     lastFiveYears: "last five years",
+    buyAndSell: "Buy and sell bitcoin",
   },
   PrimaryScreen: {
     title: "Home",

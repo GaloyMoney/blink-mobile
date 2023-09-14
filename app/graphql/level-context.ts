@@ -12,10 +12,12 @@ export type AccountLevel = (typeof AccountLevel)[keyof typeof AccountLevel]
 const Level = createContext<{
   isAtLeastLevelZero: boolean
   isAtLeastLevelOne: boolean
+  isAtLeastLevelTwo: boolean
   currentLevel: AccountLevel
 }>({
   isAtLeastLevelZero: false,
   isAtLeastLevelOne: false,
+  isAtLeastLevelTwo: false,
   currentLevel: AccountLevel.NonAuth,
 })
 
