@@ -6,7 +6,7 @@ const androidValueForAppiumInspector = {
   "appium:app": "./android/app/build/outputs/apk/debug/app-universal-debug.apk",
   "appium:automationName": "UiAutomator2",
   "appium:snapshotMaxDepth": 500,
-  "appium:autoGrantPermissions": false
+  "appium:autoGrantPermissions": false,
 }
 
 const iOSValueForAppiumInspector = {
@@ -15,7 +15,7 @@ const iOSValueForAppiumInspector = {
   "appium:bundleId": "io.galoy.bitcoinbeach",
   "appium:automationName": "XCUITest",
   "appium:snapshotMaxDepth": 500,
-  "appium:autoAcceptAlerts": false
+  "appium:autoAcceptAlerts": false,
 }
 
 // value to copy to appium inspector

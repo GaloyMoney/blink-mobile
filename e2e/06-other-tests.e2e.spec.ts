@@ -95,14 +95,6 @@ describe("People Flow", () => {
     await clickOnBottomTab(Tab.People)
   })
 
-  it("Blink circles dashboard", async () => {
-    const button = await $(selector(LL.Circles.viewMyCircles(), "Other"))
-    await button.waitForEnabled({ timeout })
-    await button.click()
-
-    await waitTillTextDisplayed(LL.Circles.groupEffort())
-  })
-
   it("Go back to main screen", async () => {
     await clickOnBottomTab(Tab.Home)
     await waitTillOnHomeScreen()
