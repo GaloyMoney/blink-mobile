@@ -483,8 +483,8 @@ mutation userLoginUpgrade($input: UserLoginUpgradeInput!) {
   }
 }
 
-mutation userLogout {
-  userLogout {
+mutation userLogout($input: UserLogoutInput!) {
+  userLogout(input: $input) {
     success
     __typename
   }

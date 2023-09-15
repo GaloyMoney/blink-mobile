@@ -941,7 +941,7 @@ type Mutation
   userEmailRegistrationValidate(input: UserEmailRegistrationValidateInput!): UserEmailRegistrationValidatePayload!
   userLogin(input: UserLoginInput!): AuthTokenPayload!
   userLoginUpgrade(input: UserLoginUpgradeInput!): UpgradePayload!
-  userLogout: SuccessPayload!
+  userLogout(input: UserLogoutInput): SuccessPayload!
   userPhoneDelete: UserPhoneDeletePayload!
   userPhoneRegistrationInitiate(input: UserPhoneRegistrationInitiateInput!): SuccessPayload!
   userPhoneRegistrationValidate(input: UserPhoneRegistrationValidateInput!): UserPhoneRegistrationValidatePayload!
@@ -1683,6 +1683,12 @@ input UserLoginUpgradeInput
 {
   code: OneTimeAuthCode!
   phone: Phone!
+}
+
+input UserLogoutInput
+  @join__type(graph: GALOY)
+{
+  deviceToken: String!
 }
 
 """Unique identifier of a user"""

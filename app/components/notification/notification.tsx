@@ -27,24 +27,27 @@ export const NotificationComponent = (): JSX.Element => {
   const primaryNavigation = useNavigation<StackNavigationProp<PrimaryStackParamList>>()
   const circlesNavigation = useNavigation<StackNavigationProp<PeopleStackParamList>>()
 
-  const showNotification = (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
-    if (remoteMessage.notification?.body) {
-      // TODO: add notifee library to show local notifications
-      console.log(remoteMessage.notification.title || "", remoteMessage.notification.body)
-    }
+  useEffect(() => {
+    const showNotification = (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
+      if (remoteMessage.notification?.body) {
+        // TODO: add notifee library to show local notifications
+        console.log(
+          remoteMessage.notification.title || "",
+          remoteMessage.notification.body,
+        )
+      }
 
-    const notificationType = remoteMessage.data?.notificationType
-    if (notificationType) {
-      switch (true) {
-        case circlesNotificationTypes.includes(notificationType):
-          primaryNavigation.navigate("People")
-          setTimeout(() => circlesNavigation.navigate("circlesDashboard"), 200)
-          break
+      const notificationType = remoteMessage.data?.notificationType
+      if (notificationType) {
+        switch (true) {
+          case circlesNotificationTypes.includes(notificationType):
+            primaryNavigation.navigate("People")
+            setTimeout(() => circlesNavigation.navigate("circlesDashboard"), 200)
+            break
+        }
       }
     }
-  }
 
-  useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
       console.debug("onMessage")
       showNotification(remoteMessage)
@@ -67,7 +70,7 @@ export const NotificationComponent = (): JSX.Element => {
       })
 
     return unsubscribe
-  }, [])
+  }, [circlesNavigation, primaryNavigation])
 
   useEffect(() => {
     ;(async () => {
