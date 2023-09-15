@@ -7,6 +7,7 @@ unit:
 test: unit check-code
 
 codegen:
+	./supergraph.sh
 	yarn dev:codegen
 	yarn update-translations
 
