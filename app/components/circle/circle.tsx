@@ -51,10 +51,18 @@ export const Circle = forwardRef<CircleRef, CircleProps>(
       subtitleGreen,
     })
 
+    const easedCountUpDuration = getcBackValue(
+      countUpDuration,
+      minValue,
+      maxValue,
+      0.5 * countUpDuration,
+      countUpDuration,
+    )
+
     const { value: countUpValue, reset } = useCountUp({
       isCounting: true,
       end: value,
-      duration: countUpDuration,
+      duration: easedCountUpDuration,
     })
 
     useImperativeHandle(
