@@ -307,7 +307,7 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 15,
-    minHeight: 24,
+    minHeight: 20,
   },
   invoiceActions: {
     flexDirection: "row",
@@ -328,17 +328,12 @@ const useStyles = makeStyles(({ colors }) => ({
   btcHighContainer: {
     display: "flex",
     flexDirection: "row",
-    columnGap: 4,
     alignItems: "flex-end",
   },
   btcHigh: {
     fontWeight: "700",
-    fontSize: 18,
   },
-  btcLow: {
-    fontSize: 10,
-    marginBottom: 2,
-  },
+  btcLow: {},
 }))
 
 export default withMyLnUpdateSub(ReceiveScreen)

@@ -1776,9 +1776,9 @@ type RootTranslation = {
 		 */
 		invoiceHasBeenPaid: string
 		/**
-		 * O​n​c​h​a​i​n​ ​A​d​d​r​e​s​s
+		 * B​i​t​c​o​i​n​ ​O​n​c​h​a​i​n​ ​A​d​d​r​e​s​s
 		 */
-		onChainAddress: string
+		btcOnChainAddress: string
 		/**
 		 * R​e​c​e​i​v​e​ ​v​i​a​ ​L​i​g​h​t​n​i​n​g
 		 */
@@ -5466,9 +5466,9 @@ export type TranslationFunctions = {
 		 */
 		invoiceHasBeenPaid: () => LocalizedString
 		/**
-		 * Onchain Address
+		 * Bitcoin Onchain Address
 		 */
-		onChainAddress: () => LocalizedString
+		btcOnChainAddress: () => LocalizedString
 		/**
 		 * Receive via Lightning
 		 */

@@ -440,6 +440,8 @@ export const useReceiveBitcoin = () => {
     extraDetails = LL.ReceiveScreen.invoiceHasBeenPaid()
   } else if (prcd.type === "PayCode" && pr?.info?.data?.invoiceType === "PayCode") {
     extraDetails = "LNURL"
+  } else if (prcd.type === "OnChain" && pr?.info?.data?.invoiceType === "OnChain") {
+    extraDetails = LL.ReceiveScreen.btcOnChainAddress()
   }
 
   let readablePaymentRequest = ""
