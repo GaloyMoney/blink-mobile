@@ -922,11 +922,6 @@ export type MutationUserLoginUpgradeArgs = {
 };
 
 
-export type MutationUserLogoutArgs = {
-  input: UserLogoutInput;
-};
-
-
 export type MutationUserPhoneRegistrationInitiateArgs = {
   input: UserPhoneRegistrationInitiateInput;
 };
@@ -1610,10 +1605,6 @@ export type UserLoginUpgradeInput = {
   readonly phone: Scalars['Phone']['input'];
 };
 
-export type UserLogoutInput = {
-  readonly authToken: Scalars['AuthToken']['input'];
-};
-
 export type UserPhoneDeletePayload = {
   readonly __typename: 'UserPhoneDeletePayload';
   readonly errors: ReadonlyArray<Error>;
@@ -1911,9 +1902,7 @@ export type CaptchaCreateChallengeMutationVariables = Exact<{ [key: string]: nev
 
 export type CaptchaCreateChallengeMutation = { readonly __typename: 'Mutation', readonly captchaCreateChallenge: { readonly __typename: 'CaptchaCreateChallengePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly result?: { readonly __typename: 'CaptchaCreateChallengeResult', readonly id: string, readonly challengeCode: string, readonly newCaptcha: boolean, readonly failbackMode: boolean } | null } };
 
-export type UserLogoutMutationVariables = Exact<{
-  input: UserLogoutInput;
-}>;
+export type UserLogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type UserLogoutMutation = { readonly __typename: 'Mutation', readonly userLogout: { readonly __typename: 'SuccessPayload', readonly success?: boolean | null } };
@@ -3284,8 +3273,8 @@ export type CaptchaCreateChallengeMutationHookResult = ReturnType<typeof useCapt
 export type CaptchaCreateChallengeMutationResult = Apollo.MutationResult<CaptchaCreateChallengeMutation>;
 export type CaptchaCreateChallengeMutationOptions = Apollo.BaseMutationOptions<CaptchaCreateChallengeMutation, CaptchaCreateChallengeMutationVariables>;
 export const UserLogoutDocument = gql`
-    mutation userLogout($input: UserLogoutInput!) {
-  userLogout(input: $input) {
+    mutation userLogout {
+  userLogout {
     success
   }
 }
@@ -3305,7 +3294,6 @@ export type UserLogoutMutationFn = Apollo.MutationFunction<UserLogoutMutation, U
  * @example
  * const [userLogoutMutation, { data, loading, error }] = useUserLogoutMutation({
  *   variables: {
- *      input: // value for 'input'
  *   },
  * });
  */
@@ -6500,7 +6488,6 @@ export type ResolversTypes = {
   UserEmailRegistrationValidatePayload: ResolverTypeWrapper<UserEmailRegistrationValidatePayload>;
   UserLoginInput: UserLoginInput;
   UserLoginUpgradeInput: UserLoginUpgradeInput;
-  UserLogoutInput: UserLogoutInput;
   UserPhoneDeletePayload: ResolverTypeWrapper<UserPhoneDeletePayload>;
   UserPhoneRegistrationInitiateInput: UserPhoneRegistrationInitiateInput;
   UserPhoneRegistrationValidateInput: UserPhoneRegistrationValidateInput;
@@ -6690,7 +6677,6 @@ export type ResolversParentTypes = {
   UserEmailRegistrationValidatePayload: UserEmailRegistrationValidatePayload;
   UserLoginInput: UserLoginInput;
   UserLoginUpgradeInput: UserLoginUpgradeInput;
-  UserLogoutInput: UserLogoutInput;
   UserPhoneDeletePayload: UserPhoneDeletePayload;
   UserPhoneRegistrationInitiateInput: UserPhoneRegistrationInitiateInput;
   UserPhoneRegistrationValidateInput: UserPhoneRegistrationValidateInput;
@@ -7180,7 +7166,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   userEmailRegistrationValidate?: Resolver<ResolversTypes['UserEmailRegistrationValidatePayload'], ParentType, ContextType, RequireFields<MutationUserEmailRegistrationValidateArgs, 'input'>>;
   userLogin?: Resolver<ResolversTypes['AuthTokenPayload'], ParentType, ContextType, RequireFields<MutationUserLoginArgs, 'input'>>;
   userLoginUpgrade?: Resolver<ResolversTypes['UpgradePayload'], ParentType, ContextType, RequireFields<MutationUserLoginUpgradeArgs, 'input'>>;
-  userLogout?: Resolver<ResolversTypes['SuccessPayload'], ParentType, ContextType, RequireFields<MutationUserLogoutArgs, 'input'>>;
+  userLogout?: Resolver<ResolversTypes['SuccessPayload'], ParentType, ContextType>;
   userPhoneDelete?: Resolver<ResolversTypes['UserPhoneDeletePayload'], ParentType, ContextType>;
   userPhoneRegistrationInitiate?: Resolver<ResolversTypes['SuccessPayload'], ParentType, ContextType, RequireFields<MutationUserPhoneRegistrationInitiateArgs, 'input'>>;
   userPhoneRegistrationValidate?: Resolver<ResolversTypes['UserPhoneRegistrationValidatePayload'], ParentType, ContextType, RequireFields<MutationUserPhoneRegistrationValidateArgs, 'input'>>;

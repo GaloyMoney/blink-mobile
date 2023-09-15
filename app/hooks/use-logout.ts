@@ -7,11 +7,10 @@ import { useCallback } from "react"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 import { gql } from "@apollo/client"
 import { useUserLogoutMutation } from "@app/graphql/generated"
-import { useAppConfig } from "./use-app-config"
 
 gql`
-  mutation userLogout($input: UserLogoutInput!) {
-    userLogout(input: $input) {
+  mutation userLogout {
+    userLogout {
       success
     }
   }
@@ -23,13 +22,10 @@ const useLogout = () => {
     fetchPolicy: "no-cache",
   })
 
-  const appConfig = useAppConfig()
-
   const logout = useCallback(
     async (stateToDefault = true): Promise<void> => {
       try {
-        const authToken = appConfig.appConfig.token
-        await userLogoutMutation({ variables: { input: { authToken } } })
+        await userLogoutMutation()
 
         await AsyncStorage.multiRemove([SCHEMA_VERSION_KEY])
         await KeyStoreWrapper.removeIsBiometricsEnabled()
@@ -47,7 +43,7 @@ const useLogout = () => {
         }
       }
     },
-    [resetState, appConfig, userLogoutMutation],
+    [resetState, userLogoutMutation],
   )
 
   return {
