@@ -154,6 +154,7 @@ const useStyles = makeStyles(({ colors }) => {
       display: "flex",
       flexDirection: "column",
       rowGap: 40,
+      backgroundColor: colors.background,
     },
     description: {
       color: colors.grey3,
