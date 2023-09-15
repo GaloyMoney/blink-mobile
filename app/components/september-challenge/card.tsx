@@ -28,9 +28,7 @@ export const SeptemberChallengeCard: React.FC = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const openModal = () => setModalIsOpen(true)
 
-  const { data } = useCirclesQuery({
-    fetchPolicy: "network-only",
-  })
+  const { data } = useCirclesQuery()
 
   const {
     theme: { colors },
