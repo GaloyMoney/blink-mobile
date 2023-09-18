@@ -81,8 +81,6 @@ export type Scalars = {
   Username: { input: string; output: string; }
   /** Unique identifier of a wallet */
   WalletId: { input: string; output: string; }
-  join__FieldSet: { input: string; output: string; }
-  link__Import: { input: string; output: string; }
   _FieldSet: { input: string; output: string; }
 };
 
@@ -923,7 +921,7 @@ export type MutationUserLoginUpgradeArgs = {
 
 
 export type MutationUserLogoutArgs = {
-  input: UserLogoutInput;
+  input?: InputMaybe<UserLogoutInput>;
 };
 
 
@@ -1611,7 +1609,7 @@ export type UserLoginUpgradeInput = {
 };
 
 export type UserLogoutInput = {
-  readonly authToken: Scalars['AuthToken']['input'];
+  readonly deviceToken: Scalars['String']['input'];
 };
 
 export type UserPhoneDeletePayload = {
@@ -1774,20 +1772,6 @@ export const WelcomeRange = {
 } as const;
 
 export type WelcomeRange = typeof WelcomeRange[keyof typeof WelcomeRange];
-export const Join__Graph = {
-  Circles: 'CIRCLES',
-  Galoy: 'GALOY'
-} as const;
-
-export type Join__Graph = typeof Join__Graph[keyof typeof Join__Graph];
-export const Link__Purpose = {
-  /** `EXECUTION` features provide metadata necessary for operation execution. */
-  Execution: 'EXECUTION',
-  /** `SECURITY` features provide metadata necessary to securely resolve fields. */
-  Security: 'SECURITY'
-} as const;
-
-export type Link__Purpose = typeof Link__Purpose[keyof typeof Link__Purpose];
 export type MobileUpdateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1910,6 +1894,13 @@ export type CaptchaCreateChallengeMutationVariables = Exact<{ [key: string]: nev
 
 
 export type CaptchaCreateChallengeMutation = { readonly __typename: 'Mutation', readonly captchaCreateChallenge: { readonly __typename: 'CaptchaCreateChallengePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly result?: { readonly __typename: 'CaptchaCreateChallengeResult', readonly id: string, readonly challengeCode: string, readonly newCaptcha: boolean, readonly failbackMode: boolean } | null } };
+
+export type UserLogoutMutationVariables = Exact<{
+  input: UserLogoutInput;
+}>;
+
+
+export type UserLogoutMutation = { readonly __typename: 'Mutation', readonly userLogout: { readonly __typename: 'SuccessPayload', readonly success?: boolean | null } };
 
 export type ConversionScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3276,6 +3267,39 @@ export function useCaptchaCreateChallengeMutation(baseOptions?: Apollo.MutationH
 export type CaptchaCreateChallengeMutationHookResult = ReturnType<typeof useCaptchaCreateChallengeMutation>;
 export type CaptchaCreateChallengeMutationResult = Apollo.MutationResult<CaptchaCreateChallengeMutation>;
 export type CaptchaCreateChallengeMutationOptions = Apollo.BaseMutationOptions<CaptchaCreateChallengeMutation, CaptchaCreateChallengeMutationVariables>;
+export const UserLogoutDocument = gql`
+    mutation userLogout($input: UserLogoutInput!) {
+  userLogout(input: $input) {
+    success
+  }
+}
+    `;
+export type UserLogoutMutationFn = Apollo.MutationFunction<UserLogoutMutation, UserLogoutMutationVariables>;
+
+/**
+ * __useUserLogoutMutation__
+ *
+ * To run a mutation, you first call `useUserLogoutMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserLogoutMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userLogoutMutation, { data, loading, error }] = useUserLogoutMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserLogoutMutation(baseOptions?: Apollo.MutationHookOptions<UserLogoutMutation, UserLogoutMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserLogoutMutation, UserLogoutMutationVariables>(UserLogoutDocument, options);
+      }
+export type UserLogoutMutationHookResult = ReturnType<typeof useUserLogoutMutation>;
+export type UserLogoutMutationResult = Apollo.MutationResult<UserLogoutMutation>;
+export type UserLogoutMutationOptions = Apollo.BaseMutationOptions<UserLogoutMutation, UserLogoutMutationVariables>;
 export const ConversionScreenDocument = gql`
     query conversionScreen {
   me {
@@ -6486,10 +6510,6 @@ export type ResolversTypes = {
   WelcomeLeaderboardInput: WelcomeLeaderboardInput;
   WelcomeProfile: ResolverTypeWrapper<WelcomeProfile>;
   WelcomeRange: WelcomeRange;
-  join__FieldSet: ResolverTypeWrapper<Scalars['join__FieldSet']['output']>;
-  join__Graph: Join__Graph;
-  link__Import: ResolverTypeWrapper<Scalars['link__Import']['output']>;
-  link__Purpose: Link__Purpose;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -6674,67 +6694,14 @@ export type ResolversParentTypes = {
   WalletId: Scalars['WalletId']['output'];
   WelcomeLeaderboardInput: WelcomeLeaderboardInput;
   WelcomeProfile: WelcomeProfile;
-  join__FieldSet: Scalars['join__FieldSet']['output'];
-  link__Import: Scalars['link__Import']['output'];
 };
 
-export type Join__EnumValueDirectiveArgs = {
-  graph: Join__Graph;
+export type DeferDirectiveArgs = {
+  if?: Scalars['Boolean']['input'];
+  label?: Maybe<Scalars['String']['input']>;
 };
 
-export type Join__EnumValueDirectiveResolver<Result, Parent, ContextType = any, Args = Join__EnumValueDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
-export type Join__FieldDirectiveArgs = {
-  external?: Maybe<Scalars['Boolean']['input']>;
-  graph?: Maybe<Join__Graph>;
-  override?: Maybe<Scalars['String']['input']>;
-  provides?: Maybe<Scalars['join__FieldSet']['input']>;
-  requires?: Maybe<Scalars['join__FieldSet']['input']>;
-  type?: Maybe<Scalars['String']['input']>;
-  usedOverridden?: Maybe<Scalars['Boolean']['input']>;
-};
-
-export type Join__FieldDirectiveResolver<Result, Parent, ContextType = any, Args = Join__FieldDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
-export type Join__GraphDirectiveArgs = {
-  name: Scalars['String']['input'];
-  url: Scalars['String']['input'];
-};
-
-export type Join__GraphDirectiveResolver<Result, Parent, ContextType = any, Args = Join__GraphDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
-export type Join__ImplementsDirectiveArgs = {
-  graph: Join__Graph;
-  interface: Scalars['String']['input'];
-};
-
-export type Join__ImplementsDirectiveResolver<Result, Parent, ContextType = any, Args = Join__ImplementsDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
-export type Join__TypeDirectiveArgs = {
-  extension?: Scalars['Boolean']['input'];
-  graph: Join__Graph;
-  isInterfaceObject?: Scalars['Boolean']['input'];
-  key?: Maybe<Scalars['join__FieldSet']['input']>;
-  resolvable?: Scalars['Boolean']['input'];
-};
-
-export type Join__TypeDirectiveResolver<Result, Parent, ContextType = any, Args = Join__TypeDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
-export type Join__UnionMemberDirectiveArgs = {
-  graph: Join__Graph;
-  member: Scalars['String']['input'];
-};
-
-export type Join__UnionMemberDirectiveResolver<Result, Parent, ContextType = any, Args = Join__UnionMemberDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
-export type LinkDirectiveArgs = {
-  as?: Maybe<Scalars['String']['input']>;
-  for?: Maybe<Link__Purpose>;
-  import?: Maybe<ReadonlyArray<Maybe<Scalars['link__Import']['input']>>>;
-  url?: Maybe<Scalars['String']['input']>;
-};
-
-export type LinkDirectiveResolver<Result, Parent, ContextType = any, Args = LinkDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+export type DeferDirectiveResolver<Result, Parent, ContextType = any, Args = DeferDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type AccountResolvers<ContextType = any, ParentType extends ResolversParentTypes['Account'] = ResolversParentTypes['Account']> = {
   __resolveType: TypeResolveFn<'ConsumerAccount', ParentType, ContextType>;
@@ -7140,7 +7107,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   userEmailRegistrationValidate?: Resolver<ResolversTypes['UserEmailRegistrationValidatePayload'], ParentType, ContextType, RequireFields<MutationUserEmailRegistrationValidateArgs, 'input'>>;
   userLogin?: Resolver<ResolversTypes['AuthTokenPayload'], ParentType, ContextType, RequireFields<MutationUserLoginArgs, 'input'>>;
   userLoginUpgrade?: Resolver<ResolversTypes['UpgradePayload'], ParentType, ContextType, RequireFields<MutationUserLoginUpgradeArgs, 'input'>>;
-  userLogout?: Resolver<ResolversTypes['SuccessPayload'], ParentType, ContextType, RequireFields<MutationUserLogoutArgs, 'input'>>;
+  userLogout?: Resolver<ResolversTypes['SuccessPayload'], ParentType, ContextType, Partial<MutationUserLogoutArgs>>;
   userPhoneDelete?: Resolver<ResolversTypes['UserPhoneDeletePayload'], ParentType, ContextType>;
   userPhoneRegistrationInitiate?: Resolver<ResolversTypes['SuccessPayload'], ParentType, ContextType, RequireFields<MutationUserPhoneRegistrationInitiateArgs, 'input'>>;
   userPhoneRegistrationValidate?: Resolver<ResolversTypes['UserPhoneRegistrationValidatePayload'], ParentType, ContextType, RequireFields<MutationUserPhoneRegistrationValidateArgs, 'input'>>;
@@ -7614,14 +7581,6 @@ export type WelcomeProfileResolvers<ContextType = any, ParentType extends Resolv
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface Join__FieldSetScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['join__FieldSet'], any> {
-  name: 'join__FieldSet';
-}
-
-export interface Link__ImportScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['link__Import'], any> {
-  name: 'link__Import';
-}
-
 export type Resolvers<ContextType = any> = {
   Account?: AccountResolvers<ContextType>;
   AccountDeletePayload?: AccountDeletePayloadResolvers<ContextType>;
@@ -7751,16 +7710,8 @@ export type Resolvers<ContextType = any> = {
   Wallet?: WalletResolvers<ContextType>;
   WalletId?: GraphQLScalarType;
   WelcomeProfile?: WelcomeProfileResolvers<ContextType>;
-  join__FieldSet?: GraphQLScalarType;
-  link__Import?: GraphQLScalarType;
 };
 
 export type DirectiveResolvers<ContextType = any> = {
-  join__enumValue?: Join__EnumValueDirectiveResolver<any, any, ContextType>;
-  join__field?: Join__FieldDirectiveResolver<any, any, ContextType>;
-  join__graph?: Join__GraphDirectiveResolver<any, any, ContextType>;
-  join__implements?: Join__ImplementsDirectiveResolver<any, any, ContextType>;
-  join__type?: Join__TypeDirectiveResolver<any, any, ContextType>;
-  join__unionMember?: Join__UnionMemberDirectiveResolver<any, any, ContextType>;
-  link?: LinkDirectiveResolver<any, any, ContextType>;
+  defer?: DeferDirectiveResolver<any, any, ContextType>;
 };
