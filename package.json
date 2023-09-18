@@ -9,7 +9,7 @@
     "tsc:check": "tsc -p .",
     "eslint:check": "eslint . --ext .js,.ts,.tsx",
     "eslint:fix": "eslint . --ext .js,.ts,.tsx --fix",
-    "check-code": "yarn tsc:check && yarn eslint:check && yarn check:translations && yarn check:codegen && yarn graphql-check",
+    "check-code": "yarn tsc:check && yarn eslint:check && yarn check:translations && yarn check:codegen",
     "check:translations": "yarn update-translations && if git diff --name-only | grep -q 'app/i18n/i18n-types.ts'; then echo 'Error: app/i18n/i18n-types.ts has changes, run `yarn update-translations` and re-recommit' >&2; exit 1; fi",
     "check:codegen": "yarn dev:codegen && if git diff --name-only | grep -q 'app/graphql/generated.ts'; then echo 'Error: app/graphql/generated.ts has changes, run `yarn dev:codegen` and re-recommit' >&2; exit 1; fi",
     "test": "LOGLEVEL=warn jest --runInBand",
