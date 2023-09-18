@@ -696,7 +696,7 @@
         "totpDeleteAlertTitle": "Verwyder twee-faktor-verifikasie",
         "totpDeleteAlertContent": "Is jy seker jy wil twee-faktor-verifikasie verwyder?",
         "copiedAccountId": "Jou rekening ID is oorgedra na die knipbord ",
-        "yourAccountId": "Jou rekening ID",
+        "yourAccountId": "Jou Rekening ID",
         "copy": "Dra oor"
     },
     "TotpRegistrationInitiateScreen": {
