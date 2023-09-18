@@ -488,7 +488,8 @@
         "lastWeek": "Afgelope week",
         "lastMonth": "Afgelope maand",
         "lastYear": "Afgelope jaar",
-        "lastFiveYears": "Die afgelope vyf jaar"
+        "lastFiveYears": "Die afgelope vyf jaar",
+        "buyAndSell": "Koop en verkoop bitcoin"
     },
     "PrimaryScreen": {
         "title": "Tuis"
@@ -520,11 +521,6 @@
         "setANote": "Maak 'n nota",
         "invoiceAmount": "Faktuur bedrag",
         "fees": "325\n{minBankFee: string} sats fooie vir opketting betaling minder as {minBankFeeThreshold: string} sats",
-        "lightning": "Lightning",
-        "paycode": "LNURL",
-        "onchain": "Op-ketting",
-        "bitcoin": "Bitcoin",
-        "stablesats": "Stablesats",
         "regenerateInvoiceButtonTitle": "Hergenereer Faktuur",
         "setUsernameButtonTitle": "Stel gebruikersnaam",
         "invoiceHasExpired": "Faktuur het verval",
@@ -539,7 +535,7 @@
             "expiresNow": "Verval nou"
         },
         "invoiceHasBeenPaid": "Faktuur is betaal",
-        "onChainAddress": "Opkettingadres",
+        "btcOnChainAddress": "Bitcoin opketting-adres",
         "receiveViaInvoice": "Ontvang met Lightning",
         "receiveViaPaycode": "Ontvang met LNURL",
         "receiveViaOnchain": "Ontvang opketting",
@@ -700,7 +696,7 @@
         "totpDeleteAlertTitle": "Verwyder twee-faktor-verifikasie",
         "totpDeleteAlertContent": "Is jy seker jy wil twee-faktor-verifikasie verwyder?",
         "copiedAccountId": "Jou rekening ID is oorgedra na die knipbord ",
-        "yourAccountId": "Jou rekening ID",
+        "yourAccountId": "Jou Rekening ID",
         "copy": "Dra oor"
     },
     "TotpRegistrationInitiateScreen": {
@@ -1029,9 +1025,9 @@
     "Circles": {
         "title": "My Sirkels",
         "titleBlinkCircles": "Blink Sirkels",
-        "fetchingLatestCircles": "Verkry tans mees onlangse sirkels ",
+        "fetchingLatestCircles": "Verkry onlangste sirkels ",
         "circles": "sirkels",
-        "circlesExplainer": "Jou sirkels groei soos jy ander by Blink verwelkom deur aan iemand hul eerste sats te stuur.",
+        "circlesExplainer": "Verwelkom iemand by Blink deur aan hulle eerste sats te stuur! Jou sirkels groei met elkeen wat jy verwelkom.",
         "viewMyCircles": "Wys my sirkels",
         "introducingCircles": "Bekendstelling van Sirkels",
         "copiedInviteLink": "Uitnodigingskakel oorgedra",
@@ -1049,7 +1045,7 @@
         "innerCircleExplainer": "Jy help Bitcoin-aanneming saam met Blink - Hou aan! ",
         "innerCircleExplainerCard": "Ek bevorder Bitcoin-aanneming met Blink!",
         "innerCircle": "Binnesirkel",
-        "peopleYouWelcomed": "Mense wat jy verwelkom het:",
+        "peopleYouWelcomed": "mense deur jou verwelkom",
         "peopleIWelcomed": "mense \nwat ek verwelkom het",
         "thisMonth": "Hierdie maand",
         "outerCircle": "Buitesirkel",
@@ -1068,7 +1064,7 @@
         "septChallenge": {
             "title": "September Uitdaging!",
             "description": "Binnesirkel {innerCircle: number}/21 - Verdien $21\nTop 3 - Wen kaartjies na Adopting Bitcoin!",
-            "details": "Groei jou binne sirkel met 21 mense in September en deel op sosiale media met #blinkcircles om $21 se Stablesats na jou blink rekening te ontvang. Top 3 wen kaartjies na Adopting Bitcoin! ",
+            "details": "Groei jou binnesirkel met 21 mense in September en deel op sosiale media met #blinkcircles om $21 se Stablesats in jou blink-rekening te ontvang. Top 3 wen kaartjies na Adopting Bitcoin! ",
             "peopleWelcomedSoFar": "mense reeds verwelkom",
             "yourRank": "Jou rang",
             "reminder": "Herhindering: Jou binnesirkel groei wanneer jy die eerste sats na 'n nuwe Blink-gebruiker stuur",
