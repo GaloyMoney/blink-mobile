@@ -51,6 +51,7 @@ export type Scalars = {
   Memo: { input: string; output: string; }
   /** (Positive) amount of minutes */
   Minutes: { input: string; output: string; }
+  NotificationCategory: { input: string; output: string; }
   /** An address for an on-chain bitcoin destination */
   OnChainAddress: { input: string; output: string; }
   OnChainTxHash: { input: string; output: string; }
@@ -94,6 +95,7 @@ export type Account = {
   readonly id: Scalars['ID']['output'];
   readonly level: AccountLevel;
   readonly limits: AccountLimits;
+  readonly notificationSettings: NotificationSettings;
   readonly realtimePrice: RealtimePrice;
   readonly transactions?: Maybe<TransactionConnection>;
   readonly usdWallet?: Maybe<UsdWallet>;
@@ -118,6 +120,24 @@ export type AccountDeletePayload = {
   readonly __typename: 'AccountDeletePayload';
   readonly errors: ReadonlyArray<Error>;
   readonly success: Scalars['Boolean']['output'];
+};
+
+export type AccountDisableNotificationCategoryInput = {
+  readonly category: Scalars['NotificationCategory']['input'];
+  readonly channel?: InputMaybe<NotificationChannel>;
+};
+
+export type AccountDisableNotificationChannelInput = {
+  readonly channel: NotificationChannel;
+};
+
+export type AccountEnableNotificationCategoryInput = {
+  readonly category: Scalars['NotificationCategory']['input'];
+  readonly channel?: InputMaybe<NotificationChannel>;
+};
+
+export type AccountEnableNotificationChannelInput = {
+  readonly channel: NotificationChannel;
 };
 
 export const AccountLevel = {
@@ -162,6 +182,12 @@ export type AccountUpdateDisplayCurrencyInput = {
 
 export type AccountUpdateDisplayCurrencyPayload = {
   readonly __typename: 'AccountUpdateDisplayCurrencyPayload';
+  readonly account?: Maybe<ConsumerAccount>;
+  readonly errors: ReadonlyArray<Error>;
+};
+
+export type AccountUpdateNotificationSettingsPayload = {
+  readonly __typename: 'AccountUpdateNotificationSettingsPayload';
   readonly account?: Maybe<ConsumerAccount>;
   readonly errors: ReadonlyArray<Error>;
 };
@@ -274,6 +300,7 @@ export type ConsumerAccount = Account & {
   readonly id: Scalars['ID']['output'];
   readonly level: AccountLevel;
   readonly limits: AccountLimits;
+  readonly notificationSettings: NotificationSettings;
   /** List the quiz questions of the consumer account */
   readonly quiz: ReadonlyArray<Quiz>;
   readonly realtimePrice: RealtimePrice;
@@ -641,6 +668,10 @@ export type MobileVersions = {
 export type Mutation = {
   readonly __typename: 'Mutation';
   readonly accountDelete: AccountDeletePayload;
+  readonly accountDisableNotificationCategory: AccountUpdateNotificationSettingsPayload;
+  readonly accountDisableNotificationChannel: AccountUpdateNotificationSettingsPayload;
+  readonly accountEnableNotificationCategory: AccountUpdateNotificationSettingsPayload;
+  readonly accountEnableNotificationChannel: AccountUpdateNotificationSettingsPayload;
   readonly accountUpdateDefaultWalletId: AccountUpdateDefaultWalletIdPayload;
   readonly accountUpdateDisplayCurrency: AccountUpdateDisplayCurrencyPayload;
   readonly callbackEndpointAdd: CallbackEndpointAddPayload;
@@ -747,6 +778,26 @@ export type Mutation = {
   readonly userUpdateLanguage: UserUpdateLanguagePayload;
   /** @deprecated Username will be moved to @Handle in Accounts. Also SetUsername naming should be used instead of UpdateUsername to reflect the idempotency of Handles */
   readonly userUpdateUsername: UserUpdateUsernamePayload;
+};
+
+
+export type MutationAccountDisableNotificationCategoryArgs = {
+  input: AccountDisableNotificationCategoryInput;
+};
+
+
+export type MutationAccountDisableNotificationChannelArgs = {
+  input: AccountDisableNotificationChannelInput;
+};
+
+
+export type MutationAccountEnableNotificationCategoryArgs = {
+  input: AccountEnableNotificationCategoryInput;
+};
+
+
+export type MutationAccountEnableNotificationChannelArgs = {
+  input: AccountEnableNotificationChannelInput;
 };
 
 
@@ -979,6 +1030,22 @@ export const Network = {
 } as const;
 
 export type Network = typeof Network[keyof typeof Network];
+export const NotificationChannel = {
+  Push: 'PUSH'
+} as const;
+
+export type NotificationChannel = typeof NotificationChannel[keyof typeof NotificationChannel];
+export type NotificationChannelSettings = {
+  readonly __typename: 'NotificationChannelSettings';
+  readonly disabledCategories: ReadonlyArray<Scalars['NotificationCategory']['output']>;
+  readonly enabled: Scalars['Boolean']['output'];
+};
+
+export type NotificationSettings = {
+  readonly __typename: 'NotificationSettings';
+  readonly push: NotificationChannelSettings;
+};
+
 export type OnChainAddressCreateInput = {
   readonly walletId: Scalars['WalletId']['input'];
 };
@@ -2298,6 +2365,39 @@ export type UserUpdateLanguageMutationVariables = Exact<{
 
 
 export type UserUpdateLanguageMutation = { readonly __typename: 'Mutation', readonly userUpdateLanguage: { readonly __typename: 'UserUpdateLanguagePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly user?: { readonly __typename: 'User', readonly id: string, readonly language: string } | null } };
+
+export type NotificationSettingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NotificationSettingsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly notificationSettings: { readonly __typename: 'NotificationSettings', readonly push: { readonly __typename: 'NotificationChannelSettings', readonly enabled: boolean, readonly disabledCategories: ReadonlyArray<string> } } } } | null };
+
+export type AccountEnableNotificationChannelMutationVariables = Exact<{
+  input: AccountEnableNotificationChannelInput;
+}>;
+
+
+export type AccountEnableNotificationChannelMutation = { readonly __typename: 'Mutation', readonly accountEnableNotificationChannel: { readonly __typename: 'AccountUpdateNotificationSettingsPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly account?: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly notificationSettings: { readonly __typename: 'NotificationSettings', readonly push: { readonly __typename: 'NotificationChannelSettings', readonly enabled: boolean, readonly disabledCategories: ReadonlyArray<string> } } } | null } };
+
+export type AccountDisableNotificationChannelMutationVariables = Exact<{
+  input: AccountDisableNotificationChannelInput;
+}>;
+
+
+export type AccountDisableNotificationChannelMutation = { readonly __typename: 'Mutation', readonly accountDisableNotificationChannel: { readonly __typename: 'AccountUpdateNotificationSettingsPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly account?: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly notificationSettings: { readonly __typename: 'NotificationSettings', readonly push: { readonly __typename: 'NotificationChannelSettings', readonly enabled: boolean, readonly disabledCategories: ReadonlyArray<string> } } } | null } };
+
+export type AccountEnableNotificationCategoryMutationVariables = Exact<{
+  input: AccountEnableNotificationCategoryInput;
+}>;
+
+
+export type AccountEnableNotificationCategoryMutation = { readonly __typename: 'Mutation', readonly accountEnableNotificationCategory: { readonly __typename: 'AccountUpdateNotificationSettingsPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly account?: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly notificationSettings: { readonly __typename: 'NotificationSettings', readonly push: { readonly __typename: 'NotificationChannelSettings', readonly enabled: boolean, readonly disabledCategories: ReadonlyArray<string> } } } | null } };
+
+export type AccountDisableNotificationCategoryMutationVariables = Exact<{
+  input: AccountDisableNotificationCategoryInput;
+}>;
+
+
+export type AccountDisableNotificationCategoryMutation = { readonly __typename: 'Mutation', readonly accountDisableNotificationCategory: { readonly __typename: 'AccountUpdateNotificationSettingsPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly account?: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly notificationSettings: { readonly __typename: 'NotificationSettings', readonly push: { readonly __typename: 'NotificationChannelSettings', readonly enabled: boolean, readonly disabledCategories: ReadonlyArray<string> } } } | null } };
 
 export type WalletCsvTransactionsQueryVariables = Exact<{
   walletIds: ReadonlyArray<Scalars['WalletId']['input']> | Scalars['WalletId']['input'];
@@ -5815,6 +5915,225 @@ export function useUserUpdateLanguageMutation(baseOptions?: Apollo.MutationHookO
 export type UserUpdateLanguageMutationHookResult = ReturnType<typeof useUserUpdateLanguageMutation>;
 export type UserUpdateLanguageMutationResult = Apollo.MutationResult<UserUpdateLanguageMutation>;
 export type UserUpdateLanguageMutationOptions = Apollo.BaseMutationOptions<UserUpdateLanguageMutation, UserUpdateLanguageMutationVariables>;
+export const NotificationSettingsDocument = gql`
+    query notificationSettings {
+  me {
+    id
+    defaultAccount {
+      id
+      notificationSettings {
+        push {
+          enabled
+          disabledCategories
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useNotificationSettingsQuery__
+ *
+ * To run a query within a React component, call `useNotificationSettingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNotificationSettingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNotificationSettingsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useNotificationSettingsQuery(baseOptions?: Apollo.QueryHookOptions<NotificationSettingsQuery, NotificationSettingsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<NotificationSettingsQuery, NotificationSettingsQueryVariables>(NotificationSettingsDocument, options);
+      }
+export function useNotificationSettingsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<NotificationSettingsQuery, NotificationSettingsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<NotificationSettingsQuery, NotificationSettingsQueryVariables>(NotificationSettingsDocument, options);
+        }
+export type NotificationSettingsQueryHookResult = ReturnType<typeof useNotificationSettingsQuery>;
+export type NotificationSettingsLazyQueryHookResult = ReturnType<typeof useNotificationSettingsLazyQuery>;
+export type NotificationSettingsQueryResult = Apollo.QueryResult<NotificationSettingsQuery, NotificationSettingsQueryVariables>;
+export const AccountEnableNotificationChannelDocument = gql`
+    mutation accountEnableNotificationChannel($input: AccountEnableNotificationChannelInput!) {
+  accountEnableNotificationChannel(input: $input) {
+    errors {
+      message
+    }
+    account {
+      id
+      notificationSettings {
+        push {
+          enabled
+          disabledCategories
+        }
+      }
+    }
+  }
+}
+    `;
+export type AccountEnableNotificationChannelMutationFn = Apollo.MutationFunction<AccountEnableNotificationChannelMutation, AccountEnableNotificationChannelMutationVariables>;
+
+/**
+ * __useAccountEnableNotificationChannelMutation__
+ *
+ * To run a mutation, you first call `useAccountEnableNotificationChannelMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAccountEnableNotificationChannelMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [accountEnableNotificationChannelMutation, { data, loading, error }] = useAccountEnableNotificationChannelMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAccountEnableNotificationChannelMutation(baseOptions?: Apollo.MutationHookOptions<AccountEnableNotificationChannelMutation, AccountEnableNotificationChannelMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AccountEnableNotificationChannelMutation, AccountEnableNotificationChannelMutationVariables>(AccountEnableNotificationChannelDocument, options);
+      }
+export type AccountEnableNotificationChannelMutationHookResult = ReturnType<typeof useAccountEnableNotificationChannelMutation>;
+export type AccountEnableNotificationChannelMutationResult = Apollo.MutationResult<AccountEnableNotificationChannelMutation>;
+export type AccountEnableNotificationChannelMutationOptions = Apollo.BaseMutationOptions<AccountEnableNotificationChannelMutation, AccountEnableNotificationChannelMutationVariables>;
+export const AccountDisableNotificationChannelDocument = gql`
+    mutation accountDisableNotificationChannel($input: AccountDisableNotificationChannelInput!) {
+  accountDisableNotificationChannel(input: $input) {
+    errors {
+      message
+    }
+    account {
+      id
+      notificationSettings {
+        push {
+          enabled
+          disabledCategories
+        }
+      }
+    }
+  }
+}
+    `;
+export type AccountDisableNotificationChannelMutationFn = Apollo.MutationFunction<AccountDisableNotificationChannelMutation, AccountDisableNotificationChannelMutationVariables>;
+
+/**
+ * __useAccountDisableNotificationChannelMutation__
+ *
+ * To run a mutation, you first call `useAccountDisableNotificationChannelMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAccountDisableNotificationChannelMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [accountDisableNotificationChannelMutation, { data, loading, error }] = useAccountDisableNotificationChannelMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAccountDisableNotificationChannelMutation(baseOptions?: Apollo.MutationHookOptions<AccountDisableNotificationChannelMutation, AccountDisableNotificationChannelMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AccountDisableNotificationChannelMutation, AccountDisableNotificationChannelMutationVariables>(AccountDisableNotificationChannelDocument, options);
+      }
+export type AccountDisableNotificationChannelMutationHookResult = ReturnType<typeof useAccountDisableNotificationChannelMutation>;
+export type AccountDisableNotificationChannelMutationResult = Apollo.MutationResult<AccountDisableNotificationChannelMutation>;
+export type AccountDisableNotificationChannelMutationOptions = Apollo.BaseMutationOptions<AccountDisableNotificationChannelMutation, AccountDisableNotificationChannelMutationVariables>;
+export const AccountEnableNotificationCategoryDocument = gql`
+    mutation accountEnableNotificationCategory($input: AccountEnableNotificationCategoryInput!) {
+  accountEnableNotificationCategory(input: $input) {
+    errors {
+      message
+    }
+    account {
+      id
+      notificationSettings {
+        push {
+          enabled
+          disabledCategories
+        }
+      }
+    }
+  }
+}
+    `;
+export type AccountEnableNotificationCategoryMutationFn = Apollo.MutationFunction<AccountEnableNotificationCategoryMutation, AccountEnableNotificationCategoryMutationVariables>;
+
+/**
+ * __useAccountEnableNotificationCategoryMutation__
+ *
+ * To run a mutation, you first call `useAccountEnableNotificationCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAccountEnableNotificationCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [accountEnableNotificationCategoryMutation, { data, loading, error }] = useAccountEnableNotificationCategoryMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAccountEnableNotificationCategoryMutation(baseOptions?: Apollo.MutationHookOptions<AccountEnableNotificationCategoryMutation, AccountEnableNotificationCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AccountEnableNotificationCategoryMutation, AccountEnableNotificationCategoryMutationVariables>(AccountEnableNotificationCategoryDocument, options);
+      }
+export type AccountEnableNotificationCategoryMutationHookResult = ReturnType<typeof useAccountEnableNotificationCategoryMutation>;
+export type AccountEnableNotificationCategoryMutationResult = Apollo.MutationResult<AccountEnableNotificationCategoryMutation>;
+export type AccountEnableNotificationCategoryMutationOptions = Apollo.BaseMutationOptions<AccountEnableNotificationCategoryMutation, AccountEnableNotificationCategoryMutationVariables>;
+export const AccountDisableNotificationCategoryDocument = gql`
+    mutation accountDisableNotificationCategory($input: AccountDisableNotificationCategoryInput!) {
+  accountDisableNotificationCategory(input: $input) {
+    errors {
+      message
+    }
+    account {
+      id
+      notificationSettings {
+        push {
+          enabled
+          disabledCategories
+        }
+      }
+    }
+  }
+}
+    `;
+export type AccountDisableNotificationCategoryMutationFn = Apollo.MutationFunction<AccountDisableNotificationCategoryMutation, AccountDisableNotificationCategoryMutationVariables>;
+
+/**
+ * __useAccountDisableNotificationCategoryMutation__
+ *
+ * To run a mutation, you first call `useAccountDisableNotificationCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAccountDisableNotificationCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [accountDisableNotificationCategoryMutation, { data, loading, error }] = useAccountDisableNotificationCategoryMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAccountDisableNotificationCategoryMutation(baseOptions?: Apollo.MutationHookOptions<AccountDisableNotificationCategoryMutation, AccountDisableNotificationCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AccountDisableNotificationCategoryMutation, AccountDisableNotificationCategoryMutationVariables>(AccountDisableNotificationCategoryDocument, options);
+      }
+export type AccountDisableNotificationCategoryMutationHookResult = ReturnType<typeof useAccountDisableNotificationCategoryMutation>;
+export type AccountDisableNotificationCategoryMutationResult = Apollo.MutationResult<AccountDisableNotificationCategoryMutation>;
+export type AccountDisableNotificationCategoryMutationOptions = Apollo.BaseMutationOptions<AccountDisableNotificationCategoryMutation, AccountDisableNotificationCategoryMutationVariables>;
 export const WalletCsvTransactionsDocument = gql`
     query walletCSVTransactions($walletIds: [WalletId!]!) {
   me {
@@ -6323,6 +6642,10 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   AccountDeletePayload: ResolverTypeWrapper<AccountDeletePayload>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
+  AccountDisableNotificationCategoryInput: AccountDisableNotificationCategoryInput;
+  AccountDisableNotificationChannelInput: AccountDisableNotificationChannelInput;
+  AccountEnableNotificationCategoryInput: AccountEnableNotificationCategoryInput;
+  AccountEnableNotificationChannelInput: AccountEnableNotificationChannelInput;
   AccountLevel: AccountLevel;
   AccountLimit: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['AccountLimit']>;
   AccountLimits: ResolverTypeWrapper<AccountLimits>;
@@ -6330,6 +6653,7 @@ export type ResolversTypes = {
   AccountUpdateDefaultWalletIdPayload: ResolverTypeWrapper<AccountUpdateDefaultWalletIdPayload>;
   AccountUpdateDisplayCurrencyInput: AccountUpdateDisplayCurrencyInput;
   AccountUpdateDisplayCurrencyPayload: ResolverTypeWrapper<AccountUpdateDisplayCurrencyPayload>;
+  AccountUpdateNotificationSettingsPayload: ResolverTypeWrapper<AccountUpdateNotificationSettingsPayload>;
   AuthToken: ResolverTypeWrapper<Scalars['AuthToken']['output']>;
   AuthTokenPayload: ResolverTypeWrapper<AuthTokenPayload>;
   BTCWallet: ResolverTypeWrapper<BtcWallet>;
@@ -6410,6 +6734,10 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   MyUpdatesPayload: ResolverTypeWrapper<Omit<MyUpdatesPayload, 'update'> & { update?: Maybe<ResolversTypes['UserUpdate']> }>;
   Network: Network;
+  NotificationCategory: ResolverTypeWrapper<Scalars['NotificationCategory']['output']>;
+  NotificationChannel: NotificationChannel;
+  NotificationChannelSettings: ResolverTypeWrapper<NotificationChannelSettings>;
+  NotificationSettings: ResolverTypeWrapper<NotificationSettings>;
   OnChainAddress: ResolverTypeWrapper<Scalars['OnChainAddress']['output']>;
   OnChainAddressCreateInput: OnChainAddressCreateInput;
   OnChainAddressCurrentInput: OnChainAddressCurrentInput;
@@ -6520,12 +6848,17 @@ export type ResolversParentTypes = {
   Int: Scalars['Int']['output'];
   AccountDeletePayload: AccountDeletePayload;
   Boolean: Scalars['Boolean']['output'];
+  AccountDisableNotificationCategoryInput: AccountDisableNotificationCategoryInput;
+  AccountDisableNotificationChannelInput: AccountDisableNotificationChannelInput;
+  AccountEnableNotificationCategoryInput: AccountEnableNotificationCategoryInput;
+  AccountEnableNotificationChannelInput: AccountEnableNotificationChannelInput;
   AccountLimit: ResolversInterfaceTypes<ResolversParentTypes>['AccountLimit'];
   AccountLimits: AccountLimits;
   AccountUpdateDefaultWalletIdInput: AccountUpdateDefaultWalletIdInput;
   AccountUpdateDefaultWalletIdPayload: AccountUpdateDefaultWalletIdPayload;
   AccountUpdateDisplayCurrencyInput: AccountUpdateDisplayCurrencyInput;
   AccountUpdateDisplayCurrencyPayload: AccountUpdateDisplayCurrencyPayload;
+  AccountUpdateNotificationSettingsPayload: AccountUpdateNotificationSettingsPayload;
   AuthToken: Scalars['AuthToken']['output'];
   AuthTokenPayload: AuthTokenPayload;
   BTCWallet: BtcWallet;
@@ -6603,6 +6936,9 @@ export type ResolversParentTypes = {
   MobileVersions: MobileVersions;
   Mutation: {};
   MyUpdatesPayload: Omit<MyUpdatesPayload, 'update'> & { update?: Maybe<ResolversParentTypes['UserUpdate']> };
+  NotificationCategory: Scalars['NotificationCategory']['output'];
+  NotificationChannelSettings: NotificationChannelSettings;
+  NotificationSettings: NotificationSettings;
   OnChainAddress: Scalars['OnChainAddress']['output'];
   OnChainAddressCreateInput: OnChainAddressCreateInput;
   OnChainAddressCurrentInput: OnChainAddressCurrentInput;
@@ -6714,6 +7050,7 @@ export type AccountResolvers<ContextType = any, ParentType extends ResolversPare
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   level?: Resolver<ResolversTypes['AccountLevel'], ParentType, ContextType>;
   limits?: Resolver<ResolversTypes['AccountLimits'], ParentType, ContextType>;
+  notificationSettings?: Resolver<ResolversTypes['NotificationSettings'], ParentType, ContextType>;
   realtimePrice?: Resolver<ResolversTypes['RealtimePrice'], ParentType, ContextType>;
   transactions?: Resolver<Maybe<ResolversTypes['TransactionConnection']>, ParentType, ContextType, Partial<AccountTransactionsArgs>>;
   usdWallet?: Resolver<Maybe<ResolversTypes['UsdWallet']>, ParentType, ContextType>;
@@ -6747,6 +7084,12 @@ export type AccountUpdateDefaultWalletIdPayloadResolvers<ContextType = any, Pare
 };
 
 export type AccountUpdateDisplayCurrencyPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['AccountUpdateDisplayCurrencyPayload'] = ResolversParentTypes['AccountUpdateDisplayCurrencyPayload']> = {
+  account?: Resolver<Maybe<ResolversTypes['ConsumerAccount']>, ParentType, ContextType>;
+  errors?: Resolver<ReadonlyArray<ResolversTypes['Error']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AccountUpdateNotificationSettingsPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['AccountUpdateNotificationSettingsPayload'] = ResolversParentTypes['AccountUpdateNotificationSettingsPayload']> = {
   account?: Resolver<Maybe<ResolversTypes['ConsumerAccount']>, ParentType, ContextType>;
   errors?: Resolver<ReadonlyArray<ResolversTypes['Error']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -6826,6 +7169,7 @@ export type ConsumerAccountResolvers<ContextType = any, ParentType extends Resol
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   level?: Resolver<ResolversTypes['AccountLevel'], ParentType, ContextType>;
   limits?: Resolver<ResolversTypes['AccountLimits'], ParentType, ContextType>;
+  notificationSettings?: Resolver<ResolversTypes['NotificationSettings'], ParentType, ContextType>;
   quiz?: Resolver<ReadonlyArray<ResolversTypes['Quiz']>, ParentType, ContextType>;
   realtimePrice?: Resolver<ResolversTypes['RealtimePrice'], ParentType, ContextType>;
   transactions?: Resolver<Maybe<ResolversTypes['TransactionConnection']>, ParentType, ContextType, Partial<ConsumerAccountTransactionsArgs>>;
@@ -7071,6 +7415,10 @@ export type MobileVersionsResolvers<ContextType = any, ParentType extends Resolv
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   accountDelete?: Resolver<ResolversTypes['AccountDeletePayload'], ParentType, ContextType>;
+  accountDisableNotificationCategory?: Resolver<ResolversTypes['AccountUpdateNotificationSettingsPayload'], ParentType, ContextType, RequireFields<MutationAccountDisableNotificationCategoryArgs, 'input'>>;
+  accountDisableNotificationChannel?: Resolver<ResolversTypes['AccountUpdateNotificationSettingsPayload'], ParentType, ContextType, RequireFields<MutationAccountDisableNotificationChannelArgs, 'input'>>;
+  accountEnableNotificationCategory?: Resolver<ResolversTypes['AccountUpdateNotificationSettingsPayload'], ParentType, ContextType, RequireFields<MutationAccountEnableNotificationCategoryArgs, 'input'>>;
+  accountEnableNotificationChannel?: Resolver<ResolversTypes['AccountUpdateNotificationSettingsPayload'], ParentType, ContextType, RequireFields<MutationAccountEnableNotificationChannelArgs, 'input'>>;
   accountUpdateDefaultWalletId?: Resolver<ResolversTypes['AccountUpdateDefaultWalletIdPayload'], ParentType, ContextType, RequireFields<MutationAccountUpdateDefaultWalletIdArgs, 'input'>>;
   accountUpdateDisplayCurrency?: Resolver<ResolversTypes['AccountUpdateDisplayCurrencyPayload'], ParentType, ContextType, RequireFields<MutationAccountUpdateDisplayCurrencyArgs, 'input'>>;
   callbackEndpointAdd?: Resolver<ResolversTypes['CallbackEndpointAddPayload'], ParentType, ContextType, RequireFields<MutationCallbackEndpointAddArgs, 'input'>>;
@@ -7123,6 +7471,21 @@ export type MyUpdatesPayloadResolvers<ContextType = any, ParentType extends Reso
   errors?: Resolver<ReadonlyArray<ResolversTypes['Error']>, ParentType, ContextType>;
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   update?: Resolver<Maybe<ResolversTypes['UserUpdate']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export interface NotificationCategoryScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['NotificationCategory'], any> {
+  name: 'NotificationCategory';
+}
+
+export type NotificationChannelSettingsResolvers<ContextType = any, ParentType extends ResolversParentTypes['NotificationChannelSettings'] = ResolversParentTypes['NotificationChannelSettings']> = {
+  disabledCategories?: Resolver<ReadonlyArray<ResolversTypes['NotificationCategory']>, ParentType, ContextType>;
+  enabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type NotificationSettingsResolvers<ContextType = any, ParentType extends ResolversParentTypes['NotificationSettings'] = ResolversParentTypes['NotificationSettings']> = {
+  push?: Resolver<ResolversTypes['NotificationChannelSettings'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -7588,6 +7951,7 @@ export type Resolvers<ContextType = any> = {
   AccountLimits?: AccountLimitsResolvers<ContextType>;
   AccountUpdateDefaultWalletIdPayload?: AccountUpdateDefaultWalletIdPayloadResolvers<ContextType>;
   AccountUpdateDisplayCurrencyPayload?: AccountUpdateDisplayCurrencyPayloadResolvers<ContextType>;
+  AccountUpdateNotificationSettingsPayload?: AccountUpdateNotificationSettingsPayloadResolvers<ContextType>;
   AuthToken?: GraphQLScalarType;
   AuthTokenPayload?: AuthTokenPayloadResolvers<ContextType>;
   BTCWallet?: BtcWalletResolvers<ContextType>;
@@ -7643,6 +8007,9 @@ export type Resolvers<ContextType = any> = {
   MobileVersions?: MobileVersionsResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   MyUpdatesPayload?: MyUpdatesPayloadResolvers<ContextType>;
+  NotificationCategory?: GraphQLScalarType;
+  NotificationChannelSettings?: NotificationChannelSettingsResolvers<ContextType>;
+  NotificationSettings?: NotificationSettingsResolvers<ContextType>;
   OnChainAddress?: GraphQLScalarType;
   OnChainAddressPayload?: OnChainAddressPayloadResolvers<ContextType>;
   OnChainTxFee?: OnChainTxFeeResolvers<ContextType>;

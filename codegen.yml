@@ -64,3 +64,4 @@ generates:
         _FieldSet: "string"
         EndpointId: "string"
         EndpointUrl: "string"
+        NotificationCategory: "string"

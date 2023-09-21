@@ -81,6 +81,7 @@ export type RootStackParamList = {
   transactionHistory?: undefined
   Earn: undefined
   accountScreen: undefined
+  notificationSettingsScreen: undefined
   transactionLimitsScreen: undefined
   emailRegistrationInitiate: undefined
   emailRegistrationValidate: { email: string; emailRegistrationId: string }
