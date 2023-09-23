@@ -24,7 +24,7 @@ import Clipboard from "@react-native-clipboard/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import RNQRGenerator from "rn-qr-generator"
 import { BarcodeFormat, useScanBarcodes } from "vision-camera-code-scanner"
-import ImagePicker from "react-native-image-crop-picker"
+import {launchImageLibrary} from 'react-native-image-picker';
 import crashlytics from "@react-native-firebase/crashlytics"
 import { gql } from "@apollo/client"
 import {
@@ -38,6 +38,7 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { logParseDestinationResult } from "@app/utils/analytics"
 import { LNURL_DOMAINS } from "@app/config"
 import { makeStyles, useTheme } from "@rneui/themed"
+import { toastShow } from "@app/utils/toast"
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
@@ -252,18 +253,21 @@ export const ScanningQRCodeScreen: React.FC = () => {
 
   const showImagePicker = async () => {
     try {
-      const response = await ImagePicker.openPicker({})
-      let qrCodeValues
-      if (Platform.OS === "ios" && response.sourceURL) {
-        qrCodeValues = await RNQRGenerator.detect({ uri: response.sourceURL })
+      const result = await launchImageLibrary({ mediaType: "photo" })
+      if (result.errorCode === "permission") {
+        toastShow({
+          message: (translations) =>
+            translations.ScanningQRCodeScreen.imageLibraryPermissionsNotGranted(),
+          currentTranslation: LL,
+        })
       }
-      if (Platform.OS === "android" && response.path) {
-        qrCodeValues = await RNQRGenerator.detect({ uri: response.path })
-      }
-      if (qrCodeValues && qrCodeValues.values.length > 0) {
-        decodeInvoice(qrCodeValues.values[0])
-      } else {
-        Alert.alert(LL.ScanningQRCodeScreen.noQrCode())
+      if (result.assets && result.assets.length > 0 && result.assets[0].uri) {
+        const qrCodeValues = await RNQRGenerator.detect({ uri: result.assets[0].uri })
+        if (qrCodeValues && qrCodeValues.values.length > 0) {
+          decodeInvoice(qrCodeValues.values[0])
+        } else {
+          Alert.alert(LL.ScanningQRCodeScreen.noQrCode())
+        }
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
