@@ -234,7 +234,7 @@ export const SettingsScreen: React.FC = () => {
           currentTranslation: LL,
         })
       },
-      chevronLogo: lightningAddress ? "copy" : undefined,
+      chevronLogo: lightningAddress ? "copy-outline" : undefined,
       enabled: isAtLeastLevelZero,
       greyed: !isAtLeastLevelZero,
     },
@@ -265,7 +265,7 @@ export const SettingsScreen: React.FC = () => {
     },
     {
       category: `${LL.common.currency()}`,
-      icon: "ios-cash",
+      icon: "ios-cash-outline",
       id: "currency",
       action: () => navigation.navigate("currency"),
       subTitleText: displayCurrency,
@@ -282,6 +282,14 @@ export const SettingsScreen: React.FC = () => {
       greyed: !isAtLeastLevelZero,
     },
     {
+      category: `${LL.SettingsScreen.notifications()}`,
+      icon: "notifications-outline",
+      id: "notification-settings",
+      action: () => navigation.navigate("notificationSettingsScreen"),
+      enabled: isAtLeastLevelZero,
+      greyed: !isAtLeastLevelZero,
+    },
+    {
       category: LL.common.security(),
       icon: "lock-closed-outline",
       id: "security",
@@ -291,7 +299,7 @@ export const SettingsScreen: React.FC = () => {
     },
     {
       category: LL.common.csvExport(),
-      icon: "ios-download",
+      icon: "ios-download-outline",
       id: "csv",
       action: fetchCsvTransactions,
       enabled: isAtLeastLevelZero && !loadingCsvTransactions,
@@ -308,7 +316,7 @@ export const SettingsScreen: React.FC = () => {
     },
     {
       category: LL.support.contactUs(),
-      icon: "help-circle",
+      icon: "help-circle-outline",
       id: "contact-us",
       action: () => {
         setHiddenContactMethods([SupportChannels.Telegram, SupportChannels.Mattermost])
@@ -320,7 +328,7 @@ export const SettingsScreen: React.FC = () => {
     },
     {
       category: LL.support.joinTheCommunity(),
-      icon: "people",
+      icon: "people-outline",
       id: "join-the-community",
       action: () => {
         setHiddenContactMethods([
@@ -340,7 +348,7 @@ export const SettingsScreen: React.FC = () => {
         storeName: isIos ? "App Store" : "Play Store",
       }),
       id: "leave-feedback",
-      icon: "star",
+      icon: "star-outline",
       action: rateUs,
       enabled: true,
       greyed: false,

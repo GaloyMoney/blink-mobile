@@ -79,6 +79,7 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
+import { NotificationSettingsScreen } from "@app/screens/settings-screen/notifications-screen"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -339,6 +340,13 @@ export const RootStack = () => {
         component={AccountScreen}
         options={{
           title: LL.common.account(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="notificationSettingsScreen"
+        component={NotificationSettingsScreen}
+        options={{
+          title: LL.NotificationSettingsScreen.title(),
         }}
       />
       <RootNavigator.Screen

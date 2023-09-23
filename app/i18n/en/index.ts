@@ -700,6 +700,7 @@ const en: BaseTranslation = {
     activated: "Activated",
     addressScreen: "Ways to get paid",
     tapUserName: "Tap to set username",
+    notifications: "Notifications",
     title: "Settings",
     darkMode: "Dark Mode",
     setToDark: "Mode: dark.",
@@ -722,6 +723,20 @@ const en: BaseTranslation = {
     nfcScanNow: "Scan NFC Now",
     nfcNotSupported: "NFC is not supported on this device",
     logInOrCreateAccount: "Log in or create account",
+  },
+  NotificationSettingsScreen: {
+    title: "Notification Settings",
+    pushNotifications: "Push Notifications",
+    notificationCategories: {
+      Circles: {
+        title: "Circles",
+        description: "Notifications about your circles.",
+      },
+      Payments: {
+        title: "Payments",
+        description: "Notifications related to sending and receiving payments.",
+      }
+    }
   },
   AccountScreen: {
     accountLevel: "Account Level",
