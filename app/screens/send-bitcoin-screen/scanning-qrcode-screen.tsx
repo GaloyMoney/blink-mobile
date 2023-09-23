@@ -1,14 +1,6 @@
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import * as React from "react"
-import {
-  Alert,
-  Dimensions,
-  Linking,
-  Platform,
-  Pressable,
-  StyleSheet,
-  View,
-} from "react-native"
+import { Alert, Dimensions, Linking, Pressable, StyleSheet, View } from "react-native"
 import {
   Camera,
   CameraPermissionStatus,
@@ -24,7 +16,7 @@ import Clipboard from "@react-native-clipboard/clipboard"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import RNQRGenerator from "rn-qr-generator"
 import { BarcodeFormat, useScanBarcodes } from "vision-camera-code-scanner"
-import {launchImageLibrary} from 'react-native-image-picker';
+import { launchImageLibrary } from "react-native-image-picker"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { gql } from "@apollo/client"
 import {
