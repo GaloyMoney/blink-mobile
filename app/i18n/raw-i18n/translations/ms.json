@@ -488,7 +488,8 @@
         "lastWeek": "Minggu lepas",
         "lastMonth": "Bulan lepas",
         "lastYear": "Tahun lepas",
-        "lastFiveYears": "5 tahun lepas"
+        "lastFiveYears": "5 tahun lepas",
+        "buyAndSell": "Beli dan Jual Bitcoin"
     },
     "PrimaryScreen": {
         "title": "Rumah"
@@ -520,11 +521,6 @@
         "setANote": "Tetapkan pesanan",
         "invoiceAmount": "Amaun invois",
         "fees": "{minBankFee: string} cas sats dikenakan untuk bayaran dengan onchain di bawah {minBankFeeThreshold: string} sats",
-        "lightning": "Lightning ",
-        "paycode": "Kod bayaran",
-        "onchain": "Chain Utama. On Chain",
-        "bitcoin": "Bitcoin ",
-        "stablesats": "Stablesats",
         "regenerateInvoiceButtonTitle": "Jana semula invois",
         "setUsernameButtonTitle": "Tetapkan Nama Pengguna",
         "invoiceHasExpired": "Invois telah luput",
@@ -539,7 +535,7 @@
             "expiresNow": "Tamat tempoh sekarang"
         },
         "invoiceHasBeenPaid": "Invois telah dibayar",
-        "onChainAddress": "Alamat Onchain",
+        "btcOnChainAddress": "Alamat Bitcoin Onchain",
         "receiveViaInvoice": "Terima melalui Lightning ",
         "receiveViaPaycode": "Terima melalui Kod bayaran",
         "receiveViaOnchain": "Terima melalui Onchain",
@@ -647,6 +643,7 @@
         "activated": "Telah diaktifkan",
         "addressScreen": "Cara untuk terima bayaran",
         "tapUserName": "Tekan untuk tetapkan ID pengguna",
+        "notifications": "Notifikasi",
         "title": "Tetapan",
         "darkMode": "Mode Gelap",
         "setToDark": "Mode: gelap",
@@ -666,6 +663,20 @@
         "nfcScanNow": "Imbas NFC sekarang",
         "nfcNotSupported": "Gajet ini tidak menyokong NFC",
         "logInOrCreateAccount": "Log masuk atau buat akaun"
+    },
+    "NotificationSettingsScreen": {
+        "title": "Tetapan Notifikasi",
+        "pushNotifications": "Paparan notifikasi",
+        "notificationCategories": {
+            "Circles": {
+                "title": "Kumpulan kecil",
+                "description": "Notifikasi tentang kumpulan kecil "
+            },
+            "Payments": {
+                "title": "Bayaran",
+                "description": "Notifikasi berkait dengan penerimaan dan penghantaran bayaran"
+            }
+        }
     },
     "AccountScreen": {
         "accountLevel": "Peringkat akaun",
@@ -699,8 +710,8 @@
         "totpDeactivated": "Pengesahan dua kali telah pun diaktifkan",
         "totpDeleteAlertTitle": "Buang pengesahan dua kali",
         "totpDeleteAlertContent": "Adakah anda pasti mahu membuang pengesahan dua kali ini?",
-        "copiedAccountId": "Copied your account ID to clipboard",
-        "yourAccountId": "Your Account ID",
+        "copiedAccountId": "Akaun ID anda telah disalin ke dalam papan klip",
+        "yourAccountId": "ID akaun anda",
         "copy": "Salin"
     },
     "TotpRegistrationInitiateScreen": {
@@ -1017,7 +1028,7 @@
         "minAmountNotMet": "Amaun minimum mestilah {AmaunMinimum: string}."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Set amount"
+        "tapToSetAmount": "Tetapkan amaun"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Aku perlu kemaskini aplikasi ini kepada yang terkini. Aku gunakan {os: string} dengan versi aplikasi {versi: string}",
@@ -1029,6 +1040,7 @@
     "Circles": {
         "title": "Kumpulan Kecilku",
         "titleBlinkCircles": "Kumpulan Kecil Blink",
+        "fetchingLatestCircles": "Kemaskini kumpulan kecil terkini",
         "circles": "kumpulan kecil",
         "circlesExplainer": "Kumpulan kecil anda akan berkembang sekiranya anda menjemput kenalan anda ke Blink - Dengan menghantarkan sats pertama buat mereka ",
         "viewMyCircles": "Lihat kumpulan kecil aku",
@@ -1048,7 +1060,7 @@
         "innerCircleExplainer": "Anda dah mendorong adaptasi Bitcoin dengan Blink, teruskan momentum ini!",
         "innerCircleExplainerCard": "Aku berkempen untuk adaptasi Bitcoin dengan Blink!",
         "innerCircle": "Kumpulan Kecil Dalaman",
-        "peopleYouWelcomed": "Kenalan yang anda telah jemput",
+        "peopleYouWelcomed": "kenalan yang telah dijemput anda",
         "peopleIWelcomed": "kenalan\nyang telah menyertai",
         "thisMonth": "bulan ini",
         "outerCircle": "Kumpulan Kecil Luar",
@@ -1067,7 +1079,7 @@
         "septChallenge": {
             "title": "Cabaran September!",
             "description": "Kumpulan Kecil {innerCircle: number}/21 - Dapatkan $21\n3 Teratas - Menangi tiket ke Adopting Bitcoin!",
-            "details": "Grow your inner circle by 21 people in September and share on social with #blinkcircles to get $21 to your Stablesats account. Top 3 win tickets to Adopting Bitcoin!",
+            "details": "Kembangkan kumpulan kecil anda menjadi 21 orang pada September ini dan dapat $21 dalam akaun stablesats anda. 3 yang teratas akan memenangi tiket Adopting Bitcoin!",
             "peopleWelcomedSoFar": "Kenalan yang telah menyertai setakat ini",
             "yourRank": "ranking kedudukan anda",
             "reminder": "Perhatian: Kumpulan kecil anda akan bertambah sekiranya anda menghantar sats kepada pengguna baru Blink ",
