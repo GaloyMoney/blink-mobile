@@ -488,7 +488,8 @@
         "lastWeek": "La semaine dernière",
         "lastMonth": "Le mois dernier",
         "lastYear": "L’année dernière",
-        "lastFiveYears": "Les cinq dernières années"
+        "lastFiveYears": "Les cinq dernières années",
+        "buyAndSell": "Acheter et vendre bitcoin"
     },
     "PrimaryScreen": {
         "title": "Accueil"
@@ -520,11 +521,6 @@
         "setANote": "Ajouter un message",
         "invoiceAmount": "Montant de la facture",
         "fees": "{minBankFee: string} sats de frais pour des paiements on-chain en-dessous de {minBankFeeThreshold: string} sats",
-        "lightning": "Lightning",
-        "paycode": "Code de paiement",
-        "onchain": "On-chain",
-        "bitcoin": "Bitcoin",
-        "stablesats": "Stablesats",
         "regenerateInvoiceButtonTitle": "Générer à nouveau la facture",
         "setUsernameButtonTitle": "Définir l’identifiant",
         "invoiceHasExpired": "la facture a expiré",
@@ -539,7 +535,7 @@
             "expiresNow": "Expire maintenant"
         },
         "invoiceHasBeenPaid": "La facture a été payée",
-        "onChainAddress": "Adresse On-chain",
+        "btcOnChainAddress": "Adresse Bitcoin on-chain",
         "receiveViaInvoice": "Recevoir via Lightning",
         "receiveViaPaycode": "Recevoir via un code de paiement",
         "receiveViaOnchain": "Recevoir via On-chain",
@@ -647,6 +643,7 @@
         "activated": "Activé",
         "addressScreen": "Moyens de se faire payer",
         "tapUserName": "Appuyez pour définir l’identifiant",
+        "notifications": "Notifications",
         "title": "Réglages",
         "darkMode": "Mode sombre",
         "setToDark": "Mode : sombre.",
@@ -666,6 +663,20 @@
         "nfcScanNow": "Scanner NFC maintenant",
         "nfcNotSupported": "NFC n’est pas compatible sur cet appareil",
         "logInOrCreateAccount": "Se connecter ou créer un compte"
+    },
+    "NotificationSettingsScreen": {
+        "title": "Réglages des notifications",
+        "pushNotifications": "Notifications push",
+        "notificationCategories": {
+            "Circles": {
+                "title": "Cercles",
+                "description": "Notifications concernant vos cercles."
+            },
+            "Payments": {
+                "title": "Paiements",
+                "description": "Notifications associées aux paiements envoyés et reçus."
+            }
+        }
     },
     "AccountScreen": {
         "accountLevel": "Niveau du compte",
@@ -1031,7 +1042,7 @@
         "titleBlinkCircles": "Cercles Blink",
         "fetchingLatestCircles": "Récupérer les derniers cercles",
         "circles": "cercles",
-        "circlesExplainer": "Vos cercles augmentent lorsque vous parrainez de nouvelles personnes à Blink - en leur envoyant leurs premiers sats.",
+        "circlesExplainer": "Parrainez des personnes sur Blink en leur envoyant leurs premiers sats ! Vos cercles grandiront à chaque parrainage.",
         "viewMyCircles": "Voir mes Cercles",
         "introducingCircles": "Introduction à Cercles",
         "copiedInviteLink": "Lien d’invitation copié",
@@ -1049,7 +1060,7 @@
         "innerCircleExplainer": "Vous participez à l’adoption de Bitcoin avec Blink, continuez comme ça !",
         "innerCircleExplainerCard": "Je participe à l’adoption de Bitcoin avec Blink !",
         "innerCircle": "Cercle interne",
-        "peopleYouWelcomed": "personnes que vous avez parrainé",
+        "peopleYouWelcomed": "personnes que vous avez parrainées",
         "peopleIWelcomed": "personnes\n| parrainées",
         "thisMonth": "ce mois-ci",
         "outerCircle": "Cercle externe",
