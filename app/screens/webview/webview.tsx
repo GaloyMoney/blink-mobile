@@ -6,8 +6,8 @@ import { WebView, WebViewNavigation } from "react-native-webview"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp, useNavigation } from "@react-navigation/native"
-import { makeStyles } from "@rneui/base"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { makeStyles } from "@rneui/themed"
 
 type WebViewDebugScreenRouteProp = RouteProp<RootStackParamList, "webView">
 
@@ -116,6 +116,6 @@ export const WebViewScreen: React.FC<Props> = ({ route }) => {
   )
 }
 
-const useStyles = makeStyles(() => ({
-  full: { width: "100%", height: "100%", flex: 1 },
+const useStyles = makeStyles(({ colors }) => ({
+  full: { width: "100%", height: "100%", flex: 1, backgroundColor: colors.transparent },
 }))
