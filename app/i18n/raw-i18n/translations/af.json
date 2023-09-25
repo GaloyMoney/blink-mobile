@@ -643,6 +643,7 @@
         "activated": "Geaktiveer ",
         "addressScreen": "Maniere om betaal te word",
         "tapUserName": "Tik om gebruikersnaam te verander ",
+        "notifications": "Notas",
         "title": "Verstellings",
         "darkMode": "Donker agtergrond",
         "setToDark": "Modus: donker.",
@@ -662,6 +663,20 @@
         "nfcScanNow": "Skandeer nou NFC",
         "nfcNotSupported": "NFC word nie ondersteun op die toestel nie",
         "logInOrCreateAccount": "Teken in of skep 'n rekening"
+    },
+    "NotificationSettingsScreen": {
+        "title": "Notaverstellings",
+        "pushNotifications": "Belangrike notas",
+        "notificationCategories": {
+            "Circles": {
+                "title": "Sirkels",
+                "description": "Notas oor jou sirkels"
+            },
+            "Payments": {
+                "title": "Betalings",
+                "description": "Notas ivm stuur en ontvang van betlings"
+            }
+        }
     },
     "AccountScreen": {
         "accountLevel": "Rekeningvlak",
