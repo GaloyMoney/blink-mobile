@@ -7502,22 +7502,13 @@ type RootTranslation = {
 		 */
 		error: string
 		/**
-		 * H​i​,​ ​I​ ​w​i​l​l​ ​l​i​k​e​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​t​h​e​ ​t​r​a​n​s​a​c​t​i​o​n​ ​l​i​m​i​t​s​ ​o​f​ ​m​y​ ​{​b​a​n​k​N​a​m​e​}​ ​a​c​c​o​u​n​t​.
-		 * @param {string} bankName
-		 */
-		contactUsMessageBody: RequiredParams<'bankName'>
-		/**
-		 * R​e​q​u​e​s​t​ ​T​o​ ​I​n​c​r​e​a​s​e​ ​T​r​a​n​s​a​c​t​i​o​n​ ​L​i​m​i​t​s
-		 */
-		contactUsMessageSubject: string
-		/**
-		 * C​o​n​t​a​c​t​ ​s​u​p​p​o​r​t​ ​t​o​ ​p​e​r​f​o​r​m​ ​m​a​n​u​a​l​ ​K​Y​C​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t
-		 */
-		contactSupportToPerformKyc: string
-		/**
 		 * I​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t​s
 		 */
 		increaseLimits: string
+		/**
+		 * I​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t​s​ ​b​y​ ​p​r​o​v​i​d​i​n​g​ ​a​n​ ​I​D
+		 */
+		increaseLimitsLevel2: string
 	}
 	TransactionScreen: {
 		/**
@@ -8657,6 +8648,50 @@ type RootTranslation = {
 			 */
 			fullDetails: string
 		}
+	}
+	FullOnboarding: {
+		/**
+		 * F​u​l​l​ ​o​n​b​o​a​r​d​i​n​g
+		 */
+		title: string
+		/**
+		 * C​o​n​f​i​r​m​ ​y​o​u​r​ ​n​a​m​e
+		 */
+		confirmNameTitle: string
+		/**
+		 * F​i​r​s​t​ ​n​a​m​e
+		 */
+		firstName: string
+		/**
+		 * L​a​s​t​ ​n​a​m​e
+		 */
+		lastName: string
+		/**
+		 * I​s​ ​t​h​e​ ​s​p​e​l​l​i​n​g​ ​o​f​ ​y​o​u​r​ ​n​a​m​e​ ​c​o​r​r​e​c​t​?​
+	​
+	​{​f​i​r​s​t​N​a​m​e​}​ ​{​l​a​s​t​N​a​m​e​}​
+	​
+	​I​t​ ​m​u​s​t​ ​m​a​t​c​h​ ​t​h​e​ ​n​a​m​e​ ​o​n​ ​y​o​u​r​ ​I​D​.
+		 * @param {string} firstName
+		 * @param {string} lastName
+		 */
+		confirmNameContent: RequiredParams<'firstName' | 'lastName'>
+		/**
+		 * T​o​ ​i​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t​s​,​ ​y​o​u​ ​w​i​l​l​ ​h​a​v​e​ ​t​o​ ​p​r​o​v​i​d​e​ ​y​o​u​r​ ​n​a​m​e​,​ ​a​ ​g​o​v​e​r​n​e​m​e​n​t​-​i​s​s​u​e​d​ ​I​D​ ​a​n​d​ ​a​ ​s​e​l​f​i​e​.​ ​W​e​'​l​l​ ​s​t​a​r​t​ ​w​i​t​h​ ​y​o​u​r​ ​n​a​m​e​.
+		 */
+		requirements: string
+		/**
+		 * Y​o​u​ ​a​c​c​o​u​n​t​ ​h​a​s​ ​a​l​r​e​a​d​y​ ​b​e​e​n​ ​v​e​r​i​f​i​e​d
+		 */
+		accountVerifiedAlready: string
+		/**
+		 * D​o​c​u​m​e​n​t​s​ ​h​a​s​ ​b​e​e​n​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​r​e​c​e​i​v​e​d
+		 */
+		success: string
+		/**
+		 * T​h​e​r​e​ ​h​a​s​ ​b​e​e​n​ ​a​n​ ​e​r​r​o​r​ ​w​i​t​h​ ​t​h​e​ ​s​u​b​m​i​s​s​i​o​n​ ​o​f​ ​y​o​u​r​ ​d​o​c​u​m​e​n​t​s​.​ ​Y​o​u​ ​c​a​n​ ​c​o​n​t​a​c​t​ ​t​h​e​ ​s​u​p​p​o​r​t​ ​i​s​ ​t​h​e​ ​p​r​o​b​l​e​m​ ​p​e​r​s​i​s​t​s​.
+		 */
+		error: string
 	}
 }
 
@@ -16079,21 +16114,13 @@ export type TranslationFunctions = {
 		 */
 		error: () => LocalizedString
 		/**
-		 * Hi, I will like to increase the transaction limits of my {bankName} account.
-		 */
-		contactUsMessageBody: (arg: { bankName: string }) => LocalizedString
-		/**
-		 * Request To Increase Transaction Limits
-		 */
-		contactUsMessageSubject: () => LocalizedString
-		/**
-		 * Contact support to perform manual KYC to increase your limit
-		 */
-		contactSupportToPerformKyc: () => LocalizedString
-		/**
 		 * Increase your limits
 		 */
 		increaseLimits: () => LocalizedString
+		/**
+		 * Increase your limits by providing an ID
+		 */
+		increaseLimitsLevel2: () => LocalizedString
 	}
 	TransactionScreen: {
 		/**
@@ -17202,6 +17229,48 @@ export type TranslationFunctions = {
 			 */
 			fullDetails: () => LocalizedString
 		}
+	}
+	FullOnboarding: {
+		/**
+		 * Full onboarding
+		 */
+		title: () => LocalizedString
+		/**
+		 * Confirm your name
+		 */
+		confirmNameTitle: () => LocalizedString
+		/**
+		 * First name
+		 */
+		firstName: () => LocalizedString
+		/**
+		 * Last name
+		 */
+		lastName: () => LocalizedString
+		/**
+		 * Is the spelling of your name correct?
+
+	{firstName} {lastName}
+
+	It must match the name on your ID.
+		 */
+		confirmNameContent: (arg: { firstName: string, lastName: string }) => LocalizedString
+		/**
+		 * To increase your limits, you will have to provide your name, a governement-issued ID and a selfie. We'll start with your name.
+		 */
+		requirements: () => LocalizedString
+		/**
+		 * You account has already been verified
+		 */
+		accountVerifiedAlready: () => LocalizedString
+		/**
+		 * Documents has been successfully received
+		 */
+		success: () => LocalizedString
+		/**
+		 * There has been an error with the submission of your documents. You can contact the support is the problem persists.
+		 */
+		error: () => LocalizedString
 	}
 }
 

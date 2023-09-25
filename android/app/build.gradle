@@ -103,6 +103,10 @@ android {
         versionCode 583
         versionName "2.2.125"
         missingDimensionStrategy 'react-native-camera', 'general' // React native camera
+
+        // onfido requirement
+        multiDexEnabled true
+
     }
     splits {
         abi {
@@ -168,6 +172,8 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+    implementation 'androidx.multidex:multidex:2.0.1'
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

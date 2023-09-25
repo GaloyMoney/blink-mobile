@@ -166,6 +166,10 @@ PODS:
     - nanopb/encode (= 2.30909.0)
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
+  - Onfido (29.4.2)
+  - onfido-react-native-sdk (10.3.1):
+    - Onfido (~> 29.4.0)
+    - React
   - PromisesObjC (2.2.0)
   - PromisesSwift (2.2.0):
     - PromisesObjC (= 2.2.0)
@@ -619,7 +623,7 @@ PODS:
     - React-Core
   - RNSVG (13.9.0):
     - React-Core
-  - RNVectorIcons (9.2.0):
+  - RNVectorIcons (10.0.0):
     - React-Core
   - vision-camera-code-scanner (0.2.0):
     - GoogleMLKit/BarcodeScanning
@@ -642,6 +646,7 @@ DEPENDENCIES:
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - libevent (~> 2.1.12)
+  - "onfido-react-native-sdk (from `../node_modules/@onfido/react-native-sdk`)"
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -738,6 +743,7 @@ SPEC REPOS:
     - MLKitCommon
     - MLKitVision
     - nanopb
+    - Onfido
     - PromisesObjC
     - PromisesSwift
     - ZXingObjC
@@ -757,6 +763,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
+  onfido-react-native-sdk:
+    :path: "../node_modules/@onfido/react-native-sdk"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -923,6 +931,8 @@ SPEC CHECKSUMS:
   MLKitCommon: c1b791c3e667091918d91bda4bba69a91011e390
   MLKitVision: 8baa5f46ee3352614169b85250574fde38c36f49
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  Onfido: abc5d9a0da1e3ae9f8b4a2a16cc1e77b7a38b12e
+  onfido-react-native-sdk: a62bb2bd5a8994ee29effc0412c013dfddf01f7e
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   PromisesSwift: cf9eb58666a43bbe007302226e510b16c1e10959
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
@@ -986,7 +996,7 @@ SPEC CHECKSUMS:
   RNSecureRandom: 07efbdf2cd99efe13497433668e54acd7df49fef
   RNShare: da6d90b6dc332f51f86498041d6e34211f96b630
   RNSVG: 53c661b76829783cdaf9b7a57258f3d3b4c28315
-  RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
+  RNVectorIcons: 8b5bb0fa61d54cd2020af4f24a51841ce365c7e9
   vision-camera-code-scanner: dda884a7f3ec8243a2a6d6489b91860648371bca
   VisionCamera: 523b49054bee9dace64189ab6631cb41e8b83fe0
   Yoga: 065f0b74dba4832d6e328238de46eb72c5de9556

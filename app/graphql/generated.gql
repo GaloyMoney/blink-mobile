@@ -455,6 +455,15 @@ mutation onChainUsdPaymentSendAsBtcDenominated($input: OnChainUsdPaymentSendAsBt
   }
 }
 
+mutation onboardingFlowStart($input: OnboardingFlowStartInput!) {
+  onboardingFlowStart(input: $input) {
+    workflowRunId
+    tokenAndroid
+    tokenIos
+    __typename
+  }
+}
+
 mutation quizCompleted($input: QuizCompletedInput!) {
   quizCompleted(input: $input) {
     errors {

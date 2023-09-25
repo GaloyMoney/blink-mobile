@@ -82,6 +82,8 @@ export type Scalars = {
   Username: { input: string; output: string; }
   /** Unique identifier of a wallet */
   WalletId: { input: string; output: string; }
+  join__FieldSet: { input: string; output: string; }
+  link__Import: { input: string; output: string; }
   _FieldSet: { input: string; output: string; }
 };
 
@@ -777,6 +779,7 @@ export type Mutation = {
   readonly onChainPaymentSendAll: PaymentSendPayload;
   readonly onChainUsdPaymentSend: PaymentSendPayload;
   readonly onChainUsdPaymentSendAsBtcDenominated: PaymentSendPayload;
+  readonly onboardingFlowStart: OnboardingFlowStartResult;
   readonly quizCompleted: QuizCompletedPayload;
   /** @deprecated will be moved to AccountContact */
   readonly userContactUpdateAlias: UserContactUpdateAliasPayload;
@@ -963,6 +966,11 @@ export type MutationOnChainUsdPaymentSendAsBtcDenominatedArgs = {
 };
 
 
+export type MutationOnboardingFlowStartArgs = {
+  input: OnboardingFlowStartInput;
+};
+
+
 export type MutationQuizCompletedArgs = {
   input: QuizCompletedInput;
 };
@@ -1129,6 +1137,19 @@ export type OnChainUsdTxFee = {
   readonly amount: Scalars['CentAmount']['output'];
 };
 
+export type OnboardingFlowStartInput = {
+  readonly accountId: Scalars['String']['input'];
+  readonly firstName: Scalars['String']['input'];
+  readonly lastName: Scalars['String']['input'];
+};
+
+export type OnboardingFlowStartResult = {
+  readonly __typename: 'OnboardingFlowStartResult';
+  readonly tokenAndroid: Scalars['String']['output'];
+  readonly tokenIos: Scalars['String']['output'];
+  readonly workflowRunId: Scalars['String']['output'];
+};
+
 export type OneDayAccountLimit = AccountLimit & {
   readonly __typename: 'OneDayAccountLimit';
   /** The rolling time interval value in seconds for the current 24 hour period. */
@@ -1269,6 +1290,7 @@ export type Query = {
   readonly feedbackModalShown: Scalars['Boolean']['output'];
   readonly globals?: Maybe<Globals>;
   readonly hasPromptedSetDefaultAccount: Scalars['Boolean']['output'];
+  readonly hello?: Maybe<Scalars['String']['output']>;
   readonly hiddenBalanceToolTip: Scalars['Boolean']['output'];
   readonly hideBalance: Scalars['Boolean']['output'];
   readonly innerCircleValue: Scalars['Int']['output'];
@@ -1839,6 +1861,21 @@ export const WelcomeRange = {
 } as const;
 
 export type WelcomeRange = typeof WelcomeRange[keyof typeof WelcomeRange];
+export const Join__Graph = {
+  Circles: 'CIRCLES',
+  Galoy: 'GALOY',
+  Kyc: 'KYC'
+} as const;
+
+export type Join__Graph = typeof Join__Graph[keyof typeof Join__Graph];
+export const Link__Purpose = {
+  /** `EXECUTION` features provide metadata necessary for operation execution. */
+  Execution: 'EXECUTION',
+  /** `SECURITY` features provide metadata necessary to securely resolve fields. */
+  Security: 'SECURITY'
+} as const;
+
+export type Link__Purpose = typeof Link__Purpose[keyof typeof Link__Purpose];
 export type MobileUpdateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2009,6 +2046,13 @@ export type UserEmailRegistrationValidateMutationVariables = Exact<{
 
 
 export type UserEmailRegistrationValidateMutation = { readonly __typename: 'Mutation', readonly userEmailRegistrationValidate: { readonly __typename: 'UserEmailRegistrationValidatePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
+
+export type OnboardingFlowStartMutationVariables = Exact<{
+  input: OnboardingFlowStartInput;
+}>;
+
+
+export type OnboardingFlowStartMutation = { readonly __typename: 'Mutation', readonly onboardingFlowStart: { readonly __typename: 'OnboardingFlowStartResult', readonly workflowRunId: string, readonly tokenAndroid: string, readonly tokenIos: string } };
 
 export type AddressScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3682,6 +3726,41 @@ export function useUserEmailRegistrationValidateMutation(baseOptions?: Apollo.Mu
 export type UserEmailRegistrationValidateMutationHookResult = ReturnType<typeof useUserEmailRegistrationValidateMutation>;
 export type UserEmailRegistrationValidateMutationResult = Apollo.MutationResult<UserEmailRegistrationValidateMutation>;
 export type UserEmailRegistrationValidateMutationOptions = Apollo.BaseMutationOptions<UserEmailRegistrationValidateMutation, UserEmailRegistrationValidateMutationVariables>;
+export const OnboardingFlowStartDocument = gql`
+    mutation onboardingFlowStart($input: OnboardingFlowStartInput!) {
+  onboardingFlowStart(input: $input) {
+    workflowRunId
+    tokenAndroid
+    tokenIos
+  }
+}
+    `;
+export type OnboardingFlowStartMutationFn = Apollo.MutationFunction<OnboardingFlowStartMutation, OnboardingFlowStartMutationVariables>;
+
+/**
+ * __useOnboardingFlowStartMutation__
+ *
+ * To run a mutation, you first call `useOnboardingFlowStartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useOnboardingFlowStartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [onboardingFlowStartMutation, { data, loading, error }] = useOnboardingFlowStartMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useOnboardingFlowStartMutation(baseOptions?: Apollo.MutationHookOptions<OnboardingFlowStartMutation, OnboardingFlowStartMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<OnboardingFlowStartMutation, OnboardingFlowStartMutationVariables>(OnboardingFlowStartDocument, options);
+      }
+export type OnboardingFlowStartMutationHookResult = ReturnType<typeof useOnboardingFlowStartMutation>;
+export type OnboardingFlowStartMutationResult = Apollo.MutationResult<OnboardingFlowStartMutation>;
+export type OnboardingFlowStartMutationOptions = Apollo.BaseMutationOptions<OnboardingFlowStartMutation, OnboardingFlowStartMutationVariables>;
 export const AddressScreenDocument = gql`
     query addressScreen {
   me {
@@ -6751,6 +6830,8 @@ export type ResolversTypes = {
   OnChainUsdPaymentSendAsBtcDenominatedInput: OnChainUsdPaymentSendAsBtcDenominatedInput;
   OnChainUsdPaymentSendInput: OnChainUsdPaymentSendInput;
   OnChainUsdTxFee: ResolverTypeWrapper<OnChainUsdTxFee>;
+  OnboardingFlowStartInput: OnboardingFlowStartInput;
+  OnboardingFlowStartResult: ResolverTypeWrapper<OnboardingFlowStartResult>;
   OneDayAccountLimit: ResolverTypeWrapper<OneDayAccountLimit>;
   OneTimeAuthCode: ResolverTypeWrapper<Scalars['OneTimeAuthCode']['output']>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
@@ -6837,6 +6918,10 @@ export type ResolversTypes = {
   WelcomeLeaderboardInput: WelcomeLeaderboardInput;
   WelcomeProfile: ResolverTypeWrapper<WelcomeProfile>;
   WelcomeRange: WelcomeRange;
+  join__FieldSet: ResolverTypeWrapper<Scalars['join__FieldSet']['output']>;
+  join__Graph: Join__Graph;
+  link__Import: ResolverTypeWrapper<Scalars['link__Import']['output']>;
+  link__Purpose: Link__Purpose;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -6951,6 +7036,8 @@ export type ResolversParentTypes = {
   OnChainUsdPaymentSendAsBtcDenominatedInput: OnChainUsdPaymentSendAsBtcDenominatedInput;
   OnChainUsdPaymentSendInput: OnChainUsdPaymentSendInput;
   OnChainUsdTxFee: OnChainUsdTxFee;
+  OnboardingFlowStartInput: OnboardingFlowStartInput;
+  OnboardingFlowStartResult: OnboardingFlowStartResult;
   OneDayAccountLimit: OneDayAccountLimit;
   OneTimeAuthCode: Scalars['OneTimeAuthCode']['output'];
   PageInfo: PageInfo;
@@ -7028,14 +7115,67 @@ export type ResolversParentTypes = {
   WalletId: Scalars['WalletId']['output'];
   WelcomeLeaderboardInput: WelcomeLeaderboardInput;
   WelcomeProfile: WelcomeProfile;
+  join__FieldSet: Scalars['join__FieldSet']['output'];
+  link__Import: Scalars['link__Import']['output'];
 };
 
-export type DeferDirectiveArgs = {
-  if?: Scalars['Boolean']['input'];
-  label?: Maybe<Scalars['String']['input']>;
+export type Join__EnumValueDirectiveArgs = {
+  graph: Join__Graph;
 };
 
-export type DeferDirectiveResolver<Result, Parent, ContextType = any, Args = DeferDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+export type Join__EnumValueDirectiveResolver<Result, Parent, ContextType = any, Args = Join__EnumValueDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type Join__FieldDirectiveArgs = {
+  external?: Maybe<Scalars['Boolean']['input']>;
+  graph?: Maybe<Join__Graph>;
+  override?: Maybe<Scalars['String']['input']>;
+  provides?: Maybe<Scalars['join__FieldSet']['input']>;
+  requires?: Maybe<Scalars['join__FieldSet']['input']>;
+  type?: Maybe<Scalars['String']['input']>;
+  usedOverridden?: Maybe<Scalars['Boolean']['input']>;
+};
+
+export type Join__FieldDirectiveResolver<Result, Parent, ContextType = any, Args = Join__FieldDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type Join__GraphDirectiveArgs = {
+  name: Scalars['String']['input'];
+  url: Scalars['String']['input'];
+};
+
+export type Join__GraphDirectiveResolver<Result, Parent, ContextType = any, Args = Join__GraphDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type Join__ImplementsDirectiveArgs = {
+  graph: Join__Graph;
+  interface: Scalars['String']['input'];
+};
+
+export type Join__ImplementsDirectiveResolver<Result, Parent, ContextType = any, Args = Join__ImplementsDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type Join__TypeDirectiveArgs = {
+  extension?: Scalars['Boolean']['input'];
+  graph: Join__Graph;
+  isInterfaceObject?: Scalars['Boolean']['input'];
+  key?: Maybe<Scalars['join__FieldSet']['input']>;
+  resolvable?: Scalars['Boolean']['input'];
+};
+
+export type Join__TypeDirectiveResolver<Result, Parent, ContextType = any, Args = Join__TypeDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type Join__UnionMemberDirectiveArgs = {
+  graph: Join__Graph;
+  member: Scalars['String']['input'];
+};
+
+export type Join__UnionMemberDirectiveResolver<Result, Parent, ContextType = any, Args = Join__UnionMemberDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type LinkDirectiveArgs = {
+  as?: Maybe<Scalars['String']['input']>;
+  for?: Maybe<Link__Purpose>;
+  import?: Maybe<ReadonlyArray<Maybe<Scalars['link__Import']['input']>>>;
+  url?: Maybe<Scalars['String']['input']>;
+};
+
+export type LinkDirectiveResolver<Result, Parent, ContextType = any, Args = LinkDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type AccountResolvers<ContextType = any, ParentType extends ResolversParentTypes['Account'] = ResolversParentTypes['Account']> = {
   __resolveType: TypeResolveFn<'ConsumerAccount', ParentType, ContextType>;
@@ -7447,6 +7587,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   onChainPaymentSendAll?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationOnChainPaymentSendAllArgs, 'input'>>;
   onChainUsdPaymentSend?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationOnChainUsdPaymentSendArgs, 'input'>>;
   onChainUsdPaymentSendAsBtcDenominated?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationOnChainUsdPaymentSendAsBtcDenominatedArgs, 'input'>>;
+  onboardingFlowStart?: Resolver<ResolversTypes['OnboardingFlowStartResult'], ParentType, ContextType, RequireFields<MutationOnboardingFlowStartArgs, 'input'>>;
   quizCompleted?: Resolver<ResolversTypes['QuizCompletedPayload'], ParentType, ContextType, RequireFields<MutationQuizCompletedArgs, 'input'>>;
   userContactUpdateAlias?: Resolver<ResolversTypes['UserContactUpdateAliasPayload'], ParentType, ContextType, RequireFields<MutationUserContactUpdateAliasArgs, 'input'>>;
   userEmailDelete?: Resolver<ResolversTypes['UserEmailDeletePayload'], ParentType, ContextType>;
@@ -7518,6 +7659,13 @@ export type OnChainUpdateResolvers<ContextType = any, ParentType extends Resolve
 
 export type OnChainUsdTxFeeResolvers<ContextType = any, ParentType extends ResolversParentTypes['OnChainUsdTxFee'] = ResolversParentTypes['OnChainUsdTxFee']> = {
   amount?: Resolver<ResolversTypes['CentAmount'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type OnboardingFlowStartResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['OnboardingFlowStartResult'] = ResolversParentTypes['OnboardingFlowStartResult']> = {
+  tokenAndroid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  tokenIos?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  workflowRunId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -7619,6 +7767,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   feedbackModalShown?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   globals?: Resolver<Maybe<ResolversTypes['Globals']>, ParentType, ContextType>;
   hasPromptedSetDefaultAccount?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  hello?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   hiddenBalanceToolTip?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   hideBalance?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   innerCircleValue?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -7935,6 +8084,14 @@ export type WelcomeProfileResolvers<ContextType = any, ParentType extends Resolv
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export interface Join__FieldSetScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['join__FieldSet'], any> {
+  name: 'join__FieldSet';
+}
+
+export interface Link__ImportScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['link__Import'], any> {
+  name: 'link__Import';
+}
+
 export type Resolvers<ContextType = any> = {
   Account?: AccountResolvers<ContextType>;
   AccountDeletePayload?: AccountDeletePayloadResolvers<ContextType>;
@@ -8007,6 +8164,7 @@ export type Resolvers<ContextType = any> = {
   OnChainTxHash?: GraphQLScalarType;
   OnChainUpdate?: OnChainUpdateResolvers<ContextType>;
   OnChainUsdTxFee?: OnChainUsdTxFeeResolvers<ContextType>;
+  OnboardingFlowStartResult?: OnboardingFlowStartResultResolvers<ContextType>;
   OneDayAccountLimit?: OneDayAccountLimitResolvers<ContextType>;
   OneTimeAuthCode?: GraphQLScalarType;
   PageInfo?: PageInfoResolvers<ContextType>;
@@ -8067,8 +8225,16 @@ export type Resolvers<ContextType = any> = {
   Wallet?: WalletResolvers<ContextType>;
   WalletId?: GraphQLScalarType;
   WelcomeProfile?: WelcomeProfileResolvers<ContextType>;
+  join__FieldSet?: GraphQLScalarType;
+  link__Import?: GraphQLScalarType;
 };
 
 export type DirectiveResolvers<ContextType = any> = {
-  defer?: DeferDirectiveResolver<any, any, ContextType>;
+  join__enumValue?: Join__EnumValueDirectiveResolver<any, any, ContextType>;
+  join__field?: Join__FieldDirectiveResolver<any, any, ContextType>;
+  join__graph?: Join__GraphDirectiveResolver<any, any, ContextType>;
+  join__implements?: Join__ImplementsDirectiveResolver<any, any, ContextType>;
+  join__type?: Join__TypeDirectiveResolver<any, any, ContextType>;
+  join__unionMember?: Join__UnionMemberDirectiveResolver<any, any, ContextType>;
+  link?: LinkDirectiveResolver<any, any, ContextType>;
 };

@@ -20,7 +20,7 @@ RNBootSplash.hide({ fade: true })
 const StorybookUI = getStorybookUI({
   enableWebsockets: true, // for @storybook/react-native-server
   onDeviceUI: true,
-  initialSelection: { kind: "Get started screen", name: "Default" },
+  initialSelection: { kind: "Full onboarding screen", name: "Default" },
   shouldPersistSelection: false,
 })
 

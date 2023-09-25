@@ -2409,12 +2409,8 @@ const en: BaseTranslation = {
     stablesatTransfers: "Stablesat Transfers",
     internalSend: "Send to {bankName: string} User",
     error: "Unable to fetch limits at this time",
-    contactUsMessageBody:
-      "Hi, I will like to increase the transaction limits of my {bankName: string} account.",
-    contactUsMessageSubject: "Request To Increase Transaction Limits",
-    contactSupportToPerformKyc:
-      "Contact support to perform manual KYC to increase your limit",
     increaseLimits: "Increase your limits",
+    increaseLimitsLevel2: "Increase your limits by providing an ID",
   },
   TransactionScreen: {
     noTransaction: "No transaction to show",
@@ -2763,8 +2759,19 @@ const en: BaseTranslation = {
       details: "We're giving away 1,000,000 sats!\n\n Share your Circles on social with tag `#blinkcircles` to enter! The winner will be chosen at random on October 31st.\n\n You must have at least one person in your Inner Circle to enter!",
       connectOnSocial: "Connect on social: ",
       fullDetails: "Full details at "
-    }
+    },
   },
+  FullOnboarding: {
+    title: "Full onboarding",
+    confirmNameTitle: "Confirm your name",
+    firstName: "First name",
+    lastName: "Last name",
+    confirmNameContent: "Is the spelling of your name correct?\n\n{firstName: string} {lastName: string}\n\nIt must match the name on your ID.",
+    requirements: "To increase your limits, you will have to provide your name, a governement-issued ID and a selfie. We'll start with your name.",
+    accountVerifiedAlready: "You account has already been verified",
+    success: "Documents has been successfully received",
+    error: "There has been an error with the submission of your documents. You can contact the support is the problem persists."
+  }
 }
 
 export default en

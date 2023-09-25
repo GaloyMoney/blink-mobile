@@ -80,6 +80,7 @@ import {
   RootStackParamList,
 } from "./stack-param-lists"
 import { NotificationSettingsScreen } from "@app/screens/settings-screen/notifications-screen"
+import { FullOnboardingFlowScreen } from "@app/screens/full-onboarding-flow"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -416,6 +417,13 @@ export const RootStack = () => {
         component={WebViewScreen}
         options={{
           title: "WebView", // should be overridden by the navigate action with an initial title
+        }}
+      />
+      <RootNavigator.Screen
+        name="fullOnboardingFlow"
+        component={FullOnboardingFlowScreen}
+        options={{
+          title: LL.FullOnboarding.title(),
         }}
       />
     </RootNavigator.Navigator>
