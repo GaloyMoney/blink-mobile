@@ -25,7 +25,7 @@ export const AccountId: React.FC = () => {
         return translations.AccountScreen.copiedAccountId()
       },
       type: "success",
-      currentTranslation: LL,
+      LL,
     })
   }, [LL, accountId])
 

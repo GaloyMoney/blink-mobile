@@ -229,11 +229,12 @@ export const EarnQuiz = ({ route }: Props) => {
           // FIXME: message is hidden by the modal
           toastShow({
             message: getErrorMessages(data.quizCompleted.errors),
+            LL,
           })
         }
       }
     })()
-  }, [recordedAnswer, id, quizCompleted])
+  }, [recordedAnswer, id, quizCompleted, LL])
 
   const close = async () => {
     if (quizVisible) {

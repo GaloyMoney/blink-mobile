@@ -346,7 +346,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
                   type: "error",
                   message: (translations) =>
                     translations.SendBitcoinDestinationScreen.clipboardError(),
-                  currentTranslation: LL,
+                  LL,
                 })
               }
             }}

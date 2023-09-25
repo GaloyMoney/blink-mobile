@@ -231,7 +231,7 @@ export const SettingsScreen: React.FC = () => {
               bankName,
             }),
           type: "success",
-          currentTranslation: LL,
+          LL,
         })
       },
       chevronLogo: lightningAddress ? "copy-outline" : undefined,

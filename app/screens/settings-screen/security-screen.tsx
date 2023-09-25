@@ -90,13 +90,13 @@ export const SecurityScreen: React.FC<Props> = ({ route, navigation }) => {
         } else {
           toastShow({
             message: (translations) => translations.SecurityScreen.biometryNotAvailable(),
-            currentTranslation: LL,
+            LL,
           })
         }
       } catch {
         toastShow({
           message: (translations) => translations.SecurityScreen.biometryNotEnrolled(),
-          currentTranslation: LL,
+          LL,
         })
       }
     } else if (await KeyStoreWrapper.removeIsBiometricsEnabled()) {

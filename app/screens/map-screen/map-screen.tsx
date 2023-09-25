@@ -81,7 +81,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   })
 
   if (error) {
-    toastShow({ message: error.message })
+    toastShow({ message: error.message, LL })
   }
 
   const maps = data?.businessMapMarkers ?? []

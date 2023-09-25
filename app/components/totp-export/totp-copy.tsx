@@ -16,6 +16,7 @@ export const CopySecretComponent: React.FC<Props> = ({ secret }) => {
     toastShow({
       type: "success",
       message: LL.CopySecretComponent.toastMessage(),
+      LL,
     })
   }
 
