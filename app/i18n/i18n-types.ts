@@ -1879,6 +1879,10 @@ type RootTranslation = {
 		 * @param {string} found
 		 */
 		invalidContentLnurl: RequiredParams<'found'>
+		/**
+		 * W​e​ ​d​o​n​'​t​ ​h​a​v​e​ ​p​e​r​m​i​s​s​i​o​n​s​ ​t​o​ ​a​c​c​e​s​s​ ​t​h​e​ ​i​m​a​g​e​ ​l​i​b​r​a​r​y​.​ ​ ​P​l​e​a​s​e​ ​c​h​e​c​k​ ​a​p​p​ ​s​e​t​t​i​n​g​s​ ​f​o​r​ ​y​o​u​r​ ​p​l​a​t​f​o​r​m​.
+		 */
+		imageLibraryPermissionsNotGranted: string
 	}
 	SecurityScreen: {
 		/**
@@ -5597,6 +5601,10 @@ export type TranslationFunctions = {
 	 is not currently supported
 		 */
 		invalidContentLnurl: (arg: { found: string }) => LocalizedString
+		/**
+		 * We don't have permissions to access the image library.  Please check app settings for your platform.
+		 */
+		imageLibraryPermissionsNotGranted: () => LocalizedString
 	}
 	SecurityScreen: {
 		/**
