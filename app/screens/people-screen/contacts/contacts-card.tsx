@@ -71,7 +71,7 @@ export const ContactsCard = () => {
   })
 
   if (error) {
-    toastShow({ message: error.message })
+    toastShow({ message: error.message, LL })
   }
 
   const contacts = useMemo(() => (data ? getFrequentContacts(data) : []), [data])

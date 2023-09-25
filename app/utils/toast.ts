@@ -5,13 +5,13 @@ import { logToastShown } from "./analytics"
 
 export const toastShow = ({
   message,
-  currentTranslation,
+  LL,
   onHide,
   type = "error",
   autoHide,
 }: {
   message: ((translations: TranslationFunctions) => string) | string
-  currentTranslation?: TranslationFunctions
+  LL: TranslationFunctions
   onHide?: () => void
   type?: "error" | "success" | "warning"
   autoHide?: boolean
@@ -19,9 +19,7 @@ export const toastShow = ({
   const englishTranslation = i18nObject("en")
   const englishMessage =
     typeof message === "function" ? message(englishTranslation) : message
-  const translations = currentTranslation || englishTranslation
-  const translatedMessage =
-    typeof message === "function" ? message(translations) : message
+  const translatedMessage = typeof message === "function" ? message(LL) : message
 
   logToastShown({
     message: englishMessage,
@@ -36,7 +34,7 @@ export const toastShow = ({
   // https://github.com/calintamas/react-native-toast-message/issues/164#issuecomment-803556361
   Toast.show({
     type,
-    text1: type === "error" ? translations.common.error() : translations.common.success(),
+    text1: type === "error" ? LL.common.error() : LL.common.success(),
     text2: translatedMessage,
     position: "bottom",
     bottomOffset: 80,

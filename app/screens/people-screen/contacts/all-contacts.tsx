@@ -51,7 +51,7 @@ export const AllContactsScreen: React.FC = () => {
   })
 
   if (error) {
-    toastShow({ message: error.message })
+    toastShow({ message: error.message, LL })
   }
 
   const contacts: Contact[] = useMemo(() => {

@@ -25,7 +25,7 @@ export const NetworkErrorComponent: React.FC = () => {
       // TODO translation
       toastShow({
         message: (translations) => translations.errors.network.server(),
-        currentTranslation: LL,
+        LL,
       })
 
       return
@@ -75,7 +75,7 @@ export const NetworkErrorComponent: React.FC = () => {
               `StatusCode: ${
                 networkError.statusCode
               }\nError code: ${errorCode}\n${translations.errors.network.request()}`,
-            currentTranslation: LL,
+            LL,
           })
           break
       }
@@ -88,7 +88,7 @@ export const NetworkErrorComponent: React.FC = () => {
       // TODO translation
       toastShow({
         message: (translations) => translations.errors.network.connection(),
-        currentTranslation: LL,
+        LL,
       })
     }
     clearNetworkError()

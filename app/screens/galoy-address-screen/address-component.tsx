@@ -56,7 +56,7 @@ const AddressComponent: React.FC<AddressComponentprops> = ({
         }
       },
       type: "success",
-      currentTranslation: LL,
+      LL,
     })
   }
 

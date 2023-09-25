@@ -56,7 +56,7 @@ export const TransactionHistoryScreen: React.FC = () => {
     crashlytics().recordError(error)
     toastShow({
       message: (translations) => translations.common.transactionsError(),
-      currentTranslation: LL,
+      LL,
     })
     return <></>
   }

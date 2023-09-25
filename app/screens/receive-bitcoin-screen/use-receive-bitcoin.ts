@@ -331,7 +331,7 @@ export const useReceiveBitcoin = () => {
 
       toastShow({
         message: msgFn,
-        currentTranslation: LL,
+        LL,
         type: "success",
       })
     }

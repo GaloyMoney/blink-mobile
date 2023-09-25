@@ -116,7 +116,7 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
   }
 
   const handlePaymentError = (error: Error) => {
-    toastShow({ message: error.message })
+    toastShow({ message: error.message, LL })
   }
 
   const payWallet = async () => {

@@ -250,7 +250,7 @@ export const ScanningQRCodeScreen: React.FC = () => {
         toastShow({
           message: (translations) =>
             translations.ScanningQRCodeScreen.imageLibraryPermissionsNotGranted(),
-          currentTranslation: LL,
+          LL,
         })
       }
       if (result.assets && result.assets.length > 0 && result.assets[0].uri) {

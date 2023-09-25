@@ -76,6 +76,7 @@ export const InviteModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
     toastShow({
       type: "success",
       message: LL.Circles.copiedInviteLink(),
+      LL,
     })
   }
 

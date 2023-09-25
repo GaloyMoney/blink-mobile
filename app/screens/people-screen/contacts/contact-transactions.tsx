@@ -56,7 +56,7 @@ export const ContactTransactions = ({ contactUsername }: Props) => {
   if (error) {
     toastShow({
       message: (translations) => translations.common.transactionsError(),
-      currentTranslation: LL,
+      LL,
     })
     return <></>
   }
