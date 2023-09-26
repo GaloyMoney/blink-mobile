@@ -34,8 +34,12 @@ export const ContactSupportButton = ({
         messageSubject={messageSubject}
         isVisible={showContactSupport}
         toggleModal={() => setShowContactSupport(!showContactSupport)}
-        // Assuming the support button is always used for 1:1 support I'm excluding community channels
-        supportChannelsToHide={[SupportChannels.Mattermost, SupportChannels.Telegram]}
+        supportChannels={[
+          SupportChannels.Faq,
+          SupportChannels.StatusPage,
+          SupportChannels.Email,
+          SupportChannels.WhatsApp,
+        ]}
       />
       <GaloyTertiaryButton
         containerStyle={containerStyle}

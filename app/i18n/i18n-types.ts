@@ -3433,6 +3433,10 @@ type RootTranslation = {
 		 */
 		email: string
 		/**
+		 * F​A​Q
+		 */
+		faq: string
+		/**
 		 * E​n​j​o​y​i​n​g​ ​t​h​e​ ​a​p​p​?
 		 */
 		enjoyingApp: string
@@ -7113,6 +7117,10 @@ export type TranslationFunctions = {
 		 * Email
 		 */
 		email: () => LocalizedString
+		/**
+		 * FAQ
+		 */
+		faq: () => LocalizedString
 		/**
 		 * Enjoying the app?
 		 */

@@ -9,7 +9,6 @@ import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
 import ContactModal, {
   SupportChannels,
-  SupportChannelsToHide,
 } from "@app/components/contact-modal/contact-modal"
 import crashlytics from "@react-native-firebase/crashlytics"
 
@@ -82,9 +81,7 @@ export const SettingsScreen: React.FC = () => {
   const { isAtLeastLevelZero, currentLevel } = useLevel()
   const { LL } = useI18nContext()
 
-  const [hiddenContactMethods, setHiddenContactMethods] = React.useState<
-    SupportChannelsToHide[]
-  >([SupportChannels.Telegram, SupportChannels.Mattermost])
+  const [contactMethods, setContactMethods] = React.useState<SupportChannels[]>([])
 
   const { data } = useSettingsScreenQuery({
     fetchPolicy: "cache-first",
@@ -319,7 +316,12 @@ export const SettingsScreen: React.FC = () => {
       icon: "help-circle-outline",
       id: "contact-us",
       action: () => {
-        setHiddenContactMethods([SupportChannels.Telegram, SupportChannels.Mattermost])
+        setContactMethods([
+          SupportChannels.Faq,
+          SupportChannels.StatusPage,
+          SupportChannels.Email,
+          SupportChannels.WhatsApp,
+        ])
         toggleIsContactModalVisible()
       },
       enabled: true,
@@ -331,11 +333,7 @@ export const SettingsScreen: React.FC = () => {
       icon: "people-outline",
       id: "join-the-community",
       action: () => {
-        setHiddenContactMethods([
-          SupportChannels.Email,
-          SupportChannels.StatusPage,
-          SupportChannels.WhatsApp,
-        ])
+        setContactMethods([SupportChannels.Telegram, SupportChannels.Mattermost])
 
         toggleIsContactModalVisible()
       },
@@ -366,7 +364,7 @@ export const SettingsScreen: React.FC = () => {
         toggleModal={toggleIsContactModalVisible}
         messageBody={contactMessageBody}
         messageSubject={contactMessageSubject}
-        supportChannelsToHide={hiddenContactMethods}
+        supportChannels={contactMethods}
       />
       <SetLightningAddressModal
         isVisible={isSetLightningAddressModalVisible}
