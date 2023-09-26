@@ -10,6 +10,7 @@ import { usePriceHistoryScreenQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useLevel } from "@app/graphql/level-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { isIos } from "@app/utils/helper"
 
 const useStyles = makeStyles((_theme) => ({
   screen: { flex: 1 },
@@ -45,7 +46,7 @@ export const PriceHistoryScreen: React.FC = () => {
   return (
     <Screen preset="scroll" style={styles.screen}>
       <PriceHistory />
-      {isAtLeastLevelTwo && (
+      {(isAtLeastLevelTwo || !isIos) && (
         <GaloyPrimaryButton
           title={LL.PriceHistoryScreen.buyAndSell()}
           onPress={() =>
