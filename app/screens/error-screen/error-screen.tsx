@@ -2,7 +2,9 @@ import React, { useEffect } from "react"
 import { Alert, View } from "react-native"
 import { getReadableVersion } from "react-native-device-info"
 
-import ContactModal from "@app/components/contact-modal/contact-modal"
+import ContactModal, {
+  SupportChannels,
+} from "@app/components/contact-modal/contact-modal"
 import { useAppConfig } from "@app/hooks"
 import useLogout from "@app/hooks/use-logout"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -80,6 +82,14 @@ export const ErrorScreen = ({
         toggleModal={toggleIsContactModalVisible}
         messageBody={contactMessageBody}
         messageSubject={contactMessageSubject}
+        supportChannels={[
+          SupportChannels.Faq,
+          SupportChannels.StatusPage,
+          SupportChannels.Email,
+          SupportChannels.WhatsApp,
+          SupportChannels.Telegram,
+          SupportChannels.Mattermost,
+        ]}
       />
     </Screen>
   )

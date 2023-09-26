@@ -1088,6 +1088,7 @@ const en: BaseTranslation = {
     joinTheCommunity: "Join the community",
     whatsapp: "WhatsApp",
     email: "Email",
+    faq: "FAQ",
     enjoyingApp: "Enjoying the app?",
     statusPage: "Status Page",
     telegram: "Telegram",

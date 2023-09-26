@@ -15,16 +15,17 @@ export const SupportChannels = {
   WhatsApp: "whatsapp",
   StatusPage: "statusPage",
   Mattermost: "mattermost",
+  Faq: "faq",
 } as const
 
-export type SupportChannelsToHide = (typeof SupportChannels)[keyof typeof SupportChannels]
+export type SupportChannels = (typeof SupportChannels)[keyof typeof SupportChannels]
 
 type Props = {
   isVisible: boolean
   toggleModal: () => void
   messageBody: string
   messageSubject: string
-  supportChannelsToHide?: SupportChannelsToHide[]
+  supportChannels: SupportChannels[]
 }
 
 /*
@@ -35,7 +36,7 @@ const ContactModal: React.FC<Props> = ({
   toggleModal,
   messageBody,
   messageSubject,
-  supportChannelsToHide,
+  supportChannels,
 }) => {
   const { LL } = useI18nContext()
   const styles = useStyles()
@@ -43,64 +44,64 @@ const ContactModal: React.FC<Props> = ({
     theme: { colors },
   } = useTheme()
 
-  const openEmailAction = () => {
-    Linking.openURL(
-      `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${encodeURIComponent(
-        messageSubject,
-      )}&body=${encodeURIComponent(messageBody)}`,
-    )
-  }
-
-  // TODO: extract in Instance
-  const openTelegramAction = () => Linking.openURL(`https://t.me/blinkbtc`)
-
-  const openMattermostAction = () => Linking.openURL(`https://chat.galoy.io`)
-
   const contactOptionList = [
     {
+      id: SupportChannels.StatusPage,
       name: LL.support.statusPage(),
       icon: <Icon name={"alert-circle-outline"} type="ionicon" />,
       action: () => {
         // TODO: extract in Instance
         Linking.openURL(`https://blink.statuspage.io/`)
       },
-      hidden: supportChannelsToHide?.includes(SupportChannels.StatusPage),
     },
     {
+      id: SupportChannels.Faq,
+      name: LL.support.faq(),
+      icon: <Icon name={"book-outline"} type="ionicon" color={colors.black} />,
+      action: () => {
+        Linking.openURL(`https://faq.blink.sv`)
+        toggleModal()
+      },
+    },
+    {
+      id: SupportChannels.Telegram,
       name: LL.support.telegram(),
       icon: <TelegramOutline width={24} height={24} fill={colors.black} />,
       action: () => {
-        openTelegramAction()
+        Linking.openURL(`https://t.me/blinkbtc`)
         toggleModal()
       },
-      hidden: supportChannelsToHide?.includes(SupportChannels.Telegram),
     },
     {
+      id: SupportChannels.Mattermost,
       name: LL.support.mattermost(),
       icon: <Icon name={"chatbubbles-outline"} type="ionicon" color={colors.black} />,
       action: () => {
-        openMattermostAction()
+        Linking.openURL(`https://chat.galoy.io`)
         toggleModal()
       },
-      hidden: supportChannelsToHide?.includes(SupportChannels.Mattermost),
     },
     {
+      id: SupportChannels.WhatsApp,
       name: LL.support.whatsapp(),
       icon: <Icon name={"ios-logo-whatsapp"} type="ionicon" color={colors.black} />,
       action: () => {
         openWhatsAppAction(messageBody)
         toggleModal()
       },
-      hidden: supportChannelsToHide?.includes(SupportChannels.WhatsApp),
     },
     {
+      id: SupportChannels.Email,
       name: LL.support.email(),
       icon: <Icon name={"mail-outline"} type="ionicon" color={colors.black} />,
       action: () => {
-        openEmailAction()
+        Linking.openURL(
+          `mailto:${CONTACT_EMAIL_ADDRESS}?subject=${encodeURIComponent(
+            messageSubject,
+          )}&body=${encodeURIComponent(messageBody)}`,
+        )
         toggleModal()
       },
-      hidden: supportChannelsToHide?.includes(SupportChannels.Email),
     },
   ]
 
@@ -112,23 +113,24 @@ const ContactModal: React.FC<Props> = ({
       onBackdropPress={toggleModal}
       style={styles.modal}
     >
-      {contactOptionList.map((item) => {
-        if (item.hidden) return null
-        return (
-          <ListItem
-            key={item.name}
-            bottomDivider
-            onPress={item.action}
-            containerStyle={styles.listItemContainer}
-          >
-            {item.icon}
-            <ListItem.Content>
-              <ListItem.Title style={styles.listItemTitle}>{item.name}</ListItem.Title>
-            </ListItem.Content>
-            <ListItem.Chevron name={"chevron-forward"} type="ionicon" />
-          </ListItem>
-        )
-      })}
+      {contactOptionList
+        .filter((item) => supportChannels.includes(item.id))
+        .map((item) => {
+          return (
+            <ListItem
+              key={item.name}
+              bottomDivider
+              onPress={item.action}
+              containerStyle={styles.listItemContainer}
+            >
+              {item.icon}
+              <ListItem.Content>
+                <ListItem.Title style={styles.listItemTitle}>{item.name}</ListItem.Title>
+              </ListItem.Content>
+              <ListItem.Chevron name={"chevron-forward"} type="ionicon" />
+            </ListItem>
+          )
+        })}
     </ReactNativeModal>
   )
 }
