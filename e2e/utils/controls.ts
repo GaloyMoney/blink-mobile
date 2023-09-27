@@ -21,9 +21,9 @@ export const clickAlertLastButton = async (title: string) => {
   await okButton.click()
 }
 
-export const clickButton = async (title: string) => {
+export const clickButton = async (title: string, wait = true) => {
   const button = await $(selector(title, "Button"))
-  await button.waitForEnabled({ timeout })
+  if (wait) await button.waitForEnabled({ timeout })
   await button.click()
 }
 

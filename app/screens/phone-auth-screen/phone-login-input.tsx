@@ -28,6 +28,7 @@ import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-but
 import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { PhoneCodeChannelType } from "@app/graphql/generated"
 import { TouchableOpacity } from "react-native-gesture-handler"
+import { testProps } from "@app/utils/testProps"
 
 const DEFAULT_COUNTRY_CODE = "SV"
 const PLACEHOLDER_PHONE_NUMBER = "123-456-7890"
@@ -282,6 +283,7 @@ export const PhoneLoginInitiateScreen: React.FC<PhoneLoginInitiateScreenProps> =
             withCallingCode={true}
           />
           <Input
+            {...testProps("telephoneNumber")}
             placeholder={PLACEHOLDER_PHONE_NUMBER}
             containerStyle={styles.inputComponentContainerStyle}
             inputContainerStyle={styles.inputContainerStyle}

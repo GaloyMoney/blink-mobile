@@ -8,7 +8,7 @@ import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Button, Text, makeStyles } from "@rneui/themed"
 import * as React from "react"
-import { Alert, DevSettings, Linking, View } from "react-native"
+import { Alert, DevSettings, Linking, View, Share } from "react-native"
 import { Screen } from "../../components/screen"
 import { usePriceConversion } from "../../hooks"
 import useLogout from "../../hooks/use-logout"
@@ -325,6 +325,15 @@ export const DeveloperScreen: React.FC = () => {
             onPress={async () => {
               Clipboard.setString(newToken || "")
               Alert.alert("Token copied in clipboard.")
+            }}
+            disabled={!newToken}
+          />
+          <Button
+            {...testProps("Share access token")}
+            title="Share access token"
+            containerStyle={styles.button}
+            onPress={async () => {
+              Share.share({ message: newToken || "" })
             }}
             disabled={!newToken}
           />
