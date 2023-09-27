@@ -20,6 +20,6 @@ export const PeopleScreen: React.FC = () => {
 
 const useStyles = makeStyles(() => ({
   screen: {
-    padding: 24,
+    padding: 20,
   },
 }))

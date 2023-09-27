@@ -15,6 +15,7 @@ import { useRef, useState } from "react"
 import { InviteFriendsCard } from "./invite-friends-card"
 import { OctoberChallengeCard } from "@app/components/october-challenge"
 import { Screen } from "../../../components/screen"
+import { IntroducingCirclesModal } from "@app/components/introducing-circles-modal"
 
 gql`
   query Circles {
@@ -46,6 +47,8 @@ export const CirclesDashboardScreen: React.FC = () => {
   const styles = useStyles()
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
+  const [isIntroducingCirclesModalVisible, setIsIntroducingCirclesModalVisible] =
+    useState(false)
 
   const innerCircleRef = useRef<CircleRef | null>(null)
   const outerCircleRef = useRef<CircleRef | null>(null)
@@ -83,6 +86,10 @@ export const CirclesDashboardScreen: React.FC = () => {
           />
         }
       >
+        <IntroducingCirclesModal
+          isVisible={isIntroducingCirclesModalVisible}
+          setIsVisible={setIsIntroducingCirclesModalVisible}
+        />
         <Text type={isLonely ? "p1" : "p2"}>
           {isLonely ? LL.Circles.innerCircleGrow() : LL.Circles.innerCircleExplainer()}
         </Text>
@@ -155,7 +162,7 @@ export const CirclesDashboardScreen: React.FC = () => {
 const useStyles = makeStyles(({ colors }) => {
   return {
     scrollView: {
-      padding: 25,
+      padding: 20,
       display: "flex",
       flexDirection: "column",
       rowGap: 25,
