@@ -558,7 +558,8 @@
         "invalidTitle": "Ongeldige QR kode",
         "noQrCode": "Ons kon nie 'n QR kode in die prent opspoor nie",
         "title": "Skandeer",
-        "invalidContentLnurl": "Ons kon opspoor:\n\n{found: string}\n\nword nie huidiglik ondersteun nie."
+        "invalidContentLnurl": "Ons kon opspoor:\n\n{found: string}\n\nword nie huidiglik ondersteun nie.",
+        "imageLibraryPermissionsNotGranted": "Ons het nie toestemming om die beelde of fotos te sien nie. Gaan na die app-verstellings op jou platform."
     },
     "SecurityScreen": {
         "biometricDescription": "Kry toegang met vingerafdruk of gesigsherkenning",
@@ -993,6 +994,7 @@
         "joinTheCommunity": "Sluit aan by die gemeenskap",
         "whatsapp": "WhatsApp",
         "email": "E-pos",
+        "faq": "FAQ",
         "enjoyingApp": "Geniet jy die toep?",
         "statusPage": "Statusbladsy",
         "telegram": "Telegram",
