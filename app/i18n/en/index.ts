@@ -1199,8 +1199,10 @@ const en: BaseTranslation = {
     },
     octoberChallenge: {
       title: "October Challenge!",
-      description: "Share your circles to X for a chance to win 1,000,000 sats!",
-      details: "Share your circles to Twitter for a chance to win 1,000,000 sats!",
+      description: "Share your #blinkcircles for a chance to win 1,000,000 sats!",
+      details: "We're giving away 1,000,000 sats!\n\n Share your Circles on social with tag `#blinkcircles` to enter! The winner will be chosen at random on October 31st.\n\n You must have at least one person in your Inner Circle to enter!",
+      connectOnSocial: "Connect on social: ",
+      fullDetails: "Full details at "
     }
   },
 }

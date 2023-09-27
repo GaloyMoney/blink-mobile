@@ -13,6 +13,7 @@ import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
 
 const CHALLENGE_PAGE = "blink.sv/circles"
 const CHALLENGE_PAGE_URL = "https://www.blink.sv/circles"
+const SOCIAL_LINK_TREE = "https://linktr.ee/blinkbtc"
 
 type Props = {
   isVisible: boolean
@@ -59,10 +60,17 @@ export const OctoberChallengeModal: React.FC<Props> = ({ isVisible, setIsVisible
           {ShareImg}
           <GaloyPrimaryButton onPress={share} title={LL.Circles.shareCircles()} />
           <Text style={styles.reminder} type="p3" color={colors.grey3}>
-            {LL.Circles.septChallenge.reminder()}
+            {LL.Circles.octoberChallenge.connectOnSocial()}
+            <Text
+              style={styles.underline}
+              color={colors.grey3}
+              onPress={() => Linking.openURL(SOCIAL_LINK_TREE)}
+            >
+              {SOCIAL_LINK_TREE}
+            </Text>
           </Text>
           <Text style={styles.reminder} type="p3">
-            {LL.Circles.septChallenge.fullDetails()}{" "}
+            {LL.Circles.octoberChallenge.fullDetails()}
             <Text
               style={styles.underline}
               color={colors.grey3}
@@ -108,7 +116,7 @@ const useStyles = makeStyles(({ colors }) => ({
   reminder: {
     textAlign: "center",
     paddingHorizontal: 20,
-    color: colors.grey3,
+    color: colors.grey2,
   },
   underline: {
     textDecorationLine: "underline",

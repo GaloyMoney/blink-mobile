@@ -167,9 +167,7 @@ const useStyles = makeStyles(
       circleSubtitleExtra: { color: colors.black, marginTop: 4 },
       circleBubble: {
         position: "absolute",
-        borderWidth: 2,
-        opacity: 0.4,
-        borderColor: colors.primary,
+        backgroundColor: colors.backdropWhiter,
         top: "50%",
         left: "50%",
       },
