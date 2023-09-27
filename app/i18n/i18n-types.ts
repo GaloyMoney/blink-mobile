@@ -3779,6 +3779,20 @@ type RootTranslation = {
 			 */
 			fullDetails: string
 		}
+		octoberChallenge: {
+			/**
+			 * O​c​t​o​b​e​r​ ​C​h​a​l​l​e​n​g​e​!
+			 */
+			title: string
+			/**
+			 * S​h​a​r​e​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​t​o​ ​X​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​t​o​ ​w​i​n​ ​1​,​0​0​0​,​0​0​0​ ​s​a​t​s​!
+			 */
+			description: string
+			/**
+			 * S​h​a​r​e​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​t​o​ ​T​w​i​t​t​e​r​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​t​o​ ​w​i​n​ ​1​,​0​0​0​,​0​0​0​ ​s​a​t​s​!
+			 */
+			details: string
+		}
 	}
 }
 
@@ -7445,6 +7459,20 @@ export type TranslationFunctions = {
 			 * Full details at
 			 */
 			fullDetails: () => LocalizedString
+		}
+		octoberChallenge: {
+			/**
+			 * October Challenge!
+			 */
+			title: () => LocalizedString
+			/**
+			 * Share your circles to X for a chance to win 1,000,000 sats!
+			 */
+			description: () => LocalizedString
+			/**
+			 * Share your circles to Twitter for a chance to win 1,000,000 sats!
+			 */
+			details: () => LocalizedString
 		}
 	}
 }

@@ -1086,6 +1086,11 @@
             "yourRank": "your rank",
             "reminder": "Reminder: Your inner circle grows when you send a new Blink user their first sats",
             "fullDetails": "Full details at"
+        },
+        "octoberChallenge": {
+            "title": "October Challenge!",
+            "description": "Share your circles to X for a chance to win 1,000,000 sats!",
+            "details": "Share your circles to Twitter for a chance to win 1,000,000 sats!"
         }
     }
 }
