@@ -73,12 +73,11 @@ const useStyles = makeStyles(({ colors }) => ({
     backgroundColor: colors.grey5,
     flexDirection: "row",
     alignItems: "center",
-    borderRadius: 10,
+    borderRadius: 8,
+    padding: 14,
   },
   amountsContainer: {
-    margin: 8,
+    marginLeft: 16,
   },
-  currencyTagContainer: {
-    margin: 8,
-  },
+  currencyTagContainer: {},
 }))

@@ -48,10 +48,19 @@ export const PaymentDestinationDisplay = ({
   const lastSix = destination.slice(-6)
 
   return (
-    <Text style={styles.primaryTextStyle} numberOfLines={1} ellipsizeMode={"middle"}>
-      <Text style={styles.highlight}>{firstSix}</Text>
+    <Text
+      type="p2"
+      style={styles.primaryTextStyle}
+      numberOfLines={1}
+      ellipsizeMode={"middle"}
+    >
+      <Text type="p2" style={styles.highlight}>
+        {firstSix}
+      </Text>
       {middle}
-      <Text style={styles.highlight}>{lastSix}</Text>
+      <Text type="p2" style={styles.highlight}>
+        {lastSix}
+      </Text>
     </Text>
   )
 }

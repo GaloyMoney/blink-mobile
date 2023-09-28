@@ -38,6 +38,7 @@ import { requestInvoice, utils } from "lnurl-pay"
 import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 import { getBtcWallet, getDefaultWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { NoteInput } from "@app/components/note-input"
+import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 
 gql`
   query sendBitcoinDetailsScreen {
@@ -414,6 +415,15 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     >
       <View style={styles.sendBitcoinAmountContainer}>
         <View style={styles.fieldContainer}>
+          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
+          <View style={styles.disabledFieldBackground}>
+            <PaymentDestinationDisplay
+              destination={paymentDetail.destination}
+              paymentType={paymentDetail.paymentType}
+            />
+          </View>
+        </View>
+        <View style={styles.fieldContainer}>
           <Text style={styles.fieldTitleText}>{LL.common.from()}</Text>
           <TouchableWithoutFeedback onPress={toggleModal} accessible={false}>
             <View style={styles.fieldBackground}>
@@ -532,10 +542,21 @@ const useStyles = makeStyles(({ colors }) => ({
     borderStyle: "solid",
     overflow: "hidden",
     backgroundColor: colors.grey5,
-    paddingHorizontal: 14,
     borderRadius: 10,
     alignItems: "center",
-    height: 60,
+    padding: 14,
+    minHeight: 60,
+  },
+  disabledFieldBackground: {
+    flexDirection: "row",
+    borderStyle: "solid",
+    overflow: "hidden",
+    backgroundColor: colors.grey5,
+    borderRadius: 10,
+    alignItems: "center",
+    padding: 14,
+    minHeight: 60,
+    opacity: 0.5,
   },
   walletContainer: {
     flexDirection: "row",
@@ -546,7 +567,7 @@ const useStyles = makeStyles(({ colors }) => ({
     borderRadius: 10,
     alignItems: "center",
     marginBottom: 10,
-    height: 60,
+    minHeight: 60,
   },
   walletSelectorTypeContainer: {
     justifyContent: "center",
