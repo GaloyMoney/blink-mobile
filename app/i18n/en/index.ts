@@ -1197,6 +1197,13 @@ const en: BaseTranslation = {
         "Reminder: Your inner circle grows when you send a new Blink user their first sats",
       fullDetails: "Full details at",
     },
+    octoberChallenge: {
+      title: "October Challenge!",
+      description: "Share your #blinkcircles for a chance to win 1,000,000 sats!",
+      details: "We're giving away 1,000,000 sats!\n\n Share your Circles on social with tag `#blinkcircles` to enter! The winner will be chosen at random on October 31st.\n\n You must have at least one person in your Inner Circle to enter!",
+      connectOnSocial: "Connect on social: ",
+      fullDetails: "Full details at "
+    }
   },
 }
 

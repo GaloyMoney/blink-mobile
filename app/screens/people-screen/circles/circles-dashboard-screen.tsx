@@ -13,6 +13,9 @@ import LogoDarkMode from "@app/assets/logo/app-logo-dark.svg"
 import LogoLightMode from "@app/assets/logo/blink-logo-light.svg"
 import { useRef, useState } from "react"
 import { InviteFriendsCard } from "./invite-friends-card"
+import { OctoberChallengeCard } from "@app/components/october-challenge"
+import { Screen } from "../../../components/screen"
+import { IntroducingCirclesModal } from "@app/components/introducing-circles-modal"
 
 gql`
   query Circles {
@@ -44,6 +47,8 @@ export const CirclesDashboardScreen: React.FC = () => {
   const styles = useStyles()
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
+  const [isIntroducingCirclesModalVisible, setIsIntroducingCirclesModalVisible] =
+    useState(false)
 
   const innerCircleRef = useRef<CircleRef | null>(null)
   const outerCircleRef = useRef<CircleRef | null>(null)
@@ -69,95 +74,98 @@ export const CirclesDashboardScreen: React.FC = () => {
   const Logo = mode === "dark" ? LogoDarkMode : LogoLightMode
 
   return (
-    <ScrollView
-      contentContainerStyle={[styles.screen]}
-      refreshControl={
-        <RefreshControl
-          refreshing={loading}
-          onRefresh={refetch}
-          colors={[colors.primary]} // Android refresh indicator colors
-          tintColor={colors.primary} // iOS refresh indicator color
+    <Screen>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={refetch}
+            colors={[colors.primary]} // Android refresh indicator colors
+            tintColor={colors.primary} // iOS refresh indicator color
+          />
+        }
+      >
+        <IntroducingCirclesModal
+          isVisible={isIntroducingCirclesModalVisible}
+          setIsVisible={setIsIntroducingCirclesModalVisible}
         />
-      }
-    >
-      <Text style={styles.description} type={isLonely ? "p1" : "p2"}>
-        {isLonely ? LL.Circles.innerCircleGrow() : LL.Circles.innerCircleExplainer()}
-      </Text>
-      {!isLonely && (
-        <View style={styles.logoContainer}>
-          <Logo height={60} />
-        </View>
-      )}
-      {isLonely ? (
-        <View style={styles.groupContainer}>
-          <View style={styles.circle} />
-          <Text type="p1" style={styles.groupEffort}>
-            {LL.Circles.groupEffort()}
-          </Text>
-        </View>
-      ) : (
-        <>
-          <Circle
-            ref={innerCircleRef}
-            heading={LL.Circles.innerCircle()}
-            value={welcomeProfile.innerCircleAllTimeCount}
-            minValue={1}
-            maxValue={180}
-            description={LL.Circles.peopleYouWelcomed()}
-            subtitle={
-              welcomeProfile.innerCircleThisMonthCount > 0
-                ? `+ ${
-                    welcomeProfile.innerCircleThisMonthCount
-                  } ${LL.Circles.thisMonth()}; rank: #${welcomeProfile.thisMonthRank}`
-                : ""
-            }
-            subtitleGreen
-            bubble
-            countUpDuration={1.8}
-          />
-          <Circle
-            ref={outerCircleRef}
-            heading={LL.Circles.outerCircle()}
-            value={data?.me?.defaultAccount.welcomeProfile.outerCircleAllTimeCount}
-            minValue={1}
-            maxValue={180}
-            description={LL.Circles.peopleWelcomedByYourCircle()}
-            subtitle={
-              welcomeProfile.outerCircleThisMonthCount > 0
-                ? `+ ${
-                    welcomeProfile.outerCircleThisMonthCount
-                  } ${LL.Circles.thisMonth()}`
-                : ""
-            }
-            subtitleGreen
-            bubble
-            countUpDuration={1.8}
-          />
-          <Text style={styles.textCenter} type="p2">
-            {LL.Circles.yourRankMessage({
-              thisMonthRank: welcomeProfile.thisMonthRank,
-              allTimeRank: welcomeProfile.allTimeRank,
-            })}
-          </Text>
-        </>
-      )}
-      <SeptemberChallengeCard />
-      {isLonely ? <InviteFriendsCard /> : <ShareCircles />}
-    </ScrollView>
+        <Text type={isLonely ? "p1" : "p2"}>
+          {isLonely ? LL.Circles.innerCircleGrow() : LL.Circles.innerCircleExplainer()}
+        </Text>
+        {!isLonely && (
+          <View style={styles.logoContainer}>
+            <Logo height={60} />
+          </View>
+        )}
+        {isLonely ? (
+          <View style={styles.groupContainer}>
+            <View style={styles.circle} />
+            <Text type="p1" style={styles.groupEffort}>
+              {LL.Circles.groupEffort()}
+            </Text>
+          </View>
+        ) : (
+          <View style={styles.circlesContainer}>
+            <Circle
+              ref={innerCircleRef}
+              heading={LL.Circles.innerCircle()}
+              value={welcomeProfile.innerCircleAllTimeCount}
+              minValue={1}
+              maxValue={180}
+              description={LL.Circles.peopleYouWelcomed()}
+              subtitle={
+                welcomeProfile.innerCircleThisMonthCount > 0
+                  ? `+ ${
+                      welcomeProfile.innerCircleThisMonthCount
+                    } ${LL.Circles.thisMonth()}; rank: #${welcomeProfile.thisMonthRank}`
+                  : ""
+              }
+              subtitleGreen
+              bubble
+              countUpDuration={1.8}
+            />
+            <Circle
+              ref={outerCircleRef}
+              heading={LL.Circles.outerCircle()}
+              value={data?.me?.defaultAccount.welcomeProfile.outerCircleAllTimeCount}
+              minValue={1}
+              maxValue={180}
+              description={LL.Circles.peopleWelcomedByYourCircle()}
+              subtitle={
+                welcomeProfile.outerCircleThisMonthCount > 0
+                  ? `+ ${
+                      welcomeProfile.outerCircleThisMonthCount
+                    } ${LL.Circles.thisMonth()}`
+                  : ""
+              }
+              subtitleGreen
+              bubble
+              countUpDuration={1.8}
+            />
+            <Text style={styles.textCenter} type="p2">
+              {LL.Circles.yourRankMessage({
+                thisMonthRank: welcomeProfile.thisMonthRank,
+                allTimeRank: welcomeProfile.allTimeRank,
+              })}
+            </Text>
+          </View>
+        )}
+        <SeptemberChallengeCard />
+        <OctoberChallengeCard />
+        {isLonely ? <InviteFriendsCard /> : <ShareCircles />}
+      </ScrollView>
+    </Screen>
   )
 }
 
 const useStyles = makeStyles(({ colors }) => {
   return {
-    screen: {
+    scrollView: {
       padding: 20,
       display: "flex",
       flexDirection: "column",
-      rowGap: 40,
-      backgroundColor: colors.background,
-    },
-    description: {
-      color: colors.grey3,
+      rowGap: 25,
     },
     textCenter: {
       textAlign: "center",
@@ -187,6 +195,10 @@ const useStyles = makeStyles(({ colors }) => {
       width: 150,
       borderRadius: 75,
       backgroundColor: colors.backdropWhite,
+    },
+    circlesContainer: {
+      zIndex: -1,
+      rowGap: 30,
     },
     logoContainer: {
       top: 90,

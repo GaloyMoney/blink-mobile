@@ -3779,6 +3779,32 @@ type RootTranslation = {
 			 */
 			fullDetails: string
 		}
+		octoberChallenge: {
+			/**
+			 * O​c​t​o​b​e​r​ ​C​h​a​l​l​e​n​g​e​!
+			 */
+			title: string
+			/**
+			 * S​h​a​r​e​ ​y​o​u​r​ ​#​b​l​i​n​k​c​i​r​c​l​e​s​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​t​o​ ​w​i​n​ ​1​,​0​0​0​,​0​0​0​ ​s​a​t​s​!
+			 */
+			description: string
+			/**
+			 * W​e​'​r​e​ ​g​i​v​i​n​g​ ​a​w​a​y​ ​1​,​0​0​0​,​0​0​0​ ​s​a​t​s​!​
+		​
+		​ ​S​h​a​r​e​ ​y​o​u​r​ ​C​i​r​c​l​e​s​ ​o​n​ ​s​o​c​i​a​l​ ​w​i​t​h​ ​t​a​g​ ​`​#​b​l​i​n​k​c​i​r​c​l​e​s​`​ ​t​o​ ​e​n​t​e​r​!​ ​T​h​e​ ​w​i​n​n​e​r​ ​w​i​l​l​ ​b​e​ ​c​h​o​s​e​n​ ​a​t​ ​r​a​n​d​o​m​ ​o​n​ ​O​c​t​o​b​e​r​ ​3​1​s​t​.​
+		​
+		​ ​Y​o​u​ ​m​u​s​t​ ​h​a​v​e​ ​a​t​ ​l​e​a​s​t​ ​o​n​e​ ​p​e​r​s​o​n​ ​i​n​ ​y​o​u​r​ ​I​n​n​e​r​ ​C​i​r​c​l​e​ ​t​o​ ​e​n​t​e​r​!
+			 */
+			details: string
+			/**
+			 * C​o​n​n​e​c​t​ ​o​n​ ​s​o​c​i​a​l​:​ 
+			 */
+			connectOnSocial: string
+			/**
+			 * F​u​l​l​ ​d​e​t​a​i​l​s​ ​a​t​ 
+			 */
+			fullDetails: string
+		}
 	}
 }
 
@@ -7443,6 +7469,32 @@ export type TranslationFunctions = {
 			reminder: () => LocalizedString
 			/**
 			 * Full details at
+			 */
+			fullDetails: () => LocalizedString
+		}
+		octoberChallenge: {
+			/**
+			 * October Challenge!
+			 */
+			title: () => LocalizedString
+			/**
+			 * Share your #blinkcircles for a chance to win 1,000,000 sats!
+			 */
+			description: () => LocalizedString
+			/**
+			 * We're giving away 1,000,000 sats!
+	
+		 Share your Circles on social with tag `#blinkcircles` to enter! The winner will be chosen at random on October 31st.
+	
+		 You must have at least one person in your Inner Circle to enter!
+			 */
+			details: () => LocalizedString
+			/**
+			 * Connect on social: 
+			 */
+			connectOnSocial: () => LocalizedString
+			/**
+			 * Full details at 
 			 */
 			fullDetails: () => LocalizedString
 		}

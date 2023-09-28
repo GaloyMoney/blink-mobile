@@ -140,6 +140,7 @@ const useStyles = makeStyles(
         position: "relative",
         width: "100%",
         paddingTop: 4,
+        zIndex: -1,
       },
       circleValue: {
         fontWeight: "700",
@@ -152,7 +153,6 @@ const useStyles = makeStyles(
         maxWidth: "35%",
         marginBottom: 6,
         lineHeight: 20,
-        color: colors.grey2,
       },
       helpBtn: {
         alignSelf: "center",
