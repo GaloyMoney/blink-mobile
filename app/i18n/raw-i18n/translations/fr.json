@@ -558,7 +558,8 @@
         "invalidTitle": "Code QR invalide",
         "noQrCode": "Nous n’avons pas trouvé de code QR dans l’image",
         "title": "Scanner QR",
-        "invalidContentLnurl": "Nous avons trouvé :\n\n{found: string}\n\n n’est pas supporté"
+        "invalidContentLnurl": "Nous avons trouvé :\n\n{found: string}\n\n n’est pas supporté",
+        "imageLibraryPermissionsNotGranted": "We don't have permissions to access the image library.  Please check app settings for your platform."
     },
     "SecurityScreen": {
         "biometricDescription": "Dévérouiller la reconnaissance faciale ou digitale.",
@@ -993,6 +994,7 @@
         "joinTheCommunity": "Rejoindre la communauté",
         "whatsapp": "WhatsApp",
         "email": "E-mail",
+        "faq": "FAQ",
         "enjoyingApp": "Vous aimez l’application ?",
         "statusPage": "Page de configuration",
         "telegram": "Telegram",
@@ -1050,7 +1052,7 @@
         "shareCircles": "Partager vos cercles",
         "share": "Partager",
         "circlesGrowingSatsExplainer": {
-            "your": "Votre",
+            "your": "Vos",
             "grow": "augmentent lorsque vous envoyez à un nouvel utilisateur Blink ses premiers sats !"
         },
         "circlesGrowingKeepGoing": "Vos cercles augmentent lorsque vous parrainez de nouvelles personnes à Blink - continuez comme ça !",
@@ -1084,6 +1086,13 @@
             "yourRank": "votre classement",
             "reminder": "Rappel : votre cercle interne augmente lorsque vous envoyez à un nouvel utilisateur Blink ses premiers sats.",
             "fullDetails": "Tous les détails à"
+        },
+        "octoberChallenge": {
+            "title": "October Challenge!",
+            "description": "Share your #blinkcircles for a chance to win 1,000,000 sats!",
+            "details": "We're giving away 1,000,000 sats!\n\n Share your Circles on social with tag `#blinkcircles` to enter! The winner will be chosen at random on October 31st.\n\n You must have at least one person in your Inner Circle to enter!",
+            "connectOnSocial": "Connect on social: ",
+            "fullDetails": "Full details at "
         }
     }
 }
