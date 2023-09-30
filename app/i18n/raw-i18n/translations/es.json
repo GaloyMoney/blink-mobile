@@ -488,7 +488,8 @@
         "lastWeek": "Semana pasada",
         "lastMonth": "Mes pasado",
         "lastYear": "Año anterior",
-        "lastFiveYears": "últimos cinco años"
+        "lastFiveYears": "últimos cinco años",
+        "buyAndSell": "Compra y Vende Bitcoin"
     },
     "PrimaryScreen": {
         "title": "Inicio"
@@ -534,7 +535,7 @@
             "expiresNow": "Expira ahora"
         },
         "invoiceHasBeenPaid": "La factura ya ha sido pagada",
-        "onChainAddress": "Dirección Onchain",
+        "btcOnChainAddress": "Dirección Bitcoin Onchain",
         "receiveViaInvoice": "Recibir vía Lightning",
         "receiveViaPaycode": "Recibir vía de código de pago",
         "receiveViaOnchain": "Recibir vía Onchain",
@@ -557,7 +558,8 @@
         "invalidTitle": "Código QR inválido",
         "noQrCode": "No pudimos encontrar un código QR en la imagen",
         "title": "Escanear QR",
-        "invalidContentLnurl": "Encontramos lo siguiente:\n\n{found: string}\n\n actualmente no es compatible"
+        "invalidContentLnurl": "Encontramos lo siguiente:\n\n{found: string}\n\n actualmente no es compatible",
+        "imageLibraryPermissionsNotGranted": "No tenemos permisos para acceder a la biblioteca de imágenes. Verifica en la configuración de la aplicación para tu plataforma."
     },
     "SecurityScreen": {
         "biometricDescription": "Desbloqueo con huella dactilar o reconocimiento facial.",
@@ -642,6 +644,7 @@
         "activated": "Activada",
         "addressScreen": "Formas de recibir pagos",
         "tapUserName": "Ingrese aquí para configurarlo",
+        "notifications": "Notificaciones ",
         "title": "Configuración",
         "darkMode": "Modo oscuro.",
         "setToDark": "Modo: oscuro.",
@@ -661,6 +664,20 @@
         "nfcScanNow": "Escanear NFC ahora",
         "nfcNotSupported": "NFC no es compatible con este dispositivo",
         "logInOrCreateAccount": "Inicia sesión o crea una cuenta"
+    },
+    "NotificationSettingsScreen": {
+        "title": "Configuración de Notificaciones ",
+        "pushNotifications": "Notificaciones push",
+        "notificationCategories": {
+            "Circles": {
+                "title": "Circulos",
+                "description": "Notificaciones sobre tus círculos."
+            },
+            "Payments": {
+                "title": "Pagos",
+                "description": "Notificaciones relacionadas con el envío y recepción de pagos."
+            }
+        }
     },
     "AccountScreen": {
         "accountLevel": "Nivel de cuenta",
@@ -977,6 +994,7 @@
         "joinTheCommunity": "Unete a la comunidad",
         "whatsapp": "WhatsApp",
         "email": "Correo electrónico",
+        "faq": "Preguntas Frecuentes - FAQ",
         "enjoyingApp": "¿Disfrutas de la aplicación?",
         "statusPage": "Página de Estado",
         "telegram": "Telegram",
@@ -1067,6 +1085,13 @@
             "peopleWelcomedSoFar": "gente bienvenida hasta ahora",
             "yourRank": "Tu puesto",
             "reminder": "Recordatorio: tu círculo interno crece cuando envías a un nuevo usuario de Blink sus primeros sats",
+            "fullDetails": "Detalles completos en"
+        },
+        "octoberChallenge": {
+            "title": "¡Reto de Octubre!",
+            "description": "¡Comparte tus círculos en las redes sociales con la etiqueta #blinkcircles para tener la oportunidad de ganar 1.000.000 de sats!",
+            "details": "¡Regalaremos 1.000.000 de sats!\n\n¡Comparte tus círculos en las redes sociales con la etiqueta `#blinkcircles` para participar! El ganador será elegido al azar el 31 de octubre.\n\n¡Debes tener al menos una persona en tu círculo interno para ingresar!",
+            "connectOnSocial": "Conecta en redes sociales:",
             "fullDetails": "Detalles completos en"
         }
     }
