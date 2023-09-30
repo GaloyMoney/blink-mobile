@@ -558,7 +558,8 @@
         "invalidTitle": "Kod QR tak betul",
         "noQrCode": "Kami tak dapat kesan kod QR pada imej ini",
         "title": "Imbas QR",
-        "invalidContentLnurl": "Kami menjumpai:\n\n{jumpa: string}\n\nBuat masa ini tidak disokong"
+        "invalidContentLnurl": "Kami menjumpai:\n\n{jumpa: string}\n\nBuat masa ini tidak disokong",
+        "imageLibraryPermissionsNotGranted": "We don't have permissions to access the image library.  Please check app settings for your platform."
     },
     "SecurityScreen": {
         "biometricDescription": "Buka dengan cap jari atau pengesahan wajah.",
@@ -993,6 +994,7 @@
         "joinTheCommunity": "Jadi sebahagian daripada komuniti",
         "whatsapp": "WhatsApp",
         "email": "Emel",
+        "faq": "Soalan Yang Sering Diajukan",
         "enjoyingApp": "Seronok menggunakan aplikasi ini?",
         "statusPage": "Status Halaman",
         "telegram": "Telegram",
@@ -1084,6 +1086,13 @@
             "yourRank": "ranking kedudukan anda",
             "reminder": "Perhatian: Kumpulan kecil anda akan bertambah sekiranya anda menghantar sats kepada pengguna baru Blink ",
             "fullDetails": "Maklumat penuh di"
+        },
+        "octoberChallenge": {
+            "title": "October Challenge!",
+            "description": "Share your #blinkcircles for a chance to win 1,000,000 sats!",
+            "details": "We're giving away 1,000,000 sats!\n\n Share your Circles on social with tag `#blinkcircles` to enter! The winner will be chosen at random on October 31st.\n\n You must have at least one person in your Inner Circle to enter!",
+            "connectOnSocial": "Connect on social: ",
+            "fullDetails": "Full details at "
         }
     }
 }
