@@ -296,13 +296,13 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   valueContainer: {
     flexDirection: "row",
-    height: 50,
+    minHeight: 60,
+    padding: 14,
     backgroundColor: colors.grey5,
     alignItems: "center",
     borderRadius: 8,
   },
   value: {
-    marginLeft: 10,
     alignItems: "center",
     justifyContent: "center",
     fontSize: 14,
