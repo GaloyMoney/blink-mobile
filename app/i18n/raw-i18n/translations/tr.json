@@ -488,7 +488,8 @@
         "lastWeek": "geçen hafta",
         "lastMonth": "geçen ay",
         "lastYear": "geçen yıl",
-        "lastFiveYears": "geçmiş beş yıl"
+        "lastFiveYears": "geçmiş beş yıl",
+        "buyAndSell": "Bitcoin al/sat"
     },
     "PrimaryScreen": {
         "title": "Ev"
@@ -520,11 +521,6 @@
         "setANote": "Not yaz",
         "invoiceAmount": "Fatura Miktarı",
         "fees": "Zincir üzerinde {minBankFee: string} sat için gerekli ücret aşağıda\n{minBankFeeThreshold: string} sats",
-        "lightning": "Lightning",
-        "paycode": "Ödeme Kodu",
-        "onchain": "Onchain",
-        "bitcoin": "Bitcoin",
-        "stablesats": "Sabit sat",
         "regenerateInvoiceButtonTitle": "Yeni bir fatura oluştur",
         "setUsernameButtonTitle": "Kullanıcı Adı Oluştur",
         "invoiceHasExpired": "Fatura zaman aşımına uğradı",
@@ -539,7 +535,7 @@
             "expiresNow": "Şimdi süresi doluyor"
         },
         "invoiceHasBeenPaid": "Fatura ödendi",
-        "onChainAddress": "Onchain Adresi",
+        "btcOnChainAddress": "Bitcoin Onchain Adresi",
         "receiveViaInvoice": "Lightning aracılığı ile al",
         "receiveViaPaycode": "Ödeme Kodu ile al",
         "receiveViaOnchain": "Onchain ile al",
@@ -562,7 +558,8 @@
         "invalidTitle": "Geçersiz QR kodu",
         "noQrCode": "Görselde QR kodu bulamadık",
         "title": "QR Kodunu Tara",
-        "invalidContentLnurl": "Şunu bulduk:\n\n{found: string}\n\nşu anda desteklenmiyor"
+        "invalidContentLnurl": "Şunu bulduk:\n\n{found: string}\n\nşu anda desteklenmiyor",
+        "imageLibraryPermissionsNotGranted": "Resim arşivinize erişimimiz yok. Lütfen uygulama ayarlarını kontrol edin."
     },
     "SecurityScreen": {
         "biometricDescription": "Parmak izi veya yüz tanıma kullanarak kilidi aç. ",
@@ -647,6 +644,7 @@
         "activated": "Aktive edildi",
         "addressScreen": "Ödeme alma yolları",
         "tapUserName": "Kullanıcı adını ayarlamak için tıkla",
+        "notifications": "Bildirimler",
         "title": "Ayarlar",
         "darkMode": "Karanlık Mod",
         "setToDark": "Mod: karanlık.",
@@ -666,6 +664,20 @@
         "nfcScanNow": "Şimdi NFC'yi Tara",
         "nfcNotSupported": "NFC bu cihazda desteklenmiyor",
         "logInOrCreateAccount": "Giriş yap ya da hesap oluştur"
+    },
+    "NotificationSettingsScreen": {
+        "title": "Bildirim Ayarları",
+        "pushNotifications": "Anlık Bildirimler",
+        "notificationCategories": {
+            "Circles": {
+                "title": "Çevreler",
+                "description": "Çevrenizle alakalı bildirimler."
+            },
+            "Payments": {
+                "title": "Ödemeler",
+                "description": "Ödeme almak ve gördermekle alakalı bildirimler."
+            }
+        }
     },
     "AccountScreen": {
         "accountLevel": "Hesap Seviyesi",
@@ -699,8 +711,8 @@
         "totpDeactivated": "İki aşamalı doğrulama kapatıldı",
         "totpDeleteAlertTitle": "İki aşamalı doğrulamayı sil",
         "totpDeleteAlertContent": "İki aşamalı doğrulamanızı silmek istediğinize emin misiniz?",
-        "copiedAccountId": "Copied your account ID to clipboard",
-        "yourAccountId": "Your Account ID",
+        "copiedAccountId": "Hesap kimliğiniz panoya kopyalandı",
+        "yourAccountId": "Hesap Kimliğiniz",
         "copy": "Kopyala"
     },
     "TotpRegistrationInitiateScreen": {
@@ -982,6 +994,7 @@
         "joinTheCommunity": "Topluluğa katılın",
         "whatsapp": "WhatsApp",
         "email": "E-posta",
+        "faq": "SSS",
         "enjoyingApp": "Uygulamayı beğendiniz mi?",
         "statusPage": "Durum Sayfası",
         "telegram": "Telegram",
@@ -1017,7 +1030,7 @@
         "minAmountNotMet": "Tutar en az {minAmount: string} olmalıdır."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Set amount"
+        "tapToSetAmount": "Miktarı belirle"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Uygulamamı en son sürüme güncellemem gerekiyor. {os: string} uygulamasının {version: string} sürümünü kullanıyorum.",
@@ -1029,8 +1042,9 @@
     "Circles": {
         "title": "Çevrem",
         "titleBlinkCircles": "Blink Çevrem",
+        "fetchingLatestCircles": "Son çevreler yükleniyor",
         "circles": "çevreler",
-        "circlesExplainer": "Çevren diğer insanları Blink'e ilk satlarını göndererek karşıladığında genişler.",
+        "circlesExplainer": "Birisine Blink'den ilk satlarını göndererek karşıla! Her karşılamada çevreniz genişleyecektir.",
         "viewMyCircles": "Çevremi Görüntüle",
         "introducingCircles": "Çevrelere Giriş",
         "copiedInviteLink": "Davet Linki Kopyalandı",
@@ -1048,7 +1062,7 @@
         "innerCircleExplainer": "Blink ile Bitcoin'in yaygınlaşmasını sağlıyorsun. Devam et!",
         "innerCircleExplainerCard": "Blink ile Bitcoin adaptasyonunu artırıyorum!",
         "innerCircle": "Yakın Çevre",
-        "peopleYouWelcomed": "karşıladığın insanlar",
+        "peopleYouWelcomed": "sizin karşıladığınız insanlar",
         "peopleIWelcomed": "karşıladığım\ninsanlar",
         "thisMonth": "bu ay",
         "outerCircle": "Uzak Çevre",
@@ -1067,10 +1081,17 @@
         "septChallenge": {
             "title": "Eylül Meydan Okuması!",
             "description": "Yakın Çevre {innerCircle: number}/21 - 21 $ Kazan\nİlk 3 - Adopting Bitcoin'e bilet kazanın!",
-            "details": "Grow your inner circle by 21 people in September and share on social with #blinkcircles to get $21 to your Stablesats account. Top 3 win tickets to Adopting Bitcoin!",
+            "details": "21 dolar kazanmak için iç çevrenizi 21 kişiye genişletin ve sosyal medyada #blinkcircles etiketi ile paylaşın. Satlar Stablesats hesabınıza yatacaktır. İlk 3 kişi Adopting Bitcoin için bilet kazanacak!",
             "peopleWelcomedSoFar": "şimdiye kadar karşılanan insanlar",
             "yourRank": "sıralamanız",
             "reminder": "Uyarı: Yakın çevreniz yeni Blink kullanıcılarına ilk SAT'larını gönderdiğinizde genişler.",
+            "fullDetails": "Tüm detaylar şurada"
+        },
+        "octoberChallenge": {
+            "title": "Ekim Meydan Okuması!",
+            "description": "1 milyon sat kazanmak için Blink çevrenizi #blinkcircles etiketi ile paylaşın!",
+            "details": "1 milyon sat veriyoruz!\n\nÇevrenizi sosyal medyada #blinkcircles etiketi ile paylaşmanız yeterli! Kazanan 31 Ekim'de açıklanacak.\n\nKatılmak için en az bir kişiyi iç çevrenize eklemeniz gerekli.",
+            "connectOnSocial": "Sosyal medyadan bağlan:",
             "fullDetails": "Tüm detaylar şurada"
         }
     }
