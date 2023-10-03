@@ -558,7 +558,8 @@
         "invalidTitle": "Ongeldige QR kode",
         "noQrCode": "Ons kon nie 'n QR kode in die prent opspoor nie",
         "title": "Skandeer",
-        "invalidContentLnurl": "Ons kon opspoor:\n\n{found: string}\n\nword nie huidiglik ondersteun nie."
+        "invalidContentLnurl": "Ons kon opspoor:\n\n{found: string}\n\nword nie huidiglik ondersteun nie.",
+        "imageLibraryPermissionsNotGranted": "Ons het nie toestemming om die beelde of fotos te sien nie. Gaan na die app-verstellings op jou platform."
     },
     "SecurityScreen": {
         "biometricDescription": "Kry toegang met vingerafdruk of gesigsherkenning",
@@ -993,6 +994,7 @@
         "joinTheCommunity": "Sluit aan by die gemeenskap",
         "whatsapp": "WhatsApp",
         "email": "E-pos",
+        "faq": "FAQ",
         "enjoyingApp": "Geniet jy die toep?",
         "statusPage": "Statusbladsy",
         "telegram": "Telegram",
@@ -1084,6 +1086,13 @@
             "yourRank": "Jou rang",
             "reminder": "Herhindering: Jou binnesirkel groei wanneer jy die eerste sats na 'n nuwe Blink-gebruiker stuur",
             "fullDetails": "Volle besonderhede"
+        },
+        "octoberChallenge": {
+            "title": "Oktober uitdaging!",
+            "description": "Deel jou #blinksirkels vir 'n kans om 1,000,000 sats te wen!",
+            "details": "Ons gee 1,000,000 sats weg! Deel jou sirkels op sosiaal en tag #blinksirkels om in te skryf! Die wenner word lukraak gekies op 31 Oktober.\n\nJy moet minstens een persoon in jou binnesirkel hê om in te skryf!",
+            "connectOnSocial": "Skakel op sosiaal:",
+            "fullDetails": "Volle besonderhede by"
         }
     }
 }
