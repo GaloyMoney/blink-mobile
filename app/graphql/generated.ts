@@ -618,6 +618,18 @@ export type LnUpdate = {
   readonly walletId: Scalars['WalletId']['output'];
 };
 
+export type LnUsdInvoiceBtcDenominatedCreateOnBehalfOfRecipientInput = {
+  /** Amount in satoshis. */
+  readonly amount: Scalars['SatAmount']['input'];
+  readonly descriptionHash?: InputMaybe<Scalars['Hex32Bytes']['input']>;
+  /** Optional invoice expiration time in minutes. */
+  readonly expiresIn?: InputMaybe<Scalars['Minutes']['input']>;
+  /** Optional memo for the lightning invoice. Acts as a note to the recipient. */
+  readonly memo?: InputMaybe<Scalars['Memo']['input']>;
+  /** Wallet ID for a USD wallet which belongs to the account of any user. */
+  readonly recipientWalletId: Scalars['WalletId']['input'];
+};
+
 export type LnUsdInvoiceCreateInput = {
   /** Amount in USD cents. */
   readonly amount: Scalars['CentAmount']['input'];
@@ -737,6 +749,13 @@ export type Mutation = {
    * Returns payment status (success, failed, pending, already_paid).
    */
   readonly lnNoAmountUsdInvoicePaymentSend: PaymentSendPayload;
+  /**
+   * Returns a lightning invoice denominated in satoshis for an associated wallet.
+   * When invoice is paid the equivalent value at invoice creation will be credited to a USD wallet.
+   * Expires after 'expiresIn' or 5 minutes (short expiry time because there is a USD/BTC exchange rate
+   *   associated with the amount).
+   */
+  readonly lnUsdInvoiceBtcDenominatedCreateOnBehalfOfRecipient: LnInvoicePayload;
   /**
    * Returns a lightning invoice denominated in satoshis for an associated wallet.
    * When invoice is paid the equivalent value at invoice creation will be credited to a USD wallet.
@@ -893,6 +912,11 @@ export type MutationLnNoAmountUsdInvoiceFeeProbeArgs = {
 
 export type MutationLnNoAmountUsdInvoicePaymentSendArgs = {
   input: LnNoAmountUsdInvoicePaymentInput;
+};
+
+
+export type MutationLnUsdInvoiceBtcDenominatedCreateOnBehalfOfRecipientArgs = {
+  input: LnUsdInvoiceBtcDenominatedCreateOnBehalfOfRecipientInput;
 };
 
 
@@ -6723,6 +6747,7 @@ export type ResolversTypes = {
   LnPaymentRequest: ResolverTypeWrapper<Scalars['LnPaymentRequest']['output']>;
   LnPaymentSecret: ResolverTypeWrapper<Scalars['LnPaymentSecret']['output']>;
   LnUpdate: ResolverTypeWrapper<LnUpdate>;
+  LnUsdInvoiceBtcDenominatedCreateOnBehalfOfRecipientInput: LnUsdInvoiceBtcDenominatedCreateOnBehalfOfRecipientInput;
   LnUsdInvoiceCreateInput: LnUsdInvoiceCreateInput;
   LnUsdInvoiceCreateOnBehalfOfRecipientInput: LnUsdInvoiceCreateOnBehalfOfRecipientInput;
   LnUsdInvoiceFeeProbeInput: LnUsdInvoiceFeeProbeInput;
@@ -6926,6 +6951,7 @@ export type ResolversParentTypes = {
   LnPaymentRequest: Scalars['LnPaymentRequest']['output'];
   LnPaymentSecret: Scalars['LnPaymentSecret']['output'];
   LnUpdate: LnUpdate;
+  LnUsdInvoiceBtcDenominatedCreateOnBehalfOfRecipientInput: LnUsdInvoiceBtcDenominatedCreateOnBehalfOfRecipientInput;
   LnUsdInvoiceCreateInput: LnUsdInvoiceCreateInput;
   LnUsdInvoiceCreateOnBehalfOfRecipientInput: LnUsdInvoiceCreateOnBehalfOfRecipientInput;
   LnUsdInvoiceFeeProbeInput: LnUsdInvoiceFeeProbeInput;
@@ -7439,6 +7465,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   lnNoAmountInvoicePaymentSend?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationLnNoAmountInvoicePaymentSendArgs, 'input'>>;
   lnNoAmountUsdInvoiceFeeProbe?: Resolver<ResolversTypes['CentAmountPayload'], ParentType, ContextType, RequireFields<MutationLnNoAmountUsdInvoiceFeeProbeArgs, 'input'>>;
   lnNoAmountUsdInvoicePaymentSend?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationLnNoAmountUsdInvoicePaymentSendArgs, 'input'>>;
+  lnUsdInvoiceBtcDenominatedCreateOnBehalfOfRecipient?: Resolver<ResolversTypes['LnInvoicePayload'], ParentType, ContextType, RequireFields<MutationLnUsdInvoiceBtcDenominatedCreateOnBehalfOfRecipientArgs, 'input'>>;
   lnUsdInvoiceCreate?: Resolver<ResolversTypes['LnInvoicePayload'], ParentType, ContextType, RequireFields<MutationLnUsdInvoiceCreateArgs, 'input'>>;
   lnUsdInvoiceCreateOnBehalfOfRecipient?: Resolver<ResolversTypes['LnInvoicePayload'], ParentType, ContextType, RequireFields<MutationLnUsdInvoiceCreateOnBehalfOfRecipientArgs, 'input'>>;
   lnUsdInvoiceFeeProbe?: Resolver<ResolversTypes['SatAmountPayload'], ParentType, ContextType, RequireFields<MutationLnUsdInvoiceFeeProbeArgs, 'input'>>;
