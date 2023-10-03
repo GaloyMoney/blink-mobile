@@ -559,7 +559,7 @@
         "noQrCode": "Nous n’avons pas trouvé de code QR dans l’image",
         "title": "Scanner QR",
         "invalidContentLnurl": "Nous avons trouvé :\n\n{found: string}\n\n n’est pas supporté",
-        "imageLibraryPermissionsNotGranted": "We don't have permissions to access the image library.  Please check app settings for your platform."
+        "imageLibraryPermissionsNotGranted": "Nous n'avons pas l'autorisation d'accéder à la bibliothèque d'images. Veuillez vérifier les paramètres de l'application pour votre plateforme."
     },
     "SecurityScreen": {
         "biometricDescription": "Dévérouiller la reconnaissance faciale ou digitale.",
@@ -1088,11 +1088,11 @@
             "fullDetails": "Tous les détails à"
         },
         "octoberChallenge": {
-            "title": "October Challenge!",
-            "description": "Share your #blinkcircles for a chance to win 1,000,000 sats!",
-            "details": "We're giving away 1,000,000 sats!\n\n Share your Circles on social with tag `#blinkcircles` to enter! The winner will be chosen at random on October 31st.\n\n You must have at least one person in your Inner Circle to enter!",
-            "connectOnSocial": "Connect on social: ",
-            "fullDetails": "Full details at "
+            "title": "Challenge d'octobre !",
+            "description": "Partagez vos #blinkcircles pour avoir une chance de gagner 1 000 000 sats !",
+            "details": "Nous offrons 1 000 000 sats ! Partagez vos Circles sur les réseaux sociaux avec le hashtag #blinkcircles pour participer ! Le gagnant sera choisi au hasard le 31 octobre. Vous devez avoir au moins une personne dans votre Inner Circle pour participer !Nous offrons 1 000 000 sats ! Partagez vos Circles sur les réseaux sociaux avec le hashtag #blinkcircles pour participer ! Le gagnant sera choisi au hasard le 31 octobre. Vous devez avoir au moins une personne dans votre Inner Circle pour participer !",
+            "connectOnSocial": "Connectez-vous sur les réseaux sociaux :",
+            "fullDetails": "Plus d'informations sur"
         }
     }
 }
