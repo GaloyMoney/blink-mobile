@@ -40,12 +40,12 @@
     "PeopleScreen": {
         "title": "つながり",
         "copy": "コピー",
-        "noContactsTitle": "連絡先が登録されていません",
-        "noContactsYet": "ユーザー名を使って送受金すると、連絡先に自動登録されます",
-        "noMatchingContacts": "連絡先には登録されていません",
-        "allContacts": "すべての連絡先",
-        "viewAllContacts": "すべての連絡先を見る",
-        "frequentContacts": "よく使う連絡先"
+        "noContactsTitle": "コンタクトリストがありません",
+        "noContactsYet": "ユーザー名を使って送受金すると、コンタクトリストに自動登録されます",
+        "noMatchingContacts": "コンタクトリストにはまだ登録されていないようです。",
+        "allContacts": "コンタクトリスト",
+        "viewAllContacts": "コンタクトリストを見る",
+        "frequentContacts": "よく使うコンタクトリスト"
     },
     "ContactDetailsScreen": {
         "title": "{username: string}とのトランザクション"
@@ -257,7 +257,7 @@
                         ],
                         "question": "米ドルやスイスフランのような法定通貨は誰が刷りますか？",
                         "text": "現在流通しているすべての国の通貨は「法定通貨」と呼ばれています。これには米ドル、日本円、スイスフランなどが含まれます。\n\n「フィアット」とはラテン語で「法定によって」という意味です。\n\nつまり、米ドルを含むすべての法定通貨は、単に国の命令によって刷られたものなのです。",
-                        "title": "法定通貨： それは何でしょう？"
+                        "title": "法定通貨とは一体何なのでしょうか？"
                     },
                     "whyCareAboutFiatMoney": {
                         "answers": [
@@ -322,7 +322,7 @@
                 }
             },
             "BitcoinWhySpecial": {
-                "title": "ビットコイン：なぜ特別なのでしょうか？",
+                "title": "ビットコインはなぜ特別なの？",
                 "questions": {
                     "LimitedSupply": {
                         "answers": [
@@ -428,7 +428,7 @@
         "sectionsCompleted": "完了しました",
         "title": "獲得する",
         "unlockQuestion": "アンロックするには、質問に答えてください：",
-        "youEarned": "獲得しました",
+        "youEarned": "獲得額",
         "registerTitle": "ウォレットのアップグレードが必要です",
         "registerContent": "satsを獲得するために電話番号を登録する"
     },
@@ -488,7 +488,8 @@
         "lastWeek": "先週",
         "lastMonth": "先月",
         "lastYear": "昨年",
-        "lastFiveYears": "5年前"
+        "lastFiveYears": "5年前",
+        "buyAndSell": "ビットコインを売買する"
     },
     "PrimaryScreen": {
         "title": "ホーム"
@@ -520,11 +521,6 @@
         "setANote": "メモを追加する",
         "invoiceAmount": "インボイス金額",
         "fees": "{minBankFee: string}オンチェーン決済のsats手数料が{minBankFeeThreshold: string} satsを下回った場合",
-        "lightning": "ライトニング",
-        "paycode": "ペイコード",
-        "onchain": "オンチェーン",
-        "bitcoin": "ビットコイン",
-        "stablesats": "ステーブル sats",
         "regenerateInvoiceButtonTitle": "インボイスを再発行する",
         "setUsernameButtonTitle": "ユーザー名を設定する",
         "invoiceHasExpired": "インボイスの有効期限が切れました",
@@ -539,7 +535,7 @@
             "expiresNow": "有効期限切れ"
         },
         "invoiceHasBeenPaid": "支払済みのインボイス",
-        "onChainAddress": "オンチェーン・アドレス",
+        "btcOnChainAddress": "オンチェーンアドレス",
         "receiveViaInvoice": "ライトニングで受金する",
         "receiveViaPaycode": "ペイコードで受金する",
         "receiveViaOnchain": "オンチェーンで受金する",
@@ -562,7 +558,8 @@
         "invalidTitle": "無効なQRコード",
         "noQrCode": "QRコードは見つかりませんでした",
         "title": "QRコードをスキャンする",
-        "invalidContentLnurl": "無効な情報\n\n{found: string}\n\nは現在サポートされていません"
+        "invalidContentLnurl": "無効な情報\n\n{found: string}\n\nは現在サポートされていません",
+        "imageLibraryPermissionsNotGranted": "画像ライブラリにアクセスする権限がありません。 アプリの設定を確認してください。"
     },
     "SecurityScreen": {
         "biometricDescription": "指紋認証または顔認証でロックを解除する。",
@@ -579,7 +576,7 @@
         "amountLabel": "金額：",
         "confirmPayment": "送金する",
         "confirmPaymentQuestion": "この送金を進めますか？",
-        "destinationLabel": "宛名：",
+        "destinationLabel": "送金先：",
         "feeLabel": "手数料",
         "memoLabel": "メモ：",
         "paymentFinal": "最終的な送金です。",
@@ -645,8 +642,9 @@
     },
     "SettingsScreen": {
         "activated": "アクティベーション",
-        "addressScreen": "支払いを受け取る方法",
+        "addressScreen": "さまざまな受金方法を見る",
         "tapUserName": "タップしてユーザー名を設定する",
+        "notifications": "通知",
         "title": "設定",
         "darkMode": "ダークモード",
         "setToDark": "モード：ダーク",
@@ -657,7 +655,7 @@
         "lnurlNoUsername": "lnurlアドレスを発行するには、まずはユーザー名を設定する必要があります。 今すぐユーザー名を設定しますか？",
         "copyClipboardLnurl": "Lnurlアドレスがクリップボードにコピーされました",
         "defaultWallet": "メインウォレット",
-        "rateUs": "{storeName: string}を評価する",
+        "rateUs": "{storeName: string}で評価する",
         "theme": "テーマ",
         "nfc": "NFCから受金する",
         "nfcError": "NFCタグの読み取り中にエラーが発生しました。もう一度トライしてみてください。",
@@ -667,10 +665,24 @@
         "nfcNotSupported": "このデバイスでは NFC がサポートされていません",
         "logInOrCreateAccount": "ログインまたはウォレットを作成"
     },
+    "NotificationSettingsScreen": {
+        "title": "通知設定",
+        "pushNotifications": "プッシュ通知",
+        "notificationCategories": {
+            "Circles": {
+                "title": "サークル",
+                "description": "あなたのサークルに関する通知。"
+            },
+            "Payments": {
+                "title": "送受金",
+                "description": "送受金に関する通知。"
+            }
+        }
+    },
     "AccountScreen": {
         "accountLevel": "ウォレットレベル",
         "upgrade": "ウォレットをアップグレードする",
-        "logOutAndDeleteLocalData": "ログアウトしてすべてのローカルデータをクリアします",
+        "logOutAndDeleteLocalData": "ログアウトしてすべてのローカルデータをクリアする",
         "IUnderstand": "わかりました。 ログアウトしてください。",
         "logoutAlertTitle": "ログアウトしてすべてのローカル データを削除してもよろしいですか？",
         "logoutAlertContentPhone": "再度ログインするには、電話番号を再入力する必要があります。\nあなたの電話番号は{phoneNumber: string}です。再ログインするには、この電話番号が使用できることを確認してください。",
@@ -699,8 +711,8 @@
         "totpDeactivated": "2要素認証（2FA）が無効化されました",
         "totpDeleteAlertTitle": "2要素認証（2FA）を削除する",
         "totpDeleteAlertContent": "2要素認証（2FA）を削除してもよろしいですか？",
-        "copiedAccountId": "Copied your account ID to clipboard",
-        "yourAccountId": "Your Account ID",
+        "copiedAccountId": "アカウントIDをクリップボードにコピーする",
+        "yourAccountId": "あなたのアカウントID",
         "copy": "コピー"
     },
     "TotpRegistrationInitiateScreen": {
@@ -814,7 +826,7 @@
         "errorUnsupportedCountry": "お住まいの国では、まだ私たちのサービスがサポートされていません。",
         "placeholder": "電話番号",
         "verify": "タップして認証する",
-        "sms": "SMSで送金する",
+        "sms": "SMSで送信する",
         "whatsapp": "WhatsAppで送金する"
     },
     "PhoneLoginValidationScreen": {
@@ -836,7 +848,7 @@
         "errorUnsupportedCountry": "お住まいの国では、まだ私たちのサービスがサポートされていません。",
         "placeholder": "電話番号",
         "verify": "タップして認証する",
-        "sms": "SMSで送金する",
+        "sms": "SMSで送信する",
         "whatsapp": "WhatsAppで送金する"
     },
     "PhoneRegistrationValidateScreen": {
@@ -872,13 +884,13 @@
         "back": "戻る",
         "backHome": "ホームに戻る",
         "bank": "銀行",
-        "bankAccount": "キャッシュ・ウォレット",
+        "bankAccount": "キャッシュウォレット",
         "bankAdvice": "{bankName: string} 通知",
         "bankInfo": "{bankName: string} 情報",
         "beta": "ベータ",
         "bitcoin": "ビットコイン",
         "bitcoinPrice": "ビットコイン価格",
-        "btcAccount": "ビットコイン・ウォレット",
+        "btcAccount": "ビットコインウォレット",
         "cancel": "キャンセル",
         "close": "閉じる",
         "confirm": "承認する",
@@ -934,7 +946,7 @@
         "submit": "提出する",
         "success": "成功！",
         "stablesatsUsd": "ステーブル sats（米国ドル固定）",
-        "to": "宛先",
+        "to": "送金先",
         "total": "合計",
         "transactions": "トランザクション",
         "transactionsError": "トランザクションの読み込みエラー",
@@ -982,6 +994,7 @@
         "joinTheCommunity": "コミュニティに参加する",
         "whatsapp": "WhatsApp",
         "email": "メールアドレス",
+        "faq": "よくある質問",
         "enjoyingApp": "このアプリが気に入りましたか？",
         "statusPage": "ステータス",
         "telegram": "Telegram",
@@ -1017,7 +1030,7 @@
         "minAmountNotMet": "最小限度額{minAmount: string}以上の金額を設定してください."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Set amount"
+        "tapToSetAmount": "金額を設定する"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "I need to update my app to the latest version. I'm using the {os: string} app with version {version: string}.",
@@ -1029,8 +1042,9 @@
     "Circles": {
         "title": "あなたのサークル",
         "titleBlinkCircles": "Blinkサークル",
+        "fetchingLatestCircles": "サークル情報を取得中",
         "circles": "サークル",
-        "circlesExplainer": "お友だちをBlinkに招待して最初のサトシを送るとあなたのサークルが広がります。",
+        "circlesExplainer": "新しいBlinkユーザーを招待して最初のサトシを送ろう！お友だちを招待するたびにあなたのサークルが広がります。",
         "viewMyCircles": "あなたのサークルを見る",
         "introducingCircles": "サークルの紹介",
         "copiedInviteLink": "紹介リンクをコピーしました",
@@ -1048,7 +1062,7 @@
         "innerCircleExplainer": "Blinkと一緒にあなたはビットコインの普及に貢献しています。その調子！",
         "innerCircleExplainerCard": "Blinkと一緒にビットコインの普及を応援しています！",
         "innerCircle": "インナーサークル",
-        "peopleYouWelcomed": "あなたが招待したお友だち",
+        "peopleYouWelcomed": "あなたによって招待されたお友だち",
         "peopleIWelcomed": "お友だち \nあなたによって招待されました",
         "thisMonth": "今月",
         "outerCircle": "アウターサークル",
@@ -1067,10 +1081,17 @@
         "septChallenge": {
             "title": "9月のチャレンジ！",
             "description": "インナーサークル {innerCircle: number}/21 - $21獲得\nトップ3 - Adopting Bitcoinのチケットを獲得できます!",
-            "details": "9月中にインナーサークルを21人に増やし、#blinkcirclesタグと一緒にソーシャルメディアでシェアすると、Stablesatsウォレットに$21が振り込まれます。さらに、上位3名には「Adopting Bitcoin!」のチケットが当たります！",
+            "details": "9月中にインナーサークルを21人に増やし、#blinkcircles タグと一緒にソーシャルメディアでシェアすると、ステイブル satsウォレットに$21が振り込まれます。さらに、上位3名には「Adopting Bitcoin!」のチケットが当たります！",
             "peopleWelcomedSoFar": "最近招待したお友だち",
             "yourRank": "あなたのランキング",
             "reminder": "リマインダー：新しいBlinkユーザーに最初のサトシを送るとあなたのインナーサークルが広がります！",
+            "fullDetails": "詳細はこちら："
+        },
+        "octoberChallenge": {
+            "title": "10月のチャレンジ！",
+            "description": "あなたの #blinkcircles をシェアして、1,000,000サトシを獲得するチャンス！",
+            "details": "1,000,000サトシをプレゼントします！\n\n#blinkcircles タグをつけて、あなたのサークルをSNSでシェアしてください！当選者は10月31日にランダムに選ばれます。\n\n応募資格はあなたのインナーサークルが1以上であることです！",
+            "connectOnSocial": "SNSでつながる：",
             "fullDetails": "詳細はこちら："
         }
     }
