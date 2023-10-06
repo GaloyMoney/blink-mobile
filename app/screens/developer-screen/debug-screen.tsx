@@ -18,6 +18,7 @@ import { InAppBrowser } from "react-native-inappbrowser-reborn"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 gql`
   query debugScreen {
@@ -80,7 +81,8 @@ export const DeveloperScreen: React.FC = () => {
 
   const [newGaloyInstance, setNewGaloyInstance] = React.useState(currentGaloyInstance.id)
 
-  const dataBeta = useBetaQuery()
+  const isAuthed = useIsAuthed()
+  const dataBeta = useBetaQuery({ skip: !isAuthed })
   const beta = dataBeta.data?.beta ?? false
 
   const changesHaveBeenMade =
