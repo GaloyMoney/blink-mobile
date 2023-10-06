@@ -849,7 +849,7 @@
         "placeholder": "電話番号",
         "verify": "タップして認証する",
         "sms": "SMSで送信する",
-        "whatsapp": "WhatsAppで送金する"
+        "whatsapp": "WhatsAppで送信する"
     },
     "PhoneRegistrationValidateScreen": {
         "successTitle": "認証済みの電話番号です"
