@@ -143,7 +143,7 @@ export const AccountScreen = () => {
   const openUpgradeAccountModal = () => setUpgradeAccountModalVisible(true)
 
   const { data } = useAccountScreenQuery({
-    fetchPolicy: "cache-and-network",
+    fetchPolicy: "cache-first",
     skip: !isAtLeastLevelZero,
   })
 

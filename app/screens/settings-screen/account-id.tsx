@@ -1,11 +1,11 @@
 import { useAccountScreenQuery } from "@app/graphql/generated"
 import { View } from "react-native"
 import { Text, makeStyles } from "@rneui/themed"
-import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { useCallback } from "react"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { toastShow } from "@app/utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 
 export const AccountId: React.FC = () => {
   const { data } = useAccountScreenQuery()
@@ -15,8 +15,6 @@ export const AccountId: React.FC = () => {
 
   const accountId = data?.me?.defaultAccount?.id || ""
   const last6digitsOfAccountId = accountId?.slice(-6).toUpperCase()
-
-  const xs = "********—****—****—****—****** "
 
   const copyToClipboard = useCallback(() => {
     Clipboard.setString(accountId)
@@ -30,17 +28,25 @@ export const AccountId: React.FC = () => {
   }, [LL, accountId])
 
   return (
-    <View>
-      <Text style={styles.accountId}>{LL.AccountScreen.yourAccountId()}</Text>
+    <View style={styles.accountId}>
+      <Text type="p2">{LL.AccountScreen.yourAccountId()}</Text>
       <View style={styles.wrapper}>
-        <Text style={styles.accIdWrapper}>
-          <Text style={styles.accIdXs}>{xs}</Text>
-          <Text style={styles.accIdText}>{last6digitsOfAccountId}</Text>
-        </Text>
-        <GaloySecondaryButton
-          containerStyle={styles.overrideButton}
-          titleStyle={styles.copyButton}
-          title={LL.AccountScreen.copy()}
+        <View style={styles.accIdWrapper}>
+          <View style={styles.accIdXs}>
+            {Array(20)
+              .fill(null)
+              .map((_, i) => (
+                <View style={styles.circle} key={i} />
+              ))}
+          </View>
+          <Text type="p3" style={styles.accIdText}>
+            {last6digitsOfAccountId}
+          </Text>
+        </View>
+        <GaloyIconButton
+          name="copy-paste"
+          size="medium"
+          iconOnly
           onPress={copyToClipboard}
         />
       </View>
@@ -50,41 +56,36 @@ export const AccountId: React.FC = () => {
 
 const useStyles = makeStyles(({ colors }) => ({
   accountId: {
-    marginHorizontal: 20,
-    marginTop: 10,
-    marginBottom: 6,
+    margin: 20,
+  },
+  circle: {
+    height: 4,
+    width: 4,
+    borderRadius: 2,
+    backgroundColor: colors.black,
   },
   wrapper: {
-    borderColor: colors.primary,
-    borderWidth: 1,
-    borderRadius: 20,
+    marginTop: 5,
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
-    marginHorizontal: 20,
-    overflow: "hidden",
-    marginBottom: 20,
-  },
-  overrideButton: {
-    backgroundColor: colors.primary,
-    borderRadius: 0,
-  },
-  copyButton: {
-    color: colors.white,
-    fontSize: 18,
-    marginLeft: -16,
+    justifyContent: "space-between",
+    backgroundColor: colors.grey5,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
   },
   accIdWrapper: {
-    width: "80%",
-    textAlign: "center",
+    display: "flex",
+    flexDirection: "row",
+    columnGap: 3,
   },
-  accIdText: {
-    fontWeight: "700",
-    fontSize: 18,
-  },
+  accIdText: {},
   accIdXs: {
-    fontSize: 12,
-    color: colors.grey3,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    columnGap: 3,
   },
 }))
