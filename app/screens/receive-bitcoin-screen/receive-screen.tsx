@@ -4,7 +4,7 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { requestNotificationPermission } from "@app/utils/notifications"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
-import React, { useEffect } from "react"
+import React, { useContext, useEffect } from "react"
 import { TouchableOpacity, View } from "react-native"
 import { testProps } from "../../utils/testProps"
 import { withMyLnUpdateSub } from "./my-ln-updates-sub"
@@ -18,6 +18,8 @@ import { NoteInput } from "@app/components/note-input"
 import Icon from "react-native-vector-icons/Ionicons"
 import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
 import { GaloyCurrencyBubble } from "@app/components/atomic/galoy-currency-bubble"
+import { ModalNfc } from "@app/components/modal-nfc"
+import { NfcContext } from "@app/config/nfc-context"
 
 const ReceiveScreen = () => {
   const {
@@ -32,6 +34,8 @@ const ReceiveScreen = () => {
 
   const request = useReceiveBitcoin()
 
+  const { displayReceiveNfc, setDisplayReceiveNfc } = useContext(NfcContext)
+
   // notification permission
   useEffect(() => {
     let timeout: NodeJS.Timeout
@@ -44,19 +48,6 @@ const ReceiveScreen = () => {
     }
     return () => timeout && clearTimeout(timeout)
   }, [isAuthed, isFocused])
-
-  useEffect(() => {
-    switch (request?.type) {
-      case Invoice.OnChain:
-        navigation.setOptions({ title: LL.ReceiveScreen.receiveViaOnchain() })
-        break
-      case Invoice.Lightning:
-        navigation.setOptions({ title: LL.ReceiveScreen.receiveViaInvoice() })
-        break
-      case Invoice.PayCode:
-        navigation.setOptions({ title: LL.ReceiveScreen.receiveViaPaycode() })
-    }
-  }, [request?.type, LL.ReceiveScreen, navigation])
 
   useEffect(() => {
     if (request?.state === PaymentRequestState.Paid) {
@@ -246,6 +237,8 @@ const ReceiveScreen = () => {
           isVisible={request.isSetLightningAddressModalVisible}
           toggleModal={request.toggleIsSetLightningAddressModalVisible}
         />
+
+        <ModalNfc isActive={displayReceiveNfc} setIsActive={setDisplayReceiveNfc} />
       </Screen>
     </>
   )

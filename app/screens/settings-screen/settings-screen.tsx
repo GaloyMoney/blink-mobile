@@ -13,7 +13,6 @@ import ContactModal, {
 import crashlytics from "@react-native-firebase/crashlytics"
 
 import { gql } from "@apollo/client"
-import { ModalNfc } from "@app/components/modal-nfc"
 import { ratingOptions } from "@app/config"
 import {
   useSettingsScreenQuery,
@@ -162,8 +161,6 @@ export const SettingsScreen: React.FC = () => {
     setIsSetLightningAddressModalVisible(!isSetLightningAddressModalVisible)
   }
 
-  const [isNFCActive, setIsNFCActive] = React.useState(false)
-
   const rateUs = () => {
     Rate.rate(ratingOptions, (success, errorMessage) => {
       if (success) {
@@ -242,14 +239,6 @@ export const SettingsScreen: React.FC = () => {
       action: () => navigation.navigate("addressScreen"),
       enabled: isAtLeastLevelZero && Boolean(lightningAddress),
       greyed: !isAtLeastLevelZero || !lightningAddress,
-    },
-    {
-      category: `${LL.SettingsScreen.nfc()} - beta`,
-      icon: "radio-outline",
-      id: "nfc",
-      action: () => setIsNFCActive(true),
-      enabled: isAtLeastLevelZero,
-      greyed: !isAtLeastLevelZero,
     },
     {
       category: LL.common.language(),
@@ -370,7 +359,6 @@ export const SettingsScreen: React.FC = () => {
         isVisible={isSetLightningAddressModalVisible}
         toggleModal={toggleIsSetLightningAddressModalVisible}
       />
-      <ModalNfc isActive={isNFCActive} setIsActive={setIsNFCActive} />
     </Screen>
   )
 }

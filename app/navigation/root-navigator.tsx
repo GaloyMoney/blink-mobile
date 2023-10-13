@@ -80,21 +80,9 @@ import {
   RootStackParamList,
 } from "./stack-param-lists"
 import { NotificationSettingsScreen } from "@app/screens/settings-screen/notifications-screen"
-
-const useStyles = makeStyles(({ colors }) => ({
-  bottomNavigatorStyle: {
-    height: "10%",
-    paddingTop: 4,
-    backgroundColor: colors.white,
-    borderTopColor: colors.grey4,
-  },
-  headerStyle: {
-    backgroundColor: colors.white,
-  },
-  title: {
-    color: colors.black,
-  },
-}))
+import Icon from "react-native-vector-icons/Ionicons"
+import { View } from "react-native"
+import { NfcContext } from "@app/config/nfc-context"
 
 const RootNavigator = createStackNavigator<RootStackParamList>()
 
@@ -105,6 +93,8 @@ export const RootStack = () => {
   } = useTheme()
   const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
+
+  const { setDisplayReceiveNfc } = React.useContext(NfcContext)
 
   return (
     <RootNavigator.Navigator
@@ -181,6 +171,16 @@ export const RootStack = () => {
         component={ReceiveScreen}
         options={{
           title: LL.ReceiveScreen.title(),
+          headerRight: () => (
+            <View style={styles.rotateIconHeaderRight}>
+              <Icon
+                name="wifi"
+                color={colors.black}
+                size={25}
+                onPress={() => setDisplayReceiveNfc(true)}
+              />
+            </View>
+          ),
         }}
       />
       <RootNavigator.Screen
@@ -571,3 +571,19 @@ export const PrimaryNavigator = () => {
     </Tab.Navigator>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  bottomNavigatorStyle: {
+    height: "10%",
+    paddingTop: 4,
+    backgroundColor: colors.white,
+    borderTopColor: colors.grey4,
+  },
+  headerStyle: {
+    backgroundColor: colors.white,
+  },
+  title: {
+    color: colors.black,
+  },
+  rotateIconHeaderRight: { transform: [{ rotate: "90deg" }], marginRight: 10 },
+}))
