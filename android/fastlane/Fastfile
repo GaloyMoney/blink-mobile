@@ -51,7 +51,8 @@ platform :android do
       client_secret: ENV["HUAWEI_CLIENT_SECRET"],
       app_id: ENV["HUAWEI_APP_ID"],
       apk_path: "./app-universal-release.apk",
-      submit_for_review: true
+      submit_for_review: true,
+      delay_before_submit_for_review: 240,
     )
   end
 
