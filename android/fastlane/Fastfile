@@ -108,6 +108,22 @@ platform :android do
       browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
       file_path: ENV["GRADLE_APK_OUTPUT_PATH"]
     )
-    sh("GALOY_TEST_TOKENS=$GALOY_TEST_TOKENS && GALOY_TOKEN_2=$GALOY_TOKEN_2 && MAILSLURP_API_KEY=$MAILSLURP_API_KEY && yarn test:browserstack:android")
+
+    max_retries = 3
+    retries = 0
+
+    begin
+      sh("GALOY_TOKEN_2=$GALOY_TOKEN_2 && MAILSLURP_API_KEY=$MAILSLURP_API_KEY && yarn test:browserstack:android")
+    rescue => e
+      retries += 1
+      if retries < max_retries
+        UI.message("Error: #{e}. Retrying... (Attempt #{retries}/#{max_retries})")
+        retry
+      else
+        UI.error("Failed after #{max_retries} attempts. Exiting.")
+        raise e
+      end
+    end
   end
+
 end

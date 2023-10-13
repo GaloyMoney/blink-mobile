@@ -1,16 +1,14 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
+import { getAccessTokenFromClipboard } from "./01-phone-flow-and-resets.e2e.spec"
 import {
   clickBackButton,
   clickIcon,
   clickOnSetting,
   waitTillSettingDisplayed,
-  userToken,
   selector,
   scrollDown,
-  scrollUp,
   clickButton,
-  waitTillTextDisplayed,
   waitTillButtonDisplayed,
   getInbox,
   getFirstEmail,
@@ -30,66 +28,7 @@ describe("Login Flow", () => {
     await clickIcon("menu")
   })
 
-  it("taps Build version 3 times", async () => {
-    // scroll down for small screens
-    await waitTillSettingDisplayed(LL.SettingsScreen.logInOrCreateAccount())
-    await scrollDown()
-
-    const buildButton = await $(selector("Version Build Text", "StaticText"))
-    await buildButton.waitForDisplayed({ timeout })
-    await buildButton.click()
-    await browser.pause(100)
-    await buildButton.click()
-    await browser.pause(100)
-    await buildButton.click()
-    await browser.pause(100)
-  })
-
-  it("click staging environment", async () => {
-    // scroll down for small screens
-    await waitTillButtonDisplayed("logout button")
-    await scrollDown()
-    await clickButton("Staging Button")
-  })
-
-  it("input token", async () => {
-    const tokenInput = await $(
-      selector(
-        "Input access token",
-        process.env.E2E_DEVICE === "ios" ? "SecureTextField" : "TextField",
-      ),
-    )
-    await tokenInput.waitForDisplayed({ timeout })
-    await tokenInput.click()
-    await tokenInput.waitUntil(tokenInput.isKeyboardShown)
-    await tokenInput.setValue(userToken)
-
-    if (process.env.E2E_DEVICE === "ios") {
-      const enterButton = await $(selector("Return", "Button"))
-      await enterButton.waitForDisplayed({ timeout })
-      await enterButton.click()
-    } else {
-      // press the enter key
-      browser.keys("\uE007")
-    }
-  })
-
-  it("click Save Changes", async () => {
-    await clickButton("Save Changes")
-    if (process.env.E2E_DEVICE !== "ios") await clickIcon("close")
-
-    await waitTillTextDisplayed("Token Present: true")
-  })
-
-  it("click go back to settings screen", async () => {
-    await clickBackButton()
-  })
-
   it("are we logged in?", async () => {
-    // scroll up for small screens
-    await scrollUp()
-    await scrollUp()
-
     await clickOnSetting(LL.common.account())
     await waitTillSettingDisplayed(LL.common.transactionLimits())
   })
@@ -107,7 +46,6 @@ describe("Login Flow", () => {
     )
 
     await emailInput.waitForDisplayed({ timeout })
-    await emailInput.click()
     await emailInput.setValue(email)
     await clickButton(LL.EmailRegistrationInitiateScreen.send())
   })
@@ -142,8 +80,6 @@ describe("Login Flow", () => {
   })
 
   it("set staging environment again", async () => {
-    if (process.env.E2E_DEVICE !== "ios") await clickIcon("close")
-
     const buildButton = await $(selector("logo-button", "Other"))
     await buildButton.waitForDisplayed({ timeout })
     await buildButton.click()
@@ -156,8 +92,9 @@ describe("Login Flow", () => {
     // scroll down for small screens
     await waitTillButtonDisplayed("logout button")
     await scrollDown()
-    await clickButton("Staging Button")
-    await clickButton("Save Changes")
+
+    await clickButton("Staging Button", false)
+    await clickButton("Save Changes", false)
 
     await clickBackButton()
   })
@@ -191,7 +128,9 @@ describe("Login Flow", () => {
     await codeInput.waitForDisplayed({ timeout })
     await codeInput.click()
     await codeInput.setValue(code)
+  })
 
-    await clickIcon("close")
+  it("Get the new access token from clipboard", async () => {
+    await getAccessTokenFromClipboard(LL)
   })
 })

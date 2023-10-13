@@ -54,8 +54,8 @@ if (process.env.NO_RESET) {
 const baseSpec = {
   specs: [
     [
-      "../01-welcome-screen-flow.e2e.spec.ts",
-      "../02-login-flow.e2e.spec.ts",
+      "../01-phone-flow-and-resets.e2e.spec.ts",
+      "../02-email-flow.e2e.spec.ts",
       "../03-intraledger-flow.e2e.spec.ts",
       "../04-payment-send-flow.e2e.spec.ts",
       "../05-payments-receive-flow.e2e.spec.ts",

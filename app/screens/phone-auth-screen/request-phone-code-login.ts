@@ -98,7 +98,8 @@ export const useRequestPhoneCodeLogin = (): UseRequestPhoneCodeReturn => {
     PhoneCodeChannelType.Sms,
   )
   const { appConfig } = useAppConfig()
-  const skipRequestPhoneCode = appConfig.galoyInstance.name === "Local"
+  const skipRequestPhoneCode =
+    appConfig.galoyInstance.name === "Local" || appConfig.galoyInstance.name === "Staging"
 
   const [error, setError] = useState<ErrorType | undefined>()
   const [captchaRequestAuthCode] = useCaptchaRequestAuthCodeMutation()
@@ -167,13 +168,10 @@ export const useRequestPhoneCodeLogin = (): UseRequestPhoneCodeReturn => {
     if (status === RequestPhoneCodeStatus.RequestingCode) {
       return
     }
-    // handle paste
-    if (number.length - rawPhoneNumber.length > 1) {
-      const parsedPhoneNumber = parsePhoneNumber(number, countryCode)
 
-      if (parsedPhoneNumber?.isValid()) {
-        parsedPhoneNumber.country && setCountryCode(parsedPhoneNumber.country)
-      }
+    const parsedPhoneNumber = parsePhoneNumber(number, countryCode)
+    if (parsedPhoneNumber?.country) {
+      setCountryCode(parsedPhoneNumber.country)
     }
 
     setRawPhoneNumber(number)

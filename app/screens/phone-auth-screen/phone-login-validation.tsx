@@ -28,6 +28,7 @@ import {
 } from "@app/utils/analytics"
 import { PhoneCodeChannelToFriendlyName } from "./request-phone-code-login"
 import { AccountLevel, useLevel } from "@app/graphql/level-context"
+import { testProps } from "@app/utils/testProps"
 
 gql`
   mutation userLogin($input: UserLoginInput!) {
@@ -348,6 +349,7 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
           autoFocus={true}
           textContentType={"oneTimeCode"}
           keyboardType="numeric"
+          {...testProps("oneTimeCode")}
         />
 
         <View style={styles.extraInfoContainer}>{extraInfoContent}</View>

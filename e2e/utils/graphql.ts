@@ -62,21 +62,31 @@ const createGaloyServerClient = (config: Config) => (authToken: string) => {
   })
 }
 
-const getRandomToken = (arr: string[]): string => {
-  const randomIndex = Math.floor(Math.random() * arr.length)
-  console.log("Choosing token at random index: ", randomIndex)
-  return arr[randomIndex]
+const getRandomPhoneNumber = (): string => {
+  const randomDigits = Math.floor(Math.random() * 40 + 60) // Generates a number between 60 and 99
+    .toString()
+  return `+503650555${randomDigits}`
 }
 
-const authTokens = process.env.GALOY_TEST_TOKENS?.split(",")
-if (authTokens === undefined) {
-  console.error("-----------------------------")
-  console.error("GALOY_TEST_TOKENS not set")
-  console.error("-----------------------------")
+export const phoneNumber = getRandomPhoneNumber()
+
+export const otp = process.env.GALOY_STAGING_GLOBAL_OTP
+if (otp === undefined) {
+  console.error("--------------------------------")
+  console.error("GALOY_STAGING_GLOBAL_OTP not set")
+  console.error("--------------------------------")
   process.exit(1)
 }
 
-export const userToken = getRandomToken(authTokens)
+const TokenStore = {
+  token: "",
+}
+export const setUserToken = (token: string) => {
+  TokenStore.token = token
+}
+export const userToken = () => {
+  return TokenStore.token
+}
 
 const receiverToken = process.env.GALOY_TOKEN_2 || ""
 
@@ -96,7 +106,7 @@ gql`
 `
 
 export const checkContact = async (username?: string) => {
-  const client = createGaloyServerClient(config)(userToken)
+  const client = createGaloyServerClient(config)(userToken())
   const contactResult = await client.query<ContactsQuery>({
     query: ContactsDocument,
     fetchPolicy: "no-cache",
@@ -202,12 +212,12 @@ export const payNoAmountInvoice = async ({
 }
 
 export const resetLanguage = async () => {
-  const client = createGaloyServerClient(config)(userToken)
+  const client = createGaloyServerClient(config)(userToken())
 
   return client.mutate<UserUpdateLanguageMutation>({
     variables: {
       input: {
-        language: "",
+        language: "DEFAULT",
       },
     },
     mutation: UserUpdateLanguageDocument,
@@ -216,7 +226,7 @@ export const resetLanguage = async () => {
 }
 
 export const resetEmail = async () => {
-  const client = createGaloyServerClient(config)(userToken)
+  const client = createGaloyServerClient(config)(userToken())
 
   return client.mutate<UserEmailDeleteMutation>({
     variables: {
@@ -230,7 +240,7 @@ export const resetEmail = async () => {
 }
 
 export const payTestUsername = async () => {
-  const userClient = createGaloyServerClient(config)(userToken)
+  const userClient = createGaloyServerClient(config)(userToken())
   const recipientClient = createGaloyServerClient(config)(receiverToken)
   const walletId = await getWalletId(userClient, "BTC")
   const recipientWalletId = await getWalletId(recipientClient, "BTC")
@@ -250,7 +260,7 @@ export const payTestUsername = async () => {
 }
 
 export const resetDisplayCurrency = async () => {
-  const client = createGaloyServerClient(config)(userToken)
+  const client = createGaloyServerClient(config)(userToken())
   const result = await client.mutate<AccountUpdateDisplayCurrencyMutation>({
     variables: {
       input: {

@@ -45,15 +45,21 @@ jobs:
           fi
       - checkout:
           path: ~/galoy-mobile
-      - run: sudo apt-get update
-      - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-      - run: sudo apt-get install -y gnupg2 gcc g++ make nodejs jq
-      - run: sudo npm install -g yarn
 
-      - run: sudo apt-get update
-      - run: sudo apt-get install gnupg2
-      - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-      - run: sudo apt-get install -y nodejs
+      - run: 
+          name: Install Node 18
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y ca-certificates curl gnupg
+            sudo mkdir -p /etc/apt/keyrings
+            curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+
+            NODE_MAJOR=18
+            echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+
+            sudo apt-get update
+            sudo apt-get install nodejs -y
+
       - run: sudo apt-get install gcc g++ make
       - run: sudo npm install -g yarn
       - run: gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
@@ -190,10 +196,22 @@ jobs:
       - gh/install
       - checkout:
           path: ~/galoy-mobile
+
+      - run:
+          name: Install Node 18
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y ca-certificates curl gnupg
+            sudo mkdir -p /etc/apt/keyrings
+            curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+
+            NODE_MAJOR=18
+            echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+
+            sudo apt-get update
+            sudo apt-get install nodejs -y
+
       - run: git checkout << pipeline.parameters.git_ref >>
-      - run: sudo apt-get update
-      - run: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-      - run: sudo apt-get install -y nodejs
       - run: sudo npm install -g yarn
       - run: gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
       - run: echo $GCLOUD_BUCKET_KEY | base64 --decode > key.json

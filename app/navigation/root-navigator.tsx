@@ -284,7 +284,13 @@ export const RootStack = () => {
         component={SecurityScreen}
         options={{ title: LL.common.security() }}
       />
-      <RootNavigator.Screen name="developerScreen" component={DeveloperScreen} />
+      <RootNavigator.Screen
+        name="developerScreen"
+        component={DeveloperScreen}
+        options={{
+          gestureEnabled: false,
+        }}
+      />
       <RootNavigator.Screen
         name="sectionCompleted"
         component={SectionCompleted}
