@@ -1,7 +1,7 @@
 {
     "GaloyAddressScreen": {
         "title": "Primi plaćanje koristeći:",
-        "buttonTitle": "Set your address",
+        "buttonTitle": "Postavi svoju adresu",
         "yourAddress": "Vaša {bankName: string} adresa",
         "notAbleToChange": "Nećete moći promijeniti svoju {bankName: string} adresu nakon što je postavite.",
         "addressNotAvailable": "Ova {bankName: string} adresa je već zauzeta.",
@@ -20,6 +20,15 @@
         "howToUseYourPaycodeExplainer": "Možete ispisati svoj Paycode (tehnički, ovo je lnurl-pay adresa) i prikazati ga u svojoj tvrtki za primanje uplata. Pojedinci vam mogu platiti skeniranjem pomoću novčanika koji podržava Lightning.\n\nMeđutim, imajte na umu da neki novčanici ne mogu skenirati Paycode kao što su:",
         "howToUseYourCashRegisterExplainer": "Omogućite ljudima da prikupljaju uplate putem poveznice na blagajnu, bez pristupa vašem novčaniku.\n\nOni mogu izraditi fakture i uplate će se slati izravno u vaš novčanik {bankName: string}."
     },
+    "SetAccountModal": {
+        "title": "Postavi zadani račun",
+        "description": "Ovaj će račun biti inicijalno odabran za slanje i primanje plaćanja. Može se promijeniti u bilo kojem trenutku.",
+        "stablesatsTag": "Odaberi ovo za održavanje stabilne vrijednosti USD.",
+        "bitcoinTag": "Odaberi ovo da budeš na Bitcoin standardu."
+    },
+    "NoteInput": {
+        "addNote": "Dodaj bilješku"
+    },
     "AuthenticationScreen": {
         "authenticationDescription": "Autentificirajte se za nastavak",
         "setUp": "Postavite biometrijsku autentifikaciju",
@@ -28,11 +37,15 @@
         "unlock": "Otključaj",
         "usePin": "Koristi PIN"
     },
-    "ContactsScreen": {
+    "PeopleScreen": {
+        "title": "Ljudi",
+        "copy": "Kopiraj",
         "noContactsTitle": "Nema pronađenih kontakata",
         "noContactsYet": "Pošaljite ili primite uplatu koristeći korisničko ime i kontakti će se automatski dodati ovdje",
         "noMatchingContacts": "Nije pronađen nijedan kontakt koji odgovara vašem pretraživanju.",
-        "title": "Kontakti"
+        "allContacts": "Svi kontakti",
+        "viewAllContacts": "Prikaži sve kontakte",
+        "frequentContacts": "Česti kontakti"
     },
     "ContactDetailsScreen": {
         "title": "Transakcije s {username: string}"
@@ -416,16 +429,17 @@
         "title": "Zaradi",
         "unlockQuestion": "Za otključavanje odgovorite na pitanje:",
         "youEarned": "Zaradio si",
-        "registerTitle": "Need to upgrade your account",
-        "registerContent": "Register with your phone number to receive sats"
+        "registerTitle": "Morate nadograditi svoj račun",
+        "registerContent": "Registriraj se svojim telefonskim brojem da bi primao satoshije"
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Prijavi se / kreiraj račun",
-        "exploreWalletInstead": "Umjesto toga istražite novčanik",
+        "createAccount": "Stvori novi račun",
+        "exploreWallet": "Istraži novčanik",
+        "logBackInWith": "Prijavi se ponovo s",
         "headline": "Novčanik koji pokreće Galoy",
         "startTrialAccount": "Započni s probnim računom",
-        "iUnderstand": "Razumijem, nastavi",
-        "startWithTrialAccount": "Start with trial account",
+        "startWithTrialAccount": "Započni s probnim računom",
         "registerPhoneAccount": "Registrirajte telefonski račun",
         "trialAccountCreationFailed": "Izrada probnog računa nije uspjela",
         "trialAccountCreationFailedMessage": "Nažalost, nismo uspjeli izraditi vaš probni račun. Pokušajte ponovno kasnije ili otvorite račun s telefonskim brojem.",
@@ -449,7 +463,7 @@
         "receive": "Primi",
         "send": "Šalji",
         "title": "Doma",
-        "scan": "Scan",
+        "scan": "Skeniraj",
         "updateAvailable": "Ažuriranje je dostupno.\nDodirnite za ažuriranje sada",
         "useLightning": "Koristimo Lightning Network.",
         "myAccounts": "Moji računi"
@@ -474,7 +488,8 @@
         "lastWeek": "prošli tjedan",
         "lastMonth": "prošli mjesec",
         "lastYear": "prošla godina",
-        "lastFiveYears": "prošlih pet godina"
+        "lastFiveYears": "prošlih pet godina",
+        "buyAndSell": "Kupi i prodaj Bitcoin"
     },
     "PrimaryScreen": {
         "title": "Doma"
@@ -483,14 +498,15 @@
         "activateNotifications": "Želite li aktivirati obavijesti kako biste bili obaviješteni kada uplata stigne?",
         "copyClipboard": "Faktura je kopirana u međuspremnik",
         "copyClipboardBitcoin": "Bitcoin adresa je kopirana u međuspremnik",
+        "copyClipboardPaycode": "Paycode/LNURL je kopiran u međuspremnik",
         "invoicePaid": "Ova faktura je plaćena",
         "setNote": "postavi bilješku",
         "tapQrCodeCopy": "Dodirnite QR kod za kopiranje",
         "title": "Primi Bitcoin",
         "usdTitle": "Primi USD",
         "error": "Generiranje fakture nije uspjelo. Obratite se podršci ako se ovaj problem nastavi pojavljivati.",
-        "copyInvoice": "Kopiraj fakturu",
-        "shareInvoice": "Podijeli fakturu",
+        "copyInvoice": "Kopiraj",
+        "shareInvoice": "Podijeli",
         "addAmount": "Zatraži određeni iznos",
         "expired": "Faktura je istekla",
         "expiresIn": "Istječe za",
@@ -504,7 +520,26 @@
         "useALightningInvoice": "Koristi Lightning fakturu",
         "setANote": "Postavi bilješku",
         "invoiceAmount": "Iznos fakture",
-        "fees": "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats"
+        "fees": "{minBankFee: string} sat naknade za onchain plaćanje ispod {minBankFeeThreshold: string} sat",
+        "regenerateInvoiceButtonTitle": "Ponovno generiraj fakturu",
+        "setUsernameButtonTitle": "Postavi korisničko ime",
+        "invoiceHasExpired": "Faktura je istekla",
+        "setUsernameToAcceptViaPaycode": "Postavi svoje korisničko ime za prihvaćanje putem Paycode QR (LNURL) i Lightning adrese",
+        "singleUse": "Jednokratna uporaba",
+        "invoiceExpired": "Istekla faktura",
+        "invoiceValidity": {
+            "validFor1Day": "Vrijedi 1 dan",
+            "validForNext": "Vrijedi sljedećih {duration: string}",
+            "validBefore": "Vrijedi do {time: string}",
+            "expiresIn": "Istječe za {duration: string}",
+            "expiresNow": "Istječe sada"
+        },
+        "invoiceHasBeenPaid": "Faktura je plaćena",
+        "btcOnChainAddress": "Bitcoin Onchain adresa",
+        "receiveViaInvoice": "Primi putem Lightninga",
+        "receiveViaPaycode": "Primi putem Paycode-a",
+        "receiveViaOnchain": "Primi putem Onchaina",
+        "payCodeOrLNURL": "Paycode / LNURL"
     },
     "RedeemBitcoinScreen": {
         "title": "Povuci bitcoin",
@@ -523,7 +558,8 @@
         "invalidTitle": "Nevažeći QR kod",
         "noQrCode": "Nismo mogli pronaći QR kod na slici",
         "title": "Skeniraj QR",
-        "invalidContentLnurl": "Našli smo:\n\n{found: string}\n\ntrenutno nije podržano"
+        "invalidContentLnurl": "Našli smo:\n\n{found: string}\n\ntrenutno nije podržano",
+        "imageLibraryPermissionsNotGranted": "Nemamo dopuštenja za pristup biblioteci slika. Provjerite postavke aplikacije za svoju platformu."
     },
     "SecurityScreen": {
         "biometricDescription": "Otključajte otiskom prsta ili prepoznavanjem lica.",
@@ -569,7 +605,7 @@
         "unknownOnchain": "Ne možemo analizirati ovu Lightning adresu. Molimo pokušajte ponovno.",
         "newBankAddressUsername": "{lnAddress: string} postoji kao adresa {bankName: string}, ali na nju nikada niste poslali novac.",
         "confirmModal": {
-            "title": "You've never sent money to this address",
+            "title": "Nikada niste slali novac na ovu adresu",
             "body1": "Provjerite je li vam primatelj dao {bankName: string} adresu,",
             "bold2bold": "nije korisničko ime iz drugog novčanika. ",
             "body3": "U suprotnom, novac će ići na račun {bankName: string} koji ima adresu “{lnAddress: string}”.\n\nProvjerite i pravopis prvog dijela adrese. npr. jackie i jack1e su 2 različite adrese",
@@ -590,14 +626,15 @@
         "destinationIsRequired": "Odredište je obavezno",
         "fee": "mrežna naknada",
         "feeCalculationUnsuccessful": "Izračun neuspješan ⚠️",
-        "input": "Korisničko ime, faktura ili adresa",
+        "placeholder": "Korisničko ime, faktura ili adresa",
         "invalidUsername": "Nevažeće korisničko ime",
         "noAmount": "Ova faktura nema iznos, pa morate ručno odrediti koliko novca želite poslati",
         "notConfirmed": "Uplata je poslana\nali još nije potvrđena\n\nMožete provjeriti status\nplaćanja u Transakcijama",
         "note": "Napomena ili oznaka",
         "success": "Uplata je uspješno poslana",
+        "suggestionInput": "Unesi svoj prijedlog",
         "max": "Max",
-        "maxAmount": "Max Amount",
+        "maxAmount": "Maksimalni iznos",
         "title": "Šalji Bitcoin",
         "failedToFetchLnurlInvoice": "Nije uspjelo dohvaćanje lnurl fakture",
         "lnurlInvoiceIncorrectAmount": "lnurl poslužitelj je odgovorio fakturom s netočnim iznosom.",
@@ -605,9 +642,9 @@
     },
     "SettingsScreen": {
         "activated": "Aktivirano",
-        "tapLogIn": "Dodirnite za prijavu",
         "addressScreen": "Načini plaćanja",
         "tapUserName": "Dodirnite za postavljanje korisničkog imena",
+        "notifications": "Obavijesti",
         "title": "Postavke",
         "darkMode": "Tamni način rada",
         "setToDark": "Način rada: tamno.",
@@ -625,19 +662,75 @@
         "nfcNotCompatible": "Dohvaćanje informacija s kartice nije kompatibilna veza lnurl-withdraw.",
         "nfcOnlyReceive": "Za sada je dostupno samo primanje od NFC-a",
         "nfcScanNow": "Skeniraj NFC sada",
-        "nfcNotSupported": "NFC nije podržan na ovom uređaju"
+        "nfcNotSupported": "NFC nije podržan na ovom uređaju",
+        "logInOrCreateAccount": "Prijavi se ili kreiraj račun"
+    },
+    "NotificationSettingsScreen": {
+        "title": "Postavke obavijesti",
+        "pushNotifications": "Push obavijesti",
+        "notificationCategories": {
+            "Circles": {
+                "title": "Krugovi",
+                "description": "Obavijesti o tvojim krugovima."
+            },
+            "Payments": {
+                "title": "Plaćanja",
+                "description": "Obavijesti vezane uz slanje i primanje uplata."
+            }
+        }
     },
     "AccountScreen": {
         "accountLevel": "Razina računa",
-        "logIn": "Prijavi se",
         "upgrade": "Nadogradite svoj račun",
         "logOutAndDeleteLocalData": "Odjavi se i izbriši sve lokalne podatke",
         "IUnderstand": "Razumijem. Molim odjavi me.",
         "logoutAlertTitle": "Jeste li sigurni da se želite odjaviti i izbrisati sve lokalne podatke?",
-        "logoutAlertContent": "Za ponovnu prijavu morat ćete ponovno unijeti svoj telefonski broj.\nvaš telefonski broj je {phoneNumber: string} pa provjerite imate li mu pristup da biste se ponovno prijavili",
-        "usdBalanceWarning": "You have a Stablesats balance of {balance: string}.",
-        "btcBalanceWarning": "You have a bitcoin balance of {balance: string}.",
-        "secureYourAccount": "Register to secure your account"
+        "logoutAlertContentPhone": "Za ponovnu prijavu morat ćeš ponovno unijeti svoj telefonski broj.\ntvoj telefonski broj je {phoneNumber: string} pa provjeri imaš li mu pristup da bi se ponovno prijavio",
+        "logoutAlertContentEmail": "Za ponovnu prijavu morat ćeš ponovno unijeti svoju e-poštu.\ntvoja e-pošta je {email: string} pa provjeri imaš li joj pristup radi ponovne prijave",
+        "logoutAlertContentPhoneEmail": "Za ponovnu prijavu morat ćeš ponovno unijeti svoj telefonski broj ili e-mail.\ntvoj telefonski broj je {phoneNumber: string}, a tvoja e-pošta je {email: string} pa provjeri imaš li im pristup za ponovnu prijavu",
+        "usdBalanceWarning": "Imaš Stablesats saldo od {balance: string}.",
+        "btcBalanceWarning": "Imaš bitcoin saldo od {balance: string}.",
+        "secureYourAccount": "Registriraj se kako bi osiguraoi svoj račun",
+        "tapToAdd": "Dodirni za dodavanje",
+        "deleteEmailPromptTitle": "Izbriši e-poštu",
+        "deleteEmailPromptContent": "Jeste li sigurni da želite izbrisati svoju adresu e-pošte? moći ćete se ponovno prijaviti samo sa svojim telefonskim brojem.",
+        "deletePhonePromptTitle": "Izbriši telefon",
+        "deletePhonePromptContent": "Jeste li sigurni da želite izbrisati svoj telefonski broj? moći ćete se ponovno prijaviti samo sa svojom e-poštom.",
+        "addEmailFirst": "Prvo dodaj e-poštu",
+        "addPhoneFirst": "Prvo dodaj telefon",
+        "phoneNumberAuthentication": "Broj telefona (za prijavu)",
+        "emailAuthentication": "Email (za prijavu)",
+        "removePhone": "Ukloni telefon",
+        "removeEmail": "Ukloni e-poštu",
+        "unverified": "E-pošta nije potvrđena",
+        "unverifiedContent": "Zaštiti svoj račun potvrdom svoje e-pošte.",
+        "confirmEmail": "Potvrdi email",
+        "emailUnverified": "Vaša e-pošta nije potvrđena",
+        "emailUnverifiedContent": "Provjerite možete li se ponovno prijaviti na svoj račun tako da potvrdite svoju e-poštu. Želite li sada izvršiti provjeru?",
+        "totp": "Dvofaktorska autentifikacija",
+        "totpDeactivated": "Dvofaktorska autentifikacija je deaktivirana",
+        "totpDeleteAlertTitle": "Izbriši dvofaktorsku provjeru autentičnosti",
+        "totpDeleteAlertContent": "Jeste li sigurni da želite izbrisati svoju dvofaktorsku provjeru autentičnosti?",
+        "copiedAccountId": "ID vašeg računa kopiran je u međuspremnik",
+        "yourAccountId": "ID tvog računa",
+        "copy": "Kopiraj"
+    },
+    "TotpRegistrationInitiateScreen": {
+        "title": "Dvofaktorska autentifikacija",
+        "content": "Skenirajte ovaj QR kod pomoću aplikacije za autentifikaciju. Alternativno, možete ručno kopirati/zalijepiti tajnu u svoju aplikaciju autentifikatora."
+    },
+    "TotpRegistrationValidateScreen": {
+        "title": "Dvofaktorska autentifikacija",
+        "enter6digitCode": "Unesite 6-znamenkasti kod iz svoje aplikacije za provjeru autentičnosti kako biste potvrdili svoju dvofaktorsku provjeru autentičnosti.",
+        "success": "Omogućena je dvostruka autentifikacija. Sada ćete se moći ponovno prijaviti svojim telefonom ili e-poštom I dvofaktorskom autentifikacijom.\n\nSamo puni KYC računi mogu se oporaviti u slučaju da je korisnik izgubio pristup svojoj dvofaktorskoj autentifikaciji."
+    },
+    "TotpLoginValidateScreen": {
+        "title": "Dvofaktorska autentifikacija",
+        "content": "Unesite 6-znamenkasti kod iz svoje aplikacije za autentifikaciju da biste se prijavili. Taj se kod mijenja svakih 30 sekundi."
+    },
+    "CopySecretComponent": {
+        "button": "Kopiraj tajnu",
+        "toastMessage": "Tajna kopirana u međuspremnik!"
     },
     "DefaultWalletScreen": {
         "title": "Zadani račun",
@@ -668,7 +761,7 @@
         "spent": "Potrošili ste",
         "receivingAccount": "Račun primatelj",
         "sendingAccount": "Račun pošiljatelj",
-        "txNotBroadcast": "Your transaction is currently pending and will be broadcasted to the Bitcoin network in a moment."
+        "txNotBroadcast": "Vaša transakcija trenutno je na čekanju i bit će emitirana na Bitcoin mrežu za koji trenutak."
     },
     "TransactionLimitsScreen": {
         "receive": "Primi",
@@ -683,7 +776,7 @@
         "contactUsMessageBody": "Bok, želio bih povećati ograničenja transakcija mog računa {bankName: string}.",
         "contactUsMessageSubject": "Zahtjev za povećanje ograničenja transakcije",
         "contactSupportToPerformKyc": "Obratite se podršci za ručni KYC kako biste povećali svoje ograničenje",
-        "increaseLimits": "Increase your limits"
+        "increaseLimits": "Povećajte svoje limite"
     },
     "TransactionScreen": {
         "noTransaction": "Nema transakcija za prikaz",
@@ -700,21 +793,21 @@
         "backUpFunds": "Napravite sigurnosnu kopiju svojih sredstava",
         "higherLimits": "Povećajte ograničenja transakcija",
         "receiveOnchain": "Primi bitcoin onchain",
-        "onlyAPhoneNumber": "Quick and easy phone number verification",
+        "onlyAPhoneNumber": "Brza i jednostavna provjera telefonskog broja",
         "letsGo": "Idemo!",
         "stayInTrialMode": "Ostani u probnom načinu rada"
     },
     "SetAddressModal": {
-        "title": "Set {bankName: string} address",
+        "title": "Postavite {bankName: string} adresu",
         "Errors": {
-            "tooShort": "Address must be at least 3 characters long",
-            "tooLong": "Address must be at most 50 characters long",
-            "invalidCharacter": "Address can only contain letters, numbers, and underscores",
-            "addressUnavailable": "Sorry, this address is already taken",
-            "unknownError": "An unknown error occurred, please try again later"
+            "tooShort": "Adresa mora imati najmanje 3 znaka",
+            "tooLong": "Adresa mora imati najviše 50 znakova",
+            "invalidCharacter": "Adresa može sadržavati samo slova, brojke i donje crte",
+            "addressUnavailable": "Nažalost, ova adresa je već zauzeta",
+            "unknownError": "Došlo je do nepoznate pogreške, molimo pokušajte ponovno kasnije"
         },
-        "receiveMoney": "Receive money from other lightning wallets and {bankName: string} users with this address.",
-        "itCannotBeChanged": "It can't be changed later."
+        "receiveMoney": "Primajte novac od drugih Lightning novčanika i korisnika {bankName: string} s ovom adresom.",
+        "itCannotBeChanged": "Kasnije se ne može promijeniti."
     },
     "WelcomeFirstScreen": {
         "bank": "Bitcoin je dizajniran da vam omogući pohranu, slanje i primanje novca, bez oslanjanja na bankovnu ili kreditnu karticu.",
@@ -746,6 +839,43 @@
         "tryAgain": "Pokušajte ponovno",
         "sendViaOtherChannel": "Odabrali ste primanje koda putem {channel: string}. Umjesto toga možete pokušati primiti putem {other: string}"
     },
+    "PhoneRegistrationInitiateScreen": {
+        "title": "Telefon postavljen ",
+        "header": "Unesite svoj telefonski broj, a mi ćemo vam poslati pristupni kod.",
+        "headerVerify": "Potvrdite da ste čovjek",
+        "errorRequestingCode": "Nešto nije u redu prilikom traženja telefonskog koda, pokušajte ponovno kasnije.",
+        "errorInvalidPhoneNumber": "Nevažeći telefonski broj. Jeste li sigurni da ste unijeli pravi broj?",
+        "errorUnsupportedCountry": "Nismo u mogućnosti podržati korisnike u vašoj zemlji.",
+        "placeholder": "Broj telefona",
+        "verify": "Kliknite za potvrdu",
+        "sms": "Pošalji putem SMS-a",
+        "whatsapp": "Pošaljite putem WhatsAppa"
+    },
+    "PhoneRegistrationValidateScreen": {
+        "successTitle": "Broj telefona potvrđen"
+    },
+    "EmailRegistrationInitiateScreen": {
+        "title": "Dodajte svoju e-poštu",
+        "header": "Unesite svoju e-mail adresu, a mi ćemo vam poslati pristupni kod.",
+        "invalidEmail": "Nevažeća adresa e-pošte. Jeste li sigurni da ste unijeli ispravnu e-poštu?",
+        "send": "Pošalji kod",
+        "missingEmailRegistrationId": "Nedostaje registracijski ID e-pošte",
+        "placeholder": "hal@finney.org"
+    },
+    "EmailRegistrationValidateScreen": {
+        "header": "Kako biste potvrdili svoju adresu e-pošte, unesite kod koji smo vam upravo poslali na {email: string}",
+        "success": "E-pošta {email: string} uspješno je potvrđena"
+    },
+    "EmailLoginInitiateScreen": {
+        "title": "Prijava putem e-pošte",
+        "header": "Unesite svoju e-mail adresu, a mi ćemo vam poslati pristupni kod.",
+        "invalidEmail": "Nevažeća adresa e-pošte. Jeste li sigurni da ste unijeli ispravnu e-poštu?",
+        "send": "Pošalji kod"
+    },
+    "EmailLoginValidateScreen": {
+        "header": "Ako postoji račun pridružen {email: string}, trebali ste primiti 6-znamenkasti kod koji trebate unijeti u nastavku.\n\nAko niste primili ništa, to je vjerojatno zato što ovo nije ispravna e-pošta, ili je u vašoj mapi neželjene pošte.",
+        "success": "E-pošta {email: string} uspješno je potvrđena"
+    },
     "common": {
         "account": "Račun",
         "transactionLimits": "Transakcijska ograničenja",
@@ -765,6 +895,7 @@
         "close": "Zatvori",
         "confirm": "Potvrdi",
         "convert": "Pretvori",
+        "codeConfirmation": "Potvrda koda",
         "currency": "Valuta",
         "currencySyncIssue": "Problem s valutom. Potrebno osvježiti",
         "csvExport": "Izvoz transakcija kao CSV",
@@ -789,13 +920,16 @@
         "loggedOut": "Odjavljeni ste.",
         "logout": "Odjavi se",
         "minutes": "minute",
+        "errorAuthToken": "Nedostaje token autentifikacije",
         "needWallet": "Prijavite se ili kreirajte račun za pristup svom novčaniku",
         "next": "Sljedeće",
         "No": "Ne",
         "note": "Bilješka",
         "notification": "Obavijest",
         "ok": "OK",
+        "or": "ili",
         "openWallet": "Otvori Novčanik",
+        "phone": "Telefon",
         "phoneNumber": "Broj telefona",
         "rate": "Tečaj",
         "reauth": "Vaša sesija je istekla. Molimo prijavite se ponovo.",
@@ -809,7 +943,9 @@
         "shareBitcoin": "Podijeli Bitcoin adresu",
         "shareLightning": "Podijeli Lightning fakturu",
         "soon": "Dolazi uskoro!",
+        "submit": "Podnesi",
         "success": "Uspjeh!",
+        "stablesatsUsd": "Stablesats USD",
         "to": "Za",
         "total": "Ukupno",
         "transactions": "Transakcije",
@@ -819,7 +955,7 @@
         "usdAccount": "USD račun",
         "username": "Korisničko ime",
         "usernameRequired": "Korisničko ime je potrebno",
-        "backupAccount": "Backup/upgrade account",
+        "backupAccount": "Sigurnosno kopiranje/nadogradnja računa",
         "viewTransaction": "Pogledaj transakciju",
         "yes": "Da",
         "pending": "u tijeku",
@@ -828,7 +964,7 @@
         "thisMonth": "Ovaj mjesec",
         "prevMonths": "Prethodni mjeseci",
         "problemMaybeReauth": "Došlo je do problema s vašim zahtjevom. Pokušajte ponovno za jednu minutu. Ako se problem nastavi, preporučujemo da se odjavite i ponovno prijavite. Možete se odjaviti tako da odete u Postavke > Račun > Odjava",
-        "warning": "Warning"
+        "warning": "Upozorenje"
     },
     "errors": {
         "generic": "Dogodila se greška.\nMolimo pokušajte ponovo kasnije.",
@@ -854,26 +990,29 @@
         }
     },
     "support": {
-        "contactUs": "Need help? Contact us.",
-        "joinTheCommunity": "Join the community",
+        "contactUs": "Trebate pomoć? Kontaktirajte nas.",
+        "joinTheCommunity": "Pridruži se zajednici",
         "whatsapp": "WhatsApp",
         "email": "Email",
+        "faq": "Česta pitanja",
+        "enjoyingApp": "Uživate u aplikaciji?",
         "statusPage": "Stranica statusa",
         "telegram": "Telegram",
         "mattermost": "Mattermost",
+        "thankYouText": "Hvala vam na povratnim informacijama, želite li predložiti poboljšanje?",
         "defaultEmailSubject": "{bankName: string} - Podrška",
         "defaultSupportMessage": "Bok! Trebam pomoć s {bankName: string}, koristim verziju {version: string} na {os: string}.",
         "emailCopied": "e-pošta {email: string} kopirana u međuspremnik",
         "deleteAccount": "Izbriši račun",
-        "delete": "delete",
-        "typeDelete": "Please type \"{delete: string}\" to confirm account deletion",
-        "finalConfirmationAccountDeletionTitle": "Final Confirmation Required",
-        "finalConfirmationAccountDeletionMessage": "Are you sure you want to delete your account? This action is irreversible.",
-        "deleteAccountBalanceWarning": "Deleting your account will cause you to lose access to your current balance. Are you sure you want to proceed?",
-        "deleteAccountConfirmation": "Your account has been written for deletion.\n\nWhen the probation period related to regulatory requirement is over, the remaining data related to your account will be permanently deleted.",
-        "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
-        "deleteAccountError": "Something went wrong. Contact {email: string} for further assistance.",
-        "bye": "Bye!"
+        "delete": "izbrisati",
+        "typeDelete": "Unesite \"{delete: string}\" za potvrdu brisanja računa",
+        "finalConfirmationAccountDeletionTitle": "Potrebna konačna potvrda",
+        "finalConfirmationAccountDeletionMessage": "Jeste li sigurni da želite izbrisati svoj račun? Ova radnja je nepovratna.",
+        "deleteAccountBalanceWarning": "Brisanjem računa izgubit ćete pristup svom trenutnom stanju. Jeste li sigurni da želite nastaviti?",
+        "deleteAccountConfirmation": "Vaš račun je označen za brisanje.\n\nKada probno razdoblje povezano s regulatornim zahtjevima završi, preostali podaci povezani s vašim računom bit će trajno izbrisani.",
+        "deleteAccountFromPhone": "Bok!, molim vas izbrišite moj račun. Moj broj telefona je {phoneNumber: string}.",
+        "deleteAccountError": "Nešto je pošlo po zlu. Kontaktirajte {email: string} za dodatnu pomoć.",
+        "bye": "Pozdrav!"
     },
     "lnurl": {
         "overLimit": "Ne možete poslati više od maksimalnog iznosa",
@@ -891,7 +1030,7 @@
         "minAmountNotMet": "Iznos mora biti najmanje {minAmount: string}."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Dodirni za postavljanje iznosa"
+        "tapToSetAmount": "Postavite iznos"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "Moram ažurirati svoju aplikaciju na najnoviju verziju. Koristim aplikaciju {os: string} s verzijom {version: string}.",
@@ -899,5 +1038,61 @@
         "updateMandatory": "Ažuriranje je obavezno",
         "tapHereUpdate": "Dodirnite ovdje za ažuriranje sada",
         "contactSupport": "Obratite se podršci"
+    },
+    "Circles": {
+        "title": "Moji krugovi",
+        "titleBlinkCircles": "Blink krugovi",
+        "fetchingLatestCircles": "Dohvaćanje najnovijih krugova",
+        "circles": "krugovi",
+        "circlesExplainer": "Poželite nekome dobrodošlicu u Blink tako što ćete mu poslati prve sat! Vaši krugovi će rasti sa svakom dobrodošlicom.",
+        "viewMyCircles": "Prikaži moje krugove",
+        "introducingCircles": "Predstavljamo Krugove",
+        "copiedInviteLink": "Kopiran link pozivnice",
+        "inviteFriendToBlink": "Pozovite prijatelja u Blink",
+        "shareCircles": "Podijeli svoje krugove",
+        "share": "Podijeli",
+        "circlesGrowingSatsExplainer": {
+            "your": "Vaš",
+            "grow": "raste kada novom korisniku Blinka pošaljete prve sat!"
+        },
+        "circlesGrowingKeepGoing": "Vaši krugovi rastu kako dodajete ljude u Blink – nastavite!",
+        "points": "bodovi",
+        "innerCircleGrow": "Vaš unutarnji krug raste kada korisniku Blinka pošaljete prve sat!",
+        "calculatingYourCircles": "Izračunavanje vaših krugova...",
+        "innerCircleExplainer": "Potičete usvajanje Bitcoina s Blinkom, samo tako nastavite!",
+        "innerCircleExplainerCard": "Potičem usvajanje Bitcoina s Blinkom!",
+        "innerCircle": "Unutarnji krug",
+        "peopleYouWelcomed": "ljudi koje ste dočekali",
+        "peopleIWelcomed": "ljudi\nkoje sam dočekao",
+        "thisMonth": "ovaj mjesec",
+        "outerCircle": "Vanjski krug",
+        "peopleWelcomedByYourCircle": "ljudi koje je dočekao vaš krug",
+        "peopleWelcomedByMyCircle": "ljudi koje je dočekao moj krug",
+        "yourSphere": "Vaša sfera",
+        "mySphere": "Moja sfera",
+        "yourRankMessage": "Vi ste #{thisMonthRank: number} ovaj mjesec i #{allTimeRank: number} od početka!",
+        "rankMessage": "#{thisMonthRank: number} ovaj mjesec i #{allTimeRank: number} od početka!",
+        "inviteFriends": "Pozovi prijatelja",
+        "buildYourCircle": "Izgradite svoje krugove",
+        "myBlinkCircles": "Moji Blink krugovi",
+        "someones": "{username: string}",
+        "groupEffort": "Usvajanje Bitcoina zajednički je napor.\nPozovite prijatelja i pošaljite mu satoshije da počnu graditi svoje krugove.",
+        "drivingAdoption": "Potičem usvajanje Bitcoina koristeći Blink.",
+        "septChallenge": {
+            "title": "Rujanski izazov!",
+            "description": "Unutarnji krug {innerCircle: number}/21 - Zaradite 21 USD\nNajbolja 3 - osvojaju ulaznice za Adopting Bitcoin!",
+            "details": "Proširite svoj unutarnji krug za 21 osobu u rujnu i dijelite na društvenim mrežama s #blinkcircles da biste dobili 21 USD na svoj Stablesats račun. Najbolja 3 osvajaju ulaznice za Adopting Bitcoin!",
+            "peopleWelcomedSoFar": "ljudi dočekani do sada",
+            "yourRank": "tvoj rang",
+            "reminder": "Podsjetnik: Vaš unutarnji krug raste kada novom korisniku Blinka pošaljete prve satoshije",
+            "fullDetails": "Sve pojedinosti na"
+        },
+        "octoberChallenge": {
+            "title": "Listopadski izazov!",
+            "description": "Podijelite svoje #blinkcircles za priliku da osvojite 1.000.000 sat!",
+            "details": "Poklanjamo 1.000.000 sat!\n\nPodijelite svoje krugove na društvenim mrežama s oznakom `#blinkcircles` za ulazak! Pobjednik će biti odabran slučajnim odabirom 31. listopada.\n\nMorate imati najmanje jednu osobu u svom unutarnjem krugu da biste sudjelovali!",
+            "connectOnSocial": "Povežite se na društvenim mrežama:",
+            "fullDetails": "Sve pojedinosti na"
+        }
     }
 }
