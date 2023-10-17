@@ -1,6 +1,6 @@
 {
     "GaloyAddressScreen": {
-        "title": "以下の方法で受金：",
+        "title": "以下の方法で受金できます：",
         "buttonTitle": "アドレスを設定",
         "yourAddress": "あなたの{bankName: string}アドレス",
         "notAbleToChange": " {bankName: string} アドレス登録後の変更はできません",
@@ -436,10 +436,10 @@
         "logInCreateAccount": "ログイン / ウォレット作成",
         "createAccount": "新たにウォレットを作成する",
         "exploreWallet": "ウォレットを見つける",
-        "logBackInWith": "でログインし直す",
+        "logBackInWith": "再ログイン：",
         "headline": "Galoyが提供するウォレット",
-        "startTrialAccount": "トライアルウォレットではじめる",
-        "startWithTrialAccount": "トライアルウォレットではじめる",
+        "startTrialAccount": "トライアルウォレットで始める",
+        "startWithTrialAccount": "トライアルウォレットで始める",
         "registerPhoneAccount": "電話番号でウォレット登録する",
         "trialAccountCreationFailed": "トライアルウォレットの作成に失敗しました",
         "trialAccountCreationFailedMessage": "トライアルウォレットの作成に失敗しました。後でもう一度お試しいただくか、電話番号を入力して新しいウォレットを作成してください。",
@@ -479,7 +479,7 @@
     },
     "PriceHistoryScreen": {
         "oneDay": "1日",
-        "oneMonth": "1ヶ月",
+        "oneMonth": "1月",
         "oneWeek": "1週間",
         "oneYear": "1年間",
         "fiveYears": "5年間",
@@ -765,13 +765,13 @@
     },
     "TransactionLimitsScreen": {
         "receive": "受金",
-        "withdraw": "引き出し",
+        "withdraw": "送金",
         "perDay": "1日あたり",
         "perWeek": "1週間あたり",
         "unlimited": "無制限",
         "remaining": "残り",
-        "stablesatTransfers": "ステーブル satsによる送金",
-        "internalSend": "{bankName: string}ユーザーに送信する",
+        "stablesatTransfers": "ステーブル satsでの送金",
+        "internalSend": "{bankName: string}ユーザーへの送金",
         "error": "現時点では制限を取得できません",
         "contactUsMessageBody": "Hi, I will like to increase the transaction limits of my {bankName: string} account.",
         "contactUsMessageSubject": "トランザクション限度額の引き上げをリクエストする",
@@ -827,7 +827,7 @@
         "placeholder": "電話番号",
         "verify": "タップして認証する",
         "sms": "SMSで送信する",
-        "whatsapp": "WhatsAppで送金する"
+        "whatsapp": "WhatsAppで送信する"
     },
     "PhoneLoginValidationScreen": {
         "errorLoggingIn": "ログインエラーです。正しいコードを入力しましたか？",
@@ -849,7 +849,7 @@
         "placeholder": "電話番号",
         "verify": "タップして認証する",
         "sms": "SMSで送信する",
-        "whatsapp": "WhatsAppで送金する"
+        "whatsapp": "WhatsAppで送信する"
     },
     "PhoneRegistrationValidateScreen": {
         "successTitle": "認証済みの電話番号です"
