@@ -559,7 +559,7 @@
         "noQrCode": "Kami tak dapat kesan kod QR pada imej ini",
         "title": "Imbas QR",
         "invalidContentLnurl": "Kami menjumpai:\n\n{jumpa: string}\n\nBuat masa ini tidak disokong",
-        "imageLibraryPermissionsNotGranted": "We don't have permissions to access the image library.  Please check app settings for your platform."
+        "imageLibraryPermissionsNotGranted": "Kami tidak ada kebenaran untuk mengakses galeri imej anda. Sila periksa tetapan pada aplikasi pada peranti anda."
     },
     "SecurityScreen": {
         "biometricDescription": "Buka dengan cap jari atau pengesahan wajah.",
@@ -1088,11 +1088,11 @@
             "fullDetails": "Maklumat penuh di"
         },
         "octoberChallenge": {
-            "title": "October Challenge!",
-            "description": "Share your #blinkcircles for a chance to win 1,000,000 sats!",
-            "details": "We're giving away 1,000,000 sats!\n\n Share your Circles on social with tag `#blinkcircles` to enter! The winner will be chosen at random on October 31st.\n\n You must have at least one person in your Inner Circle to enter!",
-            "connectOnSocial": "Connect on social: ",
-            "fullDetails": "Full details at "
+            "title": "Cabaran Oktober!",
+            "description": "Kongsikan #blinkcircles untuk peluang memenangi 1,000,000 sats!",
+            "details": "Kami akan berikan hadiah 1,000,000 sats!\n\nKongsikan Kumpulan Kecil Anda di media sosial dengan `#blinkcircles` untuk penyertaan! Pemenang akan dipilih secara rawak pada 31 Oktober ini.\n\nAnda perlu ada sekurang-kurangnya seorang sahaja dalam Kumpulan Kecil untuk layak menyertainya!",
+            "connectOnSocial": "Hubungi kami di media sosial:",
+            "fullDetails": "Maklumat terperinci ada di"
         }
     }
 }
