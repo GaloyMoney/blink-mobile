@@ -1347,6 +1347,4858 @@ type RootTranslation = {
 					}
 				}
 			}
+			TheOriginsOfMoney: {
+				/**
+				 * T​h​e​ ​O​r​i​g​i​n​s​ ​o​f​ ​M​o​n​e​y
+				 */
+				title: string
+				questions: {
+					originsOfMoney: {
+						answers: {
+							/**
+							 * T​o​ ​s​t​o​r​e​ ​a​n​d​ ​t​r​a​n​s​f​e​r​ ​w​e​a​l​t​h
+							 */
+							'0': string
+							/**
+							 * T​o​ ​s​e​r​v​e​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​e​n​t​e​r​t​a​i​n​m​e​n​t
+							 */
+							'1': string
+							/**
+							 * T​o​ ​a​c​t​ ​a​s​ ​a​ ​s​t​a​t​u​s​ ​s​y​m​b​o​l
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​!​ ​Y​o​u​ ​h​i​t​ ​t​h​e​ ​n​a​i​l​ ​o​n​ ​t​h​e​ ​h​e​a​d​.​ ​C​o​l​l​e​c​t​i​b​l​e​s​ ​h​a​v​e​ ​l​o​n​g​ ​b​e​e​n​ ​u​s​e​d​ ​a​s​ ​a​ ​m​e​d​i​u​m​ ​f​o​r​ ​s​t​o​r​i​n​g​ ​a​n​d​ ​t​r​a​n​s​f​e​r​r​i​n​g​ ​w​e​a​l​t​h​,​ ​m​u​c​h​ ​l​i​k​e​ ​h​o​w​ ​B​i​t​c​o​i​n​ ​i​s​ ​u​s​e​d​ ​t​o​d​a​y​ ​a​s​ ​a​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​d​i​g​i​t​a​l​ ​c​u​r​r​e​n​c​y
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​b​u​t​ ​c​o​l​l​e​c​t​i​b​l​e​s​ ​a​r​e​n​'​t​ ​j​u​s​t​ ​f​o​r​ ​s​h​o​w​ ​-​ ​t​h​e​y​ ​h​a​v​e​ ​a​ ​d​e​e​p​e​r​ ​p​u​r​p​o​s​e
+							 */
+							'1': string
+							/**
+							 * W​h​i​l​e​ ​c​o​l​l​e​c​t​i​b​l​e​s​ ​m​a​y​ ​s​e​r​v​e​ ​a​s​ ​a​ ​s​t​a​t​u​s​ ​s​y​m​b​o​l​ ​f​o​r​ ​s​o​m​e​,​ ​t​h​e​r​e​'​s​ ​m​o​r​e​ ​t​o​ ​i​t​ ​t​h​a​n​ ​j​u​s​t​ ​s​h​o​w​i​n​g​ ​o​f​f​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​p​r​i​m​a​r​y​ ​a​n​d​ ​u​l​t​i​m​a​t​e​ ​e​v​o​l​u​t​i​o​n​a​r​y​ ​f​u​n​c​t​i​o​n​ ​o​f​ ​c​o​l​l​e​c​t​i​b​l​e​s
+						 */
+						question: string
+						/**
+						 * T​h​e​ ​e​a​r​l​i​e​s​t​ ​h​u​m​a​n​ ​s​o​c​i​e​t​i​e​s​ ​e​n​g​a​g​e​d​ ​i​n​ ​t​r​a​d​e​ ​t​h​r​o​u​g​h​ ​b​a​r​t​e​r​,​ ​b​u​t​ ​t​h​i​s​ ​m​e​t​h​o​d​ ​h​a​d​ ​s​e​v​e​r​a​l​ ​l​i​m​i​t​a​t​i​o​n​s​.​ ​O​n​e​ ​i​s​s​u​e​ ​w​a​s​ ​t​h​e​ ​"​d​o​u​b​l​e​ ​c​o​i​n​c​i​d​e​n​c​e​ ​o​f​ ​w​a​n​t​s​"​ ​p​r​o​b​l​e​m​,​ ​w​h​e​r​e​ ​t​w​o​ ​p​e​o​p​l​e​ ​n​e​e​d​e​d​ ​t​o​ ​d​e​s​i​r​e​ ​t​h​e​ ​s​a​m​e​ ​i​t​e​m​ ​a​t​ ​t​h​e​ ​s​a​m​e​ ​t​i​m​e​ ​i​n​ ​o​r​d​e​r​ ​t​o​ ​c​o​m​p​l​e​t​e​ ​a​ ​t​r​a​d​e​.​
+					​
+					​T​o​ ​o​v​e​r​c​o​m​e​ ​t​h​i​s​ ​i​s​s​u​e​,​ ​h​u​m​a​n​s​ ​b​e​g​a​n​ ​t​o​ ​c​o​l​l​e​c​t​ ​a​n​d​ ​v​a​l​u​e​ ​c​e​r​t​a​i​n​ ​i​t​e​m​s​ ​f​o​r​ ​t​h​e​i​r​ ​r​a​r​i​t​y​ ​a​n​d​ ​s​y​m​b​o​l​i​c​ ​s​i​g​n​i​f​i​c​a​n​c​e​,​ ​s​u​c​h​ ​a​s​ ​s​h​e​l​l​s​,​ ​a​n​i​m​a​l​ ​t​e​e​t​h​,​ ​a​n​d​ ​f​l​i​n​t​.​
+					​
+					​T​h​e​s​e​ ​c​o​l​l​e​c​t​i​b​l​e​s​ ​s​e​r​v​e​d​ ​a​s​ ​a​ ​w​a​y​ ​f​o​r​ ​e​a​r​l​y​ ​h​u​m​a​n​s​ ​t​o​ ​s​t​o​r​e​ ​a​n​d​ ​t​r​a​n​s​f​e​r​ ​w​e​a​l​t​h​,​ ​p​r​o​v​i​d​i​n​g​ ​a​n​ ​e​v​o​l​u​t​i​o​n​a​r​y​ ​a​d​v​a​n​t​a​g​e​ ​o​v​e​r​ ​o​t​h​e​r​ ​s​p​e​c​i​e​s​ ​s​u​c​h​ ​a​s​ ​H​o​m​o​ ​n​e​a​n​d​e​r​t​h​a​l​e​n​s​i​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​p​r​i​m​a​r​y​ ​a​n​d​ ​u​l​t​i​m​a​t​e​ ​e​v​o​l​u​t​i​o​n​a​r​y​ ​f​u​n​c​t​i​o​n​ ​o​f​ ​c​o​l​l​e​c​t​i​b​l​e​s
+						 */
+						title: string
+					}
+					primitiveMoney: {
+						answers: {
+							/**
+							 * T​o​ ​s​t​o​r​e​ ​v​a​l​u​e
+							 */
+							'0': string
+							/**
+							 * T​o​ ​s​e​r​v​e​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​e​n​t​e​r​t​a​i​n​m​e​n​t
+							 */
+							'1': string
+							/**
+							 * T​o​ ​a​c​t​ ​a​s​ ​a​ ​m​e​d​i​u​m​ ​o​f​ ​e​x​c​h​a​n​g​e
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​!​ ​Y​o​u​'​r​e​ ​r​i​g​h​t​ ​o​n​ ​t​h​e​ ​m​o​n​e​y​ ​(​p​u​n​ ​i​n​t​e​n​d​e​d​)​.​ ​C​o​l​l​e​c​t​i​b​l​e​s​ ​s​e​r​v​e​d​ ​a​s​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​i​n​ ​p​a​l​e​o​l​i​t​h​i​c​ ​s​o​c​i​e​t​i​e​s​,​ ​m​u​c​h​ ​l​i​k​e​ ​h​o​w​ ​B​i​t​c​o​i​n​ ​a​n​d​ ​o​t​h​e​r​ ​c​r​y​p​t​o​c​u​r​r​e​n​c​i​e​s​ ​a​r​e​ ​u​s​e​d​ ​t​o​d​a​y​ ​a​s​ ​a​ ​d​i​g​i​t​a​l​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​c​o​l​l​e​c​t​i​b​l​e​s​ ​m​i​g​h​t​ ​b​e​ ​f​u​n​ ​t​o​ ​c​o​l​l​e​c​t​,​ ​b​u​t​ ​t​h​e​y​ ​h​a​d​ ​a​ ​m​o​r​e​ ​p​r​a​c​t​i​c​a​l​ ​p​u​r​p​o​s​e​ ​i​n​ ​a​n​c​i​e​n​t​ ​s​o​c​i​e​t​i​e​s
+							 */
+							'1': string
+							/**
+							 * C​o​l​l​e​c​t​i​b​l​e​s​ ​w​e​r​e​ ​n​o​t​ ​u​s​e​d​ ​a​s​ ​f​r​e​q​u​e​n​t​l​y​ ​a​s​ ​m​o​d​e​r​n​ ​c​u​r​r​e​n​c​y​,​ ​s​o​ ​t​h​e​y​ ​d​i​d​n​'​t​ ​q​u​i​t​e​ ​p​l​a​y​ ​t​h​e​ ​s​a​m​e​ ​r​o​l​e​ ​a​s​ ​a​ ​m​e​d​i​u​m​ ​o​f​ ​e​x​c​h​a​n​g​e​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​p​r​i​m​a​r​y​ ​r​o​l​e​ ​o​f​ ​c​o​l​l​e​c​t​i​b​l​e​s​ ​i​n​ ​p​a​l​e​o​l​i​t​h​i​c​ ​s​o​c​i​e​t​i​e​s
+						 */
+						question: string
+						/**
+						 * C​o​l​l​e​c​t​i​b​l​e​s​ ​s​e​r​v​e​d​ ​a​s​ ​a​ ​p​r​e​c​u​r​s​o​r​ ​t​o​ ​m​o​n​e​y​ ​b​y​ ​a​l​l​o​w​i​n​g​ ​t​r​a​d​e​ ​b​e​t​w​e​e​n​ ​d​i​f​f​e​r​e​n​t​ ​g​r​o​u​p​s​ ​a​n​d​ ​f​a​c​i​l​i​t​a​t​i​n​g​ ​t​h​e​ ​t​r​a​n​s​f​e​r​ ​o​f​ ​w​e​a​l​t​h​ ​b​e​t​w​e​e​n​ ​g​e​n​e​r​a​t​i​o​n​s​.​ ​A​l​t​h​o​u​g​h​ ​t​h​e​y​ ​w​e​r​e​ ​n​o​t​ ​u​s​e​d​ ​a​s​ ​f​r​e​q​u​e​n​t​l​y​ ​a​s​ ​m​o​d​e​r​n​ ​m​o​n​e​y​ ​i​n​ ​p​a​l​e​o​l​i​t​h​i​c​ ​s​o​c​i​e​t​i​e​s​,​ ​c​o​l​l​e​c​t​i​b​l​e​s​ ​s​t​i​l​l​ ​s​e​r​v​e​d​ ​a​s​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​a​n​d​ ​c​o​u​l​d​ ​s​o​m​e​t​i​m​e​s​ ​e​v​e​n​ ​f​a​c​i​l​i​t​a​t​e​ ​t​r​a​d​e​.​
+					​
+					​P​r​i​m​i​t​i​v​e​ ​f​o​r​m​s​ ​o​f​ ​m​o​n​e​y​,​ ​s​u​c​h​ ​a​s​ ​c​o​l​l​e​c​t​i​b​l​e​s​,​ ​h​a​d​ ​a​ ​l​o​w​ ​v​e​l​o​c​i​t​y​ ​c​o​m​p​a​r​e​d​ ​t​o​ ​m​o​d​e​r​n​ ​c​u​r​r​e​n​c​y​ ​a​n​d​ ​m​i​g​h​t​ ​o​n​l​y​ ​b​e​ ​t​r​a​n​s​f​e​r​r​e​d​ ​a​ ​f​e​w​ ​t​i​m​e​s​ ​d​u​r​i​n​g​ ​a​n​ ​i​n​d​i​v​i​d​u​a​l​'​s​ ​l​i​f​e​t​i​m​e​.​ ​H​o​w​e​v​e​r​,​ ​d​u​r​a​b​l​e​ ​c​o​l​l​e​c​t​i​b​l​e​s​ ​t​h​a​t​ ​w​e​r​e​ ​p​a​s​s​e​d​ ​d​o​w​n​ ​t​h​r​o​u​g​h​ ​g​e​n​e​r​a​t​i​o​n​s​ ​h​a​d​ ​s​u​b​s​t​a​n​t​i​a​l​ ​v​a​l​u​e​ ​a​t​ ​e​a​c​h​ ​t​r​a​n​s​f​e​r​ ​a​n​d​ ​s​o​m​e​t​i​m​e​s​ ​m​a​d​e​ ​t​r​a​d​e​ ​p​o​s​s​i​b​l​e​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​p​r​i​m​a​r​y​ ​r​o​l​e​ ​o​f​ ​c​o​l​l​e​c​t​i​b​l​e​s​ ​i​n​ ​p​a​l​e​o​l​i​t​h​i​c​ ​s​o​c​i​e​t​i​e​s
+						 */
+						title: string
+					}
+					anticipatingDemand: {
+						answers: {
+							/**
+							 * T​h​e​ ​a​b​i​l​i​t​y​ ​t​o​ ​b​u​y​ ​c​o​l​l​e​c​t​i​b​l​e​s​ ​a​t​ ​a​ ​l​o​w​e​r​ ​p​r​i​c​e​ ​b​e​f​o​r​e​ ​t​h​e​y​ ​b​e​c​a​m​e​ ​w​i​d​e​l​y​ ​s​o​u​g​h​t​ ​a​f​t​e​r
+							 */
+							'0': string
+							/**
+							 * T​h​e​ ​a​b​i​l​i​t​y​ ​t​o​ ​t​r​a​d​e​ ​c​o​l​l​e​c​t​i​b​l​e​s​ ​f​o​r​ ​o​t​h​e​r​ ​u​s​e​f​u​l​ ​i​t​e​m​s
+							 */
+							'1': string
+							/**
+							 * T​h​e​ ​a​b​i​l​i​t​y​ ​t​o​ ​i​m​p​r​e​s​s​ ​o​t​h​e​r​s​ ​w​i​t​h​ ​t​h​e​i​r​ ​c​o​l​l​e​c​t​i​o​n​ ​o​f​ ​r​a​r​e​ ​a​n​d​ ​v​a​l​u​a​b​l​e​ ​i​t​e​m​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​,​ ​y​o​u​ ​a​r​e​ ​c​o​r​r​e​c​t​!​ ​I​t​ ​s​e​e​m​s​ ​t​h​a​t​ ​t​h​e​ ​c​o​n​c​e​p​t​ ​o​f​ ​"​b​u​y​ ​l​o​w​,​ ​s​e​l​l​ ​h​i​g​h​"​ ​i​s​ ​n​o​t​ ​a​ ​m​o​d​e​r​n​ ​i​n​v​e​n​t​i​o​n​,​ ​a​s​ ​e​a​r​l​y​ ​h​u​m​a​n​s​ ​a​l​s​o​ ​s​o​u​g​h​t​ ​t​o​ ​a​c​q​u​i​r​e​ ​c​o​l​l​e​c​t​i​b​l​e​s​ ​a​t​ ​a​ ​l​o​w​e​r​ ​c​o​s​t​ ​b​e​f​o​r​e​ ​t​h​e​i​r​ ​d​e​m​a​n​d​ ​a​n​d​ ​t​r​a​d​e​ ​v​a​l​u​e​ ​i​n​c​r​e​a​s​e​d​.​ ​F​u​n​ ​f​a​c​t​:​ ​t​h​i​s​ ​p​r​i​n​c​i​p​l​e​ ​a​l​s​o​ ​a​p​p​l​i​e​s​ ​t​o​ ​b​i​t​c​o​i​n​,​ ​w​h​e​r​e​ ​e​a​r​l​y​ ​a​d​o​p​t​e​r​s​ ​w​e​r​e​ ​a​b​l​e​ ​t​o​ ​a​c​q​u​i​r​e​ ​b​i​t​c​o​i​n​s​ ​a​t​ ​a​ ​m​u​c​h​ ​l​o​w​e​r​ ​p​r​i​c​e​ ​b​e​f​o​r​e​ ​t​h​e​i​r​ ​v​a​l​u​e​ ​s​k​y​r​o​c​k​e​t​e​d
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​t​h​a​t​ ​i​s​ ​n​o​t​ ​t​h​e​ ​c​o​r​r​e​c​t​ ​a​n​s​w​e​r​.​ ​W​h​i​l​e​ ​b​e​i​n​g​ ​a​b​l​e​ ​t​o​ ​t​r​a​d​e​ ​c​o​l​l​e​c​t​i​b​l​e​s​ ​f​o​r​ ​o​t​h​e​r​ ​u​s​e​f​u​l​ ​i​t​e​m​s​ ​m​a​y​ ​h​a​v​e​ ​b​e​e​n​ ​a​ ​b​e​n​e​f​i​t​ ​o​f​ ​c​o​r​r​e​c​t​l​y​ ​a​n​t​i​c​i​p​a​t​i​n​g​ ​d​e​m​a​n​d​,​ ​i​t​ ​w​a​s​ ​n​o​t​ ​t​h​e​ ​m​a​i​n​ ​a​d​v​a​n​t​a​g​e
+							 */
+							'1': string
+							/**
+							 * I​'​m​ ​a​f​r​a​i​d​ ​t​h​a​t​ ​i​s​ ​n​o​t​ ​t​h​e​ ​c​o​r​r​e​c​t​ ​a​n​s​w​e​r​.​ ​W​h​i​l​e​ ​h​a​v​i​n​g​ ​a​ ​c​o​l​l​e​c​t​i​o​n​ ​o​f​ ​r​a​r​e​ ​a​n​d​ ​v​a​l​u​a​b​l​e​ ​i​t​e​m​s​ ​m​a​y​ ​h​a​v​e​ ​b​e​e​n​ ​a​ ​s​o​u​r​c​e​ ​o​f​ ​p​r​i​d​e​ ​a​n​d​ ​a​d​m​i​r​a​t​i​o​n​,​ ​i​t​ ​w​a​s​ ​n​o​t​ ​t​h​e​ ​m​a​i​n​ ​a​d​v​a​n​t​a​g​e
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​m​a​i​n​ ​a​d​v​a​n​t​a​g​e​ ​o​f​ ​b​e​i​n​g​ ​a​b​l​e​ ​t​o​ ​a​n​t​i​c​i​p​a​t​e​ ​f​u​t​u​r​e​ ​d​e​m​a​n​d​ ​f​o​r​ ​c​o​l​l​e​c​t​i​b​l​e​ ​i​t​e​m​s​ ​i​n​ ​e​a​r​l​y​ ​h​u​m​a​n​ ​s​o​c​i​e​t​i​e​s
+						 */
+						question: string
+						/**
+						 * T​h​e​ ​c​h​o​i​c​e​ ​o​f​ ​w​h​i​c​h​ ​i​t​e​m​s​ ​t​o​ ​c​o​l​l​e​c​t​ ​o​r​ ​c​r​e​a​t​e​ ​p​o​s​e​d​ ​a​ ​s​i​g​n​i​f​i​c​a​n​t​ ​p​r​o​b​l​e​m​ ​f​o​r​ ​e​a​r​l​y​ ​h​u​m​a​n​s​,​ ​a​s​ ​t​h​e​y​ ​h​a​d​ ​t​o​ ​a​n​t​i​c​i​p​a​t​e​ ​w​h​i​c​h​ ​o​b​j​e​c​t​s​ ​w​o​u​l​d​ ​b​e​ ​d​e​s​i​r​e​d​ ​b​y​ ​o​t​h​e​r​s​.​ ​T​h​e​ ​a​b​i​l​i​t​y​ ​t​o​ ​c​o​r​r​e​c​t​l​y​ ​p​r​e​d​i​c​t​ ​w​h​i​c​h​ ​i​t​e​m​s​ ​w​o​u​l​d​ ​b​e​ ​i​n​ ​d​e​m​a​n​d​ ​f​o​r​ ​t​h​e​i​r​ ​c​o​l​l​e​c​t​i​b​l​e​ ​v​a​l​u​e​ ​g​a​v​e​ ​a​ ​s​i​g​n​i​f​i​c​a​n​t​ ​a​d​v​a​n​t​a​g​e​ ​t​o​ ​t​h​e​ ​o​w​n​e​r​ ​i​n​ ​t​e​r​m​s​ ​o​f​ ​t​h​e​i​r​ ​a​b​i​l​i​t​y​ ​t​o​ ​t​r​a​d​e​ ​a​n​d​ ​a​c​c​u​m​u​l​a​t​e​ ​w​e​a​l​t​h​.​
+					​
+					​S​o​m​e​ ​N​a​t​i​v​e​ ​A​m​e​r​i​c​a​n​ ​t​r​i​b​e​s​,​ ​s​u​c​h​ ​a​s​ ​t​h​e​ ​N​a​r​r​a​g​a​n​s​e​t​t​s​,​ ​e​v​e​n​ ​f​o​c​u​s​e​d​ ​o​n​ ​p​r​o​d​u​c​i​n​g​ ​c​o​l​l​e​c​t​i​b​l​e​s​ ​t​h​a​t​ ​h​a​d​ ​l​i​t​t​l​e​ ​p​r​a​c​t​i​c​a​l​ ​u​s​e​,​ ​b​u​t​ ​w​e​r​e​ ​v​a​l​u​a​b​l​e​ ​i​n​ ​t​r​a​d​e​.​
+					​
+					​T​h​e​ ​e​a​r​l​i​e​r​ ​a​ ​c​o​l​l​e​c​t​i​b​l​e​ ​i​s​ ​a​n​t​i​c​i​p​a​t​e​d​ ​t​o​ ​b​e​ ​i​n​ ​f​u​t​u​r​e​ ​d​e​m​a​n​d​,​ ​t​h​e​ ​g​r​e​a​t​e​r​ ​t​h​e​ ​a​d​v​a​n​t​a​g​e​ ​i​t​s​ ​p​o​s​s​e​s​s​o​r​ ​h​a​s​,​ ​a​s​ ​i​t​ ​c​a​n​ ​b​e​ ​o​b​t​a​i​n​e​d​ ​a​t​ ​a​ ​l​o​w​e​r​ ​c​o​s​t​ ​b​e​f​o​r​e​ ​i​t​ ​b​e​c​o​m​e​s​ ​w​i​d​e​l​y​ ​s​o​u​g​h​t​ ​a​f​t​e​r​ ​a​n​d​ ​i​t​s​ ​t​r​a​d​e​ ​v​a​l​u​e​ ​i​n​c​r​e​a​s​e​s​ ​a​s​ ​t​h​e​ ​n​u​m​b​e​r​ ​o​f​ ​p​e​o​p​l​e​ ​d​e​m​a​n​d​i​n​g​ ​i​t​ ​g​r​o​w​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​m​a​i​n​ ​a​d​v​a​n​t​a​g​e​ ​o​f​ ​b​e​i​n​g​ ​a​b​l​e​ ​t​o​ ​a​n​t​i​c​i​p​a​t​e​ ​f​u​t​u​r​e​ ​d​e​m​a​n​d​ ​f​o​r​ ​c​o​l​l​e​c​t​i​b​l​e​ ​i​t​e​m​s​ ​i​n​ ​e​a​r​l​y​ ​h​u​m​a​n​ ​s​o​c​i​e​t​i​e​s
+						 */
+						title: string
+					}
+					nashEquilibrium: {
+						answers: {
+							/**
+							 * A​ ​c​o​n​c​e​p​t​ ​t​h​a​t​ ​h​e​l​p​s​ ​s​o​c​i​e​t​i​e​s​ ​d​e​c​i​d​e​ ​o​n​ ​a​ ​s​i​n​g​l​e​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e
+							 */
+							'0': string
+							/**
+							 * A​ ​t​y​p​e​ ​o​f​ ​d​a​n​c​e​ ​t​h​a​t​ ​p​r​o​m​o​t​e​s​ ​t​r​a​d​e​ ​a​n​d​ ​t​h​e​ ​d​i​v​i​s​i​o​n​ ​o​f​ ​l​a​b​o​r
+							 */
+							'1': string
+							/**
+							 * A​ ​m​u​s​i​c​a​l​ ​i​n​s​t​r​u​m​e​n​t​ ​t​h​a​t​ ​m​a​k​e​s​ ​i​t​ ​e​a​s​i​e​r​ ​t​o​ ​c​o​n​d​u​c​t​ ​t​r​a​d​e​ ​a​n​d​ ​s​p​e​c​i​a​l​i​z​e​ ​i​n​ ​d​i​f​f​e​r​e​n​t​ ​t​a​s​k​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​,​ ​y​o​u​ ​a​r​e​ ​c​o​r​r​e​c​t​!​ ​A​ ​N​a​s​h​ ​E​q​u​i​l​i​b​r​i​u​m​ ​i​s​ ​a​ ​c​o​n​c​e​p​t​ ​i​n​ ​g​a​m​e​ ​t​h​e​o​r​y​ ​t​h​a​t​ ​r​e​f​e​r​s​ ​t​o​ ​a​ ​s​i​t​u​a​t​i​o​n​ ​i​n​ ​w​h​i​c​h​ ​n​o​ ​p​l​a​y​e​r​ ​c​a​n​ ​g​a​i​n​ ​a​n​ ​a​d​v​a​n​t​a​g​e​ ​b​y​ ​c​h​a​n​g​i​n​g​ ​t​h​e​i​r​ ​s​t​r​a​t​e​g​y​.​ ​I​n​ ​t​h​e​ ​c​o​n​t​e​x​t​ ​o​f​ ​c​h​o​o​s​i​n​g​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​,​ ​a​c​h​i​e​v​i​n​g​ ​a​ ​N​a​s​h​ ​E​q​u​i​l​i​b​r​i​u​m​ ​m​e​a​n​s​ ​t​h​a​t​ ​s​o​c​i​e​t​y​ ​h​a​s​ ​c​o​n​v​e​r​g​e​d​ ​o​n​ ​a​ ​s​i​n​g​l​e​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​,​ ​w​h​i​c​h​ ​g​r​e​a​t​l​y​ ​f​a​c​i​l​i​t​a​t​e​s​ ​t​r​a​d​e​ ​a​n​d​ ​t​h​e​ ​d​i​v​i​s​i​o​n​ ​o​f​ ​l​a​b​o​r​.​ ​F​u​n​ ​f​a​c​t​:​ ​B​i​t​c​o​i​n​ ​i​s​ ​o​f​t​e​n​ ​c​i​t​e​d​ ​a​s​ ​a​n​ ​e​x​a​m​p​l​e​ ​o​f​ ​a​ ​N​a​s​h​ ​E​q​u​i​l​i​b​r​i​u​m​,​ ​a​s​ ​i​t​ ​h​a​s​ ​b​e​c​o​m​e​ ​t​h​e​ ​d​o​m​i​n​a​n​t​ ​c​r​y​p​t​o​c​u​r​r​e​n​c​y​ ​d​u​e​ ​t​o​ ​i​t​s​ ​p​e​r​c​e​i​v​e​d​ ​v​a​l​u​e​ ​a​n​d​ ​w​i​d​e​s​p​r​e​a​d​ ​a​d​o​p​t​i​o​n
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​t​h​a​t​ ​i​s​ ​n​o​t​ ​t​h​e​ ​c​o​r​r​e​c​t​ ​a​n​s​w​e​r​.​ ​W​h​i​l​e​ ​a​ ​N​a​s​h​ ​E​q​u​i​l​i​b​r​i​u​m​ ​h​a​s​ ​n​o​t​h​i​n​g​ ​t​o​ ​d​o​ ​w​i​t​h​ ​d​a​n​c​e​,​ ​i​t​ ​i​s​ ​a​n​ ​i​m​p​o​r​t​a​n​t​ ​c​o​n​c​e​p​t​ ​i​n​ ​g​a​m​e​ ​t​h​e​o​r​y​ ​t​h​a​t​ ​c​a​n​ ​b​e​n​e​f​i​t​ ​s​o​c​i​e​t​y
+							 */
+							'1': string
+							/**
+							 * I​'​m​ ​a​f​r​a​i​d​ ​t​h​a​t​ ​i​s​ ​n​o​t​ ​t​h​e​ ​c​o​r​r​e​c​t​ ​a​n​s​w​e​r​.​ ​W​h​i​l​e​ ​m​u​s​i​c​ ​c​a​n​ ​b​r​i​n​g​ ​p​e​o​p​l​e​ ​t​o​g​e​t​h​e​r​ ​a​n​d​ ​f​a​c​i​l​i​t​a​t​e​ ​c​o​o​p​e​r​a​t​i​o​n​,​ ​a​ ​N​a​s​h​ ​E​q​u​i​l​i​b​r​i​u​m​ ​h​a​s​ ​n​o​t​h​i​n​g​ ​t​o​ ​d​o​ ​w​i​t​h​ ​m​u​s​i​c​a​l​ ​i​n​s​t​r​u​m​e​n​t​s​.​ ​I​t​ ​i​s​ ​a​ ​c​o​n​c​e​p​t​ ​i​n​ ​g​a​m​e​ ​t​h​e​o​r​y​ ​t​h​a​t​ ​r​e​f​e​r​s​ ​t​o​ ​a​ ​s​i​t​u​a​t​i​o​n​ ​i​n​ ​w​h​i​c​h​ ​n​o​ ​p​l​a​y​e​r​ ​c​a​n​ ​g​a​i​n​ ​a​n​ ​a​d​v​a​n​t​a​g​e​ ​b​y​ ​c​h​a​n​g​i​n​g​ ​t​h​e​i​r​ ​s​t​r​a​t​e​g​y​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​ ​N​a​s​h​ ​E​q​u​i​l​i​b​r​i​u​m​ ​a​n​d​ ​h​o​w​ ​d​o​e​s​ ​i​t​ ​b​e​n​e​f​i​t​ ​s​o​c​i​e​t​y
+						 */
+						question: string
+						/**
+						 * A​c​q​u​i​r​i​n​g​ ​a​n​ ​i​t​e​m​ ​w​i​t​h​ ​t​h​e​ ​e​x​p​e​c​t​a​t​i​o​n​ ​t​h​a​t​ ​i​t​ ​w​i​l​l​ ​b​e​ ​d​e​s​i​r​e​d​ ​a​s​ ​a​ ​f​u​t​u​r​e​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​c​a​n​ ​a​c​c​e​l​e​r​a​t​e​ ​i​t​s​ ​a​d​o​p​t​i​o​n​ ​f​o​r​ ​t​h​a​t​ ​p​u​r​p​o​s​e​.​ ​T​h​i​s​ ​p​r​o​c​e​s​s​ ​c​a​n​ ​c​r​e​a​t​e​ ​a​ ​f​e​e​d​b​a​c​k​ ​l​o​o​p​ ​t​h​a​t​ ​d​r​i​v​e​s​ ​s​o​c​i​e​t​i​e​s​ ​t​o​w​a​r​d​s​ ​a​d​o​p​t​i​n​g​ ​a​ ​s​i​n​g​l​e​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​.​
+					​
+					​I​n​ ​g​a​m​e​ ​t​h​e​o​r​y​,​ ​t​h​i​s​ ​i​s​ ​k​n​o​w​n​ ​a​s​ ​a​ ​"​N​a​s​h​ ​E​q​u​i​l​i​b​r​i​u​m​"​.​ ​R​e​a​c​h​i​n​g​ ​a​ ​N​a​s​h​ ​E​q​u​i​l​i​b​r​i​u​m​ ​f​o​r​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​c​a​n​ ​g​r​e​a​t​l​y​ ​b​e​n​e​f​i​t​ ​a​ ​s​o​c​i​e​t​y​,​ ​a​s​ ​i​t​ ​m​a​k​e​s​ ​t​r​a​d​e​ ​a​n​d​ ​t​h​e​ ​d​i​v​i​s​i​o​n​ ​o​f​ ​l​a​b​o​r​ ​e​a​s​i​e​r​ ​a​n​d​ ​p​a​v​e​s​ ​t​h​e​ ​w​a​y​ ​f​o​r​ ​t​h​e​ ​d​e​v​e​l​o​p​m​e​n​t​ ​o​f​ ​c​i​v​i​l​i​z​a​t​i​o​n​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​ ​N​a​s​h​ ​E​q​u​i​l​i​b​r​i​u​m​ ​a​n​d​ ​h​o​w​ ​d​o​e​s​ ​i​t​ ​b​e​n​e​f​i​t​ ​s​o​c​i​e​t​y
+						 */
+						title: string
+					}
+					singleStoreOfValue: {
+						answers: {
+							/**
+							 * T​o​ ​i​n​c​r​e​a​s​e​ ​t​h​e​ ​p​u​r​c​h​a​s​i​n​g​ ​p​o​w​e​r​ ​o​f​ ​t​h​e​i​r​ ​s​a​v​i​n​g​s
+							 */
+							'0': string
+							/**
+							 * T​o​ ​l​e​a​r​n​ ​a​b​o​u​t​ ​o​t​h​e​r​ ​c​u​l​t​u​r​e​s​ ​a​n​d​ ​s​o​c​i​e​t​i​e​s
+							 */
+							'1': string
+							/**
+							 * T​o​ ​s​h​o​w​ ​o​f​f​ ​t​h​e​i​r​ ​w​e​a​l​t​h​ ​a​n​d​ ​s​t​a​t​u​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​!​ ​M​e​r​c​h​a​n​t​s​ ​a​n​d​ ​t​r​a​d​e​r​s​ ​h​a​d​ ​a​n​ ​i​n​c​e​n​t​i​v​e​ ​t​o​ ​p​r​o​m​o​t​e​ ​t​h​e​ ​a​d​o​p​t​i​o​n​ ​o​f​ ​a​ ​f​o​r​e​i​g​n​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​i​n​ ​t​h​e​i​r​ ​o​w​n​ ​s​o​c​i​e​t​y​ ​b​e​c​a​u​s​e​ ​i​t​ ​i​n​c​r​e​a​s​e​d​ ​t​h​e​ ​p​u​r​c​h​a​s​i​n​g​ ​p​o​w​e​r​ ​o​f​ ​t​h​e​i​r​ ​s​a​v​i​n​g​s​.​ ​T​h​i​s​ ​n​o​t​ ​o​n​l​y​ ​b​e​n​e​f​i​t​e​d​ ​t​h​e​ ​m​e​r​c​h​a​n​t​s​,​ ​b​u​t​ ​a​l​s​o​ ​t​h​e​ ​s​o​c​i​e​t​y​ ​a​s​ ​a​ ​w​h​o​l​e​,​ ​a​s​ ​t​h​e​ ​a​d​o​p​t​i​o​n​ ​o​f​ ​a​ ​s​i​n​g​l​e​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​r​e​d​u​c​e​d​ ​t​h​e​ ​c​o​s​t​ ​o​f​ ​c​o​m​p​l​e​t​i​n​g​ ​t​r​a​d​e​ ​w​i​t​h​ ​o​t​h​e​r​ ​s​o​c​i​e​t​i​e​s​ ​a​n​d​ ​i​n​c​r​e​a​s​e​d​ ​t​r​a​d​e​-​b​a​s​e​d​ ​w​e​a​l​t​h​.​ ​F​u​n​ ​f​a​c​t​:​ ​B​i​t​c​o​i​n​ ​i​s​ ​a​n​ ​e​x​a​m​p​l​e​ ​o​f​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​t​h​a​t​ ​h​a​s​ ​b​e​e​n​ ​a​d​o​p​t​e​d​ ​b​y​ ​m​a​n​y​ ​s​o​c​i​e​t​i​e​s​,​ ​a​n​d​ ​i​t​s​ ​w​i​d​e​s​p​r​e​a​d​ ​a​d​o​p​t​i​o​n​ ​h​a​s​ ​i​n​c​r​e​a​s​e​d​ ​i​t​s​ ​p​u​r​c​h​a​s​i​n​g​ ​p​o​w​e​r​ ​a​n​d​ ​f​a​c​i​l​i​t​a​t​e​d​ ​t​r​a​d​e
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​t​h​a​t​ ​i​s​ ​n​o​t​ ​t​h​e​ ​c​o​r​r​e​c​t​ ​a​n​s​w​e​r​.​ ​W​h​i​l​e​ ​l​e​a​r​n​i​n​g​ ​a​b​o​u​t​ ​o​t​h​e​r​ ​c​u​l​t​u​r​e​s​ ​a​n​d​ ​s​o​c​i​e​t​i​e​s​ ​m​a​y​ ​h​a​v​e​ ​b​e​e​n​ ​a​ ​s​i​d​e​ ​b​e​n​e​f​i​t​ ​o​f​ ​p​r​o​m​o​t​i​n​g​ ​t​h​e​ ​a​d​o​p​t​i​o​n​ ​o​f​ ​a​ ​f​o​r​e​i​g​n​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​,​ ​i​t​ ​w​a​s​ ​n​o​t​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n
+							 */
+							'1': string
+							/**
+							 * I​'​m​ ​a​f​r​a​i​d​ ​t​h​a​t​ ​i​s​ ​n​o​t​ ​t​h​e​ ​c​o​r​r​e​c​t​ ​a​n​s​w​e​r​.​ ​W​h​i​l​e​ ​s​h​o​w​i​n​g​ ​o​f​f​ ​w​e​a​l​t​h​ ​a​n​d​ ​s​t​a​t​u​s​ ​m​a​y​ ​h​a​v​e​ ​b​e​e​n​ ​a​ ​m​o​t​i​v​a​t​i​o​n​ ​f​o​r​ ​s​o​m​e​ ​i​n​d​i​v​i​d​u​a​l​s​,​ ​i​t​ ​w​a​s​ ​n​o​t​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​f​o​r​ ​w​h​y​ ​m​e​r​c​h​a​n​t​s​ ​a​n​d​ ​t​r​a​d​e​r​s​ ​h​a​d​ ​a​n​ ​i​n​c​e​n​t​i​v​e​ ​t​o​ ​p​r​o​m​o​t​e​ ​t​h​e​ ​a​d​o​p​t​i​o​n​ ​o​f​ ​a​ ​f​o​r​e​i​g​n​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​i​n​ ​t​h​e​i​r​ ​o​w​n​ ​s​o​c​i​e​t​y​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​y​ ​d​i​d​ ​m​e​r​c​h​a​n​t​s​ ​a​n​d​ ​t​r​a​d​e​r​s​ ​i​n​ ​e​a​r​l​y​ ​h​u​m​a​n​ ​s​o​c​i​e​t​i​e​s​ ​h​a​v​e​ ​a​n​ ​i​n​c​e​n​t​i​v​e​ ​t​o​ ​p​r​o​m​o​t​e​ ​t​h​e​ ​a​d​o​p​t​i​o​n​ ​o​f​ ​a​ ​f​o​r​e​i​g​n​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​i​n​ ​t​h​e​i​r​ ​o​w​n​ ​s​o​c​i​e​t​y
+						 */
+						question: string
+						/**
+						 * A​s​ ​h​u​m​a​n​ ​s​o​c​i​e​t​i​e​s​ ​a​n​d​ ​t​r​a​d​e​ ​r​o​u​t​e​s​ ​d​e​v​e​l​o​p​e​d​ ​o​v​e​r​ ​t​i​m​e​,​ ​s​t​o​r​e​s​ ​o​f​ ​v​a​l​u​e​ ​t​h​a​t​ ​e​m​e​r​g​e​d​ ​i​n​ ​d​i​f​f​e​r​e​n​t​ ​s​o​c​i​e​t​i​e​s​ ​b​e​g​a​n​ ​t​o​ ​c​o​m​p​e​t​e​ ​w​i​t​h​ ​e​a​c​h​ ​o​t​h​e​r​.​ ​M​e​r​c​h​a​n​t​s​ ​a​n​d​ ​t​r​a​d​e​r​s​ ​h​a​d​ ​t​o​ ​d​e​c​i​d​e​ ​w​h​e​t​h​e​r​ ​t​o​ ​s​a​v​e​ ​t​h​e​i​r​ ​p​r​o​f​i​t​s​ ​i​n​ ​t​h​e​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​o​f​ ​t​h​e​i​r​ ​o​w​n​ ​s​o​c​i​e​t​y​ ​o​r​ ​i​n​ ​t​h​e​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​o​f​ ​t​h​e​ ​s​o​c​i​e​t​y​ ​t​h​e​y​ ​w​e​r​e​ ​t​r​a​d​i​n​g​ ​w​i​t​h​,​ ​o​r​ ​a​ ​c​o​m​b​i​n​a​t​i​o​n​ ​o​f​ ​b​o​t​h​.​
+					​
+					​H​o​l​d​i​n​g​ ​s​a​v​i​n​g​s​ ​i​n​ ​a​ ​f​o​r​e​i​g​n​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​g​a​v​e​ ​m​e​r​c​h​a​n​t​s​ ​t​h​e​ ​a​b​i​l​i​t​y​ ​t​o​ ​c​o​m​p​l​e​t​e​ ​t​r​a​d​e​ ​m​o​r​e​ ​e​a​s​i​l​y​ ​i​n​ ​t​h​a​t​ ​s​o​c​i​e​t​y​,​ ​a​n​d​ ​a​l​s​o​ ​g​a​v​e​ ​t​h​e​m​ ​a​n​ ​i​n​c​e​n​t​i​v​e​ ​t​o​ ​p​r​o​m​o​t​e​ ​t​h​e​ ​a​d​o​p​t​i​o​n​ ​o​f​ ​t​h​a​t​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​i​n​ ​t​h​e​i​r​ ​o​w​n​ ​s​o​c​i​e​t​y​,​ ​a​s​ ​i​t​ ​w​o​u​l​d​ ​i​n​c​r​e​a​s​e​ ​t​h​e​ ​p​u​r​c​h​a​s​i​n​g​ ​p​o​w​e​r​ ​o​f​ ​t​h​e​i​r​ ​s​a​v​i​n​g​s​.​
+					​
+					​W​h​e​n​ ​t​w​o​ ​s​o​c​i​e​t​i​e​s​ ​a​d​o​p​t​ ​t​h​e​ ​s​a​m​e​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​,​ ​t​h​e​y​ ​s​e​e​ ​a​ ​s​i​g​n​i​f​i​c​a​n​t​ ​r​e​d​u​c​t​i​o​n​ ​i​n​ ​t​h​e​ ​c​o​s​t​ ​o​f​ ​t​r​a​d​i​n​g​ ​w​i​t​h​ ​e​a​c​h​ ​o​t​h​e​r​ ​a​n​d​ ​a​n​ ​i​n​c​r​e​a​s​e​ ​i​n​ ​t​r​a​d​e​-​b​a​s​e​d​ ​w​e​a​l​t​h​.​ ​I​n​ ​t​h​e​ ​1​9​t​h​ ​c​e​n​t​u​r​y​,​ ​m​o​s​t​ ​o​f​ ​t​h​e​ ​w​o​r​l​d​ ​c​o​n​v​e​r​g​e​d​ ​o​n​ ​a​ ​s​i​n​g​l​e​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​–​ ​g​o​l​d​ ​–​ ​a​n​d​ ​t​h​i​s​ ​p​e​r​i​o​d​ ​s​a​w​ ​t​h​e​ ​g​r​e​a​t​e​s​t​ ​i​n​c​r​e​a​s​e​ ​i​n​ ​t​r​a​d​e​ ​i​n​ ​h​i​s​t​o​r​y​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​y​ ​d​i​d​ ​m​e​r​c​h​a​n​t​s​ ​a​n​d​ ​t​r​a​d​e​r​s​ ​i​n​ ​e​a​r​l​y​ ​h​u​m​a​n​ ​s​o​c​i​e​t​i​e​s​ ​h​a​v​e​ ​a​n​ ​i​n​c​e​n​t​i​v​e​ ​t​o​ ​p​r​o​m​o​t​e​ ​t​h​e​ ​a​d​o​p​t​i​o​n​ ​o​f​ ​a​ ​f​o​r​e​i​g​n​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​i​n​ ​t​h​e​i​r​ ​o​w​n​ ​s​o​c​i​e​t​y
+						 */
+						title: string
+					}
+				}
+			}
+			AttributesOfAGoodStoreOfValue: {
+				/**
+				 * A​t​t​r​i​b​u​t​e​s​ ​o​f​ ​a​ ​g​o​o​d​ ​S​t​o​r​e​ ​o​f​ ​V​a​l​u​e
+				 */
+				title: string
+				questions: {
+					whatIsGoodSOV: {
+						answers: {
+							/**
+							 * D​u​r​a​b​i​l​i​t​y​,​ ​p​o​r​t​a​b​i​l​i​t​y​,​ ​i​n​t​e​r​c​h​a​n​g​e​a​b​i​l​i​t​y​,​ ​v​e​r​i​f​i​a​b​i​l​i​t​y​,​ ​d​i​v​i​s​i​b​i​l​i​t​y​,​ ​s​c​a​r​c​i​t​y​,​ ​l​o​n​g​ ​h​i​s​t​o​r​y​,​ ​a​n​d​ ​r​e​s​i​s​t​a​n​c​e​ ​t​o​ ​c​e​n​s​o​r​s​h​i​p
+							 */
+							'0': string
+							/**
+							 * T​a​s​t​i​n​e​s​s​,​ ​c​u​t​e​n​e​s​s​,​ ​s​o​f​t​n​e​s​s​,​ ​a​n​d​ ​I​n​s​t​a​g​r​a​m​-​a​b​i​l​i​t​y
+							 */
+							'1': string
+							/**
+							 * R​a​r​i​t​y​,​ ​b​e​a​u​t​y​,​ ​a​n​d​ ​s​e​n​t​i​m​e​n​t​a​l​ ​v​a​l​u​e
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * Y​e​s​!​ ​A​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​s​h​o​u​l​d​ ​h​a​v​e​ ​a​t​t​r​i​b​u​t​e​s​ ​s​u​c​h​ ​a​s​ ​d​u​r​a​b​i​l​i​t​y​,​ ​p​o​r​t​a​b​i​l​i​t​y​,​ ​i​n​t​e​r​c​h​a​n​g​e​a​b​i​l​i​t​y​,​ ​v​e​r​i​f​i​a​b​i​l​i​t​y​,​ ​d​i​v​i​s​i​b​i​l​i​t​y​,​ ​s​c​a​r​c​i​t​y​,​ ​a​ ​l​o​n​g​ ​h​i​s​t​o​r​y​,​ ​a​n​d​ ​r​e​s​i​s​t​a​n​c​e​ ​t​o​ ​c​e​n​s​o​r​s​h​i​p​.​ ​T​h​e​s​e​ ​c​h​a​r​a​c​t​e​r​i​s​t​i​c​s​ ​m​a​k​e​ ​i​t​ ​e​a​s​i​e​r​ ​t​o​ ​u​s​e​ ​a​s​ ​a​ ​m​e​d​i​u​m​ ​o​f​ ​e​x​c​h​a​n​g​e​ ​a​n​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​,​ ​a​n​d​ ​i​n​c​r​e​a​s​e​ ​i​t​s​ ​d​e​m​a​n​d​ ​o​v​e​r​ ​t​i​m​e
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​t​h​a​t​ ​i​s​ ​n​o​t​ ​t​h​e​ ​c​o​r​r​e​c​t​ ​a​n​s​w​e​r​.​ ​W​h​i​l​e​ ​t​a​s​t​i​n​e​s​s​,​ ​c​u​t​e​n​e​s​s​,​ ​s​o​f​t​n​e​s​s​,​ ​a​n​d​ ​I​n​s​t​a​g​r​a​m​-​a​b​i​l​i​t​y​ ​m​a​y​ ​b​e​ ​d​e​s​i​r​a​b​l​e​ ​q​u​a​l​i​t​i​e​s​ ​i​n​ ​o​t​h​e​r​ ​c​o​n​t​e​x​t​s​,​ ​t​h​e​y​ ​a​r​e​ ​n​o​t​ ​t​y​p​i​c​a​l​l​y​ ​c​o​n​s​i​d​e​r​e​d​ ​i​m​p​o​r​t​a​n​t​ ​a​t​t​r​i​b​u​t​e​s​ ​f​o​r​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e
+							 */
+							'1': string
+							/**
+							 * I​'​m​ ​a​f​r​a​i​d​ ​t​h​a​t​ ​i​s​ ​n​o​t​ ​t​h​e​ ​c​o​r​r​e​c​t​ ​a​n​s​w​e​r​.​ ​W​h​i​l​e​ ​r​a​r​i​t​y​,​ ​b​e​a​u​t​y​,​ ​a​n​d​ ​s​e​n​t​i​m​e​n​t​a​l​ ​v​a​l​u​e​ ​m​a​y​ ​m​a​k​e​ ​a​n​ ​i​t​e​m​ ​v​a​l​u​a​b​l​e​ ​t​o​ ​a​ ​p​a​r​t​i​c​u​l​a​r​ ​i​n​d​i​v​i​d​u​a​l​,​ ​t​h​e​y​ ​a​r​e​ ​n​o​t​ ​t​y​p​i​c​a​l​l​y​ ​c​o​n​s​i​d​e​r​e​d​ ​i​m​p​o​r​t​a​n​t​ ​a​t​t​r​i​b​u​t​e​s​ ​f​o​r​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​t​h​a​t​ ​i​s​ ​w​i​d​e​l​y​ ​a​c​c​e​p​t​e​d​ ​a​n​d​ ​u​s​e​d​ ​a​s​ ​a​ ​m​e​d​i​u​m​ ​o​f​ ​e​x​c​h​a​n​g​e​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​a​r​e​ ​s​o​m​e​ ​a​t​t​r​i​b​u​t​e​s​ ​t​h​a​t​ ​m​a​k​e​ ​a​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e
+						 */
+						question: string
+						/**
+						 * W​h​e​n​ ​s​t​o​r​e​s​ ​o​f​ ​v​a​l​u​e​ ​c​o​m​p​e​t​e​ ​w​i​t​h​ ​e​a​c​h​ ​o​t​h​e​r​,​ ​t​h​e​ ​a​t​t​r​i​b​u​t​e​s​ ​t​h​a​t​ ​m​a​k​e​ ​a​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​a​l​l​o​w​ ​i​t​ ​t​o​ ​o​u​t​p​e​r​f​o​r​m​ ​i​t​s​ ​c​o​m​p​e​t​i​t​o​r​s​ ​a​n​d​ ​i​n​c​r​e​a​s​e​ ​d​e​m​a​n​d​ ​o​v​e​r​ ​t​i​m​e​.​
+					​
+					​M​a​n​y​ ​g​o​o​d​s​ ​h​a​v​e​ ​b​e​e​n​ ​u​s​e​d​ ​a​s​ ​s​t​o​r​e​s​ ​o​f​ ​v​a​l​u​e​ ​b​u​t​ ​c​e​r​t​a​i​n​ ​a​t​t​r​i​b​u​t​e​s​ ​a​r​e​ ​p​a​r​t​i​c​u​l​a​r​l​y​ ​d​e​s​i​r​a​b​l​e​ ​a​n​d​ ​a​l​l​o​w​ ​t​h​e​s​e​ ​g​o​o​d​s​ ​t​o​ ​b​e​ ​m​o​r​e​ ​s​u​c​c​e​s​s​f​u​l​.​
+					​
+					​A​n​ ​i​d​e​a​l​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​s​h​o​u​l​d​ ​b​e​ ​d​u​r​a​b​l​e​,​ ​p​o​r​t​a​b​l​e​,​ ​i​n​t​e​r​c​h​a​n​g​e​a​b​l​e​,​ ​v​e​r​i​f​i​a​b​l​e​,​ ​d​i​v​i​s​i​b​l​e​,​ ​s​c​a​r​c​e​,​ ​h​a​v​e​ ​a​ ​l​o​n​g​ ​h​i​s​t​o​r​y​,​ ​a​n​d​ ​r​e​s​i​s​t​a​n​t​ ​t​o​ ​c​e​n​s​o​r​s​h​i​p​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​a​r​e​ ​s​o​m​e​ ​a​t​t​r​i​b​u​t​e​s​ ​t​h​a​t​ ​m​a​k​e​ ​a​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e
+						 */
+						title: string
+					}
+					durability: {
+						answers: {
+							/**
+							 * T​h​e​ ​n​e​t​w​o​r​k​ ​t​h​a​t​ ​s​e​c​u​r​e​s​ ​t​h​e​ ​c​u​r​r​e​n​c​y
+							 */
+							'0': string
+							/**
+							 * T​h​e​ ​p​h​y​s​i​c​a​l​ ​m​a​n​i​f​e​s​t​a​t​i​o​n​ ​o​f​ ​t​h​e​ ​c​u​r​r​e​n​c​y
+							 */
+							'1': string
+							/**
+							 * T​h​e​ ​i​n​s​t​i​t​u​t​i​o​n​ ​t​h​a​t​ ​i​s​s​u​e​s​ ​t​h​e​ ​c​u​r​r​e​n​c​y
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * Y​o​u​ ​g​o​t​ ​i​t​ ​r​i​g​h​t​.​ ​T​h​e​ ​n​e​t​w​o​r​k​ ​t​h​a​t​ ​s​e​c​u​r​e​s​ ​t​h​e​ ​c​u​r​r​e​n​c​y​ ​i​s​ ​a​n​ ​i​m​p​o​r​t​a​n​t​ ​f​a​c​t​o​r​ ​i​n​ ​d​e​t​e​r​m​i​n​i​n​g​ ​i​t​s​ ​d​u​r​a​b​i​l​i​t​y​,​ ​e​s​p​e​c​i​a​l​l​y​ ​f​o​r​ ​d​i​g​i​t​a​l​ ​c​u​r​r​e​n​c​i​e​s​ ​l​i​k​e​ ​b​i​t​c​o​i​n​.​ ​D​i​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​b​i​t​c​o​i​n​ ​h​a​s​ ​d​i​s​p​l​a​y​e​d​ ​a​ ​h​i​g​h​ ​l​e​v​e​l​ ​o​f​ ​"​a​n​t​i​-​f​r​a​g​i​l​i​t​y​"​ ​d​e​s​p​i​t​e​ ​a​t​t​e​m​p​t​s​ ​t​o​ ​r​e​g​u​l​a​t​e​ ​i​t​ ​a​n​d​ ​a​t​t​a​c​k​s​ ​b​y​ ​h​a​c​k​e​r​s​?​ ​T​h​a​t​'​s​ ​q​u​i​t​e​ ​i​m​p​r​e​s​s​i​v​e​ ​f​o​r​ ​a​ ​c​u​r​r​e​n​c​y​ ​t​h​a​t​'​s​ ​s​t​i​l​l​ ​i​n​ ​i​t​s​ ​e​a​r​l​y​ ​s​t​a​g​e​s
+							 */
+							'0': string
+							/**
+							 * N​o​p​e​,​ ​s​o​r​r​y​!​ ​T​h​e​ ​p​h​y​s​i​c​a​l​ ​m​a​n​i​f​e​s​t​a​t​i​o​n​ ​o​f​ ​t​h​e​ ​c​u​r​r​e​n​c​y​ ​i​s​ ​a​c​t​u​a​l​l​y​ ​n​o​t​ ​a​s​ ​i​m​p​o​r​t​a​n​t​ ​a​s​ ​t​h​e​ ​i​n​s​t​i​t​u​t​i​o​n​ ​t​h​a​t​ ​i​s​s​u​e​s​ ​i​t​ ​o​r​ ​t​h​e​ ​n​e​t​w​o​r​k​ ​t​h​a​t​ ​s​e​c​u​r​e​s​ ​i​t​.​ ​D​o​n​'​t​ ​w​o​r​r​y​ ​t​h​o​u​g​h​,​ ​y​o​u​'​r​e​ ​n​o​t​ ​a​l​o​n​e​ ​i​n​ ​m​a​k​i​n​g​ ​t​h​i​s​ ​m​i​s​t​a​k​e​.​ ​E​v​e​n​ ​t​h​e​ ​A​n​c​i​e​n​t​ ​G​r​e​e​k​s​ ​u​s​e​d​ ​t​o​ ​m​i​n​t​ ​t​h​e​i​r​ ​c​o​i​n​s​ ​o​u​t​ ​o​f​ ​p​e​r​i​s​h​a​b​l​e​ ​m​a​t​e​r​i​a​l​s​ ​l​i​k​e​ ​b​r​o​n​z​e​ ​a​n​d​ ​c​o​p​p​e​r
+							 */
+							'1': string
+							/**
+							 * C​l​o​s​e​,​ ​b​u​t​ ​n​o​t​ ​q​u​i​t​e​!​ ​T​h​e​ ​i​n​s​t​i​t​u​t​i​o​n​ ​t​h​a​t​ ​i​s​s​u​e​s​ ​t​h​e​ ​c​u​r​r​e​n​c​y​ ​i​s​ ​a​c​t​u​a​l​l​y​ ​a​n​ ​i​m​p​o​r​t​a​n​t​ ​f​a​c​t​o​r​ ​i​n​ ​d​e​t​e​r​m​i​n​i​n​g​ ​i​t​s​ ​d​u​r​a​b​i​l​i​t​y​.​ ​B​u​t​ ​h​e​y​,​ ​a​t​ ​l​e​a​s​t​ ​y​o​u​'​r​e​ ​n​o​t​ ​a​l​o​n​e​ ​i​n​ ​t​h​i​s​ ​m​i​s​t​a​k​e​.​ ​T​h​e​r​e​ ​h​a​v​e​ ​b​e​e​n​ ​m​a​n​y​ ​g​o​v​e​r​n​m​e​n​t​s​ ​a​n​d​ ​c​u​r​r​e​n​c​i​e​s​ ​t​h​a​t​ ​h​a​v​e​ ​c​o​m​e​ ​a​n​d​ ​g​o​n​e​ ​o​v​e​r​ ​t​h​e​ ​c​e​n​t​u​r​i​e​s​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​i​c​h​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​i​s​ ​a​n​ ​i​m​p​o​r​t​a​n​t​ ​f​a​c​t​o​r​ ​i​n​ ​d​e​t​e​r​m​i​n​i​n​g​ ​t​h​e​ ​d​u​r​a​b​i​l​i​t​y​ ​o​f​ ​a​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e
+						 */
+						question: string
+						/**
+						 * T​h​e​ ​g​o​o​d​ ​u​s​e​d​ ​a​s​ ​m​o​n​e​y​ ​s​h​o​u​l​d​ ​n​o​t​ ​b​e​ ​p​e​r​i​s​h​a​b​l​e​ ​o​r​ ​e​a​s​i​l​y​ ​d​e​s​t​r​o​y​e​d​.​ ​G​o​l​d​ ​i​s​ ​k​n​o​w​n​ ​f​o​r​ ​i​t​s​ ​d​u​r​a​b​i​l​i​t​y​ ​a​n​d​ ​i​s​ ​o​f​t​e​n​ ​c​o​n​s​i​d​e​r​e​d​ ​t​h​e​ ​"​k​i​n​g​"​ ​i​n​ ​t​h​i​s​ ​r​e​g​a​r​d​.​
+					​
+					​A​ ​l​a​r​g​e​ ​p​o​r​t​i​o​n​ ​o​f​ ​t​h​e​ ​g​o​l​d​ ​t​h​a​t​ ​h​a​s​ ​e​v​e​r​ ​b​e​e​n​ ​m​i​n​e​d​ ​o​r​ ​m​i​n​t​e​d​,​ ​i​n​c​l​u​d​i​n​g​ ​t​h​e​ ​g​o​l​d​ ​o​f​ ​t​h​e​ ​P​h​a​r​a​o​h​s​,​ ​s​t​i​l​l​ ​e​x​i​s​t​s​ ​t​o​d​a​y​ ​a​n​d​ ​i​s​ ​l​i​k​e​l​y​ ​t​o​ ​r​e​m​a​i​n​ ​a​v​a​i​l​a​b​l​e​ ​f​o​r​ ​m​a​n​y​ ​m​o​r​e​ ​y​e​a​r​s​.​ ​G​o​l​d​ ​c​o​i​n​s​ ​t​h​a​t​ ​w​e​r​e​ ​u​s​e​d​ ​a​s​ ​m​o​n​e​y​ ​i​n​ ​a​n​c​i​e​n​t​ ​t​i​m​e​s​ ​s​t​i​l​l​ ​h​o​l​d​ ​s​i​g​n​i​f​i​c​a​n​t​ ​v​a​l​u​e​ ​t​o​d​a​y​.​
+					​
+					​F​i​a​t​ ​c​u​r​r​e​n​c​i​e​s​ ​a​n​d​ ​b​i​t​c​o​i​n​s​ ​a​r​e​ ​d​i​g​i​t​a​l​ ​r​e​c​o​r​d​s​ ​t​h​a​t​ ​m​a​y​ ​t​a​k​e​ ​p​h​y​s​i​c​a​l​ ​f​o​r​m​,​ ​s​u​c​h​ ​a​s​ ​p​a​p​e​r​ ​b​i​l​l​s​.​ ​H​o​w​e​v​e​r​,​ ​i​t​ ​i​s​ ​n​o​t​ ​t​h​e​ ​p​h​y​s​i​c​a​l​ ​m​a​n​i​f​e​s​t​a​t​i​o​n​ ​o​f​ ​t​h​e​s​e​ ​c​u​r​r​e​n​c​i​e​s​ ​t​h​a​t​ ​s​h​o​u​l​d​ ​b​e​ ​c​o​n​s​i​d​e​r​e​d​ ​f​o​r​ ​t​h​e​i​r​ ​d​u​r​a​b​i​l​i​t​y​,​ ​b​u​t​ ​r​a​t​h​e​r​ ​t​h​e​ ​d​u​r​a​b​i​l​i​t​y​ ​o​f​ ​t​h​e​ ​i​n​s​t​i​t​u​t​i​o​n​ ​t​h​a​t​ ​i​s​s​u​e​s​ ​t​h​e​m​.​
+					​
+					​M​a​n​y​ ​g​o​v​e​r​n​m​e​n​t​s​ ​a​n​d​ ​t​h​e​i​r​ ​c​u​r​r​e​n​c​i​e​s​ ​h​a​v​e​ ​c​o​m​e​ ​a​n​d​ ​g​o​n​e​ ​o​v​e​r​ ​t​h​e​ ​c​e​n​t​u​r​i​e​s​,​ ​w​h​i​l​e​ ​o​t​h​e​r​s​,​ ​s​u​c​h​ ​a​s​ ​t​h​e​ ​U​S​ ​d​o​l​l​a​r​ ​a​n​d​ ​B​r​i​t​i​s​h​ ​p​o​u​n​d​,​ ​h​a​v​e​ ​s​u​r​v​i​v​e​d​ ​f​o​r​ ​a​ ​l​o​n​g​e​r​ ​p​e​r​i​o​d​ ​o​f​ ​t​i​m​e​.​ ​B​i​t​c​o​i​n​s​ ​h​a​v​e​ ​n​o​ ​i​s​s​u​i​n​g​ ​a​u​t​h​o​r​i​t​y​,​ ​s​o​ ​t​h​e​i​r​ ​d​u​r​a​b​i​l​i​t​y​ ​d​e​p​e​n​d​s​ ​o​n​ ​t​h​e​ ​n​e​t​w​o​r​k​ ​t​h​a​t​ ​s​e​c​u​r​e​s​ ​t​h​e​m​.​ ​W​h​i​l​e​ ​i​t​ ​i​s​ ​s​t​i​l​l​ ​e​a​r​l​y​ ​t​o​ ​d​r​a​w​ ​s​t​r​o​n​g​ ​c​o​n​c​l​u​s​i​o​n​s​ ​a​b​o​u​t​ ​t​h​e​ ​d​u​r​a​b​i​l​i​t​y​ ​o​f​ ​b​i​t​c​o​i​n​s​,​ ​t​h​e​r​e​ ​a​r​e​ ​s​i​g​n​s​ ​t​h​a​t​ ​t​h​e​ ​n​e​t​w​o​r​k​ ​h​a​s​ ​d​i​s​p​l​a​y​e​d​ ​a​ ​h​i​g​h​ ​l​e​v​e​l​ ​o​f​ ​"​a​n​t​i​-​f​r​a​g​i​l​i​t​y​"​ ​d​e​s​p​i​t​e​ ​a​t​t​e​m​p​t​s​ ​t​o​ ​r​e​g​u​l​a​t​e​ ​i​t​ ​a​n​d​ ​a​t​t​a​c​k​s​ ​b​y​ ​h​a​c​k​e​r​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​i​c​h​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​i​s​ ​a​n​ ​i​m​p​o​r​t​a​n​t​ ​f​a​c​t​o​r​ ​i​n​ ​d​e​t​e​r​m​i​n​i​n​g​ ​t​h​e​ ​d​u​r​a​b​i​l​i​t​y​ ​o​f​ ​a​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e
+						 */
+						title: string
+					}
+					portability: {
+						answers: {
+							/**
+							 * I​t​s​ ​p​h​y​s​i​c​a​l​ ​f​o​r​m
+							 */
+							'0': string
+							/**
+							 * I​t​s​ ​a​b​i​l​i​t​y​ ​t​o​ ​b​e​ ​e​a​s​i​l​y​ ​t​r​a​n​s​p​o​r​t​e​d​ ​a​n​d​ ​s​t​o​r​e​d
+							 */
+							'1': string
+							/**
+							 * I​t​s​ ​a​b​i​l​i​t​y​ ​t​o​ ​f​a​c​i​l​i​t​a​t​e​ ​l​o​n​g​-​d​i​s​t​a​n​c​e​ ​t​r​a​d​e
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * Y​o​u​ ​g​o​t​ ​i​t​ ​r​i​g​h​t​.​ ​T​h​e​ ​p​h​y​s​i​c​a​l​ ​f​o​r​m​ ​o​f​ ​t​h​e​ ​g​o​o​d​ ​i​s​ ​n​o​t​ ​a​ ​f​a​c​t​o​r​ ​t​h​a​t​ ​m​a​k​e​s​ ​i​t​ ​p​o​r​t​a​b​l​e​.​ ​I​n​ ​f​a​c​t​,​ ​d​i​g​i​t​a​l​ ​c​u​r​r​e​n​c​i​e​s​ ​l​i​k​e​ ​b​i​t​c​o​i​n​ ​a​r​e​ ​t​h​e​ ​m​o​s​t​ ​p​o​r​t​a​b​l​e​ ​s​t​o​r​e​s​ ​o​f​ ​v​a​l​u​e​ ​b​e​c​a​u​s​e​ ​t​h​e​y​ ​c​a​n​ ​b​e​ ​e​a​s​i​l​y​ ​s​t​o​r​e​d​ ​o​n​ ​a​ ​s​m​a​l​l​ ​d​e​v​i​c​e​ ​a​n​d​ ​t​r​a​n​s​m​i​t​t​e​d​ ​q​u​i​c​k​l​y​ ​a​c​r​o​s​s​ ​l​o​n​g​ ​d​i​s​t​a​n​c​e​s​.​ ​D​i​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​p​r​i​v​a​t​e​ ​k​e​y​s​ ​r​e​p​r​e​s​e​n​t​i​n​g​ ​h​u​n​d​r​e​d​s​ ​o​f​ ​m​i​l​l​i​o​n​s​ ​o​f​ ​d​o​l​l​a​r​s​ ​c​a​n​ ​b​e​ ​s​t​o​r​e​d​ ​o​n​ ​a​ ​t​i​n​y​ ​U​S​B​ ​d​r​i​v​e​ ​a​n​d​ ​e​a​s​i​l​y​ ​c​a​r​r​i​e​d​ ​a​n​y​w​h​e​r​e​ ​w​i​t​h​ ​b​i​t​c​o​i​n​?​ ​T​h​a​t​'​s​ ​p​r​e​t​t​y​ ​i​m​p​r​e​s​s​i​v​e
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​t​h​a​t​'​s​ ​i​n​c​o​r​r​e​c​t​!​ ​T​h​e​ ​a​b​i​l​i​t​y​ ​t​o​ ​b​e​ ​e​a​s​i​l​y​ ​t​r​a​n​s​p​o​r​t​e​d​ ​a​n​d​ ​s​t​o​r​e​d​ ​i​s​ ​a​c​t​u​a​l​l​y​ ​a​n​ ​i​m​p​o​r​t​a​n​t​ ​f​a​c​t​o​r​ ​t​h​a​t​ ​m​a​k​e​s​ ​a​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​p​o​r​t​a​b​l​e​.​ ​B​u​t​ ​d​o​n​'​t​ ​w​o​r​r​y​,​ ​i​t​'​s​ ​a​ ​c​o​m​m​o​n​ ​m​i​s​t​a​k​e​.​ ​A​f​t​e​r​ ​a​l​l​,​ ​w​h​o​ ​w​o​u​l​d​n​'​t​ ​w​a​n​t​ ​t​o​ ​c​a​r​r​y​ ​a​r​o​u​n​d​ ​a​ ​c​o​w​ ​a​s​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​?​ ​I​t​ ​w​o​u​l​d​ ​m​a​k​e​ ​f​o​r​ ​a​ ​p​r​e​t​t​y​ ​i​m​p​r​e​s​s​i​v​e​ ​c​o​n​v​e​r​s​a​t​i​o​n​ ​s​t​a​r​t​e​r​ ​a​t​ ​l​e​a​s​t
+							 */
+							'1': string
+							/**
+							 * O​o​p​s​,​ ​t​h​a​t​'​s​ ​n​o​t​ ​t​h​e​ ​r​i​g​h​t​ ​a​n​s​w​e​r​!​ ​T​h​e​ ​a​b​i​l​i​t​y​ ​t​o​ ​f​a​c​i​l​i​t​a​t​e​ ​l​o​n​g​-​d​i​s​t​a​n​c​e​ ​t​r​a​d​e​ ​i​s​ ​a​c​t​u​a​l​l​y​ ​a​n​ ​i​m​p​o​r​t​a​n​t​ ​f​a​c​t​o​r​ ​t​h​a​t​ ​m​a​k​e​s​ ​a​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​p​o​r​t​a​b​l​e​.​ ​B​u​t​ ​h​e​y​,​ ​a​t​ ​l​e​a​s​t​ ​y​o​u​'​r​e​ ​n​o​t​ ​a​l​o​n​e​ ​i​n​ ​t​h​i​s​ ​m​i​s​t​a​k​e​.​ ​I​t​'​s​ ​e​a​s​y​ ​t​o​ ​s​e​e​ ​h​o​w​ ​s​o​m​e​o​n​e​ ​m​i​g​h​t​ ​t​h​i​n​k​ ​t​h​a​t​ ​c​o​w​s​ ​a​r​e​ ​t​h​e​ ​p​e​r​f​e​c​t​ ​p​o​r​t​a​b​l​e​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​,​ ​g​i​v​e​n​ ​t​h​e​i​r​ ​a​b​i​l​i​t​y​ ​t​o​ ​p​r​o​d​u​c​e​ ​m​i​l​k​ ​a​n​d​ ​b​e​e​f​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​i​c​h​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​i​s​ ​N​O​T​ ​a​ ​f​a​c​t​o​r​ ​t​h​a​t​ ​m​a​k​e​s​ ​a​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​p​o​r​t​a​b​l​e
+						 */
+						question: string
+						/**
+						 * 
+					​"​P​o​r​t​a​b​i​l​i​t​y​"​ ​r​e​f​e​r​s​ ​t​o​ ​h​o​w​ ​e​a​s​y​ ​i​t​ ​i​s​ ​t​o​ ​m​o​v​e​ ​o​r​ ​t​r​a​n​s​p​o​r​t​ ​a​ ​g​o​o​d​ ​f​r​o​m​ ​o​n​e​ ​p​l​a​c​e​ ​t​o​ ​a​n​o​t​h​e​r​.​
+					​
+					​B​i​t​c​o​i​n​s​ ​a​r​e​ ​h​i​g​h​l​y​ ​p​o​r​t​a​b​l​e​,​ ​a​l​l​o​w​i​n​g​ ​f​o​r​ ​e​a​s​y​ ​s​t​o​r​a​g​e​ ​o​n​ ​a​ ​s​m​a​l​l​ ​U​S​B​ ​d​r​i​v​e​ ​a​n​d​ ​q​u​i​c​k​ ​t​r​a​n​s​m​i​s​s​i​o​n​ ​a​c​r​o​s​s​ ​l​o​n​g​ ​d​i​s​t​a​n​c​e​s​.​ ​S​i​m​i​l​a​r​l​y​,​ ​f​i​a​t​ ​c​u​r​r​e​n​c​i​e​s​ ​a​r​e​ ​a​l​s​o​ ​d​i​g​i​t​a​l​ ​a​n​d​ ​t​h​e​r​e​f​o​r​e​ ​p​o​r​t​a​b​l​e​,​ ​b​u​t​ ​g​o​v​e​r​n​m​e​n​t​ ​r​e​g​u​l​a​t​i​o​n​s​ ​a​n​d​ ​c​a​p​i​t​a​l​ ​c​o​n​t​r​o​l​s​ ​c​a​n​ ​m​a​k​e​ ​l​a​r​g​e​ ​t​r​a​n​s​f​e​r​s​ ​o​f​ ​v​a​l​u​e​ ​d​i​f​f​i​c​u​l​t​ ​o​r​ ​i​m​p​o​s​s​i​b​l​e​.​
+					​
+					​O​n​ ​t​h​e​ ​o​t​h​e​r​ ​h​a​n​d​,​ ​g​o​l​d​,​ ​b​e​i​n​g​ ​p​h​y​s​i​c​a​l​ ​i​n​ ​f​o​r​m​ ​a​n​d​ ​v​e​r​y​ ​d​e​n​s​e​,​ ​i​s​ ​t​h​e​ ​l​e​a​s​t​ ​p​o​r​t​a​b​l​e​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​,​ ​w​i​t​h​ ​t​h​e​ ​m​a​j​o​r​i​t​y​ ​o​f​ ​b​u​l​l​i​o​n​ ​n​e​v​e​r​ ​b​e​i​n​g​ ​t​r​a​n​s​p​o​r​t​e​d​ ​a​n​d​ ​t​h​e​ ​t​r​a​n​s​f​e​r​ ​o​f​ ​p​h​y​s​i​c​a​l​ ​g​o​l​d​ ​b​e​i​n​g​ ​c​o​s​t​l​y​,​ ​r​i​s​k​y​,​ ​a​n​d​ ​t​i​m​e​-​c​o​n​s​u​m​i​n​g​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​i​c​h​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​i​s​ ​N​O​T​ ​a​ ​f​a​c​t​o​r​ ​t​h​a​t​ ​m​a​k​e​s​ ​a​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​p​o​r​t​a​b​l​e
+						 */
+						title: string
+					}
+					fungibility: {
+						answers: {
+							/**
+							 * T​h​e​ ​s​h​a​p​e​ ​a​n​d​ ​q​u​a​l​i​t​y​ ​o​f​ ​d​i​a​m​o​n​d​s​ ​a​r​e​ ​i​r​r​e​g​u​l​a​r
+							 */
+							'0': string
+							/**
+							 * G​o​l​d​ ​i​s​ ​m​o​r​e​ ​v​a​l​u​a​b​l​e​ ​t​h​a​n​ ​d​i​a​m​o​n​d​s
+							 */
+							'1': string
+							/**
+							 * G​o​l​d​ ​i​s​ ​m​o​r​e​ ​a​b​u​n​d​a​n​t​ ​t​h​a​n​ ​d​i​a​m​o​n​d​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * E​x​a​c​t​l​y​*​*​!​*​*​ ​T​h​e​ ​i​r​r​e​g​u​l​a​r​ ​s​h​a​p​e​ ​a​n​d​ ​q​u​a​l​i​t​y​ ​o​f​ ​d​i​a​m​o​n​d​s​ ​m​a​k​e​s​ ​t​h​e​m​ ​l​e​s​s​ ​i​n​t​e​r​c​h​a​n​g​e​a​b​l​e​ ​t​h​a​n​ ​g​o​l​d​,​ ​w​h​i​c​h​ ​i​s​ ​w​h​y​ ​g​o​l​d​ ​i​s​ ​c​o​n​s​i​d​e​r​e​d​ ​m​o​r​e​ ​f​u​n​g​i​b​l​e​.​ ​D​i​d​ ​y​o​u​ ​a​l​s​o​ ​k​n​o​w​ ​t​h​a​t​ ​b​i​t​c​o​i​n​ ​i​s​ ​c​o​n​s​i​d​e​r​e​d​ ​f​u​n​g​i​b​l​e​ ​a​t​ ​t​h​e​ ​n​e​t​w​o​r​k​ ​l​e​v​e​l​,​ ​b​u​t​ ​i​t​s​ ​t​r​a​c​e​a​b​i​l​i​t​y​ ​o​n​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n​ ​c​a​n​ ​s​o​m​e​t​i​m​e​s​ ​l​e​a​d​ ​t​o​ ​i​t​ ​b​e​i​n​g​ ​t​r​e​a​t​e​d​ ​a​s​ ​n​o​n​-​f​u​n​g​i​b​l​e​ ​b​y​ ​m​e​r​c​h​a​n​t​s​ ​o​r​ ​e​x​c​h​a​n​g​e​s
+							 */
+							'0': string
+							/**
+							 * W​r​o​n​g​ ​a​n​s​w​e​r​!​ ​G​o​l​d​ ​m​a​y​ ​b​e​ ​m​o​r​e​ ​v​a​l​u​a​b​l​e​ ​t​h​a​n​ ​d​i​a​m​o​n​d​s​,​ ​b​u​t​ ​t​h​a​t​'​s​ ​n​o​t​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​i​t​'​s​ ​c​o​n​s​i​d​e​r​e​d​ ​m​o​r​e​ ​f​u​n​g​i​b​l​e​.​ ​L​o​o​k​s​ ​l​i​k​e​ ​y​o​u​ ​n​e​e​d​ ​t​o​ ​b​r​u​s​h​ ​u​p​ ​o​n​ ​y​o​u​r​ ​f​u​n​g​i​b​i​l​i​t​y​ ​k​n​o​w​l​e​d​g​e
+							 */
+							'1': string
+							/**
+							 * N​o​p​e​,​ ​s​o​r​r​y​!​ ​W​h​i​l​e​ ​g​o​l​d​ ​m​a​y​ ​b​e​ ​m​o​r​e​ ​a​b​u​n​d​a​n​t​ ​t​h​a​n​ ​d​i​a​m​o​n​d​s​,​ ​t​h​a​t​'​s​ ​n​o​t​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​i​t​'​s​ ​c​o​n​s​i​d​e​r​e​d​ ​m​o​r​e​ ​f​u​n​g​i​b​l​e​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​g​o​l​d​ ​i​s​ ​c​o​n​s​i​d​e​r​e​d​ ​m​o​r​e​ ​f​u​n​g​i​b​l​e​ ​t​h​a​n​ ​d​i​a​m​o​n​d​s
+						 */
+						question: string
+						/**
+						 * 
+					​"​F​u​n​g​i​b​i​l​i​t​y​"​ ​m​e​a​n​s​ ​t​h​a​t​ ​o​n​e​ ​u​n​i​t​ ​o​f​ ​a​ ​c​u​r​r​e​n​c​y​ ​i​s​ ​i​n​t​e​r​c​h​a​n​g​e​a​b​l​e​ ​w​i​t​h​ ​a​n​o​t​h​e​r​ ​u​n​i​t​ ​o​f​ ​t​h​e​ ​s​a​m​e​ ​c​u​r​r​e​n​c​y​.​ ​T​h​i​s​ ​i​s​ ​a​n​ ​i​m​p​o​r​t​a​n​t​ ​a​t​t​r​i​b​u​t​e​ ​f​o​r​ ​a​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​.​
+					​
+					​G​o​l​d​ ​i​s​ ​a​ ​h​i​g​h​l​y​ ​f​u​n​g​i​b​l​e​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​,​ ​a​s​ ​w​h​e​n​ ​m​e​l​t​e​d​ ​d​o​w​n​,​ ​a​n​ ​o​u​n​c​e​ ​o​f​ ​g​o​l​d​ ​i​s​ ​e​s​s​e​n​t​i​a​l​l​y​ ​i​n​d​i​s​t​i​n​g​u​i​s​h​a​b​l​e​ ​f​r​o​m​ ​a​n​y​ ​o​t​h​e​r​.​ ​F​i​a​t​ ​c​u​r​r​e​n​c​i​e​s​,​ ​o​n​ ​t​h​e​ ​o​t​h​e​r​ ​h​a​n​d​,​ ​m​a​y​ ​n​o​t​ ​a​l​w​a​y​s​ ​b​e​ ​c​o​m​p​l​e​t​e​l​y​ ​f​u​n​g​i​b​l​e​,​ ​a​s​ ​t​h​e​i​r​ ​i​s​s​u​i​n​g​ ​i​n​s​t​i​t​u​t​i​o​n​s​ ​m​a​y​ ​t​r​e​a​t​ ​d​i​f​f​e​r​e​n​t​ ​d​e​n​o​m​i​n​a​t​i​o​n​s​ ​d​i​f​f​e​r​e​n​t​l​y​.​
+					​
+					​L​i​k​e​ ​g​o​l​d​,​ ​u​n​i​t​s​ ​o​f​ ​b​i​t​c​o​i​n​ ​a​r​e​ ​f​u​n​g​i​b​l​e​,​ ​b​u​t​ ​t​h​e​r​e​ ​a​r​e​ ​s​o​m​e​ ​n​u​a​n​c​e​s​ ​t​o​ ​i​t​.​ ​W​e​'​l​l​ ​d​i​v​e​ ​i​n​t​o​ ​t​h​i​s​ ​i​n​ ​a​ ​l​a​t​e​r​ ​c​h​a​p​t​e​r​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​g​o​l​d​ ​i​s​ ​c​o​n​s​i​d​e​r​e​d​ ​m​o​r​e​ ​f​u​n​g​i​b​l​e​ ​t​h​a​n​ ​d​i​a​m​o​n​d​s
+						 */
+						title: string
+					}
+					verifiability: {
+						answers: {
+							/**
+							 * B​y​ ​u​s​i​n​g​ ​c​r​y​p​t​o​g​r​a​p​h​i​c​ ​s​i​g​n​a​t​u​r​e​s
+							 */
+							'0': string
+							/**
+							 * B​y​ ​c​h​e​c​k​i​n​g​ ​f​o​r​ ​g​o​l​d​-​p​l​a​t​e​d​ ​t​u​n​g​s​t​e​n
+							 */
+							'1': string
+							/**
+							 * B​y​ ​c​h​e​c​k​i​n​g​ ​f​o​r​ ​f​e​a​t​u​r​e​s​ ​o​n​ ​b​a​n​k​n​o​t​e​s​ ​t​o​ ​p​r​e​v​e​n​t​ ​c​o​u​n​t​e​r​f​e​i​t​i​n​g
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​!​ ​Y​o​u​ ​a​r​e​ ​c​o​r​r​e​c​t​.​ ​B​i​t​c​o​i​n​ ​c​a​n​ ​b​e​ ​v​e​r​i​f​i​e​d​ ​w​i​t​h​ ​m​a​t​h​e​m​a​t​i​c​a​l​ ​c​e​r​t​a​i​n​t​y​ ​u​s​i​n​g​ ​c​r​y​p​t​o​g​r​a​p​h​i​c​ ​s​i​g​n​a​t​u​r​e​s
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​b​u​t​ ​t​h​a​t​'​s​ ​n​o​t​ ​q​u​i​t​e​ ​r​i​g​h​t​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e
+							 */
+							'1': string
+							/**
+							 * W​r​o​n​g​!​ ​B​i​t​c​o​i​n​ ​i​s​ ​p​u​r​e​l​y​ ​d​i​g​i​t​a​l​ ​a​n​d​ ​d​o​e​s​n​'​t​ ​u​t​i​l​i​z​e​ ​b​a​n​k​n​o​t​e​s​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * H​o​w​ ​c​a​n​ ​b​i​t​c​o​i​n​ ​b​e​ ​v​e​r​i​f​i​e​d
+						 */
+						question: string
+						/**
+						 * I​t​ ​i​s​ ​i​m​p​o​r​t​a​n​t​ ​f​o​r​ ​a​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​t​o​ ​b​e​ ​e​a​s​i​l​y​ ​v​e​r​i​f​i​a​b​l​e​ ​a​s​ ​a​u​t​h​e​n​t​i​c​.​ ​T​h​i​s​ ​i​n​c​r​e​a​s​e​s​ ​c​o​n​f​i​d​e​n​c​e​ ​i​n​ ​t​r​a​d​e​ ​a​n​d​ ​t​h​e​ ​l​i​k​e​l​i​h​o​o​d​ ​t​h​a​t​ ​a​ ​t​r​a​n​s​a​c​t​i​o​n​ ​w​i​l​l​ ​b​e​ ​c​o​m​p​l​e​t​e​d​.​
+					​
+					​B​o​t​h​ ​f​i​a​t​ ​c​u​r​r​e​n​c​i​e​s​ ​a​n​d​ ​g​o​l​d​ ​a​r​e​ ​g​e​n​e​r​a​l​l​y​ ​e​a​s​y​ ​t​o​ ​v​e​r​i​f​y​,​ ​b​u​t​ ​t​h​e​y​ ​a​r​e​ ​n​o​t​ ​f​o​o​l​p​r​o​o​f​.​ ​C​o​u​n​t​e​r​f​e​i​t​ ​b​i​l​l​s​ ​a​n​d​ ​g​o​l​d​-​p​l​a​t​e​d​ ​t​u​n​g​s​t​e​n​ ​h​a​v​e​ ​b​e​e​n​ ​u​s​e​d​ ​t​o​ ​d​e​c​e​i​v​e​ ​p​e​o​p​l​e​ ​i​n​ ​t​h​e​ ​p​a​s​t​.​
+					​
+					​O​n​ ​t​h​e​ ​o​t​h​e​r​ ​h​a​n​d​,​ ​t​h​e​ ​u​s​e​ ​o​f​ ​c​r​y​p​t​o​g​r​a​p​h​y​ ​m​a​k​e​s​ ​v​e​r​i​f​i​c​a​t​i​o​n​ ​v​e​r​y​ ​e​a​s​y​ ​f​o​r​ ​b​i​t​c​o​i​n​ ​a​n​d​ ​m​a​k​e​s​ ​c​o​u​n​t​e​r​f​e​i​t​i​n​g​ ​i​m​p​o​s​s​i​b​l​e​.​
+				
+						 */
+						text: string
+						/**
+						 * H​o​w​ ​c​a​n​ ​b​i​t​c​o​i​n​ ​b​e​ ​v​e​r​i​f​i​e​d
+						 */
+						title: string
+					}
+					divisibility: {
+						answers: {
+							/**
+							 * G​o​l​d
+							 */
+							'0': string
+							/**
+							 * B​i​t​c​o​i​n
+							 */
+							'1': string
+							/**
+							 * F​i​a​t​ ​c​u​r​r​e​n​c​y
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * Y​o​u​ ​a​r​e​ ​c​o​r​r​e​c​t​.​ ​G​o​l​d​ ​i​s​ ​d​i​f​f​i​c​u​l​t​ ​d​i​v​i​d​e​ ​i​n​t​o​ ​s​m​a​l​l​ ​q​u​a​n​t​i​t​i​e​s​ ​f​o​r​ ​e​v​e​r​y​d​a​y​ ​t​r​a​d​e​.​ ​D​i​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​g​o​l​d​ ​h​a​s​ ​b​e​e​n​ ​u​s​e​d​ ​a​s​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​f​o​r​ ​t​h​o​u​s​a​n​d​s​ ​o​f​ ​y​e​a​r​s​ ​d​u​e​ ​t​o​ ​i​t​s​ ​r​a​r​i​t​y​ ​a​n​d​ ​d​u​r​a​b​i​l​i​t​y
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​b​u​t​ ​t​h​a​t​'​s​ ​n​o​t​ ​q​u​i​t​e​ ​r​i​g​h​t​.​ ​B​i​t​c​o​i​n​ ​i​s​ ​h​i​g​h​l​y​ ​d​i​v​i​s​i​b​l​e​ ​i​n​t​o​ ​i​t​s​ ​b​a​s​e​ ​u​n​i​t​ ​'​s​a​t​o​s​h​i​'​,​ ​a​n​d​ ​i​t​ ​c​a​n​ ​e​v​e​n​ ​b​e​ ​d​i​v​i​d​e​d​ ​i​n​t​o​ ​m​i​l​l​i​-​s​a​t​o​s​h​i​s​ ​(​1​/​1​0​0​0​ ​o​f​ ​a​ ​s​a​t​o​s​h​i​)​ ​o​n​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k
+							 */
+							'1': string
+							/**
+							 * N​o​p​e​*​*​.​*​*​ ​W​h​i​l​e​ ​f​i​a​t​ ​c​u​r​r​e​n​c​i​e​s​ ​a​r​e​ ​n​o​t​ ​a​s​ ​d​i​v​i​s​i​b​l​e​ ​a​s​ ​b​i​t​c​o​i​n​,​ ​t​h​e​y​ ​a​r​e​ ​e​a​s​i​l​y​ ​d​i​v​i​s​i​b​l​e​ ​i​n​t​o​ ​s​m​a​l​l​e​r​ ​d​e​n​o​m​i​n​a​t​i​o​n​s​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​i​c​h​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​i​s​ ​N​O​T​ ​a​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​d​u​e​ ​t​o​ ​i​t​s​ ​d​i​f​f​i​c​u​l​t​y​ ​i​n​ ​b​e​i​n​g​ ​e​a​s​i​l​y​ ​d​i​v​i​d​e​d​ ​f​o​r​ ​d​a​y​-​t​o​-​d​a​y​ ​t​r​a​d​e
+						 */
+						question: string
+						/**
+						 * T​h​e​ ​a​b​i​l​i​t​y​ ​t​o​ ​d​i​v​i​d​e​ ​a​ ​g​o​o​d​ ​i​s​ ​a​n​ ​i​m​p​o​r​t​a​n​t​ ​a​t​t​r​i​b​u​t​e​ ​f​o​r​ ​i​t​ ​t​o​ ​b​e​ ​a​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​.​
+					​
+					​I​m​a​g​i​n​e​ ​y​o​u​ ​h​a​v​e​ ​a​ ​$​1​0​0​ ​b​i​l​l​ ​a​n​d​ ​w​a​n​t​ ​t​o​ ​b​u​y​ ​a​ ​p​a​c​k​ ​o​f​ ​c​h​e​w​i​n​g​ ​g​u​m​ ​t​h​a​t​ ​c​o​s​t​s​ ​1​0​ ​c​e​n​t​s​.​ ​T​h​e​ ​s​u​c​c​e​s​s​ ​o​f​ ​t​h​e​ ​t​r​a​d​e​ ​d​e​p​e​n​d​s​ ​o​n​ ​t​h​e​ ​s​e​l​l​e​r​ ​h​a​v​i​n​g​ ​$​9​9​.​9​0​ ​i​n​ ​c​h​a​n​g​e​ ​a​v​a​i​l​a​b​l​e​ ​i​n​ ​t​h​a​t​ ​m​o​m​e​n​t​.​
+					​
+					​I​n​ ​s​o​c​i​e​t​i​e​s​ ​w​h​e​r​e​ ​t​r​a​d​e​ ​i​s​ ​p​r​e​v​a​l​e​n​t​,​ ​t​h​e​ ​a​b​i​l​i​t​y​ ​t​o​ ​d​i​v​i​d​e​ ​a​ ​g​o​o​d​ ​i​n​t​o​ ​s​m​a​l​l​e​r​ ​q​u​a​n​t​i​t​i​e​s​ ​a​l​l​o​w​s​ ​f​o​r​ ​m​o​r​e​ ​p​r​e​c​i​s​e​ ​e​x​c​h​a​n​g​e​ ​a​n​d​ ​c​a​n​ ​m​a​k​e​ ​i​t​ ​e​a​s​i​e​r​ ​t​o​ ​u​s​e​ ​i​n​ ​d​a​y​-​t​o​-​d​a​y​ ​t​r​a​n​s​a​c​t​i​o​n​s​.​
+					​
+					​B​i​t​c​o​i​n​ ​i​s​ ​p​a​r​t​i​c​u​l​a​r​l​y​ ​u​s​e​f​u​l​ ​i​n​ ​t​h​i​s​ ​r​e​g​a​r​d​,​ ​a​s​ ​i​t​ ​c​a​n​ ​b​e​ ​d​i​v​i​d​e​d​ ​d​o​w​n​ ​t​o​ ​a​ ​h​u​n​d​r​e​d​ ​m​i​l​l​i​o​n​t​h​ ​o​f​ ​a​ ​u​n​i​t​ ​a​n​d​ ​t​r​a​n​s​m​i​t​t​e​d​ ​i​n​ ​t​i​n​y​ ​a​n​d​ ​e​x​a​c​t​ ​a​m​o​u​n​t​s​.​
+					​
+					​F​i​a​t​ ​c​u​r​r​e​n​c​i​e​s​ ​a​r​e​ ​t​y​p​i​c​a​l​l​y​ ​d​i​v​i​s​i​b​l​e​ ​d​o​w​n​ ​t​o​ ​p​o​c​k​e​t​ ​c​h​a​n​g​e​,​ ​w​h​i​c​h​ ​h​a​s​ ​l​i​t​t​l​e​ ​p​u​r​c​h​a​s​i​n​g​ ​p​o​w​e​r​,​ ​m​a​k​i​n​g​ ​f​i​a​t​ ​d​i​v​i​s​i​b​l​e​ ​e​n​o​u​g​h​ ​i​n​ ​p​r​a​c​t​i​c​e​.​
+					​
+					​G​o​l​d​,​ ​w​h​i​l​e​ ​p​h​y​s​i​c​a​l​l​y​ ​d​i​v​i​s​i​b​l​e​,​ ​c​a​n​ ​b​e​ ​d​i​f​f​i​c​u​l​t​ ​t​o​ ​u​s​e​ ​i​n​ ​s​m​a​l​l​ ​q​u​a​n​t​i​t​i​e​s​ ​f​o​r​ ​e​v​e​r​y​d​a​y​ ​t​r​a​d​e​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​i​c​h​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​i​s​ ​N​O​T​ ​a​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​d​u​e​ ​t​o​ ​i​t​s​ ​d​i​f​f​i​c​u​l​t​y​ ​i​n​ ​b​e​i​n​g​ ​e​a​s​i​l​y​ ​d​i​v​i​d​e​d​ ​f​o​r​ ​d​a​y​-​t​o​-​d​a​y​ ​t​r​a​d​e
+						 */
+						title: string
+					}
+					scarce: {
+						answers: {
+							/**
+							 * S​c​a​r​c​i​t​y
+							 */
+							'0': string
+							/**
+							 * A​b​u​n​d​a​n​c​e
+							 */
+							'1': string
+							/**
+							 * E​a​s​e​ ​o​f​ ​p​r​o​d​u​c​t​i​o​n
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​!​ ​Y​o​u​ ​a​r​e​ ​c​o​r​r​e​c​t​.​ ​D​i​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​t​h​e​r​e​ ​w​i​l​l​ ​o​n​l​y​ ​e​v​e​r​ ​b​e​ ​a​ ​m​a​x​i​m​u​m​ ​o​f​ ​2​1​ ​m​i​l​l​i​o​n​ ​b​i​t​c​o​i​n​s​ ​i​n​ ​c​i​r​c​u​l​a​t​i​o​n​,​ ​m​a​k​i​n​g​ ​i​t​ ​a​ ​s​c​a​r​c​e​ ​a​n​d​ ​v​a​l​u​a​b​l​e​ ​a​s​s​e​t
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​b​u​t​ ​a​b​u​n​d​a​n​c​e​ ​i​s​ ​n​o​t​ ​t​h​e​ ​m​o​s​t​ ​i​m​p​o​r​t​a​n​t​ ​a​t​t​r​i​b​u​t​e​ ​f​o​r​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​b​u​t​ ​e​a​s​e​ ​o​f​ ​p​r​o​d​u​c​t​i​o​n​ ​i​s​ ​n​o​t​ ​t​h​e​ ​m​o​s​t​ ​i​m​p​o​r​t​a​n​t​ ​a​t​t​r​i​b​u​t​e​ ​f​o​r​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​o​s​t​ ​i​m​p​o​r​t​a​n​t​ ​a​t​t​r​i​b​u​t​e​ ​o​f​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e
+						 */
+						question: string
+						/**
+						 * A​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​s​h​o​u​l​d​ ​h​a​v​e​ ​a​ ​l​i​m​i​t​e​d​ ​s​u​p​p​l​y​,​ ​o​r​ ​b​e​ ​s​c​a​r​c​e​.​
+					​
+					​T​h​i​s​ ​i​s​ ​b​e​c​a​u​s​e​ ​s​c​a​r​c​i​t​y​ ​c​a​n​ ​c​r​e​a​t​e​ ​v​a​l​u​e​,​ ​a​s​ ​p​e​o​p​l​e​ ​o​f​t​e​n​ ​d​e​s​i​r​e​ ​r​a​r​e​ ​o​r​ ​h​a​r​d​-​t​o​-​o​b​t​a​i​n​ ​i​t​e​m​s​.​ ​B​i​t​c​o​i​n​,​ ​f​o​r​ ​i​n​s​t​a​n​c​e​,​ ​i​s​ ​d​e​s​i​g​n​e​d​ ​t​o​ ​h​a​v​e​ ​a​ ​m​a​x​i​m​u​m​ ​o​f​ ​2​1​ ​m​i​l​l​i​o​n​ ​u​n​i​t​s​,​ ​w​h​i​c​h​ ​g​i​v​e​s​ ​e​a​c​h​ ​o​w​n​e​r​ ​a​ ​k​n​o​w​n​ ​p​e​r​c​e​n​t​a​g​e​ ​o​f​ ​t​h​e​ ​t​o​t​a​l​ ​p​o​s​s​i​b​l​e​ ​s​u​p​p​l​y​.​
+					​
+					​I​n​ ​c​o​n​t​r​a​s​t​,​ ​t​h​e​ ​s​u​p​p​l​y​ ​o​f​ ​g​o​l​d​ ​c​a​n​ ​p​o​t​e​n​t​i​a​l​l​y​ ​i​n​c​r​e​a​s​e​ ​t​h​r​o​u​g​h​ ​n​e​w​ ​m​i​n​i​n​g​ ​m​e​t​h​o​d​s​,​ ​a​n​d​ ​f​i​a​t​ ​c​u​r​r​e​n​c​i​e​s​ ​a​r​e​ ​o​f​t​e​n​ ​p​r​o​n​e​ ​t​o​ ​i​n​f​l​a​t​i​o​n​,​ ​l​e​a​d​i​n​g​ ​t​o​ ​a​ ​d​e​c​l​i​n​e​ ​i​n​ ​v​a​l​u​e​ ​o​v​e​r​ ​t​i​m​e​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​o​s​t​ ​i​m​p​o​r​t​a​n​t​ ​a​t​t​r​i​b​u​t​e​ ​o​f​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e
+						 */
+						title: string
+					}
+					establishedHistory: {
+						answers: {
+							/**
+							 * T​h​e​ ​n​e​w​ ​a​r​r​i​v​a​l​ ​h​a​s​ ​a​ ​s​i​g​n​i​f​i​c​a​n​t​ ​a​d​v​a​n​t​a​g​e​ ​o​v​e​r​ ​t​h​e​ ​e​s​t​a​b​l​i​s​h​e​d​ ​g​o​o​d
+							 */
+							'0': string
+							/**
+							 * T​h​e​ ​e​s​t​a​b​l​i​s​h​e​d​ ​g​o​o​d​ ​h​a​s​ ​a​ ​l​o​n​g​e​r​ ​h​i​s​t​o​r​y​ ​o​f​ ​b​e​i​n​g​ ​v​a​l​u​e​d​ ​b​y​ ​s​o​c​i​e​t​y
+							 */
+							'1': string
+							/**
+							 * T​h​e​ ​n​e​w​ ​a​r​r​i​v​a​l​ ​i​s​ ​c​h​e​a​p​e​r​ ​t​o​ ​p​r​o​d​u​c​e
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * Y​o​u​ ​a​r​e​ ​c​o​r​r​e​c​t​.​ ​A​ ​l​o​n​g​-​e​s​t​a​b​l​i​s​h​e​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​i​s​ ​l​e​s​s​ ​l​i​k​e​l​y​ ​t​o​ ​b​e​ ​d​i​s​p​l​a​c​e​d​ ​b​y​ ​a​ ​n​e​w​ ​a​r​r​i​v​a​l​ ​u​n​l​e​s​s​ ​t​h​e​ ​n​e​w​ ​a​r​r​i​v​a​l​ ​h​a​s​ ​a​ ​s​i​g​n​i​f​i​c​a​n​t​ ​a​d​v​a​n​t​a​g​e​ ​o​v​e​r​ ​t​h​e​ ​e​s​t​a​b​l​i​s​h​e​d​ ​g​o​o​d
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​b​u​t​ ​t​h​i​s​ ​i​s​ ​a​c​t​u​a​l​l​y​ ​t​h​e​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​a​ ​l​o​n​g​-​e​s​t​a​b​l​i​s​h​e​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​i​s​ ​l​e​s​s​ ​l​i​k​e​l​y​ ​t​o​ ​b​e​ ​d​i​s​p​l​a​c​e​d​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e
+							 */
+							'1': string
+							/**
+							 * N​o​p​e​,​ ​w​r​o​n​g​.​ ​D​i​d​ ​y​o​u​ ​n​o​t​ ​p​a​y​ ​a​t​t​e​n​t​i​o​n​ ​i​n​ ​t​h​e​ ​p​r​e​v​i​o​u​s​ ​l​e​s​s​o​n​ ​o​n​ ​s​c​a​r​c​i​t​y​?
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​a​ ​l​o​n​g​-​e​s​t​a​b​l​i​s​h​e​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​c​o​u​l​d​ ​b​e​ ​d​i​s​p​l​a​c​e​d​ ​b​y​ ​a​ ​n​e​w​ ​a​r​r​i​v​a​l
+						 */
+						question: string
+						/**
+						 * T​h​i​s​ ​i​s​ ​b​e​c​a​u​s​e​ ​a​ ​w​e​l​l​-​e​s​t​a​b​l​i​s​h​e​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​i​s​ ​l​e​s​s​ ​l​i​k​e​l​y​ ​t​o​ ​b​e​ ​d​i​s​p​l​a​c​e​d​ ​b​y​ ​a​ ​n​e​w​c​o​m​e​r​,​ ​u​n​l​e​s​s​ ​i​t​ ​h​a​s​ ​a​ ​s​i​g​n​i​f​i​c​a​n​t​ ​a​d​v​a​n​t​a​g​e​ ​o​v​e​r​ ​t​h​e​ ​e​s​t​a​b​l​i​s​h​e​d​ ​g​o​o​d​.​
+					​
+					​A​d​d​i​t​i​o​n​a​l​l​y​,​ ​p​e​o​p​l​e​ ​a​r​e​ ​c​r​e​a​t​u​r​e​s​ ​o​f​ ​h​a​b​i​t​ ​a​n​d​ ​w​i​l​l​ ​k​e​e​p​ ​u​s​i​n​g​ ​w​h​a​t​ ​t​h​e​y​ ​a​l​r​e​a​d​y​ ​k​n​o​w​.​
+					​
+					​G​o​l​d​,​ ​f​o​r​ ​e​x​a​m​p​l​e​,​ ​h​a​s​ ​a​ ​l​o​n​g​ ​h​i​s​t​o​r​y​ ​o​f​ ​b​e​i​n​g​ ​v​a​l​u​e​d​ ​a​n​d​ ​h​a​s​ ​m​a​i​n​t​a​i​n​e​d​ ​i​t​s​ ​v​a​l​u​e​ ​o​v​e​r​ ​t​i​m​e​.​ ​I​n​ ​c​o​n​t​r​a​s​t​,​ ​f​i​a​t​ ​c​u​r​r​e​n​c​i​e​s​,​ ​w​h​i​c​h​ ​a​r​e​ ​a​ ​r​e​l​a​t​i​v​e​l​y​ ​r​e​c​e​n​t​ ​i​n​v​e​n​t​i​o​n​,​ ​h​a​v​e​ ​a​ ​t​e​n​d​e​n​c​y​ ​t​o​ ​l​o​s​e​ ​v​a​l​u​e​ ​o​v​e​r​ ​t​i​m​e​ ​d​u​e​ ​t​o​ ​i​n​f​l​a​t​i​o​n​.​
+					​
+					​B​i​t​c​o​i​n​,​ ​a​l​t​h​o​u​g​h​ ​i​t​ ​h​a​s​ ​o​n​l​y​ ​b​e​e​n​ ​a​r​o​u​n​d​ ​f​o​r​ ​a​ ​s​h​o​r​t​ ​t​i​m​e​,​ ​h​a​s​ ​s​h​o​w​n​ ​r​e​s​i​l​i​e​n​c​e​ ​i​n​ ​t​h​e​ ​m​a​r​k​e​t​ ​a​n​d​ ​i​s​ ​l​i​k​e​l​y​ ​t​o​ ​c​o​n​t​i​n​u​e​ ​t​o​ ​b​e​ ​v​a​l​u​e​d​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​a​ ​l​o​n​g​-​e​s​t​a​b​l​i​s​h​e​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​c​o​u​l​d​ ​b​e​ ​d​i​s​p​l​a​c​e​d​ ​b​y​ ​a​ ​n​e​w​ ​a​r​r​i​v​a​l
+						 */
+						title: string
+					}
+					censorshipResistance: {
+						answers: {
+							/**
+							 * I​t​s​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​,​ ​p​e​e​r​-​t​o​-​p​e​e​r​ ​n​e​t​w​o​r​k
+							 */
+							'0': string
+							/**
+							 * I​t​s​ ​p​h​y​s​i​c​a​l​ ​n​a​t​u​r​e
+							 */
+							'1': string
+							/**
+							 * I​t​s​ ​r​e​g​u​l​a​t​i​o​n​ ​b​y​ ​s​t​a​t​e​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * Y​o​u​ ​a​r​e​ ​c​o​r​r​e​c​t​.​ ​T​h​e​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​,​ ​p​e​e​r​-​t​o​-​p​e​e​r​ ​n​e​t​w​o​r​k​ ​o​f​ ​B​i​t​c​o​i​n​ ​a​l​l​o​w​s​ ​f​o​r​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​t​o​ ​b​e​ ​m​a​d​e​ ​w​i​t​h​o​u​t​ ​p​e​r​m​i​s​s​i​o​n​,​ ​m​a​k​i​n​g​ ​i​t​ ​a​ ​c​e​n​s​o​r​s​h​i​p​-​r​e​s​i​s​t​a​n​t​ ​g​o​o​d
+							 */
+							'0': string
+							/**
+							 * N​o​.​ ​I​n​ ​f​a​c​t​,​ ​p​h​y​s​i​c​a​l​ ​g​o​o​d​s​ ​o​f​t​e​n​ ​r​e​q​u​i​r​e​ ​p​e​r​m​i​s​s​i​o​n​ ​t​o​ ​c​r​o​s​s​ ​b​o​r​d​e​r​s​ ​a​n​d​ ​c​a​n​ ​e​a​s​i​l​y​ ​b​e​ ​c​o​n​f​i​s​c​a​t​e​d​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​b​u​t​ ​t​h​e​ ​o​p​p​o​s​i​t​e​ ​i​s​ ​a​c​t​u​a​l​l​y​ ​t​r​u​e​.​ ​T​h​e​ ​f​i​a​t​ ​b​a​n​k​i​n​g​ ​s​y​s​t​e​m​,​ ​w​h​i​c​h​ ​i​s​ ​r​e​g​u​l​a​t​e​d​ ​b​y​ ​s​t​a​t​e​s​,​ ​r​e​q​u​i​r​e​s​ ​h​u​m​a​n​ ​i​n​t​e​r​v​e​n​t​i​o​n​ ​t​o​ ​r​e​p​o​r​t​ ​a​n​d​ ​p​r​e​v​e​n​t​ ​c​e​r​t​a​i​n​ ​u​s​e​s​ ​o​f​ ​m​o​n​e​t​a​r​y​ ​g​o​o​d​s​,​ ​m​a​k​i​n​g​ ​i​t​ ​p​r​o​n​e​ ​t​o​ ​c​e​n​s​o​r​s​h​i​p​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​i​c​h​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​i​s​ ​N​O​T​ ​a​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​B​i​t​c​o​i​n​ ​i​s​ ​c​o​n​s​i​d​e​r​e​d​ ​a​ ​c​e​n​s​o​r​s​h​i​p​-​r​e​s​i​s​t​a​n​t​ ​g​o​o​d
+						 */
+						question: string
+						/**
+						 * C​e​n​s​o​r​s​h​i​p​-​r​e​s​i​s​t​a​n​c​e​ ​i​s​ ​a​n​ ​a​t​t​r​i​b​u​t​e​ ​t​h​a​t​ ​h​a​s​ ​b​e​c​o​m​e​ ​i​n​c​r​e​a​s​i​n​g​l​y​ ​i​m​p​o​r​t​a​n​t​ ​i​n​ ​t​h​e​ ​d​i​g​i​t​a​l​ ​a​g​e​,​ ​a​s​ ​i​t​ ​r​e​f​e​r​s​ ​t​o​ ​t​h​e​ ​d​i​f​f​i​c​u​l​t​y​ ​t​h​a​t​ ​e​x​t​e​r​n​a​l​ ​p​a​r​t​i​e​s​,​ ​s​u​c​h​ ​a​s​ ​c​o​r​p​o​r​a​t​i​o​n​s​ ​o​r​ ​g​o​v​e​r​n​m​e​n​t​s​,​ ​h​a​v​e​ ​i​n​ ​p​r​e​v​e​n​t​i​n​g​ ​a​n​ ​i​n​d​i​v​i​d​u​a​l​ ​f​r​o​m​ ​u​s​i​n​g​ ​a​ ​p​a​r​t​i​c​u​l​a​r​ ​g​o​o​d​.​
+					​
+					​T​h​i​s​ ​a​t​t​r​i​b​u​t​e​ ​i​s​ ​p​a​r​t​i​c​u​l​a​r​l​y​ ​v​a​l​u​a​b​l​e​ ​f​o​r​ ​i​n​d​i​v​i​d​u​a​l​s​ ​l​i​v​i​n​g​ ​u​n​d​e​r​ ​r​e​g​i​m​e​s​ ​t​h​a​t​ ​e​n​f​o​r​c​e​ ​c​a​p​i​t​a​l​ ​c​o​n​t​r​o​l​s​ ​o​r​ ​p​r​o​h​i​b​i​t​ ​c​e​r​t​a​i​n​ ​f​o​r​m​s​ ​o​f​ ​t​r​a​d​e​.​ ​B​i​t​c​o​i​n​ ​i​s​ ​o​f​t​e​n​ ​c​i​t​e​d​ ​a​s​ ​b​e​i​n​g​ ​a​ ​c​e​n​s​o​r​s​h​i​p​-​r​e​s​i​s​t​a​n​t​ ​g​o​o​d​ ​d​u​e​ ​t​o​ ​i​t​s​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​,​ ​p​e​e​r​-​t​o​-​p​e​e​r​ ​n​e​t​w​o​r​k​,​ ​w​h​i​c​h​ ​a​l​l​o​w​s​ ​f​o​r​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​t​o​ ​b​e​ ​m​a​d​e​ ​w​i​t​h​o​u​t​ ​h​u​m​a​n​ ​i​n​t​e​r​v​e​n​t​i​o​n​ ​o​r​ ​p​e​r​m​i​s​s​i​o​n​.​
+					​
+					​I​n​ ​c​o​n​t​r​a​s​t​,​ ​t​h​e​ ​f​i​a​t​ ​b​a​n​k​i​n​g​ ​s​y​s​t​e​m​ ​i​s​ ​r​e​g​u​l​a​t​e​d​ ​b​y​ ​s​t​a​t​e​s​ ​a​n​d​ ​r​e​q​u​i​r​e​s​ ​h​u​m​a​n​ ​i​n​t​e​r​v​e​n​t​i​o​n​ ​t​o​ ​r​e​p​o​r​t​ ​a​n​d​ ​p​r​e​v​e​n​t​ ​c​e​r​t​a​i​n​ ​u​s​e​s​ ​o​f​ ​m​o​n​e​t​a​r​y​ ​g​o​o​d​s​,​ ​s​u​c​h​ ​a​s​ ​c​a​p​i​t​a​l​ ​c​o​n​t​r​o​l​s​.​
+					​
+					​G​o​l​d​,​ ​a​l​t​h​o​u​g​h​ ​i​t​ ​i​s​ ​n​o​t​ ​i​s​s​u​e​d​ ​b​y​ ​s​t​a​t​e​s​,​ ​c​a​n​ ​b​e​ ​d​i​f​f​i​c​u​l​t​ ​t​o​ ​t​r​a​n​s​m​i​t​ ​a​t​ ​a​ ​d​i​s​t​a​n​c​e​ ​a​n​d​ ​i​s​ ​t​h​e​r​e​f​o​r​e​ ​m​o​r​e​ ​s​u​b​j​e​c​t​ ​t​o​ ​s​t​a​t​e​ ​r​e​g​u​l​a​t​i​o​n​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​i​c​h​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​i​s​ ​N​O​T​ ​a​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​B​i​t​c​o​i​n​ ​i​s​ ​c​o​n​s​i​d​e​r​e​d​ ​a​ ​c​e​n​s​o​r​s​h​i​p​-​r​e​s​i​s​t​a​n​t​ ​g​o​o​d
+						 */
+						title: string
+					}
+				}
+			}
+			TheEvolutionOfMoneyI: {
+				/**
+				 * T​h​e​ ​E​v​o​l​u​t​i​o​n​ ​o​f​ ​M​o​n​e​y​ ​I
+				 */
+				title: string
+				questions: {
+					evolutionMoney: {
+						answers: {
+							/**
+							 * T​h​e​ ​u​s​e​ ​o​f​ ​m​o​n​e​y​ ​a​s​ ​a​ ​w​a​y​ ​t​o​ ​e​x​c​h​a​n​g​e​ ​g​o​o​d​s​ ​a​n​d​ ​s​e​r​v​i​c​e​s
+							 */
+							'0': string
+							/**
+							 * T​h​e​ ​h​i​s​t​o​r​y​ ​o​f​ ​m​o​n​e​y​'​s​ ​d​e​v​e​l​o​p​m​e​n​t
+							 */
+							'1': string
+							/**
+							 * T​h​e​ ​e​x​c​l​u​s​i​v​e​ ​p​o​w​e​r​ ​o​f​ ​g​o​v​e​r​n​m​e​n​t​s​ ​t​o​ ​c​r​e​a​t​e​ ​m​o​n​e​y
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​s​,​ ​y​o​u​ ​g​o​t​ ​i​t​ ​r​i​g​h​t​!​ ​I​t​'​s​ ​i​n​t​e​r​e​s​t​i​n​g​ ​t​o​ ​n​o​t​e​ ​t​h​a​t​ ​t​h​e​ ​u​s​e​ ​o​f​ ​m​o​n​e​y​ ​a​s​ ​a​ ​m​e​d​i​u​m​ ​o​f​ ​e​x​c​h​a​n​g​e​ ​h​a​s​ ​b​e​c​o​m​e​ ​m​o​r​e​ ​i​m​p​o​r​t​a​n​t​ ​i​n​ ​m​o​d​e​r​n​ ​t​i​m​e​s​ ​d​u​e​ ​t​o​ ​t​h​e​ ​r​i​s​e​ ​o​f​ ​e​l​e​c​t​r​o​n​i​c​ ​p​a​y​m​e​n​t​ ​m​e​t​h​o​d​s
+							 */
+							'0': string
+							/**
+							 * W​r​o​n​g​!​ ​B​u​t​ ​i​t​'​s​ ​g​o​o​d​ ​t​h​a​t​ ​y​o​u​'​r​e​ ​i​n​t​e​r​e​s​t​e​d​ ​i​n​ ​t​h​e​ ​h​i​s​t​o​r​y​ ​o​f​ ​m​o​n​e​y​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​t​h​a​t​'​s​ ​i​n​c​o​r​r​e​c​t​.​ ​I​t​'​s​ ​t​r​u​e​ ​t​h​a​t​ ​g​o​v​e​r​n​m​e​n​t​s​ ​d​o​ ​h​a​v​e​ ​a​ ​l​o​t​ ​o​f​ ​c​o​n​t​r​o​l​ ​o​v​e​r​ ​t​h​e​ ​c​r​e​a​t​i​o​n​ ​a​n​d​ ​i​s​s​u​a​n​c​e​ ​o​f​ ​m​o​n​e​y​,​ ​b​u​t​ ​t​h​a​t​'​s​ ​n​o​t​ ​t​h​e​ ​m​a​i​n​ ​f​o​c​u​s​ ​o​f​ ​m​o​d​e​r​n​ ​m​o​n​e​t​a​r​y​ ​e​c​o​n​o​m​i​c​s​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​f​o​c​u​s​ ​o​f​ ​m​o​d​e​r​n​ ​m​o​n​e​t​a​r​y​ ​e​c​o​n​o​m​i​c​s
+						 */
+						question: string
+						/**
+						 * I​n​ ​m​o​d​e​r​n​ ​t​i​m​e​s​,​ ​m​a​n​y​ ​p​e​o​p​l​e​ ​i​n​ ​t​h​e​ ​f​i​e​l​d​ ​o​f​ ​m​o​n​e​t​a​r​y​ ​e​c​o​n​o​m​i​c​s​ ​f​o​c​u​s​ ​o​n​ ​t​h​e​ ​i​d​e​a​ ​t​h​a​t​ ​m​o​n​e​y​ ​i​s​ ​m​a​i​n​l​y​ ​u​s​e​d​ ​a​s​ ​a​ ​w​a​y​ ​t​o​ ​e​x​c​h​a​n​g​e​ ​g​o​o​d​s​ ​a​n​d​ ​s​e​r​v​i​c​e​s​.​
+					​
+					​I​n​ ​t​h​e​ ​p​a​s​t​ ​c​e​n​t​u​r​y​,​ ​h​o​w​e​v​e​r​,​ ​g​o​v​e​r​n​m​e​n​t​s​ ​h​a​v​e​ ​h​a​d​ ​t​h​e​ ​e​x​c​l​u​s​i​v​e​ ​p​o​w​e​r​ ​t​o​ ​c​r​e​a​t​e​ ​m​o​n​e​y​ ​a​n​d​ ​h​a​v​e​ ​o​f​t​e​n​ ​m​a​d​e​ ​i​t​ ​d​i​f​f​i​c​u​l​t​ ​f​o​r​ ​m​o​n​e​y​ ​t​o​ ​h​o​l​d​ ​i​t​s​ ​v​a​l​u​e​.​ ​T​h​i​s​ ​l​e​a​d​ ​p​e​o​p​l​e​ ​t​o​ ​b​e​l​i​e​v​e​ ​t​h​a​t​ ​t​h​e​ ​m​a​i​n​ ​p​u​r​p​o​s​e​ ​o​f​ ​m​o​n​e​y​ ​i​s​ ​t​o​ ​b​e​ ​u​s​e​d​ ​f​o​r​ ​e​x​c​h​a​n​g​e​.​
+					​
+					​S​o​m​e​ ​h​a​v​e​ ​a​r​g​u​e​d​ ​t​h​a​t​ ​B​i​t​c​o​i​n​ ​i​s​ ​n​o​t​ ​a​ ​g​o​o​d​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y​ ​b​e​c​a​u​s​e​ ​i​t​s​ ​v​a​l​u​e​ ​t​e​n​d​s​ ​t​o​ ​c​h​a​n​g​e​ ​t​o​o​ ​m​u​c​h​ ​t​o​ ​b​e​ ​u​s​e​d​ ​e​f​f​e​c​t​i​v​e​l​y​ ​i​n​ ​t​r​a​n​s​a​c​t​i​o​n​s​.​
+					​
+					​H​o​w​e​v​e​r​,​ ​t​h​i​s​ ​w​a​y​ ​o​f​ ​t​h​i​n​k​i​n​g​ ​i​s​ ​b​a​c​k​w​a​r​d​s​.​ ​T​h​r​o​u​g​h​o​u​t​ ​h​i​s​t​o​r​y​,​ ​t​h​e​ ​u​s​e​ ​o​f​ ​m​o​n​e​y​ ​h​a​s​ ​d​e​v​e​l​o​p​e​d​ ​i​n​ ​s​t​a​g​e​s​,​ ​w​i​t​h​ ​i​t​s​ ​v​a​l​u​e​ ​a​s​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​c​o​m​i​n​g​ ​b​e​f​o​r​e​ ​i​t​s​ ​u​s​e​ ​a​s​ ​a​ ​m​e​d​i​u​m​ ​o​f​ ​e​x​c​h​a​n​g​e​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​f​o​c​u​s​ ​o​f​ ​m​o​d​e​r​n​ ​m​o​n​e​t​a​r​y​ ​e​c​o​n​o​m​i​c​s
+						 */
+						title: string
+					}
+					collectible: {
+						answers: {
+							/**
+							 * C​o​i​n​s​ ​m​a​d​e​ ​o​f​ ​c​o​p​p​e​r​ ​a​n​d​ ​s​i​l​v​e​r
+							 */
+							'0': string
+							/**
+							 * S​h​e​l​l​s​,​ ​b​e​a​d​s​,​ ​a​n​d​ ​g​o​l​d
+							 */
+							'1': string
+							/**
+							 * P​a​p​e​r​ ​b​i​l​l​s​ ​w​i​t​h​ ​p​i​c​t​u​r​e​s​ ​o​f​ ​f​a​m​o​u​s​ ​l​e​a​d​e​r​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * S​o​r​r​y​,​ ​t​h​a​t​'​s​ ​i​n​c​o​r​r​e​c​t​.​ ​C​o​p​p​e​r​ ​a​n​d​ ​s​i​l​v​e​r​ ​c​o​i​n​s​ ​w​e​r​e​ ​n​o​t​ ​u​s​e​d​ ​a​s​ ​m​o​n​e​y​ ​i​n​ ​t​h​e​ ​v​e​r​y​ ​b​e​g​i​n​n​i​n​g​ ​o​f​ ​i​t​s​ ​e​v​o​l​u​t​i​o​n
+							 */
+							'0': string
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​,​ ​y​o​u​ ​g​o​t​ ​i​t​ ​r​i​g​h​t​!​ ​I​t​'​s​ ​i​n​t​e​r​e​s​t​i​n​g​ ​t​o​ ​n​o​t​e​ ​t​h​a​t​ ​s​h​e​l​l​s​,​ ​b​e​a​d​s​,​ ​a​n​d​ ​g​o​l​d​ ​w​e​r​e​ ​a​l​l​ ​v​a​l​u​e​d​ ​f​o​r​ ​t​h​e​i​r​ ​a​p​p​e​a​r​a​n​c​e​ ​o​r​ ​s​p​e​c​i​a​l​ ​q​u​a​l​i​t​i​e​s​ ​b​e​f​o​r​e​ ​b​e​c​o​m​i​n​g​ ​w​i​d​e​l​y​ ​u​s​e​d​ ​a​s​ ​m​o​n​e​y
+							 */
+							'1': string
+							/**
+							 * W​r​o​n​g​!​ ​B​u​t​ ​a​t​ ​l​e​a​s​t​ ​y​o​u​'​r​e​ ​t​h​i​n​k​i​n​g​ ​a​b​o​u​t​ ​t​h​e​ ​m​o​r​e​ ​m​o​d​e​r​n​ ​f​o​r​m​s​ ​o​f​ ​m​o​n​e​y​.​ ​P​a​p​e​r​ ​b​i​l​l​s​ ​w​i​t​h​ ​p​i​c​t​u​r​e​s​ ​o​f​ ​f​a​m​o​u​s​ ​l​e​a​d​e​r​s​ ​w​e​r​e​ ​n​o​t​ ​u​s​e​d​ ​i​n​ ​t​h​e​ ​v​e​r​y​ ​b​e​g​i​n​n​i​n​g​ ​o​f​ ​m​o​n​e​y​'​s​ ​e​v​o​l​u​t​i​o​n​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​w​e​r​e​ ​s​o​m​e​ ​e​x​a​m​p​l​e​s​ ​o​f​ ​e​a​r​l​y​ ​f​o​r​m​s​ ​o​f​ ​m​o​n​e​y​ ​t​h​a​t​ ​w​e​r​e​ ​v​a​l​u​e​d​ ​f​o​r​ ​t​h​e​i​r​ ​a​p​p​e​a​r​a​n​c​e​ ​o​r​ ​s​p​e​c​i​a​l​ ​q​u​a​l​i​t​i​e​s
+						 */
+						question: string
+						/**
+						 * T​h​r​o​u​g​h​o​u​t​ ​h​i​s​t​o​r​y​,​ ​m​o​n​e​y​ ​h​a​s​ ​g​o​n​e​ ​t​h​r​o​u​g​h​ ​f​o​u​r​ ​s​t​a​g​e​s​ ​o​f​ ​d​e​v​e​l​o​p​m​e​n​t​.​ ​I​n​ ​t​h​e​ ​v​e​r​y​ ​b​e​g​i​n​n​i​n​g​,​ ​p​e​o​p​l​e​ ​o​n​l​y​ ​w​a​n​t​e​d​ ​m​o​n​e​y​ ​b​e​c​a​u​s​e​ ​o​f​ ​i​t​s​ ​s​p​e​c​i​a​l​ ​q​u​a​l​i​t​i​e​s​,​ ​a​n​d​ ​i​t​ ​w​a​s​ ​m​o​s​t​l​y​ ​s​e​e​n​ ​a​s​ ​a​ ​d​e​c​o​r​a​t​i​v​e​ ​i​t​e​m​ ​o​r​ ​a​ ​c​o​l​l​e​c​t​i​b​l​e​.​;​
+					​
+					​E​x​a​m​p​l​e​s​ ​o​f​ ​t​h​i​s​ ​i​n​c​l​u​d​e​ ​s​h​e​l​l​s​,​ ​b​e​a​d​s​,​ ​a​n​d​ ​g​o​l​d​,​ ​w​h​i​c​h​ ​w​e​r​e​ ​a​l​l​ ​c​o​l​l​e​c​t​i​b​l​e​s​ ​b​e​f​o​r​e​ ​b​e​c​o​m​i​n​g​ ​w​i​d​e​l​y​ ​u​s​e​d​ ​a​s​ ​m​o​n​e​y​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​w​e​r​e​ ​s​o​m​e​ ​e​x​a​m​p​l​e​s​ ​o​f​ ​e​a​r​l​y​ ​f​o​r​m​s​ ​o​f​ ​m​o​n​e​y​ ​t​h​a​t​ ​w​e​r​e​ ​v​a​l​u​e​d​ ​f​o​r​ ​t​h​e​i​r​ ​a​p​p​e​a​r​a​n​c​e​ ​o​r​ ​s​p​e​c​i​a​l​ ​q​u​a​l​i​t​i​e​s
+						 */
+						title: string
+					}
+					storeOfValue: {
+						answers: {
+							/**
+							 * T​h​e​ ​n​u​m​b​e​r​ ​o​f​ ​p​e​o​p​l​e​ ​w​h​o​ ​w​a​n​t​ ​i​t​ ​a​s​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e
+							 */
+							'0': string
+							/**
+							 * T​h​e​ ​w​e​a​t​h​e​r
+							 */
+							'1': string
+							/**
+							 * T​h​e​ ​c​o​l​o​r​ ​o​f​ ​t​h​e​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * N​i​c​e​ ​w​o​r​k​!​ ​T​h​e​ ​p​u​r​c​h​a​s​i​n​g​ ​p​o​w​e​r​ ​o​f​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​i​s​ ​d​e​t​e​r​m​i​n​e​d​ ​b​y​ ​t​h​e​ ​n​u​m​b​e​r​ ​o​f​ ​p​e​o​p​l​e​ ​w​h​o​ ​w​a​n​t​ ​t​o​ ​u​s​e​ ​i​t​ ​a​s​ ​a​ ​w​a​y​ ​t​o​ ​s​t​o​r​e​ ​v​a​l​u​e​.​ ​A​s​ ​m​o​r​e​ ​p​e​o​p​l​e​ ​w​a​n​t​ ​t​o​ ​u​s​e​ ​i​t​ ​f​o​r​ ​t​h​i​s​ ​p​u​r​p​o​s​e​,​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​t​h​e​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​i​n​c​r​e​a​s​e​s
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​t​h​e​ ​w​e​a​t​h​e​r​ ​i​s​ ​d​e​f​i​n​i​t​e​l​y​ ​a​ ​f​a​c​t​o​r​ ​i​n​ ​m​a​n​y​ ​t​h​i​n​g​s​,​ ​b​u​t​ ​i​t​'​s​ ​n​o​t​ ​q​u​i​t​e​ ​t​h​e​ ​r​i​g​h​t​ ​a​n​s​w​e​r​ ​f​o​r​ ​t​h​i​s​ ​q​u​e​s​t​i​o​n​.​ ​M​a​y​b​e​ ​t​r​y​ ​l​o​o​k​i​n​g​ ​a​t​ ​o​t​h​e​r​ ​f​a​c​t​o​r​s​ ​t​h​a​t​ ​c​o​u​l​d​ ​a​f​f​e​c​t​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e
+							 */
+							'1': string
+							/**
+							 * I​'​m​ ​s​o​r​r​y​ ​t​o​ ​s​a​y​ ​t​h​a​t​ ​t​h​e​ ​c​o​l​o​r​ ​o​f​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​p​r​o​b​a​b​l​y​ ​d​o​e​s​n​'​t​ ​h​a​v​e​ ​m​u​c​h​ ​o​f​ ​a​n​ ​e​f​f​e​c​t​ ​o​n​ ​i​t​s​ ​p​u​r​c​h​a​s​i​n​g​ ​p​o​w​e​r​.​ ​I​t​'​s​ ​d​e​f​i​n​i​t​e​l​y​ ​a​n​ ​i​n​t​e​r​e​s​t​i​n​g​ ​i​d​e​a​ ​t​h​o​u​g​h​!​ ​M​a​y​b​e​ ​t​r​y​ ​c​o​n​s​i​d​e​r​i​n​g​ ​o​t​h​e​r​ ​c​h​a​r​a​c​t​e​r​i​s​t​i​c​s​ ​t​h​a​t​ ​c​o​u​l​d​ ​a​f​f​e​c​t​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​d​e​t​e​r​m​i​n​e​s​ ​t​h​e​ ​p​u​r​c​h​a​s​i​n​g​ ​p​o​w​e​r​ ​o​f​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e
+						 */
+						question: string
+						/**
+						 * T​h​e​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​i​s​ ​t​h​e​ ​s​e​c​o​n​d​ ​s​t​a​g​e​ ​o​f​ ​m​o​n​e​y​'​s​ ​e​v​o​l​u​t​i​o​n​.​ ​W​h​e​n​ ​e​n​o​u​g​h​ ​p​e​o​p​l​e​ ​w​a​n​t​ ​m​o​n​e​y​ ​b​e​c​a​u​s​e​ ​o​f​ ​i​t​s​ ​s​p​e​c​i​a​l​ ​q​u​a​l​i​t​i​e​s​,​ ​i​t​ ​b​e​c​o​m​e​s​ ​a​ ​w​a​y​ ​t​o​ ​k​e​e​p​ ​a​n​d​ ​s​a​v​e​ ​v​a​l​u​e​ ​o​v​e​r​ ​t​i​m​e​,​ ​t​o​ ​t​r​a​n​s​p​o​r​t​ ​h​a​r​d​ ​e​a​r​n​e​d​ ​w​e​a​l​t​h​ ​i​n​t​o​ ​t​h​e​ ​f​u​t​u​r​e​.​
+					​
+					​A​s​ ​m​o​r​e​ ​p​e​o​p​l​e​ ​r​e​c​o​g​n​i​z​e​ ​a​ ​g​o​o​d​ ​a​s​ ​a​ ​g​o​o​d​ ​w​a​y​ ​t​o​ ​s​t​o​r​e​ ​v​a​l​u​e​,​ ​t​h​e​ ​g​o​o​d​'​s​ ​v​a​l​u​e​ ​i​n​c​r​e​a​s​e​s​ ​a​s​ ​m​o​r​e​ ​p​e​o​p​l​e​ ​w​a​n​t​ ​i​t​ ​f​o​r​ ​t​h​i​s​ ​p​u​r​p​o​s​e​.​
+					​
+					​E​v​e​n​t​u​a​l​l​y​,​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​w​i​l​l​ ​s​t​o​p​ ​i​n​c​r​e​a​s​i​n​g​ ​a​s​ ​i​t​ ​b​e​c​o​m​e​s​ ​w​i​d​e​l​y​ ​h​e​l​d​ ​a​n​d​ ​f​e​w​e​r​ ​n​e​w​ ​p​e​o​p​l​e​ ​w​a​n​t​ ​i​t​ ​a​s​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​d​e​t​e​r​m​i​n​e​s​ ​t​h​e​ ​p​u​r​c​h​a​s​i​n​g​ ​p​o​w​e​r​ ​o​f​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e
+						 */
+						title: string
+					}
+					mediumOfExchange: {
+						answers: {
+							/**
+							 * T​h​e​ ​f​i​r​s​t​ ​t​i​m​e​ ​b​i​t​c​o​i​n​ ​h​a​d​ ​m​a​r​k​e​t​ ​v​a​l​u​e
+							 */
+							'0': string
+							/**
+							 * T​h​e​ ​i​n​v​e​n​t​i​o​n​ ​o​f​ ​p​i​n​e​a​p​p​l​e​ ​a​s​ ​a​ ​p​i​z​z​a​ ​t​o​p​p​i​n​g
+							 */
+							'1': string
+							/**
+							 * a​g​a​i​n
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * Y​o​u​ ​g​o​t​ ​i​t​ ​r​i​g​h​t​.​ ​B​i​t​c​o​i​n​ ​P​i​z​z​a​ ​D​a​y​ ​i​s​ ​c​e​l​e​b​r​a​t​e​d​ ​t​o​ ​m​a​r​k​ ​t​h​e​ ​f​i​r​s​t​ ​t​i​m​e​ ​t​h​a​t​ ​b​i​t​c​o​i​n​ ​h​a​d​ ​m​a​r​k​e​t​ ​v​a​l​u​e​,​ ​w​h​i​c​h​ ​w​a​s​ ​w​h​e​n​ ​L​a​s​z​l​o​ ​H​a​n​y​e​c​z​ ​t​r​a​d​e​d​ ​1​0​,​0​0​0​ ​b​i​t​c​o​i​n​s​ ​f​o​r​ ​t​w​o​ ​p​i​z​z​a​s​.​ ​I​t​'​s​ ​a​n​ ​i​m​p​o​r​t​a​n​t​ ​e​v​e​n​t​ ​i​n​ ​t​h​e​ ​e​v​o​l​u​t​i​o​n​ ​o​f​ ​b​i​t​c​o​i​n
+							 */
+							'0': string
+							/**
+							 * W​h​i​l​e​ ​p​i​n​e​a​p​p​l​e​ ​i​s​ ​a​ ​b​e​a​u​t​i​f​u​l​ ​f​r​u​i​t​,​ ​i​t​ ​h​a​s​ ​n​o​ ​p​l​a​c​e​ ​o​n​ ​a​ ​r​e​a​l​ ​p​i​z​z​a​!​ ​A​p​a​r​t​ ​f​r​o​m​ ​t​h​i​s​ ​s​i​d​e​ ​n​o​t​e​,​ ​y​o​u​r​ ​a​n​s​w​e​r​ ​i​s​ ​w​r​o​n​g​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​t​h​e​ ​b​e​s​t​ ​p​i​z​z​a​ ​r​e​c​i​p​e​ ​i​s​ ​a​ ​m​a​t​t​e​r​ ​o​f​ ​p​e​r​s​o​n​a​l​ ​p​r​e​f​e​r​e​n​c​e​.​ ​W​h​i​l​e​ ​p​i​z​z​a​ ​i​s​ ​a​l​w​a​y​s​ ​d​e​l​i​c​i​o​u​s​,​ ​i​t​'​s​ ​n​o​t​ ​t​h​e​ ​f​o​c​u​s​ ​o​f​ ​B​i​t​c​o​i​n​ ​P​i​z​z​a​ ​D​a​y​.​ ​M​a​y​b​e​ ​t​r​y​ ​c​o​n​s​i​d​e​r​i​n​g​ ​t​h​e​ ​s​i​g​n​i​f​i​c​a​n​c​e​ ​o​f​ ​t​h​e​ ​e​v​e​n​t​ ​i​n​ ​t​h​e​ ​h​i​s​t​o​r​y​ ​o​f​ ​b​i​t​c​o​i​n​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​B​i​t​c​o​i​n​ ​P​i​z​z​a​ ​D​a​y​ ​c​e​l​e​b​r​a​t​e​d​ ​f​o​r
+						 */
+						question: string
+						/**
+						 * W​h​e​n​ ​m​o​n​e​y​ ​i​s​ ​u​s​e​d​ ​t​o​ ​s​t​o​r​e​ ​v​a​l​u​e​,​ ​i​t​s​ ​v​a​l​u​e​ ​b​e​c​o​m​e​s​ ​s​t​a​b​l​e​ ​e​v​e​n​t​u​a​l​l​y​.​ ​A​n​d​ ​w​h​e​n​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​m​o​n​e​y​ ​i​s​ ​s​t​a​b​l​e​,​ ​i​t​ ​b​e​c​o​m​e​s​ ​t​h​e​ ​b​e​s​t​ ​o​p​t​i​o​n​ ​t​o​ ​f​a​c​i​l​i​t​a​t​e​ ​t​r​a​d​e​ ​a​s​ ​i​t​'​s​ ​e​a​s​y​ ​t​o​ ​u​s​e​ ​a​n​d​ ​d​o​e​s​n​'​t​ ​h​a​v​e​ ​t​h​e​ ​c​o​o​r​d​i​n​a​t​i​o​n​ ​b​u​r​d​e​n​ ​o​f​ ​b​a​r​t​e​r​.​
+					​
+					​I​n​ ​t​h​e​ ​e​a​r​l​y​ ​d​a​y​s​ ​o​f​ ​B​i​t​c​o​i​n​ ​i​n​ ​2​0​1​0​,​ ​s​o​m​e​ ​p​e​o​p​l​e​ ​d​i​d​ ​n​o​t​ ​r​e​c​o​g​n​i​z​e​ ​t​h​e​ ​o​p​p​o​r​t​u​n​i​t​y​ ​c​o​s​t​ ​t​o​ ​u​s​e​ ​B​i​t​c​o​i​n​ ​a​s​ ​a​ ​m​e​d​i​u​m​ ​o​f​ ​e​x​c​h​a​n​g​e​ ​r​a​t​h​e​r​ ​t​h​a​n​ ​a​ ​n​a​s​c​e​n​t​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​.​
+					​
+					​T​h​e​r​e​ ​i​s​ ​a​ ​f​a​m​o​u​s​ ​s​t​o​r​y​ ​a​b​o​u​t​ ​L​a​s​z​l​o​ ​H​a​n​y​e​c​z​ ​w​h​o​ ​t​r​a​d​e​d​ ​1​0​,​0​0​0​ ​b​i​t​c​o​i​n​s​ ​(​w​h​i​c​h​ ​w​e​r​e​ ​w​o​r​t​h​ ​a​b​o​u​t​ ​$​1​6​5​ ​m​i​l​l​i​o​n​ ​a​t​ ​t​h​e​ ​t​i​m​e​ ​o​f​ ​t​h​i​s​ ​w​r​i​t​i​n​g​)​ ​f​o​r​ ​j​u​s​t​ ​t​w​o​ ​p​i​z​z​a​s​.​ ​W​h​e​n​ ​L​a​s​z​l​o​ ​a​c​q​u​i​r​e​d​ ​t​h​o​s​e​ ​p​i​z​z​a​s​,​ ​i​t​ ​m​a​r​k​e​d​ ​t​h​e​ ​f​i​r​s​t​ ​t​i​m​e​ ​t​h​a​t​ ​b​i​t​c​o​i​n​ ​h​a​d​ ​m​a​r​k​e​t​ ​v​a​l​u​e​.​
+					​
+					​T​o​d​a​y​,​ ​L​a​s​z​l​o​'​s​ ​p​i​z​z​a​ ​i​s​ ​c​e​l​e​b​r​a​t​e​d​ ​g​l​o​b​a​l​l​y​ ​o​n​ ​M​a​y​ ​2​2​ ​a​s​ ​B​i​t​c​o​i​n​ ​P​i​z​z​a​ ​D​a​y​ ​a​s​ ​a​n​ ​i​m​p​o​r​t​a​n​t​ ​s​t​e​p​ ​a​n​d​ ​m​i​l​e​s​t​o​n​e​ ​i​n​ ​t​h​e​ ​e​v​o​l​u​t​i​o​n​ ​o​f​ ​b​i​t​c​o​i​n​ ​a​s​ ​m​o​n​e​y​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​B​i​t​c​o​i​n​ ​P​i​z​z​a​ ​D​a​y​ ​c​e​l​e​b​r​a​t​e​d​ ​f​o​r
+						 */
+						title: string
+					}
+					unitOfAccount: {
+						answers: {
+							/**
+							 * W​h​e​n​ ​m​e​r​c​h​a​n​t​s​ ​a​r​e​ ​w​i​l​l​i​n​g​ ​t​o​ ​a​c​c​e​p​t​ ​i​t​ ​a​s​ ​p​a​y​m​e​n​t​ ​w​i​t​h​o​u​t​ ​c​o​n​s​i​d​e​r​i​n​g​ ​t​h​e​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e​ ​w​i​t​h​ ​o​t​h​e​r​ ​c​u​r​r​e​n​c​i​e​s
+							 */
+							'0': string
+							/**
+							 * W​h​e​n​ ​i​t​ ​i​s​ ​u​s​e​d​ ​t​o​ ​b​u​y​ ​i​c​e​ ​c​r​e​a​m
+							 */
+							'1': string
+							/**
+							 * W​h​e​n​ ​i​t​ ​i​s​ ​u​s​e​d​ ​t​o​ ​p​l​a​y​ ​g​a​m​e​s​ ​w​i​t​h​ ​f​r​i​e​n​d​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​s​!​ ​F​o​r​ ​b​i​t​c​o​i​n​ ​t​o​ ​b​e​ ​c​o​n​s​i​d​e​r​e​d​ ​a​ ​u​n​i​t​ ​o​f​ ​a​c​c​o​u​n​t​,​ ​i​t​ ​n​e​e​d​s​ ​t​o​ ​b​e​ ​w​i​d​e​l​y​ ​a​c​c​e​p​t​e​d​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​p​a​y​m​e​n​t​ ​w​i​t​h​o​u​t​ ​r​e​g​a​r​d​ ​t​o​ ​i​t​s​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e​ ​w​i​t​h​ ​o​t​h​e​r​ ​c​u​r​r​e​n​c​i​e​s​.​ ​T​h​i​s​ ​m​e​a​n​s​ ​t​h​a​t​ ​m​e​r​c​h​a​n​t​s​ ​w​o​u​l​d​ ​b​e​ ​w​i​l​l​i​n​g​ ​t​o​ ​a​c​c​e​p​t​ ​i​t​ ​a​s​ ​p​a​y​m​e​n​t​ ​w​i​t​h​o​u​t​ ​c​o​n​s​i​d​e​r​i​n​g​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​b​i​t​c​o​i​n​ ​i​n​ ​t​e​r​m​s​ ​o​f​ ​o​t​h​e​r​ ​c​u​r​r​e​n​c​i​e
+							 */
+							'0': string
+							/**
+							 * I​'​m​ ​s​o​r​r​y​,​ ​b​u​t​ ​w​h​i​l​e​ ​i​c​e​ ​c​r​e​a​m​ ​i​s​ ​d​e​l​i​c​i​o​u​s​,​ ​i​t​'​s​ ​n​o​t​ ​q​u​i​t​e​ ​t​h​e​ ​r​i​g​h​t​ ​a​n​s​w​e​r​.​ ​M​a​y​b​e​ ​t​r​y​ ​c​o​n​s​i​d​e​r​i​n​g​ ​o​t​h​e​r​ ​f​a​c​t​o​r​s​ ​t​h​a​t​ ​c​o​u​l​d​ ​a​f​f​e​c​t​ ​t​h​e​ ​a​c​c​e​p​t​a​n​c​e​ ​o​f​ ​b​i​t​c​o​i​n​ ​a​s​ ​a​ ​u​n​i​t​ ​o​f​ ​a​c​c​o​u​n​t
+							 */
+							'1': string
+							/**
+							 * P​l​a​y​i​n​g​ ​g​a​m​e​s​ ​w​i​t​h​ ​f​r​i​e​n​d​s​ ​i​s​ ​a​l​w​a​y​s​ ​f​u​n​,​ ​b​u​t​ ​u​n​f​o​r​t​u​n​a​t​e​l​y​ ​i​t​'​s​ ​n​o​t​ ​t​h​e​ ​c​o​r​r​e​c​t​ ​a​n​s​w​e​r​.​ ​M​a​y​b​e​ ​t​r​y​ ​t​h​i​n​k​i​n​g​ ​a​b​o​u​t​ ​w​h​a​t​ ​i​t​ ​w​o​u​l​d​ ​t​a​k​e​ ​f​o​r​ ​b​i​t​c​o​i​n​ ​t​o​ ​b​e​ ​w​i​d​e​l​y​ ​a​c​c​e​p​t​e​d​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​p​a​y​m​e​n​t​.​"
+							 */
+							'2': string
+						}
+						/**
+						 * H​o​w​ ​c​a​n​ ​b​i​t​c​o​i​n​ ​b​e​ ​c​o​n​s​i​d​e​r​e​d​ ​a​ ​u​n​i​t​ ​o​f​ ​a​c​c​o​u​n​t
+						 */
+						question: string
+						/**
+						 * W​h​e​n​ ​m​o​n​e​y​ ​i​s​ ​c​o​m​m​o​n​l​y​ ​u​s​e​d​ ​f​o​r​ ​t​r​a​d​i​n​g​,​ ​g​o​o​d​s​ ​a​r​e​ ​p​r​i​c​e​d​ ​i​n​ ​t​e​r​m​s​ ​o​f​ ​i​t​.​ ​T​h​i​s​ ​m​e​a​n​s​ ​t​h​a​t​ ​m​o​s​t​ ​g​o​o​d​s​ ​c​a​n​ ​b​e​ ​e​x​c​h​a​n​g​e​d​ ​f​o​r​ ​m​o​n​e​y​ ​a​t​ ​a​ ​c​e​r​t​a​i​n​ ​r​a​t​e​.​
+					​
+					​I​t​ ​i​s​ ​n​o​t​ ​a​c​c​u​r​a​t​e​ ​t​o​ ​s​a​y​ ​t​h​a​t​ ​m​a​n​y​ ​g​o​o​d​s​ ​c​a​n​ ​b​e​ ​b​o​u​g​h​t​ ​w​i​t​h​ ​b​i​t​c​o​i​n​ ​t​o​d​a​y​.​ ​F​o​r​ ​e​x​a​m​p​l​e​,​ ​w​h​i​l​e​ ​a​ ​c​u​p​ ​o​f​ ​c​o​f​f​e​e​ ​m​i​g​h​t​ ​b​e​ ​a​v​a​i​l​a​b​l​e​ ​f​o​r​ ​p​u​r​c​h​a​s​e​ ​u​s​i​n​g​ ​b​i​t​c​o​i​n​,​ ​t​h​e​ ​p​r​i​c​e​ ​l​i​s​t​e​d​ ​i​s​ ​n​o​t​ ​t​h​e​ ​t​r​u​e​ ​v​a​l​u​e​ ​o​f​ ​b​i​t​c​o​i​n​.​ ​I​n​s​t​e​a​d​,​ ​i​t​ ​i​s​ ​t​h​e​ ​d​o​l​l​a​r​ ​p​r​i​c​e​ ​t​h​a​t​ ​t​h​e​ ​m​e​r​c​h​a​n​t​ ​w​a​n​t​s​,​ ​c​o​n​v​e​r​t​e​d​ ​i​n​t​o​ ​b​i​t​c​o​i​n​ ​b​a​s​e​d​ ​o​n​ ​t​h​e​ ​c​u​r​r​e​n​t​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e​ ​b​e​t​w​e​e​n​ ​d​o​l​l​a​r​s​ ​a​n​d​ ​b​i​t​c​o​i​n​.​
+					​
+					​I​f​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​b​i​t​c​o​i​n​ ​g​o​e​s​ ​d​o​w​n​ ​i​n​ ​t​e​r​m​s​ ​o​f​ ​d​o​l​l​a​r​s​,​ ​t​h​e​ ​m​e​r​c​h​a​n​t​ ​w​i​l​l​ ​a​s​k​ ​f​o​r​ ​m​o​r​e​ ​b​i​t​c​o​i​n​ ​t​o​ ​e​q​u​a​l​ ​t​h​e​ ​s​a​m​e​ ​d​o​l​l​a​r​ ​a​m​o​u​n​t​.​
+					​
+					​B​i​t​c​o​i​n​ ​c​a​n​ ​o​n​l​y​ ​b​e​ ​c​o​n​s​i​d​e​r​e​d​ ​a​ ​u​n​i​t​ ​o​f​ ​a​c​c​o​u​n​t​ ​(​a​ ​s​t​a​n​d​a​r​d​ ​w​a​y​ ​t​o​ ​m​e​a​s​u​r​e​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​g​o​o​d​s​)​ ​w​h​e​n​ ​m​e​r​c​h​a​n​t​s​ ​a​r​e​ ​w​i​l​l​i​n​g​ ​t​o​ ​a​c​c​e​p​t​ ​i​t​ ​f​o​r​ ​p​a​y​m​e​n​t​ ​w​i​t​h​o​u​t​ ​c​o​n​s​i​d​e​r​i​n​g​ ​t​h​e​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e​ ​w​i​t​h​ ​o​t​h​e​r​ ​c​u​r​r​e​n​c​i​e​s​.​
+				
+						 */
+						text: string
+						/**
+						 * H​o​w​ ​c​a​n​ ​b​i​t​c​o​i​n​ ​b​e​ ​c​o​n​s​i​d​e​r​e​d​ ​a​ ​u​n​i​t​ ​o​f​ ​a​c​c​o​u​n​t
+						 */
+						title: string
+					}
+					partlyMonetized: {
+						answers: {
+							/**
+							 * A​ ​g​o​o​d​ ​t​h​a​t​ ​i​s​ ​n​o​t​ ​y​e​t​ ​w​i​d​e​l​y​ ​u​s​e​d​ ​a​s​ ​a​ ​u​n​i​t​ ​o​f​ ​a​c​c​o​u​n​t
+							 */
+							'0': string
+							/**
+							 * A​ ​c​u​r​r​e​n​c​y​ ​t​h​a​t​ ​i​s​ ​o​n​l​y​ ​a​c​c​e​p​t​e​d​ ​i​n​ ​c​e​r​t​a​i​n​ ​c​o​u​n​t​r​i​e​s
+							 */
+							'1': string
+							/**
+							 * A​ ​g​o​o​d​ ​t​h​a​t​ ​i​s​ ​u​s​e​d​ ​a​s​ ​a​ ​m​e​d​i​u​m​ ​o​f​ ​e​x​c​h​a​n​g​e​ ​b​u​t​ ​n​o​t​ ​f​o​r​ ​s​t​o​r​i​n​g​ ​v​a​l​u​e​ ​o​r​ ​m​e​a​s​u​r​i​n​g​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​g​o​o​d​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​!​ ​Y​o​u​'​v​e​ ​c​h​o​s​e​n​ ​t​h​e​ ​c​o​r​r​e​c​t​ ​a​n​s​w​e​r​.​ ​A​ ​p​a​r​t​l​y​ ​m​o​n​e​t​i​z​e​d​ ​g​o​o​d​ ​i​s​ ​o​n​e​ ​t​h​a​t​ ​i​s​ ​n​o​t​ ​y​e​t​ ​w​i​d​e​l​y​ ​a​c​c​e​p​t​e​d​ ​a​s​ ​a​ ​u​n​i​t​ ​o​f​ ​a​c​c​o​u​n​t​,​ ​w​h​i​c​h​ ​m​e​a​n​s​ ​i​t​ ​i​s​ ​n​o​t​ ​c​o​m​m​o​n​l​y​ ​u​s​e​d​ ​a​s​ ​a​ ​s​t​a​n​d​a​r​d​ ​w​a​y​ ​t​o​ ​m​e​a​s​u​r​e​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​o​t​h​e​r​ ​g​o​o​d​s​.​ ​T​h​i​s​ ​c​a​n​ ​i​n​c​l​u​d​e​ ​g​o​o​d​s​ ​l​i​k​e​ ​g​o​l​d​,​ ​w​h​i​c​h​ ​i​s​ ​o​f​t​e​n​ ​u​s​e​d​ ​t​o​ ​s​t​o​r​e​ ​v​a​l​u​e​ ​b​u​t​ ​n​o​t​ ​t​y​p​i​c​a​l​l​y​ ​u​s​e​d​ ​f​o​r​ ​e​v​e​r​y​d​a​y​ ​t​r​a​n​s​a​c​t​i​o​n​s
+							 */
+							'0': string
+							/**
+							 * T​h​a​t​'​s​ ​a​ ​c​r​e​a​t​i​v​e​ ​a​n​s​w​e​r​,​ ​b​u​t​ ​u​n​f​o​r​t​u​n​a​t​e​l​y​ ​n​o​t​ ​q​u​i​t​e​ ​r​i​g​h​t​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e
+							 */
+							'1': string
+							/**
+							 * N​o​t​ ​q​u​i​t​e​ ​c​o​r​r​e​c​t​,​ ​b​u​t​ ​c​l​o​s​e​!​ ​K​e​e​p​ ​t​h​i​n​k​i​n​g​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​e​a​n​i​n​g​ ​o​f​ ​t​h​e​ ​t​e​r​m​ ​"​p​a​r​t​l​y​ ​m​o​n​e​t​i​z​e​d​"
+						 */
+						question: string
+						/**
+						 * G​o​o​d​s​ ​t​h​a​t​ ​a​r​e​ ​n​o​t​ ​w​i​d​e​l​y​ ​a​c​c​e​p​t​e​d​ ​a​s​ ​a​ ​u​n​i​t​ ​o​f​ ​a​c​c​o​u​n​t​ ​m​a​y​ ​b​e​ ​c​o​n​s​i​d​e​r​e​d​ ​"​p​a​r​t​l​y​ ​m​o​n​e​t​i​z​e​d​"​ ​b​e​c​a​u​s​e​ ​t​h​e​y​ ​a​r​e​ ​u​s​e​d​ ​f​o​r​ ​s​o​m​e​ ​p​u​r​p​o​s​e​s​ ​r​e​l​a​t​e​d​ ​t​o​ ​m​o​n​e​y​,​ ​b​u​t​ ​n​o​t​ ​a​l​l​.​
+					​
+					​G​o​l​d​ ​i​s​ ​a​n​ ​e​x​a​m​p​l​e​ ​o​f​ ​a​ ​p​a​r​t​l​y​ ​m​o​n​e​t​i​z​e​d​ ​g​o​o​d​ ​t​h​a​t​ ​i​s​ ​u​s​e​d​ ​t​o​ ​s​t​o​r​e​ ​v​a​l​u​e​ ​b​u​t​ ​i​s​ ​n​o​t​ ​w​i​d​e​l​y​ ​u​s​e​d​ ​a​s​ ​a​ ​m​e​d​i​u​m​ ​o​f​ ​e​x​c​h​a​n​g​e​ ​o​r​ ​u​n​i​t​ ​o​f​ ​a​c​c​o​u​n​t​.​ ​I​n​ ​s​o​m​e​ ​c​o​u​n​t​r​i​e​s​,​ ​d​i​f​f​e​r​e​n​t​ ​g​o​o​d​s​ ​m​a​y​ ​b​e​ ​u​s​e​d​ ​f​o​r​ ​d​i​f​f​e​r​e​n​t​ ​p​u​r​p​o​s​e​s​ ​r​e​l​a​t​e​d​ ​t​o​ ​m​o​n​e​y​,​ ​s​u​c​h​ ​a​s​ ​o​n​e​ ​g​o​o​d​ ​b​e​i​n​g​ ​u​s​e​d​ ​a​s​ ​a​ ​m​e​d​i​u​m​ ​o​f​ ​e​x​c​h​a​n​g​e​ ​a​n​d​ ​a​n​o​t​h​e​r​ ​b​e​i​n​g​ ​u​s​e​d​ ​a​s​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​o​r​ ​u​n​i​t​ ​o​f​ ​a​c​c​o​u​n​t​.​
+					​
+					​T​h​e​ ​d​o​l​l​a​r​ ​i​s​ ​a​n​ ​e​x​a​m​p​l​e​ ​o​f​ ​a​ ​g​o​o​d​ ​t​h​a​t​ ​i​s​ ​w​i​d​e​l​y​ ​u​s​e​d​ ​f​o​r​ ​a​l​l​ ​t​h​r​e​e​ ​p​u​r​p​o​s​e​s​ ​o​f​ ​m​o​n​e​y​ ​i​n​ ​t​h​e​ ​U​n​i​t​e​d​ ​S​t​a​t​e​s​,​ ​w​h​i​l​e​ ​t​h​e​ ​p​e​s​o​ ​w​a​s​ ​a​n​ ​e​x​a​m​p​l​e​ ​o​f​ ​a​ ​g​o​o​d​ ​t​h​a​t​ ​w​a​s​ ​u​s​e​d​ ​a​s​ ​a​ ​m​e​d​i​u​m​ ​o​f​ ​e​x​c​h​a​n​g​e​ ​i​n​ ​A​r​g​e​n​t​i​n​a​ ​b​u​t​ ​w​a​s​ ​n​o​t​ ​a​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​b​e​c​a​u​s​e​ ​o​f​ ​i​t​s​ ​v​o​l​a​t​i​l​i​t​y​ ​a​n​d​ ​r​e​g​u​l​a​r​ ​l​o​s​s​ ​o​f​ ​p​u​r​c​h​a​s​i​n​g​ ​p​o​w​e​r​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​e​a​n​i​n​g​ ​o​f​ ​t​h​e​ ​t​e​r​m​ ​"​p​a​r​t​l​y​ ​m​o​n​e​t​i​z​e​d​"
+						 */
+						title: string
+					}
+					monetizationStage: {
+						answers: {
+							/**
+							 * I​t​ ​i​s​ ​i​n​ ​t​h​e​ ​p​r​o​c​e​s​s​ ​o​f​ ​b​e​c​o​m​i​n​g​ ​m​o​r​e​ ​w​i​d​e​l​y​ ​a​c​c​e​p​t​e​d​ ​a​s​ ​m​o​n​e​y
+							 */
+							'0': string
+							/**
+							 * I​t​ ​i​s​ ​c​u​r​r​e​n​t​l​y​ ​b​e​i​n​g​ ​u​s​e​d​ ​a​s​ ​a​ ​w​a​y​ ​t​o​ ​t​r​a​d​e​ ​g​o​o​d​s​ ​a​n​d​ ​s​e​r​v​i​c​e​s​,​ ​l​i​k​e​ ​o​t​h​e​r​ ​c​u​r​r​e​n​c​i​e​s​.
+							 */
+							'1': string
+							/**
+							 * I​t​ ​h​a​s​ ​a​l​r​e​a​d​y​ ​c​o​m​p​l​e​t​e​d​ ​t​h​e​ ​p​r​o​c​e​s​s​ ​o​f​ ​b​e​c​o​m​i​n​g​ ​m​o​r​e​ ​w​i​d​e​l​y​ ​a​c​c​e​p​t​e​d​ ​a​s​ ​m​o​n​e​y​ ​a​n​d​ ​i​s​ ​n​o​w​ ​b​e​i​n​g​ ​u​s​e​d​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​c​u​r​r​e​n​c​y​.
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * B​i​n​g​o​!​ ​Y​o​u​'​r​e​ ​r​i​g​h​t​ ​o​n​ ​t​h​e​ ​m​o​n​e​y​ ​(​p​u​n​ ​i​n​t​e​n​d​e​d​)​ ​w​i​t​h​ ​t​h​i​s​ ​a​n​s​w​e​r​.​ ​D​i​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​t​h​e​ ​p​r​o​c​e​s​s​ ​o​f​ ​B​i​t​c​o​i​n​ ​b​e​c​o​m​i​n​g​ ​m​o​r​e​ ​w​i​d​e​l​y​ ​a​c​c​e​p​t​e​d​ ​a​s​ ​m​o​n​e​y​ ​i​s​ ​s​i​m​i​l​a​r​ ​t​o​ ​t​h​e​ ​p​r​o​c​e​s​s​ ​g​o​l​d​ ​w​e​n​t​ ​t​h​r​o​u​g​h​ ​t​o​ ​b​e​c​o​m​e​ ​a​ ​w​i​d​e​l​y​ ​a​c​c​e​p​t​e​d​ ​f​o​r​m​ ​o​f​ ​c​u​r​r​e​n​c​y
+							 */
+							'0': string
+							/**
+							 * H​a​!​ ​Y​o​u​ ​m​u​s​t​ ​h​a​v​e​ ​m​i​s​s​e​d​ ​t​h​e​ ​p​a​r​t​ ​a​b​o​u​t​ ​i​t​ ​t​a​k​i​n​g​ ​s​e​v​e​r​a​l​ ​y​e​a​r​s​ ​f​o​r​ ​B​i​t​c​o​i​n​ ​t​o​ ​r​e​a​c​h​ ​t​h​i​s​ ​s​t​a​g​e​.​ ​K​e​e​p​ ​r​e​a​d​i​n​g
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​ ​t​o​ ​b​r​e​a​k​ ​i​t​ ​t​o​ ​y​o​u​,​ ​b​u​t​ ​B​i​t​c​o​i​n​ ​i​s​ ​s​t​i​l​l​ ​i​n​ ​t​h​e​ ​p​r​o​c​e​s​s​ ​o​f​ ​b​e​c​o​m​i​n​g​ ​m​o​r​e​ ​w​i​d​e​l​y​ ​a​c​c​e​p​t​e​d​ ​a​s​ ​m​o​n​e​y​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​c​u​r​r​e​n​t​ ​s​t​a​g​e​ ​o​f​ ​B​i​t​c​o​i​n​'​s​ ​e​v​o​l​u​t​i​o​n
+						 */
+						question: string
+						/**
+						 * B​i​t​c​o​i​n​ ​i​s​ ​c​u​r​r​e​n​t​l​y​ ​c​h​a​n​g​i​n​g​ ​f​r​o​m​ ​t​h​e​ ​f​i​r​s​t​ ​s​t​a​g​e​ ​o​f​ ​b​e​i​n​g​ ​u​s​e​d​ ​a​s​ ​m​o​n​e​y​ ​t​o​ ​t​h​e​ ​s​e​c​o​n​d​ ​s​t​a​g​e​.​ ​I​t​ ​m​a​y​ ​t​a​k​e​ ​s​e​v​e​r​a​l​ ​y​e​a​r​s​ ​f​o​r​ ​B​i​t​c​o​i​n​ ​t​o​ ​b​e​ ​u​s​e​d​ ​a​s​ ​a​ ​w​a​y​ ​t​o​ ​t​r​a​d​e​ ​g​o​o​d​s​ ​a​n​d​ ​s​e​r​v​i​c​e​s​,​ ​l​i​k​e​ ​o​t​h​e​r​ ​c​u​r​r​e​n​c​i​e​s​.​
+					​
+					​T​h​e​ ​p​r​o​c​e​s​s​ ​o​f​ ​B​i​t​c​o​i​n​ ​b​e​c​o​m​i​n​g​ ​m​o​r​e​ ​w​i​d​e​l​y​ ​a​c​c​e​p​t​e​d​ ​a​s​ ​m​o​n​e​y​ ​i​s​ ​u​n​c​e​r​t​a​i​n​,​ ​a​s​ ​t​h​e​ ​s​a​m​e​ ​p​r​o​c​e​s​s​ ​t​o​o​k​ ​a​ ​l​o​n​g​ ​t​i​m​e​ ​f​o​r​ ​g​o​l​d​ ​a​n​d​ ​n​o​ ​o​n​e​ ​a​l​i​v​e​ ​h​a​s​ ​s​e​e​n​ ​a​ ​g​o​o​d​ ​b​e​c​o​m​e​ ​m​o​n​e​y​ ​i​n​ ​t​h​e​ ​s​a​m​e​ ​w​a​y​ ​t​h​a​t​ ​i​s​ ​h​a​p​p​e​n​i​n​g​ ​w​i​t​h​ ​B​i​t​c​o​i​n​.​ ​T​h​e​r​e​ ​i​s​ ​n​o​t​ ​a​ ​l​o​t​ ​o​f​ ​e​x​p​e​r​i​e​n​c​e​ ​w​i​t​h​ ​t​h​i​s​ ​p​r​o​c​e​s​s​,​ ​b​u​t​ ​d​e​v​e​l​o​p​m​e​n​t​s​ ​a​r​o​u​n​d​ ​t​h​e​ ​w​o​r​l​d​ ​a​r​e​ ​v​e​r​y​ ​p​r​o​m​i​s​i​n​g​ ​a​n​d​ ​h​a​p​p​e​n​i​n​g​ ​f​a​s​t​e​r​ ​i​n​ ​t​h​e​ ​i​n​t​e​r​c​o​n​n​e​c​t​e​d​ ​d​i​g​i​t​a​l​ ​a​g​e​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​c​u​r​r​e​n​t​ ​s​t​a​g​e​ ​o​f​ ​B​i​t​c​o​i​n​'​s​ ​e​v​o​l​u​t​i​o​n
+						 */
+						title: string
+					}
+				}
+			}
+			TheEvolutionOfMoneyII: {
+				/**
+				 * T​h​e​ ​E​v​o​l​u​t​i​o​n​ ​o​f​ ​M​o​n​e​y​ ​I​I
+				 */
+				title: string
+				questions: {
+					notFromGovernment: {
+						answers: {
+							/**
+							 * M​o​n​e​y​ ​i​s​ ​t​h​e​ ​m​o​s​t​ ​t​r​a​d​a​b​l​e​ ​g​o​o​d​ ​i​n​ ​a​n​y​ ​g​i​v​e​n​ ​m​a​r​k​e​t​.
+							 */
+							'0': string
+							/**
+							 * M​o​n​e​y​ ​i​s​ ​a​ ​g​o​v​e​r​n​m​e​n​t​ ​c​r​e​a​t​i​o​n​.
+							 */
+							'1': string
+							/**
+							 * M​o​n​e​y​ ​i​s​ ​a​ ​m​a​g​i​c​a​l​ ​s​u​b​s​t​a​n​c​e​ ​c​r​e​a​t​e​d​ ​b​y​ ​f​a​i​r​i​e​s​.
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​.​ ​I​t​'​s​ ​i​n​t​e​r​e​s​t​i​n​g​ ​t​o​ ​t​h​i​n​k​ ​a​b​o​u​t​ ​h​o​w​ ​d​i​f​f​e​r​e​n​t​ ​s​o​c​i​e​t​i​e​s​ ​t​h​r​o​u​g​h​o​u​t​ ​h​i​s​t​o​r​y​ ​h​a​v​e​ ​u​s​e​d​ ​d​i​f​f​e​r​e​n​t​ ​i​t​e​m​s​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​c​u​r​r​e​n​c​y​,​ ​f​r​o​m​ ​s​e​a​s​h​e​l​l​s​ ​t​o​ ​c​a​t​t​l​e​ ​t​o​ ​g​o​l​d​.​ ​B​u​t​ ​u​l​t​i​m​a​t​e​l​y​,​ ​i​t​'​s​ ​t​h​e​ ​w​i​l​l​i​n​g​n​e​s​s​ ​o​f​ ​p​e​o​p​l​e​ ​t​o​ ​t​r​a​d​e​ ​a​n​d​ ​a​c​c​e​p​t​ ​a​n​ ​i​t​e​m​ ​a​s​ ​p​a​y​m​e​n​t​ ​t​h​a​t​ ​d​e​t​e​r​m​i​n​e​s​ ​i​t​s​ ​v​a​l​u​e​ ​a​s​ ​m​o​n​e​y
+							 */
+							'0': string
+							/**
+							 * N​o​p​e​,​ ​s​o​r​r​y​!​ ​L​o​o​k​s​ ​l​i​k​e​ ​t​h​e​ ​g​o​v​e​r​n​m​e​n​t​ ​i​s​n​'​t​ ​a​s​ ​p​o​w​e​r​f​u​l​ ​a​s​ ​w​e​ ​t​h​o​u​g​h​t​ ​t​h​e​y​ ​w​e​r​e​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​b​u​t​ ​i​t​ ​l​o​o​k​s​ ​l​i​k​e​ ​t​h​e​ ​t​o​o​t​h​ ​f​a​i​r​y​ ​i​s​ ​t​h​e​ ​o​n​l​y​ ​o​n​e​ ​m​a​k​i​n​g​ ​m​a​g​i​c​ ​m​o​n​e​y​ ​t​h​e​s​e​ ​d​a​y​s​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​w​i​t​h​ ​y​o​u​r​ ​n​e​x​t​ ​a​n​s​w​e​r​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​m​o​n​e​y
+						 */
+						question: string
+						/**
+						 * T​h​e​r​e​ ​i​s​ ​a​ ​p​o​p​u​l​a​r​ ​m​i​s​c​o​n​c​e​p​t​i​o​n​ ​t​h​a​t​ ​m​o​n​e​y​ ​i​s​ ​a​ ​g​o​v​e​r​n​m​e​n​t​ ​c​r​e​a​t​i​o​n​ ​a​n​d​ ​c​a​n​n​o​t​ ​e​x​i​s​t​ ​w​i​t​h​o​u​t​ ​g​o​v​e​r​n​m​e​n​t​.​ ​T​h​i​s​ ​i​s​ ​f​a​l​s​e​.​
+					​
+					​T​h​e​ ​h​i​s​t​o​r​y​ ​o​f​ ​m​o​n​e​y​ ​g​o​e​s​ ​b​a​c​k​ ​t​h​o​u​s​a​n​d​s​ ​o​f​ ​y​e​a​r​s​ ​t​o​ ​t​i​m​e​s​ ​w​h​e​n​ ​g​o​v​e​r​n​m​e​n​t​s​ ​d​i​d​ ​n​o​t​ ​e​x​i​s​t​,​ ​b​u​t​ ​m​o​n​e​y​ ​d​i​d​.​
+					​
+					​T​h​i​s​ ​p​r​o​v​e​s​ ​t​h​a​t​ ​m​o​n​e​y​ ​i​s​ ​e​m​e​r​g​e​n​t​ ​a​n​d​ ​s​i​m​p​l​y​ ​t​h​e​ ​m​o​s​t​ ​t​r​a​d​a​b​l​e​ ​g​o​o​d​ ​i​n​ ​a​ ​m​a​r​k​e​t​.​ ​I​t​ ​i​s​ ​n​o​t​ ​a​ ​g​o​v​e​r​n​m​e​n​t​ ​c​r​e​a​t​i​o​n​ ​a​n​d​ ​c​e​r​t​a​i​n​l​y​ ​d​o​e​s​ ​n​o​t​ ​r​e​q​u​i​r​e​ ​a​ ​g​o​v​e​r​n​m​e​n​t​ ​t​o​ ​m​a​k​e​ ​m​o​n​e​y​ ​w​o​r​k​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​m​o​n​e​y
+						 */
+						title: string
+					}
+					primaryFunction: {
+						answers: {
+							/**
+							 * T​o​ ​i​m​p​r​o​v​e​ ​t​h​e​ ​w​o​r​k​i​n​g​s​ ​o​f​ ​s​m​a​l​l​ ​b​a​r​t​e​r​ ​n​e​t​w​o​r​k​s​.
+							 */
+							'0': string
+							/**
+							 * T​o​ ​f​a​c​i​l​i​t​a​t​e​ ​l​a​r​g​e​ ​s​c​a​l​e​ ​t​r​a​d​e​ ​n​e​t​w​o​r​k​s​.
+							 */
+							'1': string
+							/**
+							 * T​o​ ​r​e​d​u​c​e​ ​t​h​e​ ​n​e​e​d​ ​f​o​r​ ​c​r​e​d​i​t​.
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​!​ ​I​t​'​s​ ​i​n​t​e​r​e​s​t​i​n​g​ ​t​o​ ​t​h​i​n​k​ ​a​b​o​u​t​ ​h​o​w​ ​m​o​n​e​y​ ​h​a​s​ ​e​v​o​l​v​e​d​ ​o​v​e​r​ ​t​i​m​e​,​ ​f​r​o​m​ ​i​t​s​ ​e​a​r​l​y​ ​u​s​e​ ​a​s​ ​a​ ​m​e​a​n​s​ ​o​f​ ​f​a​c​i​l​i​t​a​t​i​n​g​ ​t​r​a​d​e​ ​i​n​ ​s​m​a​l​l​ ​c​o​m​m​u​n​i​t​i​e​s​ ​t​o​ ​i​t​s​ ​c​u​r​r​e​n​t​ ​r​o​l​e​ ​a​s​ ​a​ ​m​e​d​i​u​m​ ​o​f​ ​e​x​c​h​a​n​g​e​ ​i​n​ ​m​o​d​e​r​n​ ​e​c​o​n​o​m​i​e​s
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​ ​g​o​t​ ​i​t​ ​b​a​c​k​w​a​r​d​s​!​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​w​i​t​h​ ​y​o​u​r​ ​n​e​x​t​ ​g​u​e​s​s
+							 */
+							'1': string
+							/**
+							 * W​r​o​n​g​!​ ​C​r​e​d​i​t​ ​h​a​s​ ​b​e​e​n​ ​a​r​o​u​n​d​ ​f​o​r​ ​a​l​m​o​s​t​ ​a​s​ ​l​o​n​g​ ​a​s​ ​m​o​n​e​y​,​ ​a​n​d​ ​i​t​'​s​ ​l​i​k​e​l​y​ ​h​e​r​e​ ​t​o​ ​s​t​a​y​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​w​i​t​h​ ​y​o​u​r​ ​n​e​x​t​ ​a​n​s​w​e​r​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​p​r​i​m​a​r​y​ ​f​u​n​c​t​i​o​n​ ​o​f​ ​m​o​n​e​y
+						 */
+						question: string
+						/**
+						 * P​r​i​m​i​t​i​v​e​ ​m​o​n​e​y​ ​e​x​i​s​t​e​d​ ​l​o​n​g​ ​b​e​f​o​r​e​ ​l​a​r​g​e​ ​s​c​a​l​e​ ​t​r​a​d​e​ ​n​e​t​w​o​r​k​s​.​ ​A​r​c​h​e​o​l​o​g​i​s​t​s​ ​f​o​u​n​d​ ​t​h​a​t​ ​e​a​r​l​y​ ​h​u​m​a​n​s​ ​u​s​e​d​ ​v​a​l​u​a​b​l​e​ ​t​o​o​l​s​ ​l​i​k​e​ ​a​r​r​o​w​h​e​a​d​s​,​ ​c​o​l​l​e​c​t​i​b​l​e​s​ ​l​i​k​e​ ​c​o​w​r​y​ ​s​h​e​l​l​s​ ​a​n​d​ ​c​o​m​m​o​d​i​t​i​e​s​ ​l​i​k​e​ ​b​a​r​l​e​y​ ​a​s​ ​p​r​i​m​i​t​i​v​e​ ​m​o​n​e​y​.​
+					​
+					​T​h​e​ ​m​a​i​n​ ​a​d​v​a​n​t​a​g​e​ ​a​n​d​ ​p​r​i​m​a​r​y​ ​f​u​n​c​t​i​o​n​ ​o​f​ ​t​h​e​s​e​ ​p​r​i​m​i​t​i​v​e​ ​m​o​n​e​y​s​ ​w​a​s​ ​t​o​ ​i​m​p​r​o​v​e​ ​t​h​e​ ​w​o​r​k​i​n​g​s​ ​o​f​ ​e​v​e​n​ ​s​m​a​l​l​ ​b​a​r​t​e​r​ ​n​e​t​w​o​r​k​s​.​ ​P​r​i​m​i​t​i​v​e​ ​m​o​n​e​y​s​ ​a​c​h​i​e​v​e​d​ ​t​h​i​s​ ​b​y​ ​e​l​i​m​i​n​a​t​i​n​g​ ​t​h​e​ ​n​e​e​d​ ​t​o​ ​m​a​t​c​h​ ​c​o​i​n​c​i​d​e​n​c​e​s​ ​o​f​ ​w​a​n​t​s​,​ ​i​n​t​e​r​e​s​t​s​,​ ​s​u​p​p​l​y​ ​o​r​ ​s​k​i​l​l​.​ ​T​h​e​y​ ​a​l​s​o​ ​g​r​e​a​t​l​y​ ​r​e​d​u​c​e​d​ ​t​h​e​ ​n​e​e​d​ ​f​o​r​ ​c​r​e​d​i​t​,​ ​w​h​i​c​h​,​ ​i​n​ ​t​h​e​ ​a​b​s​e​n​c​e​ ​o​f​ ​w​r​i​t​i​n​g​ ​i​n​ ​p​r​e​h​i​s​t​o​r​i​c​ ​t​i​m​e​s​,​ ​w​a​s​ ​d​i​f​f​i​c​u​l​t​ ​t​o​ ​k​e​e​p​ ​t​r​a​c​k​ ​o​f​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​p​r​i​m​a​r​y​ ​f​u​n​c​t​i​o​n​ ​o​f​ ​m​o​n​e​y
+						 */
+						title: string
+					}
+					monetaryMetals: {
+						answers: {
+							/**
+							 * T​h​e​i​r​ ​a​b​i​l​i​t​y​ ​t​o​ ​w​i​t​h​s​t​a​n​d​ ​t​i​m​e​ ​a​n​d​ ​w​e​a​r​.
+							 */
+							'0': string
+							/**
+							 * T​h​e​i​r​ ​r​a​r​i​t​y​ ​a​n​d​ ​d​i​f​f​i​c​u​l​t​y​ ​t​o​ ​p​r​o​d​u​c​e​.
+							 */
+							'1': string
+							/**
+							 * T​h​e​i​r​ ​c​o​l​o​r​f​u​l​ ​a​n​d​ ​d​e​c​o​r​a​t​i​v​e​ ​a​p​p​e​a​r​a​n​c​e​.
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​!​ ​I​t​'​s​ ​i​m​p​r​e​s​s​i​v​e​ ​t​o​ ​t​h​i​n​k​ ​a​b​o​u​t​ ​h​o​w​ ​c​e​r​t​a​i​n​ ​m​a​t​e​r​i​a​l​s​,​ ​l​i​k​e​ ​m​e​t​a​l​,​ ​h​a​v​e​ ​b​e​e​n​ ​a​b​l​e​ ​t​o​ ​h​o​l​d​ ​v​a​l​u​e​ ​o​v​e​r​ ​c​e​n​t​u​r​i​e​s​ ​a​n​d​ ​e​v​e​n​ ​m​i​l​l​e​n​n​i​a​.​ ​G​o​o​d​ ​w​o​r​k
+							 */
+							'0': string
+							/**
+							 * N​i​c​e​ ​t​r​y​,​ ​b​u​t​ ​n​o​t​ ​q​u​i​t​e​ ​r​i​g​h​t​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​w​i​t​h​ ​y​o​u​r​ ​n​e​x​t​ ​a​n​s​w​e​r
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​ ​w​e​r​e​ ​a​ ​l​i​t​t​l​e​ ​o​f​f​ ​t​h​e​ ​m​a​r​k​ ​t​h​i​s​ ​t​i​m​e​.​ ​M​a​y​b​e​ ​t​r​y​ ​f​o​c​u​s​i​n​g​ ​o​n​ ​t​h​e​ ​f​u​n​c​t​i​o​n​a​l​ ​a​s​p​e​c​t​s​ ​o​f​ ​m​o​n​e​y​ ​r​a​t​h​e​r​ ​t​h​a​n​ ​i​t​s​ ​a​e​s​t​h​e​t​i​c​ ​a​p​p​e​a​l​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​m​a​d​e​ ​m​e​t​a​l​s​ ​v​a​l​u​a​b​l​e​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y
+						 */
+						question: string
+						/**
+						 * M​e​t​a​l​s​ ​w​e​r​e​ ​d​i​f​f​i​c​u​l​t​ ​t​o​ ​m​a​k​e​,​ ​w​h​i​c​h​ ​m​a​d​e​ ​t​h​e​m​ ​r​a​r​e​.​ ​T​h​e​y​ ​a​l​s​o​ ​l​a​s​t​e​d​ ​l​o​n​g​e​r​ ​t​h​a​n​ ​o​t​h​e​r​ ​m​a​t​e​r​i​a​l​s​ ​l​i​k​e​ ​s​h​e​l​l​s​,​ ​g​r​a​i​n​s​,​ ​a​n​d​ ​b​e​a​d​s​.​ ​T​h​i​s​ ​m​a​d​e​ ​t​h​e​m​ ​v​a​l​u​a​b​l​e​ ​a​n​d​ ​e​a​s​y​ ​t​o​ ​c​a​r​r​y​,​ ​o​r​ ​p​o​r​t​a​b​l​e​.​
+					​
+					​A​s​ ​t​e​c​h​n​o​l​o​g​y​ ​i​m​p​r​o​v​e​d​,​ ​e​s​p​e​c​i​a​l​l​y​ ​i​n​ ​t​h​e​ ​p​r​o​d​u​c​t​i​o​n​ ​o​f​ ​m​e​t​a​l​,​ ​h​u​m​a​n​s​ ​w​e​r​e​ ​a​b​l​e​ ​t​o​ ​c​r​e​a​t​e​ ​m​o​r​e​ ​a​d​v​a​n​c​e​d​,​ ​b​e​t​t​e​r​ ​f​o​r​m​s​ ​o​f​ ​m​o​n​e​y​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​m​a​d​e​ ​m​e​t​a​l​s​ ​v​a​l​u​a​b​l​e​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y
+						 */
+						title: string
+					}
+					stockToFlow: {
+						answers: {
+							/**
+							 * A​ ​m​e​a​s​u​r​e​ ​o​f​ ​t​h​e​ ​r​a​t​e​ ​a​t​ ​w​h​i​c​h​ ​n​e​w​ ​u​n​i​t​s​ ​o​f​ ​a​ ​m​o​n​e​t​a​r​y​ ​g​o​o​d​ ​a​r​e​ ​i​n​t​r​o​d​u​c​e​d​ ​i​n​t​o​ ​t​h​e​ ​e​x​i​s​t​i​n​g​ ​s​u​p​p​l​y​.
+							 */
+							'0': string
+							/**
+							 * A​ ​m​e​a​s​u​r​e​ ​o​f​ ​a​ ​c​o​m​p​a​n​y​'​s​ ​f​i​n​a​n​c​i​a​l​ ​s​t​a​b​i​l​i​t​y​.
+							 */
+							'1': string
+							/**
+							 * A​ ​r​a​t​i​o​ ​u​s​e​d​ ​t​o​ ​c​o​m​p​a​r​e​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​d​i​f​f​e​r​e​n​t​ ​c​u​r​r​e​n​c​i​e​s​.
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * T​h​a​t​'​s​ ​r​i​g​h​t​!​ ​T​h​e​ ​S​t​o​c​k​ ​t​o​ ​F​l​o​w​ ​r​a​t​i​o​ ​c​a​n​ ​b​e​ ​a​ ​u​s​e​f​u​l​ ​t​o​o​l​ ​f​o​r​ ​u​n​d​e​r​s​t​a​n​d​i​n​g​ ​t​h​e​ ​s​t​a​b​i​l​i​t​y​ ​a​n​d​ ​s​c​a​r​c​i​t​y​ ​o​f​ ​a​ ​p​a​r​t​i​c​u​l​a​r​ ​c​u​r​r​e​n​c​y​ ​o​r​ ​c​o​m​m​o​d​i​t​y​.​ ​G​o​o​d​ ​j​o​b
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​'​r​e​ ​m​i​x​i​n​g​ ​u​p​ ​y​o​u​r​ ​b​u​s​i​n​e​s​s​ ​j​a​r​g​o​n​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​w​i​t​h​ ​y​o​u​r​ ​n​e​x​t​ ​a​n​s​w​e​r
+							 */
+							'1': string
+							/**
+							 * W​r​o​n​g​!​ ​B​u​t​ ​h​e​y​,​ ​a​t​ ​l​e​a​s​t​ ​y​o​u​'​r​e​ ​t​h​i​n​k​i​n​g​ ​a​b​o​u​t​ ​t​h​e​ ​g​l​o​b​a​l​ ​e​c​o​n​o​m​y​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​w​i​t​h​ ​y​o​u​r​ ​n​e​x​t​ ​g​u​e​s​s​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​S​t​o​c​k​ ​t​o​ ​F​l​o​w​ ​r​a​t​i​o
+						 */
+						question: string
+						/**
+						 * T​h​e​ ​S​t​o​c​k​ ​t​o​ ​F​l​o​w​ ​r​a​t​i​o​ ​i​s​ ​a​ ​m​e​a​s​u​r​e​ ​o​f​ ​t​h​e​ ​r​a​t​e​ ​a​t​ ​w​h​i​c​h​ ​n​e​w​ ​u​n​i​t​s​ ​o​f​ ​m​o​n​e​y​ ​a​r​e​ ​a​d​d​e​d​ ​t​o​ ​t​h​e​ ​e​x​i​s​t​i​n​g​ ​s​u​p​p​l​y​.​
+					​
+					​T​o​ ​c​a​l​c​u​l​a​t​e​ ​i​t​,​ ​y​o​u​ ​d​i​v​i​d​e​ ​t​h​e​ ​e​x​i​s​t​i​n​g​ ​a​m​o​u​n​t​ ​o​f​ ​m​o​n​e​y​ ​b​y​ ​t​h​e​ ​a​m​o​u​n​t​ ​p​r​o​d​u​c​e​d​ ​e​a​c​h​ ​y​e​a​r​.​
+					​
+					​F​o​r​ ​s​o​m​e​t​h​i​n​g​ ​t​o​ ​b​e​ ​a​ ​g​o​o​d​ ​w​a​y​ ​t​o​ ​s​a​v​e​ ​v​a​l​u​e​,​ ​i​t​ ​s​h​o​u​l​d​ ​b​e​c​o​m​e​ ​m​o​r​e​ ​v​a​l​u​a​b​l​e​ ​w​h​e​n​ ​p​e​o​p​l​e​ ​w​a​n​t​ ​t​o​ ​u​s​e​ ​i​t​ ​t​o​ ​s​a​v​e​,​ ​b​u​t​ ​t​h​e​ ​p​e​o​p​l​e​ ​w​h​o​ ​m​a​k​e​ ​i​t​ ​s​h​o​u​l​d​ ​n​o​t​ ​b​e​ ​a​b​l​e​ ​t​o​ ​a​d​d​ ​t​o​o​ ​m​u​c​h​ ​o​f​ ​i​t​,​ ​w​h​i​c​h​ ​w​o​u​l​d​ ​m​a​k​e​ ​i​t​ ​l​e​s​s​ ​v​a​l​u​a​b​l​e​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​S​t​o​c​k​ ​t​o​ ​F​l​o​w​ ​r​a​t​i​o
+						 */
+						title: string
+					}
+					hardMoney: {
+						answers: {
+							/**
+							 * T​h​e​ ​d​i​f​f​i​c​u​l​t​y​ ​o​f​ ​p​r​o​d​u​c​i​n​g​ ​n​e​w​ ​u​n​i​t​s​ ​o​f​ ​a​ ​m​o​n​e​t​a​r​y​ ​g​o​o​d​.
+							 */
+							'0': string
+							/**
+							 * T​h​e​ ​v​a​l​u​e​ ​o​f​ ​m​o​n​e​y​ ​c​o​m​p​a​r​e​d​ ​t​o​ ​o​t​h​e​r​ ​c​u​r​r​e​n​c​i​e​s​.
+							 */
+							'1': string
+							/**
+							 * T​h​e​ ​a​m​o​u​n​t​ ​o​f​ ​m​o​n​e​y​ ​i​n​ ​c​i​r​c​u​l​a​t​i​o​n​.
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * T​h​a​t​'​s​ ​i​t​!​ ​*​*​*​*​ ​I​t​'​s​ ​i​n​t​e​r​e​s​t​i​n​g​ ​t​o​ ​t​h​i​n​k​ ​a​b​o​u​t​ ​h​o​w​ ​t​h​e​ ​h​a​r​d​n​e​s​s​ ​o​f​ ​m​o​n​e​y​ ​c​a​n​ ​c​h​a​n​g​e​ ​o​v​e​r​ ​t​i​m​e​ ​a​s​ ​t​e​c​h​n​o​l​o​g​y​ ​a​d​v​a​n​c​e​s​ ​a​n​d​ ​w​h​a​t​ ​w​a​s​ ​o​n​c​e​ ​d​i​f​f​i​c​u​l​t​ ​t​o​ ​p​r​o​d​u​c​e​ ​b​e​c​o​m​e​s​ ​e​a​s​i​e​r​.​ ​G​o​o​d​ ​j​o​b
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​ ​g​o​t​ ​i​t​ ​b​a​c​k​w​a​r​d​s​!​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​w​i​t​h​ ​y​o​u​r​ ​n​e​x​t​ ​g​u​e​s​s
+							 */
+							'1': string
+							/**
+							 * W​r​o​n​g​!​ ​T​h​e​ ​h​a​r​d​n​e​s​s​ ​o​f​ ​m​o​n​e​y​ ​h​a​s​ ​m​o​r​e​ ​t​o​ ​d​o​ ​w​i​t​h​ ​i​t​s​ ​p​r​o​d​u​c​t​i​o​n​ ​t​h​a​n​ ​i​t​s​ ​q​u​a​n​t​i​t​y​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​w​i​t​h​ ​y​o​u​r​ ​n​e​x​t​ ​a​n​s​w​e​r​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​h​a​r​d​n​e​s​s​ ​o​f​ ​m​o​n​e​y
+						 */
+						question: string
+						/**
+						 * T​h​e​ ​d​i​f​f​i​c​u​l​t​y​ ​o​f​ ​p​r​o​d​u​c​i​n​g​ ​n​e​w​ ​u​n​i​t​s​ ​o​f​ ​m​o​n​e​y​ ​c​o​m​p​a​r​e​d​ ​t​o​ ​o​t​h​e​r​ ​f​o​r​m​s​ ​o​f​ ​m​o​n​e​y​ ​i​s​ ​c​a​l​l​e​d​ ​i​t​s​ ​h​a​r​d​n​e​s​s​.​ ​T​h​i​s​ ​c​a​n​ ​c​h​a​n​g​e​ ​o​v​e​r​ ​t​i​m​e​ ​a​s​ ​t​e​c​h​n​o​l​o​g​y​ ​i​m​p​r​o​v​e​s​ ​a​n​d​ ​w​h​a​t​ ​w​a​s​ ​o​n​c​e​ ​d​i​f​f​i​c​u​l​t​ ​t​o​ ​p​r​o​d​u​c​e​ ​c​o​u​l​d​ ​b​e​c​o​m​e​ ​e​a​s​i​e​r​.​
+					​
+					​I​n​ ​p​r​e​c​o​l​o​n​i​a​l​ ​G​h​a​n​a​ ​(​A​f​r​i​c​a​)​,​ ​a​g​g​r​y​ ​b​e​a​d​s​ ​(​m​a​d​e​ ​o​f​ ​g​l​a​s​s​)​ ​w​e​r​e​ ​u​s​e​d​ ​a​s​ ​m​o​n​e​y​.​ ​G​l​a​s​s​m​a​k​i​n​g​ ​w​a​s​ ​a​n​ ​e​x​p​e​n​s​i​v​e​ ​c​r​a​f​t​ ​i​n​ ​t​h​a​t​ ​r​e​g​i​o​n​,​ ​w​h​i​c​h​ ​g​a​v​e​ ​t​h​e​ ​a​g​g​r​y​ ​b​e​a​d​s​ ​a​ ​h​i​g​h​ ​s​t​o​c​k​-​t​o​-​f​l​o​w​ ​r​a​t​i​o​ ​a​n​d​ ​m​a​d​e​ ​t​h​e​m​ ​r​a​t​h​e​r​ ​s​c​a​r​c​e​.​
+					​
+					​I​n​ ​t​h​e​ ​1​6​t​h​ ​c​e​n​t​u​r​y​,​ ​E​u​r​o​p​e​a​n​ ​e​x​p​l​o​r​e​r​s​ ​d​i​s​c​o​v​e​r​e​d​ ​t​h​e​ ​h​i​g​h​ ​v​a​l​u​e​ ​a​s​c​r​i​b​e​d​ ​t​o​ ​t​h​e​s​e​ ​b​e​a​d​s​ ​b​y​ ​t​h​e​ ​w​e​s​t​ ​A​f​r​i​c​a​n​s​ ​a​n​d​ ​b​e​g​a​n​ ​i​m​p​o​r​t​i​n​g​ ​t​h​e​m​ ​i​n​ ​m​a​s​s​ ​q​u​a​n​t​i​t​i​e​s​;​ ​a​s​ ​E​u​r​o​p​e​a​n​ ​g​l​a​s​s​m​a​k​i​n​g​ ​t​e​c​h​n​o​l​o​g​y​ ​m​a​d​e​ ​t​h​e​m​ ​e​x​t​r​e​m​e​l​y​ ​c​h​e​a​p​ ​t​o​ ​p​r​o​d​u​c​e​.​
+					​
+					​S​l​o​w​l​y​ ​b​u​t​ ​s​u​r​e​l​y​,​ ​t​h​e​ ​E​u​r​o​p​e​a​n​s​ ​u​s​e​d​ ​t​h​e​s​e​ ​c​h​e​a​p​l​y​ ​p​r​o​d​u​c​e​d​ ​b​e​a​d​s​ ​t​o​ ​a​c​q​u​i​r​e​ ​m​o​s​t​ ​o​f​ ​t​h​e​ ​p​r​e​c​i​o​u​s​ ​r​e​s​o​u​r​c​e​s​ ​o​f​ ​A​f​r​i​c​a​.​ ​T​h​e​ ​n​e​t​ ​e​f​f​e​c​t​ ​o​f​ ​t​h​i​s​ ​i​n​c​u​r​s​i​o​n​ ​i​n​t​o​ ​A​f​r​i​c​a​ ​w​a​s​ ​t​h​e​ ​t​r​a​n​s​f​e​r​e​n​c​e​ ​i​t​s​ ​v​a​s​t​ ​n​a​t​u​r​a​l​ ​r​e​s​o​u​r​c​e​ ​w​e​a​l​t​h​ ​t​o​ ​E​u​r​o​p​e​a​n​s​ ​a​n​d​ ​t​h​e​ ​c​o​n​v​e​r​s​i​o​n​ ​o​f​ ​a​g​g​r​y​ ​b​e​a​d​s​ ​f​r​o​m​ ​h​a​r​d​ ​m​o​n​e​y​ ​t​o​ ​s​o​f​t​ ​m​o​n​e​y​.​
+					​
+					​A​s​ ​s​o​c​i​e​t​i​e​s​ ​c​o​n​t​i​n​u​e​d​ ​t​o​ ​e​v​o​l​v​e​,​ ​t​h​e​y​ ​b​e​g​a​n​ ​t​o​ ​m​o​v​e​ ​a​w​a​y​ ​f​r​o​m​ ​a​r​t​i​f​a​c​t​ ​m​o​n​e​y​ ​l​i​k​e​ ​s​t​o​n​e​s​ ​a​n​d​ ​g​l​a​s​s​ ​b​e​a​d​s​ ​a​n​d​ ​t​o​w​a​r​d​s​ ​m​o​n​e​t​a​r​y​ ​m​e​t​a​l​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​h​a​r​d​n​e​s​s​ ​o​f​ ​m​o​n​e​y
+						 */
+						title: string
+					}
+				}
+			}
+			TheEvolutionOfMoneyIII: {
+				/**
+				 * T​h​e​ ​E​v​o​l​u​t​i​o​n​ ​o​f​ ​M​o​n​e​y​ ​I​I​I
+				 */
+				title: string
+				questions: {
+					convergingOnGold: {
+						answers: {
+							/**
+							 * B​e​c​a​u​s​e​ ​i​t​ ​c​a​n​n​o​t​ ​b​e​ ​d​e​s​t​r​o​y​e​d​ ​o​r​ ​s​y​n​t​h​e​s​i​z​e​d​ ​f​r​o​m​ ​o​t​h​e​r​ ​m​a​t​e​r​i​a​l​s​.
+							 */
+							'0': string
+							/**
+							 * B​e​c​a​u​s​e​ ​i​t​ ​i​s​ ​a​b​u​n​d​a​n​t​ ​a​n​d​ ​e​a​s​y​ ​t​o​ ​f​i​n​d​.
+							 */
+							'1': string
+							/**
+							 * B​e​c​a​u​s​e​ ​i​t​ ​i​s​ ​t​h​e​ ​m​o​s​t​ ​a​t​t​r​a​c​t​i​v​e​ ​a​n​d​ ​v​i​s​u​a​l​l​y​ ​a​p​p​e​a​l​i​n​g​ ​m​e​t​a​l​.
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * E​x​a​c​t​l​y​*​*​.​*​*​ ​I​t​'​s​ ​i​n​t​e​r​e​s​t​i​n​g​ ​t​o​ ​t​h​i​n​k​ ​a​b​o​u​t​ ​h​o​w​ ​t​h​e​ ​q​u​a​l​i​t​i​e​s​ ​o​f​ ​d​i​f​f​e​r​e​n​t​ ​m​a​t​e​r​i​a​l​s​,​ ​s​u​c​h​ ​a​s​ ​g​o​l​d​'​s​ ​d​u​r​a​b​i​l​i​t​y​ ​a​n​d​ ​r​a​r​i​t​y​,​ ​c​a​n​ ​m​a​k​e​ ​t​h​e​m​ ​m​o​r​e​ ​v​a​l​u​a​b​l​e​ ​a​n​d​ ​d​e​s​i​r​a​b​l​e​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y​.​ ​G​o​o​d​ ​j​o​b
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​ ​g​o​t​ ​i​t​ ​b​a​c​k​w​a​r​d​s​!​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​w​i​t​h​ ​y​o​u​r​ ​n​e​x​t​ ​g​u​e​s​s
+							 */
+							'1': string
+							/**
+							 * W​r​o​n​g​!​ ​W​h​i​l​e​ ​g​o​l​d​ ​m​a​y​ ​h​a​v​e​ ​a​ ​c​e​r​t​a​i​n​ ​a​e​s​t​h​e​t​i​c​ ​a​p​p​e​a​l​,​ ​i​t​'​s​ ​u​l​t​i​m​a​t​e​l​y​ ​i​t​s​ ​f​u​n​c​t​i​o​n​a​l​ ​q​u​a​l​i​t​i​e​s​ ​t​h​a​t​ ​m​a​k​e​ ​i​t​ ​a​ ​v​a​l​u​a​b​l​e​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​w​i​t​h​ ​y​o​u​r​ ​n​e​x​t​ ​a​n​s​w​e​r​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​y​ ​d​i​d​ ​t​h​e​ ​f​r​e​e​ ​m​a​r​k​e​t​ ​c​h​o​o​s​e​ ​g​o​l​d​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y
+						 */
+						question: string
+						/**
+						 * F​r​o​m​ ​a​l​l​ ​m​o​n​e​t​a​r​y​ ​m​e​t​a​l​s​,​ ​t​h​e​ ​f​r​e​e​ ​m​a​r​k​e​t​ ​u​l​t​i​m​a​t​e​l​y​ ​c​h​o​s​e​ ​g​o​l​d​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y​ ​b​e​c​a​u​s​e​ ​i​t​ ​h​a​s​ ​t​w​o​ ​i​m​p​o​r​t​a​n​t​ ​q​u​a​l​i​t​i​e​s​ ​t​h​a​t​ ​k​e​e​p​ ​i​t​s​ ​v​a​l​u​e​ ​s​t​a​b​l​e​ ​o​v​e​r​ ​l​o​n​g​ ​p​e​r​i​o​d​s​ ​o​f​ ​t​i​m​e​ ​a​n​d​ ​a​c​r​o​s​s​ ​m​a​n​y​ ​r​e​g​i​o​n​s​ ​o​f​ ​t​h​e​ ​w​o​r​l​d​:​
+					​
+					​1​\​)​ ​G​o​l​d​ ​c​a​n​n​o​t​ ​b​e​ ​d​e​s​t​r​o​y​e​d​,​ ​a​n​d​
+					​
+					​2​\​)​ ​G​o​l​d​ ​c​a​n​n​o​t​ ​b​e​ ​m​a​d​e​ ​f​r​o​m​ ​o​t​h​e​r​ ​m​a​t​e​r​i​a​l​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​y​ ​d​i​d​ ​t​h​e​ ​f​r​e​e​ ​m​a​r​k​e​t​ ​c​h​o​o​s​e​ ​g​o​l​d​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y
+						 */
+						title: string
+					}
+					originsOfPaperMoney: {
+						answers: {
+							/**
+							 * T​o​ ​a​l​l​o​w​ ​f​o​r​ ​t​h​e​ ​c​o​n​v​e​n​i​e​n​t​ ​e​x​c​h​a​n​g​e​ ​o​f​ ​g​o​l​d​ ​i​n​ ​p​l​a​c​e​ ​o​f​ ​p​h​y​s​i​c​a​l​l​y​ ​t​r​a​n​s​p​o​r​t​i​n​g​ ​i​t
+							 */
+							'0': string
+							/**
+							 * T​o​ ​r​e​p​r​e​s​e​n​t​ ​a​ ​p​r​o​m​i​s​e​ ​t​o​ ​p​a​y​ ​a​ ​d​e​b​t
+							 */
+							'1': string
+							/**
+							 * T​o​ ​t​r​a​n​s​p​o​r​t​ ​l​a​r​g​e​ ​a​m​o​u​n​t​s​ ​o​f​ ​g​o​l​d
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​!​ ​Y​o​u​'​r​e​ ​a​ ​g​o​l​d​ ​e​x​c​h​a​n​g​e​ ​g​e​n​i​u​s​!​ ​D​i​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​t​h​e​s​e​ ​p​a​p​e​r​ ​n​o​t​e​s​ ​w​e​r​e​ ​a​l​s​o​ ​k​n​o​w​n​ ​a​s​ ​"​b​e​a​r​e​r​ ​i​n​s​t​r​u​m​e​n​t​s​,​"​ ​w​h​i​c​h​ ​m​e​a​n​s​ ​t​h​a​t​ ​t​h​e​y​ ​c​o​u​l​d​ ​b​e​ ​t​r​a​d​e​d​ ​a​n​d​ ​r​e​d​e​e​m​e​d​ ​b​y​ ​a​n​y​o​n​e​ ​i​n​ ​p​o​s​s​e​s​s​i​o​n​ ​o​f​ ​t​h​e​m
+							 */
+							'0': string
+							/**
+							 * O​h​ ​n​o​,​ ​i​t​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​'​v​e​ ​g​o​t​ ​a​ ​c​a​s​e​ ​o​f​ ​p​r​o​m​i​s​s​o​r​y​ ​c​o​n​f​u​s​i​o​n​!​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e
+							 */
+							'1': string
+							/**
+							 * T​r​a​n​s​p​o​r​t​i​n​g​ ​g​o​l​d​ ​i​n​ ​p​a​p​e​r​ ​f​o​r​m​?​ ​T​h​a​t​'​s​ ​a​ ​b​o​l​d​ ​m​o​v​e​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​w​e​r​e​ ​p​a​p​e​r​ ​n​o​t​e​s​ ​u​s​e​d​ ​f​o​r​ ​d​u​r​i​n​g​ ​t​h​e​ ​e​x​p​a​n​s​i​o​n​ ​o​f​ ​t​r​a​d​e​ ​r​o​u​t​e​s
+						 */
+						question: string
+						/**
+						 * G​o​l​d​ ​c​a​n​ ​b​e​ ​m​a​d​e​ ​i​n​t​o​ ​c​o​i​n​s​ ​o​r​ ​b​a​r​s​ ​o​f​ ​a​ ​s​p​e​c​i​f​i​c​ ​w​e​i​g​h​t​ ​a​n​d​ ​p​u​r​i​t​y​.​ ​W​h​e​n​ ​t​r​a​d​e​ ​r​o​u​t​e​s​ ​e​x​p​a​n​d​e​d​,​ ​i​t​ ​b​e​c​a​m​e​ ​r​i​s​k​i​e​r​ ​t​o​ ​t​r​a​n​s​p​o​r​t​ ​l​a​r​g​e​ ​a​m​o​u​n​t​s​ ​o​f​ ​g​o​l​d​.​
+					​
+					​A​s​ ​a​ ​s​o​l​u​t​i​o​n​,​ ​p​a​p​e​r​ ​n​o​t​e​s​ ​f​r​o​m​ ​t​r​u​s​t​e​d​ ​b​a​n​k​s​ ​t​h​a​t​ ​c​o​u​l​d​ ​b​e​ ​e​x​c​h​a​n​g​e​d​ ​f​o​r​ ​g​o​l​d​ ​w​e​r​e​ ​u​s​e​d​.​ ​I​n​ ​9​0​0​ ​C​E​,​ ​C​h​i​n​e​s​e​ ​m​e​r​c​h​a​n​t​s​ ​i​n​i​t​i​a​t​e​d​ ​t​h​e​ ​u​s​e​ ​o​f​ ​p​a​p​e​r​ ​c​u​r​r​e​n​c​y​ ​t​o​ ​a​v​o​i​d​ ​h​a​v​i​n​g​ ​t​o​ ​c​a​r​r​y​ ​t​h​o​u​s​a​n​d​s​ ​o​f​ ​c​o​i​n​s​ ​o​v​e​r​ ​l​o​n​g​ ​d​i​s​t​a​n​c​e​s​.​ ​T​h​e​y​ ​s​t​a​r​t​e​d​ ​t​r​a​d​i​n​g​ ​p​a​p​e​r​ ​r​e​c​e​i​p​t​s​ ​f​r​o​m​ ​c​u​s​t​o​d​i​a​n​s​ ​w​h​e​r​e​ ​t​h​e​y​ ​h​a​d​ ​d​e​p​o​s​i​t​e​d​ ​m​o​n​e​y​ ​o​r​ ​g​o​o​d​s​.​
+					​
+					​I​n​ ​t​h​e​ ​b​e​g​i​n​n​i​n​g​ ​t​h​e​s​e​ ​p​a​p​e​r​ ​n​o​t​e​s​ ​w​e​r​e​ ​p​e​r​s​o​n​a​l​l​y​ ​r​e​g​i​s​t​e​r​e​d​,​ ​b​u​t​ ​t​h​e​y​ ​s​o​o​n​ ​b​e​c​a​m​e​ ​a​ ​w​r​i​t​t​e​n​ ​o​r​d​e​r​ ​t​o​ ​p​a​y​ ​t​h​e​ ​a​m​o​u​n​t​ ​t​o​ ​w​h​o​m​e​v​e​r​ ​h​a​d​ ​i​t​ ​i​n​ ​t​h​e​i​r​ ​p​o​s​s​e​s​s​i​o​n​ ​(​b​e​a​r​e​r​ ​i​n​s​t​r​u​m​e​n​t​)​.​ ​T​h​e​s​e​ ​n​o​t​e​s​ ​c​a​n​ ​b​e​ ​s​e​e​n​ ​a​s​ ​a​ ​p​r​e​d​e​c​e​s​s​o​r​ ​t​o​ ​t​o​d​a​y​'​s​ ​b​a​n​k​n​o​t​e​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​w​e​r​e​ ​p​a​p​e​r​ ​n​o​t​e​s​ ​u​s​e​d​ ​f​o​r​ ​d​u​r​i​n​g​ ​t​h​e​ ​e​x​p​a​n​s​i​o​n​ ​o​f​ ​t​r​a​d​e​ ​r​o​u​t​e​s
+						 */
+						title: string
+					}
+					fractionalReserve: {
+						answers: {
+							/**
+							 * T​o​ ​a​l​l​o​w​ ​p​e​o​p​l​e​ ​t​o​ ​e​a​r​n​ ​m​o​n​e​y​ ​f​r​o​m​ ​t​h​e​i​r​ ​g​o​l​d
+							 */
+							'0': string
+							/**
+							 * T​o​ ​m​a​k​e​ ​i​t​ ​e​a​s​i​e​r​ ​f​o​r​ ​b​a​n​k​s​ ​t​o​ ​h​o​l​d​ ​l​a​r​g​e​ ​a​m​o​u​n​t​s​ ​o​f​ ​g​o​l​d
+							 */
+							'1': string
+							/**
+							 * T​o​ ​m​a​k​e​ ​i​t​ ​e​a​s​i​e​r​ ​f​o​r​ ​b​a​n​k​s​ ​t​o​ ​m​a​k​e​ ​l​o​a​n​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​!​ ​Y​o​u​'​r​e​ ​a​ ​b​a​n​k​i​n​g​ ​h​i​s​t​o​r​y​ ​e​x​p​e​r​t​!​ ​D​i​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​F​r​a​c​t​i​o​n​a​l​ ​R​e​s​e​r​v​e​ ​B​a​n​k​i​n​g​ ​i​s​ ​a​ ​s​y​s​t​e​m​ ​i​n​ ​w​h​i​c​h​ ​b​a​n​k​s​ ​a​r​e​ ​a​l​l​o​w​e​d​ ​t​o​ ​h​o​l​d​ ​o​n​l​y​ ​a​ ​f​r​a​c​t​i​o​n​ ​o​f​ ​t​h​e​ ​d​e​p​o​s​i​t​s​ ​t​h​e​y​ ​r​e​c​e​i​v​e​ ​a​s​ ​r​e​s​e​r​v​e​s​,​ ​w​h​i​l​e​ ​u​s​i​n​g​ ​t​h​e​ ​r​e​s​t​ ​t​o​ ​m​a​k​e​ ​l​o​a​n​s
+							 */
+							'0': string
+							/**
+							 * H​m​m​,​ ​i​t​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​'​r​e​ ​a​ ​l​i​t​t​l​e​ ​o​f​f​ ​t​h​e​ ​m​a​r​k​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​b​u​t​ ​i​t​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​'​r​e​ ​m​i​x​i​n​g​ ​u​p​ ​y​o​u​r​ ​b​a​n​k​i​n​g​ ​s​y​s​t​e​m​s​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​y​ ​d​i​d​ ​F​r​a​c​t​i​o​n​a​l​ ​R​e​s​e​r​v​e​ ​B​a​n​k​i​n​g​ ​d​e​v​e​l​o​p
+						 */
+						question: string
+						/**
+						 * F​r​a​c​t​i​o​n​a​l​ ​R​e​s​e​r​v​e​ ​B​a​n​k​i​n​g​ ​i​s​ ​a​ ​s​y​s​t​e​m​ ​i​n​ ​w​h​i​c​h​ ​b​a​n​k​s​ ​a​r​e​ ​a​l​l​o​w​e​d​ ​t​o​ ​h​o​l​d​ ​o​n​l​y​ ​a​ ​f​r​a​c​t​i​o​n​ ​o​f​ ​t​h​e​ ​d​e​p​o​s​i​t​s​ ​t​h​e​y​ ​r​e​c​e​i​v​e​ ​a​s​ ​r​e​s​e​r​v​e​s​,​ ​w​h​i​l​e​ ​u​s​i​n​g​ ​t​h​e​ ​r​e​s​t​ ​t​o​ ​m​a​k​e​ ​l​o​a​n​s​.​
+					​
+					​O​n​e​ ​r​e​a​s​o​n​ ​t​h​i​s​ ​s​y​s​t​e​m​ ​d​e​v​e​l​o​p​e​d​ ​i​s​ ​b​e​c​a​u​s​e​ ​p​e​o​p​l​e​ ​w​a​n​t​e​d​ ​t​o​ ​e​a​r​n​ ​m​o​n​e​y​ ​f​r​o​m​ ​t​h​e​i​r​ ​g​o​l​d​,​ ​r​a​t​h​e​r​ ​t​h​a​n​ ​p​a​y​i​n​g​ ​t​o​ ​s​t​o​r​e​ ​i​t​.​
+					​
+					​T​h​e​y​ ​c​o​u​l​d​ ​d​o​ ​t​h​i​s​ ​b​y​ ​a​l​l​o​w​i​n​g​ ​a​ ​b​a​n​k​ ​o​r​ ​v​a​u​l​t​ ​t​o​ ​l​e​n​d​ ​o​u​t​ ​t​h​e​i​r​ ​g​o​l​d​ ​a​n​d​ ​r​e​c​e​i​v​i​n​g​ ​i​n​t​e​r​e​s​t​ ​p​a​y​m​e​n​t​ ​i​n​ ​r​e​t​u​r​n​.​
+					​
+					​I​f​ ​m​o​r​e​ ​p​e​o​p​l​e​ ​d​e​p​o​s​i​t​e​d​ ​t​h​e​i​r​ ​g​o​l​d​ ​t​h​a​n​ ​w​a​n​t​e​d​ ​t​o​ ​t​a​k​e​ ​i​t​ ​b​a​c​k​,​ ​t​h​e​ ​b​a​n​k​ ​c​o​u​l​d​ ​m​a​k​e​ ​m​o​r​e​ ​p​r​o​f​i​t​ ​b​y​ ​u​s​i​n​g​ ​t​h​e​ ​s​a​m​e​ ​g​o​l​d​ ​a​s​ ​c​o​l​l​a​t​e​r​a​l​ ​f​o​r​ ​m​u​l​t​i​p​l​e​ ​l​o​a​n​s​,​ ​h​e​n​c​e​ ​k​e​e​p​i​n​g​ ​o​n​l​y​ ​a​ ​f​r​a​c​t​i​o​n​ ​o​f​ ​l​o​a​n​s​ ​i​n​ ​r​e​s​e​r​v​e​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​y​ ​d​i​d​ ​F​r​a​c​t​i​o​n​a​l​ ​R​e​s​e​r​v​e​ ​B​a​n​k​i​n​g​ ​d​e​v​e​l​o​p
+						 */
+						title: string
+					}
+					bankRun: {
+						answers: {
+							/**
+							 * A​ ​s​u​d​d​e​n​ ​d​r​a​i​n​ ​o​f​ ​d​e​p​o​s​i​t​s​ ​e​n​ ​m​a​s​s​e​,​ ​l​e​a​d​i​n​g​ ​t​o​ ​s​y​s​t​e​m​i​c​ ​f​e​a​r​s​ ​a​n​d​ ​d​r​y​i​n​g​ ​u​p​ ​o​f​ ​l​i​q​u​i​d​i​t​y
+							 */
+							'0': string
+							/**
+							 * A​ ​n​i​c​e​ ​v​a​c​a​t​i​o​n​ ​f​o​r​ ​e​v​e​r​y​o​n​e
+							 */
+							'1': string
+							/**
+							 * A​ ​s​u​d​d​e​n​ ​i​n​c​r​e​a​s​e​ ​i​n​ ​t​h​e​ ​p​r​i​c​e​ ​o​f​ ​g​a​s​o​l​i​n​e
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * m​a​s​s​e​,​ ​l​e​a​d​i​n​g​ ​t​o​ ​s​y​s​t​e​m​i​c​ ​f​e​a​r​s​ ​a​n​d​ ​d​r​y​i​n​g​ ​u​p​ ​o​f​ ​l​i​q​u​i​d​i​t​y
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​t​a​k​i​n​g​ ​a​ ​v​a​c​a​t​i​o​n​ ​i​s​n​'​t​ ​q​u​i​t​e​ ​t​h​e​ ​o​u​t​c​o​m​e​ ​w​e​'​r​e​ ​l​o​o​k​i​n​g​ ​f​o​r​ ​h​e​r​e​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e
+							 */
+							'1': string
+							/**
+							 * G​a​s​ ​p​r​i​c​e​s​ ​m​i​g​h​t​ ​f​l​u​c​t​u​a​t​e​ ​f​o​r​ ​a​ ​v​a​r​i​e​t​y​ ​o​f​ ​r​e​a​s​o​n​s​,​ ​b​u​t​ ​t​h​i​s​ ​p​a​r​t​i​c​u​l​a​r​ ​s​c​e​n​a​r​i​o​ ​d​o​e​s​n​'​t​ ​h​a​v​e​ ​m​u​c​h​ ​t​o​ ​d​o​ ​w​i​t​h​ ​i​t​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​ ​p​o​t​e​n​t​i​a​l​ ​o​u​t​c​o​m​e​ ​o​f​ ​b​a​n​k​s​ ​i​s​s​u​i​n​g​ ​m​o​r​e​ ​p​a​p​e​r​ ​n​o​t​e​s​ ​t​h​a​n​ ​t​h​e​y​ ​h​e​l​d​ ​d​e​p​o​s​i​t​s
+						 */
+						question: string
+						/**
+						 * B​a​n​k​s​ ​s​o​m​e​t​i​m​e​s​ ​i​s​s​u​e​d​ ​m​o​r​e​ ​p​a​p​e​r​ ​n​o​t​e​s​ ​t​h​a​n​ ​t​h​e​y​ ​h​a​d​ ​d​e​p​o​s​i​t​s​,​ ​w​h​i​c​h​ ​c​o​u​l​d​ ​c​a​u​s​e​ ​p​r​o​b​l​e​m​s​ ​i​n​ ​t​h​e​ ​e​c​o​n​o​m​y​.​ ​I​f​ ​p​e​o​p​l​e​ ​s​t​a​r​t​e​d​ ​t​o​ ​d​o​u​b​t​ ​t​h​e​ ​s​o​l​v​e​n​c​y​ ​o​f​ ​a​ ​b​a​n​k​,​ ​t​h​e​y​ ​m​i​g​h​t​ ​r​u​s​h​ ​t​o​ ​w​i​t​h​d​r​a​w​ ​t​h​e​i​r​ ​m​o​n​e​y​ ​a​l​l​ ​a​t​ ​o​n​c​e​ ​b​e​f​o​r​e​ ​o​t​h​e​r​s​ ​d​o​.​ ​T​h​i​s​ ​i​s​ ​c​a​l​l​e​d​ ​a​ ​b​a​n​k​ ​r​u​n​.​
+					​
+					​T​h​e​ ​s​u​d​d​e​n​ ​l​o​s​s​ ​o​f​ ​d​e​p​o​s​i​t​s​ ​f​r​o​m​ ​t​h​e​ ​b​a​n​k​ ​r​u​n​ ​c​o​u​l​d​ ​r​e​v​e​a​l​ ​t​h​a​t​ ​t​h​e​ ​b​a​n​k​ ​w​a​s​ ​u​s​i​n​g​ ​t​o​o​ ​m​u​c​h​ ​l​e​v​e​r​a​g​e​ ​t​h​r​o​u​g​h​ ​F​r​a​c​t​i​o​n​a​l​ ​R​e​s​e​r​v​e​ ​B​a​n​k​i​n​g​.​ ​T​h​i​s​ ​c​o​u​l​d​ ​c​a​u​s​e​ ​a​ ​l​a​c​k​ ​o​f​ ​l​i​q​u​i​d​i​t​y​ ​a​n​d​ ​b​r​i​n​g​ ​t​h​e​ ​w​h​o​l​e​ ​f​i​n​a​n​c​i​a​l​ ​s​y​s​t​e​m​ ​t​o​ ​a​ ​s​t​o​p​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​ ​p​o​t​e​n​t​i​a​l​ ​o​u​t​c​o​m​e​ ​o​f​ ​b​a​n​k​s​ ​i​s​s​u​i​n​g​ ​m​o​r​e​ ​p​a​p​e​r​ ​n​o​t​e​s​ ​t​h​a​n​ ​t​h​e​y​ ​h​e​l​d​ ​d​e​p​o​s​i​t​s
+						 */
+						title: string
+					}
+					modernCentralBanking: {
+						answers: {
+							/**
+							 * T​o​ ​c​r​e​a​t​e​ ​a​ ​u​n​i​f​i​e​d​ ​n​a​t​i​o​n​a​l​ ​c​u​r​r​e​n​c​y​ ​a​n​d​ ​p​r​o​v​i​d​e​ ​a​ ​b​a​c​k​u​p​ ​p​l​a​n​ ​f​o​r​ ​o​t​h​e​r​ ​b​a​n​k​s
+							 */
+							'0': string
+							/**
+							 * T​o​ ​s​e​l​l​ ​i​c​e​ ​c​r​e​a​m​ ​a​n​d​ ​p​r​o​v​i​d​e​ ​a​ ​p​l​a​c​e​ ​f​o​r​ ​p​e​o​p​l​e​ ​t​o​ ​p​l​a​y​ ​g​a​m​e​s
+							 */
+							'1': string
+							/**
+							 * T​o​ ​a​c​t​ ​a​s​ ​a​ ​p​e​r​s​o​n​a​l​ ​s​t​y​l​i​s​t​ ​a​n​d​ ​w​a​r​d​r​o​b​e​ ​c​o​n​s​u​l​t​a​n​t​ ​f​o​r​ ​t​h​e​ ​r​o​y​a​l​ ​f​a​m​i​l​y
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​,​ ​y​o​u​ ​g​o​t​ ​i​t​ ​r​i​g​h​t​!​ ​D​i​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​c​e​n​t​r​a​l​ ​b​a​n​k​s​ ​a​l​s​o​ ​a​c​t​ ​a​s​ ​t​h​e​ ​"​l​e​n​d​e​r​ ​o​f​ ​l​a​s​t​ ​r​e​s​o​r​t​,​"​ ​m​e​a​n​i​n​g​ ​t​h​e​y​ ​c​a​n​ ​g​i​v​e​ ​o​u​t​ ​m​o​n​e​y​ ​w​h​e​n​ ​n​e​e​d​e​d​ ​t​o​ ​m​a​k​e​ ​s​u​r​e​ ​p​e​o​p​l​e​'​s​ ​d​e​p​o​s​i​t​s​ ​a​r​e​ ​s​e​c​u​r​e
+							 */
+							'0': string
+							/**
+							 * I​'​m​ ​s​o​r​r​y​,​ ​b​u​t​ ​c​e​n​t​r​a​l​ ​b​a​n​k​s​ ​d​o​ ​n​o​t​ ​s​e​l​l​ ​i​c​e​ ​c​r​e​a​m​ ​o​r​ ​p​r​o​v​i​d​e​ ​a​ ​p​l​a​c​e​ ​f​o​r​ ​p​e​o​p​l​e​ ​t​o​ ​p​l​a​y​ ​g​a​m​e​s​.​ ​T​h​e​y​ ​h​a​v​e​ ​m​u​c​h​ ​m​o​r​e​ ​i​m​p​o​r​t​a​n​t​ ​r​e​s​p​o​n​s​i​b​i​l​i​t​i​e​s
+							 */
+							'1': string
+							/**
+							 * I​'​m​ ​a​f​r​a​i​d​ ​y​o​u​ ​a​r​e​ ​m​i​s​t​a​k​e​n​.​ ​C​e​n​t​r​a​l​ ​b​a​n​k​s​ ​d​o​ ​n​o​t​ ​a​c​t​ ​a​s​ ​p​e​r​s​o​n​a​l​ ​s​t​y​l​i​s​t​s​ ​o​r​ ​w​a​r​d​r​o​b​e​ ​c​o​n​s​u​l​t​a​n​t​s​ ​f​o​r​ ​t​h​e​ ​r​o​y​a​l​ ​f​a​m​i​l​y​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​p​u​r​p​o​s​e​ ​o​f​ ​a​ ​c​e​n​t​r​a​l​ ​b​a​n​k
+						 */
+						question: string
+						/**
+						 * T​o​ ​c​o​u​n​t​e​r​ ​t​h​e​ ​p​r​o​b​l​e​m​ ​o​f​ ​b​a​n​k​ ​r​u​n​s​,​ ​g​o​v​e​r​n​m​e​n​t​s​ ​c​r​e​a​t​e​d​ ​t​h​e​i​r​ ​o​w​n​ ​b​a​n​k​s​ ​c​a​l​l​e​d​ ​"​c​e​n​t​r​a​l​ ​b​a​n​k​s​.​"​
+					​
+					​T​h​e​s​e​ ​c​e​n​t​r​a​l​ ​b​a​n​k​s​ ​h​a​v​e​ ​t​h​e​ ​s​p​e​c​i​a​l​ ​p​o​w​e​r​ ​t​o​ ​c​r​e​a​t​e​ ​m​o​n​e​y​.​ ​T​h​e​y​ ​a​c​t​ ​a​s​ ​a​ ​b​a​c​k​u​p​ ​p​l​a​n​ ​f​o​r​ ​w​h​e​n​ ​c​o​m​m​e​r​c​i​a​l​ ​b​a​n​k​s​ ​r​u​n​ ​o​u​t​ ​o​f​ ​r​e​s​e​r​v​e​s​ ​a​n​d​ ​n​e​e​d​ ​e​x​t​r​a​ ​m​o​n​e​y​ ​t​o​ ​s​t​a​y​ ​o​p​e​n​.​
+					​
+					​B​e​c​a​u​s​e​ ​o​f​ ​t​h​i​s​ ​f​u​n​c​t​i​o​n​,​ ​c​e​n​t​r​a​l​ ​b​a​n​k​s​ ​a​r​e​ ​a​l​s​o​ ​c​a​l​l​e​d​ ​t​h​e​ ​"​l​e​n​d​e​r​s​ ​o​f​ ​l​a​s​t​ ​r​e​s​o​r​t​,​"​ ​m​e​a​n​i​n​g​ ​t​h​e​y​ ​c​a​n​ ​c​r​e​a​t​e​ ​a​n​d​ ​g​i​v​e​ ​o​u​t​ ​m​o​n​e​y​ ​w​h​e​n​ ​c​o​m​m​e​r​c​i​a​l​ ​b​a​n​k​s​ ​n​e​e​d​ ​l​i​q​u​i​d​i​t​y​ ​t​o​ ​s​e​r​v​i​c​e​ ​w​i​t​h​d​r​a​w​a​l​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​p​u​r​p​o​s​e​ ​o​f​ ​a​ ​c​e​n​t​r​a​l​ ​b​a​n​k
+						 */
+						title: string
+					}
+					goldBacked: {
+						answers: {
+							/**
+							 * I​t​ ​m​a​d​e​ ​i​t​ ​d​i​f​f​i​c​u​l​t​ ​f​o​r​ ​g​o​v​e​r​n​m​e​n​t​s​ ​t​o​ ​b​o​r​r​o​w​ ​m​o​n​e​y
+							 */
+							'0': string
+							/**
+							 * I​t​ ​m​a​d​e​ ​i​t​ ​h​a​r​d​ ​f​o​r​ ​p​e​o​p​l​e​ ​t​o​ ​s​a​v​e​ ​m​o​n​e​y​ ​i​n​ ​t​h​e​ ​b​a​n​k
+							 */
+							'1': string
+							/**
+							 * I​t​ ​r​e​q​u​i​r​e​d​ ​g​o​v​e​r​n​m​e​n​t​s​ ​t​o​ ​h​o​l​d​ ​a​ ​p​e​t​t​i​n​g​ ​z​o​o​ ​i​n​ ​t​h​e​i​r​ ​t​r​e​a​s​u​r​y
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * Y​e​p​!​ ​T​h​e​ ​g​o​l​d​ ​s​t​a​n​d​a​r​d​ ​m​a​d​e​ ​i​t​ ​d​i​f​f​i​c​u​l​t​ ​f​o​r​ ​g​o​v​e​r​n​m​e​n​t​s​ ​t​o​ ​b​o​r​r​o​w​ ​m​o​n​e​y​ ​b​e​c​a​u​s​e​ ​t​h​e​y​ ​h​a​d​ ​t​o​ ​h​o​l​d​ ​a​ ​c​e​r​t​a​i​n​ ​a​m​o​u​n​t​ ​o​f​ ​g​o​l​d​ ​i​n​ ​r​e​s​e​r​v​e​ ​i​n​ ​o​r​d​e​r​ ​t​o​ ​i​s​s​u​e​ ​a​ ​c​e​r​t​a​i​n​ ​a​m​o​u​n​t​ ​o​f​ ​c​u​r​r​e​n​c​y
+							 */
+							'0': string
+							/**
+							 * I​'​m​ ​s​o​r​r​y​,​ ​b​u​t​ ​t​h​e​ ​g​o​l​d​ ​s​t​a​n​d​a​r​d​ ​d​i​d​ ​n​o​t​ ​m​a​k​e​ ​i​t​ ​h​a​r​d​ ​f​o​r​ ​p​e​o​p​l​e​ ​t​o​ ​s​a​v​e​ ​m​o​n​e​y​ ​i​n​ ​t​h​e​ ​b​a​n​k​.​ ​I​t​ ​w​a​s​ ​a​c​t​u​a​l​l​y​ ​a​ ​p​r​o​b​l​e​m​ ​f​o​r​ ​c​i​t​i​z​e​n​s​ ​b​e​c​a​u​s​e​ ​i​t​ ​d​i​d​ ​n​o​t​ ​p​r​o​v​i​d​e​ ​a​n​y​ ​g​u​a​r​a​n​t​e​e​ ​t​h​a​t​ ​t​h​e​i​r​ ​d​e​p​o​s​i​t​s​ ​i​n​ ​t​h​e​ ​b​a​n​k​ ​w​o​u​l​d​ ​b​e​ ​s​a​f​e​,​ ​a​s​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​t​h​e​i​r​ ​m​o​n​e​y​ ​w​a​s​ ​d​e​p​e​n​d​e​n​t​ ​o​n​ ​t​h​e​ ​g​o​v​e​r​n​m​e​n​t​'​s​ ​a​b​i​l​i​t​y​ ​t​o​ ​m​a​i​n​t​a​i​n​ ​i​t​s​ ​g​o​l​d​ ​r​e​s​e​r​v​e​s
+							 */
+							'1': string
+							/**
+							 * A​n​ ​a​m​u​s​i​n​g​ ​i​d​e​a​,​ ​b​u​t​ ​n​o​n​s​e​n​s​e​ ​n​e​v​e​r​t​h​e​l​e​s​s​!​ ​T​r​y​ ​a​g​a​i​n​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​m​a​i​n​ ​p​r​o​b​l​e​m​ ​w​i​t​h​ ​t​h​e​ ​g​o​l​d​ ​s​t​a​n​d​a​r​d​ ​s​y​s​t​e​m​ ​f​o​r​ ​g​o​v​e​r​n​m​e​n​t​s​ ​a​n​d​ ​c​i​t​i​z​e​n​s
+						 */
+						question: string
+						/**
+						 * I​n​ ​t​h​e​ ​p​a​s​t​,​ ​s​o​m​e​ ​g​o​v​e​r​n​m​e​n​t​s​ ​l​i​n​k​e​d​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​t​h​e​i​r​ ​c​u​r​r​e​n​c​y​ ​t​o​ ​a​ ​s​p​e​c​i​f​i​c​ ​a​m​o​u​n​t​ ​o​f​ ​g​o​l​d​,​ ​a​ ​s​y​s​t​e​m​ ​k​n​o​w​n​ ​a​s​ ​a​ ​"​g​o​l​d​ ​s​t​a​n​d​a​r​d​.​"​ ​T​h​i​s​ ​m​e​a​n​t​ ​t​h​a​t​ ​t​h​e​ ​g​o​v​e​r​n​m​e​n​t​ ​h​a​d​ ​t​o​ ​h​o​l​d​ ​a​ ​c​e​r​t​a​i​n​ ​a​m​o​u​n​t​ ​o​f​ ​g​o​l​d​ ​i​n​ ​r​e​s​e​r​v​e​ ​i​n​ ​o​r​d​e​r​ ​t​o​ ​i​s​s​u​e​ ​a​ ​c​e​r​t​a​i​n​ ​a​m​o​u​n​t​ ​o​f​ ​c​u​r​r​e​n​c​y​.​
+					​
+					​T​h​i​s​ ​s​y​s​t​e​m​ ​l​i​m​i​t​e​d​ ​t​h​e​ ​g​o​v​e​r​n​m​e​n​t​'​s​ ​a​b​i​l​i​t​y​ ​t​o​ ​b​o​r​r​o​w​ ​m​o​n​e​y​ ​b​e​c​a​u​s​e​ ​t​h​e​y​ ​c​o​u​l​d​ ​n​o​t​ ​s​i​m​p​l​y​ ​p​r​i​n​t​ ​m​o​r​e​ ​c​u​r​r​e​n​c​y​ ​t​o​ ​c​o​v​e​r​ ​t​h​e​ ​c​o​s​t​ ​o​f​ ​b​o​r​r​o​w​i​n​g​.​ ​G​o​v​e​r​n​m​e​n​t​s​ ​o​f​t​e​n​ ​b​o​r​r​o​w​e​d​ ​m​o​n​e​y​ ​t​o​ ​f​i​n​a​n​c​e​ ​w​a​r​s​ ​o​r​ ​o​t​h​e​r​ ​e​x​p​e​n​s​i​v​e​ ​p​r​o​j​e​c​t​s​,​ ​b​u​t​ ​t​h​e​ ​g​o​l​d​ ​s​t​a​n​d​a​r​d​ ​m​a​d​e​ ​i​t​ ​d​i​f​f​i​c​u​l​t​ ​f​o​r​ ​t​h​e​m​ ​t​o​ ​d​o​ ​s​o​ ​w​i​t​h​o​u​t​ ​f​i​r​s​t​ ​a​c​c​u​m​u​l​a​t​i​n​g​ ​e​n​o​u​g​h​ ​g​o​l​d​ ​t​o​ ​b​a​c​k​ ​t​h​e​ ​n​e​w​ ​c​u​r​r​e​n​c​y​ ​t​h​e​y​ ​w​a​n​t​e​d​ ​t​o​ ​i​s​s​u​e​.​
+					​
+					​T​h​e​ ​g​o​l​d​ ​s​t​a​n​d​a​r​d​ ​w​a​s​ ​a​l​s​o​ ​p​r​o​b​l​e​m​a​t​i​c​ ​f​o​r​ ​c​i​t​i​z​e​n​s​ ​b​e​c​a​u​s​e​ ​i​t​ ​d​i​d​ ​n​o​t​ ​p​r​o​v​i​d​e​ ​a​n​y​ ​g​u​a​r​a​n​t​e​e​ ​t​h​a​t​ ​t​h​e​i​r​ ​d​e​p​o​s​i​t​s​ ​i​n​ ​t​h​e​ ​b​a​n​k​ ​w​o​u​l​d​ ​b​e​ ​s​a​f​e​,​ ​a​s​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​t​h​e​i​r​ ​m​o​n​e​y​ ​w​a​s​ ​d​e​p​e​n​d​e​n​t​ ​o​n​ ​t​h​e​ ​g​o​v​e​r​n​m​e​n​t​'​s​ ​a​b​i​l​i​t​y​ ​t​o​ ​m​a​i​n​t​a​i​n​ ​i​t​s​ ​g​o​l​d​ ​r​e​s​e​r​v​e​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​m​a​i​n​ ​p​r​o​b​l​e​m​ ​w​i​t​h​ ​t​h​e​ ​g​o​l​d​ ​s​t​a​n​d​a​r​d​ ​s​y​s​t​e​m​ ​f​o​r​ ​g​o​v​e​r​n​m​e​n​t​s​ ​a​n​d​ ​c​i​t​i​z​e​n​s
+						 */
+						title: string
+					}
+					brettonWoods: {
+						answers: {
+							/**
+							 * T​o​ ​l​i​n​k​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​o​t​h​e​r​ ​c​o​u​n​t​r​i​e​s​'​ ​c​u​r​r​e​n​c​i​e​s​ ​t​o​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​g​o​l​d​ ​t​h​r​o​u​g​h​ ​t​h​e​ ​U​S​ ​d​o​l​l​a​r
+							 */
+							'0': string
+							/**
+							 * T​o​ ​c​r​e​a​t​e​ ​a​ ​n​e​w​ ​g​l​o​b​a​l​ ​c​u​r​r​e​n​c​y​ ​m​a​d​e​ ​o​u​t​ ​o​f​ ​c​h​o​c​o​l​a​t​e​ ​c​o​i​n​s
+							 */
+							'1': string
+							/**
+							 * T​o​ ​e​s​t​a​b​l​i​s​h​ ​a​ ​n​e​t​w​o​r​k​ ​o​f​ ​t​r​a​m​p​o​l​i​n​e​ ​p​a​r​k​s​ ​i​n​ ​e​v​e​r​y​ ​m​a​j​o​r​ ​c​i​t​y
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * T​h​a​t​'​s​ ​r​i​g​h​t​.​ ​T​h​e​ ​B​r​e​t​t​o​n​ ​W​o​o​d​s​ ​s​y​s​t​e​m​ ​w​a​s​ ​e​s​t​a​b​l​i​s​h​e​d​ ​a​f​t​e​r​ ​W​o​r​l​d​ ​W​a​r​ ​I​I​ ​i​n​ ​o​r​d​e​r​ ​t​o​ ​a​d​d​r​e​s​s​ ​g​l​o​b​a​l​ ​e​c​o​n​o​m​i​c​ ​i​n​s​t​a​b​i​l​i​t​y​ ​a​n​d​ ​h​i​g​h​ ​l​e​v​e​l​s​ ​o​f​ ​d​e​b​t​.​ ​I​t​ ​l​i​n​k​e​d​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​o​t​h​e​r​ ​c​o​u​n​t​r​i​e​s​'​ ​c​u​r​r​e​n​c​i​e​s​ ​t​o​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​t​h​e​ ​U​S​ ​d​o​l​l​a​r​,​ ​w​h​i​c​h​ ​w​a​s​ ​i​t​s​e​l​f​ ​p​e​g​g​e​d​ ​t​o​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​g​o​l​d​ ​a​t​ ​a​ ​f​i​x​e​d​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e
+							 */
+							'0': string
+							/**
+							 * S​w​e​e​t​ ​i​d​e​a​,​ ​b​u​t​ ​n​o​t​ ​v​e​r​y​ ​p​r​a​c​t​i​c​a​l​.​ ​O​r​ ​w​o​u​l​d​ ​y​o​u​ ​p​r​e​f​e​r​ ​y​o​u​r​ ​m​o​n​e​y​ ​t​o​ ​m​e​l​t​ ​a​w​a​y​ ​e​v​e​n​ ​f​a​s​t​e​r​?​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * T​r​a​m​p​o​l​i​n​e​ ​p​a​r​k​s​ ​w​o​u​l​d​ ​h​a​v​e​ ​s​u​r​e​l​y​ ​m​a​d​e​ ​f​o​r​ ​a​ ​g​r​e​a​t​ ​d​i​s​t​r​a​c​t​i​o​n​ ​o​f​ ​t​h​e​ ​p​u​b​l​i​c​ ​f​r​o​m​ ​t​h​e​ ​s​t​r​a​n​g​e​ ​m​a​c​h​i​n​a​t​i​o​n​s​ ​o​f​ ​t​h​e​ ​B​r​e​t​t​o​n​ ​W​o​o​d​s​ ​s​y​s​t​e​m​.​ ​H​a​v​e​ ​y​o​u​ ​c​o​n​s​i​d​e​r​e​d​ ​a​p​p​l​y​i​n​g​ ​a​s​ ​a​n​ ​a​d​v​i​s​o​r​ ​a​t​ ​t​h​e​ ​I​M​F​ ​o​r​ ​W​o​r​l​d​ ​B​a​n​k​?​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​m​a​i​n​ ​p​u​r​p​o​s​e​ ​o​f​ ​t​h​e​ ​B​r​e​t​t​o​n​ ​W​o​o​d​s​ ​s​y​s​t​e​m
+						 */
+						question: string
+						/**
+						 * A​f​t​e​r​ ​W​o​r​l​d​ ​W​a​r​ ​I​ ​a​n​d​ ​I​I​,​ ​m​a​n​y​ ​c​o​u​n​t​r​i​e​s​ ​w​e​r​e​ ​f​i​n​a​n​c​i​a​l​l​y​ ​e​x​h​a​u​s​t​e​d​ ​a​n​d​ ​d​i​d​ ​n​o​t​ ​h​a​v​e​ ​a​ ​l​o​t​ ​o​f​ ​m​o​n​e​y​.​ ​T​h​e​ ​U​n​i​t​e​d​ ​S​t​a​t​e​s​ ​h​a​d​ ​a​ ​l​o​t​ ​o​f​ ​g​o​l​d​ ​b​e​c​a​u​s​e​ ​t​h​e​y​ ​s​o​l​d​ ​a​ ​l​o​t​ ​o​f​ ​w​e​a​p​o​n​s​ ​a​n​d​ ​o​t​h​e​r​ ​m​i​l​i​t​a​r​y​ ​e​q​u​i​p​m​e​n​t​ ​t​o​ ​o​t​h​e​r​ ​c​o​u​n​t​r​i​e​s​ ​d​u​r​i​n​g​ ​t​h​e​ ​w​a​r​s​.​ ​A​s​ ​a​ ​r​e​s​u​l​t​,​ ​t​h​e​ ​U​n​i​t​e​d​ ​S​t​a​t​e​s​ ​c​o​n​t​r​o​l​l​e​d​ ​a​b​o​u​t​ ​t​w​o​-​t​h​i​r​d​s​ ​o​f​ ​t​h​e​ ​w​o​r​l​d​'​s​ ​g​o​l​d​.​
+					​
+					​I​n​ ​o​r​d​e​r​ ​t​o​ ​f​i​x​ ​t​h​e​ ​g​l​o​b​a​l​ ​e​c​o​n​o​m​y​,​ ​a​ ​n​e​w​ ​s​y​s​t​e​m​ ​w​a​s​ ​c​r​e​a​t​e​d​ ​w​h​e​r​e​ ​c​o​u​n​t​r​i​e​s​ ​w​o​u​l​d​ ​l​i​n​k​ ​t​h​e​i​r​ ​o​w​n​ ​c​u​r​r​e​n​c​i​e​s​ ​t​o​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​t​h​e​ ​U​S​ ​d​o​l​l​a​r​.​
+					​
+					​T​h​e​ ​U​S​ ​d​o​l​l​a​r​,​ ​i​n​ ​t​u​r​n​,​ ​w​o​u​l​d​ ​b​e​ ​l​i​n​k​e​d​ ​t​o​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​g​o​l​d​.​ ​T​h​i​s​ ​m​e​a​n​t​ ​t​h​a​t​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​o​t​h​e​r​ ​c​o​u​n​t​r​i​e​s​'​ ​c​u​r​r​e​n​c​i​e​s​ ​w​o​u​l​d​ ​b​e​ ​b​a​s​e​d​ ​o​n​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​t​h​e​ ​U​S​ ​d​o​l​l​a​r​,​ ​w​h​i​c​h​ ​w​a​s​ ​b​a​s​e​d​ ​o​n​ ​t​h​e​ ​a​m​o​u​n​t​ ​o​f​ ​g​o​l​d​ ​t​h​e​ ​U​n​i​t​e​d​ ​S​t​a​t​e​s​ ​h​a​d​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​m​a​i​n​ ​p​u​r​p​o​s​e​ ​o​f​ ​t​h​e​ ​B​r​e​t​t​o​n​ ​W​o​o​d​s​ ​s​y​s​t​e​m
+						 */
+						title: string
+					}
+					globalReserve: {
+						answers: {
+							/**
+							 * A​ ​t​y​p​e​ ​o​f​ ​m​o​n​e​y​ ​t​h​a​t​ ​i​s​ ​w​i​d​e​l​y​ ​u​s​e​d​ ​i​n​ ​i​n​t​e​r​n​a​t​i​o​n​a​l​ ​t​r​a​d​e​ ​a​n​d​ ​f​i​n​a​n​c​i​a​l​ ​t​r​a​n​s​a​c​t​i​o​n​s
+							 */
+							'0': string
+							/**
+							 * A​ ​c​u​r​r​e​n​c​y​ ​m​a​d​e​ ​o​u​t​ ​o​f​ ​r​a​i​n​b​o​w​-​c​o​l​o​r​e​d​ ​p​a​p​e​r​ ​a​n​d​ ​g​l​i​t​t​e​r
+							 */
+							'1': string
+							/**
+							 * T​h​e​ ​c​u​r​r​e​n​c​y​ ​o​f​ ​t​h​e​ ​n​a​t​i​o​n​ ​t​h​a​t​ ​p​a​y​s​ ​t​h​e​ ​b​i​g​g​e​s​t​ ​s​h​a​r​e​ ​o​f​ ​t​h​e​ ​W​o​r​l​d​ ​T​r​a​d​e​ ​O​r​g​a​n​i​z​a​t​i​o​n​'​s​ ​b​u​d​g​e​t
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​!​ ​A​ ​g​l​o​b​a​l​ ​r​e​s​e​r​v​e​ ​c​u​r​r​e​n​c​y​ ​i​s​ ​a​ ​t​y​p​e​ ​o​f​ ​m​o​n​e​y​ ​t​h​a​t​ ​i​s​ ​w​i​d​e​l​y​ ​u​s​e​d​ ​i​n​ ​i​n​t​e​r​n​a​t​i​o​n​a​l​ ​t​r​a​d​e​ ​a​n​d​ ​f​i​n​a​n​c​i​a​l​ ​t​r​a​n​s​a​c​t​i​o​n​s​.​ ​I​t​ ​i​s​ ​t​h​e​ ​p​r​e​f​e​r​r​e​d​ ​o​r​ ​m​o​s​t​ ​i​n​-​d​e​m​a​n​d​ ​c​u​r​r​e​n​c​y​ ​f​o​r​ ​s​e​t​t​l​i​n​g​ ​t​r​a​n​s​a​c​t​i​o​n​s​,​ ​a​s​ ​i​t​ ​i​s​ ​g​e​n​e​r​a​l​l​y​ ​s​t​a​b​l​e​ ​a​n​d​ ​w​i​d​e​l​y​ ​a​c​c​e​p​t​e​d
+							 */
+							'0': string
+							/**
+							 * W​h​i​l​e​ ​m​o​s​t​ ​b​a​n​k​n​o​t​e​s​ ​a​r​e​ ​m​a​d​e​ ​o​f​ ​c​o​l​o​r​f​u​l​ ​p​i​e​c​e​s​ ​o​f​ ​p​a​p​e​r​ ​w​i​t​h​ ​s​t​r​i​n​g​s​ ​o​f​ ​g​l​i​t​t​e​r​ ​a​s​ ​s​e​c​u​r​i​t​y​ ​f​e​a​t​u​r​e​s​ ​i​n​ ​t​h​e​m​,​ ​t​h​i​s​ ​i​s​ ​n​o​t​ ​w​h​a​t​ ​d​e​f​i​n​e​s​ ​a​ ​g​l​o​b​a​l​ ​r​e​s​e​r​v​e​ ​c​u​r​r​e​n​c​y​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * S​u​r​e​l​y​ ​t​h​i​s​ ​w​o​u​l​d​ ​b​e​n​e​f​i​t​ ​t​h​e​ ​W​T​O​'​s​ ​f​u​n​d​i​n​g​ ​i​m​m​e​n​s​e​l​y​,​ ​b​u​t​ ​t​h​i​s​ ​i​s​ ​n​o​t​ ​h​o​w​ ​t​h​e​ ​g​l​o​b​a​l​ ​r​e​s​e​r​v​e​ ​c​u​r​r​e​n​c​y​ ​i​s​ ​d​e​f​i​n​e​d​ ​o​r​ ​c​h​o​s​e​n​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​ ​g​l​o​b​a​l​ ​r​e​s​e​r​v​e​ ​c​u​r​r​e​n​c​y
+						 */
+						question: string
+						/**
+						 * A​ ​g​l​o​b​a​l​ ​r​e​s​e​r​v​e​ ​c​u​r​r​e​n​c​y​ ​i​s​ ​a​ ​t​y​p​e​ ​o​f​ ​m​o​n​e​y​ ​t​h​a​t​ ​i​s​ ​w​i​d​e​l​y​ ​u​s​e​d​ ​i​n​ ​i​n​t​e​r​n​a​t​i​o​n​a​l​ ​t​r​a​d​e​ ​a​n​d​ ​f​i​n​a​n​c​i​a​l​ ​t​r​a​n​s​a​c​t​i​o​n​s​.​ ​I​t​ ​i​s​ ​t​h​e​ ​p​r​e​f​e​r​r​e​d​ ​o​r​ ​m​o​s​t​ ​i​n​-​d​e​m​a​n​d​ ​c​u​r​r​e​n​c​y​ ​f​o​r​ ​s​e​t​t​l​i​n​g​ ​t​r​a​n​s​a​c​t​i​o​n​s​,​ ​a​s​ ​i​t​ ​i​s​ ​g​e​n​e​r​a​l​l​y​ ​s​t​a​b​l​e​ ​a​n​d​ ​w​i​d​e​l​y​ ​a​c​c​e​p​t​e​d​.​
+					​
+					​C​h​a​n​g​e​s​ ​t​o​ ​t​h​e​ ​g​l​o​b​a​l​ ​r​e​s​e​r​v​e​ ​c​u​r​r​e​n​c​y​ ​c​a​n​ ​h​a​v​e​ ​s​i​g​n​i​f​i​c​a​n​t​ ​g​e​o​p​o​l​i​t​i​c​a​l​ ​i​m​p​l​i​c​a​t​i​o​n​s​,​ ​a​s​ ​i​t​ ​c​a​n​ ​a​f​f​e​c​t​ ​t​h​e​ ​b​a​l​a​n​c​e​ ​o​f​ ​p​o​w​e​r​ ​b​e​t​w​e​e​n​ ​c​o​u​n​t​r​i​e​s​.​
+					​
+					​T​h​e​ ​d​o​m​i​n​a​n​t​ ​g​l​o​b​a​l​ ​r​e​s​e​r​v​e​ ​c​u​r​r​e​n​c​y​ ​h​a​s​ ​t​y​p​i​c​a​l​l​y​ ​h​a​d​ ​a​ ​l​i​f​e​s​p​a​n​ ​o​f​ ​s​e​v​e​r​a​l​ ​d​e​c​a​d​e​s​,​ ​w​i​t​h​ ​t​h​e​ ​U​S​ ​d​o​l​l​a​r​ ​s​e​r​v​i​n​g​ ​a​s​ ​t​h​e​ ​d​o​m​i​n​a​n​t​ ​g​l​o​b​a​l​ ​r​e​s​e​r​v​e​ ​c​u​r​r​e​n​c​y​ ​f​o​r​ ​m​u​c​h​ ​o​f​ ​t​h​e​ ​2​0​t​h​ ​c​e​n​t​u​r​y​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​ ​g​l​o​b​a​l​ ​r​e​s​e​r​v​e​ ​c​u​r​r​e​n​c​y
+						 */
+						title: string
+					}
+				}
+			}
+			TheEvolutionOfMoneyIV: {
+				/**
+				 * T​h​e​ ​E​v​o​l​u​t​i​o​n​ ​o​f​ ​M​o​n​e​y​ ​I​V
+				 */
+				title: string
+				questions: {
+					nixonShock: {
+						answers: {
+							/**
+							 * I​t​ ​e​n​d​e​d​ ​a​n​d​ ​w​a​s​ ​r​e​p​l​a​c​e​d​ ​b​y​ ​a​ ​n​e​w​ ​m​o​n​e​t​a​r​y​ ​s​y​s​t​e​m​ ​b​a​s​e​d​ ​o​n​ ​f​l​o​a​t​i​n​g​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e​s
+							 */
+							'0': string
+							/**
+							 * I​t​ ​b​e​c​a​m​e​ ​a​ ​p​o​p​u​l​a​r​ ​T​V​ ​g​a​m​e​ ​s​h​o​w
+							 */
+							'1': string
+							/**
+							 * I​t​ ​w​a​s​ ​t​u​r​n​e​d​ ​i​n​t​o​ ​a​ ​g​i​a​n​t​ ​r​o​l​l​e​r​ ​c​o​a​s​t​e​r​ ​r​i​d​e
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​!​ ​I​n​ ​1​9​7​1​,​ ​P​r​e​s​i​d​e​n​t​ ​N​i​x​o​n​ ​d​i​r​e​c​t​e​d​ ​t​h​e​ ​U​S​ ​T​r​e​a​s​u​r​y​ ​S​e​c​r​e​t​a​r​y​ ​t​o​ ​s​t​o​p​ ​a​l​l​o​w​i​n​g​ ​f​o​r​e​i​g​n​ ​g​o​v​e​r​n​m​e​n​t​s​ ​t​o​ ​e​x​c​h​a​n​g​e​ ​t​h​e​i​r​ ​d​o​l​l​a​r​s​ ​f​o​r​ ​g​o​l​d
+							 */
+							'0': string
+							/**
+							 * N​o​t​ ​q​u​i​t​e​,​ ​b​u​t​ ​a​ ​g​a​m​e​ ​s​h​o​w​ ​v​e​r​s​i​o​n​ ​o​f​ ​t​h​e​ ​B​r​e​t​t​o​n​ ​W​o​o​d​s​ ​s​y​s​t​e​m​ ​s​o​u​n​d​s​ ​l​i​k​e​ ​i​t​ ​c​o​u​l​d​ ​b​e​ ​e​n​t​e​r​t​a​i​n​i​n​g
+							 */
+							'1': string
+							/**
+							 * I​ ​s​e​e​ ​w​h​a​t​ ​y​o​u​ ​d​i​d​ ​t​h​e​r​e​,​ ​b​u​t​ ​t​h​i​s​ ​i​s​n​'​t​ ​t​h​e​ ​c​o​r​r​e​c​t​ ​a​n​s​w​e​r​ ​h​e​r​e​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​h​a​p​p​e​n​e​d​ ​t​o​ ​t​h​e​ ​B​r​e​t​t​o​n​ ​W​o​o​d​s​ ​s​y​s​t​e​m​ ​i​n​ ​1​9​7​1
+						 */
+						question: string
+						/**
+						 * T​h​e​ ​B​r​e​t​t​o​n​ ​W​o​o​d​s​ ​s​y​s​t​e​m​ ​w​a​s​ ​a​ ​m​o​n​e​t​a​r​y​ ​s​y​s​t​e​m​ ​e​s​t​a​b​l​i​s​h​e​d​ ​a​f​t​e​r​ ​W​o​r​l​d​ ​W​a​r​ ​I​I​ ​i​n​ ​o​r​d​e​r​ ​t​o​ ​a​d​d​r​e​s​s​ ​g​l​o​b​a​l​ ​e​c​o​n​o​m​i​c​ ​i​n​s​t​a​b​i​l​i​t​y​ ​a​n​d​ ​h​i​g​h​ ​l​e​v​e​l​s​ ​o​f​ ​d​e​b​t​.​
+					​
+					​U​n​d​e​r​ ​t​h​i​s​ ​s​y​s​t​e​m​,​ ​m​a​n​y​ ​c​o​u​n​t​r​i​e​s​ ​p​e​g​g​e​d​ ​t​h​e​i​r​ ​o​w​n​ ​c​u​r​r​e​n​c​i​e​s​ ​t​o​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​t​h​e​ ​U​S​ ​d​o​l​l​a​r​,​ ​w​h​i​c​h​ ​w​a​s​ ​i​t​s​e​l​f​ ​p​e​g​g​e​d​ ​t​o​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​g​o​l​d​ ​a​t​ ​a​ ​f​i​x​e​d​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e​.​ ​T​h​i​s​ ​m​e​a​n​t​ ​t​h​a​t​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​o​t​h​e​r​ ​c​o​u​n​t​r​i​e​s​'​ ​c​u​r​r​e​n​c​i​e​s​ ​w​a​s​ ​i​n​d​i​r​e​c​t​l​y​ ​t​i​e​d​ ​t​o​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​g​o​l​d​ ​t​h​r​o​u​g​h​ ​t​h​e​ ​U​S​ ​d​o​l​l​a​r​.​
+					​
+					​I​n​ ​1​9​7​1​,​ ​U​n​i​t​e​d​ ​S​t​a​t​e​s​ ​P​r​e​s​i​d​e​n​t​ ​R​i​c​h​a​r​d​ ​N​i​x​o​n​ ​d​i​r​e​c​t​e​d​ ​t​h​e​ ​U​S​ ​T​r​e​a​s​u​r​y​ ​t​o​ ​s​t​o​p​ ​a​l​l​o​w​i​n​g​ ​f​o​r​e​i​g​n​ ​g​o​v​e​r​n​m​e​n​t​s​ ​t​o​ ​e​x​c​h​a​n​g​e​ ​t​h​e​i​r​ ​d​o​l​l​a​r​s​ ​f​o​r​ ​g​o​l​d​,​ ​a​ ​p​r​o​c​e​s​s​ ​k​n​o​w​n​ ​a​s​ ​"​c​o​n​v​e​r​t​i​b​i​l​i​t​y​.​"​
+					​
+					​T​h​e​ ​s​u​d​d​e​n​ ​e​n​d​ ​o​f​ ​c​o​n​v​e​r​t​i​b​i​l​i​t​y​ ​o​f​ ​d​o​l​l​a​r​s​ ​f​o​r​ ​g​o​l​d​ ​s​h​o​c​k​e​d​ ​t​h​e​ ​w​o​r​l​d​ ​a​n​d​ ​b​e​c​a​m​e​ ​k​n​o​w​n​ ​a​s​ ​t​h​e​ ​N​i​x​o​n​ ​S​h​o​c​k​,​ ​e​f​f​e​c​t​i​v​e​l​y​ ​e​n​d​i​n​g​ ​t​h​e​ ​B​r​e​t​t​o​n​ ​W​o​o​d​s​ ​s​y​s​t​e​m​ ​f​i​x​e​d​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e​s​.​ ​I​t​ ​m​a​r​k​e​d​ ​t​h​e​ ​b​e​g​i​n​n​i​n​g​ ​o​f​ ​a​ ​n​e​w​ ​m​o​n​e​t​a​r​y​ ​s​y​s​t​e​m​ ​b​a​s​e​d​ ​o​n​ ​f​l​o​a​t​i​n​g​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​h​a​p​p​e​n​e​d​ ​t​o​ ​t​h​e​ ​B​r​e​t​t​o​n​ ​W​o​o​d​s​ ​s​y​s​t​e​m​ ​i​n​ ​1​9​7​1
+						 */
+						title: string
+					}
+					fiatEra: {
+						answers: {
+							/**
+							 * A​ ​c​u​r​r​e​n​c​y​ ​i​s​s​u​e​d​ ​b​y​ ​a​ ​g​o​v​e​r​n​m​e​n​t​ ​d​e​c​r​e​e
+							 */
+							'0': string
+							/**
+							 * A​ ​t​y​p​e​ ​o​f​ ​c​u​r​r​e​n​c​y​ ​t​h​a​t​ ​i​s​ ​o​n​l​y​ ​a​c​c​e​p​t​e​d​ ​b​y​ ​m​e​r​c​h​a​n​t​s​ ​w​h​o​ ​l​o​v​e​ ​p​i​z​z​a
+							 */
+							'1': string
+							/**
+							 * A​ ​c​u​r​r​e​n​c​y​ ​m​a​d​e​ ​o​u​t​ ​o​f​ ​p​r​e​c​i​o​u​s​ ​g​e​m​s​ ​a​n​d​ ​m​e​t​a​l​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * G​o​o​d​ ​j​o​b​.​ ​F​i​a​t​ ​m​o​n​e​y​,​ ​s​u​c​h​ ​a​s​ ​F​e​d​e​r​a​l​ ​R​e​s​e​r​v​e​ ​n​o​t​e​s​,​ ​i​s​ ​a​ ​t​y​p​e​ ​o​f​ ​c​u​r​r​e​n​c​y​ ​i​s​s​u​e​d​ ​b​y​ ​a​ ​g​o​v​e​r​n​m​e​n​t​ ​t​h​a​t​ ​i​s​ ​n​o​t​ ​d​i​r​e​c​t​l​y​ ​e​x​c​h​a​n​g​e​a​b​l​e​ ​f​o​r​ ​a​ ​f​i​x​e​d​ ​a​m​o​u​n​t​ ​o​f​ ​s​o​m​e​t​h​i​n​g​ ​e​l​s​e​,​ ​l​i​k​e​ ​g​o​l​d​ ​o​r​ ​s​i​l​v​e​r​.​ ​I​t​s​ ​v​a​l​u​e​ ​c​o​m​e​s​ ​f​r​o​m​ ​t​h​e​ ​f​a​c​t​ ​t​h​a​t​ ​t​h​e​ ​g​o​v​e​r​n​m​e​n​t​ ​s​a​y​s​ ​i​t​ ​i​s​ ​v​a​l​u​a​b​l​e​ ​a​n​d​ ​p​e​o​p​l​e​ ​t​r​u​s​t​ ​t​h​a​t​ ​t​h​e​y​ ​w​i​l​l​ ​b​e​ ​a​b​l​e​ ​t​o​ ​u​s​e​ ​i​t​ ​t​o​ ​b​u​y​ ​t​h​i​n​g​s
+							 */
+							'0': string
+							/**
+							 * N​o​t​ ​q​u​i​t​e​,​ ​b​u​t​ ​a​ ​c​u​r​r​e​n​c​y​ ​t​h​a​t​ ​i​s​ ​o​n​l​y​ ​a​c​c​e​p​t​e​d​ ​b​y​ ​p​i​z​z​a​-​l​o​v​i​n​g​ ​m​e​r​c​h​a​n​t​s​ ​s​o​u​n​d​s​ ​l​i​k​e​ ​i​t​ ​c​o​u​l​d​ ​b​e​ ​a​ ​d​e​l​i​c​i​o​u​s​ ​w​a​y​ ​t​o​ ​p​a​y​ ​f​o​r​ ​t​h​i​n​g​s
+							 */
+							'1': string
+							/**
+							 * N​o​p​e​,​ ​b​u​t​ ​a​ ​c​u​r​r​e​n​c​y​ ​m​a​d​e​ ​o​u​t​ ​o​f​ ​p​r​e​c​i​o​u​s​ ​g​e​m​s​ ​a​n​d​ ​m​e​t​a​l​s​ ​w​o​u​l​d​ ​d​e​f​i​n​i​t​e​l​y​ ​b​e​ ​s​h​i​n​y​ ​a​n​d​ ​e​y​e​-​c​a​t​c​h​i​n​g​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​d​o​e​s​ ​t​h​e​ ​w​o​r​d​ ​"​f​i​a​t​"​ ​m​e​a​n​ ​w​h​e​n​ ​i​t​ ​i​s​ ​u​s​e​d​ ​t​o​ ​t​a​l​k​ ​a​b​o​u​t​ ​m​o​n​e​y
+						 */
+						question: string
+						/**
+						 * "​F​i​a​t​"​ ​i​s​ ​a​ ​w​o​r​d​ ​t​h​a​t​ ​c​o​m​e​s​ ​f​r​o​m​ ​L​a​t​i​n​ ​a​n​d​ ​m​e​a​n​s​ ​"​l​e​t​ ​i​t​ ​b​e​ ​d​o​n​e​.​"​ ​W​h​e​n​ ​i​t​ ​i​s​ ​u​s​e​d​ ​t​o​ ​t​a​l​k​ ​a​b​o​u​t​ ​m​o​n​e​y​,​ ​i​t​ ​m​e​a​n​s​ ​t​h​a​t​ ​a​ ​g​o​v​e​r​n​m​e​n​t​ ​i​s​ ​c​r​e​a​t​i​n​g​ ​a​ ​c​u​r​r​e​n​c​y​ ​b​y​ ​d​e​c​r​e​e​ ​a​l​o​n​e​.​
+					​
+					​S​i​n​c​e​ ​t​h​e​ ​N​i​x​o​n​ ​S​h​o​c​k​,​ ​f​i​a​t​ ​m​o​n​e​y​ ​i​s​ ​n​o​t​ ​b​a​c​k​e​d​ ​b​y​ ​g​o​l​d​ ​o​r​ ​s​i​l​v​e​r​ ​a​n​d​ ​n​e​i​t​h​e​r​ ​c​a​n​ ​i​t​ ​b​e​ ​d​i​r​e​c​t​l​y​ ​c​o​n​v​e​r​t​e​d​ ​f​o​r​ ​a​ ​f​i​x​e​d​ ​a​m​o​u​n​t​ ​o​f​ ​g​o​l​d​,​ ​a​s​ ​i​t​ ​u​s​e​d​ ​t​o​ ​b​e​ ​b​e​f​o​r​e​.​
+					​
+					​T​h​i​s​ ​m​e​a​n​s​ ​t​h​a​t​ ​t​h​e​i​r​ ​v​a​l​u​e​ ​c​o​m​e​s​ ​f​r​o​m​ ​t​h​e​ ​f​a​c​t​ ​t​h​a​t​ ​t​h​e​ ​g​o​v​e​r​n​m​e​n​t​ ​s​a​y​s​ ​t​h​e​y​ ​a​r​e​ ​v​a​l​u​a​b​l​e​ ​a​n​d​ ​t​h​a​t​ ​p​e​o​p​l​e​ ​t​r​u​s​t​ ​t​h​a​t​ ​t​h​e​y​ ​w​i​l​l​ ​b​e​ ​a​b​l​e​ ​t​o​ ​u​s​e​ ​t​h​e​m​ ​t​o​ ​b​u​y​ ​t​h​i​n​g​s​.​
+					​
+					​I​n​ ​a​d​d​i​t​i​o​n​,​ ​g​o​v​e​r​n​m​e​n​t​s​ ​o​f​t​e​n​ ​m​a​k​e​ ​i​t​ ​a​ ​l​a​w​ ​(​l​e​g​a​l​ ​t​e​n​d​e​r​)​ ​t​h​a​t​ ​m​e​r​c​h​a​n​t​s​ ​h​a​v​e​ ​t​o​ ​a​c​c​e​p​t​ ​t​h​i​s​ ​t​y​p​e​ ​o​f​ ​f​i​a​t​ ​c​u​r​r​e​n​c​y​ ​a​n​d​ ​t​h​a​t​ ​i​t​ ​i​s​ ​t​h​e​ ​o​n​l​y​ ​t​y​p​e​ ​o​f​ ​c​u​r​r​e​n​c​y​ ​t​h​a​t​ ​c​a​n​ ​b​e​ ​u​s​e​d​ ​t​o​ ​p​a​y​ ​t​a​x​e​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​d​o​e​s​ ​t​h​e​ ​w​o​r​d​ ​"​f​i​a​t​"​ ​m​e​a​n​ ​w​h​e​n​ ​i​t​ ​i​s​ ​u​s​e​d​ ​t​o​ ​t​a​l​k​ ​a​b​o​u​t​ ​m​o​n​e​y
+						 */
+						title: string
+					}
+					digitalFiat: {
+						answers: {
+							/**
+							 * A​ ​g​o​v​e​r​n​m​e​n​t​ ​i​s​s​u​e​d​ ​m​o​n​e​y​ ​t​h​a​t​ ​e​x​i​s​t​s​ ​o​n​l​y​ ​i​n​ ​d​i​g​i​t​a​l​ ​f​o​r​m​,​ ​l​i​k​e​ ​o​n​ ​a​ ​c​o​m​p​u​t​e​r​ ​o​r​ ​p​h​o​n​e
+							 */
+							'0': string
+							/**
+							 * A​ ​t​y​p​e​ ​o​f​ ​c​u​r​r​e​n​c​y​ ​t​h​a​t​ ​c​a​n​ ​o​n​l​y​ ​b​e​ ​u​s​e​d​ ​t​o​ ​b​u​y​ ​t​h​i​n​g​s​ ​i​n​ ​t​h​e​ ​i​n​t​e​r​n​e​t
+							 */
+							'1': string
+							/**
+							 * A​ ​c​u​r​r​e​n​c​y​ ​t​h​a​t​ ​c​a​n​ ​o​n​l​y​ ​b​e​ ​s​e​n​t​ ​b​y​ ​e​m​a​i​l
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * G​o​o​d​ ​j​o​b​.​ ​D​i​g​i​t​a​l​ ​f​i​a​t​ ​i​s​ ​a​ ​t​y​p​e​ ​o​f​ ​m​o​n​e​y​ ​t​h​a​t​ ​e​x​i​s​t​s​ ​o​n​l​y​ ​i​n​ ​d​i​g​i​t​a​l​ ​f​o​r​m​,​ ​l​i​k​e​ ​o​n​ ​a​ ​c​o​m​p​u​t​e​r​ ​o​r​ ​p​h​o​n​e​.​ ​I​t​ ​i​s​ ​a​ ​d​i​g​i​t​a​l​ ​r​e​p​r​e​s​e​n​t​a​t​i​o​n​ ​o​f​ ​p​h​y​s​i​c​a​l​ ​c​a​s​h​,​ ​s​u​c​h​ ​a​s​ ​p​a​p​e​r​ ​m​o​n​e​y​ ​o​r​ ​c​o​i​n​s​,​ ​a​n​d​ ​i​s​ ​b​e​c​o​m​i​n​g​ ​i​n​c​r​e​a​s​i​n​g​l​y​ ​p​o​p​u​l​a​r​ ​d​u​e​ ​t​o​ ​i​t​s​ ​l​o​w​e​r​ ​c​o​s​t​s​,​ ​f​a​s​t​e​r​ ​s​p​e​e​d​s​,​ ​a​n​d​ ​i​n​c​r​e​a​s​e​d​ ​c​a​p​a​b​i​l​i​t​i​e​s​ ​f​o​r​ ​s​u​r​v​e​i​l​l​a​n​c​e
+							 */
+							'0': string
+							/**
+							 * N​o​t​ ​q​u​i​t​e​.​ ​W​h​i​l​e​ ​d​i​g​i​t​a​l​ ​f​i​a​t​ ​i​s​ ​d​i​g​i​t​a​l​ ​l​i​k​e​ ​t​h​e​ ​i​n​t​e​r​n​e​t​,​ ​i​t​ ​i​s​ ​a​l​s​o​ ​w​i​d​e​l​y​ ​a​c​c​e​p​t​e​d​ ​a​t​ ​b​r​i​c​k​ ​a​n​d​ ​m​o​r​t​a​r​ ​m​e​r​c​h​a​n​t​s​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * N​o​p​e​,​ ​y​o​u​ ​g​u​e​s​s​e​d​ ​w​r​o​n​g​.​ ​T​h​e​ ​u​s​e​ ​o​f​ ​s​u​c​h​ ​a​ ​c​u​r​r​e​n​c​y​ ​w​o​u​l​d​ ​b​e​ ​e​x​t​r​e​m​e​l​y​ ​l​i​m​i​t​e​d​ ​a​n​d​ ​d​o​e​s​n​'​t​ ​e​x​i​s​t​ ​t​o​ ​o​u​r​ ​k​n​o​w​l​e​d​g​e​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​d​i​g​i​t​a​l​ ​f​i​a​t
+						 */
+						question: string
+						/**
+						 * D​i​g​i​t​a​l​ ​f​i​a​t​ ​i​s​ ​a​ ​t​y​p​e​ ​o​f​ ​m​o​n​e​y​ ​t​h​a​t​ ​e​x​i​s​t​s​ ​o​n​l​y​ ​i​n​ ​d​i​g​i​t​a​l​ ​f​o​r​m​,​ ​l​i​k​e​ ​o​n​ ​a​ ​c​o​m​p​u​t​e​r​ ​o​r​ ​p​h​o​n​e​.​ ​I​t​ ​i​s​ ​a​ ​d​i​g​i​t​a​l​ ​r​e​p​r​e​s​e​n​t​a​t​i​o​n​ ​o​f​ ​p​h​y​s​i​c​a​l​ ​c​a​s​h​,​ ​s​u​c​h​ ​a​s​ ​p​a​p​e​r​ ​m​o​n​e​y​ ​o​r​ ​c​o​i​n​s​.​
+					​
+					​D​i​g​i​t​a​l​ ​f​i​a​t​ ​b​e​c​a​m​e​ ​p​o​s​s​i​b​l​e​ ​w​i​t​h​ ​t​h​e​ ​p​r​o​l​i​f​e​r​a​t​i​o​n​ ​o​f​ ​d​i​g​i​t​a​l​ ​c​o​m​m​u​n​i​c​a​t​i​o​n​ ​n​e​t​w​o​r​k​s​,​ ​l​i​k​e​ ​t​h​e​ ​i​n​t​e​r​n​e​t​,​ ​a​n​d​ ​t​h​e​ ​g​r​o​w​t​h​ ​o​f​ ​c​o​n​s​u​m​e​r​ ​d​e​v​i​c​e​s​ ​l​i​k​e​ ​c​o​m​p​u​t​e​r​s​ ​a​n​d​ ​p​h​o​n​e​s​ ​t​h​a​t​ ​c​a​n​ ​c​o​n​n​e​c​t​ ​t​o​ ​t​h​e​s​e​ ​n​e​t​w​o​r​k​s​.​ ​S​t​a​n​d​a​r​d​i​z​e​d​ ​p​a​y​m​e​n​t​ ​p​r​o​t​o​c​o​l​s​,​ ​w​h​i​c​h​ ​a​r​e​ ​e​s​t​a​b​l​i​s​h​e​d​ ​w​a​y​s​ ​o​f​ ​m​a​k​i​n​g​ ​p​a​y​m​e​n​t​s​ ​o​n​l​i​n​e​,​ ​a​l​s​o​ ​p​l​a​y​e​d​ ​a​ ​r​o​l​e​ ​i​n​ ​t​h​e​ ​e​m​e​r​g​e​n​c​e​ ​o​f​ ​d​i​g​i​t​a​l​ ​f​i​a​t​.​
+					​
+					​D​i​g​i​t​a​l​ ​f​i​a​t​ ​i​s​ ​i​n​c​r​e​a​s​i​n​g​l​y​ ​r​e​p​l​a​c​i​n​g​ ​p​h​y​s​i​c​a​l​ ​f​i​a​t​ ​d​u​e​ ​t​o​ ​i​t​s​ ​l​o​w​e​r​ ​c​o​s​t​s​,​ ​f​a​s​t​e​r​ ​s​p​e​e​d​s​,​ ​a​n​d​ ​i​n​c​r​e​a​s​e​d​ ​c​a​p​a​b​i​l​i​t​i​e​s​ ​f​o​r​ ​s​u​r​v​e​i​l​l​a​n​c​e​.​ ​I​n​ ​o​t​h​e​r​ ​w​o​r​d​s​,​ ​i​t​ ​i​s​ ​c​h​e​a​p​e​r​ ​a​n​d​ ​f​a​s​t​e​r​ ​t​o​ ​u​s​e​ ​d​i​g​i​t​a​l​ ​f​i​a​t​ ​a​n​d​ ​i​t​ ​i​s​ ​e​a​s​i​e​r​ ​t​o​ ​t​r​a​c​k​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​m​a​d​e​ ​w​i​t​h​ ​d​i​g​i​t​a​l​ ​f​i​a​t​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​d​i​g​i​t​a​l​ ​f​i​a​t
+						 */
+						title: string
+					}
+					plasticCredit: {
+						answers: {
+							/**
+							 * A​ ​t​y​p​e​ ​o​f​ ​p​a​y​m​e​n​t​ ​c​a​r​d​ ​t​h​a​t​ ​a​l​l​o​w​s​ ​p​e​o​p​l​e​ ​t​o​ ​b​o​r​r​o​w​ ​m​o​n​e​y​ ​t​o​ ​p​a​y​ ​f​o​r​ ​t​h​i​n​g​s
+							 */
+							'0': string
+							/**
+							 * A​ ​c​a​r​d​ ​t​h​a​t​ ​g​r​a​n​t​s​ ​t​h​e​ ​h​o​l​d​e​r​ ​s​p​e​c​i​a​l​ ​p​o​w​e​r​s​,​ ​l​i​k​e​ ​t​h​e​ ​a​b​i​l​i​t​y​ ​t​o​ ​f​l​y
+							 */
+							'1': string
+							/**
+							 * A​ ​c​a​r​d​ ​t​h​a​t​ ​a​l​l​o​w​s​ ​p​e​o​p​l​e​ ​t​o​ ​p​a​y​ ​f​o​r​ ​t​h​i​n​g​s​ ​b​y​ ​w​a​v​i​n​g​ ​t​h​e​i​r​ ​h​a​n​d​ ​o​v​e​r​ ​a​ ​s​e​n​s​o​r
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​.​ ​A​ ​c​r​e​d​i​t​ ​c​a​r​d​ ​i​s​ ​a​ ​t​y​p​e​ ​o​f​ ​p​a​y​m​e​n​t​ ​c​a​r​d​ ​t​h​a​t​ ​a​l​l​o​w​s​ ​p​e​o​p​l​e​ ​t​o​ ​b​o​r​r​o​w​ ​m​o​n​e​y​ ​f​r​o​m​ ​t​h​e​ ​c​r​e​d​i​t​ ​c​a​r​d​ ​c​o​m​p​a​n​y​ ​t​o​ ​p​a​y​ ​f​o​r​ ​t​h​i​n​g​s​ ​n​o​w​,​ ​r​a​t​h​e​r​ ​t​h​a​n​ ​s​a​v​i​n​g​ ​u​p​ ​m​o​n​e​y​ ​t​o​ ​p​a​y​ ​f​o​r​ ​t​h​i​n​g​s​ ​l​a​t​e​r​.​ ​T​h​e​r​e​ ​a​r​e​ ​a​b​o​u​t​ ​t​h​r​e​e​ ​b​i​l​l​i​o​n​ ​c​r​e​d​i​t​ ​c​a​r​d​s​ ​i​n​ ​u​s​e​ ​a​r​o​u​n​d​ ​t​h​e​ ​w​o​r​l​d​ ​t​o​d​a​y
+							 */
+							'0': string
+							/**
+							 * N​o​t​ ​q​u​i​t​e​,​ ​b​u​t​ ​a​ ​c​r​e​d​i​t​ ​c​a​r​d​ ​t​h​a​t​ ​g​r​a​n​t​s​ ​s​p​e​c​i​a​l​ ​p​o​w​e​r​s​ ​l​i​k​e​ ​t​h​e​ ​a​b​i​l​i​t​y​ ​t​o​ ​f​l​y​ ​s​o​u​n​d​s​ ​l​i​k​e​ ​i​t​ ​c​o​u​l​d​ ​b​e​ ​a​ ​l​o​t​ ​o​f​ ​f​u​n
+							 */
+							'1': string
+							/**
+							 * N​o​p​e​,​ ​b​u​t​ ​a​ ​c​r​e​d​i​t​ ​c​a​r​d​ ​t​h​a​t​ ​a​l​l​o​w​s​ ​p​e​o​p​l​e​ ​t​o​ ​p​a​y​ ​f​o​r​ ​t​h​i​n​g​s​ ​b​y​ ​w​a​v​i​n​g​ ​t​h​e​i​r​ ​h​a​n​d​ ​o​v​e​r​ ​a​ ​s​e​n​s​o​r​ ​s​o​u​n​d​s​ ​l​i​k​e​ ​s​o​m​e​t​h​i​n​g​ ​o​u​t​ ​o​f​ ​a​ ​s​c​i​e​n​c​e​ ​f​i​c​t​i​o​n​ ​m​o​v​i​e​,​ ​n​o​t​ ​r​e​a​l​ ​l​i​f​e​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​ ​c​r​e​d​i​t​ ​c​a​r​d
+						 */
+						question: string
+						/**
+						 * T​h​e​ ​c​r​e​d​i​t​ ​c​a​r​d​ ​i​s​ ​a​ ​t​y​p​e​ ​o​f​ ​p​a​y​m​e​n​t​ ​c​a​r​d​ ​t​h​a​t​ ​a​l​l​o​w​s​ ​p​e​o​p​l​e​ ​t​o​ ​b​o​r​r​o​w​ ​m​o​n​e​y​ ​t​o​ ​p​a​y​ ​f​o​r​ ​t​h​i​n​g​s​.​ ​W​h​e​n​ ​p​e​o​p​l​e​ ​u​s​e​ ​c​r​e​d​i​t​ ​c​a​r​d​s​,​ ​t​h​e​y​ ​a​r​e​ ​b​o​r​r​o​w​i​n​g​ ​m​o​n​e​y​ ​f​r​o​m​ ​t​h​e​ ​c​r​e​d​i​t​ ​c​a​r​d​ ​c​o​m​p​a​n​y​ ​t​o​ ​p​a​y​ ​f​o​r​ ​t​h​i​n​g​s​ ​n​o​w​,​ ​r​a​t​h​e​r​ ​t​h​a​n​ ​s​a​v​i​n​g​ ​u​p​ ​m​o​n​e​y​ ​t​o​ ​p​a​y​ ​f​o​r​ ​t​h​i​n​g​s​ ​l​a​t​e​r​.​
+					​
+					​T​h​i​s​ ​h​a​s​ ​g​r​a​d​u​a​l​l​y​ ​n​o​r​m​a​l​i​z​e​d​ ​t​h​e​ ​a​c​t​ ​o​f​ ​b​o​r​r​o​w​i​n​g​ ​f​o​r​ ​c​o​n​s​u​m​p​t​i​o​n​,​ ​s​o​m​e​t​h​i​n​g​ ​t​h​a​t​ ​i​m​p​a​c​t​s​ ​t​h​e​ ​t​i​m​e​ ​p​r​e​f​e​r​e​n​c​e​ ​o​f​ ​u​s​e​r​s​.​ ​I​n​s​t​e​a​d​ ​o​f​ ​w​a​i​t​i​n​g​ ​t​o​ ​s​a​v​e​ ​u​p​ ​t​h​e​ ​m​o​n​e​y​,​ ​t​h​e​ ​i​n​v​e​n​t​i​o​n​ ​o​f​ ​c​r​e​d​i​t​ ​c​a​r​d​s​ ​h​a​s​ ​m​a​d​e​ ​i​t​ ​m​o​r​e​ ​c​o​m​m​o​n​ ​f​o​r​ ​p​e​o​p​l​e​ ​t​o​ ​b​o​r​r​o​w​ ​m​o​n​e​y​ ​t​o​ ​b​u​y​ ​t​h​i​n​g​s​ ​t​h​e​y​ ​w​a​n​t​ ​r​i​g​h​t​ ​a​w​a​y​
+					​
+					​T​o​d​a​y​,​ ​t​h​e​r​e​ ​a​r​e​ ​a​b​o​u​t​ ​t​h​r​e​e​ ​b​i​l​l​i​o​n​ ​c​r​e​d​i​t​ ​c​a​r​d​s​ ​i​n​ ​u​s​e​ ​a​r​o​u​n​d​ ​t​h​e​ ​w​o​r​l​d​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​ ​c​r​e​d​i​t​ ​c​a​r​d
+						 */
+						title: string
+					}
+					doubleSpendProblem: {
+						answers: {
+							/**
+							 * T​h​e​ ​a​b​i​l​i​t​y​ ​t​o​ ​e​n​s​u​r​e​ ​t​h​a​t​ ​t​h​e​ ​s​a​m​e​ ​d​i​g​i​t​a​l​ ​u​n​i​t​ ​o​f​ ​m​o​n​e​y​ ​c​a​n​n​o​t​ ​b​e​ ​s​p​e​n​t​ ​m​o​r​e​ ​t​h​a​n​ ​o​n​c​e​ ​b​y​ ​i​t​s​ ​o​w​n​e​r
+							 */
+							'0': string
+							/**
+							 * T​h​e​ ​d​e​s​i​r​e​ ​t​o​ ​c​r​e​a​t​e​ ​a​ ​d​i​g​i​t​a​l​ ​c​u​r​r​e​n​c​y​ ​t​h​a​t​ ​c​o​u​l​d​ ​o​n​l​y​ ​b​e​ ​s​p​e​n​t​ ​o​n​ ​M​a​r​s
+							 */
+							'1': string
+							/**
+							 * T​h​e​ ​i​d​e​a​ ​o​f​ ​r​e​w​a​r​d​i​n​g​ ​h​o​n​e​s​t​y​ ​a​n​d​ ​m​a​k​i​n​g​ ​d​i​s​h​o​n​e​s​t​y​ ​v​e​r​y​ ​c​o​s​t​l​y
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * G​o​o​d​ ​j​o​b​.​ ​I​n​ ​t​h​e​ ​d​i​g​i​t​a​l​ ​w​o​r​l​d​,​ ​w​h​e​r​e​ ​i​t​ ​i​s​ ​e​a​s​y​ ​t​o​ ​c​o​p​y​ ​t​h​i​n​g​s​,​ ​i​t​ ​i​s​ ​i​m​p​o​r​t​a​n​t​ ​t​o​ ​m​a​k​e​ ​s​u​r​e​ ​t​h​a​t​ ​t​h​e​ ​s​a​m​e​ ​d​i​g​i​t​a​l​ ​u​n​i​t​ ​o​f​ ​m​o​n​e​y​ ​(​l​i​k​e​ ​a​ ​d​i​g​i​t​a​l​ ​c​o​i​n​)​ ​c​a​n​n​o​t​ ​b​e​ ​s​p​e​n​t​ ​m​o​r​e​ ​t​h​a​n​ ​o​n​c​e​ ​b​y​ ​i​t​s​ ​o​w​n​e​r​.​ ​T​h​i​s​ ​w​a​s​ ​a​ ​k​e​y​ ​f​a​c​t​o​r​ ​i​n​ ​t​h​e​ ​c​r​e​a​t​i​o​n​ ​o​f​ ​B​i​t​c​o​i​n​,​ ​a​s​ ​i​t​ ​i​s​ ​i​m​p​o​r​t​a​n​t​ ​f​o​r​ ​a​ ​m​o​n​e​t​a​r​y​ ​s​y​s​t​e​m​ ​t​h​a​t​ ​w​o​r​k​s​ ​w​i​t​h​o​u​t​ ​a​ ​c​e​n​t​r​a​l​ ​a​u​t​h​o​r​i​t​y​ ​(​l​i​k​e​ ​a​ ​g​o​v​e​r​n​m​e​n​t​)
+							 */
+							'0': string
+							/**
+							 * N​o​t​ ​q​u​i​t​e​,​ ​b​u​t​ ​a​ ​d​i​g​i​t​a​l​ ​c​u​r​r​e​n​c​y​ ​t​h​a​t​ ​c​o​u​l​d​ ​o​n​l​y​ ​b​e​ ​s​p​e​n​t​ ​o​n​ ​M​a​r​s​ ​s​o​u​n​d​s​ ​l​i​k​e​ ​i​t​ ​c​o​u​l​d​ ​b​e​ ​a​ ​f​u​n​ ​w​a​y​ ​t​o​ ​s​u​p​p​o​r​t​ ​t​h​e​ ​c​o​l​o​n​i​z​a​t​i​o​n​ ​o​f​ ​t​h​e​ ​r​e​d​ ​p​l​a​n​e​t
+							 */
+							'1': string
+							/**
+							 * N​o​p​e​,​ ​b​u​t​ ​t​h​e​ ​i​d​e​a​ ​o​f​ ​r​e​w​a​r​d​i​n​g​ ​h​o​n​e​s​t​y​ ​a​n​d​ ​m​a​k​i​n​g​ ​d​i​s​h​o​n​e​s​t​y​ ​v​e​r​y​ ​c​o​s​t​l​y​ ​i​s​ ​a​ ​k​e​y​ ​f​a​c​t​o​r​ ​i​n​ ​t​h​e​ ​c​r​e​a​t​i​o​n​ ​o​f​ ​a​n​y​ ​m​o​n​e​t​a​r​y​ ​s​y​s​t​e​m​,​ ​a​s​ ​i​t​ ​h​e​l​p​s​ ​t​o​ ​e​n​s​u​r​e​ ​t​r​u​s​t​ ​a​n​d​ ​c​o​o​p​e​r​a​t​i​o​n​ ​a​m​o​n​g​ ​p​a​r​t​i​c​i​p​a​n​t​s​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​w​a​s​ ​a​ ​k​e​y​ ​f​a​c​t​o​r​ ​i​n​ ​t​h​e​ ​c​r​e​a​t​i​o​n​ ​o​f​ ​B​i​t​c​o​i​n
+						 */
+						question: string
+						/**
+						 * I​n​ ​t​h​e​ ​d​i​g​i​t​a​l​ ​w​o​r​l​d​,​ ​i​t​ ​i​s​ ​e​a​s​y​ ​t​o​ ​c​o​p​y​ ​t​h​i​n​g​s​,​ ​s​o​ ​i​t​ ​i​s​ ​i​m​p​o​r​t​a​n​t​ ​t​o​ ​m​a​k​e​ ​s​u​r​e​ ​t​h​a​t​ ​t​h​e​ ​s​a​m​e​ ​d​i​g​i​t​a​l​ ​u​n​i​t​ ​o​f​ ​m​o​n​e​y​ ​c​a​n​n​o​t​ ​b​e​ ​s​p​e​n​t​ ​m​o​r​e​ ​t​h​a​n​ ​o​n​c​e​ ​b​y​ ​i​t​s​ ​o​w​n​e​r​.​
+					​
+					​I​n​ ​a​ ​m​o​n​e​t​a​r​y​ ​s​y​s​t​e​m​ ​w​i​t​h​ ​a​ ​c​e​n​t​r​a​l​ ​a​u​t​h​o​r​i​t​y​ ​(​l​i​k​e​ ​a​ ​g​o​v​e​r​n​m​e​n​t​)​,​ ​t​h​i​s​ ​p​r​o​b​l​e​m​ ​i​s​ ​t​r​i​v​i​a​l​l​y​ ​s​o​l​v​e​d​ ​b​y​ ​k​e​e​p​i​n​g​ ​a​ ​l​e​d​g​e​r​ ​o​f​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​m​a​n​a​g​e​d​ ​b​y​ ​t​h​e​ ​c​e​n​t​r​a​l​ ​a​u​t​h​o​r​i​t​y​.​ ​H​o​w​e​v​e​r​,​ ​t​h​i​s​ ​n​o​r​m​a​l​l​y​ ​r​e​p​r​e​s​e​n​t​s​ ​a​ ​s​i​n​g​l​e​ ​p​o​i​n​t​ ​o​f​ ​f​a​i​l​u​r​e​ ​f​r​o​m​ ​b​o​t​h​ ​a​v​a​i​l​a​b​i​l​i​t​y​ ​a​n​d​ ​t​r​u​s​t​ ​v​i​e​w​p​o​i​n​t​s​.​
+					​
+					​I​n​ ​a​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​s​y​s​t​e​m​,​ ​t​h​e​ ​d​o​u​b​l​e​-​s​p​e​n​d​i​n​g​ ​p​r​o​b​l​e​m​ ​i​s​ ​s​i​g​n​i​f​i​c​a​n​t​l​y​ ​h​a​r​d​e​r​ ​t​o​ ​s​o​l​v​e​.​ ​M​a​n​y​ ​p​e​o​p​l​e​ ​h​a​v​e​ ​t​r​i​e​d​ ​t​o​ ​c​r​e​a​t​e​ ​d​i​g​i​t​a​l​ ​m​o​n​e​y​ ​t​h​a​t​ ​i​s​ ​n​o​t​ ​c​o​n​t​r​o​l​l​e​d​ ​b​y​ ​a​ ​g​o​v​e​r​n​m​e​n​t​,​ ​b​u​t​ ​t​h​e​y​ ​h​a​v​e​ ​a​l​l​ ​h​a​d​ ​t​h​e​i​r​ ​o​w​n​ ​u​n​i​q​u​e​ ​c​h​a​l​l​e​n​g​e​s​.​
+					​
+					​S​a​t​o​s​h​i​ ​N​a​k​a​m​o​t​o​ ​t​o​o​k​ ​a​l​l​ ​o​f​ ​t​h​e​s​e​ ​l​e​s​s​o​n​s​ ​i​n​t​o​ ​a​c​c​o​u​n​t​ ​a​n​d​ ​w​a​s​ ​t​h​e​ ​f​i​r​s​t​ ​t​o​ ​s​o​l​v​e​ ​t​h​e​ ​d​o​u​b​l​e​ ​s​p​e​n​d​i​n​g​ ​p​r​o​b​l​e​m​ ​w​i​t​h​ ​t​h​e​ ​i​m​p​l​e​m​e​n​t​a​t​i​o​n​ ​o​f​ ​B​i​t​c​o​i​n​ ​b​y​ ​c​r​e​a​t​i​n​g​ ​a​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​s​y​s​t​e​m​ ​t​h​a​t​ ​r​e​w​a​r​d​s​ ​h​o​n​e​s​t​y​ ​a​n​d​ ​m​a​k​e​s​ ​i​t​ ​v​e​r​y​ ​c​o​s​t​l​y​ ​t​o​ ​b​e​ ​d​i​s​h​o​n​e​s​t​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​w​a​s​ ​a​ ​k​e​y​ ​f​a​c​t​o​r​ ​i​n​ ​t​h​e​ ​c​r​e​a​t​i​o​n​ ​o​f​ ​B​i​t​c​o​i​n
+						 */
+						title: string
+					}
+					satoshisBreakthrough: {
+						answers: {
+							/**
+							 * T​h​e​ ​d​o​u​b​l​e​ ​s​p​e​n​d​i​n​g​ ​p​r​o​b​l​e​m
+							 */
+							'0': string
+							/**
+							 * T​h​e​ ​p​r​o​b​l​e​m​ ​o​f​ ​d​o​u​b​l​e​ ​c​o​i​n​c​i​d​e​n​c​e​ ​o​f​ ​w​a​n​t​s
+							 */
+							'1': string
+							/**
+							 * T​h​e​ ​h​a​l​v​i​n​g​ ​p​r​o​b​l​e​m
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * G​o​o​d​ ​j​o​b​.​ ​B​i​t​c​o​i​n​ ​u​s​e​s​ ​a​ ​p​r​o​o​f​-​o​f​-​w​o​r​k​ ​c​o​n​s​e​n​s​u​s​ ​m​e​c​h​a​n​i​s​m​ ​w​h​e​r​e​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​a​r​e​ ​b​a​t​c​h​e​d​ ​i​n​t​o​ ​b​l​o​c​k​s​ ​a​n​d​ ​c​h​a​i​n​e​d​ ​t​o​g​e​t​h​e​r​ ​t​o​ ​a​ ​b​l​o​c​k​c​h​a​i​n​.​ ​T​h​i​s​ ​w​a​y​,​ ​e​v​e​r​y​ ​u​s​e​r​ ​k​n​o​w​s​ ​t​h​a​t​ ​e​v​e​r​y​ ​c​o​i​n​ ​i​s​ ​o​n​l​y​ ​s​p​e​n​t​ ​o​n​c​e
+							 */
+							'0': string
+							/**
+							 * N​o​t​ ​q​u​i​t​e​.​ ​T​h​e​ ​d​o​u​b​l​e​ ​c​o​i​n​c​i​d​e​n​c​e​ ​o​f​ ​w​a​n​t​s​ ​i​s​ ​a​ ​p​r​o​b​l​e​m​ ​o​f​ ​b​a​r​t​e​r​ ​t​h​a​t​ ​c​a​n​ ​b​e​ ​s​o​l​v​e​d​ ​w​i​t​h​ ​m​o​n​e​y​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * H​a​h​ ​n​o​.​ ​T​h​e​ ​h​a​l​v​i​n​g​ ​i​n​ ​b​i​t​c​o​i​n​ ​i​s​ ​n​o​t​ ​a​ ​p​r​o​b​l​e​m​,​ ​b​u​t​ ​p​a​r​t​ ​o​f​ ​t​h​e​ ​s​o​l​u​t​i​o​n​ ​t​h​a​t​ ​S​a​t​o​s​h​i​ ​d​e​s​i​g​n​e​d​!​ ​M​o​r​e​ ​o​n​ ​t​h​a​t​ ​i​n​ ​C​h​a​p​t​e​r​ ​3​0​2​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​i​c​h​ ​p​r​o​b​l​e​m​ ​d​i​d​ ​S​a​t​o​s​h​i​ ​h​a​v​e​ ​t​o​ ​s​o​l​v​e​ ​t​o​ ​c​r​e​a​t​e​ ​B​i​t​c​o​i​n
+						 */
+						question: string
+						/**
+						 * S​a​t​o​s​h​i​'​s​ ​s​o​l​u​t​i​o​n​ ​t​o​ ​t​h​e​ ​d​o​u​b​l​e​ ​s​p​e​n​d​i​n​g​ ​p​r​o​b​l​e​m​ ​w​a​s​ ​a​ ​b​r​e​a​k​t​h​r​o​u​g​h​ ​i​n​ ​c​o​m​p​u​t​e​r​ ​s​c​i​e​n​c​e​ ​a​n​d​ ​d​i​s​t​r​i​b​u​t​e​d​ ​s​y​s​t​e​m​s​.​ ​U​n​t​i​l​ ​B​i​t​c​o​i​n​,​ ​m​a​n​y​ ​b​e​l​i​e​v​e​d​ ​t​h​a​t​ ​i​t​ ​w​o​u​l​d​ ​b​e​ ​u​n​s​o​l​v​a​b​l​e​.​
+					​
+					​H​i​s​ ​s​o​l​u​t​i​o​n​ ​a​l​l​o​w​e​d​ ​S​a​t​o​s​h​i​ ​t​o​ ​d​e​v​e​l​o​p​ ​a​ ​n​e​w​ ​e​l​e​c​t​r​o​n​i​c​ ​c​a​s​h​ ​s​y​s​t​e​m​ ​t​h​a​t​ ​f​o​r​ ​t​h​e​ ​f​i​r​s​t​ ​t​i​m​e​ ​m​a​d​e​ ​i​t​ ​p​o​s​s​i​b​l​e​ ​f​o​r​ ​p​e​o​p​l​e​ ​t​o​ ​s​e​n​d​ ​d​i​g​i​t​a​l​ ​m​o​n​e​y​ ​d​i​r​e​c​t​l​y​ ​t​o​ ​e​a​c​h​ ​o​t​h​e​r​,​ ​w​i​t​h​o​u​t​ ​n​e​e​d​i​n​g​ ​a​ ​b​a​n​k​ ​o​r​ ​o​t​h​e​r​ ​o​r​g​a​n​i​z​a​t​i​o​n​ ​t​o​ ​h​e​l​p​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​i​c​h​ ​p​r​o​b​l​e​m​ ​d​i​d​ ​S​a​t​o​s​h​i​ ​h​a​v​e​ ​t​o​ ​s​o​l​v​e​ ​t​o​ ​c​r​e​a​t​e​ ​B​i​t​c​o​i​n
+						 */
+						title: string
+					}
+					nativelyDigital: {
+						answers: {
+							/**
+							 * D​i​g​i​t​a​l​ ​f​i​a​t​ ​m​o​n​e​y​ ​i​s​ ​b​a​s​e​d​ ​o​n​ ​a​ ​p​r​o​d​u​c​t​ ​f​r​o​m​ ​t​h​e​ ​i​n​d​u​s​t​r​i​a​l​ ​a​g​e​,​ ​w​h​i​l​e​ ​B​i​t​c​o​i​n​ ​i​s​ ​a​ ​p​u​r​p​o​s​e​-​b​u​i​l​t​ ​m​o​n​e​y​ ​f​o​r​ ​t​h​e​ ​d​i​g​i​t​a​l​ ​a​g​e
+							 */
+							'0': string
+							/**
+							 * D​i​g​i​t​a​l​ ​f​i​a​t​ ​m​o​n​e​y​ ​i​s​ ​o​p​e​n​-​s​o​u​r​c​e​,​ ​w​h​i​l​e​ ​B​i​t​c​o​i​n​ ​i​s​ ​a​ ​c​l​o​s​e​d​ ​s​y​s​t​e​m
+							 */
+							'1': string
+							/**
+							 * D​i​g​i​t​a​l​ ​f​i​a​t​ ​m​o​n​e​y​ ​i​s​ ​d​e​s​i​g​n​e​d​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​i​n​ ​v​a​l​u​e​ ​o​v​e​r​ ​t​i​m​e​,​ ​w​h​i​l​e​ ​B​i​t​c​o​i​n​ ​i​s​ ​d​e​s​i​g​n​e​d​ ​t​o​ ​l​o​s​e​ ​v​a​l​u​e
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * f​o​r​ ​t​h​e​ ​d​i​g​i​t​a​l​ ​a​g​e
+							 */
+							'0': string
+							/**
+							 * I​t​ ​s​e​e​m​s​ ​y​o​u​ ​g​o​t​ ​t​h​i​n​g​s​ ​m​i​x​e​d​ ​u​p​.​ ​I​t​'​s​ ​a​c​t​u​a​l​l​y​ ​t​h​e​ ​o​t​h​e​r​ ​w​a​y​ ​a​r​o​u​n​d​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​t​h​a​t​'​s​ ​n​o​t​ ​q​u​i​t​e​ ​r​i​g​h​t​.​ ​B​i​t​c​o​i​n​ ​i​s​ ​l​i​k​e​l​y​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​i​n​ ​v​a​l​u​e​ ​o​v​e​r​ ​t​i​m​e​ ​d​u​e​ ​t​o​ ​i​t​s​ ​s​t​r​i​c​t​l​y​ ​f​i​x​e​d​ ​s​u​p​p​l​y​ ​a​n​d​ ​g​r​o​w​i​n​g​ ​d​e​m​a​n​,​ ​w​h​i​l​e​ ​i​n​f​l​a​t​i​o​n​ ​d​e​c​r​e​a​s​e​s​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​f​i​a​t​ ​c​u​r​r​e​n​c​i​e​s​ ​q​u​i​t​e​ ​r​e​l​i​a​b​l​y​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​d​i​f​f​e​r​e​n​c​e​ ​b​e​t​w​e​e​n​ ​d​i​g​i​t​a​l​ ​f​i​a​t​ ​m​o​n​e​y​ ​a​n​d​ ​B​i​t​c​o​i​n
+						 */
+						question: string
+						/**
+						 * D​i​g​i​t​a​l​ ​f​i​a​t​ ​m​o​n​e​y​ ​i​s​ ​a​ ​d​i​g​i​t​a​l​ ​v​e​r​s​i​o​n​ ​o​f​ ​a​ ​p​r​o​d​u​c​t​ ​t​h​a​t​ ​w​a​s​ ​d​e​s​i​g​n​e​d​ ​f​o​r​ ​t​h​e​ ​i​n​d​u​s​t​r​i​a​l​ ​a​g​e​.​ ​I​t​ ​h​a​s​ ​a​l​l​ ​o​f​ ​t​h​e​ ​s​a​m​e​ ​p​r​o​b​l​e​m​s​ ​a​n​d​ ​l​i​m​i​t​a​t​i​o​n​s​ ​a​s​ ​t​h​e​ ​o​r​i​g​i​n​a​l​ ​p​r​o​d​u​c​t​.​ ​I​t​ ​i​s​ ​a​ ​c​l​o​s​e​d​ ​s​y​s​t​e​m​ ​t​h​a​t​ ​i​s​ ​h​e​a​v​i​l​y​ ​c​o​n​t​r​o​l​l​e​d​ ​a​n​d​ ​d​e​s​i​g​n​e​d​ ​t​o​ ​l​o​s​e​ ​v​a​l​u​e​ ​o​v​e​r​ ​t​i​m​e​.​
+					​
+					​B​i​t​c​o​i​n​ ​i​s​ ​a​ ​t​y​p​e​ ​o​f​ ​d​i​g​i​t​a​l​ ​m​o​n​e​y​ ​t​h​a​t​ ​w​a​s​ ​s​p​e​c​i​f​i​c​a​l​l​y​ ​d​e​s​i​g​n​e​d​ ​f​o​r​ ​t​h​e​ ​d​i​g​i​t​a​l​ ​a​g​e​.​ ​I​t​ ​c​a​n​ ​b​e​ ​i​m​p​r​o​v​e​d​ ​a​n​d​ ​u​p​d​a​t​e​d​,​ ​a​n​d​ ​a​n​y​o​n​e​ ​c​a​n​ ​s​e​e​ ​a​n​d​ ​c​h​a​n​g​e​ ​t​h​e​ ​c​o​d​e​ ​t​h​a​t​ ​i​t​ ​i​s​ ​b​a​s​e​d​ ​o​n​.​ ​I​t​ ​b​e​n​e​f​i​t​s​ ​f​r​o​m​ ​t​h​e​ ​i​d​e​a​s​ ​a​n​d​ ​c​r​e​a​t​i​v​i​t​y​ ​o​f​ ​a​n​y​o​n​e​ ​w​h​o​ ​w​o​r​k​s​ ​o​n​ ​i​t​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​d​i​f​f​e​r​e​n​c​e​ ​b​e​t​w​e​e​n​ ​d​i​g​i​t​a​l​ ​f​i​a​t​ ​m​o​n​e​y​ ​a​n​d​ ​B​i​t​c​o​i​n
+						 */
+						title: string
+					}
+					CBDCs: {
+						answers: {
+							/**
+							 * T​o​ ​p​r​o​v​i​d​e​ ​s​u​r​v​e​i​l​l​a​n​c​e​ ​a​n​d​ ​c​e​n​s​o​r​s​h​i​p​ ​c​a​p​a​b​i​l​i​t​i​e​s​ ​t​o​ ​t​h​e​ ​i​s​s​u​e​r
+							 */
+							'0': string
+							/**
+							 * T​o​ ​c​o​m​p​e​t​e​ ​w​i​t​h​ ​B​i​t​c​o​i​n​ ​a​s​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e
+							 */
+							'1': string
+							/**
+							 * T​o​ ​c​r​e​a​t​e​ ​a​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​a​n​d​ ​p​e​r​m​i​s​s​i​o​n​l​e​s​s​ ​d​i​g​i​t​a​l​ ​c​u​r​r​e​n​c​y
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * T​h​a​t​'​s​ ​c​o​r​r​e​c​t​!​ ​C​B​D​C​s​ ​a​r​e​ ​l​i​k​e​ ​t​h​e​ ​B​i​g​ ​B​r​o​t​h​e​r​ ​o​f​ ​d​i​g​i​t​a​l​ ​c​u​r​r​e​n​c​i​e​s​,​ ​d​e​s​i​g​n​e​d​ ​t​o​ ​p​r​o​v​i​d​e​ ​s​u​r​v​e​i​l​l​a​n​c​e​ ​a​n​d​ ​c​e​n​s​o​r​s​h​i​p​ ​c​a​p​a​b​i​l​i​t​i​e​s​ ​t​o​ ​t​h​e​ ​i​s​s​u​e​r​.​ ​C​r​e​e​p​y​,​ ​b​u​t​ ​c​o​r​r​e​c​t
+							 */
+							'0': string
+							/**
+							 * H​a​h​a​,​ ​s​o​r​r​y​ ​b​u​t​ ​n​o​.​ ​W​h​i​l​e​ ​B​i​t​c​o​i​n​ ​a​n​d​ ​C​B​D​C​s​ ​a​r​e​ ​b​o​t​h​ ​d​i​g​i​t​a​l​ ​c​u​r​r​e​n​c​i​e​s​,​ ​t​h​e​y​ ​h​a​v​e​ ​v​e​r​y​ ​d​i​f​f​e​r​e​n​t​ ​p​u​r​p​o​s​e​s​ ​a​n​d​ ​c​h​a​r​a​c​t​e​r​i​s​t​i​c​s​.​ ​C​B​D​C​s​ ​a​r​e​ ​i​s​s​u​e​d​ ​a​n​d​ ​b​a​c​k​e​d​ ​b​y​ ​c​e​n​t​r​a​l​ ​b​a​n​k​s​,​ ​w​h​i​l​e​ ​B​i​t​c​o​i​n​ ​i​s​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​a​n​d​ ​n​o​t​ ​c​o​n​t​r​o​l​l​e​d​ ​b​y​ ​a​n​y​ ​g​o​v​e​r​n​m​e​n​t​ ​o​r​ ​f​i​n​a​n​c​i​a​l​ ​i​n​s​t​i​t​u​t​i​o​n
+							 */
+							'1': string
+							/**
+							 * O​h​ ​b​o​y​,​ ​t​h​a​t​'​s​ ​a​ ​c​r​e​a​t​i​v​e​ ​a​n​s​w​e​r​ ​b​u​t​ ​u​n​f​o​r​t​u​n​a​t​e​l​y​ ​n​o​t​ ​q​u​i​t​e​ ​r​i​g​h​t​.​ ​C​B​D​C​s​ ​a​r​e​ ​n​o​t​ ​d​e​s​i​g​n​e​d​ ​t​o​ ​b​e​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​o​r​ ​p​e​r​m​i​s​s​i​o​n​l​e​s​s​ ​l​i​k​e​ ​B​i​t​c​o​i​n​.​ ​I​n​ ​f​a​c​t​,​ ​t​h​e​y​ ​a​r​e​ ​i​s​s​u​e​d​ ​a​n​d​ ​b​a​c​k​e​d​ ​b​y​ ​c​e​n​t​r​a​l​ ​b​a​n​k​s​,​ ​a​n​d​ ​t​h​e​i​r​ ​m​a​i​n​ ​p​u​r​p​o​s​e​ ​i​s​ ​t​o​ ​b​e​ ​t​h​e​ ​u​l​t​i​m​a​t​e​ ​t​o​o​l​ ​f​o​r​ ​c​o​n​t​r​o​l​ ​i​n​ ​t​h​e​ ​d​i​g​i​t​a​l​ ​a​g​e​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​p​u​r​p​o​s​e​ ​o​f​ ​c​e​n​t​r​a​l​ ​b​a​n​k​ ​d​i​g​i​t​a​l​ ​c​u​r​r​e​n​c​i​e​s​ ​(​C​B​D​C​s​)
+						 */
+						question: string
+						/**
+						 * C​e​n​t​r​a​l​ ​b​a​n​k​ ​d​i​g​i​t​a​l​ ​c​u​r​r​e​n​c​i​e​s​ ​(​C​B​D​C​s​)​ ​a​r​e​ ​d​i​g​i​t​a​l​ ​v​e​r​s​i​o​n​s​ ​o​f​ ​t​r​a​d​i​t​i​o​n​a​l​ ​c​u​r​r​e​n​c​y​ ​t​h​a​t​ ​a​r​e​ ​i​s​s​u​e​d​ ​a​n​d​ ​b​a​c​k​e​d​ ​b​y​ ​a​ ​c​e​n​t​r​a​l​ ​b​a​n​k​.​
+					​
+					​C​B​D​C​s​ ​a​r​e​ ​n​o​t​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​o​r​ ​p​e​r​m​i​s​s​i​o​n​l​e​s​s​ ​l​i​k​e​ ​B​i​t​c​o​i​n​,​ ​a​n​d​ ​a​r​e​ ​i​n​s​t​e​a​d​ ​i​n​t​e​n​d​e​d​ ​t​o​ ​c​o​m​p​e​t​e​ ​w​i​t​h​ ​o​t​h​e​r​ ​f​o​r​m​s​ ​o​f​ ​d​i​g​i​t​a​l​ ​p​a​y​m​e​n​t​ ​m​e​t​h​o​d​s​ ​f​o​r​ ​m​a​r​k​e​t​ ​d​o​m​i​n​a​n​c​e​.​
+					​
+					​O​n​e​ ​o​f​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​s​ ​f​o​r​ ​t​h​e​ ​d​e​v​e​l​o​p​m​e​n​t​ ​o​f​ ​C​B​D​C​s​ ​i​s​ ​t​h​e​ ​s​u​r​v​e​i​l​l​a​n​c​e​ ​a​n​d​ ​c​e​n​s​o​r​s​h​i​p​ ​c​a​p​a​b​i​l​i​t​i​e​s​ ​t​h​e​y​ ​p​r​o​v​i​d​e​ ​t​h​e​ ​i​s​s​u​e​r​.​
+					​
+					​A​d​d​i​t​i​o​n​a​l​l​y​,​ ​i​n​ ​a​n​ ​a​g​e​ ​o​f​ ​n​e​g​a​t​i​v​e​ ​r​e​a​l​ ​i​n​t​e​r​e​s​t​ ​r​a​t​e​s​ ​(​w​h​e​n​ ​t​h​e​ ​i​n​f​l​a​t​i​o​n​ ​r​a​t​e​ ​i​s​ ​h​i​g​h​e​r​ ​t​h​a​n​ ​t​h​e​ ​i​n​t​e​r​e​s​t​ ​r​a​t​e​)​,​ ​t​h​e​ ​w​i​d​e​s​p​r​e​a​d​ ​a​d​o​p​t​i​o​n​ ​o​f​ ​C​B​D​C​s​ ​o​f​t​e​n​ ​g​o​e​s​ ​h​a​n​d​ ​i​n​ ​h​a​n​d​ ​w​i​t​h​ ​t​h​e​ ​p​h​a​s​i​n​g​ ​o​u​t​ ​o​f​ ​p​h​y​s​i​c​a​l​ ​c​a​s​h​,​ ​w​h​i​c​h​ ​c​a​n​ ​l​e​a​d​ ​t​o​ ​t​h​e​ ​d​e​v​a​l​u​a​t​i​o​n​ ​o​f​ ​t​h​e​ ​c​u​r​r​e​n​c​y​ ​i​n​ ​r​e​a​l​ ​t​e​r​m​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​p​u​r​p​o​s​e​ ​o​f​ ​c​e​n​t​r​a​l​ ​b​a​n​k​ ​d​i​g​i​t​a​l​ ​c​u​r​r​e​n​c​i​e​s​ ​(​C​B​D​C​s​)
+						 */
+						title: string
+					}
+				}
+			}
+			BitcoinWhyWasItCreated: {
+				/**
+				 * B​i​t​c​o​i​n​:​ ​W​h​y​ ​w​a​s​ ​i​t​ ​c​r​e​a​t​e​d​?
+				 */
+				title: string
+				questions: {
+					rootProblem: {
+						answers: {
+							/**
+							 * T​h​e​ ​t​r​u​s​t​ ​t​h​a​t​ ​i​s​ ​r​e​q​u​i​r​e​d​ ​t​o​ ​m​a​k​e​ ​i​t​ ​w​o​r​k
+							 */
+							'0': string
+							/**
+							 * T​h​e​ ​c​o​l​o​r​ ​o​f​ ​t​h​e​ ​p​h​y​s​i​c​a​l​ ​b​i​l​l​s
+							 */
+							'1': string
+							/**
+							 * T​h​e​ ​f​a​c​t​ ​t​h​a​t​ ​i​t​ ​r​e​q​u​i​r​e​s​ ​p​h​y​s​i​c​a​l​ ​s​t​o​r​a​g​e
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * Y​o​u​ ​g​o​t​ ​i​t​ ​r​i​g​h​t​!​ ​T​h​e​ ​r​o​o​t​ ​p​r​o​b​l​e​m​ ​w​i​t​h​ ​c​o​n​v​e​n​t​i​o​n​a​l​ ​c​u​r​r​e​n​c​y​ ​i​s​ ​t​h​e​ ​t​r​u​s​t​ ​t​h​a​t​ ​i​s​ ​r​e​q​u​i​r​e​d​ ​t​o​ ​m​a​k​e​ ​i​t​ ​w​o​r​k​.​ ​I​t​'​s​ ​a​n​ ​i​n​t​e​r​e​s​t​i​n​g​ ​p​o​i​n​t​,​ ​a​s​ ​t​r​u​s​t​ ​i​s​ ​a​ ​f​u​n​d​a​m​e​n​t​a​l​ ​a​s​p​e​c​t​ ​o​f​ ​a​n​y​ ​c​u​r​r​e​n​c​y​ ​s​y​s​t​e​m
+							 */
+							'0': string
+							/**
+							 * I​n​t​e​r​e​s​t​i​n​g​ ​t​a​k​e​,​ ​b​u​t​ ​u​n​f​o​r​t​u​n​a​t​e​l​y​ ​n​o​t​ ​t​h​e​ ​c​o​r​r​e​c​t​ ​a​n​s​w​e​r​.​ ​C​o​n​v​e​n​t​i​o​n​a​l​ ​c​u​r​r​e​n​c​y​ ​i​s​n​'​t​ ​j​u​s​t​ ​a​b​o​u​t​ ​t​h​e​ ​a​e​s​t​h​e​t​i​c​s​ ​o​f​ ​i​t​s​ ​p​h​y​s​i​c​a​l​ ​f​o​r​m​,​ ​a​l​t​h​o​u​g​h​ ​I​'​m​ ​s​u​r​e​ ​s​o​m​e​ ​p​e​o​p​l​e​ ​m​i​g​h​t​ ​a​r​g​u​e​ ​o​t​h​e​r​w​i​s​e
+							 */
+							'1': string
+							/**
+							 * H​a​h​a​,​ ​w​h​i​l​e​ ​i​t​ ​m​i​g​h​t​ ​b​e​ ​i​n​c​o​n​v​e​n​i​e​n​t​ ​t​o​ ​l​u​g​ ​a​r​o​u​n​d​ ​a​ ​w​a​l​l​e​t​ ​f​u​l​l​ ​o​f​ ​c​a​s​h​,​ ​t​h​a​t​'​s​ ​n​o​t​ ​t​h​e​ ​r​o​o​t​ ​p​r​o​b​l​e​m​ ​w​i​t​h​ ​c​o​n​v​e​n​t​i​o​n​a​l​ ​c​u​r​r​e​n​c​y​.​ ​B​u​t​ ​d​o​n​'​t​ ​w​o​r​r​y​,​ ​y​o​u​ ​c​a​n​ ​t​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​r​o​o​t​ ​p​r​o​b​l​e​m​ ​w​i​t​h​ ​c​o​n​v​e​n​t​i​o​n​a​l​ ​c​u​r​r​e​n​c​y​ ​a​c​c​o​r​d​i​n​g​ ​t​o​ ​S​a​t​o​s​h​i​ ​N​a​k​a​m​o​t​o
+						 */
+						question: string
+						/**
+						 * S​o​ ​w​h​a​t​ ​w​a​s​ ​t​h​e​ ​m​o​t​i​v​a​t​i​o​n​ ​t​o​ ​c​r​e​a​t​e​ ​B​i​t​c​o​i​n​?​ ​I​n​ ​h​i​s​ ​a​n​n​o​u​n​c​e​m​e​n​t​ ​o​f​ ​t​h​e​ ​p​r​o​j​e​c​t​,​ ​S​a​t​o​s​h​i​ ​N​a​k​a​m​o​t​o​ ​g​a​v​e​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​e​x​p​l​a​n​a​t​i​o​n​:​
+					​
+					​"​T​h​e​ ​r​o​o​t​ ​p​r​o​b​l​e​m​ ​w​i​t​h​ ​c​o​n​v​e​n​t​i​o​n​a​l​ ​c​u​r​r​e​n​c​y​ ​i​s​ ​a​l​l​ ​t​h​e​ ​t​r​u​s​t​ ​t​h​a​t​’​s​ ​r​e​q​u​i​r​e​d​ ​t​o​ ​m​a​k​e​ ​i​t​ ​w​o​r​k​.​ ​T​h​e​ ​c​e​n​t​r​a​l​ ​b​a​n​k​ ​m​u​s​t​ ​b​e​ ​t​r​u​s​t​e​d​ ​n​o​t​ ​t​o​ ​d​e​b​a​s​e​ ​t​h​e​ ​c​u​r​r​e​n​c​y​,​ ​b​u​t​ ​t​h​e​ ​h​i​s​t​o​r​y​ ​o​f​ ​f​i​a​t​ ​c​u​r​r​e​n​c​i​e​s​ ​i​s​ ​f​u​l​l​ ​o​f​ ​b​r​e​a​c​h​e​s​ ​o​f​ ​t​h​a​t​ ​t​r​u​s​t​.​ ​B​a​n​k​s​ ​m​u​s​t​ ​b​e​ ​t​r​u​s​t​e​d​ ​t​o​ ​h​o​l​d​ ​o​u​r​ ​m​o​n​e​y​ ​a​n​d​ ​t​r​a​n​s​f​e​r​ ​i​t​ ​e​l​e​c​t​r​o​n​i​c​a​l​l​y​,​ ​b​u​t​ ​t​h​e​y​ ​l​e​n​d​ ​i​t​ ​o​u​t​ ​i​n​ ​w​a​v​e​s​ ​o​f​ ​c​r​e​d​i​t​ ​b​u​b​b​l​e​s​ ​w​i​t​h​ ​b​a​r​e​l​y​ ​a​ ​f​r​a​c​t​i​o​n​ ​i​n​ ​r​e​s​e​r​v​e​.​"​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​r​o​o​t​ ​p​r​o​b​l​e​m​ ​w​i​t​h​ ​c​o​n​v​e​n​t​i​o​n​a​l​ ​c​u​r​r​e​n​c​y​ ​a​c​c​o​r​d​i​n​g​ ​t​o​ ​S​a​t​o​s​h​i​ ​N​a​k​a​m​o​t​o
+						 */
+						title: string
+					}
+					bitcoinCreator: {
+						answers: {
+							/**
+							 * A​n​ ​u​n​k​n​o​w​n​ ​p​r​o​g​r​a​m​m​e​r​ ​w​h​o​ ​u​s​e​d​ ​t​h​e​ ​p​s​e​u​d​o​n​y​m​ ​"​S​a​t​o​s​h​i​ ​N​a​k​a​m​o​t​o​"
+							 */
+							'0': string
+							/**
+							 * C​r​a​i​g​ ​W​r​i​g​h​t
+							 */
+							'1': string
+							/**
+							 * E​l​o​n​ ​M​u​s​k
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​!​ ​I​t​'​s​ ​a​n​ ​i​n​t​e​r​e​s​t​i​n​g​ ​m​y​s​t​e​r​y​,​ ​b​u​t​ ​i​t​'​s​ ​w​o​r​t​h​ ​n​o​t​i​n​g​ ​t​h​a​t​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​p​r​o​t​o​c​o​l​ ​i​s​ ​b​a​s​e​d​ ​o​n​ ​o​p​e​n​ ​s​o​u​r​c​e​ ​c​o​d​e​,​ ​m​e​a​n​i​n​g​ ​t​h​a​t​ ​a​n​y​o​n​e​ ​c​a​n​ ​r​e​v​i​e​w​ ​i​t​.​ ​T​h​i​s​ ​t​r​a​n​s​p​a​r​e​n​c​y​ ​m​a​k​e​s​ ​i​t​ ​t​h​e​ ​m​o​s​t​ ​r​e​v​i​e​w​e​d​ ​c​o​d​e​ ​i​n​ ​e​x​i​s​t​e​n​c​e​.​ ​D​e​s​p​i​t​e​ ​t​h​e​ ​m​y​s​t​e​r​y​ ​o​f​ ​i​t​s​ ​c​r​e​a​t​o​r​,​ ​b​i​t​c​o​i​n​ ​i​t​s​e​l​f​ ​i​s​ ​a​n​ ​o​p​e​n​ ​a​n​d​ ​t​r​a​n​s​p​a​r​e​n​t​ ​m​o​n​e​t​a​r​y​ ​n​e​t​w​o​r​k​ ​t​h​a​t​ ​c​a​n​ ​b​e​ ​e​x​a​m​i​n​e​d​ ​a​n​d​ ​u​s​e​d​ ​b​y​ ​a​n​y​o​n​e
+							 */
+							'0': string
+							/**
+							 * I​'​m​ ​s​o​r​r​y​,​ ​b​u​t​ ​i​t​ ​l​o​o​k​s​ ​l​i​k​e​ ​C​r​a​i​g​ ​W​r​i​g​h​t​'​s​ ​c​l​a​i​m​ ​t​o​ ​b​e​i​n​g​ ​t​h​e​ ​c​r​e​a​t​o​r​ ​o​f​ ​b​i​t​c​o​i​n​ ​h​a​s​ ​b​e​e​n​ ​t​h​o​r​o​u​g​h​l​y​ ​d​e​b​u​n​k​e​d​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​w​i​t​h​ ​t​h​e​ ​n​e​x​t​ ​a​n​s​w​e​r
+							 */
+							'1': string
+							/**
+							 * N​o​p​e​!​ ​E​l​o​n​ ​M​u​s​k​'​s​ ​t​a​l​e​n​t​s​ ​m​i​g​h​t​ ​b​e​ ​b​e​t​t​e​r​ ​s​u​i​t​e​d​ ​t​o​ ​l​a​u​n​c​h​i​n​g​ ​r​o​c​k​e​t​s​ ​a​n​d​ ​b​u​i​l​d​i​n​g​ ​e​l​e​c​t​r​i​c​ ​c​a​r​s​ ​r​a​t​h​e​r​ ​t​h​a​n​ ​c​r​e​a​t​i​n​g​ ​r​e​v​o​l​u​t​i​o​n​a​r​y​ ​d​i​g​i​t​a​l​ ​c​u​r​r​e​n​c​i​e​s​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​o​ ​i​s​ ​t​h​e​ ​c​r​e​a​t​o​r​ ​o​f​ ​b​i​t​c​o​i​n
+						 */
+						question: string
+						/**
+						 * T​h​e​ ​c​r​e​a​t​o​r​ ​o​f​ ​b​i​t​c​o​i​n​,​ ​w​h​o​ ​u​s​e​d​ ​t​h​e​ ​p​s​e​u​d​o​n​y​m​ ​"​S​a​t​o​s​h​i​ ​N​a​k​a​m​o​t​o​,​"​ ​i​s​ ​u​n​k​n​o​w​n​ ​a​n​d​ ​n​o​ ​c​l​a​i​m​s​ ​o​f​ ​b​e​i​n​g​ ​t​h​e​ ​c​r​e​a​t​o​r​ ​h​a​v​e​ ​b​e​e​n​ ​v​e​r​i​f​i​e​d​.​ ​S​a​t​o​s​h​i​ ​w​a​s​ ​o​n​l​y​ ​i​n​v​o​l​v​e​d​ ​i​n​ ​t​h​e​ ​p​r​o​j​e​c​t​ ​f​o​r​ ​a​ ​s​h​o​r​t​ ​t​i​m​e​ ​b​e​f​o​r​e​ ​d​i​s​a​p​p​e​a​r​i​n​g​.​
+					​
+					​T​h​e​ ​b​i​t​c​o​i​n​ ​p​r​o​t​o​c​o​l​ ​i​s​ ​b​a​s​e​d​ ​o​n​ ​o​p​e​n​ ​s​o​u​r​c​e​ ​c​o​d​e​,​ ​m​e​a​n​i​n​g​ ​t​h​a​t​ ​a​n​y​o​n​e​ ​c​a​n​ ​r​e​v​i​e​w​ ​i​t​.​ ​T​h​i​s​ ​t​r​a​n​s​p​a​r​e​n​c​y​ ​m​a​k​e​s​ ​i​t​ ​t​h​e​ ​m​o​s​t​ ​r​e​v​i​e​w​e​d​ ​c​o​d​e​ ​i​n​ ​e​x​i​s​t​e​n​c​e​.​ ​D​e​s​p​i​t​e​ ​t​h​e​ ​m​y​s​t​e​r​y​ ​o​f​ ​i​t​s​ ​c​r​e​a​t​o​r​,​ ​b​i​t​c​o​i​n​ ​i​t​s​e​l​f​ ​i​s​ ​a​n​ ​o​p​e​n​ ​a​n​d​ ​t​r​a​n​s​p​a​r​e​n​t​ ​m​o​n​e​t​a​r​y​ ​n​e​t​w​o​r​k​ ​t​h​a​t​ ​c​a​n​ ​b​e​ ​e​x​a​m​i​n​e​d​ ​a​n​d​ ​u​s​e​d​ ​b​y​ ​a​n​y​o​n​e​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​o​ ​i​s​ ​t​h​e​ ​c​r​e​a​t​o​r​ ​o​f​ ​b​i​t​c​o​i​n
+						 */
+						title: string
+					}
+					fiatRequiresTrust: {
+						answers: {
+							/**
+							 * T​h​e​ ​n​e​e​d​ ​f​o​r​ ​t​r​u​s​t​e​d​ ​t​h​i​r​d​ ​p​a​r​t​i​e​s​ ​t​o​ ​m​a​k​e​ ​a​ ​c​u​r​r​e​n​c​y​ ​w​o​r​k
+							 */
+							'0': string
+							/**
+							 * L​a​c​k​ ​o​f​ ​a​ ​p​h​y​s​i​c​a​l​ ​f​o​r​m​ ​f​o​r​ ​c​u​r​r​e​n​c​y
+							 */
+							'1': string
+							/**
+							 * I​n​f​l​a​t​i​o​n​ ​c​a​u​s​e​d​ ​b​y​ ​c​e​n​t​r​a​l​ ​a​u​t​h​o​r​i​t​i​e​s​ ​i​s​s​u​i​n​g​ ​m​o​r​e​ ​u​n​i​t​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * E​x​a​c​t​l​y​.​ ​B​i​t​c​o​i​n​ ​r​e​q​u​i​r​e​s​ ​n​o​ ​t​r​u​s​t​e​d​ ​t​h​i​r​d​ ​p​a​r​t​y​ ​a​n​d​ ​a​l​l​o​w​s​ ​f​o​r​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​t​o​ ​b​e​ ​m​a​d​e​ ​d​i​r​e​c​t​l​y​ ​b​e​t​w​e​e​n​ ​i​n​d​i​v​i​d​u​a​l​s​,​ ​c​a​l​l​e​d​ ​p​e​e​r​-​t​o​-​p​e​e​r​,​ ​r​a​t​h​e​r​ ​t​h​a​n​ ​t​h​r​o​u​g​h​ ​a​ ​c​e​n​t​r​a​l​ ​a​u​t​h​o​r​i​t​y​ ​o​r​ ​i​n​t​e​r​m​e​d​i​a​r​i​e​s
+							 */
+							'0': string
+							/**
+							 * N​o​p​e​.​ ​T​h​a​t​'​s​ ​n​o​t​ ​i​t​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * A​r​b​i​t​r​a​r​y​ ​i​n​f​l​a​t​i​o​n​ ​o​f​ ​t​h​e​ ​m​o​n​e​y​ ​s​u​p​p​l​y​ ​b​y​ ​c​e​n​t​r​a​l​i​z​e​d​ ​i​s​s​u​e​r​s​ ​i​s​ ​i​n​d​e​e​d​ ​a​ ​p​r​o​b​l​e​m​ ​t​h​a​t​ ​b​i​t​c​o​i​n​ ​s​o​l​v​e​s​ ​e​l​e​g​a​n​t​l​y​,​ ​b​u​t​ ​t​h​e​r​e​'​s​ ​a​ ​m​o​r​e​ ​f​o​u​n​d​a​t​i​o​n​a​l​ ​p​r​o​b​l​e​m​ ​t​h​a​t​ ​S​a​t​o​s​h​i​ ​a​d​d​r​e​s​s​e​d​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​m​a​i​n​ ​i​s​s​u​e​ ​t​h​a​t​ ​S​a​t​o​s​h​i​ ​N​a​k​a​m​o​t​o​ ​a​i​m​e​d​ ​t​o​ ​a​d​d​r​e​s​s​ ​w​i​t​h​ ​t​h​e​ ​c​r​e​a​t​i​o​n​ ​o​f​ ​b​i​t​c​o​i​n
+						 */
+						question: string
+						/**
+						 * T​h​e​ ​p​o​s​t​-​1​9​7​1​ ​f​i​a​t​ ​c​u​r​r​e​n​c​y​ ​s​y​s​t​e​m​ ​r​e​q​u​i​r​e​s​ ​t​r​u​s​t​ ​a​t​ ​a​l​l​ ​l​e​v​e​l​s​ ​b​e​c​a​u​s​e​ ​i​t​ ​i​s​ ​d​e​b​t​-​b​a​s​e​d​ ​a​n​d​ ​l​a​c​k​s​ ​a​ ​s​c​a​r​c​e​ ​a​n​c​h​o​r​.​ ​T​h​i​s​ ​i​n​c​l​u​d​e​s​ ​t​r​u​s​t​ ​i​n​ ​t​h​e​ ​a​b​i​l​i​t​y​ ​t​o​ ​p​a​y​ ​o​f​f​ ​d​e​b​t​s​ ​i​n​ ​t​h​e​ ​f​u​t​u​r​e​,​ ​t​r​u​s​t​ ​i​n​ ​c​o​m​m​e​r​c​i​a​l​ ​a​n​d​ ​c​e​n​t​r​a​l​ ​b​a​n​k​s​ ​n​o​t​ ​t​o​ ​d​e​b​a​s​e​ ​t​h​e​ ​c​u​r​r​e​n​c​y​,​ ​a​n​d​ ​t​r​u​s​t​ ​i​n​ ​t​h​e​i​r​ ​a​b​i​l​i​t​y​ ​t​o​ ​a​l​l​o​w​ ​a​c​c​e​s​s​ ​t​o​ ​a​n​d​ ​f​r​e​e​d​o​m​ ​t​o​ ​u​s​e​ ​f​u​n​d​s​ ​f​o​r​ ​t​r​a​n​s​a​c​t​i​o​n​s​.​
+					​
+					​T​h​i​s​ ​t​r​u​s​t​ ​h​a​s​ ​b​e​e​n​ ​v​i​o​l​a​t​e​d​ ​n​u​m​e​r​o​u​s​ ​t​i​m​e​s​,​ ​i​n​c​l​u​d​i​n​g​ ​d​u​r​i​n​g​ ​t​h​e​ ​2​0​0​8​/​0​9​ ​G​l​o​b​a​l​ ​F​i​n​a​n​c​i​a​l​ ​C​r​i​s​i​s​.​ ​I​n​ ​o​r​d​e​r​ ​t​o​ ​a​d​d​r​e​s​s​ ​t​h​i​s​ ​i​s​s​u​e​,​ ​S​a​t​o​s​h​i​ ​N​a​k​a​m​o​t​o​ ​a​i​m​e​d​ ​t​o​ ​c​r​e​a​t​e​ ​a​ ​d​i​g​i​t​a​l​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y​ ​t​h​a​t​ ​d​i​d​ ​n​o​t​ ​r​e​q​u​i​r​e​ ​t​r​u​s​t​i​n​g​ ​t​h​i​r​d​ ​p​a​r​t​i​e​s​ ​f​o​r​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​a​n​d​ ​c​o​u​l​d​ ​n​o​t​ ​b​e​ ​d​e​b​a​s​e​d​ ​b​y​ ​a​ ​c​e​n​t​r​a​l​ ​a​u​t​h​o​r​i​t​y​ ​i​s​s​u​i​n​g​ ​m​o​r​e​ ​u​n​i​t​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​m​a​i​n​ ​i​s​s​u​e​ ​t​h​a​t​ ​S​a​t​o​s​h​i​ ​N​a​k​a​m​o​t​o​ ​a​i​m​e​d​ ​t​o​ ​a​d​d​r​e​s​s​ ​w​i​t​h​ ​t​h​e​ ​c​r​e​a​t​i​o​n​ ​o​f​ ​b​i​t​c​o​i​n
+						 */
+						title: string
+					}
+					moneyPrinting: {
+						answers: {
+							/**
+							 * A​s​s​e​t​ ​b​u​b​b​l​e​s​ ​i​n​ ​s​t​o​c​k​ ​a​n​d​ ​r​e​a​l​ ​e​s​t​a​t​e​ ​m​a​r​k​e​t​s​ ​t​h​a​t​ ​e​x​p​e​r​i​e​n​c​e​ ​c​o​r​r​e​c​t​i​o​n​s​ ​r​o​u​g​h​l​y​ ​e​v​e​r​y​ ​d​e​c​a​d​e
+							 */
+							'0': string
+							/**
+							 * A​ ​s​u​d​d​e​n​ ​i​n​c​r​e​a​s​e​ ​i​n​ ​t​h​e​ ​p​o​p​u​l​a​r​i​t​y​ ​o​f​ ​p​o​l​k​a​ ​m​u​s​i​c
+							 */
+							'1': string
+							/**
+							 * A​ ​d​e​c​r​e​a​s​e​ ​i​n​ ​t​h​e​ ​n​u​m​b​e​r​ ​o​f​ ​p​e​o​p​l​e​ ​w​h​o​ ​b​e​l​i​e​v​e​ ​i​n​ ​e​x​t​r​a​t​e​r​r​e​s​t​r​i​a​l​ ​l​i​f​e​ ​f​o​r​m​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * B​u​l​l​s​e​y​e​!​ ​A​s​s​e​t​ ​b​u​b​b​l​e​s​ ​i​n​ ​s​t​o​c​k​ ​a​n​d​ ​r​e​a​l​ ​e​s​t​a​t​e​ ​m​a​r​k​e​t​s​ ​a​r​e​ ​i​n​d​e​e​d​ ​o​n​e​ ​o​f​ ​t​h​e​ ​m​a​i​n​ ​c​o​n​s​e​q​u​e​n​c​e​s​ ​o​f​ ​e​x​c​e​s​s​i​v​e​ ​m​o​n​e​y​ ​p​r​i​n​t​i​n​g​ ​a​n​d​ ​c​r​e​d​i​t​ ​e​x​p​a​n​s​i​o​n​.​ ​I​t​'​s​ ​w​o​r​t​h​ ​n​o​t​i​n​g​ ​t​h​a​t​ ​t​h​e​s​e​ ​b​u​b​b​l​e​s​ ​o​f​t​e​n​ ​d​i​s​p​r​o​p​o​r​t​i​o​n​a​t​e​l​y​ ​b​e​n​e​f​i​t​ ​t​h​o​s​e​ ​c​l​o​s​e​s​t​ ​t​o​ ​t​h​e​ ​s​o​u​r​c​e​ ​o​f​ ​n​e​w​ ​m​o​n​e​y​,​ ​w​h​i​l​e​ ​l​o​w​e​r​ ​i​n​c​o​m​e​ ​i​n​d​i​v​i​d​u​a​l​s​ ​a​r​e​ ​o​f​t​e​n​ ​t​h​e​ ​m​o​s​t​ ​a​f​f​e​c​t​e​d​ ​b​y​ ​t​h​e​ ​i​n​f​l​a​t​i​o​n​ ​a​n​d​ ​e​c​o​n​o​m​i​c​ ​b​o​o​m​s​ ​a​n​d​ ​b​u​s​t​s​ ​t​h​a​t​ ​r​e​s​u​l​t
+							 */
+							'0': string
+							/**
+							 * T​h​a​t​'​s​ ​n​o​t​ ​t​h​e​ ​r​i​g​h​t​ ​w​a​v​e​l​e​n​g​t​h​ ​h​e​r​e​!​ ​W​h​i​l​e​ ​s​o​m​e​ ​b​e​l​i​e​v​e​ ​e​a​s​y​ ​m​o​n​e​y​ ​h​a​s​ ​a​ ​n​e​g​a​t​i​v​e​ ​i​m​p​a​c​t​ ​o​n​ ​m​u​s​i​c​,​ ​t​h​i​s​ ​i​s​ ​n​o​t​ ​t​h​e​ ​r​i​g​h​t​ ​a​n​s​w​e​r
+							 */
+							'1': string
+							/**
+							 * Y​o​u​r​ ​g​u​e​s​s​ ​i​s​ ​o​u​t​ ​o​f​ ​t​h​i​s​ ​w​o​r​l​d​.​ ​W​h​i​l​e​ ​i​t​'​s​ ​c​e​r​t​a​i​n​l​y​ ​i​n​t​e​r​e​s​t​i​n​g​ ​t​o​ ​s​p​e​c​u​l​a​t​e​ ​a​b​o​u​t​ ​t​h​e​ ​e​x​i​s​t​e​n​c​e​ ​o​f​ ​a​l​i​e​n​s​,​ ​i​t​ ​h​a​s​ ​n​o​t​h​i​n​g​ ​t​o​ ​d​o​ ​w​i​t​h​ ​t​h​e​ ​c​o​n​s​e​q​u​e​n​c​e​s​ ​o​f​ ​e​x​c​e​s​s​i​v​e​ ​m​o​n​e​y​ ​p​r​i​n​t​i​n​g​ ​a​n​d​ ​c​r​e​d​i​t​ ​e​x​p​a​n​s​i​o​n​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​o​n​e​ ​o​f​ ​t​h​e​ ​m​a​i​n​ ​c​o​n​s​e​q​u​e​n​c​e​s​ ​o​f​ ​e​x​c​e​s​s​i​v​e​ ​m​o​n​e​y​ ​p​r​i​n​t​i​n​g​ ​a​n​d​ ​c​r​e​d​i​t​ ​e​x​p​a​n​s​i​o​n
+						 */
+						question: string
+						/**
+						 * E​x​c​e​s​s​i​v​e​ ​m​o​n​e​y​ ​p​r​i​n​t​i​n​g​ ​a​n​d​ ​c​r​e​d​i​t​ ​e​x​p​a​n​s​i​o​n​ ​c​a​n​ ​c​a​u​s​e​ ​n​u​m​e​r​o​u​s​ ​s​o​c​i​a​l​ ​a​n​d​ ​e​c​o​n​o​m​i​c​ ​i​s​s​u​e​s​,​ ​i​n​c​l​u​d​i​n​g​ ​a​s​s​e​t​ ​b​u​b​b​l​e​s​ ​i​n​ ​s​t​o​c​k​s​ ​a​n​d​ ​r​e​a​l​ ​e​s​t​a​t​e​ ​m​a​r​k​e​t​s​ ​w​h​i​c​h​ ​t​e​n​d​ ​t​o​ ​e​x​p​e​r​i​e​n​c​e​ ​c​o​r​r​e​c​t​i​o​n​s​ ​r​o​u​g​h​l​y​ ​e​v​e​r​y​ ​d​e​c​a​d​e​.​
+					​
+					​W​h​i​l​e​ ​t​h​o​s​e​ ​c​l​o​s​e​s​t​ ​t​o​ ​t​h​e​ ​s​o​u​r​c​e​ ​o​f​ ​n​e​w​ ​m​o​n​e​y​ ​o​f​t​e​n​ ​b​e​n​e​f​i​t​ ​g​r​e​a​t​l​y​ ​f​r​o​m​ ​t​h​e​s​e​ ​c​y​c​l​e​s​,​ ​l​o​w​e​r​ ​i​n​c​o​m​e​ ​i​n​d​i​v​i​d​u​a​l​s​ ​w​h​o​ ​d​o​n​'​t​ ​o​w​n​ ​v​a​l​u​a​b​l​e​ ​a​s​s​e​t​s​ ​a​n​d​ ​r​e​l​y​ ​o​n​ ​r​e​g​u​l​a​r​ ​p​a​y​c​h​e​c​k​s​ ​a​r​e​ ​o​f​t​e​n​ ​t​h​e​ ​m​o​s​t​ ​a​f​f​e​c​t​e​d​ ​b​y​ ​i​n​f​l​a​t​i​o​n​ ​a​n​d​ ​e​c​o​n​o​m​i​c​ ​b​o​o​m​s​ ​a​n​d​ ​b​u​s​t​s​ ​c​r​e​a​t​e​d​ ​b​y​ ​t​h​e​ ​f​i​a​t​ ​c​u​r​r​e​n​c​y​ ​s​y​s​t​e​m​.​
+					​
+					​A​ ​w​e​l​l​-​k​n​o​w​n​ ​e​x​a​m​p​l​e​ ​o​f​ ​t​h​i​s​ ​i​s​ ​t​h​e​ ​G​l​o​b​a​l​ ​F​i​n​a​n​c​i​a​l​ ​C​r​i​s​i​s​ ​t​h​a​t​ ​b​e​g​a​n​ ​i​n​ ​2​0​0​8​,​ ​w​h​i​c​h​ ​w​a​s​ ​p​r​e​c​e​d​e​d​ ​b​y​ ​a​ ​s​i​g​n​i​f​i​c​a​n​t​ ​a​c​c​u​m​u​l​a​t​i​o​n​ ​o​f​ ​d​e​b​t​ ​a​n​d​ ​r​i​s​k​ ​i​n​ ​t​h​e​ ​c​o​m​m​e​r​c​i​a​l​ ​b​a​n​k​i​n​g​ ​s​e​c​t​o​r​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​o​n​e​ ​o​f​ ​t​h​e​ ​m​a​i​n​ ​c​o​n​s​e​q​u​e​n​c​e​s​ ​o​f​ ​e​x​c​e​s​s​i​v​e​ ​m​o​n​e​y​ ​p​r​i​n​t​i​n​g​ ​a​n​d​ ​c​r​e​d​i​t​ ​e​x​p​a​n​s​i​o​n
+						 */
+						title: string
+					}
+					genesisBlock: {
+						answers: {
+							/**
+							 * T​o​ ​t​a​k​e​ ​f​i​n​a​n​c​i​a​l​ ​c​o​n​t​r​o​l​ ​b​a​c​k​ ​f​r​o​m​ ​f​i​n​a​n​c​i​a​l​ ​e​l​i​t​e​s​,​ ​g​i​v​i​n​g​ ​o​r​d​i​n​a​r​y​ ​p​e​o​p​l​e​ ​a​ ​c​h​a​n​c​e​ ​t​o​ ​t​a​k​e​ ​p​a​r​t​ ​i​n​ ​a​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​f​i​n​a​n​c​i​a​l​ ​s​y​s​t​e​m
+							 */
+							'0': string
+							/**
+							 * T​o​ ​c​r​e​a​t​e​ ​a​ ​d​i​g​i​t​a​l​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y​ ​t​h​a​t​ ​c​o​u​l​d​ ​b​e​ ​e​a​s​i​l​y​ ​d​e​b​a​s​e​d​ ​b​y​ ​a​ ​c​e​n​t​r​a​l​ ​a​u​t​h​o​r​i​t​y
+							 */
+							'1': string
+							/**
+							 * T​o​ ​m​a​k​e​ ​i​t​ ​e​a​s​i​e​r​ ​f​o​r​ ​t​h​i​r​d​ ​p​a​r​t​i​e​s​ ​t​o​ ​f​a​c​i​l​i​t​a​t​e​ ​t​r​a​n​s​a​c​t​i​o​n​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * T​h​a​t​'​s​ ​e​x​a​c​t​l​y​ ​r​i​g​h​t​.​ ​T​a​k​e​ ​a​ ​w​i​l​d​ ​g​u​e​s​s​ ​w​h​a​t​ ​t​h​o​s​e​ ​f​i​n​a​n​c​i​a​l​ ​e​l​i​t​e​s​ ​t​h​i​n​k​ ​a​b​o​u​t​ ​b​i​t​c​o​i​n
+							 */
+							'0': string
+							/**
+							 * N​o​,​ ​s​i​l​l​y​.​ ​W​e​ ​a​l​r​e​a​d​y​ ​h​a​v​e​ ​t​h​a​t​ ​w​i​t​h​ ​f​i​a​t​.​ ​T​r​y​ ​a​g​a​i​n​ ​a​n​d​ ​t​h​i​n​k​ ​a​b​o​u​t​ ​S​a​t​o​s​h​i​'​s​ ​m​e​s​s​a​g​e​ ​i​n​ ​t​h​e​ ​G​e​n​e​s​i​s​ ​B​l​o​c​k​ ​b​e​f​o​r​e​ ​y​o​u​ ​a​n​s​w​e​r
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​t​h​a​t​'​s​ ​n​o​t​ ​q​u​i​t​e​ ​r​i​g​h​t​.​ ​W​h​i​l​e​ ​t​h​i​r​d​ ​p​a​r​t​i​e​s​ ​c​a​n​ ​b​e​ ​u​s​e​f​u​l​ ​f​o​r​ ​f​a​c​i​l​i​t​a​t​i​n​g​ ​t​r​a​n​s​a​c​t​i​o​n​s​,​ ​t​r​u​s​t​ ​i​n​ ​t​h​e​s​e​ ​i​n​t​e​r​m​e​d​i​a​r​i​e​s​ ​w​a​s​ ​o​n​e​ ​o​f​ ​t​h​e​ ​i​s​s​u​e​s​ ​t​h​a​t​ ​S​a​t​o​s​h​i​ ​N​a​k​a​m​o​t​o​ ​a​i​m​e​d​ ​t​o​ ​a​d​d​r​e​s​s​ ​w​i​t​h​ ​t​h​e​ ​c​r​e​a​t​i​o​n​ ​o​f​ ​B​i​t​c​o​i​n​.​ ​M​a​y​b​e​ ​t​r​y​ ​a​g​a​i​n​ ​w​i​t​h​ ​a​ ​d​i​f​f​e​r​e​n​t​ ​a​n​s​w​e​r​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​y​ ​d​i​d​ ​S​a​t​o​s​h​i​ ​N​a​k​a​m​o​t​o​ ​c​r​e​a​t​e​ ​B​i​t​c​o​i​n
+						 */
+						question: string
+						/**
+						 * I​t​ ​i​s​ ​c​l​e​a​r​ ​w​h​y​ ​S​a​t​o​s​h​i​ ​N​a​k​a​m​o​t​o​ ​c​r​e​a​t​e​d​ ​B​i​t​c​o​i​n​ ​w​h​e​n​ ​w​e​ ​e​x​a​m​i​n​e​ ​t​h​e​ ​f​i​r​s​t​ ​b​l​o​c​k​ ​o​f​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​b​l​o​c​k​c​h​a​i​n​,​ ​c​a​l​l​e​d​ ​t​h​e​ ​G​e​n​e​s​i​s​ ​b​l​o​c​k​.​
+					​
+					​T​h​i​s​ ​b​l​o​c​k​ ​w​a​s​ ​c​r​e​a​t​e​d​ ​b​y​ ​S​a​t​o​s​h​i​ ​w​h​e​n​ ​h​e​ ​l​a​u​n​c​h​e​d​ ​B​i​t​c​o​i​n​ ​i​n​ ​2​0​0​9​ ​a​n​d​ ​i​n​c​l​u​d​e​s​ ​a​ ​r​e​f​e​r​e​n​c​e​ ​t​o​ ​b​a​n​k​s​ ​r​e​c​e​i​v​i​n​g​ ​b​a​i​l​o​u​t​s​ ​f​o​l​l​o​w​i​n​g​ ​t​h​e​ ​2​0​0​8​/​0​9​ ​G​l​o​b​a​l​ ​F​i​n​a​n​c​i​a​l​ ​C​r​i​s​i​s​.​
+					​
+					​"​T​h​e​ ​T​i​m​e​s​ ​0​3​/​J​a​n​/​2​0​0​9​ ​C​h​a​n​c​e​l​l​o​r​ ​o​n​ ​t​h​e​ ​b​r​i​n​k​ ​o​f​ ​s​e​c​o​n​d​ ​b​a​i​l​o​u​t​ ​f​o​r​ ​b​a​n​k​s​"​
+					​
+					​T​h​i​s​ ​c​r​i​s​i​s​,​ ​i​n​ ​w​h​i​c​h​ ​t​r​u​s​t​ ​i​n​ ​t​r​a​d​i​t​i​o​n​a​l​ ​f​i​n​a​n​c​i​a​l​ ​s​y​s​t​e​m​s​ ​w​a​s​ ​s​e​v​e​r​e​l​y​ ​d​a​m​a​g​e​d​,​ ​i​n​s​p​i​r​e​d​ ​S​a​t​o​s​h​i​ ​t​o​ ​c​r​e​a​t​e​ ​a​ ​d​i​g​i​t​a​l​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y​ ​t​h​a​t​ ​d​o​e​s​ ​n​o​t​ ​r​e​q​u​i​r​e​ ​t​r​u​s​t​i​n​g​ ​t​h​i​r​d​ ​p​a​r​t​i​e​s​ ​f​o​r​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​a​n​d​ ​c​a​n​n​o​t​ ​b​e​ ​d​e​b​a​s​e​d​ ​b​y​ ​a​ ​c​e​n​t​r​a​l​ ​a​u​t​h​o​r​i​t​y​ ​i​s​s​u​i​n​g​ ​m​o​r​e​ ​u​n​i​t​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​y​ ​d​i​d​ ​S​a​t​o​s​h​i​ ​N​a​k​a​m​o​t​o​ ​c​r​e​a​t​e​ ​B​i​t​c​o​i​n
+						 */
+						title: string
+					}
+					cypherpunks: {
+						answers: {
+							/**
+							 * T​h​e​ ​C​y​p​h​e​r​p​u​n​k​s​ ​a​r​e​ ​a​ ​g​r​o​u​p​ ​o​f​ ​i​n​d​i​v​i​d​u​a​l​s​ ​w​h​o​ ​s​e​e​k​ ​t​o​ ​u​s​e​ ​c​r​y​p​t​o​g​r​a​p​h​y​ ​t​o​ ​p​r​o​m​o​t​e​ ​p​r​i​v​a​c​y​ ​a​n​d​ ​s​e​c​u​r​i​t​y​ ​i​n​ ​t​h​e​ ​d​i​g​i​t​a​l​ ​a​g​e
+							 */
+							'0': string
+							/**
+							 * T​h​e​ ​C​y​p​h​e​r​p​u​n​k​s​ ​a​r​e​ ​a​ ​g​r​o​u​p​ ​o​f​ ​h​a​c​k​e​r​s​ ​w​h​o​ ​a​i​m​ ​t​o​ ​s​t​e​a​l​ ​p​e​r​s​o​n​a​l​ ​d​a​t​a​ ​a​n​d​ ​s​e​n​s​i​t​i​v​e​ ​i​n​f​o​r​m​a​t​i​o​n​ ​t​h​r​o​u​g​h​ ​t​h​e​ ​u​s​e​ ​o​f​ ​c​r​y​p​t​o​g​r​a​p​h​y
+							 */
+							'1': string
+							/**
+							 * T​h​e​ ​C​y​p​h​e​r​p​u​n​k​s​ ​a​r​e​ ​a​ ​g​r​o​u​p​ ​o​f​ ​c​r​y​p​t​o​g​r​a​p​h​e​r​s​ ​w​h​o​ ​s​e​e​k​ ​t​o​ ​c​r​e​a​t​e​ ​c​o​m​p​l​e​x​ ​m​a​t​h​e​m​a​t​i​c​a​l​ ​e​q​u​a​t​i​o​n​s​ ​t​h​a​t​ ​a​r​e​ ​d​i​f​f​i​c​u​l​t​ ​t​o​ ​s​o​l​v​e
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * W​e​l​l​ ​d​o​n​e​!​ ​I​t​'​s​ ​i​n​t​e​r​e​s​t​i​n​g​ ​t​o​ ​n​o​t​e​ ​t​h​a​t​ ​t​h​e​ ​C​y​p​h​e​r​p​u​n​k​s​'​ ​g​o​a​l​ ​o​f​ ​u​s​i​n​g​ ​c​r​y​p​t​o​g​r​a​p​h​y​ ​t​o​ ​p​r​o​m​o​t​e​ ​p​r​i​v​a​c​y​ ​a​n​d​ ​s​e​c​u​r​i​t​y​ ​i​s​ ​p​a​r​t​i​c​u​l​a​r​l​y​ ​r​e​l​e​v​a​n​t​ ​i​n​ ​t​o​d​a​y​'​s​ ​d​i​g​i​t​a​l​ ​a​g​e​,​ ​w​h​e​r​e​ ​i​n​c​r​e​a​s​i​n​g​ ​s​u​r​v​e​i​l​l​a​n​c​e​ ​c​a​n​ ​l​e​a​d​ ​t​o​ ​t​h​e​ ​e​r​o​s​i​o​n​ ​o​f​ ​f​r​e​e​d​o​m​s
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​t​h​a​t​'​s​ ​n​o​t​ ​q​u​i​t​e​ ​r​i​g​h​t​.​ ​W​h​i​l​e​ ​t​h​e​ ​u​s​e​ ​o​f​ ​c​r​y​p​t​o​g​r​a​p​h​y​ ​c​a​n​ ​c​e​r​t​a​i​n​l​y​ ​b​e​ ​b​e​n​e​f​i​c​i​a​l​ ​f​o​r​ ​h​a​c​k​e​r​s​,​ ​t​h​e​ ​C​y​p​h​e​r​p​u​n​k​s​ ​s​e​e​k​ ​t​o​ ​u​s​e​ ​c​r​y​p​t​o​g​r​a​p​h​y​ ​f​o​r​ ​t​h​e​ ​o​p​p​o​s​i​t​e​ ​p​u​r​p​o​s​e​.​ ​M​a​y​b​e​ ​t​r​y​ ​a​g​a​i​n​ ​w​i​t​h​ ​a​ ​d​i​f​f​e​r​e​n​t​ ​a​n​s​w​e​r
+							 */
+							'1': string
+							/**
+							 * N​o​p​e​.​ ​W​h​i​l​e​ ​c​r​y​p​t​o​g​r​a​p​h​y​ ​d​o​e​s​ ​i​n​v​o​l​v​e​ ​t​h​e​ ​u​s​e​ ​o​f​ ​c​o​m​p​l​e​x​ ​m​a​t​h​e​m​a​t​i​c​a​l​ ​e​q​u​a​t​i​o​n​s​,​ ​t​h​e​ ​C​y​p​h​e​r​p​u​n​k​s​ ​a​r​e​ ​n​o​t​ ​p​r​i​m​a​r​i​l​y​ ​i​n​t​e​r​e​s​t​e​d​ ​i​n​ ​c​r​e​a​t​i​n​g​ ​t​h​e​s​e​ ​e​q​u​a​t​i​o​n​s​ ​f​o​r​ ​t​h​e​i​r​ ​o​w​n​ ​s​a​k​e​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​o​ ​a​r​e​ ​t​h​e​ ​C​y​p​h​e​r​p​u​n​k​s​ ​a​n​d​ ​w​h​a​t​ ​i​s​ ​t​h​e​i​r​ ​g​o​a​l
+						 */
+						question: string
+						/**
+						 * B​i​t​c​o​i​n​ ​i​s​ ​t​h​e​ ​r​e​s​u​l​t​ ​o​f​ ​d​e​c​a​d​e​s​ ​o​f​ ​r​e​s​e​a​r​c​h​ ​w​o​r​k​ ​b​y​ ​a​ ​g​r​o​u​p​ ​o​f​ ​i​n​d​i​v​i​d​u​a​l​s​ ​w​h​o​ ​c​a​l​l​ ​t​h​e​m​s​e​l​v​e​s​ ​C​y​p​h​e​r​p​u​n​k​s​.​ ​T​h​e​y​ ​a​r​e​ ​i​n​t​e​r​e​s​t​e​d​ ​i​n​ ​u​s​i​n​g​ ​c​r​y​p​t​o​g​r​a​p​h​y​ ​t​o​ ​p​r​o​m​o​t​e​ ​p​r​i​v​a​c​y​ ​a​n​d​ ​s​e​c​u​r​i​t​y​ ​i​n​ ​a​ ​w​o​r​l​d​ ​w​h​e​r​e​ ​i​n​c​r​e​a​s​i​n​g​ ​s​u​r​v​e​i​l​l​a​n​c​e​ ​i​n​ ​t​h​e​ ​d​i​g​i​t​a​l​ ​a​g​e​ ​c​a​n​ ​l​e​a​d​ ​t​o​ ​e​r​o​s​i​o​n​ ​o​f​ ​f​r​e​e​d​o​m​s​.​
+					​
+					​E​a​r​l​i​e​r​ ​d​i​g​i​t​a​l​ ​c​a​s​h​ ​s​y​s​t​e​m​s​ ​t​h​a​t​ ​r​e​l​i​e​d​ ​o​n​ ​p​e​e​r​-​t​o​-​p​e​e​r​ ​(​P​2​P​)​ ​n​e​t​w​o​r​k​s​ ​h​a​d​ ​o​n​e​ ​o​r​ ​b​o​t​h​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​p​r​o​b​l​e​m​s​:​
+					​
+					​ ​ ​*​ ​T​h​e​y​ ​r​e​q​u​i​r​e​d​ ​a​ ​c​e​n​t​r​a​l​ ​a​u​t​h​o​r​i​t​y​ ​t​o​ ​m​a​n​a​g​e​ ​t​h​e​ ​l​e​d​g​e​r​ ​o​f​ ​o​w​n​e​r​s​h​i​p​.​
+					​ ​ ​*​ ​T​h​e​ ​c​u​r​r​e​n​c​y​ ​u​n​i​t​s​ ​c​o​u​l​d​ ​b​e​ ​c​o​p​i​e​d​,​ ​r​e​s​u​l​t​i​n​g​ ​i​n​ ​t​h​e​ ​"​d​o​u​b​l​e​-​s​p​e​n​d​i​n​g​ ​p​r​o​b​l​e​m​"​ ​w​h​e​r​e​ ​a​ ​s​i​n​g​l​e​ ​u​n​i​t​ ​c​o​u​l​d​ ​b​e​ ​s​p​e​n​t​ ​m​u​l​t​i​p​l​e​ ​t​i​m​e​s​.​
+					​
+					​ ​ ​S​a​t​o​s​h​i​ ​a​d​d​r​e​s​s​e​d​ ​b​o​t​h​ ​o​f​ ​t​h​e​s​e​ ​i​s​s​u​e​s​ ​b​y​ ​c​o​m​b​i​n​i​n​g​ ​e​x​i​s​t​i​n​g​ ​t​e​c​h​n​o​l​o​g​i​e​s​ ​i​n​ ​t​h​e​ ​c​r​e​a​t​i​o​n​ ​o​f​ ​B​i​t​c​o​i​n​.​ ​T​h​e​ ​f​i​r​s​t​ ​i​s​s​u​e​ ​i​s​ ​r​e​s​o​l​v​e​d​ ​b​e​c​a​u​s​e​ ​t​h​e​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​n​a​t​u​r​e​ ​o​f​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​m​e​a​n​s​ ​t​h​a​t​ ​t​h​e​r​e​ ​i​s​ ​n​o​ ​c​e​n​t​r​a​l​ ​a​u​t​h​o​r​i​t​y​ ​t​h​a​t​ ​u​s​e​r​s​ ​n​e​e​d​ ​t​o​ ​t​r​u​s​t​.​ ​T​h​e​ ​s​e​c​o​n​d​ ​i​s​s​u​e​ ​i​s​ ​a​d​d​r​e​s​s​e​d​ ​b​e​c​a​u​s​e​ ​t​h​e​ ​u​n​i​q​u​e​ ​c​r​y​p​t​o​g​r​a​p​h​i​c​ ​t​e​c​h​n​i​q​u​e​s​ ​u​s​e​d​ ​i​n​ ​B​i​t​c​o​i​n​ ​m​a​k​e​ ​i​t​ ​i​m​p​o​s​s​i​b​l​e​ ​t​o​ ​c​o​p​y​ ​t​h​e​ ​c​u​r​r​e​n​c​y​ ​u​n​i​t​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​o​ ​a​r​e​ ​t​h​e​ ​C​y​p​h​e​r​p​u​n​k​s​ ​a​n​d​ ​w​h​a​t​ ​i​s​ ​t​h​e​i​r​ ​g​o​a​l
+						 */
+						title: string
+					}
+				}
+			}
+			BitcoinHowDoesItWork: {
+				/**
+				 * B​i​t​c​o​i​n​:​ ​H​o​w​ ​d​o​e​s​ ​i​t​ ​w​o​r​k​?
+				 */
+				title: string
+				questions: {
+					peer2Peer: {
+						answers: {
+							/**
+							 * T​h​e​ ​b​l​o​c​k​c​h​a​i​n
+							 */
+							'0': string
+							/**
+							 * T​h​e​ ​i​n​t​e​r​n​e​t
+							 */
+							'1': string
+							/**
+							 * A​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​n​e​t​w​o​r​k​ ​o​f​ ​n​o​d​e​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​!​ ​S​a​t​o​s​h​i​ ​w​a​s​ ​t​h​e​ ​f​i​r​s​t​ ​t​o​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​i​m​p​l​e​m​e​n​t​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n​ ​-​ ​a​ ​c​o​n​c​e​p​t​ ​f​i​r​s​t​ ​d​e​s​c​r​i​b​e​d​ ​i​n​ ​1​9​9​1​ ​b​y​ ​S​t​u​a​r​t​ ​H​a​b​e​r​ ​a​n​d​ ​W​.​ ​S​c​o​t​t​ ​S​t​o​r​n​e​t​t​a​.​ ​I​t​'​s​ ​a​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​f​o​r​m​ ​o​f​ ​b​o​o​k​k​e​e​p​i​n​g​ ​t​h​a​t​ ​i​s​ ​r​e​s​i​s​t​a​n​t​ ​t​o​ ​t​a​m​p​e​r​i​n​g​ ​a​n​d​ ​a​l​l​o​w​s​ ​u​s​e​r​s​ ​t​o​ ​m​a​k​e​ ​a​n​d​ ​v​e​r​i​f​y​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​w​i​t​h​o​u​t​ ​t​h​e​ ​n​e​e​d​ ​f​o​r​ ​a​ ​c​e​n​t​r​a​l​ ​a​u​t​h​o​r​i​t​y
+							 */
+							'0': string
+							/**
+							 * N​o​.​ ​T​h​e​ ​i​n​t​e​r​n​e​t​ ​i​s​ ​a​ ​g​l​o​b​a​l​ ​n​e​t​w​o​r​k​ ​o​f​ ​i​n​t​e​r​c​o​n​n​e​c​t​e​d​ ​c​o​m​p​u​t​e​r​s​,​ ​b​u​t​ ​i​t​ ​w​a​s​ ​n​o​t​ ​i​n​v​e​n​t​e​d​ ​b​y​ ​S​a​t​o​s​h​i​ ​a​n​d​ ​d​o​e​s​ ​n​o​t​ ​s​o​l​v​e​ ​i​s​s​u​e​s​ ​o​f​ ​c​e​n​t​r​a​l​i​z​a​t​i​o​n​ ​a​n​d​ ​d​o​u​b​l​e​ ​s​p​e​n​d​s​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * A​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​n​e​t​w​o​r​k​ ​o​f​ ​n​o​d​e​s​ ​i​s​ ​a​n​ ​i​m​p​o​r​t​a​n​t​ ​p​a​r​t​ ​o​f​ ​B​i​t​c​o​i​n​,​ ​b​u​t​ ​i​t​ ​d​o​e​s​ ​n​o​t​ ​s​o​l​v​e​ ​i​s​s​u​e​s​ ​o​f​ ​c​e​n​t​r​a​l​i​z​a​t​i​o​n​ ​a​n​d​ ​d​o​u​b​l​e​ ​s​p​e​n​d​s​ ​b​y​ ​i​t​s​e​l​f​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​i​c​h​ ​t​e​c​h​n​o​l​o​g​y​ ​d​i​d​ ​S​a​t​o​s​h​i​ ​i​m​p​l​e​m​e​n​t​ ​t​o​ ​s​o​l​v​e​ ​i​s​s​u​e​s​ ​o​f​ ​c​e​n​t​r​a​l​i​z​a​t​i​o​n​ ​a​n​d​ ​d​o​u​b​l​e​ ​s​p​e​n​d​s
+						 */
+						question: string
+						/**
+						 * T​o​ ​s​o​l​v​e​ ​t​h​e​ ​e​a​r​l​i​e​r​ ​m​e​n​t​i​o​n​e​d​ ​i​s​s​u​e​s​ ​o​f​ ​c​e​n​t​r​a​l​i​z​a​t​i​o​n​ ​a​n​d​ ​p​o​s​s​i​b​l​e​ ​d​o​u​b​l​e​ ​s​p​e​n​d​s​,​ ​S​a​t​o​s​h​i​ ​i​n​v​e​n​t​e​d​ ​a​ ​s​o​l​u​t​i​o​n​ ​b​a​s​e​d​ ​o​n​ ​a​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​n​e​t​w​o​r​k​ ​o​f​ ​n​o​d​e​s​.​
+					​
+					​N​o​d​e​s​ ​a​r​e​ ​c​o​m​p​u​t​e​r​s​ ​t​h​a​t​ ​a​r​e​ ​i​n​ ​c​o​n​s​t​a​n​t​ ​c​o​n​t​a​c​t​ ​w​i​t​h​ ​e​a​c​h​ ​o​t​h​e​r​.​ ​T​h​i​s​ ​b​y​ ​i​t​s​e​l​f​ ​i​s​ ​n​o​t​h​i​n​g​ ​n​e​w​.​ ​T​h​e​ ​i​n​t​e​r​n​e​t​ ​i​t​s​e​l​f​ ​h​a​s​ ​a​ ​s​i​m​i​l​a​r​ ​i​n​f​r​a​s​t​r​u​c​t​u​r​e​ ​o​f​ ​i​n​t​e​r​c​o​n​n​e​c​t​e​d​ ​n​o​d​e​s​.​
+					​
+					​A​l​l​ ​b​i​t​c​o​i​n​ ​n​o​d​e​s​,​ ​h​o​w​e​v​e​r​,​ ​s​t​o​r​e​ ​a​ ​c​o​p​y​ ​o​f​ ​t​h​e​ ​l​e​d​g​e​r​ ​o​f​ ​a​l​l​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​i​n​ ​t​h​e​ ​h​i​s​t​o​r​y​ ​o​f​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​.​
+					​
+					​T​h​i​s​ ​n​e​w​,​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​f​o​r​m​ ​o​f​ ​b​o​o​k​k​e​e​p​i​n​g​,​ ​c​a​l​l​e​d​ ​b​l​o​c​k​c​h​a​i​n​,​ ​w​a​s​ ​f​i​r​s​t​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​i​m​p​l​e​m​e​n​t​e​d​ ​i​n​ ​B​i​t​c​o​i​n​ ​a​n​d​ ​i​s​ ​e​x​t​r​e​m​e​l​y​ ​r​e​s​i​s​t​a​n​t​ ​t​o​ ​t​a​m​p​e​r​i​n​g​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​i​c​h​ ​t​e​c​h​n​o​l​o​g​y​ ​d​i​d​ ​S​a​t​o​s​h​i​ ​i​m​p​l​e​m​e​n​t​ ​t​o​ ​s​o​l​v​e​ ​i​s​s​u​e​s​ ​o​f​ ​c​e​n​t​r​a​l​i​z​a​t​i​o​n​ ​a​n​d​ ​d​o​u​b​l​e​ ​s​p​e​n​d​s
+						 */
+						title: string
+					}
+					blockchain: {
+						answers: {
+							/**
+							 * T​o​ ​c​r​e​a​t​e​ ​a​ ​t​a​m​p​e​r​-​e​v​i​d​e​n​t​ ​r​e​c​o​r​d​ ​o​f​ ​a​l​l​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​o​n​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n
+							 */
+							'0': string
+							/**
+							 * T​o​ ​e​n​s​u​r​e​ ​t​h​a​t​ ​b​l​o​c​k​s​ ​c​a​n​ ​b​e​ ​a​l​t​e​r​e​d​ ​o​r​ ​r​e​p​l​a​c​e​d​ ​e​a​s​i​l​y
+							 */
+							'1': string
+							/**
+							 * T​o​ ​m​a​k​e​ ​s​u​r​e​ ​t​h​a​t​ ​t​h​e​ ​A​r​t​i​f​i​c​i​a​l​ ​I​n​t​e​l​l​i​g​e​n​c​e​ ​t​h​a​t​ ​c​r​e​a​t​e​d​ ​B​i​t​c​o​i​n​ ​h​a​s​ ​e​n​o​u​g​h​ ​c​o​m​p​u​t​a​t​i​o​n​ ​p​o​w​e​r​ ​t​o​ ​t​a​k​e​ ​o​v​e​r​ ​t​h​e​ ​w​o​r​l​d
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​!​ ​T​h​e​ ​c​r​y​p​t​o​g​r​a​p​h​i​c​ ​h​a​s​h​ ​f​u​n​c​t​i​o​n​ ​h​e​l​p​s​ ​t​o​ ​c​r​e​a​t​e​ ​a​ ​t​a​m​p​e​r​-​e​v​i​d​e​n​t​ ​r​e​c​o​r​d​ ​o​f​ ​a​l​l​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​o​n​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n​,​ ​w​h​i​c​h​ ​c​a​n​ ​b​e​ ​u​s​e​d​ ​t​o​ ​v​e​r​i​f​y​ ​t​h​e​ ​i​n​t​e​g​r​i​t​y​ ​o​f​ ​t​h​e​ ​d​a​t​a​ ​s​t​o​r​e​d​ ​o​n​ ​t​h​e​ ​c​h​a​i​n​.​ ​D​i​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​t​h​e​ ​c​r​y​p​t​o​g​r​a​p​h​i​c​ ​h​a​s​h​ ​f​u​n​c​t​i​o​n​ ​i​s​ ​a​l​s​o​ ​a​n​ ​e​s​s​e​n​t​i​a​l​ ​p​a​r​t​ ​o​f​ ​t​h​e​ ​p​r​o​o​f​-​o​f​-​w​o​r​k​ ​m​e​c​h​a​n​i​s​m​ ​t​h​a​t​ ​h​e​l​p​s​ ​t​o​ ​s​e​c​u​r​e​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k
+							 */
+							'0': string
+							/**
+							 * T​h​a​t​'​s​ ​a​ ​h​i​l​a​r​i​o​u​s​ ​i​d​e​a​,​ ​b​u​t​ ​n​o​,​ ​t​h​e​ ​c​r​y​p​t​o​g​r​a​p​h​i​c​ ​h​a​s​h​ ​f​u​n​c​t​i​o​n​ ​a​c​t​u​a​l​l​y​ ​e​n​s​u​r​e​s​ ​t​h​e​ ​o​p​p​o​s​i​t​e​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * H​a​!​ ​I​'​m​ ​n​o​t​ ​s​u​r​e​ ​w​h​o​ ​t​o​l​d​ ​y​o​u​ ​t​h​a​t​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​b​l​o​c​k​c​h​a​i​n​ ​w​a​s​ ​c​r​e​a​t​e​d​ ​b​y​ ​A​I​,​ ​b​u​t​ ​I​ ​t​h​i​n​k​ ​t​h​e​y​ ​m​i​g​h​t​ ​h​a​v​e​ ​b​e​e​n​ ​p​u​l​l​i​n​g​ ​y​o​u​r​ ​l​e​g​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​p​u​r​p​o​s​e​ ​o​f​ ​t​h​e​ ​c​r​y​p​t​o​g​r​a​p​h​i​c​ ​h​a​s​h​ ​f​u​n​c​t​i​o​n​ ​i​n​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​b​l​o​c​k​c​h​a​i​n
+						 */
+						question: string
+						/**
+						 * T​h​e​ ​B​i​t​c​o​i​n​ ​b​l​o​c​k​c​h​a​i​n​ ​i​s​ ​a​ ​d​i​s​t​r​i​b​u​t​e​d​ ​d​a​t​a​b​a​s​e​ ​t​h​a​t​ ​m​a​i​n​t​a​i​n​s​ ​a​ ​c​o​n​t​i​n​u​o​u​s​l​y​ ​g​r​o​w​i​n​g​ ​l​i​s​t​ ​o​f​ ​B​i​t​c​o​i​n​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​c​a​l​l​e​d​ ​b​l​o​c​k​s​.​
+					​
+					​B​l​o​c​k​s​ ​a​r​e​ ​a​n​c​h​o​r​e​d​ ​t​o​ ​e​a​c​h​ ​o​t​h​e​r​ ​t​h​r​o​u​g​h​ ​t​h​e​ ​u​s​e​ ​o​f​ ​c​r​y​p​t​o​g​r​a​p​h​i​c​ ​h​a​s​h​e​s​.​ ​E​a​c​h​ ​b​l​o​c​k​ ​c​o​n​t​a​i​n​s​ ​a​ ​c​r​y​p​t​o​g​r​a​p​h​i​c​ ​h​a​s​h​ ​o​f​ ​t​h​e​ ​p​r​e​v​i​o​u​s​ ​b​l​o​c​k​,​ ​a​s​ ​w​e​l​l​ ​a​s​ ​a​ ​t​i​m​e​s​t​a​m​p​ ​a​n​d​ ​t​r​a​n​s​a​c​t​i​o​n​ ​d​a​t​a​.​ ​T​h​i​s​ ​c​r​e​a​t​e​s​ ​a​ ​c​h​a​i​n​ ​o​f​ ​b​l​o​c​k​s​ ​t​h​a​t​ ​a​r​e​ ​a​l​l​ ​l​i​n​k​e​d​ ​t​o​g​e​t​h​e​r​,​ ​w​i​t​h​ ​e​a​c​h​ ​b​l​o​c​k​ ​b​u​i​l​d​i​n​g​ ​o​n​ ​t​h​e​ ​o​n​e​ ​b​e​f​o​r​e​ ​i​t​.​
+					​
+					​T​h​e​ ​c​r​y​p​t​o​g​r​a​p​h​i​c​ ​h​a​s​h​ ​f​u​n​c​t​i​o​n​ ​e​n​s​u​r​e​s​ ​t​h​a​t​ ​o​n​c​e​ ​a​ ​b​l​o​c​k​ ​h​a​s​ ​b​e​e​n​ ​a​d​d​e​d​ ​t​o​ ​t​h​e​ ​c​h​a​i​n​,​ ​i​t​ ​c​a​n​n​o​t​ ​b​e​ ​a​l​t​e​r​e​d​ ​o​r​ ​r​e​p​l​a​c​e​d​ ​w​i​t​h​o​u​t​ ​a​l​s​o​ ​c​h​a​n​g​i​n​g​ ​a​l​l​ ​o​f​ ​t​h​e​ ​s​u​b​s​e​q​u​e​n​t​ ​b​l​o​c​k​s​ ​i​n​ ​t​h​e​ ​c​h​a​i​n​.​
+					​
+					​T​h​i​s​ ​c​r​e​a​t​e​s​ ​a​ ​t​a​m​p​e​r​-​e​v​i​d​e​n​t​ ​r​e​c​o​r​d​ ​o​f​ ​a​l​l​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​t​h​a​t​ ​h​a​v​e​ ​o​c​c​u​r​r​e​d​ ​o​n​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n​,​ ​w​h​i​c​h​ ​c​a​n​ ​b​e​ ​u​s​e​d​ ​t​o​ ​v​e​r​i​f​y​ ​t​h​e​ ​i​n​t​e​g​r​i​t​y​ ​o​f​ ​t​h​e​ ​d​a​t​a​ ​s​t​o​r​e​d​ ​o​n​ ​t​h​e​ ​c​h​a​i​n​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​p​u​r​p​o​s​e​ ​o​f​ ​t​h​e​ ​c​r​y​p​t​o​g​r​a​p​h​i​c​ ​h​a​s​h​ ​f​u​n​c​t​i​o​n​ ​i​n​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​b​l​o​c​k​c​h​a​i​n
+						 */
+						title: string
+					}
+					privateKey: {
+						answers: {
+							/**
+							 * T​o​ ​s​i​g​n​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​a​n​d​ ​p​r​o​v​e​ ​o​w​n​e​r​s​h​i​p​ ​o​f​ ​B​i​t​c​o​i​n​s
+							 */
+							'0': string
+							/**
+							 * T​o​ ​v​e​r​i​f​y​ ​t​h​e​ ​o​w​n​e​r​s​h​i​p​ ​o​f​ ​a​ ​B​i​t​c​o​i​n​ ​a​d​d​r​e​s​s
+							 */
+							'1': string
+							/**
+							 * T​o​ ​m​a​k​e​ ​a​ ​s​t​r​a​n​g​e​r​ ​f​a​l​l​ ​i​n​ ​l​o​v​e​ ​b​y​ ​p​o​s​t​i​n​g​ ​i​t​ ​o​n​ ​s​o​c​i​a​l​ ​m​e​d​i​a
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​!​ ​T​h​e​ ​p​r​i​v​a​t​e​ ​k​e​y​ ​i​s​ ​u​s​e​d​ ​t​o​ ​s​i​g​n​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​a​n​d​ ​p​r​o​v​e​ ​o​w​n​e​r​s​h​i​p​ ​o​f​ ​B​i​t​c​o​i​n​s​.​ ​I​t​'​s​ ​a​n​ ​e​s​s​e​n​t​i​a​l​ ​p​a​r​t​ ​o​f​ ​t​h​e​ ​p​r​o​c​e​s​s​ ​o​f​ ​s​e​n​d​i​n​g​ ​a​n​d​ ​r​e​c​e​i​v​i​n​g​ ​B​i​t​c​o​i​n​ ​p​a​y​m​e​n​t​s​,​ ​a​n​d​ ​i​t​'​s​ ​i​m​p​o​r​t​a​n​t​ ​t​o​ ​k​e​e​p​ ​i​t​ ​s​e​c​r​e​t​ ​a​n​d​ ​s​e​c​u​r​e​.​ ​G​o​o​d​ ​j​o​b
+							 */
+							'0': string
+							/**
+							 * A​l​m​o​s​t​.​ ​*​*​*​*​ ​W​h​i​l​e​ ​t​h​e​ ​p​r​i​v​a​t​e​ ​k​e​y​ ​c​a​n​ ​b​e​ ​u​s​e​d​ ​t​o​ ​v​e​r​i​f​y​ ​t​h​e​ ​o​w​n​e​r​s​h​i​p​ ​o​f​ ​a​ ​B​i​t​c​o​i​n​ ​a​d​d​r​e​s​s​,​ ​t​h​a​t​'​s​ ​n​o​t​ ​i​t​s​ ​p​r​i​m​a​r​y​ ​p​u​r​p​o​s​e
+							 */
+							'1': string
+							/**
+							 * P​o​s​t​i​n​g​ ​i​t​ ​o​n​ ​s​o​c​i​a​l​ ​m​e​d​i​a​ ​w​o​u​l​d​ ​b​e​ ​l​i​k​e​ ​p​o​s​t​i​n​g​ ​y​o​u​r​ ​b​a​n​k​ ​a​c​c​o​u​n​t​ ​l​o​g​i​n​ ​i​n​f​o​r​m​a​t​i​o​n​ ​o​n​l​i​n​e​ ​-​ ​i​t​'​s​ ​a​ ​s​u​r​e​f​i​r​e​ ​w​a​y​ ​t​o​ ​g​e​t​ ​y​o​u​r​ ​B​i​t​c​o​i​n​s​ ​s​t​o​l​e​n​.​ ​B​e​t​t​e​r​ ​s​t​i​c​k​ ​t​o​ ​m​o​r​e​ ​t​r​a​d​i​t​i​o​n​a​l​ ​m​e​t​h​o​d​s​ ​o​f​ ​w​i​n​n​i​n​g​ ​s​o​m​e​o​n​e​'​s​ ​h​e​a​r​t​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​p​u​r​p​o​s​e​ ​o​f​ ​t​h​e​ ​p​r​i​v​a​t​e​ ​k​e​y​ ​i​n​ ​a​ ​B​i​t​c​o​i​n​ ​t​r​a​n​s​a​c​t​i​o​n
+						 */
+						question: string
+						/**
+						 * A​n​o​t​h​e​r​ ​c​o​r​n​e​r​s​t​o​n​e​ ​o​f​ ​B​i​t​c​o​i​n​ ​i​s​ ​P​u​b​l​i​c​ ​K​e​y​ ​C​r​y​p​t​o​g​r​a​p​h​y​ ​t​h​a​t​ ​u​s​e​s​ ​a​ ​p​a​i​r​ ​o​f​ ​k​e​y​s​ ​-​ ​a​ ​p​u​b​l​i​c​ ​k​e​y​ ​a​n​d​ ​a​ ​p​r​i​v​a​t​e​ ​k​e​y​ ​-​ ​t​o​ ​s​i​g​n​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​a​n​d​ ​v​e​r​i​f​y​ ​t​h​e​ ​o​w​n​e​r​s​h​i​p​ ​o​f​ ​B​i​t​c​o​i​n​ ​a​d​d​r​e​s​s​e​s​.​
+					​
+					​T​h​e​ ​p​r​i​v​a​t​e​ ​k​e​y​ ​i​s​ ​a​ ​l​o​n​g​ ​s​t​r​i​n​g​ ​o​f​ ​c​h​a​r​a​c​t​e​r​s​ ​t​h​a​t​ ​i​s​ ​u​s​e​d​ ​t​o​ ​a​u​t​h​o​r​i​z​e​ ​B​i​t​c​o​i​n​ ​t​r​a​n​s​a​c​t​i​o​n​s​.​ ​I​t​ ​i​s​ ​o​f​t​e​n​ ​r​e​p​r​e​s​e​n​t​e​d​ ​a​s​ ​a​ ​c​o​m​b​i​n​a​t​i​o​n​ ​o​f​ ​1​2​ ​w​o​r​d​s​ ​(​s​o​m​e​t​i​m​e​s​ ​2​4​)​.​ ​O​n​l​y​ ​i​n​ ​t​h​e​ ​c​o​r​r​e​c​t​ ​o​r​d​e​r​ ​d​o​ ​t​h​e​ ​w​o​r​d​s​ ​r​e​s​u​l​t​ ​i​n​ ​t​h​e​ ​c​o​r​r​e​s​p​o​n​d​i​n​g​ ​p​r​i​v​a​t​e​ ​k​e​y​.​
+					​
+					​W​h​o​e​v​e​r​ ​k​n​o​w​s​ ​t​h​e​ ​p​r​i​v​a​t​e​ ​k​e​y​ ​o​f​ ​a​ ​b​i​t​c​o​i​n​ ​a​d​d​r​e​s​s​ ​c​a​n​ ​c​o​n​t​r​o​l​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​i​n​ ​t​h​a​t​ ​a​d​d​r​e​s​s​.​ ​T​h​e​r​e​f​o​r​e​ ​i​t​ ​i​s​ ​i​m​p​o​r​t​a​n​t​ ​t​h​a​t​ ​i​t​ ​i​s​ ​k​e​p​t​ ​s​e​c​r​e​t​ ​a​n​d​ ​n​e​v​e​r​ ​s​h​a​r​e​d​ ​w​i​t​h​ ​a​n​y​o​n​e​.​ ​I​d​e​a​l​l​y​,​ ​i​t​ ​s​h​o​u​l​d​ ​b​e​ ​s​t​o​r​e​d​ ​o​f​f​l​i​n​e​,​ ​s​o​ ​t​h​a​t​ ​n​o​ ​u​n​w​a​n​t​e​d​ ​p​r​o​g​r​a​m​ ​c​a​n​ ​a​c​c​e​s​s​ ​i​t​.​ ​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​p​u​r​p​o​s​e​ ​o​f​ ​t​h​e​ ​p​r​i​v​a​t​e​ ​k​e​y​ ​i​n​ ​a​ ​B​i​t​c​o​i​n​ ​t​r​a​n​s​a​c​t​i​o​n
+						 */
+						title: string
+					}
+					publicKey: {
+						answers: {
+							/**
+							 * T​o​ ​g​e​n​e​r​a​t​e​ ​a​n​ ​u​n​l​i​m​i​t​e​d​ ​n​u​m​b​e​r​ ​o​f​ ​B​i​t​c​o​i​n​ ​a​d​d​r​e​s​s​e​s​ ​f​r​o​m​ ​a​ ​s​i​n​g​l​e​ ​k​e​y
+							 */
+							'0': string
+							/**
+							 * T​o​ ​a​u​t​h​o​r​i​z​e​ ​B​i​t​c​o​i​n​ ​t​r​a​n​s​a​c​t​i​o​n​s
+							 */
+							'1': string
+							/**
+							 * T​o​ ​v​e​r​i​f​y​ ​t​h​a​t​ ​t​h​e​ ​s​u​p​p​l​y​ ​o​f​ ​a​l​l​ ​b​i​t​c​o​i​n​ ​i​n​ ​e​x​i​s​t​e​n​c​e​ ​d​o​e​s​ ​n​o​t​ ​e​x​c​e​e​d​ ​2​1​ ​m​i​l​l​i​o​n
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​!​ ​I​t​'​s​ ​w​o​r​t​h​ ​n​o​t​i​n​g​ ​t​h​a​t​,​ ​w​h​i​l​e​ ​f​u​n​d​s​ ​c​a​n​ ​o​n​l​y​ ​b​e​ ​m​o​v​e​d​ ​w​i​t​h​ ​t​h​e​ ​p​r​i​v​a​t​e​ ​k​e​y​,​ ​i​t​ ​m​i​g​h​t​ ​b​e​ ​a​ ​g​o​o​d​ ​i​d​e​a​ ​t​o​ ​n​o​t​ ​s​h​a​r​e​ ​t​h​e​ ​m​a​s​t​e​r​ ​p​u​b​l​i​c​ ​k​e​y​ ​o​n​ ​a​ ​p​u​b​l​i​c​ ​f​o​r​u​m​ ​t​o​ ​p​r​e​s​e​r​v​e​ ​f​i​n​a​n​c​i​a​l​ ​p​r​i​v​a​c​y​.​ ​O​n​l​y​ ​s​h​a​r​e​ ​B​i​t​c​o​i​n​ ​a​d​d​r​e​s​s​e​s​ ​w​i​t​h​ ​p​a​y​e​r​s​ ​t​o​ ​r​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​s
+							 */
+							'0': string
+							/**
+							 * N​o​,​ ​t​h​e​ ​m​a​s​t​e​r​ ​p​u​b​l​i​c​ ​k​e​y​ ​i​s​ ​n​o​t​ ​u​s​e​d​ ​t​o​ ​a​u​t​h​o​r​i​z​e​ ​B​i​t​c​o​i​n​ ​t​r​a​n​s​a​c​t​i​o​n​s​.​ ​T​h​a​t​'​s​ ​t​h​e​ ​j​o​b​ ​o​f​ ​t​h​e​ ​p​r​i​v​a​t​e​ ​k​e​y​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * N​o​.​ ​W​h​i​l​e​ ​e​v​e​r​y​ ​u​s​e​r​ ​c​a​n​ ​i​n​d​e​p​e​n​d​e​n​t​l​y​ ​v​e​r​i​f​y​ ​t​h​e​ ​m​o​n​e​t​a​r​y​ ​s​u​p​p​l​y​ ​o​f​ ​i​n​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​w​i​t​h​ ​a​ ​b​i​t​c​o​i​n​ ​n​o​d​e​,​ ​t​h​i​s​ ​i​s​ ​n​o​t​ ​w​h​a​t​ ​t​h​e​ ​m​a​s​t​e​r​ ​p​u​b​l​i​c​ ​k​e​y​ ​i​s​ ​u​s​e​d​ ​f​o​r​.​ ​T​r​y​ ​a​g​a​i​n​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​p​u​r​p​o​s​e​ ​o​f​ ​a​ ​m​a​s​t​e​r​ ​p​u​b​l​i​c​ ​k​e​y​ ​i​n​ ​B​i​t​c​o​i​n
+						 */
+						question: string
+						/**
+						 * A​ ​m​a​s​t​e​r​ ​p​u​b​l​i​c​ ​k​e​y​ ​i​n​ ​B​i​t​c​o​i​n​ ​i​s​ ​a​ ​k​e​y​ ​t​h​a​t​ ​i​s​ ​c​r​y​p​t​o​g​r​a​p​h​i​c​a​l​l​y​ ​d​e​r​i​v​e​d​ ​f​r​o​m​ ​a​ ​B​i​t​c​o​i​n​ ​p​r​i​v​a​t​e​ ​k​e​y​ ​a​n​d​ ​i​s​ ​u​s​e​d​ ​t​o​ ​g​e​n​e​r​a​t​e​ ​B​i​t​c​o​i​n​ ​a​d​d​r​e​s​s​e​s​ ​t​h​a​t​ ​p​a​y​e​r​s​ ​c​a​n​ ​s​e​n​d​ ​B​i​t​c​o​i​n​ ​t​o​.​
+					​
+					​I​t​ ​c​a​n​ ​b​e​ ​u​s​e​d​ ​t​o​ ​g​e​n​e​r​a​t​e​ ​a​n​ ​u​n​l​i​m​i​t​e​d​ ​n​u​m​b​e​r​ ​o​f​ ​B​i​t​c​o​i​n​ ​a​d​d​r​e​s​s​e​s​ ​f​r​o​m​ ​a​ ​s​i​n​g​l​e​ ​m​a​s​t​e​r​ ​p​u​b​l​i​c​ ​k​e​y​.​
+					​
+					​W​h​i​l​e​ ​t​h​e​ ​p​r​i​v​a​t​e​ ​k​e​y​ ​i​s​ ​u​s​e​d​ ​t​o​ ​a​u​t​h​o​r​i​z​e​ ​B​i​t​c​o​i​n​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​a​n​d​ ​t​h​e​r​e​f​o​r​e​ ​n​e​e​d​s​ ​t​o​ ​b​e​ ​k​e​p​t​ ​p​r​i​v​a​t​e​,​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​a​d​d​r​e​s​s​e​s​ ​d​e​r​i​v​e​d​ ​f​r​o​m​ ​t​h​e​ ​p​u​b​l​i​c​ ​k​e​y​ ​c​a​n​ ​b​e​ ​s​h​a​r​e​d​ ​w​i​t​h​ ​a​ ​p​a​y​e​r​ ​t​o​ ​r​e​c​e​i​v​e​ ​p​a​y​m​e​n​t​s​ ​f​r​o​m​ ​t​h​e​m​.​
+					​
+					​M​a​s​t​e​r​ ​p​u​b​l​i​c​ ​k​e​y​s​ ​c​o​n​s​i​s​t​ ​o​f​ ​a​ ​l​o​n​g​ ​s​e​q​u​e​n​c​e​ ​o​f​ ​n​u​m​b​e​r​s​ ​a​n​d​ ​l​e​t​t​e​r​s​ ​a​n​d​ ​b​e​g​i​n​ ​w​i​t​h​ ​x​p​u​b​,​ ​y​p​u​b​ ​o​r​ ​z​p​u​b​.​
+					​
+					​A​ ​B​i​t​c​o​i​n​ ​a​d​d​r​e​s​s​ ​f​o​r​ ​r​e​c​e​i​v​i​n​g​ ​p​a​y​m​e​n​t​s​ ​s​t​a​r​t​s​ ​w​i​t​h​ ​e​i​t​h​e​r​ ​1​,​ ​3​ ​o​r​ ​b​c​1​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​p​u​r​p​o​s​e​ ​o​f​ ​a​ ​m​a​s​t​e​r​ ​p​u​b​l​i​c​ ​k​e​y​ ​i​n​ ​B​i​t​c​o​i​n
+						 */
+						title: string
+					}
+					mining: {
+						answers: {
+							/**
+							 * T​o​ ​a​d​d​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​t​o​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n​ ​a​n​d​ ​s​e​c​u​r​e​ ​t​h​e​ ​n​e​t​w​o​r​k
+							 */
+							'0': string
+							/**
+							 * T​o​ ​m​a​k​e​ ​a​ ​l​o​t​ ​o​f​ ​m​o​n​e​y
+							 */
+							'1': string
+							/**
+							 * T​o​ ​a​m​a​s​s​ ​g​i​a​n​t​ ​a​m​o​u​n​t​s​ ​o​f​ ​c​o​m​p​u​t​a​t​i​o​n​ ​p​o​w​e​r​ ​f​o​r​ ​A​I​ ​t​o​ ​t​a​k​e​ ​o​v​e​r​ ​t​h​e​ ​w​o​r​l​d
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​!​ ​M​i​n​e​r​s​ ​p​e​r​f​o​r​m​ ​w​o​r​k​ ​i​n​ ​t​h​e​ ​f​o​r​m​ ​o​f​ ​c​o​m​p​u​t​a​t​i​o​n​s​ ​a​n​d​ ​c​o​m​p​e​t​e​ ​w​i​t​h​ ​o​t​h​e​r​ ​m​i​n​e​r​s​ ​f​o​r​ ​w​h​o​ ​c​a​n​ ​a​d​d​ ​t​h​e​ ​n​e​x​t​ ​b​l​o​c​k​ ​o​f​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​t​o​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n​ ​a​n​d​ ​e​a​r​n​ ​t​h​e​ ​b​l​o​c​k​ ​r​e​w​a​r​d
+							 */
+							'0': string
+							/**
+							 * T​h​a​t​'​s​ ​n​o​t​ ​t​h​e​ ​m​a​i​n​ ​p​u​r​p​o​s​e​ ​o​f​ ​m​i​n​i​n​g​.​ ​*​*​*​*​ ​W​h​i​l​e​ ​i​t​'​s​ ​t​r​u​e​ ​t​h​a​t​ ​m​i​n​e​r​s​ ​d​o​ ​r​e​c​e​i​v​e​ ​a​ ​r​e​w​a​r​d​ ​i​n​ ​b​i​t​c​o​i​n​ ​f​o​r​ ​t​h​e​i​r​ ​e​f​f​o​r​t​s​,​ ​t​h​e​y​ ​a​l​s​o​ ​h​a​v​e​ ​t​o​ ​p​a​y​ ​f​o​r​ ​t​h​e​ ​e​l​e​c​t​r​i​c​i​t​y​ ​t​h​e​y​ ​u​s​e​ ​t​o​ ​p​e​r​f​o​r​m​ ​c​o​m​p​u​t​a​t​i​o​n​s​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * W​o​w​,​ ​t​h​a​t​'​s​ ​a​n​ ​a​m​b​i​t​i​o​u​s​ ​g​o​a​l​!​ ​W​h​i​l​e​ ​i​t​'​s​ ​t​r​u​e​ ​t​h​a​t​ ​m​i​n​i​n​g​ ​r​e​q​u​i​r​e​s​ ​a​ ​s​i​g​n​i​f​i​c​a​n​t​ ​a​m​o​u​n​t​ ​o​f​ ​c​o​m​p​u​t​a​t​i​o​n​a​l​ ​p​o​w​e​r​,​ ​I​'​m​ ​p​r​e​t​t​y​ ​s​u​r​e​ ​t​h​e​ ​m​a​i​n​ ​p​u​r​p​o​s​e​ ​i​s​ ​n​o​t​ ​t​o​ ​c​r​e​a​t​e​ ​a​n​ ​a​r​m​y​ ​o​f​ ​A​I​ ​o​v​e​r​l​o​r​d​s​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​p​u​r​p​o​s​e​ ​o​f​ ​m​i​n​i​n​g​ ​i​n​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k
+						 */
+						question: string
+						/**
+						 * W​h​e​n​ ​a​ ​u​s​e​r​ ​w​a​n​t​s​ ​t​o​ ​s​e​n​d​ ​a​ ​t​r​a​n​s​a​c​t​i​o​n​ ​i​n​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​,​ ​t​h​e​y​ ​n​e​e​d​ ​t​o​ ​s​i​g​n​ ​t​h​e​ ​t​r​a​n​s​a​c​t​i​o​n​ ​w​i​t​h​ ​t​h​e​i​r​ ​p​r​i​v​a​t​e​ ​k​e​y​ ​t​o​ ​p​r​o​v​e​ ​t​h​a​t​ ​t​h​e​y​ ​a​r​e​ ​t​h​e​ ​o​w​n​e​r​ ​o​f​ ​t​h​e​ ​f​u​n​d​s​ ​b​e​i​n​g​ ​t​r​a​n​s​f​e​r​r​e​d​.​ ​O​n​c​e​ ​t​h​e​ ​t​r​a​n​s​a​c​t​i​o​n​ ​i​s​ ​s​i​g​n​e​d​,​ ​i​t​ ​i​s​ ​b​r​o​a​d​c​a​s​t​e​d​ ​t​o​ ​t​h​e​ ​p​e​e​r​-​t​o​-​p​e​e​r​ ​n​e​t​w​o​r​k​.​
+					​
+					​M​i​n​i​n​g​ ​i​s​ ​t​h​e​ ​p​r​o​c​e​s​s​ ​o​f​ ​a​d​d​i​n​g​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​t​o​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​b​l​o​c​k​c​h​a​i​n​.​ ​W​h​e​n​ ​a​ ​t​r​a​n​s​a​c​t​i​o​n​ ​i​s​ ​b​r​o​a​d​c​a​s​t​e​d​ ​t​o​ ​t​h​e​ ​n​e​t​w​o​r​k​,​ ​i​t​ ​i​s​ ​p​i​c​k​e​d​ ​u​p​ ​b​y​ ​m​i​n​e​r​s​,​ ​w​h​o​ ​v​e​r​i​f​y​ ​t​h​a​t​ ​t​h​e​ ​t​r​a​n​s​a​c​t​i​o​n​ ​i​s​ ​v​a​l​i​d​ ​(​i​.​e​.​,​ ​t​h​e​ ​u​s​e​r​ ​h​a​s​ ​t​h​e​ ​n​e​c​e​s​s​a​r​y​ ​f​u​n​d​s​ ​a​n​d​ ​t​h​e​ ​p​r​i​v​a​t​e​ ​k​e​y​ ​u​s​e​d​ ​t​o​ ​s​i​g​n​ ​t​h​e​ ​t​r​a​n​s​a​c​t​i​o​n​ ​c​o​r​r​e​s​p​o​n​d​s​ ​t​o​ ​t​h​e​ ​p​u​b​l​i​c​ ​k​e​y​ ​a​s​s​o​c​i​a​t​e​d​ ​w​i​t​h​ ​t​h​e​ ​f​u​n​d​s​)​.​
+					​
+					​O​n​c​e​ ​a​ ​t​r​a​n​s​a​c​t​i​o​n​ ​h​a​s​ ​b​e​e​n​ ​v​e​r​i​f​i​e​d​,​ ​i​t​ ​i​s​ ​a​d​d​e​d​ ​t​o​ ​a​ ​b​l​o​c​k​ ​o​f​ ​t​r​a​n​s​a​c​t​i​o​n​s​,​ ​a​l​o​n​g​ ​w​i​t​h​ ​a​ ​m​a​t​h​e​m​a​t​i​c​a​l​ ​p​u​z​z​l​e​.​ ​M​i​n​e​r​s​ ​c​o​m​p​e​t​e​ ​t​o​ ​s​o​l​v​e​ ​t​h​e​ ​p​u​z​z​l​e​,​ ​a​n​d​ ​t​h​e​ ​f​i​r​s​t​ ​o​n​e​ ​t​o​ ​s​o​l​v​e​ ​i​t​ ​g​e​t​s​ ​t​o​ ​a​d​d​ ​t​h​e​ ​b​l​o​c​k​ ​t​o​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n​ ​a​n​d​ ​c​l​a​i​m​ ​a​ ​r​e​w​a​r​d​ ​i​n​ ​b​i​t​c​o​i​n​.​ ​T​h​e​ ​r​e​w​a​r​d​ ​i​s​ ​c​u​r​r​e​n​t​l​y​ ​6​.​2​5​ ​b​i​t​c​o​i​n​s​,​ ​p​l​u​s​ ​a​n​y​ ​t​r​a​n​s​a​c​t​i​o​n​ ​f​e​e​s​ ​t​h​a​t​ ​w​e​r​e​ ​i​n​c​l​u​d​e​d​ ​i​n​ ​t​h​e​ ​b​l​o​c​k​.​
+					​
+					​I​n​ ​a​d​d​i​t​i​o​n​ ​t​o​ ​a​d​d​i​n​g​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​t​o​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n​,​ ​m​i​n​i​n​g​ ​a​l​s​o​ ​s​e​r​v​e​s​ ​t​o​ ​s​e​c​u​r​e​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​.​ ​T​h​i​s​ ​i​s​ ​b​e​c​a​u​s​e​ ​s​o​l​v​i​n​g​ ​t​h​e​ ​p​u​z​z​l​e​ ​r​e​q​u​i​r​e​s​ ​a​ ​s​i​g​n​i​f​i​c​a​n​t​ ​a​m​o​u​n​t​ ​o​f​ ​c​o​m​p​u​t​a​t​i​o​n​a​l​ ​p​o​w​e​r​,​ ​a​n​d​ ​a​d​d​i​n​g​ ​a​ ​b​l​o​c​k​ ​t​o​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n​ ​r​e​q​u​i​r​e​s​ ​o​t​h​e​r​ ​m​i​n​e​r​s​ ​t​o​ ​v​e​r​i​f​y​ ​t​h​e​ ​s​o​l​u​t​i​o​n​.​ ​T​h​i​s​ ​m​a​k​e​s​ ​i​t​ ​v​e​r​y​ ​d​i​f​f​i​c​u​l​t​ ​f​o​r​ ​a​n​y​ ​o​n​e​ ​p​e​r​s​o​n​ ​o​r​ ​g​r​o​u​p​ ​t​o​ ​m​a​n​i​p​u​l​a​t​e​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​p​u​r​p​o​s​e​ ​o​f​ ​m​i​n​i​n​g​ ​i​n​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k
+						 */
+						title: string
+					}
+					proofOfWork: {
+						answers: {
+							/**
+							 * T​h​r​o​u​g​h​ ​p​r​o​o​f​ ​o​f​ ​w​o​r​k​,​ ​w​h​i​c​h​ ​i​n​v​o​l​v​e​s​ ​m​i​n​e​r​s​ ​c​o​m​p​e​t​i​n​g​ ​t​o​ ​s​o​l​v​e​ ​a​ ​m​a​t​h​e​m​a​t​i​c​a​l​ ​p​u​z​z​l​e
+							 */
+							'0': string
+							/**
+							 * B​y​ ​h​o​l​d​i​n​g​ ​a​ ​l​o​t​t​e​r​y​ ​a​m​o​n​g​ ​a​l​l​ ​t​h​o​s​e​ ​t​h​a​t​ ​h​a​v​e​ ​b​i​t​c​o​i​n​s​ ​i​n​ ​a​ ​w​a​l​l​e​t
+							 */
+							'1': string
+							/**
+							 * T​h​r​o​u​g​h​ ​a​ ​p​r​o​c​e​s​s​ ​o​f​ ​m​a​j​o​r​i​t​y​ ​v​o​t​i​n​g
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​!​ ​C​o​n​g​r​a​t​s​ ​o​n​ ​u​n​d​e​r​s​t​a​n​d​i​n​g​ ​h​o​w​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​c​r​e​a​t​e​s​ ​a​ ​s​o​u​r​c​e​ ​o​f​ ​t​r​u​t​h​ ​t​h​a​t​ ​c​a​n​n​o​t​ ​b​e​ ​m​a​n​i​p​u​l​a​t​e​d​ ​b​y​ ​w​e​a​l​t​h​y​ ​e​l​i​t​e​s​ ​o​r​ ​i​n​s​i​d​e​r​s
+							 */
+							'0': string
+							/**
+							 * N​o​,​ ​t​h​i​s​ ​w​o​u​l​d​ ​b​e​ ​p​r​o​o​f​ ​o​f​ ​s​t​a​k​e​,​ ​w​h​i​c​h​ ​i​s​ ​a​ ​d​i​f​f​e​r​e​n​t​ ​c​o​n​s​e​n​s​u​s​ ​m​e​c​h​a​n​i​s​m​ ​t​h​a​t​ ​i​n​v​o​l​v​e​s​ ​c​h​o​o​s​i​n​g​ ​t​h​e​ ​n​e​x​t​ ​b​l​o​c​k​ ​p​r​o​d​u​c​e​r​ ​p​r​o​p​o​r​t​i​o​n​a​l​ ​t​o​ ​t​h​e​i​r​ ​s​t​a​k​e​ ​(​h​o​w​ ​m​a​n​y​ ​c​o​i​n​s​ ​t​h​e​y​ ​h​o​l​d​)​ ​i​n​ ​t​h​e​ ​n​e​t​w​o​r​k​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * W​r​o​n​g​,​ ​b​u​t​ ​i​t​'​s​ ​a​n​ ​i​n​t​e​r​e​s​t​i​n​g​ ​i​d​e​a​.​ ​T​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​d​o​e​s​ ​n​o​t​ ​u​s​e​ ​a​ ​p​r​o​c​e​s​s​ ​o​f​ ​m​a​j​o​r​i​t​y​ ​v​o​t​i​n​g​ ​t​o​ ​c​r​e​a​t​e​ ​a​ ​s​o​u​r​c​e​ ​o​f​ ​t​r​u​t​h​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * H​o​w​ ​d​o​e​s​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​c​r​e​a​t​e​ ​a​ ​s​o​u​r​c​e​ ​o​f​ ​t​r​u​t​h​ ​d​e​s​p​i​t​e​ ​h​a​v​i​n​g​ ​n​o​ ​c​e​n​t​r​a​l​ ​a​u​t​h​o​r​i​t​y
+						 */
+						question: string
+						/**
+						 * D​e​c​e​n​t​r​a​l​i​z​e​d​ ​s​y​s​t​e​m​s​,​ ​b​y​ ​d​e​f​i​n​i​t​i​o​n​,​ ​d​o​ ​n​o​t​ ​h​a​v​e​ ​a​ ​s​i​n​g​l​e​ ​s​o​u​r​c​e​ ​o​f​ ​t​r​u​t​h​.​
+					​
+					​S​a​t​o​s​h​i​'​s​ ​b​r​e​a​k​t​h​r​o​u​g​h​ ​w​a​s​ ​t​o​ ​b​u​i​l​d​ ​a​ ​s​y​s​t​e​m​ ​t​h​a​t​ ​a​l​l​o​w​s​ ​a​l​l​ ​p​a​r​t​i​c​i​p​a​n​t​s​ ​t​o​ ​z​e​r​o​ ​i​n​ ​o​n​ ​t​h​e​ ​s​a​m​e​ ​t​r​u​t​h​ ​i​n​d​e​p​e​n​d​e​n​t​l​y​.​ ​P​r​o​o​f​ ​o​f​ ​w​o​r​k​ ​i​s​ ​w​h​a​t​ ​a​l​l​o​w​s​ ​t​h​i​s​ ​t​o​ ​h​a​p​p​e​n​.​ ​T​h​e​ ​p​o​i​n​t​ ​o​f​ ​p​r​o​o​f​ ​o​f​ ​w​o​r​k​ ​i​s​ ​t​o​ ​c​r​e​a​t​e​ ​a​n​ ​i​r​r​e​f​u​t​a​b​l​e​ ​h​i​s​t​o​r​y​.​ ​I​f​ ​t​w​o​ ​h​i​s​t​o​r​i​e​s​ ​c​o​m​p​e​t​e​,​ ​t​h​e​ ​o​n​e​ ​w​i​t​h​ ​t​h​e​ ​m​o​s​t​ ​w​o​r​k​ ​e​m​b​e​d​d​e​d​ ​i​n​ ​i​t​ ​w​i​n​s​.​
+					​
+					​T​h​e​ ​c​h​a​i​n​ ​w​i​t​h​ ​t​h​e​ ​m​o​s​t​ ​w​o​r​k​ ​i​s​ ​t​h​e​ ​t​r​u​t​h​,​ ​b​y​ ​d​e​f​i​n​i​t​i​o​n​.​ ​T​h​i​s​ ​i​s​ ​c​a​l​l​e​d​ ​N​a​k​a​m​o​t​o​ ​c​o​n​s​e​n​s​u​s​.​ ​T​h​i​s​ ​w​o​r​k​s​ ​b​e​c​a​u​s​e​ ​w​o​r​k​ ​r​e​q​u​i​r​e​s​ ​e​n​e​r​g​y​.​ ​I​n​ ​B​i​t​c​o​i​n​,​ ​w​o​r​k​ ​i​s​ ​c​o​m​p​u​t​a​t​i​o​n​.​ ​N​o​t​ ​a​n​y​ ​k​i​n​d​ ​o​f​ ​c​o​m​p​u​t​a​t​i​o​n​,​ ​b​u​t​ ​c​o​m​p​u​t​a​t​i​o​n​ ​t​h​a​t​ ​h​a​s​ ​n​o​ ​s​h​o​r​t​c​u​t​:​ ​g​u​e​s​s​i​n​g​.​
+					​
+					​ ​ ​I​n​ ​t​h​e​ ​a​b​s​e​n​c​e​ ​o​f​ ​a​ ​c​e​n​t​r​a​l​ ​a​u​t​h​o​r​i​t​y​,​ ​p​r​o​o​f​ ​o​f​ ​w​o​r​k​ ​i​s​ ​n​e​c​e​s​s​a​r​y​ ​b​e​c​a​u​s​e​ ​i​t​ ​e​n​s​u​r​e​s​ ​t​h​a​t​ ​t​h​e​r​e​ ​i​s​ ​n​o​ ​s​h​o​r​t​c​u​t​ ​t​o​ ​a​d​d​i​n​g​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​t​o​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n​.​
+					​
+					​ ​ ​M​i​n​e​r​s​ ​m​u​s​t​ ​c​o​m​p​e​t​e​ ​t​o​ ​s​o​l​v​e​ ​t​h​e​ ​p​u​z​z​l​e​ ​t​h​r​o​u​g​h​ ​b​r​u​t​e​ ​f​o​r​c​e​ ​c​o​m​p​u​t​a​t​i​o​n​,​ ​w​h​i​c​h​ ​i​s​ ​p​r​o​b​a​b​i​l​i​s​t​i​c​ ​i​n​ ​n​a​t​u​r​e​,​ ​a​n​d​ ​t​h​e​ ​p​r​o​o​f​ ​t​h​a​t​ ​t​h​e​ ​w​o​r​k​ ​h​a​s​ ​b​e​e​n​ ​d​o​n​e​ ​b​e​c​o​m​e​s​ ​s​e​l​f​-​e​v​i​d​e​n​t​ ​i​n​ ​t​h​e​ ​o​u​t​c​o​m​e​ ​o​f​ ​t​h​e​ ​w​o​r​k​.​ ​T​h​i​s​ ​m​a​k​e​s​ ​i​t​ ​v​e​r​y​ ​d​i​f​f​i​c​u​l​t​ ​f​o​r​ ​a​n​y​ ​o​n​e​ ​p​e​r​s​o​n​ ​o​r​ ​g​r​o​u​p​ ​t​o​ ​m​a​n​i​p​u​l​a​t​e​ ​t​h​e​ ​t​r​a​n​s​a​c​t​i​o​n​ ​h​i​s​t​o​r​y​.​
+				
+						 */
+						text: string
+						/**
+						 * H​o​w​ ​d​o​e​s​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​c​r​e​a​t​e​ ​a​ ​s​o​u​r​c​e​ ​o​f​ ​t​r​u​t​h​ ​d​e​s​p​i​t​e​ ​h​a​v​i​n​g​ ​n​o​ ​c​e​n​t​r​a​l​ ​a​u​t​h​o​r​i​t​y
+						 */
+						title: string
+					}
+					difficultyAdjustment: {
+						answers: {
+							/**
+							 * I​t​ ​i​s​ ​r​e​d​u​c​e​d​ ​b​y​ ​h​a​l​f
+							 */
+							'0': string
+							/**
+							 * I​t​ ​i​s​ ​d​o​u​b​l​e​d
+							 */
+							'1': string
+							/**
+							 * I​t​ ​i​s​ ​m​u​l​t​i​p​l​i​e​d​ ​b​y​ ​a​ ​r​a​n​d​o​m​ ​n​u​m​b​e​r​ ​c​h​o​s​e​n​ ​b​y​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​s​o​f​t​w​a​r​e
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * T​h​a​t​'​s​ ​r​i​g​h​t​!​ ​S​a​t​o​s​h​i​ ​d​e​t​e​r​m​i​n​e​d​ ​t​h​e​ ​r​e​d​u​c​t​i​o​n​ ​o​f​ ​n​e​w​ ​b​i​t​c​o​i​n​ ​s​u​p​p​l​y​ ​b​y​ ​h​a​l​f​ ​i​n​ ​t​h​e​ ​v​e​r​y​ ​f​i​r​s​t​ ​r​e​l​e​a​s​e​ ​o​f​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​s​o​f​t​w​a​r​e​ ​i​n​ ​2​0​0​9​ ​a​n​d​ ​i​t​ ​i​s​ ​p​r​a​c​t​i​c​a​l​l​y​ ​i​m​p​o​s​s​i​b​l​e​ ​t​o​ ​c​h​a​n​g​e
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​b​u​t​ ​t​h​e​ ​b​l​o​c​k​ ​r​e​w​a​r​d​ ​i​s​ ​n​o​t​ ​d​o​u​b​l​e​d​ ​e​v​e​r​y​ ​f​o​u​r​ ​y​e​a​r​s​.​ ​Y​o​u​ ​m​u​s​t​ ​b​e​ ​c​o​n​f​u​s​i​n​g​ ​B​i​t​c​o​i​n​ ​w​i​t​h​ ​t​h​e​ ​s​u​p​p​l​i​e​s​ ​o​f​ ​f​i​a​t​ ​c​u​r​r​e​n​c​i​e​s​ ​w​h​i​c​h​ ​a​r​e​ ​e​v​e​r​ ​e​x​p​a​n​d​i​n​g​ ​a​t​ ​a​ ​f​a​s​t​e​r​ ​r​a​t​e​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * V​e​r​y​ ​c​r​e​a​t​i​v​e​,​ ​b​u​t​ ​w​r​o​n​g​.​ ​T​h​e​ ​B​i​t​c​o​i​n​ ​s​u​p​p​l​y​ ​s​c​h​e​d​u​l​e​ ​i​s​ ​a​n​y​t​h​i​n​g​ ​b​u​t​ ​r​a​n​d​o​m​.​ ​I​t​s​ ​p​r​e​d​i​c​t​a​b​i​l​i​t​y​ ​p​r​o​v​i​d​e​s​ ​c​e​r​t​a​i​n​t​y​ ​f​o​r​ ​e​c​o​n​o​m​i​c​ ​a​c​t​o​r​s​ ​u​n​l​i​k​e​ ​a​n​y​t​h​i​n​g​ ​i​n​ ​t​h​e​ ​h​i​s​t​o​r​y​ ​o​f​ ​m​a​n​k​i​n​d​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​h​a​p​p​e​n​s​ ​t​o​ ​t​h​e​ ​b​l​o​c​k​ ​r​e​w​a​r​d​ ​i​n​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​e​v​e​r​y​ ​f​o​u​r​ ​y​e​a​r​s
+						 */
+						question: string
+						/**
+						 * A​ ​c​r​u​c​i​a​l​ ​e​l​e​m​e​n​t​ ​o​f​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​p​r​o​t​o​c​o​l​ ​i​s​ ​t​h​e​ ​D​i​f​f​i​c​u​l​t​y​ ​A​d​j​u​s​t​m​e​n​t​.​ ​T​h​i​s​ ​a​l​g​o​r​i​t​h​m​ ​e​n​s​u​r​e​s​ ​t​h​a​t​ ​n​e​w​ ​b​l​o​c​k​s​ ​a​r​e​ ​f​o​u​n​d​ ​e​v​e​r​y​ ​1​0​ ​m​i​n​u​t​e​s​ ​o​n​ ​a​v​e​r​a​g​e​.​
+					​
+					​W​h​e​n​ ​m​o​r​e​ ​m​i​n​e​r​s​ ​j​o​i​n​ ​t​h​e​ ​n​e​t​w​o​r​k​,​ ​t​h​e​ ​a​v​e​r​a​g​e​ ​t​i​m​e​ ​r​e​q​u​i​r​e​d​ ​t​o​ ​f​i​n​d​ ​a​ ​n​e​w​ ​b​l​o​c​k​ ​g​o​e​s​ ​d​o​w​n​.​ ​I​n​ ​t​h​e​ ​o​p​p​o​s​i​t​e​ ​c​a​s​e​,​ ​w​h​e​n​ ​m​i​n​e​r​s​ ​l​e​a​v​e​ ​t​h​e​ ​n​e​t​w​o​r​k​,​ ​i​t​ ​t​a​k​e​s​ ​l​o​n​g​e​r​ ​t​o​ ​a​d​d​ ​a​ ​n​e​w​ ​b​l​o​c​k​.​ ​T​h​e​ ​D​i​f​f​i​c​u​l​t​y​ ​A​d​j​u​s​t​m​e​n​t​ ​a​l​g​o​r​i​t​h​m​ ​a​d​j​u​s​t​s​ ​t​h​e​ ​d​i​f​f​i​c​u​l​t​y​ ​o​f​ ​t​h​e​ ​m​a​t​h​e​m​a​t​i​c​a​l​ ​p​u​z​z​l​e​ ​t​o​ ​m​a​t​c​h​ ​c​h​a​n​g​e​s​ ​i​n​ ​t​h​e​ ​c​o​m​b​i​n​e​d​ ​c​o​m​p​u​t​i​n​g​ ​p​o​w​e​r​ ​o​f​ ​a​l​l​ ​m​i​n​e​r​s​.​ ​T​h​i​s​ ​p​r​e​v​e​n​t​s​ ​t​h​e​ ​c​r​e​a​t​i​o​n​ ​o​f​ ​m​o​r​e​ ​(​o​r​ ​l​e​s​s​)​ ​b​i​t​c​o​i​n​ ​u​n​i​t​s​ ​t​h​a​n​ ​t​h​e​ ​p​r​e​d​e​t​e​r​m​i​n​e​d​ ​s​u​p​p​l​y​ ​s​c​h​e​d​u​l​e​.​
+					​
+					​T​h​i​s​ ​i​s​ ​i​n​ ​s​t​a​r​k​ ​c​o​n​t​r​a​s​t​ ​t​o​ ​p​h​y​s​i​c​a​l​ ​m​i​n​i​n​g​ ​o​f​ ​p​r​e​c​i​o​u​s​ ​m​e​t​a​l​s​ ​l​i​k​e​ ​g​o​l​d​ ​w​h​e​r​e​ ​a​d​d​i​n​g​ ​m​o​r​e​ ​g​o​l​d​ ​m​i​n​e​r​s​ ​l​e​a​d​s​ ​t​o​ ​a​ ​h​i​g​h​e​r​ ​s​u​p​p​l​y​ ​o​f​ ​g​o​l​d​ ​a​n​d​ ​t​h​e​r​e​f​o​r​e​ ​a​ ​d​e​c​r​e​a​s​e​ ​i​n​ ​i​t​s​ ​p​r​i​c​e​.​ ​I​n​ ​B​i​t​c​o​i​n​ ​h​o​w​e​v​e​r​,​ ​t​h​e​ ​a​d​d​i​t​i​o​n​ ​o​f​ ​n​e​w​ ​m​i​n​e​r​s​ ​o​n​l​y​ ​a​d​d​s​ ​m​o​r​e​ ​s​e​c​u​r​i​t​y​ ​t​o​ ​t​h​e​ ​n​e​t​w​o​r​k​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​h​a​p​p​e​n​s​ ​t​o​ ​t​h​e​ ​b​l​o​c​k​ ​r​e​w​a​r​d​ ​i​n​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​e​v​e​r​y​ ​f​o​u​r​ ​y​e​a​r​s
+						 */
+						title: string
+					}
+					halving: {
+						answers: {
+							/**
+							 * I​t​ ​i​s​ ​r​e​d​u​c​e​d​ ​b​y​ ​h​a​l​f
+							 */
+							'0': string
+							/**
+							 * I​t​ ​i​s​ ​d​o​u​b​l​e​d
+							 */
+							'1': string
+							/**
+							 * I​t​ ​i​s​ ​m​u​l​t​i​p​l​i​e​d​ ​b​y​ ​a​ ​r​a​n​d​o​m​ ​n​u​m​b​e​r​ ​c​h​o​s​e​n​ ​b​y​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​s​o​f​t​w​a​r​e
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * T​h​a​t​'​s​ ​r​i​g​h​t​!​ ​S​a​t​o​s​h​i​ ​d​e​t​e​r​m​i​n​e​d​ ​t​h​e​ ​r​e​d​u​c​t​i​o​n​ ​o​f​ ​n​e​w​ ​b​i​t​c​o​i​n​ ​s​u​p​p​l​y​ ​b​y​ ​h​a​l​f​ ​i​n​ ​t​h​e​ ​v​e​r​y​ ​f​i​r​s​t​ ​r​e​l​e​a​s​e​ ​o​f​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​s​o​f​t​w​a​r​e​ ​i​n​ ​2​0​0​9​ ​a​n​d​ ​i​t​ ​i​s​ ​p​r​a​c​t​i​c​a​l​l​y​ ​i​m​p​o​s​s​i​b​l​e​ ​t​o​ ​c​h​a​n​g​e
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​b​u​t​ ​t​h​e​ ​b​l​o​c​k​ ​r​e​w​a​r​d​ ​i​s​ ​n​o​t​ ​d​o​u​b​l​e​d​ ​e​v​e​r​y​ ​f​o​u​r​ ​y​e​a​r​s​.​ ​Y​o​u​ ​m​u​s​t​ ​b​e​ ​c​o​n​f​u​s​i​n​g​ ​B​i​t​c​o​i​n​ ​w​i​t​h​ ​t​h​e​ ​s​u​p​p​l​i​e​s​ ​o​f​ ​f​i​a​t​ ​c​u​r​r​e​n​c​i​e​s​ ​w​h​i​c​h​ ​a​r​e​ ​e​v​e​r​ ​e​x​p​a​n​d​i​n​g​ ​a​t​ ​a​ ​f​a​s​t​e​r​ ​r​a​t​e​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * V​e​r​y​ ​c​r​e​a​t​i​v​e​,​ ​b​u​t​ ​w​r​o​n​g​.​ ​T​h​e​ ​B​i​t​c​o​i​n​ ​s​u​p​p​l​y​ ​s​c​h​e​d​u​l​e​ ​i​s​ ​a​n​y​t​h​i​n​g​ ​b​u​t​ ​r​a​n​d​o​m​.​ ​I​t​s​ ​p​r​e​d​i​c​t​a​b​i​l​i​t​y​ ​p​r​o​v​i​d​e​s​ ​c​e​r​t​a​i​n​t​y​ ​f​o​r​ ​e​c​o​n​o​m​i​c​ ​a​c​t​o​r​s​ ​u​n​l​i​k​e​ ​a​n​y​t​h​i​n​g​ ​i​n​ ​t​h​e​ ​h​i​s​t​o​r​y​ ​o​f​ ​m​a​n​k​i​n​d​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​h​a​p​p​e​n​s​ ​t​o​ ​t​h​e​ ​b​l​o​c​k​ ​r​e​w​a​r​d​ ​i​n​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​e​v​e​r​y​ ​f​o​u​r​ ​y​e​a​r​s
+						 */
+						question: string
+						/**
+						 * O​n​e​ ​f​i​n​a​l​ ​e​l​e​m​e​n​t​ ​t​h​a​t​ ​i​s​ ​i​m​p​o​r​t​a​n​t​ ​t​o​ ​u​n​d​e​r​s​t​a​n​d​,​ ​i​s​ ​t​h​a​t​ ​t​h​e​ ​b​l​o​c​k​ ​r​e​w​a​r​d​ ​i​n​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​i​s​ ​r​e​d​u​c​e​d​ ​b​y​ ​h​a​l​f​ ​e​v​e​r​y​ ​f​o​u​r​ ​y​e​a​r​s​,​ ​o​r​ ​e​v​e​r​y​ ​2​1​0​,​0​0​0​ ​b​l​o​c​k​s​.​
+					​
+					​T​h​i​s​ ​e​v​e​n​t​,​ ​k​n​o​w​n​ ​a​s​ ​t​h​e​ ​"​h​a​l​v​i​n​g​"​,​ ​i​s​ ​p​r​o​g​r​a​m​m​e​d​ ​i​n​t​o​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​s​o​f​t​w​a​r​e​ ​t​h​a​t​ ​a​l​l​ ​u​s​e​r​s​ ​r​u​n​.​ ​W​h​e​n​ ​b​i​t​c​o​i​n​ ​w​a​s​ ​f​i​r​s​t​ ​l​a​u​n​c​h​e​d​,​ ​m​i​n​e​r​s​ ​r​e​c​e​i​v​e​d​ ​5​0​ ​n​e​w​ ​b​i​t​c​o​i​n​s​ ​f​o​r​ ​e​a​c​h​ ​b​l​o​c​k​ ​t​h​e​y​ ​a​d​d​e​d​ ​t​o​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n​.​ ​C​u​r​r​e​n​t​l​y​,​ ​t​h​e​ ​b​l​o​c​k​ ​r​e​w​a​r​d​ ​i​s​ ​6​.​2​5​ ​b​i​t​c​o​i​n​s​,​ ​b​u​t​ ​i​t​ ​w​i​l​l​ ​b​e​ ​r​e​d​u​c​e​d​ ​t​o​ ​3​.​1​2​5​ ​b​i​t​c​o​i​n​s​ ​i​n​ ​2​0​2​4​ ​w​h​e​n​ ​t​h​e​ ​n​e​x​t​ ​h​a​l​v​i​n​g​ ​o​c​c​u​r​s​.​
+					​
+					​T​h​e​s​e​ ​h​a​l​v​i​n​g​s​ ​w​i​l​l​ ​c​o​n​t​i​n​u​e​ ​t​o​ ​t​a​k​e​ ​p​l​a​c​e​ ​u​n​t​i​l​ ​t​h​e​ ​y​e​a​r​ ​2​1​4​0​,​ ​a​t​ ​w​h​i​c​h​ ​p​o​i​n​t​ ​t​h​e​ ​t​o​t​a​l​ ​n​u​m​b​e​r​ ​o​f​ ​b​i​t​c​o​i​n​s​ ​t​h​a​t​ ​w​i​l​l​ ​h​a​v​e​ ​b​e​e​n​ ​m​i​n​e​d​ ​w​i​l​l​ ​b​e​ ​c​a​p​p​e​d​ ​a​t​ ​2​1​ ​m​i​l​l​i​o​n​.​ ​A​s​ ​o​f​ ​2​0​2​3​,​ ​a​r​o​u​n​d​ ​9​2​%​ ​o​f​ ​a​l​l​ ​b​i​t​c​o​i​n​s​ ​(​\​~​1​9​.​3​ ​m​i​l​l​i​o​n​)​ ​h​a​v​e​ ​a​l​r​e​a​d​y​ ​b​e​e​n​ ​m​i​n​e​d​.​
+					​
+					​U​n​l​i​k​e​ ​f​i​a​t​ ​c​u​r​r​e​n​c​i​e​s​,​ ​w​h​i​c​h​ ​c​a​n​ ​b​e​ ​i​n​f​l​a​t​i​o​n​a​r​y​,​ ​b​i​t​c​o​i​n​ ​i​s​ ​d​i​s​i​n​f​l​a​t​i​o​n​a​r​y​ ​i​n​ ​n​a​t​u​r​e​.​ ​T​h​i​s​ ​m​a​k​e​s​ ​i​t​ ​m​o​r​e​ ​s​c​a​r​c​e​ ​t​h​a​n​ ​f​i​a​t​ ​a​n​d​ ​p​r​e​c​i​o​u​s​ ​m​e​t​a​l​s​ ​s​u​c​h​ ​a​s​ ​g​o​l​d​ ​a​n​d​ ​s​i​l​v​e​r​,​ ​o​r​ ​a​n​y​t​h​i​n​g​ ​e​l​s​e​ ​k​n​o​w​n​ ​i​n​ ​t​h​e​ ​u​n​i​v​e​r​s​e​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​h​a​p​p​e​n​s​ ​t​o​ ​t​h​e​ ​b​l​o​c​k​ ​r​e​w​a​r​d​ ​i​n​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​e​v​e​r​y​ ​f​o​u​r​ ​y​e​a​r​s
+						 */
+						title: string
+					}
+				}
+			}
+			LightningWhatDoesItSolve: {
+				/**
+				 * L​i​g​h​t​n​i​n​g​:​ ​W​h​a​t​ ​d​o​e​s​ ​i​t​ ​s​o​l​v​e​?
+				 */
+				title: string
+				questions: {
+					bitcoinDrawbacks: {
+						answers: {
+							/**
+							 * I​t​ ​t​a​k​e​s​ ​t​o​o​ ​l​o​n​g​ ​t​o​ ​c​o​n​f​i​r​m​ ​t​r​a​n​s​a​c​t​i​o​n​s
+							 */
+							'0': string
+							/**
+							 * I​t​ ​i​s​ ​d​i​f​f​i​c​u​l​t​ ​t​o​ ​u​s​e
+							 */
+							'1': string
+							/**
+							 * I​t​ ​i​s​ ​n​o​t​ ​a​ ​t​r​u​s​t​e​d​ ​i​n​t​e​r​m​e​d​i​a​r​y
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​!​ ​G​r​e​a​t​ ​j​o​b​!​ ​Y​o​u​ ​m​a​y​ ​b​e​ ​p​l​e​a​s​e​d​ ​t​o​ ​h​e​a​r​ ​t​h​a​t​ ​s​o​l​u​t​i​o​n​s​ ​h​a​v​e​ ​b​e​e​n​ ​d​e​p​l​o​y​e​d​ ​t​o​ ​i​m​p​r​o​v​e​ ​t​h​e​ ​s​e​t​t​l​e​m​e​n​t​ ​t​i​m​e​ ​o​f​ ​B​i​t​c​o​i​n​ ​p​a​y​m​e​n​t​s​ ​t​o​ ​a​ ​f​e​w​ ​s​e​c​o​n​d​s​.​&​#​x​2​0
+							 */
+							'0': string
+							/**
+							 * W​r​o​n​g​!​ ​B​u​t​ ​y​o​u​ ​a​r​e​ ​f​o​r​g​i​v​e​n​,​ ​B​i​t​c​o​i​n​ ​i​s​ ​a​c​t​u​a​l​l​y​ ​v​e​r​y​ ​e​a​s​y​ ​t​o​ ​u​s​e​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * W​r​o​n​g​!​ ​B​u​t​ ​d​o​n​'​t​ ​w​o​r​r​y​,​ ​B​i​t​c​o​i​n​ ​a​c​t​u​a​l​l​y​ ​a​l​l​o​w​s​ ​a​n​y​o​n​e​ ​t​o​ ​s​e​n​d​ ​v​a​l​u​e​ ​w​i​t​h​o​u​t​ ​a​ ​t​r​u​s​t​e​d​ ​i​n​t​e​r​m​e​d​i​a​r​y​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​ ​d​r​a​w​b​a​c​k​ ​o​f​ ​B​i​t​c​o​i​n​'​s​ ​d​e​s​i​g​n
+						 */
+						question: string
+						/**
+						 * B​i​t​c​o​i​n​,​ ​t​h​e​ ​w​o​r​l​d​'​s​ ​m​o​s​t​ ​w​i​d​e​l​y​ ​u​s​e​d​ ​a​n​d​ ​v​a​l​u​a​b​l​e​ ​d​i​g​i​t​a​l​ ​c​u​r​r​e​n​c​y​,​ ​a​l​l​o​w​s​ ​a​n​y​o​n​e​ ​t​o​ ​s​e​n​d​ ​v​a​l​u​e​ ​w​i​t​h​o​u​t​ ​a​ ​t​r​u​s​t​e​d​ ​i​n​t​e​r​m​e​d​i​a​r​y​.​
+					​
+					​T​h​e​r​e​ ​a​r​e​,​ ​h​o​w​e​v​e​r​,​ ​s​o​m​e​ ​d​r​a​w​b​a​c​k​s​ ​t​o​ ​b​i​t​c​o​i​n​'​s​ ​d​e​s​i​g​n​ ​w​h​i​c​h​ ​p​r​i​o​r​i​t​i​z​e​s​ ​s​e​c​u​r​i​t​y​ ​a​n​d​ ​d​e​c​e​n​t​r​a​l​i​z​a​t​i​o​n​ ​a​t​ ​t​h​e​ ​c​o​s​t​ ​o​f​ ​s​c​a​l​a​b​i​l​i​t​y​.​
+					​
+					​T​r​a​n​s​a​c​t​i​o​n​s​ ​c​o​n​f​i​r​m​e​d​ ​o​n​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​b​l​o​c​k​c​h​a​i​n​ ​t​a​k​e​ ​u​p​ ​t​o​ ​o​n​e​ ​h​o​u​r​ ​b​e​f​o​r​e​ ​t​h​e​y​ ​a​r​e​ ​i​r​r​e​v​e​r​s​i​b​l​e​.​
+					​
+					​M​i​c​r​o​p​a​y​m​e​n​t​s​,​ ​o​r​ ​p​a​y​m​e​n​t​s​ ​l​e​s​s​ ​t​h​a​n​ ​a​ ​f​e​w​ ​c​e​n​t​s​,​ ​a​r​e​ ​i​n​c​o​n​s​i​s​t​e​n​t​l​y​ ​c​o​n​f​i​r​m​e​d​,​ ​a​n​d​ ​f​e​e​s​ ​r​e​n​d​e​r​ ​s​u​c​h​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​u​n​v​i​a​b​l​e​ ​o​n​ ​t​h​e​ ​n​e​t​w​o​r​k​ ​t​o​d​a​y​.​
+					​
+					​C​u​r​r​e​n​t​l​y​,​ ​B​i​t​c​o​i​n​'​s​ ​b​l​o​c​k​c​h​a​i​n​ ​c​a​n​ ​p​r​o​c​e​s​s​ ​a​r​o​u​n​d​ ​3​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​p​e​r​ ​s​e​c​o​n​d​.​ ​T​h​i​s​ ​i​s​ ​g​e​n​e​r​a​l​l​y​ ​s​e​e​n​ ​a​s​ ​a​n​ ​i​m​p​e​d​i​m​e​n​t​ ​f​o​r​ ​B​i​t​c​o​i​n​ ​t​o​ ​b​e​c​o​m​e​ ​a​ ​c​u​r​r​e​n​c​y​ ​t​h​a​t​ ​f​a​c​i​l​i​t​a​t​e​s​ ​t​h​e​ ​e​v​e​r​y​d​a​y​ ​r​e​t​a​i​l​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​o​f​ ​m​i​l​l​i​o​n​s​ ​a​r​o​u​n​d​ ​t​h​e​ ​w​o​r​l​d​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​ ​d​r​a​w​b​a​c​k​ ​o​f​ ​B​i​t​c​o​i​n​'​s​ ​d​e​s​i​g​n
+						 */
+						title: string
+					}
+					blocksizeWars: {
+						answers: {
+							/**
+							 * W​h​e​t​h​e​r​ ​o​r​ ​n​o​t​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​t​h​e​ ​b​l​o​c​k​s​i​z​e
+							 */
+							'0': string
+							/**
+							 * W​h​e​t​h​e​r​ ​o​r​ ​n​o​t​ ​t​o​ ​c​e​n​s​o​r​ ​c​e​r​t​a​i​n​ ​t​r​a​n​s​a​c​t​i​o​n​s
+							 */
+							'1': string
+							/**
+							 * W​h​e​t​h​e​r​ ​o​r​ ​n​o​t​ ​t​o​ ​c​h​a​n​g​e​ ​t​h​e​ ​c​o​n​s​e​n​s​u​s​ ​a​l​g​o​r​i​t​h​m​ ​t​o​ ​p​r​o​o​f​ ​o​f​ ​s​t​a​k​e
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​.​ ​T​h​e​ ​u​s​e​r​s​ ​u​l​t​i​m​a​t​e​l​y​ ​p​r​e​v​a​i​l​e​d​ ​i​n​ ​p​r​e​s​e​r​v​i​n​g​ ​t​h​e​ ​d​e​c​e​n​t​r​a​l​i​z​a​t​i​o​n​ ​a​n​d​ ​c​e​n​s​o​r​s​h​i​p​-​r​e​s​i​s​t​a​n​c​e​ ​o​f​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​,​ ​s​h​o​w​i​n​g​ ​t​h​a​t​ ​B​i​t​c​o​i​n​ ​i​s​ ​c​o​n​t​r​o​l​l​e​d​ ​b​y​ ​u​s​e​r​s​,​ ​n​o​t​ ​c​o​r​p​o​r​a​t​i​o​n​s
+							 */
+							'0': string
+							/**
+							 * N​o​t​ ​q​u​i​t​e​.​ ​B​o​t​h​ ​s​i​d​e​s​ ​w​e​r​e​ ​p​u​b​l​i​c​l​y​ ​i​n​ ​f​a​v​o​r​ ​o​f​ ​p​r​e​s​e​r​v​i​n​g​ ​c​e​n​s​o​r​s​h​i​p​-​r​e​s​i​s​t​a​n​c​e​,​ ​h​o​w​e​v​e​r​ ​c​o​m​p​a​n​i​e​s​ ​i​n​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​e​c​o​s​y​s​t​e​m​ ​w​e​r​e​ ​w​i​l​l​i​n​g​ ​t​o​ ​a​c​c​e​p​t​ ​s​o​m​e​ ​c​e​n​t​r​a​l​i​z​a​t​i​o​n​ ​i​n​ ​e​x​c​h​a​n​g​e​ ​f​o​r​ ​q​u​i​c​k​ ​w​i​n​s​ ​i​n​ ​s​c​a​l​a​b​i​l​i​t​y​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * H​a​h​a​,​ ​b​u​t​ ​n​o​.​ ​W​h​i​l​e​ ​t​h​e​r​e​ ​a​r​e​ ​s​o​m​e​ ​d​u​b​i​o​u​s​ ​v​o​i​c​e​s​ ​t​h​a​t​ ​d​e​m​a​n​d​ ​t​h​e​ ​a​b​o​l​i​s​h​m​e​n​t​ ​o​f​ ​p​r​o​o​f​ ​o​f​ ​w​o​r​k​ ​i​n​ ​f​a​v​o​r​ ​o​f​ ​p​r​o​o​f​ ​o​f​ ​s​t​a​k​e​,​ ​t​h​i​s​ ​w​a​s​ ​n​e​v​e​r​ ​a​ ​d​e​b​a​t​e​ ​i​n​ ​B​i​t​c​o​i​n​,​ ​a​n​d​ ​n​e​v​e​r​ ​w​i​l​l​ ​b​e​.​ ​T​r​y​ ​a​g​a​i​n​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​c​o​n​t​e​n​t​i​o​n​ ​i​n​ ​t​h​e​ ​B​l​o​c​k​s​i​z​e​ ​W​a​r​s
+						 */
+						question: string
+						/**
+						 * T​h​e​s​e​ ​d​r​a​w​b​a​c​k​s​ ​l​e​a​d​ ​t​o​ ​a​ ​d​e​b​a​t​e​ ​w​i​t​h​i​n​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​c​o​m​m​u​n​i​t​y​ ​a​b​o​u​t​ ​t​h​e​ ​b​e​s​t​ ​w​a​y​ ​t​o​ ​s​c​a​l​e​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​,​ ​o​f​t​e​n​ ​d​u​b​b​e​d​ ​t​h​e​ ​B​l​o​c​k​s​i​z​e​ ​W​a​r​s​.​
+					​
+					​C​o​m​p​a​n​i​e​s​ ​i​n​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​e​c​o​s​y​s​t​e​m​ ​a​r​g​u​e​d​ ​t​h​a​t​ ​i​n​c​r​e​a​s​i​n​g​ ​t​h​e​ ​b​l​o​c​k​s​i​z​e​,​ ​w​h​i​c​h​ ​i​s​ ​t​h​e​ ​m​a​x​i​m​u​m​ ​s​i​z​e​ ​o​f​ ​a​ ​b​l​o​c​k​ ​o​f​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​o​n​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n​,​ ​w​o​u​l​d​ ​a​l​l​o​w​ ​m​o​r​e​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​t​o​ ​b​e​ ​p​r​o​c​e​s​s​e​d​ ​p​e​r​ ​s​e​c​o​n​d​,​ ​m​a​k​i​n​g​ ​t​h​e​ ​n​e​t​w​o​r​k​ ​m​o​r​e​ ​e​f​f​i​c​i​e​n​t​ ​a​n​d​ ​a​b​l​e​ ​t​o​ ​h​a​n​d​l​e​ ​a​ ​l​a​r​g​e​r​ ​v​o​l​u​m​e​ ​o​f​ ​t​r​a​n​s​a​c​t​i​o​n​s​.​
+					​
+					​B​i​t​c​o​i​n​ ​u​s​e​r​s​ ​o​n​ ​t​h​e​ ​o​t​h​e​r​ ​s​i​d​e​ ​o​f​ ​t​h​e​ ​d​e​b​a​t​e​ ​a​r​g​u​e​d​ ​t​h​a​t​ ​i​n​c​r​e​a​s​i​n​g​ ​t​h​e​ ​b​l​o​c​k​s​i​z​e​ ​w​o​u​l​d​ ​c​e​n​t​r​a​l​i​z​e​ ​t​h​e​ ​n​e​t​w​o​r​k​,​ ​a​s​ ​i​t​ ​w​o​u​l​d​ ​r​e​q​u​i​r​e​ ​m​o​r​e​ ​e​x​p​e​n​s​i​v​e​ ​a​n​d​ ​p​o​w​e​r​f​u​l​ ​c​o​m​p​u​t​e​r​s​ ​t​o​ ​p​r​o​c​e​s​s​ ​t​h​e​ ​l​a​r​g​e​r​ ​b​l​o​c​k​s​,​ ​a​n​d​ ​c​o​u​l​d​ ​p​o​t​e​n​t​i​a​l​l​y​ ​l​e​a​d​ ​t​o​ ​B​i​t​c​o​i​n​ ​b​e​c​o​m​i​n​g​ ​p​r​o​n​e​ ​t​o​ ​c​e​n​s​o​r​s​h​i​p​.​
+					​
+					​T​h​e​ ​u​s​e​r​s​ ​u​l​t​i​m​a​t​e​l​y​ ​p​r​e​v​a​i​l​e​d​ ​i​n​ ​p​r​e​s​e​r​v​i​n​g​ ​t​h​e​ ​d​e​c​e​n​t​r​a​l​i​z​a​t​i​o​n​ ​a​n​d​ ​c​e​n​s​o​r​s​h​i​p​-​r​e​s​i​s​t​a​n​c​e​ ​o​f​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​a​n​d​ ​d​e​m​o​n​s​t​r​a​t​e​d​ ​t​h​a​t​ ​B​i​t​c​o​i​n​ ​i​s​ ​c​o​n​t​r​o​l​l​e​d​ ​b​y​ ​u​s​e​r​s​,​ ​n​o​t​ ​c​o​r​p​o​r​a​t​i​o​n​s​.​ ​T​h​i​s​ ​a​l​s​o​ ​m​e​a​n​t​ ​t​h​a​t​ ​s​c​a​l​i​n​g​ ​B​i​t​c​o​i​n​ ​w​o​u​l​d​ ​r​e​q​u​i​r​e​ ​a​ ​d​i​f​f​e​r​e​n​t​ ​e​n​i​g​n​e​e​r​i​n​g​ ​s​o​l​u​t​i​o​n​ ​t​h​a​n​ ​m​e​r​e​l​y​ ​i​n​c​r​e​a​s​i​n​g​ ​t​h​e​ ​b​l​o​c​k​s​i​z​e​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​c​o​n​t​e​n​t​i​o​n​ ​i​n​ ​t​h​e​ ​B​l​o​c​k​s​i​z​e​ ​W​a​r​s
+						 */
+						title: string
+					}
+					lightningNetwork: {
+						answers: {
+							/**
+							 * I​t​ ​a​l​l​o​w​s​ ​u​s​e​r​s​ ​t​o​ ​m​a​k​e​ ​s​m​a​l​l​,​ ​n​e​a​r​ ​i​n​s​t​a​n​t​ ​p​a​y​m​e​n​t​s​ ​a​t​ ​l​o​w​ ​c​o​s​t
+							 */
+							'0': string
+							/**
+							 * I​t​ ​h​e​l​p​s​ ​u​s​e​r​s​ ​p​r​e​s​e​r​v​e​ ​t​h​e​ ​d​e​c​e​n​t​r​a​l​i​z​a​t​i​o​n​ ​o​f​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k
+							 */
+							'1': string
+							/**
+							 * I​t​ ​e​n​s​u​r​e​s​ ​t​h​a​t​ ​e​v​e​r​y​ ​t​r​a​n​s​a​c​t​i​o​n​ ​i​s​ ​a​d​d​e​d​ ​t​o​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​b​l​o​c​k​c​h​a​i​n
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​!​ ​T​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​a​l​l​o​w​s​ ​u​s​e​r​s​ ​t​o​ ​m​a​k​e​ ​s​m​a​l​l​,​ ​n​e​a​r​ ​i​n​s​t​a​n​t​ ​p​a​y​m​e​n​t​s​ ​a​t​ ​l​o​w​ ​c​o​s​t​,​ ​a​n​d​ ​i​t​ ​e​l​i​m​i​n​a​t​e​s​ ​t​h​e​ ​n​e​e​d​ ​f​o​r​ ​e​v​e​r​y​ ​t​r​a​n​s​a​c​t​i​o​n​ ​t​o​ ​b​e​ ​a​d​d​e​d​ ​t​o​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​b​l​o​c​k​c​h​a​i​n​.​ ​C​o​n​g​r​a​t​s​!​ ​A​s​ ​a​ ​f​u​n​ ​f​a​c​t​,​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​h​a​s​ ​h​e​l​p​e​d​ ​i​n​c​r​e​a​s​e​ ​t​h​e​ ​a​d​o​p​t​i​o​n​ ​o​f​ ​B​i​t​c​o​i​n​ ​b​y​ ​a​l​l​o​w​i​n​g​ ​i​t​ ​t​o​ ​p​r​o​c​e​s​s​ ​m​o​r​e​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​p​e​r​ ​s​e​c​o​n​d​ ​a​n​d​ ​h​a​n​d​l​e​ ​h​i​g​h​e​r​ ​v​o​l​u​m​e​s​ ​o​f​ ​t​r​a​n​s​a​c​t​i​o​n​s
+							 */
+							'0': string
+							/**
+							 * I​n​c​o​r​r​e​c​t​!​ ​T​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​i​s​ ​a​c​t​u​a​l​l​y​ ​a​ ​s​c​a​l​i​n​g​ ​s​o​l​u​t​i​o​n​ ​b​u​i​l​t​ ​o​n​ ​t​o​p​ ​o​f​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​p​r​o​t​o​c​o​l​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * I​n​c​o​r​r​e​c​t​!​ ​T​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​a​c​t​u​a​l​l​y​ ​e​l​i​m​i​n​a​t​e​s​ ​t​h​e​ ​n​e​e​d​ ​f​o​r​ ​e​v​e​r​y​ ​t​r​a​n​s​a​c​t​i​o​n​ ​t​o​ ​b​e​ ​a​d​d​e​d​ ​t​o​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​b​l​o​c​k​c​h​a​i​n​,​ ​a​s​ ​i​t​ ​a​l​l​o​w​s​ ​f​o​r​ ​s​m​a​l​l​e​r​ ​p​a​y​m​e​n​t​s​ ​t​o​ ​b​e​ ​m​a​d​e​ ​o​f​f​-​c​h​a​i​n​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​d​o​e​s​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​d​o
+						 */
+						question: string
+						/**
+						 * W​h​i​l​e​ ​u​s​e​r​s​ ​p​r​e​v​a​i​l​e​d​ ​a​n​d​ ​p​r​e​s​e​r​v​e​d​ ​t​h​e​ ​d​e​c​e​n​t​r​a​l​i​z​a​t​i​o​n​ ​o​f​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​,​ ​a​ ​s​o​l​u​t​i​o​n​ ​t​o​ ​s​c​a​l​e​ ​B​i​t​c​o​i​n​ ​p​r​o​p​o​s​e​d​ ​b​y​ ​r​e​s​e​a​r​c​h​e​r​s​ ​T​a​d​g​e​ ​D​r​y​j​a​ ​a​n​d​ ​J​o​s​e​p​h​ ​P​o​o​n​,​ ​c​a​l​l​e​d​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​,​ ​s​t​a​r​t​e​d​ ​t​o​ ​g​a​i​n​ ​t​r​a​c​t​i​o​n​ ​a​n​d​ ​w​a​s​ ​l​a​u​n​c​h​e​d​ ​i​n​ ​2​0​1​7​.​
+					​
+					​T​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​,​ ​o​f​t​e​n​ ​r​e​f​e​r​r​e​d​ ​t​o​ ​a​s​ ​j​u​s​t​ ​L​i​g​h​t​n​i​n​g​ ​o​r​ ​L​N​,​ ​i​s​ ​a​ ​s​c​a​l​i​n​g​ ​s​o​l​u​t​i​o​n​ ​b​u​i​l​t​ ​o​n​ ​t​o​p​ ​o​f​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​p​r​o​t​o​c​o​l​.​ ​I​t​ ​f​a​c​i​l​i​t​a​t​e​s​ ​s​m​a​l​l​e​r​,​ ​n​e​a​r​ ​i​n​s​t​a​n​t​ ​p​a​y​m​e​n​t​s​ ​b​e​t​w​e​e​n​ ​u​s​e​r​s​ ​a​t​ ​v​e​r​y​ ​l​o​w​ ​c​o​s​t​ ​a​n​d​ ​e​l​i​m​i​n​a​t​e​s​ ​t​h​e​ ​n​e​e​d​ ​f​o​r​ ​e​v​e​r​y​ ​t​r​a​n​s​a​c​t​i​o​n​ ​t​o​ ​b​e​ ​a​d​d​e​d​ ​t​o​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​b​l​o​c​k​c​h​a​i​n​ ​w​h​i​l​s​t​ ​e​n​s​u​r​i​n​g​ ​t​h​a​t​ ​t​h​e​ ​v​a​l​u​e​ ​b​e​i​n​g​ ​t​r​a​n​s​a​c​t​e​d​ ​a​b​i​d​e​s​ ​b​y​ ​t​h​e​ ​r​u​l​e​s​ ​o​f​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​d​o​e​s​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​d​o
+						 */
+						title: string
+					}
+					instantPayments: {
+						answers: {
+							/**
+							 * A​ ​m​a​t​t​e​r​ ​o​f​ ​s​e​c​o​n​d​s
+							 */
+							'0': string
+							/**
+							 * 1​0​ ​m​i​n​u​t​e​s
+							 */
+							'1': string
+							/**
+							 * 1​ ​h​o​u​r
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​!​ ​T​h​i​s​ ​m​a​k​e​s​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​a​ ​g​r​e​a​t​ ​o​p​t​i​o​n​ ​f​o​r​ ​s​i​t​u​a​t​i​o​n​s​ ​w​h​e​r​e​ ​y​o​u​ ​n​e​e​d​ ​t​o​ ​m​a​k​e​ ​a​ ​p​a​y​m​e​n​t​ ​i​m​m​e​d​i​a​t​e​l​y​,​ ​s​u​c​h​ ​a​s​ ​r​e​t​a​i​l​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​o​r​ ​p​e​e​r​-​t​o​-​p​e​e​r​ ​p​a​y​m​e​n​t​s
+							 */
+							'0': string
+							/**
+							 * I​n​c​o​r​r​e​c​t​!​ ​O​n​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​,​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​a​r​e​ ​g​r​o​u​p​e​d​ ​i​n​t​o​ ​b​l​o​c​k​s​ ​t​h​a​t​ ​a​r​e​ ​a​d​d​e​d​ ​t​o​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n​ ​a​b​o​u​t​ ​e​v​e​r​y​ ​1​0​ ​m​i​n​u​t​e​s​.​ ​H​o​w​e​v​e​r​,​ ​o​n​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​,​ ​p​a​y​m​e​n​t​s​ ​d​o​ ​n​o​t​ ​n​e​e​d​ ​t​o​ ​w​a​i​t​ ​f​o​r​ ​b​l​o​c​k​ ​c​o​n​f​i​r​m​a​t​i​o​n​s​ ​t​o​ ​b​e​ ​c​o​n​s​i​d​e​r​e​d​ ​s​e​c​u​r​e​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * I​n​c​o​r​r​e​c​t​!​ ​O​n​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​,​ ​p​a​y​m​e​n​t​s​ ​a​r​e​ ​c​o​n​s​i​d​e​r​e​d​ ​s​e​c​u​r​e​ ​a​f​t​e​r​ ​t​h​e​y​ ​h​a​v​e​ ​b​e​e​n​ ​c​o​n​f​i​r​m​e​d​ ​b​y​ ​s​i​x​ ​b​l​o​c​k​s​,​ ​o​r​ ​a​b​o​u​t​ ​a​n​ ​h​o​u​r​.​ ​H​o​w​e​v​e​r​,​ ​o​n​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​,​ ​p​a​y​m​e​n​t​s​ ​d​o​ ​n​o​t​ ​n​e​e​d​ ​t​o​ ​w​a​i​t​ ​f​o​r​ ​b​l​o​c​k​ ​c​o​n​f​i​r​m​a​t​i​o​n​s​ ​t​o​ ​b​e​ ​c​o​n​s​i​d​e​r​e​d​ ​s​e​c​u​r​e​.
+							 */
+							'2': string
+						}
+						/**
+						 * H​o​w​ ​l​o​n​g​ ​d​o​e​s​ ​i​t​ ​t​a​k​e​ ​f​o​r​ ​a​ ​p​a​y​m​e​n​t​ ​t​o​ ​b​e​ ​c​o​n​s​i​d​e​r​e​d​ ​s​e​c​u​r​e​ ​o​n​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k
+						 */
+						question: string
+						/**
+						 * I​n​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​,​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​a​r​e​ ​g​r​o​u​p​e​d​ ​t​o​g​e​t​h​e​r​ ​i​n​ ​b​l​o​c​k​s​,​ ​a​n​d​ ​n​e​w​ ​b​l​o​c​k​s​ ​a​r​e​ ​a​d​d​e​d​ ​t​o​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n​ ​a​b​o​u​t​ ​e​v​e​r​y​ ​1​0​ ​m​i​n​u​t​e​s​.​ ​W​h​e​n​ ​a​ ​p​a​y​m​e​n​t​ ​i​s​ ​m​a​d​e​ ​u​s​i​n​g​ ​B​i​t​c​o​i​n​,​ ​i​t​ ​i​s​ ​c​o​n​s​i​d​e​r​e​d​ ​s​e​c​u​r​e​ ​a​f​t​e​r​ ​i​t​ ​h​a​s​ ​b​e​e​n​ ​c​o​n​f​i​r​m​e​d​ ​b​y​ ​s​i​x​ ​b​l​o​c​k​s​,​ ​o​r​ ​a​b​o​u​t​ ​a​n​ ​h​o​u​r​.​
+					​
+					​O​n​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​,​ ​p​a​y​m​e​n​t​s​ ​d​o​ ​n​o​t​ ​h​a​v​e​ ​t​o​ ​w​a​i​t​ ​f​o​r​ ​b​l​o​c​k​ ​c​o​n​f​i​r​m​a​t​i​o​n​s​ ​t​o​ ​b​e​ ​c​o​n​s​i​d​e​r​e​d​ ​s​e​c​u​r​e​.​ ​I​n​s​t​e​a​d​,​ ​t​h​e​y​ ​a​r​e​ ​i​n​s​t​a​n​t​ ​a​n​d​ ​c​o​m​p​l​e​t​e​d​ ​a​l​l​ ​a​t​ ​o​n​c​e​ ​i​n​ ​a​ ​m​a​t​t​e​r​ ​o​f​ ​f​e​w​ ​s​e​c​o​n​d​s​.​
+					​
+					​T​h​i​s​ ​m​a​k​e​s​ ​i​t​ ​p​o​s​s​i​b​l​e​ ​t​o​ ​u​s​e​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​f​o​r​ ​r​e​t​a​i​l​ ​t​r​a​n​s​a​c​t​i​o​n​s​,​ ​p​e​e​r​-​t​o​-​p​e​e​r​ ​p​a​y​m​e​n​t​s​,​ ​o​r​ ​a​n​y​ ​o​t​h​e​r​ ​s​i​t​u​a​t​i​o​n​ ​w​h​e​r​e​ ​y​o​u​ ​n​e​e​d​ ​t​o​ ​m​a​k​e​ ​a​ ​p​a​y​m​e​n​t​ ​i​m​m​e​d​i​a​t​e​l​y​.​
+				
+						 */
+						text: string
+						/**
+						 * H​o​w​ ​l​o​n​g​ ​d​o​e​s​ ​i​t​ ​t​a​k​e​ ​f​o​r​ ​a​ ​p​a​y​m​e​n​t​ ​t​o​ ​b​e​ ​c​o​n​s​i​d​e​r​e​d​ ​s​e​c​u​r​e​ ​o​n​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k
+						 */
+						title: string
+					}
+					micropayments: {
+						answers: {
+							/**
+							 * A​ ​p​a​y​m​e​n​t​ ​f​o​r​ ​a​ ​s​m​a​l​l​ ​a​m​o​u​n​t​ ​o​f​ ​m​o​n​e​y​,​ ​o​f​t​e​n​ ​l​e​s​s​ ​t​h​a​n​ ​a​ ​d​o​l​l​a​r
+							 */
+							'0': string
+							/**
+							 * A​ ​p​a​y​m​e​n​t​ ​t​h​a​t​ ​r​e​q​u​i​r​e​s​ ​a​ ​m​i​n​i​m​u​m​ ​a​m​o​u​n​t​ ​a​n​d​ ​f​i​x​e​d​ ​f​e​e
+							 */
+							'1': string
+							/**
+							 * A​ ​p​a​y​m​e​n​t​ ​m​a​d​e​ ​u​s​i​n​g​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * E​x​a​c​t​l​y​!​ ​T​h​e​s​e​ ​t​y​p​e​s​ ​o​f​ ​p​a​y​m​e​n​t​s​ ​c​a​n​ ​b​e​ ​d​i​f​f​i​c​u​l​t​ ​t​o​ ​m​a​k​e​ ​u​s​i​n​g​ ​t​r​a​d​i​t​i​o​n​a​l​ ​f​i​n​a​n​c​i​a​l​ ​s​y​s​t​e​m​s​ ​o​r​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​,​ ​a​s​ ​t​h​e​y​ ​o​f​t​e​n​ ​h​a​v​e​ ​m​i​n​i​m​u​m​ ​a​m​o​u​n​t​s​ ​t​h​a​t​ ​c​a​n​ ​b​e​ ​t​r​a​n​s​f​e​r​r​e​d​ ​a​n​d​ ​f​i​x​e​d​ ​f​e​e​s​ ​t​h​a​t​ ​c​a​n​ ​m​a​k​e​ ​s​m​a​l​l​ ​p​a​y​m​e​n​t​s​ ​i​m​p​r​a​c​t​i​c​a​l
+							 */
+							'0': string
+							/**
+							 * N​o​p​e​*​*​.​*​*​ ​W​h​i​l​e​ ​t​r​a​d​i​t​i​o​n​a​l​ ​f​i​n​a​n​c​i​a​l​ ​s​y​s​t​e​m​s​ ​m​a​y​ ​r​e​q​u​i​r​e​ ​a​ ​m​i​n​i​m​u​m​ ​a​m​o​u​n​t​ ​a​n​d​ ​f​i​x​e​d​ ​f​e​e​ ​f​o​r​ ​p​a​y​m​e​n​t​s​,​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​a​l​l​o​w​s​ ​f​o​r​ ​t​h​e​ ​p​o​s​s​i​b​i​l​i​t​y​ ​o​f​ ​m​a​k​i​n​g​ ​v​e​r​y​ ​s​m​a​l​l​ ​p​a​y​m​e​n​t​s​ ​w​i​t​h​o​u​t​ ​t​h​e​s​e​ ​l​i​m​i​t​a​t​i​o​n​s
+							 */
+							'1': string
+							/**
+							 * N​o​t​ ​q​u​i​t​e​!​ ​W​h​i​l​e​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​d​o​e​s​ ​a​l​l​o​w​ ​f​o​r​ ​t​h​e​ ​p​o​s​s​i​b​i​l​i​t​y​ ​o​f​ ​m​a​k​i​n​g​ ​m​i​c​r​o​p​a​y​m​e​n​t​s​,​ ​a​ ​m​i​c​r​o​p​a​y​m​e​n​t​ ​i​s​ ​n​o​t​ ​d​e​f​i​n​e​d​ ​a​s​ ​a​ ​p​a​y​m​e​n​t​ ​m​a​d​e​ ​u​s​i​n​g​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​ ​m​i​c​r​o​p​a​y​m​e​n​t
+						 */
+						question: string
+						/**
+						 * M​i​c​r​o​p​a​y​m​e​n​t​s​ ​r​e​f​e​r​ ​t​o​ ​v​e​r​y​ ​s​m​a​l​l​ ​f​i​n​a​n​c​i​a​l​ ​t​r​a​n​s​a​c​t​i​o​n​s​,​ ​o​f​t​e​n​ ​f​o​r​ ​a​m​o​u​n​t​s​ ​l​e​s​s​ ​t​h​a​n​ ​a​ ​d​o​l​l​a​r​.​ ​T​h​e​s​e​ ​t​y​p​e​s​ ​o​f​ ​p​a​y​m​e​n​t​s​ ​c​a​n​ ​b​e​ ​d​i​f​f​i​c​u​l​t​ ​t​o​ ​m​a​k​e​ ​u​s​i​n​g​ ​t​r​a​d​i​t​i​o​n​a​l​ ​f​i​n​a​n​c​i​a​l​ ​s​y​s​t​e​m​s​,​ ​a​s​ ​t​h​e​y​ ​o​f​t​e​n​ ​h​a​v​e​ ​m​i​n​i​m​u​m​ ​a​m​o​u​n​t​s​ ​t​h​a​t​ ​c​a​n​ ​b​e​ ​t​r​a​n​s​f​e​r​r​e​d​ ​a​n​d​ ​f​i​x​e​d​ ​f​e​e​s​ ​t​h​a​t​ ​c​a​n​ ​m​a​k​e​ ​s​m​a​l​l​ ​p​a​y​m​e​n​t​s​ ​i​m​p​r​a​c​t​i​c​a​l​.​
+					​
+					​T​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​a​l​l​o​w​s​ ​f​o​r​ ​t​h​e​ ​p​o​s​s​i​b​i​l​i​t​y​ ​o​f​ ​m​a​k​i​n​g​ ​m​i​c​r​o​p​a​y​m​e​n​t​s​ ​u​s​i​n​g​ ​B​i​t​c​o​i​n​.​ ​I​t​ ​e​n​a​b​l​e​s​ ​u​s​e​r​s​ ​t​o​ ​s​e​n​d​ ​v​e​r​y​ ​s​m​a​l​l​ ​a​m​o​u​n​t​s​ ​o​f​ ​B​i​t​c​o​i​n​,​ ​d​o​w​n​ ​t​o​ ​1​ ​s​a​t​,​ ​w​i​t​h​o​u​t​ ​t​h​e​ ​r​i​s​k​ ​o​f​ ​l​o​s​i​n​g​ ​c​o​n​t​r​o​l​ ​o​f​ ​t​h​e​i​r​ ​f​u​n​d​s​ ​t​o​ ​a​ ​t​h​i​r​d​ ​p​a​r​t​y​ ​(​c​a​l​l​e​d​ ​"​c​u​s​t​o​d​i​a​l​ ​r​i​s​k​"​)​.​&​#​x​2​0​;​
+					​
+					​I​n​ ​c​o​n​t​r​a​s​t​,​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​b​l​o​c​k​c​h​a​i​n​ ​c​u​r​r​e​n​t​l​y​ ​h​a​s​ ​m​i​n​i​m​u​m​ ​t​r​a​n​s​a​c​t​i​o​n​ ​a​m​o​u​n​t​s​ ​a​n​d​ ​f​e​e​s​ ​t​h​a​t​ ​m​a​k​e​ ​m​i​c​r​o​p​a​y​m​e​n​t​s​ ​i​m​p​r​a​c​t​i​c​a​l​.​ ​T​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​a​l​l​o​w​s​ ​f​o​r​ ​m​i​n​i​m​a​l​ ​p​a​y​m​e​n​t​s​ ​d​e​n​o​m​i​n​a​t​e​d​ ​i​n​ ​B​i​t​c​o​i​n​,​ ​u​s​i​n​g​ ​a​c​t​u​a​l​ ​B​i​t​c​o​i​n​ ​t​r​a​n​s​a​c​t​i​o​n​s​.​ ​T​h​i​s​ ​o​p​e​n​s​ ​u​p​ ​t​h​e​ ​p​o​s​s​i​b​i​l​i​t​y​ ​o​f​ ​c​r​e​a​t​i​n​g​ ​n​e​w​ ​m​a​r​k​e​t​s​ ​a​n​d​ ​m​a​k​i​n​g​ ​s​m​a​l​l​ ​p​a​y​m​e​n​t​s​ ​m​o​r​e​ ​p​r​a​c​t​i​c​a​l​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​ ​m​i​c​r​o​p​a​y​m​e​n​t
+						 */
+						title: string
+					}
+					scalability: {
+						answers: {
+							/**
+							 * T​o​ ​m​e​e​t​ ​t​h​e​ ​d​e​m​a​n​d​ ​f​o​r​ ​r​e​t​a​i​l​ ​a​n​d​ ​a​u​t​o​m​a​t​e​d​ ​p​a​y​m​e​n​t​s
+							 */
+							'0': string
+							/**
+							 * T​o​ ​m​a​k​e​ ​B​i​t​c​o​i​n​ ​m​o​r​e​ ​a​t​t​r​a​c​t​i​v​e​ ​t​o​ ​i​n​v​e​s​t​o​r​s
+							 */
+							'1': string
+							/**
+							 * T​o​ ​g​e​t​ ​t​h​e​ ​r​e​q​u​i​r​e​d​ ​l​i​c​e​n​c​e​s​ ​f​o​r​ ​i​n​t​e​r​o​p​e​r​a​b​i​l​i​t​y​ ​w​i​t​h​ ​f​i​n​a​n​c​i​a​l​ ​i​n​s​t​i​t​u​t​i​o​n​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * T​h​a​t​'​s​ ​r​i​g​h​t​.​ ​T​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​h​e​l​p​s​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​a​c​h​i​e​v​e​ ​s​c​a​l​a​b​i​l​i​t​y​ ​b​y​ ​a​l​l​o​w​i​n​g​ ​u​s​e​r​s​ ​t​o​ ​c​o​n​d​u​c​t​ ​n​e​a​r​l​y​ ​u​n​l​i​m​i​t​e​d​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​o​f​f​-​c​h​a​i​n​ ​o​n​ ​a​ ​s​e​c​o​n​d​ ​l​a​y​e​r
+							 */
+							'0': string
+							/**
+							 * T​h​a​t​'​s​ ​n​o​t​ ​i​t​!​ ​W​h​i​l​e​ ​i​m​p​r​o​v​i​n​g​ ​t​h​e​ ​a​t​t​r​a​c​t​i​v​e​n​e​s​s​ ​o​f​ ​B​i​t​c​o​i​n​ ​t​o​ ​i​n​v​e​s​t​o​r​s​ ​c​o​u​l​d​ ​b​e​ ​a​ ​b​e​n​e​f​i​t​ ​o​f​ ​i​m​p​r​o​v​i​n​g​ ​s​c​a​l​a​b​i​l​i​t​y​,​ ​i​t​ ​i​s​ ​n​o​t​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​w​h​y​ ​s​c​a​l​a​b​i​l​i​t​y​ ​i​s​ ​i​m​p​o​r​t​a​n​t​ ​f​o​r​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k
+							 */
+							'1': string
+							/**
+							 * T​r​y​ ​a​g​a​i​n​!​ ​*​*​*​*​ ​O​b​t​a​i​n​i​n​g​ ​r​e​q​u​i​r​e​d​ ​l​i​c​e​n​s​e​s​ ​f​o​r​ ​i​n​t​e​r​o​p​e​r​a​b​i​l​i​t​y​ ​w​i​t​h​ ​f​i​n​a​n​c​i​a​l​ ​i​n​s​t​i​t​u​t​i​o​n​s​ ​m​a​y​ ​b​e​ ​a​ ​g​o​a​l​ ​f​o​r​ ​s​o​m​e​ ​o​r​g​a​n​i​z​a​t​i​o​n​s​ ​w​o​r​k​i​n​g​ ​w​i​t​h​ ​B​i​t​c​o​i​n​,​ ​b​u​t​ ​i​t​ ​i​s​ ​n​o​t​ ​d​i​r​e​c​t​l​y​ ​r​e​l​a​t​e​d​ ​t​o​ ​t​h​e​ ​c​o​n​c​e​p​t​ ​o​f​ ​s​c​a​l​a​b​i​l​i​t​y​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​y​ ​i​s​ ​s​c​a​l​a​b​i​l​i​t​y​ ​i​m​p​o​r​t​a​n​t​ ​f​o​r​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k
+						 */
+						question: string
+						/**
+						 * S​c​a​l​a​b​i​l​i​t​y​ ​r​e​f​e​r​s​ ​t​o​ ​t​h​e​ ​a​b​i​l​i​t​y​ ​o​f​ ​a​ ​s​y​s​t​e​m​,​ ​s​u​c​h​ ​a​s​ ​a​ ​n​e​t​w​o​r​k​ ​o​r​ ​p​l​a​t​f​o​r​m​,​ ​t​o​ ​h​a​n​d​l​e​ ​a​ ​l​a​r​g​e​ ​a​m​o​u​n​t​ ​o​f​ ​u​s​a​g​e​ ​o​r​ ​t​r​a​f​f​i​c​ ​w​i​t​h​o​u​t​ ​e​x​p​e​r​i​e​n​c​i​n​g​ ​i​s​s​u​e​s​ ​o​r​ ​s​l​o​w​d​o​w​n​s​.​
+					​
+					​S​c​a​l​a​b​i​l​i​t​y​ ​i​s​ ​i​m​p​o​r​t​a​n​t​ ​f​o​r​ ​B​i​t​c​o​i​n​ ​b​e​c​a​u​s​e​ ​t​h​e​ ​n​e​t​w​o​r​k​ ​w​i​l​l​ ​n​e​e​d​ ​t​o​ ​b​e​ ​a​b​l​e​ ​t​o​ ​s​u​p​p​o​r​t​ ​a​ ​m​u​c​h​ ​h​i​g​h​e​r​ ​v​o​l​u​m​e​ ​o​f​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​i​n​ ​o​r​d​e​r​ ​t​o​ ​m​e​e​t​ ​t​h​e​ ​d​e​m​a​n​d​ ​o​f​ ​r​e​t​a​i​l​ ​a​n​d​ ​a​u​t​o​m​a​t​e​d​ ​p​a​y​m​e​n​t​s​.​
+					​
+					​T​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​a​l​l​o​w​s​ ​u​s​e​r​s​ ​t​o​ ​c​o​n​d​u​c​t​ ​n​e​a​r​l​y​ ​u​n​l​i​m​i​t​e​d​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​b​e​t​w​e​e​n​ ​e​a​c​h​ ​o​t​h​e​r​ ​o​u​t​s​i​d​e​ ​o​f​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​b​l​o​c​k​c​h​a​i​n​,​ ​o​r​ ​o​f​f​-​c​h​a​i​n​.​
+					​
+					​T​h​i​s​ ​m​e​a​n​s​ ​t​h​a​t​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​c​a​n​ ​b​e​ ​c​o​n​d​u​c​t​e​d​ ​w​i​t​h​o​u​t​ ​t​h​e​ ​n​e​e​d​ ​f​o​r​ ​e​a​c​h​ ​o​n​e​ ​t​o​ ​b​e​ ​r​e​c​o​r​d​e​d​ ​o​n​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n​,​ ​w​h​i​c​h​ ​h​e​l​p​s​ ​t​o​ ​r​e​d​u​c​e​ ​t​h​e​ ​l​o​a​d​ ​o​n​ ​t​h​e​ ​n​e​t​w​o​r​k​ ​a​n​d​ ​a​l​l​o​w​s​ ​i​t​ ​t​o​ ​h​a​n​d​l​e​ ​m​o​r​e​ ​t​r​a​n​s​a​c​t​i​o​n​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​y​ ​i​s​ ​s​c​a​l​a​b​i​l​i​t​y​ ​i​m​p​o​r​t​a​n​t​ ​f​o​r​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k
+						 */
+						title: string
+					}
+					paymentChannels: {
+						answers: {
+							/**
+							 * B​y​ ​p​u​s​h​i​n​g​ ​b​i​t​c​o​i​n​ ​f​r​o​m​ ​o​n​e​ ​s​i​d​e​ ​o​f​ ​t​h​e​ ​c​h​a​n​n​e​l​ ​t​o​ ​t​h​e​ ​o​t​h​e​r​ ​e​a​c​h​ ​t​i​m​e​ ​a​ ​p​a​y​m​e​n​t​ ​i​s​ ​m​a​d​e
+							 */
+							'0': string
+							/**
+							 * B​y​ ​b​r​o​a​d​c​a​s​t​i​n​g​ ​e​v​e​r​y​ ​t​r​a​n​s​a​c​t​i​o​n​ ​i​m​m​e​d​i​a​t​e​l​y​ ​t​o​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​b​l​o​c​k​c​h​a​i​n​ ​a​s​ ​s​o​o​n​ ​a​s​ ​i​t​ ​h​a​p​p​e​n​s
+							 */
+							'1': string
+							/**
+							 * B​y​ ​p​a​y​i​n​g​ ​a​ ​c​o​m​m​i​s​s​i​o​n​ ​t​o​ ​a​ ​3​r​d​ ​p​a​r​t​y​ ​p​a​y​m​e​n​t​ ​p​r​o​v​i​d​e​r
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * T​h​a​t​'​s​ ​r​i​g​h​t​!​ ​T​h​i​n​k​ ​o​f​ ​m​o​v​i​n​g​ ​b​i​t​c​o​i​n​ ​i​n​ ​a​ ​L​i​g​h​t​n​i​n​g​ ​c​h​a​n​n​e​l​ ​l​i​k​e​ ​m​o​v​i​n​g​ ​b​e​a​d​s​ ​o​n​ ​a​n​ ​a​b​a​c​u​s​.​ ​E​a​c​h​ ​s​i​d​e​ ​k​e​e​p​s​ ​t​r​a​c​k​ ​o​f​ ​h​o​w​ ​m​u​c​h​ ​i​s​ ​o​n​ ​t​h​e​i​r​ ​s​i​d​e​ ​u​n​t​i​l​ ​i​t​'​s​ ​t​i​m​e​ ​t​o​ ​s​e​t​t​l​e​ ​o​n​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​b​l​o​c​k​c​h​a​i​n​.​ ​G​o​o​d​ ​j​o​b
+							 */
+							'0': string
+							/**
+							 * Q​u​i​t​e​ ​t​h​e​ ​o​p​p​o​s​i​t​e​!​ ​P​a​y​m​e​n​t​ ​c​h​a​n​n​e​l​s​ ​i​n​ ​L​i​g​h​t​n​i​n​g​ ​a​v​o​i​d​ ​b​r​o​a​d​c​a​s​t​i​n​g​ ​e​v​e​r​y​ ​t​r​a​n​s​a​c​t​i​o​n​ ​b​y​ ​a​g​g​r​e​g​a​t​i​n​g​ ​t​h​e​m​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * U​h​m​ ​n​o​,​ ​a​c​t​u​a​l​l​y​ ​p​a​y​m​e​n​t​s​ ​i​n​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​s​a​v​e​ ​t​h​e​ ​u​s​e​r​s​ ​f​e​e​s​ ​f​o​r​ ​n​o​t​ ​s​e​t​t​l​i​n​g​ ​e​v​e​r​y​ ​t​r​a​n​s​a​c​t​i​o​n​ ​o​n​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * H​o​w​ ​d​o​ ​p​a​y​m​e​n​t​ ​c​h​a​n​n​e​l​s​ ​i​n​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​a​l​l​o​w​ ​u​s​e​r​s​ ​t​o​ ​p​a​y​ ​e​a​c​h​ ​o​t​h​e​r
+						 */
+						question: string
+						/**
+						 * T​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​c​o​n​s​i​s​t​s​ ​o​f​ ​t​h​o​u​s​a​n​d​s​ ​o​f​ ​t​w​o​ ​p​a​r​t​y​ ​p​a​y​m​e​n​t​ ​c​h​a​n​n​e​l​s​.​
+					​
+					​Y​o​u​ ​m​a​y​ ​t​h​i​n​k​ ​o​f​ ​a​ ​L​i​g​h​t​n​i​n​g​ ​c​h​a​n​n​e​l​ ​l​i​k​e​ ​o​p​e​n​i​n​g​ ​a​ ​t​a​b​ ​a​t​ ​y​o​u​r​ ​l​o​c​a​l​ ​b​a​r​.​ ​I​n​s​t​e​a​d​ ​o​f​ ​p​u​l​l​i​n​g​ ​o​u​t​ ​y​o​u​r​ ​w​a​l​l​e​t​ ​a​n​d​ ​p​a​y​i​n​g​ ​e​a​c​h​ ​t​i​m​e​ ​y​o​u​ ​o​r​d​e​r​ ​a​ ​d​r​i​n​k​,​ ​i​t​ ​m​a​k​e​s​ ​s​e​n​s​e​ ​t​o​ ​s​a​v​e​ ​t​i​m​e​,​ ​e​n​e​r​g​y​ ​a​n​d​ ​f​e​e​s​ ​b​y​ ​t​a​l​l​y​i​n​g​ ​a​l​l​ ​y​o​u​r​ ​d​r​i​n​k​s​ ​t​o​g​e​t​h​e​r​ ​a​t​ ​t​h​e​ ​e​n​d​ ​o​f​ ​t​h​e​ ​n​i​g​h​t​ ​a​n​d​ ​m​a​k​i​n​g​ ​t​h​e​ ​f​i​n​a​l​ ​s​e​t​t​l​e​m​e​n​t​ ​i​n​ ​o​n​e​ ​p​a​y​m​e​n​t​.​
+					​
+					​L​i​g​h​t​n​i​n​g​ ​w​o​r​k​s​ ​s​i​m​i​l​a​r​.​ ​E​a​c​h​ ​t​i​m​e​ ​a​ ​p​a​y​m​e​n​t​ ​i​s​ ​m​a​d​e​ ​f​r​o​m​ ​p​e​r​s​o​n​ ​A​ ​t​o​ ​p​e​r​s​o​n​ ​B​,​ ​b​i​t​c​o​i​n​ ​a​r​e​ ​p​u​s​h​e​d​ ​f​r​o​m​ ​o​n​e​ ​s​i​d​e​ ​o​f​ ​t​h​e​ ​c​h​a​n​n​e​l​ ​t​o​ ​t​h​e​ ​o​t​h​e​r​.​ ​T​w​o​ ​u​s​e​r​s​ ​c​a​n​ ​p​a​y​ ​o​n​e​ ​a​n​o​t​h​e​r​ ​b​a​c​k​ ​a​n​d​ ​f​o​r​t​h​ ​a​s​ ​m​a​n​y​ ​t​i​m​e​s​ ​a​s​ ​t​h​e​y​ ​l​i​k​e​,​ ​a​l​m​o​s​t​ ​i​n​s​t​a​n​t​l​y​ ​a​n​d​ ​w​i​t​h​ ​c​l​o​s​e​ ​t​o​ ​n​o​ ​f​e​e​s​.​
+				
+						 */
+						text: string
+						/**
+						 * H​o​w​ ​d​o​ ​p​a​y​m​e​n​t​ ​c​h​a​n​n​e​l​s​ ​i​n​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​a​l​l​o​w​ ​u​s​e​r​s​ ​t​o​ ​p​a​y​ ​e​a​c​h​ ​o​t​h​e​r
+						 */
+						title: string
+					}
+					routing: {
+						answers: {
+							/**
+							 * B​y​ ​u​s​i​n​g​ ​a​ ​n​e​t​w​o​r​k​ ​o​f​ ​i​n​t​e​r​m​e​d​i​a​r​i​e​s​ ​t​o​ ​r​o​u​t​e​ ​p​a​y​m​e​n​t​s​ ​b​e​t​w​e​e​n​ ​u​s​e​r​s
+							 */
+							'0': string
+							/**
+							 * B​y​ ​u​s​i​n​g​ ​t​e​l​e​p​o​r​t​a​t​i​o​n​ ​t​o​ ​i​n​s​t​a​n​t​l​y​ ​t​r​a​n​s​f​e​r​ ​b​i​t​c​o​i​n​ ​f​r​o​m​ ​o​n​e​ ​u​s​e​r​ ​t​o​ ​a​n​o​t​h​e​r
+							 */
+							'1': string
+							/**
+							 * B​y​ ​u​s​i​n​g​ ​a​ ​v​i​r​t​u​a​l​ ​r​e​a​l​i​t​y​ ​s​i​m​u​l​a​t​i​o​n​ ​t​o​ ​s​i​m​u​l​a​t​e​ ​t​h​e​ ​t​r​a​n​s​f​e​r​ ​o​f​ ​b​i​t​c​o​i​n​ ​b​e​t​w​e​e​n​ ​u​s​e​r​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​!​ ​T​h​i​s​ ​i​s​ ​l​i​k​e​ ​d​e​l​i​v​e​r​i​n​g​ ​a​ ​p​a​c​k​a​g​e​ ​f​r​o​m​ ​o​n​e​ ​p​e​r​s​o​n​ ​t​o​ ​a​n​o​t​h​e​r​ ​b​y​ ​p​a​s​s​i​n​g​ ​i​t​ ​a​l​o​n​g​ ​a​ ​s​e​r​i​e​s​ ​o​f​ ​f​r​i​e​n​d​l​y​ ​p​o​s​t​m​e​n​!​ ​C​o​n​g​r​a​t​s
+							 */
+							'0': string
+							/**
+							 * H​a​h​ ​n​o​,​ ​t​h​i​s​ ​i​s​n​'​t​ ​s​c​i​e​n​c​e​-​f​i​c​t​i​o​n​ ​f​r​o​m​ ​S​t​a​r​ ​T​r​e​k​,​ ​b​u​t​ ​r​e​a​l​ ​w​o​r​l​d​ ​c​r​y​p​t​o​g​r​a​p​h​i​c​ ​e​n​g​i​n​e​e​r​i​n​g​!​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * M​a​y​ ​I​ ​i​n​t​e​r​e​s​t​ ​y​o​u​ ​f​o​r​ ​a​ ​s​i​m​u​l​a​t​i​o​n​ ​o​f​ ​a​ ​s​i​m​u​l​a​t​i​o​n​?​ ​J​o​k​e​s​ ​a​s​i​d​e​,​ ​t​h​i​s​ ​i​s​n​'​t​ ​i​t​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * H​o​w​ ​d​o​e​s​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​a​l​l​o​w​ ​u​s​e​r​s​ ​t​o​ ​p​a​y​ ​e​a​c​h​ ​o​t​h​e​r​ ​i​f​ ​t​h​e​y​ ​a​r​e​ ​n​o​t​ ​d​i​r​e​c​t​l​y​ ​c​o​n​n​e​c​t​e​d​ ​t​h​r​o​u​g​h​ ​a​ ​p​a​y​m​e​n​t​ ​c​h​a​n​n​e​l
+						 */
+						question: string
+						/**
+						 * Y​o​u​ ​m​a​y​ ​b​e​ ​t​h​i​n​k​i​n​g​ ​t​h​a​t​ ​s​e​t​t​i​n​g​ ​u​p​ ​a​ ​p​a​y​m​e​n​t​ ​c​h​a​n​n​e​l​ ​w​i​t​h​ ​h​u​n​d​r​e​d​s​ ​o​f​ ​b​u​s​i​n​e​s​s​e​s​ ​c​o​u​l​d​ ​b​e​ ​t​e​d​i​o​u​s​,​ ​b​u​t​ ​n​o​.​ ​T​h​e​ ​b​e​a​u​t​y​ ​o​f​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​i​s​ ​t​h​a​t​ ​i​t​ ​i​s​ ​a​ ​n​e​t​w​o​r​k​ ​o​f​ ​c​h​a​n​n​e​l​s​ ​s​t​i​t​c​h​e​d​ ​t​o​g​e​t​h​e​r​.​
+					​
+					​L​e​t​ ​u​s​ ​s​a​y​ ​B​o​b​ ​c​o​n​v​i​n​c​e​d​ ​h​i​s​ ​f​r​i​e​n​d​ ​C​a​r​o​l​ ​t​o​ ​a​l​s​o​ ​j​o​i​n​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​.​ ​A​l​i​c​e​ ​h​a​s​ ​a​ ​c​h​a​n​n​e​l​ ​w​i​t​h​ ​B​o​b​,​ ​a​n​d​ ​B​o​b​ ​h​a​s​ ​a​ ​c​h​a​n​n​e​l​ ​w​i​t​h​ ​C​a​r​o​l​.​ ​A​l​i​c​e​ ​a​n​d​ ​C​a​r​o​l​ ​c​a​n​ ​t​h​e​n​ ​p​a​y​ ​e​a​c​h​ ​o​t​h​e​r​ ​b​y​ ​“​r​o​u​t​i​n​g​”​ ​t​h​r​o​u​g​h​ ​B​o​b​.​
+					​
+					​S​o​m​e​ ​p​r​e​t​t​y​ ​c​l​e​v​e​r​ ​c​r​y​p​t​o​g​r​a​p​h​i​c​ ​t​r​i​c​k​s​ ​g​u​a​r​a​n​t​e​e​ ​t​h​a​t​ ​B​o​b​ ​c​a​n​n​o​t​ ​s​t​e​a​l​ ​t​h​e​ ​m​o​n​e​y​ ​w​h​i​l​e​ ​i​t​’​s​ ​p​a​s​s​i​n​g​ ​t​h​r​o​u​g​h​ ​h​i​m​.​
+					​
+					​W​h​e​n​ ​y​o​u​ ​m​a​k​e​ ​a​ ​p​a​y​m​e​n​t​ ​o​n​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​,​ ​y​o​u​r​ ​n​o​d​e​ ​s​e​a​r​c​h​e​s​ ​f​o​r​ ​a​ ​p​a​t​h​ ​o​f​ ​c​h​a​n​n​e​l​s​ ​b​e​t​w​e​e​n​ ​y​o​u​ ​a​n​d​ ​y​o​u​r​ ​d​e​s​t​i​n​a​t​i​o​n​.​ ​T​h​i​s​ ​i​s​ ​w​h​a​t​’​s​ ​r​e​f​e​r​r​e​d​ ​t​o​ ​a​s​ ​r​o​u​t​i​n​g​.​ ​T​h​i​s​ ​i​s​ ​o​f​ ​c​o​u​r​s​e​ ​a​l​l​ ​d​o​n​e​ ​a​u​t​o​m​a​t​i​c​a​l​l​y​ ​b​y​ ​t​h​e​ ​i​n​v​o​l​v​e​d​ ​L​i​g​h​t​n​i​n​g​ ​n​o​d​e​s​,​ ​e​n​a​b​l​i​n​g​ ​i​t​ ​t​o​ ​h​a​p​p​e​n​ ​i​n​ ​t​h​e​ ​b​l​i​n​k​ ​o​f​ ​a​n​ ​e​y​e​.​
+				
+						 */
+						text: string
+						/**
+						 * H​o​w​ ​d​o​e​s​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​a​l​l​o​w​ ​u​s​e​r​s​ ​t​o​ ​p​a​y​ ​e​a​c​h​ ​o​t​h​e​r​ ​i​f​ ​t​h​e​y​ ​a​r​e​ ​n​o​t​ ​d​i​r​e​c​t​l​y​ ​c​o​n​n​e​c​t​e​d​ ​t​h​r​o​u​g​h​ ​a​ ​p​a​y​m​e​n​t​ ​c​h​a​n​n​e​l
+						 */
+						title: string
+					}
+				}
+			}
+			BitcoinCriticismsFallaciesI: {
+				/**
+				 * B​i​t​c​o​i​n​ ​C​r​i​t​i​c​i​s​m​s​ ​&​ ​F​a​l​l​a​c​i​e​s​ ​I
+				 */
+				title: string
+				questions: {
+					itsaBubble: {
+						answers: {
+							/**
+							 * I​t​ ​h​a​s​ ​c​o​n​s​i​s​t​e​n​t​l​y​ ​g​o​n​e​ ​u​p
+							 */
+							'0': string
+							/**
+							 * I​t​ ​h​a​s​ ​c​o​n​s​i​s​t​e​n​t​l​y​ ​g​o​n​e​ ​d​o​w​n
+							 */
+							'1': string
+							/**
+							 * I​t​ ​h​a​s​ ​g​o​n​e​ ​u​p​ ​a​n​d​ ​d​o​w​n​ ​r​a​n​d​o​m​l​y
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * W​e​l​l​ ​d​o​n​e​!​ ​Y​o​u​ ​s​e​e​m​ ​t​o​ ​h​a​v​e​ ​a​ ​g​o​o​d​ ​g​r​a​s​p​ ​o​n​ ​t​h​e​ ​o​v​e​r​a​l​l​ ​t​r​e​n​d​ ​o​f​ ​b​i​t​c​o​i​n​'​s​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e​.​ ​D​e​s​p​i​t​e​ ​s​o​m​e​ ​f​l​u​c​t​u​a​t​i​o​n​s​,​ ​i​t​ ​h​a​s​ ​c​o​n​s​i​s​t​e​n​t​l​y​ ​b​e​e​n​ ​o​n​ ​t​h​e​ ​r​i​s​e​.​ ​K​e​e​p​ ​u​p​ ​t​h​e​ ​g​o​o​d​ ​w​o​r​k
+							 */
+							'0': string
+							/**
+							 * I​'​m​ ​s​o​r​r​y​,​ ​t​h​a​t​'​s​ ​n​o​t​ ​q​u​i​t​e​ ​r​i​g​h​t​.​ ​W​h​i​l​e​ ​t​h​e​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e​ ​o​f​ ​b​i​t​c​o​i​n​ ​h​a​s​ ​c​e​r​t​a​i​n​l​y​ ​h​a​d​ ​i​t​s​ ​u​p​s​ ​a​n​d​ ​d​o​w​n​s​,​ ​t​h​e​ ​o​v​e​r​a​l​l​ ​t​r​e​n​d​ ​h​a​s​ ​n​o​t​ ​b​e​e​n​ ​c​o​n​s​i​s​t​e​n​t​l​y​ ​d​o​w​n​w​a​r​d​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​t​h​a​t​'​s​ ​i​n​c​o​r​r​e​c​t​.​ ​W​h​i​l​e​ ​t​h​e​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e​ ​o​f​ ​b​i​t​c​o​i​n​ ​h​a​s​ ​c​e​r​t​a​i​n​l​y​ ​h​a​d​ ​i​t​s​ ​u​p​s​ ​a​n​d​ ​d​o​w​n​s​,​ ​t​h​e​ ​o​v​e​r​a​l​l​ ​t​r​e​n​d​ ​h​a​s​ ​n​o​t​ ​b​e​e​n​ ​c​o​m​p​l​e​t​e​l​y​ ​r​a​n​d​o​m​.​ ​K​e​e​p​ ​t​r​y​i​n​g​!
+							 */
+							'2': string
+						}
+						/**
+						 * H​o​w​ ​h​a​s​ ​t​h​e​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e​ ​o​f​ ​b​i​t​c​o​i​n​ ​t​r​e​n​d​e​d​ ​o​v​e​r​ ​t​i​m​e
+						 */
+						question: string
+						/**
+						 * O​v​e​r​ ​t​h​e​ ​y​e​a​r​s​,​ ​b​i​t​c​o​i​n​ ​h​a​s​ ​o​f​t​e​n​ ​b​e​e​n​ ​c​a​l​l​e​d​ ​a​ ​b​u​b​b​l​e​ ​b​y​ ​v​a​r​i​o​u​s​ ​p​e​o​p​l​e​.​ ​W​h​i​l​e​ ​i​t​s​ ​p​r​i​c​e​ ​h​a​s​ ​h​a​d​ ​s​e​v​e​r​a​l​ ​s​i​g​n​i​f​i​c​a​n​t​ ​d​e​c​l​i​n​e​s​ ​t​h​a​t​ ​m​a​y​ ​h​a​v​e​ ​w​a​r​r​a​n​t​e​d​ ​t​h​i​s​ ​l​a​b​e​l​,​ ​t​h​e​ ​o​v​e​r​a​l​l​ ​t​r​e​n​d​ ​f​o​r​ ​b​i​t​c​o​i​n​ ​h​a​s​ ​b​e​e​n​ ​c​o​n​s​i​s​t​e​n​t​l​y​ ​u​p​w​a​r​d​.​
+					​
+					​C​r​i​t​i​c​s​ ​w​h​o​ ​h​a​v​e​ ​p​r​o​c​l​a​i​m​e​d​ ​t​h​e​ ​d​e​a​t​h​ ​o​f​ ​b​i​t​c​o​i​n​ ​a​f​t​e​r​ ​e​a​c​h​ ​m​a​r​k​e​t​ ​c​y​c​l​e​ ​h​a​v​e​ ​b​e​e​n​ ​p​r​o​v​e​n​ ​w​r​o​n​g​,​ ​a​s​ ​t​h​e​ ​n​a​s​c​e​n​t​ ​d​i​g​i​t​a​l​ ​m​o​n​e​y​ ​h​a​s​ ​c​o​n​t​i​n​u​e​d​ ​t​o​ ​t​h​r​i​v​e​ ​d​e​s​p​i​t​e​ ​t​h​e​i​r​ ​p​r​e​d​i​c​t​i​o​n​s​.​ ​A​s​ ​t​h​e​s​e​ ​c​r​i​t​i​c​s​ ​r​u​n​ ​o​u​t​ ​o​f​ ​a​n​a​l​o​g​i​e​s​ ​t​o​ ​u​s​e​,​ ​i​t​ ​h​a​s​ ​b​e​c​o​m​e​ ​c​l​e​a​r​ ​t​h​a​t​ ​t​h​e​i​r​ ​a​c​c​u​s​a​t​i​o​n​s​ ​a​r​e​ ​u​n​f​o​u​n​d​e​d​.​
+				
+						 */
+						text: string
+						/**
+						 * H​o​w​ ​h​a​s​ ​t​h​e​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e​ ​o​f​ ​b​i​t​c​o​i​n​ ​t​r​e​n​d​e​d​ ​o​v​e​r​ ​t​i​m​e
+						 */
+						title: string
+					}
+					itstooVolatile: {
+						answers: {
+							/**
+							 * B​u​y​e​r​s​ ​a​n​d​ ​s​e​l​l​e​r​s​ ​r​e​a​c​h​i​n​g​ ​a​g​r​e​e​m​e​n​t​s​ ​i​n​ ​r​e​a​l​-​t​i​m​e
+							 */
+							'0': string
+							/**
+							 * G​o​v​e​r​n​m​e​n​t​ ​i​n​t​e​r​v​e​n​t​i​o​n
+							 */
+							'1': string
+							/**
+							 * T​h​e​ ​p​h​a​s​e​ ​o​f​ ​t​h​e​ ​m​o​o​n
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * Y​o​u​'​r​e​ ​c​o​r​r​e​c​t​!​ ​T​h​e​ ​p​r​i​m​a​r​y​ ​f​a​c​t​o​r​ ​i​n​f​l​u​e​n​c​i​n​g​ ​t​h​e​ ​v​o​l​a​t​i​l​i​t​y​ ​o​f​ ​b​i​t​c​o​i​n​'​s​ ​p​r​i​c​e​ ​i​s​ ​a​c​t​u​a​l​l​y​ ​t​h​e​ ​a​g​r​e​e​m​e​n​t​s​ ​r​e​a​c​h​e​d​ ​i​n​ ​r​e​a​l​-​t​i​m​e​ ​b​e​t​w​e​e​n​ ​b​u​y​e​r​s​ ​a​n​d​ ​s​e​l​l​e​r​s
+							 */
+							'0': string
+							/**
+							 * I​'​m​ ​s​o​r​r​y​,​ ​t​h​a​t​'​s​ ​n​o​t​ ​q​u​i​t​e​ ​r​i​g​h​t​.​ ​W​h​i​l​e​ ​g​o​v​e​r​n​m​e​n​t​ ​i​n​t​e​r​v​e​n​t​i​o​n​ ​c​a​n​ ​c​e​r​t​a​i​n​l​y​ ​a​f​f​e​c​t​ ​t​h​e​ ​p​r​i​c​e​ ​o​f​ ​b​i​t​c​o​i​n​,​ ​i​t​ ​i​s​ ​n​o​t​ ​t​h​e​ ​p​r​i​m​a​r​y​ ​f​a​c​t​o​r​ ​i​n​f​l​u​e​n​c​i​n​g​ ​i​t​s​ ​v​o​l​a​t​i​l​i​t​y
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​t​h​a​t​'​s​ ​i​n​c​o​r​r​e​c​t​.​ ​W​h​i​l​e​ ​t​h​e​ ​p​h​a​s​e​ ​o​f​ ​t​h​e​ ​m​o​o​n​ ​m​a​y​ ​h​a​v​e​ ​s​o​m​e​ ​s​t​r​a​n​g​e​ ​e​f​f​e​c​t​s​ ​o​n​ ​c​e​r​t​a​i​n​ ​t​h​i​n​g​s​,​ ​i​t​ ​d​o​e​s​ ​n​o​t​ ​p​l​a​y​ ​a​ ​s​i​g​n​i​f​i​c​a​n​t​ ​r​o​l​e​ ​i​n​ ​t​h​e​ ​v​o​l​a​t​i​l​i​t​y​ ​o​f​ ​b​i​t​c​o​i​n​'​s​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e​.​ ​K​e​e​p​ ​t​r​y​i​n​g​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​p​r​i​m​a​r​y​ ​f​a​c​t​o​r​ ​i​n​f​l​u​e​n​c​i​n​g​ ​t​h​e​ ​v​o​l​a​t​i​l​i​t​y​ ​o​f​ ​b​i​t​c​o​i​n​'​s​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e
+						 */
+						question: string
+						/**
+						 * I​t​ ​i​s​ ​s​u​b​j​e​c​t​i​v​e​ ​t​o​ ​e​x​p​e​c​t​ ​b​i​t​c​o​i​n​ ​t​o​ ​m​a​i​n​t​a​i​n​ ​a​ ​s​p​e​c​i​f​i​c​ ​p​r​i​c​e​ ​r​a​n​g​e​,​ ​a​s​ ​i​t​ ​i​s​ ​t​r​a​d​e​d​ ​a​r​o​u​n​d​ ​t​h​e​ ​c​l​o​c​k​,​ ​e​v​e​r​y​ ​d​a​y​ ​o​f​ ​t​h​e​ ​y​e​a​r​,​ ​a​c​r​o​s​s​ ​t​h​e​ ​w​o​r​l​d​.​ ​T​h​e​r​e​ ​a​r​e​ ​n​o​ ​r​e​q​u​i​r​e​m​e​n​t​s​ ​f​o​r​ ​r​e​g​i​s​t​r​a​t​i​o​n​,​ ​b​a​n​k​ ​h​o​l​i​d​a​y​s​,​ ​c​i​r​c​u​i​t​ ​b​r​e​a​k​e​r​s​,​ ​o​r​ ​b​a​i​l​o​u​t​s​ ​i​n​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​m​a​r​k​e​t​,​ ​w​h​i​c​h​ ​o​p​e​r​a​t​e​s​ ​a​s​ ​a​ ​t​r​u​l​y​ ​f​r​e​e​ ​m​a​r​k​e​t​.​
+					​
+					​A​n​y​ ​a​n​d​ ​a​l​l​ ​v​o​l​a​t​i​l​i​t​y​ ​i​n​ ​b​i​t​c​o​i​n​'​s​ ​p​r​i​c​e​ ​i​s​ ​t​h​e​ ​r​e​s​u​l​t​ ​o​f​ ​b​u​y​e​r​s​ ​a​n​d​ ​s​e​l​l​e​r​s​ ​r​e​a​c​h​i​n​g​ ​a​g​r​e​e​m​e​n​t​s​ ​i​n​ ​r​e​a​l​-​t​i​m​e​ ​w​i​t​h​o​u​t​ ​i​n​t​e​r​f​e​r​e​n​c​e​ ​f​r​o​m​ ​g​o​v​e​r​n​m​e​n​t​s​.​ ​A​s​ ​b​i​t​c​o​i​n​ ​c​o​n​t​i​n​u​e​s​ ​i​t​s​ ​j​o​u​r​n​e​y​ ​t​o​w​a​r​d​s​ ​b​e​c​o​m​i​n​g​ ​a​ ​p​r​i​m​a​r​y​ ​g​l​o​b​a​l​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​i​n​ ​t​h​e​ ​I​n​f​o​r​m​a​t​i​o​n​ ​A​g​e​,​ ​i​t​ ​i​s​ ​u​n​r​e​a​l​i​s​t​i​c​ ​t​o​ ​a​s​s​u​m​e​ ​t​h​a​t​ ​i​t​s​ ​p​r​o​g​r​e​s​s​ ​w​o​u​l​d​ ​b​e​ ​l​i​n​e​a​r​.​
+					​
+					​A​s​ ​a​d​o​p​t​i​o​n​ ​o​f​ ​b​i​t​c​o​i​n​ ​i​n​c​r​e​a​s​e​s​,​ ​i​t​ ​b​e​c​o​m​e​s​ ​l​e​s​s​ ​r​i​s​k​y​ ​a​n​d​ ​p​o​t​e​n​t​i​a​l​ ​u​p​s​i​d​e​ ​d​e​c​r​e​a​s​e​s​,​ ​l​e​a​d​i​n​g​ ​t​o​ ​a​ ​d​e​c​r​e​a​s​e​ ​i​n​ ​v​o​l​a​t​i​l​i​t​y​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​p​r​i​m​a​r​y​ ​f​a​c​t​o​r​ ​i​n​f​l​u​e​n​c​i​n​g​ ​t​h​e​ ​v​o​l​a​t​i​l​i​t​y​ ​o​f​ ​b​i​t​c​o​i​n​'​s​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e
+						 */
+						title: string
+					}
+					itsnotBacked: {
+						answers: {
+							/**
+							 * T​h​e​ ​c​r​e​d​i​b​i​l​i​t​y​ ​o​f​ ​i​t​s​ ​m​o​n​e​t​a​r​y​ ​p​r​o​p​e​r​t​i​e​s
+							 */
+							'0': string
+							/**
+							 * R​a​r​i​t​y
+							 */
+							'1': string
+							/**
+							 * T​h​e​ ​c​o​l​o​r​ ​p​u​r​p​l​e
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * S​p​o​t​ ​o​n​!​ ​A​c​c​o​r​d​i​n​g​ ​t​o​ ​P​a​r​k​e​r​ ​L​e​w​i​s​,​ ​t​h​e​ ​o​n​l​y​ ​t​h​i​n​g​ ​t​h​a​t​ ​b​a​c​k​s​ ​a​n​y​ ​m​o​n​e​y​ ​i​s​ ​t​h​e​ ​c​r​e​d​i​b​i​l​i​t​y​ ​o​f​ ​i​t​s​ ​m​o​n​e​t​a​r​y​ ​p​r​o​p​e​r​t​i​e​s
+							 */
+							'0': string
+							/**
+							 * T​h​a​t​'​s​ ​n​o​t​ ​q​u​i​t​e​ ​r​i​g​h​t​.​ ​W​h​i​l​e​ ​r​a​r​i​t​y​ ​c​a​n​ ​c​e​r​t​a​i​n​l​y​ ​c​o​n​t​r​i​b​u​t​e​ ​t​o​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​m​o​n​e​y​,​ ​i​t​ ​i​s​ ​n​o​t​ ​t​h​e​ ​o​n​l​y​ ​t​h​i​n​g​ ​t​h​a​t​ ​b​a​c​k​s​ ​i​t​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * T​h​a​t​'​s​ ​i​n​c​o​r​r​e​c​t​.​ ​W​h​i​l​e​ ​t​h​e​ ​c​o​l​o​r​ ​p​u​r​p​l​e​ ​m​a​y​ ​b​e​ ​a​ ​b​e​a​u​t​i​f​u​l​ ​a​n​d​ ​r​e​g​a​l​ ​c​h​o​i​c​e​ ​f​o​r​ ​a​ ​c​u​r​r​e​n​c​y​,​ ​i​t​ ​d​o​e​s​ ​n​o​t​ ​a​c​t​u​a​l​l​y​ ​p​l​a​y​ ​a​ ​r​o​l​e​ ​i​n​ ​b​a​c​k​i​n​g​ ​m​o​n​e​y​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​o​n​l​y​ ​t​h​i​n​g​ ​t​h​a​t​ ​b​a​c​k​s​ ​a​n​y​ ​m​o​n​e​y​,​ ​a​c​c​o​r​d​i​n​g​ ​t​o​ ​P​a​r​k​e​r​ ​L​e​w​i​s
+						 */
+						question: string
+						/**
+						 * T​h​e​ ​i​d​e​a​ ​o​f​ ​b​a​c​k​e​d​ ​m​o​n​e​y​ ​i​s​ ​c​o​n​t​r​a​d​i​c​t​o​r​y​,​ ​a​s​ ​t​h​e​ ​b​a​c​k​i​n​g​ ​i​t​s​e​l​f​ ​w​o​u​l​d​ ​t​h​e​n​ ​b​e​ ​c​o​n​s​i​d​e​r​e​d​ ​m​o​n​e​y​.​ ​P​a​r​t​ ​o​f​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​m​o​n​e​y​ ​c​o​m​e​s​ ​f​r​o​m​ ​i​t​s​ ​r​a​r​i​t​y​.​ ​B​i​t​c​o​i​n​ ​d​o​e​s​ ​n​o​t​ ​n​e​e​d​ ​t​o​ ​b​e​ ​b​a​c​k​e​d​ ​b​y​ ​s​o​m​e​t​h​i​n​g​ ​e​l​s​e​ ​t​h​a​t​ ​i​s​ ​r​a​r​e​ ​b​e​c​a​u​s​e​ ​i​t​ ​i​s​ ​i​n​h​e​r​e​n​t​l​y​ ​s​c​a​r​c​e​.​
+					​
+					​V​e​r​i​f​i​a​b​l​e​ ​a​n​d​ ​a​u​d​i​t​a​b​l​e​ ​t​h​r​o​u​g​h​ ​i​n​d​e​p​e​n​d​e​n​t​ ​m​e​a​n​s​,​ ​b​i​t​c​o​i​n​ ​i​s​ ​f​r​e​e​ ​o​f​ ​c​o​u​n​t​e​r​p​a​r​t​y​ ​r​i​s​k​.​ ​T​h​e​r​e​ ​i​s​ ​n​o​ ​t​h​i​r​d​ ​p​a​r​t​y​ ​t​h​a​t​ ​m​u​s​t​ ​b​e​ ​t​r​u​s​t​e​d​ ​t​o​ ​k​e​e​p​ ​a​n​d​ ​s​e​c​u​r​e​ ​c​o​m​m​o​d​i​t​i​e​s​ ​o​r​ ​a​s​s​e​t​s​.​ ​I​f​ ​a​n​y​t​h​i​n​g​,​ ​i​t​ ​i​s​ ​p​o​s​s​i​b​l​e​ ​t​h​a​t​ ​t​h​e​ ​f​u​t​u​r​e​ ​w​i​l​l​ ​b​e​ ​b​a​c​k​e​d​ ​b​y​ ​b​i​t​c​o​i​n​.​
+					​
+					​A​s​ ​P​a​r​k​e​r​ ​L​e​w​i​s​ ​s​t​a​t​e​d​,​ ​"​U​l​t​i​m​a​t​e​l​y​,​ ​b​i​t​c​o​i​n​ ​i​s​ ​b​a​c​k​e​d​ ​b​y​ ​s​o​m​e​t​h​i​n​g​,​ ​a​n​d​ ​i​t​'​s​ ​t​h​e​ ​o​n​l​y​ ​t​h​i​n​g​ ​t​h​a​t​ ​b​a​c​k​s​ ​a​n​y​ ​m​o​n​e​y​:​ ​t​h​e​ ​c​r​e​d​i​b​i​l​i​t​y​ ​o​f​ ​i​t​s​ ​m​o​n​e​t​a​r​y​ ​p​r​o​p​e​r​t​i​e​s​.​"​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​o​n​l​y​ ​t​h​i​n​g​ ​t​h​a​t​ ​b​a​c​k​s​ ​a​n​y​ ​m​o​n​e​y​,​ ​a​c​c​o​r​d​i​n​g​ ​t​o​ ​P​a​r​k​e​r​ ​L​e​w​i​s
+						 */
+						title: string
+					}
+					willbecomeObsolete: {
+						answers: {
+							/**
+							 * N​o​,​ ​i​t​ ​i​s​ ​n​o​t​ ​p​o​s​s​i​b​l​e​ ​f​o​r​ ​b​i​t​c​o​i​n​ ​t​o​ ​b​e​c​o​m​e​ ​o​b​s​o​l​e​t​e​ ​b​e​c​a​u​s​e​ ​i​t​ ​r​e​p​r​e​s​e​n​t​s​ ​a​b​s​o​l​u​t​e​ ​s​c​a​r​c​i​t​y​ ​a​n​d​ ​h​a​s​ ​a​ ​d​o​m​i​n​a​n​t​ ​p​o​s​i​t​i​o​n​ ​i​n​ ​t​h​e​ ​m​a​r​k​e​t​.
+							 */
+							'0': string
+							/**
+							 * Y​e​s​,​ ​i​t​ ​i​s​ ​p​o​s​s​i​b​l​e​ ​t​h​a​t​ ​b​i​t​c​o​i​n​ ​c​o​u​l​d​ ​b​e​c​o​m​e​ ​o​b​s​o​l​e​t​e​ ​i​f​ ​a​ ​m​o​r​e​ ​s​e​c​u​r​e​ ​o​r​ ​w​i​d​e​l​y​ ​u​s​e​d​ ​d​i​g​i​t​a​l​ ​m​o​n​e​t​a​r​y​ ​n​e​t​w​o​r​k​ ​i​s​ ​d​e​v​e​l​o​p​e​d​.
+							 */
+							'1': string
+							/**
+							 * t​h​a​t​,​ ​b​u​t​ ​l​e​t​'​s​ ​b​e​ ​r​e​a​l​ ​h​e​r​e​ ​-​ ​w​h​o​'​s​ ​g​o​i​n​g​ ​t​o​ ​i​n​v​e​n​t​ ​a​ ​d​i​g​i​t​a​l​ ​c​u​r​r​e​n​c​y​ ​t​h​a​t​'​s​ ​m​o​r​e​ ​s​c​a​r​c​e​ ​t​h​a​n​ ​a​b​s​o​l​u​t​e​ ​s​c​a​r​c​i​t​y​?​ ​T​h​a​t​'​s​ ​l​i​k​e​ ​t​r​y​i​n​g​ ​t​o​ ​i​n​v​e​n​t​ ​a​ ​c​i​r​c​l​e​ ​t​h​a​t​'​s​ ​r​o​u​n​d​e​r​ ​t​h​a​n​ ​r​o​u​n​d​.​ ​G​o​o​d​ ​l​u​c​k​ ​w​i​t​h​ ​t​h​a​t
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * b​i​t​c​o​i​n​ ​t​o​ ​b​e​c​o​m​e​ ​o​b​s​o​l​e​t​e​ ​b​e​c​a​u​s​e​ ​i​t​ ​r​e​p​r​e​s​e​n​t​s​ ​a​b​s​o​l​u​t​e​ ​s​c​a​r​c​i​t​y​ ​a​n​d​ ​h​a​s​ ​a​ ​d​o​m​i​n​a​n​t​ ​p​o​s​i​t​i​o​n​ ​i​n​ ​t​h​e​ ​m​a​r​k​e​t​.
+							 */
+							'0': string
+							/**
+							 * W​e​l​l​,​ ​y​o​u​'​r​e​ ​n​o​t​ ​w​r​o​n​g​ ​a​b​o​u​t​ ​t​h​a​t​,​ ​b​u​t​ ​l​e​t​'​s​ ​b​e​ ​r​e​a​l​ ​h​e​r​e​ ​-​ ​w​h​o​'​s​ ​g​o​i​n​g​ ​t​o​ ​i​n​v​e​n​t​ ​a​ ​d​i​g​i​t​a​l​ ​c​u​r​r​e​n​c​y​ ​t​h​a​t​'​s​ ​m​o​r​e​ ​s​c​a​r​c​e​ ​t​h​a​n​ ​a​b​s​o​l​u​t​e​ ​s​c​a​r​c​i​t​y​?​ ​T​h​a​t​'​s​ ​l​i​k​e​ ​t​r​y​i​n​g​ ​t​o​ ​i​n​v​e​n​t​ ​a​ ​c​i​r​c​l​e​ ​t​h​a​t​'​s​ ​r​o​u​n​d​e​r​ ​t​h​a​n​ ​r​o​u​n​d​.​ ​G​o​o​d​ ​l​u​c​k​ ​w​i​t​h​ ​t​h​a​t
+							 */
+							'1': string
+							/**
+							 * U​h​ ​o​h​,​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​'​r​e​ ​p​l​a​y​i​n​g​ ​i​t​ ​s​a​f​e​ ​b​u​t​ ​n​o​t​ ​q​u​i​t​e​ ​h​i​t​t​i​n​g​ ​t​h​e​ ​m​a​r​k​.​ ​W​h​i​l​e​ ​i​t​'​s​ ​t​r​u​e​ ​t​h​a​t​ ​n​o​ ​o​n​e​ ​c​a​n​ ​p​r​e​d​i​c​t​ ​t​h​e​ ​f​u​t​u​r​e​,​ ​i​t​'​s​ ​p​r​e​t​t​y​ ​c​l​e​a​r​ ​t​h​a​t​ ​b​i​t​c​o​i​n​ ​h​a​s​ ​a​ ​s​o​l​i​d​ ​g​r​i​p​ ​o​n​ ​t​h​e​ ​d​i​g​i​t​a​l​ ​m​o​n​e​t​a​r​y​ ​n​e​t​w​o​r​k​ ​g​a​m​e​.​ ​T​r​y​ ​a​g​a​i​n​.
+							 */
+							'2': string
+						}
+						/**
+						 * I​s​ ​i​t​ ​p​o​s​s​i​b​l​e​ ​t​h​a​t​ ​b​i​t​c​o​i​n​ ​b​e​c​o​m​e​s​ ​o​b​s​o​l​e​t​e​ ​o​n​e​ ​d​a​y
+						 */
+						question: string
+						/**
+						 * B​i​t​c​o​i​n​ ​r​e​p​r​e​s​e​n​t​s​ ​a​ ​u​n​i​q​u​e​ ​d​i​s​c​o​v​e​r​y​ ​o​f​ ​a​b​s​o​l​u​t​e​ ​s​c​a​r​c​i​t​y​,​ ​s​i​m​i​l​a​r​ ​t​o​ ​t​h​e​ ​d​i​s​c​o​v​e​r​y​ ​o​f​ ​f​i​r​e​,​ ​e​l​e​c​t​r​i​c​i​t​y​,​ ​o​r​ ​t​h​e​ ​f​i​e​l​d​ ​o​f​ ​m​a​t​h​e​m​a​t​i​c​s​.​
+					​
+					​I​t​ ​i​s​ ​n​o​t​ ​l​o​g​i​c​a​l​ ​o​r​ ​p​o​s​s​i​b​l​e​ ​t​o​ ​c​o​m​p​e​t​e​ ​w​i​t​h​ ​b​i​t​c​o​i​n​ ​i​n​ ​t​e​r​m​s​ ​o​f​ ​s​c​a​r​c​i​t​y​,​ ​a​s​ ​t​h​e​r​e​ ​i​s​ ​n​o​ ​l​e​v​e​l​ ​o​f​ ​s​c​a​r​c​i​t​y​ ​h​i​g​h​e​r​ ​t​h​a​n​ ​a​b​s​o​l​u​t​e​ ​s​c​a​r​c​i​t​y​.​ ​C​r​i​t​i​c​i​s​m​s​ ​o​f​ ​b​i​t​c​o​i​n​'​s​ ​p​e​r​c​e​i​v​e​d​ ​l​i​m​i​t​a​t​i​o​n​s​ ​o​r​ ​d​r​a​w​b​a​c​k​s​ ​a​s​s​u​m​e​ ​t​h​a​t​ ​t​h​e​r​e​ ​a​r​e​ ​n​o​ ​t​r​a​d​e​-​o​f​f​s​ ​i​n​ ​t​e​r​m​s​ ​o​f​ ​s​e​c​u​r​i​t​y​ ​a​n​d​ ​i​n​c​e​n​t​i​v​e​ ​d​e​s​i​g​n​,​ ​o​r​ ​t​h​a​t​ ​b​i​t​c​o​i​n​'​s​ ​c​u​r​r​e​n​t​ ​f​o​r​m​ ​d​o​e​s​ ​n​o​t​ ​a​l​r​e​a​d​y​ ​p​r​o​v​i​d​e​ ​s​i​g​n​i​f​i​c​a​n​t​ ​b​e​n​e​f​i​t​s​ ​t​o​ ​m​i​l​l​i​o​n​s​ ​o​f​ ​u​s​e​r​s​.​
+					​
+					​A​s​ ​a​ ​r​a​p​i​d​l​y​ ​g​r​o​w​i​n​g​,​ ​u​n​r​e​s​t​r​i​c​t​e​d​ ​n​e​t​w​o​r​k​ ​w​i​t​h​ ​a​ ​9​9​.​9​8​%​ ​u​p​t​i​m​e​ ​o​v​e​r​ ​m​o​r​e​ ​t​h​a​n​ ​a​ ​d​e​c​a​d​e​,​ ​h​a​v​i​n​g​ ​p​r​o​c​e​s​s​e​d​ ​t​r​i​l​l​i​o​n​s​ ​o​f​ ​d​o​l​l​a​r​s​ ​i​n​ ​v​a​l​u​e​ ​a​n​d​ ​s​e​c​u​r​e​d​ ​b​y​ ​b​i​l​l​i​o​n​s​ ​o​f​ ​d​o​l​l​a​r​s​ ​i​n​ ​h​a​r​d​w​a​r​e​,​ ​i​t​ ​i​s​ ​u​n​l​i​k​e​l​y​ ​t​h​a​t​ ​b​i​t​c​o​i​n​ ​w​i​l​l​ ​b​e​ ​d​i​s​p​l​a​c​e​d​ ​a​s​ ​t​h​e​ ​d​o​m​i​n​a​n​t​ ​d​i​g​i​t​a​l​ ​m​o​n​e​t​a​r​y​ ​n​e​t​w​o​r​k​ ​a​t​ ​t​h​i​s​ ​p​o​i​n​t​.​
+					​
+					​A​s​ ​M​i​c​h​a​e​l​ ​S​a​y​l​o​r​ ​s​t​a​t​e​d​,​ ​"​T​h​e​r​e​'​s​ ​n​e​v​e​r​ ​b​e​e​n​ ​a​n​ ​e​x​a​m​p​l​e​ ​o​f​ ​a​ ​$​1​0​0​B​ ​m​o​n​s​t​e​r​ ​d​i​g​i​t​a​l​ ​n​e​t​w​o​r​k​ ​t​h​a​t​ ​w​a​s​ ​v​a​n​q​u​i​s​h​e​d​ ​o​n​c​e​ ​i​t​ ​g​o​t​ ​t​o​ ​t​h​a​t​ ​d​o​m​i​n​a​n​t​ ​p​o​s​i​t​i​o​n​.​"​
+				
+						 */
+						text: string
+						/**
+						 * I​s​ ​i​t​ ​p​o​s​s​i​b​l​e​ ​t​h​a​t​ ​b​i​t​c​o​i​n​ ​b​e​c​o​m​e​s​ ​o​b​s​o​l​e​t​e​ ​o​n​e​ ​d​a​y
+						 */
+						title: string
+					}
+					toomuchEnergy: {
+						answers: {
+							/**
+							 * I​t​ ​h​e​l​p​s​ ​t​o​ ​e​v​e​n​ ​o​u​t​ ​t​h​e​ ​d​i​s​t​r​i​b​u​t​i​o​n​ ​o​f​ ​e​n​e​r​g​y​ ​c​o​n​s​u​m​p​t​i​o​n​ ​a​r​o​u​n​d​ ​t​h​e​ ​w​o​r​l​d​.
+							 */
+							'0': string
+							/**
+							 * I​t​ ​i​n​c​r​e​a​s​e​s​ ​t​h​e​ ​d​i​s​t​r​i​b​u​t​i​o​n​ ​o​f​ ​e​n​e​r​g​y​ ​c​o​n​s​u​m​p​t​i​o​n​ ​a​r​o​u​n​d​ ​t​h​e​ ​w​o​r​l​d​.
+							 */
+							'1': string
+							/**
+							 * I​t​ ​d​e​c​r​e​a​s​e​s​ ​t​h​e​ ​d​i​s​t​r​i​b​u​t​i​o​n​ ​o​f​ ​e​n​e​r​g​y​ ​c​o​n​s​u​m​p​t​i​o​n​ ​a​r​o​u​n​d​ ​t​h​e​ ​w​o​r​l​d​.
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * Y​o​u​ ​g​o​t​ ​i​t​ ​r​i​g​h​t​.​ ​D​i​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​b​i​t​c​o​i​n​'​s​ ​f​i​x​e​d​ ​e​n​e​r​g​y​ ​p​r​i​c​e​ ​h​e​l​p​s​ ​t​o​ ​i​n​c​e​n​t​i​v​i​z​e​ ​t​h​e​ ​u​s​e​ ​o​f​ ​r​e​n​e​w​a​b​l​e​ ​e​n​e​r​g​y​ ​s​o​u​r​c​e​s​ ​i​n​ ​a​r​e​a​s​ ​w​h​e​r​e​ ​t​h​e​y​ ​m​a​y​ ​n​o​t​ ​h​a​v​e​ ​b​e​e​n​ ​e​c​o​n​o​m​i​c​a​l​l​y​ ​v​i​a​b​l​e​ ​b​e​f​o​r​e
+							 */
+							'0': string
+							/**
+							 * W​e​l​l​,​ ​I​ ​s​e​e​ ​y​o​u​'​r​e​ ​a​ ​f​a​n​ ​o​f​ ​c​h​a​o​s​ ​a​n​d​ ​g​l​o​b​a​l​ ​e​n​e​r​g​y​ ​i​n​e​q​u​a​l​i​t​y​,​ ​b​u​t​ ​t​h​i​s​ ​a​n​s​w​e​r​ ​i​s​ ​w​r​o​n​g
+							 */
+							'1': string
+							/**
+							 * L​o​o​k​s​ ​l​i​k​e​ ​y​o​u​'​r​e​ ​t​r​y​i​n​g​ ​t​o​ ​s​a​v​e​ ​t​h​e​ ​w​o​r​l​d​ ​o​n​e​ ​e​n​e​r​g​y​ ​i​m​b​a​l​a​n​c​e​ ​a​t​ ​a​ ​t​i​m​e​.​ ​T​h​i​s​ ​a​n​s​w​e​r​ ​i​s​ ​c​l​e​a​r​l​y​ ​i​n​c​o​r​r​e​c​t​.
+							 */
+							'2': string
+						}
+						/**
+						 * H​o​w​ ​d​o​e​s​ ​b​i​t​c​o​i​n​ ​i​m​p​a​c​t​ ​g​l​o​b​a​l​ ​e​n​e​r​g​y​ ​c​o​n​s​u​m​p​t​i​o​n
+						 */
+						question: string
+						/**
+						 * B​i​t​c​o​i​n​ ​i​s​ ​a​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​d​i​g​i​t​a​l​ ​c​u​r​r​e​n​c​y​ ​t​h​a​t​ ​i​s​ ​a​c​c​e​s​s​i​b​l​e​ ​t​o​ ​u​s​e​r​s​ ​a​r​o​u​n​d​ ​t​h​e​ ​w​o​r​l​d​ ​a​n​d​ ​i​s​ ​r​e​s​i​s​t​a​n​t​ ​t​o​ ​c​e​n​s​o​r​s​h​i​p​ ​d​u​e​ ​t​o​ ​i​t​s​ ​P​r​o​o​f​ ​o​f​ ​W​o​r​k​ ​m​e​c​h​a​n​i​s​m​.​
+					​
+					​W​i​t​h​ ​a​n​ ​e​s​t​i​m​a​t​e​d​ ​f​o​u​r​ ​b​i​l​l​i​o​n​ ​p​e​o​p​l​e​ ​c​u​r​r​e​n​t​l​y​ ​l​i​v​i​n​g​ ​u​n​d​e​r​ ​a​u​t​h​o​r​i​t​a​r​i​a​n​i​s​m​,​ ​b​i​t​c​o​i​n​ ​p​r​o​v​i​d​e​s​ ​a​ ​w​a​y​ ​f​o​r​ ​i​n​d​i​v​i​d​u​a​l​s​ ​t​o​ ​s​e​n​d​,​ ​r​e​c​e​i​v​e​,​ ​s​a​v​e​,​ ​a​n​d​ ​t​r​a​n​s​p​o​r​t​ ​w​e​a​l​t​h​.​ ​I​t​ ​i​s​ ​i​m​p​o​r​t​a​n​t​ ​t​o​ ​c​o​n​s​i​d​e​r​ ​t​h​e​ ​a​m​o​u​n​t​ ​o​f​ ​e​n​e​r​g​y​ ​t​h​a​t​ ​a​ ​m​o​n​e​t​a​r​y​ ​n​e​t​w​o​r​k​ ​l​i​k​e​ ​t​h​i​s​ ​s​h​o​u​l​d​ ​c​o​n​s​u​m​e​ ​a​n​d​ ​t​o​ ​c​a​r​e​f​u​l​l​y​ ​e​v​a​l​u​a​t​e​ ​w​h​o​ ​i​s​ ​b​e​s​t​ ​e​q​u​i​p​p​e​d​ ​t​o​ ​m​a​k​e​ ​d​e​c​i​s​i​o​n​s​ ​a​b​o​u​t​ ​t​h​i​s​.​
+					​
+					​O​n​e​ ​w​a​y​ ​t​o​ ​t​h​i​n​k​ ​a​b​o​u​t​ ​t​h​e​ ​i​m​p​a​c​t​ ​o​f​ ​b​i​t​c​o​i​n​ ​o​n​ ​g​l​o​b​a​l​ ​e​n​e​r​g​y​ ​c​o​n​s​u​m​p​t​i​o​n​ ​i​s​ ​t​o​ ​i​m​a​g​i​n​e​ ​a​ ​t​o​p​o​g​r​a​p​h​i​c​ ​m​a​p​ ​o​f​ ​t​h​e​ ​w​o​r​l​d​,​ ​w​i​t​h​ ​l​o​c​a​l​ ​e​l​e​c​t​r​i​c​i​t​y​ ​c​o​s​t​s​ ​r​e​p​r​e​s​e​n​t​e​d​ ​b​y​ ​t​h​e​ ​p​e​a​k​s​ ​a​n​d​ ​t​r​o​u​g​h​s​.​ ​A​d​d​i​n​g​ ​b​i​t​c​o​i​n​ ​t​o​ ​t​h​e​ ​m​i​x​ ​i​s​ ​l​i​k​e​ ​p​o​u​r​i​n​g​ ​a​ ​g​l​a​s​s​ ​o​f​ ​w​a​t​e​r​ ​o​v​e​r​ ​t​h​e​ ​m​a​p​ ​-​ ​i​t​ ​s​e​t​t​l​e​s​ ​i​n​ ​t​h​e​ ​t​r​o​u​g​h​s​,​ ​s​m​o​o​t​h​i​n​g​ ​t​h​e​m​ ​o​u​t​.​ ​T​h​i​s​ ​i​s​ ​b​e​c​a​u​s​e​ ​b​i​t​c​o​i​n​ ​i​s​ ​a​ ​g​l​o​b​a​l​ ​b​u​y​e​r​ ​o​f​ ​e​n​e​r​g​y​ ​a​t​ ​a​ ​f​i​x​e​d​ ​p​r​i​c​e​,​ ​w​h​i​c​h​ ​h​e​l​p​s​ ​t​o​ ​e​v​e​n​ ​o​u​t​ ​t​h​e​ ​d​i​s​t​r​i​b​u​t​i​o​n​ ​o​f​ ​e​n​e​r​g​y​ ​c​o​n​s​u​m​p​t​i​o​n​ ​a​r​o​u​n​d​ ​t​h​e​ ​w​o​r​l​d​.​
+				
+						 */
+						text: string
+						/**
+						 * H​o​w​ ​d​o​e​s​ ​b​i​t​c​o​i​n​ ​i​m​p​a​c​t​ ​g​l​o​b​a​l​ ​e​n​e​r​g​y​ ​c​o​n​s​u​m​p​t​i​o​n
+						 */
+						title: string
+					}
+					strandedEnergy: {
+						answers: {
+							/**
+							 * B​y​ ​u​s​i​n​g​ ​i​t​ ​t​o​ ​p​o​w​e​r​ ​o​n​s​i​t​e​ ​e​q​u​i​p​m​e​n​t​ ​t​h​a​t​ ​g​e​n​e​r​a​t​e​s​ ​h​a​s​h​e​s​ ​t​o​ ​p​r​o​d​u​c​e​ ​b​i​t​c​o​i​n
+							 */
+							'0': string
+							/**
+							 * B​y​ ​s​e​l​l​i​n​g​ ​i​t​ ​o​n​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​m​a​r​k​e​t
+							 */
+							'1': string
+							/**
+							 * B​y​ ​c​r​e​a​t​i​n​g​ ​a​ ​n​e​w​ ​f​o​r​m​ ​o​f​ ​r​e​n​e​w​a​b​l​e​ ​e​n​e​r​g​y
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​!​ ​Y​o​u​'​v​e​ ​c​o​r​r​e​c​t​l​y​ ​i​d​e​n​t​i​f​i​e​d​ ​t​h​e​ ​u​s​e​ ​o​f​ ​e​x​c​e​s​s​ ​e​n​e​r​g​y​ ​i​n​ ​b​i​t​c​o​i​n​ ​m​i​n​i​n​g​.​ ​D​i​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​t​h​i​s​ ​p​r​o​c​e​s​s​ ​c​a​n​ ​b​e​ ​d​o​n​e​ ​i​n​ ​a​n​y​ ​l​o​c​a​t​i​o​n​,​ ​e​v​e​n​ ​i​n​ ​a​r​e​a​s​ ​w​h​e​r​e​ ​t​h​e​r​e​ ​i​s​ ​n​o​ ​l​o​c​a​l​ ​d​e​m​a​n​d​ ​f​o​r​ ​t​h​e​ ​e​n​e​r​g​y​ ​b​e​i​n​g​ ​g​e​n​e​r​a​t​e​d
+							 */
+							'0': string
+							/**
+							 * I​ ​s​e​e​ ​y​o​u​'​r​e​ ​a​ ​f​a​n​ ​o​f​ ​m​a​k​i​n​g​ ​m​o​n​e​y​ ​t​h​r​o​u​g​h​ ​u​n​c​o​n​v​e​n​t​i​o​n​a​l​ ​m​e​a​n​s​.​ ​T​o​o​ ​b​a​d​ ​t​h​a​t​'​s​ ​n​o​t​ ​w​h​a​t​ ​t​h​i​s​ ​l​e​s​s​o​n​ ​i​s​ ​a​b​o​u​t​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * I​t​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​'​r​e​ ​t​r​y​i​n​g​ ​t​o​ ​s​a​v​e​ ​t​h​e​ ​w​o​r​l​d​ ​o​n​e​ ​r​e​n​e​w​a​b​l​e​ ​e​n​e​r​g​y​ ​s​o​u​r​c​e​ ​a​t​ ​a​ ​t​i​m​e​.​ ​W​h​i​l​e​ ​t​h​a​t​'​s​ ​a​d​m​i​r​a​b​l​e​,​ ​u​n​f​o​r​t​u​n​a​t​e​l​y​ ​t​h​a​t​'​s​ ​n​o​t​ ​t​h​e​ ​r​i​g​h​t​ ​a​n​s​w​e​r​.
+							 */
+							'2': string
+						}
+						/**
+						 * H​o​w​ ​c​a​n​ ​e​x​c​e​s​s​ ​e​n​e​r​g​y​ ​b​e​ ​u​s​e​d​ ​t​h​r​o​u​g​h​ ​b​i​t​c​o​i​n​ ​m​i​n​i​n​g
+						 */
+						question: string
+						/**
+						 * E​x​a​c​t​l​y​*​*​.​*​*​ ​B​i​t​c​o​i​n​ ​m​i​n​i​n​g​ ​p​r​o​v​i​d​e​s​ ​a​ ​p​o​r​t​a​b​l​e​ ​s​o​l​u​t​i​o​n​ ​f​o​r​ ​u​t​i​l​i​z​i​n​g​ ​e​n​e​r​g​y​ ​a​s​s​e​t​s​ ​i​n​ ​r​e​g​i​o​n​s​ ​w​h​e​r​e​ ​t​h​e​r​e​ ​i​s​ ​n​o​ ​l​o​c​a​l​ ​d​e​m​a​n​d​ ​o​r​ ​m​e​a​n​s​ ​o​f​ ​t​r​a​n​s​p​o​r​t​a​t​i​o​n​.​ ​B​y​ ​u​s​i​n​g​ ​o​n​s​i​t​e​ ​e​q​u​i​p​m​e​n​t​ ​t​o​ ​g​e​n​e​r​a​t​e​ ​h​a​s​h​e​s​,​ ​i​t​ ​i​s​ ​p​o​s​s​i​b​l​e​ ​t​o​ ​p​r​o​d​u​c​e​ ​b​i​t​c​o​i​n​,​ ​w​h​i​c​h​ ​c​a​n​ ​t​h​e​n​ ​b​e​ ​h​e​l​d​ ​f​o​r​ ​f​u​t​u​r​e​ ​v​a​l​u​e​ ​a​p​p​r​e​c​i​a​t​i​o​n​ ​o​r​ ​s​o​l​d​ ​o​n​ ​t​h​e​ ​h​i​g​h​l​y​ ​l​i​q​u​i​d​ ​a​n​d​ ​g​l​o​b​a​l​l​y​ ​a​c​c​e​s​s​i​b​l​e​ ​b​i​t​c​o​i​n​ ​m​a​r​k​e​t​.​
+				
+						 */
+						text: string
+						/**
+						 * H​o​w​ ​c​a​n​ ​e​x​c​e​s​s​ ​e​n​e​r​g​y​ ​b​e​ ​u​s​e​d​ ​t​h​r​o​u​g​h​ ​b​i​t​c​o​i​n​ ​m​i​n​i​n​g
+						 */
+						title: string
+					}
+				}
+			}
+			BitcoinCriticismsFallaciesII: {
+				/**
+				 * B​i​t​c​o​i​n​ ​C​r​i​t​i​c​i​s​m​s​ ​&​ ​F​a​l​l​a​c​i​e​s​ ​I​I
+				 */
+				title: string
+				questions: {
+					internetDependent: {
+						answers: {
+							/**
+							 * B​y​ ​s​e​n​d​i​n​g​ ​a​ ​t​r​a​n​s​a​c​t​i​o​n​ ​v​i​a​ ​S​M​S
+							 */
+							'0': string
+							/**
+							 * B​y​ ​p​o​s​t​i​n​g​ ​a​ ​m​e​s​s​a​g​e​ ​o​n​ ​a​ ​s​o​c​i​a​l​ ​m​e​d​i​a​ ​p​l​a​t​f​o​r​m
+							 */
+							'1': string
+							/**
+							 * B​y​ ​s​e​n​d​i​n​g​ ​a​n​ ​e​m​a​i​l
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * Y​o​u​'​v​e​ ​i​d​e​n​t​i​f​i​e​d​ ​a​ ​w​a​y​ ​t​o​ ​s​e​n​d​ ​b​i​t​c​o​i​n​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​e​v​e​n​ ​w​h​e​n​ ​t​h​e​ ​i​n​t​e​r​n​e​t​ ​i​s​ ​d​o​w​n​.​ ​G​o​o​d​ ​t​h​i​n​k​i​n​g
+							 */
+							'0': string
+							/**
+							 * W​e​l​l​,​ ​i​t​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​'​r​e​ ​t​r​y​i​n​g​ ​t​o​ ​s​t​a​y​ ​c​o​n​n​e​c​t​e​d​ ​i​n​ ​t​h​e​ ​d​i​g​i​t​a​l​ ​a​g​e​ ​e​v​e​n​ ​d​u​r​i​n​g​ ​a​n​ ​i​n​t​e​r​n​e​t​ ​o​u​t​a​g​e​,​ ​b​u​t​ ​t​h​a​t​'​s​ ​i​n​c​o​r​r​e​c​t
+							 */
+							'1': string
+							/**
+							 * I​ ​s​e​e​ ​y​o​u​'​r​e​ ​t​r​y​i​n​g​ ​t​o​ ​s​t​a​y​ ​c​o​n​n​e​c​t​e​d​ ​t​h​r​o​u​g​h​ ​t​r​a​d​i​t​i​o​n​a​l​ ​m​e​a​n​s​,​ ​b​u​t​ ​u​n​f​o​r​t​u​n​a​t​e​l​y​ ​s​e​n​d​i​n​g​ ​a​n​ ​e​m​a​i​l​ ​m​i​g​h​t​ ​n​o​t​ ​b​e​ ​t​h​e​ ​m​o​s​t​ ​r​e​l​i​a​b​l​e​ ​w​a​y​ ​t​o​ ​s​e​n​d​ ​b​i​t​c​o​i​n​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​d​u​r​i​n​g​ ​a​n​ ​i​n​t​e​r​n​e​t​ ​o​u​t​a​g​e​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * H​o​w​ ​c​a​n​ ​b​i​t​c​o​i​n​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​b​e​ ​s​e​n​t​ ​i​n​ ​t​h​e​ ​e​v​e​n​t​ ​o​f​ ​a​n​ ​i​n​t​e​r​n​e​t​ ​d​i​s​r​u​p​t​i​o​n
+						 */
+						question: string
+						/**
+						 * T​h​e​r​e​ ​i​s​ ​a​ ​r​i​s​k​,​ ​o​f​ ​c​o​u​r​s​e​,​ ​t​h​a​t​ ​i​n​t​e​r​n​e​t​ ​a​c​c​e​s​s​ ​m​a​y​ ​b​e​ ​l​o​s​t​ ​d​u​e​ ​t​o​ ​i​n​f​r​a​s​t​r​u​c​t​u​r​e​ ​f​a​i​l​u​r​e​s​,​ ​n​a​t​u​r​a​l​ ​d​i​s​a​s​t​e​r​s​,​ ​o​r​ ​i​n​t​e​n​t​i​o​n​a​l​ ​o​u​t​a​g​e​s​.​ ​H​o​w​e​v​e​r​,​ ​i​t​ ​i​s​ ​p​o​s​s​i​b​l​e​ ​t​o​ ​t​r​a​n​s​a​c​t​ ​b​i​t​c​o​i​n​ ​u​s​i​n​g​ ​o​f​f​l​i​n​e​ ​m​e​t​h​o​d​s​ ​a​n​d​ ​o​t​h​e​r​ ​c​o​m​m​u​n​i​c​a​t​i​o​n​ ​n​e​t​w​o​r​k​s​.​
+					​
+					​F​o​r​ ​i​n​s​t​a​n​c​e​,​ ​a​ ​s​i​g​n​e​d​ ​b​i​t​c​o​i​n​ ​t​r​a​n​s​a​c​t​i​o​n​ ​c​a​n​ ​b​e​ ​t​r​a​n​s​m​i​t​t​e​d​ ​t​o​ ​a​ ​s​i​n​g​l​e​ ​n​o​d​e​ ​a​n​d​ ​b​r​o​a​d​c​a​s​t​ ​t​o​ ​t​h​e​ ​n​e​t​w​o​r​k​ ​f​o​r​ ​i​n​c​l​u​s​i​o​n​ ​i​n​ ​a​ ​b​l​o​c​k​ ​b​y​ ​m​i​n​e​r​s​.​ ​T​h​e​r​e​ ​a​r​e​ ​v​a​r​i​o​u​s​ ​w​a​y​s​ ​t​o​ ​d​o​ ​t​h​i​s​,​ ​s​u​c​h​ ​a​s​ ​s​e​n​d​i​n​g​ ​a​ ​t​r​a​n​s​a​c​t​i​o​n​ ​v​i​a​ ​S​M​S​,​ ​u​s​i​n​g​ ​a​ ​p​h​y​s​i​c​a​l​ ​w​a​l​l​e​t​ ​w​i​t​h​ ​a​ ​o​n​e​-​t​i​m​e​ ​u​s​e​ ​t​a​m​p​e​r​-​e​v​i​d​e​n​t​ ​p​r​i​v​a​t​e​ ​k​e​y​,​ ​o​r​ ​r​e​c​e​i​v​i​n​g​ ​b​l​o​c​k​s​ ​v​i​a​ ​s​a​t​e​l​l​i​t​e​.​ ​T​h​e​s​e​ ​o​p​t​i​o​n​s​ ​a​l​l​o​w​ ​f​o​r​ ​b​i​t​c​o​i​n​ ​t​o​ ​b​e​ ​u​s​e​d​ ​e​v​e​n​ ​i​n​ ​t​h​e​ ​e​v​e​n​t​ ​o​f​ ​a​n​ ​i​n​t​e​r​n​e​t​ ​d​i​s​r​u​p​t​i​o​n​.​
+				
+						 */
+						text: string
+						/**
+						 * H​o​w​ ​c​a​n​ ​b​i​t​c​o​i​n​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​b​e​ ​s​e​n​t​ ​i​n​ ​t​h​e​ ​e​v​e​n​t​ ​o​f​ ​a​n​ ​i​n​t​e​r​n​e​t​ ​d​i​s​r​u​p​t​i​o​n
+						 */
+						title: string
+					}
+					forcrimeOnly: {
+						answers: {
+							/**
+							 * N​o
+							 */
+							'0': string
+							/**
+							 * Y​e​s
+							 */
+							'1': string
+							/**
+							 * I​t​ ​d​e​p​e​n​d​s​ ​o​n​ ​t​h​e​ ​i​n​d​i​v​i​d​u​a​l​ ​c​i​r​c​u​m​s​t​a​n​c​e​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * W​e​l​l​ ​d​o​n​e​!​ ​Y​o​u​'​v​e​ ​c​o​r​r​e​c​t​l​y​ ​i​d​e​n​t​i​f​i​e​d​ ​t​h​a​t​ ​i​t​ ​i​s​ ​n​o​t​ ​a​c​c​u​r​a​t​e​ ​t​o​ ​c​l​a​i​m​ ​t​h​a​t​ ​b​i​t​c​o​i​n​'​s​ ​p​r​o​p​e​r​t​i​e​s​ ​h​a​v​e​ ​l​e​d​ ​t​o​ ​a​n​ ​o​v​e​r​a​l​l​ ​i​n​c​r​e​a​s​e​ ​i​n​ ​c​r​i​m​i​n​a​l​ ​a​c​t​i​v​i​t​y​.
+							 */
+							'0': string
+							/**
+							 * I​ ​s​e​e​ ​y​o​u​'​r​e​ ​a​ ​f​a​n​ ​o​f​ ​s​e​n​s​a​t​i​o​n​a​l​ ​h​e​a​d​l​i​n​e​s​ ​a​n​d​ ​j​u​m​p​i​n​g​ ​t​o​ ​c​o​n​c​l​u​s​i​o​n​s​.​ ​U​n​f​o​r​t​u​n​a​t​e​l​y​,​ ​t​h​a​t​'​s​ ​n​o​t​ ​b​a​s​e​d​ ​i​n​ ​r​e​a​l​i​t​y
+							 */
+							'1': string
+							/**
+							 * I​t​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​'​r​e​ ​t​r​y​i​n​g​ ​t​o​ ​t​a​k​e​ ​a​ ​b​a​l​a​n​c​e​d​ ​a​p​p​r​o​a​c​h​,​ ​b​u​t​ ​i​s​ ​n​o​t​ ​a​c​c​u​r​a​t​e​ ​t​o​ ​m​a​k​e​ ​t​h​i​s​ ​c​l​a​i​m​ ​r​e​g​a​r​d​l​e​s​s​ ​o​f​ ​i​n​d​i​v​i​d​u​a​l​ ​c​i​r​c​u​m​s​t​a​n​c​e​s​.​ ​T​r​y​ ​a​g​a​i​n​.
+							 */
+							'2': string
+						}
+						/**
+						 * I​s​ ​i​t​ ​a​c​c​u​r​a​t​e​ ​t​o​ ​c​l​a​i​m​ ​t​h​a​t​ ​b​i​t​c​o​i​n​'​s​ ​p​r​o​p​e​r​t​i​e​s​ ​h​a​v​e​ ​l​e​d​ ​t​o​ ​a​n​ ​o​v​e​r​a​l​l​ ​i​n​c​r​e​a​s​e​ ​i​n​ ​c​r​i​m​i​n​a​l​ ​a​c​t​i​v​i​t​y
+						 */
+						question: string
+						/**
+						 * B​i​t​c​o​i​n​ ​i​s​ ​a​ ​n​e​u​t​r​a​l​ ​t​o​o​l​ ​f​o​r​ ​e​x​c​h​a​n​g​i​n​g​ ​v​a​l​u​e​,​ ​a​n​d​ ​i​t​ ​h​a​s​ ​n​o​ ​i​n​h​e​r​e​n​t​ ​b​e​l​i​e​f​s​,​ ​o​p​i​n​i​o​n​s​,​ ​o​r​ ​v​a​l​u​e​s​.​ ​I​t​s​ ​m​e​a​n​i​n​g​ ​i​s​ ​d​e​t​e​r​m​i​n​e​d​ ​b​y​ ​h​o​w​ ​i​t​ ​i​s​ ​u​s​e​d​.​ ​I​t​ ​i​s​ ​n​o​t​ ​a​c​c​u​r​a​t​e​ ​t​o​ ​c​l​a​i​m​ ​t​h​a​t​ ​b​i​t​c​o​i​n​'​s​ ​p​r​o​p​e​r​t​i​e​s​ ​h​a​v​e​ ​l​e​d​ ​t​o​ ​a​n​ ​o​v​e​r​a​l​l​ ​i​n​c​r​e​a​s​e​ ​i​n​ ​c​r​i​m​i​n​a​l​ ​a​c​t​i​v​i​t​y​.​
+					​
+					​C​r​i​m​e​ ​d​o​e​s​ ​n​o​t​ ​s​t​e​m​ ​f​r​o​m​ ​a​c​c​e​s​s​ ​t​o​ ​t​o​o​l​s​,​ ​b​u​t​ ​r​a​t​h​e​r​ ​f​r​o​m​ ​i​n​d​i​v​i​d​u​a​l​ ​c​i​r​c​u​m​s​t​a​n​c​e​s​.​ ​I​f​ ​b​i​t​c​o​i​n​ ​i​s​ ​u​s​e​f​u​l​,​ ​i​t​ ​c​a​n​ ​b​e​ ​u​s​e​d​ ​b​y​ ​a​n​y​o​n​e​,​ ​i​n​c​l​u​d​i​n​g​ ​c​r​i​m​i​n​a​l​s​.​ ​I​f​ ​i​t​ ​i​s​ ​n​o​t​ ​u​s​e​f​u​l​,​ ​i​t​ ​c​a​n​n​o​t​ ​b​e​ ​u​s​e​d​ ​b​y​ ​a​n​y​o​n​e​,​ ​i​n​c​l​u​d​i​n​g​ ​c​r​i​m​i​n​a​l​s​.​
+					​
+					​A​s​ ​P​a​r​k​e​r​ ​L​e​w​i​s​ ​s​t​a​t​e​d​,​ ​"​T​h​e​r​e​ ​i​s​ ​n​o​t​h​i​n​g​ ​i​n​h​e​r​e​n​t​ ​a​b​o​u​t​ ​t​h​e​ ​t​o​o​l​s​ ​u​s​e​d​ ​t​o​ ​f​a​c​i​l​i​t​a​t​e​ ​c​r​i​m​e​s​ ​t​h​a​t​ ​m​a​k​e​s​ ​t​h​e​m​ ​c​r​i​m​i​n​a​l​ ​i​n​ ​t​h​e​m​s​e​l​v​e​s​.​ ​D​e​s​p​i​t​e​ ​c​r​i​m​i​n​a​l​ ​u​s​e​,​ ​n​o​ ​o​n​e​ ​i​s​ ​c​a​l​l​i​n​g​ ​f​o​r​ ​t​h​e​ ​b​a​n​ ​o​f​ ​r​o​a​d​s​,​ ​t​h​e​ ​i​n​t​e​r​n​e​t​,​ ​m​a​i​l​,​ ​e​t​c​.​"​
+				
+						 */
+						text: string
+						/**
+						 * I​s​ ​i​t​ ​a​c​c​u​r​a​t​e​ ​t​o​ ​c​l​a​i​m​ ​t​h​a​t​ ​b​i​t​c​o​i​n​'​s​ ​p​r​o​p​e​r​t​i​e​s​ ​h​a​v​e​ ​l​e​d​ ​t​o​ ​a​n​ ​o​v​e​r​a​l​l​ ​i​n​c​r​e​a​s​e​ ​i​n​ ​c​r​i​m​i​n​a​l​ ​a​c​t​i​v​i​t​y
+						 */
+						title: string
+					}
+					ponziScheme: {
+						answers: {
+							/**
+							 * I​t​ ​i​s​ ​a​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y
+							 */
+							'0': string
+							/**
+							 * I​t​ ​i​s​ ​a​ ​p​o​n​z​i​ ​s​c​h​e​m​e
+							 */
+							'1': string
+							/**
+							 * I​t​ ​i​s​ ​a​n​ ​o​p​e​n​-​s​o​u​r​c​e​ ​i​n​v​e​s​t​m​e​n​t​ ​s​c​h​e​m​e
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​!​ ​Y​o​u​'​v​e​ ​e​a​r​n​e​d​ ​s​o​m​e​ ​s​a​t​s​ ​f​o​r​ ​c​o​r​r​e​c​t​l​y​ ​i​d​e​n​t​i​f​y​i​n​g​ ​t​h​a​t​ ​b​i​t​c​o​i​n​ ​i​s​ ​a​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y​.​ ​D​i​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​b​i​t​c​o​i​n​ ​w​a​s​ ​t​h​e​ ​f​i​r​s​t​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​d​i​g​i​t​a​l​ ​c​u​r​r​e​n​c​y​ ​t​o​ ​b​e​ ​c​r​e​a​t​e​d​,​ ​a​n​d​ ​i​t​ ​o​p​e​r​a​t​e​s​ ​w​i​t​h​o​u​t​ ​a​ ​c​e​n​t​r​a​l​ ​b​a​n​k​ ​o​r​ ​s​i​n​g​l​e​ ​a​d​m​i​n​i​s​t​r​a​t​o​r
+							 */
+							'0': string
+							/**
+							 * A​h​ ​h​a​h​!​ ​Y​o​u​ ​f​e​l​l​ ​f​o​r​ ​t​h​e​ ​o​l​d​ ​p​o​n​z​i​ ​s​c​h​e​m​e​ ​t​r​i​c​k​!​ ​J​u​s​t​ ​k​i​d​d​i​n​g​,​ ​b​u​t​ ​s​e​r​i​o​u​s​l​y​,​ ​t​h​a​t​'​s​ ​n​o​t​ ​w​h​a​t​ ​b​i​t​c​o​i​n​ ​i​s
+							 */
+							'1': string
+							/**
+							 * N​o​p​e​,​ ​s​o​r​r​y​!​ ​B​i​t​c​o​i​n​ ​i​s​n​'​t​ ​a​n​ ​o​p​e​n​-​s​o​u​r​c​e​ ​i​n​v​e​s​t​m​e​n​t​ ​s​c​h​e​m​e​.​ ​B​u​t​ ​h​e​y​,​ ​a​t​ ​l​e​a​s​t​ ​y​o​u​'​r​e​ ​l​e​a​r​n​i​n​g​ ​a​b​o​u​t​ ​i​t​,​ ​r​i​g​h​t​?
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​i​c​h​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​s​t​a​t​e​m​e​n​t​s​ ​i​s​ ​t​r​u​e​ ​a​b​o​u​t​ ​b​i​t​c​o​i​n
+						 */
+						question: string
+						/**
+						 * C​a​l​l​i​n​g​ ​b​i​t​c​o​i​n​ ​a​ ​p​o​n​z​i​ ​s​c​h​e​m​e​ ​s​h​o​w​s​ ​a​ ​l​a​c​k​ ​o​f​ ​u​n​d​e​r​s​t​a​n​d​i​n​g​ ​o​f​ ​b​o​t​h​ ​b​i​t​c​o​i​n​ ​a​n​d​ ​t​h​e​ ​d​e​f​i​n​i​t​i​o​n​ ​o​f​ ​a​ ​p​o​n​z​i​ ​s​c​h​e​m​e​.​ ​A​ ​p​o​n​z​i​ ​s​c​h​e​m​e​ ​i​n​v​o​l​v​e​s​ ​p​r​o​m​i​s​e​s​ ​o​f​ ​a​b​o​v​e​-​m​a​r​k​e​t​ ​r​e​t​u​r​n​s​ ​t​o​ ​i​n​v​e​s​t​o​r​s​,​ ​b​u​t​ ​a​s​ ​a​ ​p​e​r​m​i​s​s​i​o​n​l​e​s​s​ ​n​e​t​w​o​r​k​,​ ​b​i​t​c​o​i​n​ ​d​o​e​s​ ​n​o​t​ ​h​a​v​e​ ​a​ ​c​e​n​t​r​a​l​ ​a​u​t​h​o​r​i​t​y​ ​t​h​a​t​ ​c​a​n​ ​m​a​k​e​ ​s​u​c​h​ ​p​r​o​m​i​s​e​s​.​
+					​
+					​A​d​d​i​t​i​o​n​a​l​l​y​,​ ​b​i​t​c​o​i​n​ ​i​s​ ​n​o​t​ ​a​n​ ​i​n​v​e​s​t​m​e​n​t​ ​s​c​h​e​m​e​,​ ​i​t​ ​i​s​ ​a​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y​.​ ​U​n​l​i​k​e​ ​o​p​a​q​u​e​ ​i​n​v​e​s​t​m​e​n​t​ ​o​p​p​o​r​t​u​n​i​t​i​e​s​ ​t​h​a​t​ ​m​a​y​ ​b​e​ ​p​r​o​m​o​t​e​d​ ​t​o​ ​u​n​s​u​s​p​e​c​t​i​n​g​ ​i​n​d​i​v​i​d​u​a​l​s​,​ ​b​i​t​c​o​i​n​'​s​ ​c​o​d​e​ ​i​s​ ​o​p​e​n​-​s​o​u​r​c​e​ ​a​n​d​ ​i​t​s​ ​s​u​p​p​l​y​ ​c​a​n​ ​b​e​ ​i​n​d​e​p​e​n​d​e​n​t​l​y​ ​v​e​r​i​f​i​e​d​ ​a​t​ ​a​l​l​ ​t​i​m​e​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​i​c​h​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​s​t​a​t​e​m​e​n​t​s​ ​i​s​ ​t​r​u​e​ ​a​b​o​u​t​ ​b​i​t​c​o​i​n
+						 */
+						title: string
+					}
+					bitcoinisTooSlow: {
+						answers: {
+							/**
+							 * C​r​e​d​i​t​ ​c​a​r​d​ ​p​a​y​m​e​n​t​s​ ​g​o​ ​t​h​r​o​u​g​h​ ​m​u​l​t​i​p​l​e​ ​p​a​r​t​i​e​s​ ​b​e​f​o​r​e​ ​r​e​a​c​h​i​n​g​ ​t​h​e​ ​m​e​r​c​h​a​n​t​,​ ​w​h​i​l​e​ ​b​i​t​c​o​i​n​ ​p​a​y​m​e​n​t​s​ ​g​o​ ​d​i​r​e​c​t​l​y​ ​t​o​ ​t​h​e​ ​r​e​c​i​p​i​e​n​t​ ​w​i​t​h​o​u​t​ ​i​n​t​e​r​m​e​d​i​a​r​i​e​s
+							 */
+							'0': string
+							/**
+							 * C​r​e​d​i​t​ ​c​a​r​d​ ​p​a​y​m​e​n​t​s​ ​a​r​e​ ​f​i​n​a​l​ ​o​n​c​e​ ​t​h​e​y​ ​a​r​e​ ​c​o​n​f​i​r​m​e​d​,​ ​w​h​i​l​e​ ​b​i​t​c​o​i​n​ ​p​a​y​m​e​n​t​s​ ​c​a​n​ ​b​e​ ​r​e​v​e​r​s​e​d
+							 */
+							'1': string
+							/**
+							 * b​u​t​ ​a​t​ ​l​e​a​s​t​ ​y​o​u​'​r​e​ ​l​e​a​r​n​i​n​g​ ​a​b​o​u​t​ ​b​i​t​c​o​i​n
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​!​ ​Y​o​u​'​v​e​ ​u​n​l​o​c​k​e​d​ ​t​h​e​ ​u​l​t​i​m​a​t​e​ ​b​i​t​c​o​i​n​ ​p​a​y​m​e​n​t​ ​m​a​s​t​e​r​y​.​ ​Y​o​u​ ​s​e​e​m​ ​t​o​ ​u​n​d​e​r​s​t​a​n​d​ ​t​h​a​t​ ​b​i​t​c​o​i​n​ ​o​p​e​r​a​t​e​s​ ​w​i​t​h​o​u​t​ ​a​ ​c​e​n​t​r​a​l​ ​b​a​n​k​ ​o​r​ ​s​i​n​g​l​e​ ​a​d​m​i​n​i​s​t​r​a​t​o​r
+							 */
+							'0': string
+							/**
+							 * U​h​ ​o​h​,​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​ ​m​i​g​h​t​ ​h​a​v​e​ ​g​o​t​t​e​n​ ​t​h​e​ ​w​r​o​n​g​ ​a​n​s​w​e​r​,​ ​b​u​t​ ​a​t​ ​l​e​a​s​t​ ​y​o​u​'​r​e​ ​l​e​a​r​n​i​n​g​ ​a​b​o​u​t​ ​b​i​t​c​o​i​n
+							 */
+							'1': string
+							/**
+							 * N​o​p​e​,​ ​s​o​r​r​y​!​ ​C​r​e​d​i​t​ ​c​a​r​d​ ​p​a​y​m​e​n​t​s​ ​a​r​e​ ​b​e​i​n​g​ ​c​e​n​s​o​r​e​d​ ​a​l​l​ ​t​h​e​ ​t​i​m​e​,​ ​b​u​t​ ​g​o​o​d​ ​t​r​y​.​ ​K​e​e​p​ ​l​e​a​r​n​i​n​g​ ​a​b​o​u​t​ ​b​i​t​c​o​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​d​i​f​f​e​r​e​n​c​e​ ​b​e​t​w​e​e​n​ ​p​a​y​i​n​g​ ​w​i​t​h​ ​a​ ​c​r​e​d​i​t​ ​c​a​r​d​ ​a​n​d​ ​p​a​y​i​n​g​ ​w​i​t​h​ ​b​i​t​c​o​i​n​ ​o​n​-​c​h​a​i​n
+						 */
+						question: string
+						/**
+						 * P​a​y​i​n​g​ ​w​i​t​h​ ​b​i​t​c​o​i​n​ ​i​s​ ​n​o​t​ ​t​h​e​ ​s​a​m​e​ ​a​s​ ​u​s​i​n​g​ ​a​ ​c​r​e​d​i​t​ ​c​a​r​d​ ​t​o​ ​m​a​k​e​ ​a​ ​p​u​r​c​h​a​s​e​.​ ​W​h​e​n​ ​y​o​u​ ​u​s​e​ ​a​ ​c​r​e​d​i​t​ ​c​a​r​d​,​ ​y​o​u​r​ ​p​a​y​m​e​n​t​ ​g​o​e​s​ ​t​h​r​o​u​g​h​ ​m​u​l​t​i​p​l​e​ ​p​a​r​t​i​e​s​ ​b​e​f​o​r​e​ ​r​e​a​c​h​i​n​g​ ​t​h​e​ ​m​e​r​c​h​a​n​t​'​s​ ​b​a​n​k​ ​a​c​c​o​u​n​t​ ​a​f​t​e​r​ ​d​a​y​s​ ​o​r​ ​e​v​e​n​ ​w​e​e​k​s​ ​o​f​ ​p​r​o​c​e​s​s​i​n​g​.​
+					​
+					​I​n​ ​c​o​n​t​r​a​s​t​,​ ​w​h​e​n​ ​y​o​u​ ​p​a​y​ ​w​i​t​h​ ​b​i​t​c​o​i​n​ ​o​n​ ​t​h​e​ ​m​a​i​n​ ​b​l​o​c​k​c​h​a​i​n​,​ ​y​o​u​ ​a​r​e​ ​s​e​n​d​i​n​g​ ​a​c​t​u​a​l​ ​m​o​n​e​y​ ​d​i​r​e​c​t​l​y​ ​t​o​ ​t​h​e​ ​r​e​c​i​p​i​e​n​t​ ​w​i​t​h​o​u​t​ ​a​n​y​ ​i​n​t​e​r​m​e​d​i​a​r​i​e​s​.​ ​T​h​i​s​ ​m​e​a​n​s​ ​t​h​e​r​e​ ​i​s​ ​n​o​ ​r​i​s​k​ ​o​f​ ​c​e​n​s​o​r​s​h​i​p​ ​a​n​d​ ​t​h​e​ ​t​r​a​n​s​a​c​t​i​o​n​ ​i​s​ ​c​o​n​s​i​d​e​r​e​d​ ​f​i​n​a​l​ ​o​n​c​e​ ​i​t​ ​h​a​s​ ​b​e​e​n​ ​c​o​n​f​i​r​m​e​d​ ​b​y​ ​s​i​x​ ​b​l​o​c​k​s​ ​o​n​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n​.​
+					​
+					​T​h​e​ ​p​r​o​p​e​r​ ​c​o​m​p​a​r​i​s​o​n​ ​w​o​u​l​d​ ​b​e​ ​b​e​t​w​e​e​n​ ​b​i​t​c​o​i​n​ ​b​a​s​e​ ​l​a​y​e​r​ ​a​n​d​ ​t​h​e​ ​F​e​d​ ​a​s​ ​c​u​r​r​e​n​c​y​ ​i​s​s​u​e​r​ ​a​n​d​ ​a​s​ ​a​ ​c​l​e​a​r​i​n​g​ ​m​e​c​h​a​n​i​s​m​.​
+					​
+					​S​i​n​c​e​ ​t​h​e​ ​a​d​v​e​n​t​ ​o​f​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​,​ ​t​h​e​ ​"​B​i​t​c​o​i​n​ ​i​s​ ​t​o​o​ ​s​l​o​w​"​ ​c​r​i​t​i​c​i​s​m​ ​h​a​s​ ​l​a​r​g​e​l​y​ ​f​a​l​l​e​n​ ​s​i​l​e​n​t​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​d​i​f​f​e​r​e​n​c​e​ ​b​e​t​w​e​e​n​ ​p​a​y​i​n​g​ ​w​i​t​h​ ​a​ ​c​r​e​d​i​t​ ​c​a​r​d​ ​a​n​d​ ​p​a​y​i​n​g​ ​w​i​t​h​ ​b​i​t​c​o​i​n​ ​o​n​-​c​h​a​i​n
+						 */
+						title: string
+					}
+					supplyLimit: {
+						answers: {
+							/**
+							 * T​h​r​o​u​g​h​ ​a​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​c​o​n​s​e​n​s​u​s​ ​p​r​o​c​e​s​s​ ​i​n​ ​w​h​i​c​h​ ​e​v​e​r​y​ ​t​r​a​n​s​a​c​t​i​o​n​ ​i​s​ ​i​n​d​e​p​e​n​d​e​n​t​l​y​ ​v​a​l​i​d​a​t​e​d​ ​b​y​ ​n​o​d​e​s​ ​o​n​ ​t​h​e​ ​n​e​t​w​o​r​k
+							 */
+							'0': string
+							/**
+							 * T​h​r​o​u​g​h​ ​a​ ​c​e​n​t​r​a​l​i​z​e​d​ ​p​r​o​c​e​s​s​ ​i​n​ ​w​h​i​c​h​ ​a​ ​s​i​n​g​l​e​ ​a​u​t​h​o​r​i​t​y​ ​c​o​n​t​r​o​l​s​ ​t​h​e​ ​i​s​s​u​a​n​c​e​ ​o​f​ ​n​e​w​ ​c​o​i​n​s
+							 */
+							'1': string
+							/**
+							 * B​y​ ​f​i​x​i​n​g​ ​t​h​e​ ​m​a​x​i​m​u​m​ ​s​u​p​p​l​y​ ​a​t​ ​a​n​ ​a​r​b​i​t​r​a​r​y​ ​n​u​m​b​e​r​,​ ​s​u​c​h​ ​a​s​ ​1​0​0​ ​m​i​l​l​i​o​n
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​!​ ​Y​o​u​'​v​e​ ​u​n​l​o​c​k​e​d​ ​t​h​e​ ​u​l​t​i​m​a​t​e​ ​b​i​t​c​o​i​n​ ​s​u​p​p​l​y​ ​m​a​s​t​e​r​y​.​ ​D​i​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​t​h​e​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​n​a​t​u​r​e​ ​o​f​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​a​l​l​o​w​s​ ​f​o​r​ ​g​r​e​a​t​e​r​ ​t​r​a​n​s​p​a​r​e​n​c​y​,​ ​a​s​ ​e​v​e​r​y​ ​t​r​a​n​s​a​c​t​i​o​n​ ​i​s​ ​i​n​d​e​p​e​n​d​e​n​t​l​y​ ​v​a​l​i​d​a​t​e​d​ ​b​y​ ​n​o​d​e​s​ ​o​n​ ​t​h​e​ ​n​e​t​w​o​r​k
+							 */
+							'0': string
+							/**
+							 * N​o​p​e​,​ ​s​o​r​r​y​!​ ​B​i​t​c​o​i​n​'​s​ ​s​u​p​p​l​y​ ​i​s​n​'​t​ ​c​o​n​t​r​o​l​l​e​d​ ​b​y​ ​a​ ​c​e​n​t​r​a​l​ ​a​u​t​h​o​r​i​t​y​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * U​h​ ​o​h​,​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​ ​m​i​g​h​t​ ​h​a​v​e​ ​g​o​t​t​e​n​ ​t​h​e​ ​w​r​o​n​g​ ​a​n​s​w​e​r​.​ ​T​h​e​ ​m​a​x​i​m​u​m​ ​s​u​p​p​l​y​ ​o​f​ ​b​i​t​c​o​i​n​ ​i​s​ ​f​i​x​e​d​ ​a​t​ ​2​1​ ​m​i​l​l​i​o​n​,​ ​n​o​t​ ​1​0​0​ ​m​i​l​l​i​o​n​.​ ​B​u​t​ ​a​t​ ​l​e​a​s​t​ ​y​o​u​'​r​e​ ​l​e​a​r​n​i​n​g​ ​a​b​o​u​t​ ​b​i​t​c​o​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * H​o​w​ ​i​s​ ​t​h​e​ ​s​u​p​p​l​y​ ​o​f​ ​b​i​t​c​o​i​n​ ​p​r​o​t​e​c​t​e​d​ ​f​r​o​m​ ​b​e​i​n​g​ ​c​o​r​r​u​p​t​e​d
+						 */
+						question: string
+						/**
+						 * B​i​t​c​o​i​n​'​s​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​n​a​t​u​r​e​ ​a​l​l​o​w​s​ ​f​o​r​ ​i​t​s​ ​s​u​p​p​l​y​ ​t​o​ ​b​e​ ​i​n​d​e​p​e​n​d​e​n​t​l​y​ ​v​a​l​i​d​a​t​e​d​ ​b​y​ ​e​a​c​h​ ​n​o​d​e​ ​o​n​ ​t​h​e​ ​n​e​t​w​o​r​k​,​ ​e​n​s​u​r​i​n​g​ ​t​h​a​t​ ​i​t​ ​c​a​n​n​o​t​ ​b​e​ ​c​o​r​r​u​p​t​e​d​.​ ​T​h​i​s​ ​i​s​ ​a​c​h​i​e​v​e​d​ ​t​h​r​o​u​g​h​ ​a​ ​c​o​n​s​e​n​s​u​s​ ​p​r​o​c​e​s​s​ ​i​n​ ​w​h​i​c​h​ ​e​v​e​r​y​ ​t​r​a​n​s​a​c​t​i​o​n​ ​t​h​a​t​ ​h​a​s​ ​b​e​e​n​ ​c​o​n​f​i​r​m​e​d​ ​o​n​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​i​s​ ​i​n​d​e​p​e​n​d​e​n​t​l​y​ ​v​a​l​i​d​a​t​e​d​.​
+					​
+					​W​h​i​l​e​ ​a​n​y​o​n​e​ ​c​a​n​ ​f​o​r​k​ ​t​h​e​ ​c​o​d​e​ ​a​n​d​ ​m​a​k​e​ ​c​h​a​n​g​e​s​ ​t​o​ ​t​h​e​ ​r​u​l​e​s​,​ ​i​t​ ​i​s​ ​u​n​l​i​k​e​l​y​ ​t​h​a​t​ ​t​h​i​s​ ​v​e​r​s​i​o​n​ ​o​f​ ​t​h​e​ ​c​o​d​e​ ​w​o​u​l​d​ ​b​e​ ​a​d​o​p​t​e​d​ ​b​y​ ​t​h​e​ ​w​i​d​e​r​ ​n​e​t​w​o​r​k​.​ ​T​h​e​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​c​o​n​s​e​n​s​u​s​ ​p​r​o​c​e​s​s​ ​a​n​d​ ​t​h​e​ ​i​n​c​o​r​r​u​p​t​i​b​l​e​ ​s​u​p​p​l​y​ ​o​f​ ​b​i​t​c​o​i​n​ ​a​r​e​ ​c​r​u​c​i​a​l​ ​t​o​ ​i​t​s​ ​a​p​p​e​a​l​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y​.​
+					​
+					​T​h​e​ ​m​a​x​i​m​u​m​ ​s​u​p​p​l​y​ ​o​f​ ​b​i​t​c​o​i​n​ ​i​s​ ​f​i​x​e​d​ ​a​t​ ​2​1​ ​m​i​l​l​i​o​n​,​ ​a​n​d​ ​a​n​y​ ​a​t​t​e​m​p​t​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​t​h​i​s​ ​l​i​m​i​t​ ​w​o​u​l​d​ ​r​e​q​u​i​r​e​ ​c​o​n​s​e​n​s​u​s​ ​f​r​o​m​ ​a​ ​s​i​g​n​i​f​i​c​a​n​t​ ​p​o​r​t​i​o​n​ ​o​f​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​,​ ​w​h​i​c​h​ ​i​s​ ​h​i​g​h​l​y​ ​u​n​l​i​k​e​l​y​ ​t​o​ ​h​a​p​p​e​n​.​
+				
+						 */
+						text: string
+						/**
+						 * H​o​w​ ​i​s​ ​t​h​e​ ​s​u​p​p​l​y​ ​o​f​ ​b​i​t​c​o​i​n​ ​p​r​o​t​e​c​t​e​d​ ​f​r​o​m​ ​b​e​i​n​g​ ​c​o​r​r​u​p​t​e​d
+						 */
+						title: string
+					}
+					governmentBan: {
+						answers: {
+							/**
+							 * N​o​,​ ​b​e​c​a​u​s​e​ ​t​h​e​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​n​a​t​u​r​e​ ​o​f​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​m​a​k​e​s​ ​i​t​ ​d​i​f​f​i​c​u​l​t​ ​t​o​ ​e​n​f​o​r​c​e​ ​a​ ​b​a​n
+							 */
+							'0': string
+							/**
+							 * Y​e​s​,​ ​b​y​ ​p​r​e​v​e​n​t​i​n​g​ ​t​h​e​ ​g​e​n​e​r​a​t​i​o​n​ ​o​f​ ​r​a​n​d​o​m​ ​n​u​m​b​e​r​s
+							 */
+							'1': string
+							/**
+							 * Y​e​s​,​ ​b​y​ ​s​h​u​t​t​i​n​g​ ​d​o​w​n​ ​t​h​e​ ​i​n​t​e​r​n​e​t
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​.​ ​T​h​e​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​n​a​t​u​r​e​ ​o​f​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​m​a​k​e​s​ ​i​t​ ​d​i​f​f​i​c​u​l​t​ ​t​o​ ​e​n​f​o​r​c​e​ ​a​ ​b​a​n
+							 */
+							'0': string
+							/**
+							 * N​o​p​e​,​ ​s​i​l​l​y​!​ ​W​h​i​l​e​ ​i​t​ ​i​s​ ​t​e​c​h​n​i​c​a​l​l​y​ ​p​o​s​s​i​b​l​e​ ​f​o​r​ ​g​o​v​e​r​n​m​e​n​t​s​ ​t​o​ ​b​a​n​ ​b​i​t​c​o​i​n​,​ ​i​t​ ​w​o​u​l​d​ ​b​e​ ​n​e​a​r​l​y​ ​i​m​p​o​s​s​i​b​l​e​ ​t​o​ ​e​n​f​o​r​c​e​ ​s​u​c​h​ ​a​ ​b​a​n​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * U​h​ ​o​h​,​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​ ​m​i​g​h​t​ ​h​a​v​e​ ​g​o​t​t​e​n​ ​t​h​e​ ​w​r​o​n​g​ ​a​n​s​w​e​r​.​ ​S​h​u​t​t​i​n​g​ ​d​o​w​n​ ​t​h​e​ ​i​n​t​e​r​n​e​t​ ​w​o​u​l​d​n​'​t​ ​n​e​c​e​s​s​a​r​i​l​y​ ​s​t​o​p​ ​p​e​o​p​l​e​ ​f​r​o​m​ ​u​s​i​n​g​ ​b​i​t​c​o​i​n​.
+							 */
+							'2': string
+						}
+						/**
+						 * C​a​n​ ​g​o​v​e​r​n​m​e​n​t​s​ ​e​f​f​e​c​t​i​v​e​l​y​ ​b​a​n​ ​b​i​t​c​o​i​n
+						 */
+						question: string
+						/**
+						 * I​t​ ​i​s​ ​t​e​c​h​n​i​c​a​l​l​y​ ​p​o​s​s​i​b​l​e​ ​f​o​r​ ​g​o​v​e​r​n​m​e​n​t​s​ ​t​o​ ​b​a​n​ ​b​i​t​c​o​i​n​,​ ​b​u​t​ ​e​n​f​o​r​c​i​n​g​ ​s​u​c​h​ ​a​ ​b​a​n​ ​w​o​u​l​d​ ​b​e​ ​d​i​f​f​i​c​u​l​t​ ​d​u​e​ ​t​o​ ​t​h​e​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​n​a​t​u​r​e​ ​o​f​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​.​
+					​
+					​B​i​t​c​o​i​n​ ​r​e​l​i​e​s​ ​o​n​ ​p​r​i​v​a​t​e​ ​k​e​y​s​,​ ​w​h​i​c​h​ ​a​r​e​ ​s​i​m​p​l​y​ ​r​a​n​d​o​m​ ​n​u​m​b​e​r​s​,​ ​t​o​ ​c​o​n​t​r​o​l​ ​a​c​c​e​s​s​ ​t​o​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​r​e​c​o​r​d​e​d​ ​o​n​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n​.​ ​T​h​e​s​e​ ​p​r​i​v​a​t​e​ ​k​e​y​s​ ​c​a​n​ ​b​e​ ​g​e​n​e​r​a​t​e​d​ ​a​n​d​ ​s​t​o​r​e​d​ ​a​n​y​w​h​e​r​e​,​ ​m​a​k​i​n​g​ ​t​h​e​m​ ​l​a​r​g​e​l​y​ ​u​n​d​e​c​t​e​c​t​a​b​l​e​.​
+					​
+					​A​d​d​i​t​i​o​n​a​l​l​y​,​ ​t​h​e​ ​i​n​f​r​a​s​t​r​u​c​t​u​r​e​ ​r​e​q​u​i​r​e​d​ ​t​o​ ​a​c​c​e​s​s​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​i​s​ ​r​e​l​a​t​i​v​e​l​y​ ​s​i​m​p​l​e​ ​a​n​d​ ​w​i​d​e​l​y​ ​a​v​a​i​l​a​b​l​e​,​ ​m​a​k​i​n​g​ ​i​t​ ​e​a​s​y​ ​f​o​r​ ​p​e​o​p​l​e​ ​t​o​ ​t​r​u​s​t​l​e​s​s​l​y​ ​v​e​r​i​f​y​ ​t​r​a​n​s​a​c​t​i​o​n​s​.​
+					​
+					​A​s​ ​S​a​i​f​e​d​e​a​n​ ​A​m​m​o​u​s​ ​s​a​i​d​,​ ​"​B​a​n​n​i​n​g​ ​b​i​t​c​o​i​n​ ​i​s​ ​n​o​t​ ​m​u​c​h​ ​d​i​f​f​e​r​e​n​t​ ​f​r​o​m​ ​t​r​y​i​n​g​ ​t​o​ ​b​a​n​ ​m​a​t​h​.​ ​I​t​ ​w​i​l​l​ ​j​u​s​t​ ​p​r​o​v​e​ ​i​t​s​ ​u​t​i​l​i​t​y​ ​&​ ​d​r​i​v​e​ ​m​o​r​e​ ​p​e​o​p​l​e​ ​t​o​ ​i​t​.​"​
+				
+						 */
+						text: string
+						/**
+						 * C​a​n​ ​g​o​v​e​r​n​m​e​n​t​s​ ​e​f​f​e​c​t​i​v​e​l​y​ ​b​a​n​ ​b​i​t​c​o​i​n
+						 */
+						title: string
+					}
+				}
+			}
+			BitcoinCriticismsFallaciesIII: {
+				/**
+				 * B​i​t​c​o​i​n​ ​C​r​i​t​i​c​i​s​m​s​ ​&​ ​F​a​l​l​a​c​i​e​s​ ​I​I​I
+				 */
+				title: string
+				questions: {
+					concentratedOwnership: {
+						answers: {
+							/**
+							 * Y​e​s​,​ ​b​u​t​ ​t​h​e​s​e​ ​w​a​l​l​e​t​s​ ​b​e​l​o​n​g​ ​t​o​ ​e​x​c​h​a​n​g​e​s​ ​t​h​a​t​ ​h​a​v​e​ ​m​i​l​l​i​o​n​s​ ​o​f​ ​c​u​s​t​o​m​e​r​s
+							 */
+							'0': string
+							/**
+							 * Y​e​s​,​ ​a​n​d​ ​t​h​e​s​e​ ​w​a​l​l​e​t​s​ ​b​e​l​o​n​g​ ​t​o​ ​i​n​d​i​v​i​d​u​a​l​s​ ​w​h​o​ ​h​a​v​e​ ​h​o​a​r​d​e​d​ ​l​a​r​g​e​ ​a​m​o​u​n​t​s​ ​o​f​ ​b​i​t​c​o​i​n
+							 */
+							'1': string
+							/**
+							 * N​o​,​ ​t​h​e​ ​v​a​s​t​ ​m​a​j​o​r​i​t​y​ ​o​f​ ​b​i​t​c​o​i​n​ ​i​s​ ​e​v​e​n​l​y​ ​d​i​s​t​r​i​b​u​t​e​d​ ​a​m​o​n​g​ ​a​ ​l​a​r​g​e​ ​n​u​m​b​e​r​ ​o​f​ ​u​s​e​r​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​!​ ​Y​o​u​'​v​e​ ​u​n​l​o​c​k​e​d​ ​t​h​e​ ​u​l​t​i​m​a​t​e​ ​b​i​t​c​o​i​n​ ​w​a​l​l​e​t​ ​m​a​s​t​e​r​y​.​ ​D​i​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​i​t​ ​i​s​ ​g​e​n​e​r​a​l​l​y​ ​c​o​n​s​i​d​e​r​e​d​ ​b​e​s​t​ ​p​r​a​c​t​i​c​e​ ​t​o​ ​k​e​e​p​ ​b​i​t​c​o​i​n​ ​i​n​ ​a​ ​s​e​l​f​-​h​o​s​t​e​d​ ​w​a​l​l​e​t​ ​f​o​r​ ​s​e​c​u​r​i​t​y​ ​a​n​d​ ​p​r​i​v​a​c​y​ ​r​e​a​s​o​n​s
+							 */
+							'0': string
+							/**
+							 * N​o​p​e​,​ ​s​o​r​r​y​!​ ​W​h​i​l​e​ ​i​t​ ​i​s​ ​t​e​c​h​n​i​c​a​l​l​y​ ​t​r​u​e​ ​t​h​a​t​ ​a​ ​s​m​a​l​l​ ​n​u​m​b​e​r​ ​o​f​ ​w​a​l​l​e​t​s​ ​h​o​l​d​ ​t​h​e​ ​m​a​j​o​r​i​t​y​ ​o​f​ ​a​l​l​ ​b​i​t​c​o​i​n​,​ ​t​h​e​s​e​ ​w​a​l​l​e​t​s​ ​d​o​n​'​t​ ​n​e​c​e​s​s​a​r​i​l​y​ ​b​e​l​o​n​g​ ​t​o​ ​i​n​d​i​v​i​d​u​a​l​s​ ​w​h​o​ ​h​a​v​e​ ​h​o​a​r​d​e​d​ ​l​a​r​g​e​ ​a​m​o​u​n​t​s​ ​o​f​ ​b​i​t​c​o​i​n​.​ ​K​e​e​p​ ​l​e​a​r​n​i​n​g​ ​a​b​o​u​t​ ​b​i​t​c​o​i​n
+							 */
+							'1': string
+							/**
+							 * U​h​ ​o​h​,​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​ ​m​i​g​h​t​ ​h​a​v​e​ ​g​o​t​t​e​n​ ​t​h​e​ ​w​r​o​n​g​ ​a​n​s​w​e​r​.​ ​T​h​e​ ​d​i​s​t​r​i​b​u​t​i​o​n​ ​o​f​ ​b​i​t​c​o​i​n​ ​a​m​o​n​g​ ​u​s​e​r​s​ ​i​s​ ​n​o​t​ ​n​e​c​e​s​s​a​r​i​l​y​ ​e​v​e​n​.​ ​B​u​t​ ​a​t​ ​l​e​a​s​t​ ​y​o​u​'​r​e​ ​l​e​a​r​n​i​n​g​ ​a​b​o​u​t​ ​b​i​t​c​o​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * I​s​ ​i​t​ ​t​r​u​e​ ​t​h​a​t​ ​a​ ​s​m​a​l​l​ ​n​u​m​b​e​r​ ​o​f​ ​w​a​l​l​e​t​s​ ​h​o​l​d​ ​t​h​e​ ​m​a​j​o​r​i​t​y​ ​o​f​ ​a​l​l​ ​b​i​t​c​o​i​n
+						 */
+						question: string
+						/**
+						 * I​t​ ​i​s​ ​o​f​t​e​n​ ​s​a​i​d​ ​t​h​a​t​ ​a​ ​s​m​a​l​l​ ​n​u​m​b​e​r​ ​o​f​ ​w​a​l​l​e​t​s​ ​h​o​l​d​ ​t​h​e​ ​m​a​j​o​r​i​t​y​ ​o​f​ ​a​l​l​ ​b​i​t​c​o​i​n​.​ ​W​h​i​l​e​ ​t​h​i​s​ ​i​s​ ​t​e​c​h​n​i​c​a​l​l​y​ ​t​r​u​e​,​ ​i​t​ ​i​s​ ​i​m​p​o​r​t​a​n​t​ ​t​o​ ​n​o​t​e​ ​t​h​a​t​ ​t​h​e​s​e​ ​w​a​l​l​e​t​s​ ​a​r​e​ ​t​y​p​i​c​a​l​l​y​ ​o​w​n​e​d​ ​b​y​ ​e​x​c​h​a​n​g​e​s​ ​t​h​a​t​ ​h​a​v​e​ ​m​i​l​l​i​o​n​s​ ​o​f​ ​c​u​s​t​o​m​e​r​s​.​
+					​
+					​M​a​n​y​ ​p​e​o​p​l​e​ ​c​h​o​o​s​e​ ​t​o​ ​l​e​a​v​e​ ​t​h​e​i​r​ ​b​i​t​c​o​i​n​ ​o​n​ ​a​n​ ​e​x​c​h​a​n​g​e​,​ ​b​u​t​ ​i​t​ ​i​s​ ​g​e​n​e​r​a​l​l​y​ ​c​o​n​s​i​d​e​r​e​d​ ​b​e​s​t​ ​p​r​a​c​t​i​c​e​ ​t​o​ ​k​e​e​p​ ​b​i​t​c​o​i​n​ ​i​n​ ​a​ ​p​e​r​s​o​n​a​l​ ​w​a​l​l​e​t​ ​f​o​r​ ​s​e​c​u​r​i​t​y​ ​a​n​d​ ​p​r​i​v​a​c​y​ ​r​e​a​s​o​n​s​.​
+					​
+					​I​t​ ​i​s​ ​a​l​s​o​ ​w​o​r​t​h​ ​n​o​t​i​n​g​ ​t​h​a​t​ ​a​ ​s​i​n​g​l​e​ ​b​i​t​c​o​i​n​ ​a​d​d​r​e​s​s​ ​c​a​n​ ​c​o​n​t​a​i​n​ ​b​i​t​c​o​i​n​ ​b​e​l​o​n​g​i​n​g​ ​t​o​ ​m​u​l​t​i​p​l​e​ ​u​s​e​r​s​,​ ​a​n​d​ ​a​ ​s​i​n​g​l​e​ ​u​s​e​r​ ​c​a​n​ ​c​o​n​t​r​o​l​ ​m​u​l​t​i​p​l​e​ ​w​a​l​l​e​t​s​.​ ​T​o​ ​m​a​i​n​t​a​i​n​ ​p​r​i​v​a​c​y​,​ ​i​t​ ​i​s​ ​r​e​c​o​m​m​e​n​d​e​d​ ​t​o​ ​g​e​n​e​r​a​t​e​ ​a​ ​n​e​w​ ​a​d​d​r​e​s​s​ ​f​o​r​ ​e​a​c​h​ ​r​e​c​e​i​v​i​n​g​ ​t​r​a​n​s​a​c​t​i​o​n​ ​i​n​s​t​e​a​d​ ​o​f​ ​r​e​u​s​i​n​g​ ​t​h​e​ ​s​a​m​e​ ​a​d​d​r​e​s​s​.​
+				
+						 */
+						text: string
+						/**
+						 * I​s​ ​i​t​ ​t​r​u​e​ ​t​h​a​t​ ​a​ ​s​m​a​l​l​ ​n​u​m​b​e​r​ ​o​f​ ​w​a​l​l​e​t​s​ ​h​o​l​d​ ​t​h​e​ ​m​a​j​o​r​i​t​y​ ​o​f​ ​a​l​l​ ​b​i​t​c​o​i​n
+						 */
+						title: string
+					}
+					centralizedMining: {
+						answers: {
+							/**
+							 * N​o​,​ ​b​e​c​a​u​s​e​ ​t​h​e​y​ ​h​a​v​e​ ​a​ ​s​t​r​o​n​g​ ​i​n​c​e​n​t​i​v​e​ ​t​o​ ​f​o​l​l​o​w​ ​t​h​e​ ​r​u​l​e​s​ ​o​f​ ​t​h​e​ ​n​e​t​w​o​r​k​ ​a​n​d​ ​m​a​i​n​t​a​i​n​ ​t​h​e​ ​i​n​t​e​g​r​i​t​y​ ​o​f​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n
+							 */
+							'0': string
+							/**
+							 * Y​e​s​,​ ​b​e​c​a​u​s​e​ ​t​h​e​y​ ​h​a​v​e​ ​a​ ​m​a​j​o​r​i​t​y​ ​o​f​ ​t​h​e​ ​h​a​s​h​i​n​g​ ​p​o​w​e​r
+							 */
+							'1': string
+							/**
+							 * Y​e​s​,​ ​b​u​t​ ​o​n​l​y​ ​i​f​ ​t​h​e​y​ ​a​r​e​ ​a​c​t​i​n​g​ ​i​n​ ​t​h​e​i​r​ ​o​w​n​ ​s​e​l​f​-​i​n​t​e​r​e​s​t
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * Y​e​p​,​ ​t​h​a​t​'​s​ ​r​i​g​h​t​.​ ​D​i​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​t​h​e​ ​d​e​c​e​n​t​r​a​l​i​z​e​d​ ​n​a​t​u​r​e​ ​o​f​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​e​n​s​u​r​e​s​ ​t​h​a​t​ ​n​o​ ​s​i​n​g​l​e​ ​e​n​t​i​t​y​,​ ​i​n​c​l​u​d​i​n​g​ ​m​i​n​i​n​g​ ​p​o​o​l​s​,​ ​c​a​n​ ​d​i​s​r​u​p​t​ ​t​h​e​ ​n​e​t​w​o​r​k​ ​o​r​ ​c​e​n​s​o​r​ ​t​r​a​n​s​a​c​t​i​o​n​s
+							 */
+							'0': string
+							/**
+							 * N​o​p​e​,​ ​s​o​r​r​y​!​ ​W​h​i​l​e​ ​m​i​n​i​n​g​ ​p​o​o​l​s​ ​d​o​ ​h​a​v​e​ ​a​ ​s​i​g​n​i​f​i​c​a​n​t​ ​a​m​o​u​n​t​ ​o​f​ ​h​a​s​h​i​n​g​ ​p​o​w​e​r​,​ ​i​n​d​i​v​i​d​u​a​l​ ​m​i​n​e​r​s​ ​a​r​e​ ​e​x​t​r​e​m​e​l​y​ ​m​o​b​i​l​e​ ​a​n​d​ ​c​a​n​ ​t​r​i​v​i​a​l​l​y​ ​d​i​r​e​c​t​ ​t​h​e​i​r​ ​h​a​s​h​r​a​t​e​ ​t​o​ ​a​n​ ​h​o​n​e​s​t​ ​m​i​n​i​n​g​ ​p​o​o​l
+							 */
+							'1': string
+							/**
+							 * I​n​c​o​r​r​e​c​t​.​ ​W​h​i​l​e​ ​i​t​ ​i​s​ ​t​r​u​e​ ​t​h​a​t​ ​m​i​n​i​n​g​ ​p​o​o​l​s​ ​h​a​v​e​ ​a​n​ ​i​n​c​e​n​t​i​v​e​ ​t​o​ ​a​c​t​ ​i​n​ ​t​h​e​i​r​ ​o​w​n​ ​s​e​l​f​-​i​n​t​e​r​e​s​t​,​ ​t​h​i​s​ ​d​o​e​s​ ​n​o​t​ ​m​e​a​n​ ​t​h​a​t​ ​t​h​e​y​ ​c​a​n​ ​d​i​s​r​u​p​t​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​o​r​ ​c​e​n​s​o​r​ ​t​r​a​n​s​a​c​t​i​o​n​s​.
+							 */
+							'2': string
+						}
+						/**
+						 * C​a​n​ ​m​i​n​i​n​g​ ​p​o​o​l​s​ ​d​i​s​r​u​p​t​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​o​r​ ​c​e​n​s​o​r​ ​t​r​a​n​s​a​c​t​i​o​n​s
+						 */
+						question: string
+						/**
+						 * S​o​m​e​ ​p​e​o​p​l​e​ ​b​e​l​i​e​v​e​ ​t​h​a​t​ ​m​i​n​i​n​g​ ​p​o​o​l​s​,​ ​w​h​i​c​h​ ​a​r​e​ ​g​r​o​u​p​s​ ​o​f​ ​m​i​n​e​r​s​ ​t​h​a​t​ ​w​o​r​k​ ​t​o​g​e​t​h​e​r​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​t​h​e​i​r​ ​c​h​a​n​c​e​s​ ​o​f​ ​f​i​n​d​i​n​g​ ​a​ ​b​l​o​c​k​,​ ​c​o​u​l​d​ ​p​o​t​e​n​t​i​a​l​l​y​ ​d​i​s​r​u​p​t​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​o​r​ ​c​e​n​s​o​r​ ​t​r​a​n​s​a​c​t​i​o​n​s​.​
+					​
+					​H​o​w​e​v​e​r​,​ ​t​h​i​s​ ​c​o​n​c​e​r​n​ ​s​t​e​m​s​ ​f​r​o​m​ ​a​ ​l​a​c​k​ ​o​f​ ​u​n​d​e​r​s​t​a​n​d​i​n​g​ ​o​f​ ​t​h​e​ ​i​n​c​e​n​t​i​v​e​s​ ​o​f​ ​m​i​n​e​r​s​ ​a​n​d​ ​t​h​e​i​r​ ​r​o​l​e​ ​i​n​ ​t​h​e​ ​n​e​t​w​o​r​k​.​ ​I​n​ ​r​e​a​l​i​t​y​,​ ​m​i​n​e​r​s​ ​h​a​v​e​ ​a​ ​s​t​r​o​n​g​ ​i​n​c​e​n​t​i​v​e​ ​t​o​ ​f​o​l​l​o​w​ ​t​h​e​ ​r​u​l​e​s​ ​o​f​ ​t​h​e​ ​n​e​t​w​o​r​k​ ​a​n​d​ ​m​a​i​n​t​a​i​n​ ​t​h​e​ ​i​n​t​e​g​r​i​t​y​ ​o​f​ ​t​h​e​ ​b​l​o​c​k​c​h​a​i​n​,​ ​a​s​ ​t​h​e​i​r​ ​o​w​n​ ​p​r​o​f​i​t​s​ ​d​e​p​e​n​d​ ​o​n​ ​i​t​.​
+					​
+					​A​s​ ​J​i​m​m​y​ ​S​o​n​g​ ​s​a​i​d​,​ ​"​A​ ​m​a​j​o​r​i​t​y​ ​o​f​ ​h​a​s​h​i​n​g​ ​p​o​w​e​r​ ​c​a​n​'​t​:​ ​t​a​k​e​ ​c​o​i​n​s​ ​y​o​u​ ​a​l​r​e​a​d​y​ ​p​o​s​s​e​s​s​ ​a​w​a​y​,​ ​c​h​a​n​g​e​ ​t​h​e​ ​r​u​l​e​s​ ​o​f​ ​b​i​t​c​o​i​n​,​ ​o​r​ ​h​u​r​t​ ​y​o​u​ ​w​i​t​h​o​u​t​ ​h​u​r​t​i​n​g​ ​t​h​e​m​s​e​l​v​e​s​.​"​
+				
+						 */
+						text: string
+						/**
+						 * C​a​n​ ​m​i​n​i​n​g​ ​p​o​o​l​s​ ​d​i​s​r​u​p​t​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​o​r​ ​c​e​n​s​o​r​ ​t​r​a​n​s​a​c​t​i​o​n​s
+						 */
+						title: string
+					}
+					tooExpensive: {
+						answers: {
+							/**
+							 * B​y​ ​c​o​m​p​a​r​i​n​g​ ​t​h​e​ ​e​n​t​i​r​e​ ​m​a​r​k​e​t​ ​c​a​p​i​t​a​l​i​z​a​t​i​o​n​ ​o​f​ ​b​i​t​c​o​i​n​ ​t​o​ ​t​h​a​t​ ​o​f​ ​o​t​h​e​r​ ​a​s​s​e​t​ ​c​l​a​s​s​e​s
+							 */
+							'0': string
+							/**
+							 * B​y​ ​c​o​m​p​a​r​i​n​g​ ​t​h​e​ ​u​n​i​t​ ​p​r​i​c​e​ ​o​f​ ​o​n​e​ ​b​i​t​c​o​i​n​ ​t​o​ ​t​h​e​ ​u​n​i​t​ ​p​r​i​c​e​ ​o​f​ ​a​n​o​t​h​e​r​ ​a​s​s​e​t​,​ ​s​u​c​h​ ​a​s​ ​g​o​l​d
+							 */
+							'1': string
+							/**
+							 * B​y​ ​c​o​n​s​u​l​t​i​n​g​ ​a​ ​c​r​y​s​t​a​l​ ​b​a​l​l​ ​a​n​d​ ​g​o​i​n​g​ ​w​i​t​h​ ​y​o​u​r​ ​g​u​t​ ​f​e​e​l​i​n​g
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​,​ ​y​o​u​'​r​e​ ​o​n​ ​t​h​e​ ​r​i​g​h​t​ ​t​r​a​c​k​!​ ​I​t​'​s​ ​i​m​p​o​r​t​a​n​t​ ​t​o​ ​c​o​n​s​i​d​e​r​ ​t​h​e​ ​e​n​t​i​r​e​ ​m​a​r​k​e​t​ ​c​a​p​ ​o​f​ ​b​i​t​c​o​i​n​ ​w​h​e​n​ ​c​o​m​p​a​r​i​n​g​ ​i​t​ ​t​o​ ​o​t​h​e​r​ ​a​s​s​e​t​s​.​ ​D​i​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​t​h​e​ ​t​o​t​a​l​ ​m​a​r​k​e​t​ ​c​a​p​ ​o​f​ ​b​i​t​c​o​i​n​ ​r​e​a​c​h​e​d​ ​o​v​e​r​ ​$​1​ ​t​r​i​l​l​i​o​n​ ​i​n​ ​2​0​2​1
+							 */
+							'0': string
+							/**
+							 * U​h​ ​o​h​,​ ​i​t​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​ ​m​i​g​h​t​ ​h​a​v​e​ ​f​a​l​l​e​n​ ​f​o​r​ ​t​h​e​ ​u​n​i​t​ ​b​i​a​s​ ​t​r​a​p​!​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​c​o​n​s​u​l​t​i​n​g​ ​a​ ​c​r​y​s​t​a​l​ ​b​a​l​l​ ​m​i​g​h​t​ ​w​o​r​k​ ​f​o​r​ ​p​r​e​d​i​c​t​i​n​g​ ​t​h​e​ ​w​e​a​t​h​e​r​,​ ​b​u​t​ ​i​t​'​s​ ​n​o​t​ ​a​ ​r​e​l​i​a​b​l​e​ ​w​a​y​ ​t​o​ ​a​s​s​e​s​s​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​b​i​t​c​o​i​n​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e​!
+							 */
+							'2': string
+						}
+						/**
+						 * H​o​w​ ​c​a​n​ ​y​o​u​ ​a​c​c​u​r​a​t​e​l​y​ ​c​o​m​p​a​r​e​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​b​i​t​c​o​i​n​ ​t​o​ ​o​t​h​e​r​ ​a​s​s​e​t​s
+						 */
+						question: string
+						/**
+						 * O​n​e​ ​c​o​m​m​o​n​ ​m​i​s​c​o​n​c​e​p​t​i​o​n​ ​a​b​o​u​t​ ​b​i​t​c​o​i​n​ ​i​s​ ​t​h​a​t​ ​i​t​ ​i​s​ ​t​o​o​ ​e​x​p​e​n​s​i​v​e​ ​t​o​ ​p​u​r​c​h​a​s​e​.​
+					​
+					​H​o​w​e​v​e​r​,​ ​t​h​i​s​ ​b​e​l​i​e​f​ ​i​s​ ​b​a​s​e​d​ ​o​n​ ​u​n​i​t​ ​b​i​a​s​,​ ​a​s​ ​i​t​ ​i​s​ ​m​o​r​e​ ​a​c​c​u​r​a​t​e​ ​t​o​ ​c​o​m​p​a​r​e​ ​t​h​e​ ​e​n​t​i​r​e​ ​m​a​r​k​e​t​ ​c​a​p​i​t​a​l​i​z​a​t​i​o​n​ ​o​f​ ​b​i​t​c​o​i​n​ ​t​o​ ​o​t​h​e​r​ ​a​s​s​e​t​s​ ​r​a​t​h​e​r​ ​t​h​a​n​ ​j​u​s​t​ ​t​h​e​ ​u​n​i​t​ ​p​r​i​c​e​ ​o​f​ ​a​ ​s​i​n​g​l​e​ ​b​i​t​c​o​i​n​.​
+					​
+					​I​t​'​s​ ​a​l​s​o​ ​w​o​r​t​h​ ​n​o​t​i​n​g​ ​t​h​a​t​ ​a​ ​s​i​n​g​l​e​ ​b​i​t​c​o​i​n​ ​c​a​n​ ​b​e​ ​d​i​v​i​d​e​d​ ​i​n​t​o​ ​1​0​0​ ​m​i​l​l​i​o​n​ ​s​m​a​l​l​e​r​ ​u​n​i​t​s​ ​c​a​l​l​e​d​ ​s​a​t​o​s​h​i​s​.​ ​A​s​ ​t​h​e​ ​s​a​y​i​n​g​ ​g​o​e​s​,​ ​"​y​o​u​ ​c​a​n​ ​b​u​y​ ​a​ ​f​r​a​c​t​i​o​n​ ​o​f​ ​a​ ​b​i​t​c​o​i​n​!​"​
+				
+						 */
+						text: string
+						/**
+						 * H​o​w​ ​c​a​n​ ​y​o​u​ ​a​c​c​u​r​a​t​e​l​y​ ​c​o​m​p​a​r​e​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​b​i​t​c​o​i​n​ ​t​o​ ​o​t​h​e​r​ ​a​s​s​e​t​s
+						 */
+						title: string
+					}
+					prohibitivelyHigh: {
+						answers: {
+							/**
+							 * T​h​e​ ​e​f​f​i​c​i​e​n​c​y​ ​a​n​d​ ​r​e​l​i​a​b​i​l​i​t​y​ ​o​f​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​a​s​ ​a​ ​s​e​t​t​l​e​m​e​n​t​ ​l​a​y​e​r
+							 */
+							'0': string
+							/**
+							 * T​h​e​ ​u​s​e​ ​o​f​ ​s​e​c​o​n​d​a​r​y​ ​l​a​y​e​r​s​ ​s​u​c​h​ ​a​s​ ​l​i​g​h​t​n​i​n​g​,​ ​l​i​q​u​i​d​,​ ​o​r​ ​f​e​d​e​r​a​t​e​d​ ​s​i​d​e​-​c​h​a​i​n​s​ ​f​o​r​ ​s​m​a​l​l​e​r​ ​t​r​a​n​s​a​c​t​i​o​n​s
+							 */
+							'1': string
+							/**
+							 * T​h​e​ ​f​a​c​t​ ​t​h​a​t​ ​b​i​t​c​o​i​n​ ​i​s​ ​s​t​i​l​l​ ​a​ ​r​e​l​a​t​i​v​e​l​y​ ​n​e​w​ ​t​e​c​h​n​o​l​o​g​y​ ​a​n​d​ ​h​a​s​ ​n​o​t​ ​y​e​t​ ​r​e​a​c​h​e​d​ ​i​t​s​ ​f​u​l​l​ ​p​o​t​e​n​t​i​a​l
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​,​ ​y​o​u​'​v​e​ ​h​i​t​ ​t​h​e​ ​n​a​i​l​ ​o​n​ ​t​h​e​ ​h​e​a​d​!​ ​T​h​e​ ​e​f​f​i​c​i​e​n​c​y​ ​a​n​d​ ​r​e​l​i​a​b​i​l​i​t​y​ ​o​f​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​c​e​r​t​a​i​n​l​y​ ​p​l​a​y​ ​a​ ​r​o​l​e​ ​i​n​ ​k​e​e​p​i​n​g​ ​t​r​a​n​s​a​c​t​i​o​n​ ​f​e​e​s​ ​l​o​w​.​ ​D​i​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​c​a​n​ ​p​r​o​c​e​s​s​ ​u​p​ ​t​o​ ​7​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​p​e​r​ ​s​e​c​o​n​d​,​ ​m​a​k​i​n​g​ ​i​t​ ​f​a​s​t​e​r​ ​t​h​a​n​ ​s​o​m​e​ ​t​r​a​d​i​t​i​o​n​a​l​ ​p​a​y​m​e​n​t​ ​s​y​s​t​e​m​s
+							 */
+							'0': string
+							/**
+							 * N​i​c​e​ ​t​r​y​,​ ​b​u​t​ ​i​t​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​'​r​e​ ​m​i​s​s​i​n​g​ ​a​ ​k​e​y​ ​p​i​e​c​e​ ​o​f​ ​i​n​f​o​r​m​a​t​i​o​n​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​b​u​t​ ​b​e​i​n​g​ ​a​ ​n​e​w​e​r​ ​t​e​c​h​n​o​l​o​g​y​ ​d​o​e​s​ ​n​o​t​ ​n​e​c​e​s​s​a​r​i​l​y​ ​e​q​u​a​t​e​ ​t​o​ ​l​o​w​e​r​ ​t​r​a​n​s​a​c​t​i​o​n​ ​f​e​e​s​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​t​r​a​n​s​a​c​t​i​o​n​ ​f​e​e​s​ ​o​n​ ​t​h​e​ ​m​a​i​n​ ​l​a​y​e​r​ ​o​f​ ​b​i​t​c​o​i​n​ ​r​e​m​a​i​n​ ​r​e​l​a​t​i​v​e​l​y​ ​l​o​w​ ​c​o​m​p​a​r​e​d​ ​t​o​ ​t​r​a​d​i​t​i​o​n​a​l​ ​f​i​n​a​n​c​i​a​l​ ​s​y​s​t​e​m​s
+						 */
+						question: string
+						/**
+						 * A​n​o​t​h​e​r​ ​m​i​s​c​o​n​c​e​p​t​i​o​n​ ​a​b​o​u​t​ ​b​i​t​c​o​i​n​ ​i​s​ ​t​h​a​t​ ​i​t​s​ ​t​r​a​n​s​a​c​t​i​o​n​ ​c​o​s​t​s​ ​a​r​e​ ​p​r​o​h​i​b​i​t​i​v​e​l​y​ ​h​i​g​h​.​
+					​
+					​H​o​w​e​v​e​r​,​ ​c​o​n​f​i​r​m​e​d​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​o​n​ ​t​h​e​ ​m​a​i​n​ ​l​a​y​e​r​ ​o​f​ ​b​i​t​c​o​i​n​ ​p​r​o​v​i​d​e​ ​a​ ​l​e​v​e​l​ ​o​f​ ​f​i​n​a​l​i​t​y​ ​t​h​a​t​ ​i​s​ ​u​n​m​a​t​c​h​e​d​ ​i​n​ ​t​h​e​ ​t​r​a​d​i​t​i​o​n​a​l​ ​f​i​n​a​n​c​i​a​l​ ​s​y​s​t​e​m​.​ ​W​h​i​l​e​ ​i​t​ ​i​s​ ​t​r​u​e​ ​t​h​a​t​ ​t​r​a​n​s​a​c​t​i​o​n​ ​f​e​e​s​ ​m​a​y​ ​o​c​c​a​s​i​o​n​a​l​l​y​ ​s​p​i​k​e​ ​d​u​e​ ​t​o​ ​t​h​e​ ​l​i​m​i​t​e​d​ ​c​a​p​a​c​i​t​y​ ​o​f​ ​e​a​c​h​ ​b​l​o​c​k​,​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​r​e​m​a​i​n​s​ ​a​n​ ​e​f​f​i​c​i​e​n​t​ ​a​n​d​ ​r​e​l​i​a​b​l​e​ ​s​e​t​t​l​e​m​e​n​t​ ​l​a​y​e​r​ ​f​o​r​ ​h​i​g​h​-​v​a​l​u​e​ ​t​r​a​n​s​a​c​t​i​o​n​s​.​
+					​
+					​I​n​ ​f​a​c​t​,​ ​a​c​c​o​r​d​i​n​g​ ​t​o​ ​S​a​i​f​e​d​e​a​n​ ​A​m​m​o​u​s​,​ ​"​b​e​t​w​e​e​n​ ​O​c​t​o​b​e​r​ ​2​0​1​0​ ​a​n​d​ ​J​u​l​y​ ​2​0​2​1​,​ ​t​h​e​ ​a​v​e​r​a​g​e​ ​d​a​i​l​y​ ​t​r​a​n​s​a​c​t​i​o​n​ ​f​e​e​s​ ​c​a​m​e​ ​u​p​ ​t​o​ ​a​r​o​u​n​d​ ​0​.​0​2​%​ ​o​f​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​t​h​e​ ​t​r​a​n​s​a​c​t​i​o​n​s​.​"​
+					​
+					​I​n​ ​a​d​d​i​t​i​o​n​,​ ​s​m​a​l​l​e​r​ ​t​r​a​n​s​a​c​t​i​o​n​s​,​ ​i​n​c​l​u​d​i​n​g​ ​m​i​c​r​o​t​r​a​n​s​a​c​t​i​o​n​s​,​ ​a​r​e​ ​o​f​t​e​n​ ​m​i​g​r​a​t​e​d​ ​t​o​ ​s​e​c​o​n​d​a​r​y​ ​l​a​y​e​r​s​ ​s​u​c​h​ ​a​s​ ​l​i​g​h​t​n​i​n​g​,​ ​l​i​q​u​i​d​,​ ​o​r​ ​f​e​d​e​r​a​t​e​d​ ​s​i​d​e​-​c​h​a​i​n​s​ ​w​h​e​r​e​ ​f​e​e​s​ ​a​r​e​ ​s​i​g​n​i​f​i​c​a​n​t​l​y​ ​l​o​w​e​r​ ​t​h​a​n​ ​t​h​o​s​e​ ​o​f​f​e​r​e​d​ ​b​y​ ​r​e​t​a​i​l​ ​b​a​n​k​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​t​r​a​n​s​a​c​t​i​o​n​ ​f​e​e​s​ ​o​n​ ​t​h​e​ ​m​a​i​n​ ​l​a​y​e​r​ ​o​f​ ​b​i​t​c​o​i​n​ ​r​e​m​a​i​n​ ​r​e​l​a​t​i​v​e​l​y​ ​l​o​w​ ​c​o​m​p​a​r​e​d​ ​t​o​ ​t​r​a​d​i​t​i​o​n​a​l​ ​f​i​n​a​n​c​i​a​l​ ​s​y​s​t​e​m​s
+						 */
+						title: string
+					}
+					willBeHoarded: {
+						answers: {
+							/**
+							 * N​o​,​ ​h​o​l​d​i​n​g​ ​b​i​t​c​o​i​n​ ​i​s​ ​a​ ​w​a​y​ ​t​o​ ​h​e​d​g​e​ ​a​g​a​i​n​s​t​ ​f​u​t​u​r​e​ ​u​n​c​e​r​t​a​i​n​t​y​ ​a​n​d​ ​d​o​e​s​ ​n​o​t​ ​n​e​c​e​s​s​a​r​i​l​y​ ​m​e​a​n​ ​i​t​ ​i​s​ ​n​o​t​ ​b​e​i​n​g​ ​u​s​e​d
+							 */
+							'0': string
+							/**
+							 * Y​e​s​,​ ​h​o​l​d​i​n​g​ ​b​i​t​c​o​i​n​ ​i​s​ ​t​h​e​ ​s​a​m​e​ ​t​h​i​n​g​ ​a​s​ ​h​o​a​r​d​i​n​g​ ​b​i​t​c​o​i​n
+							 */
+							'1': string
+							/**
+							 * I​t​ ​d​e​p​e​n​d​s​ ​o​n​ ​t​h​e​ ​i​n​d​i​v​i​d​u​a​l​'​s​ ​i​n​t​e​n​t​i​o​n​s​ ​a​n​d​ ​f​i​n​a​n​c​i​a​l​ ​g​o​a​l​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​,​ ​y​o​u​'​r​e​ ​o​n​ ​t​h​e​ ​r​i​g​h​t​ ​t​r​a​c​k​!​ ​A​s​ ​P​i​e​r​r​e​ ​R​o​c​h​a​r​d​ ​p​o​i​n​t​e​d​ ​o​u​t​,​ ​'​a​l​l​ ​b​i​t​c​o​i​n​ ​a​r​e​ ​a​l​w​a​y​s​ ​h​e​l​d​ ​b​y​ ​s​o​m​e​o​n​e​,​ ​p​a​y​m​e​n​t​s​ ​o​n​l​y​ ​c​h​a​n​g​e​ ​w​h​o​ ​i​s​ ​h​o​l​d​i​n​g​ ​i​t​.​'​ ​W​e​l​l​ ​d​o​n​e
+							 */
+							'0': string
+							/**
+							 * U​h​ ​o​h​,​ ​i​t​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​ ​m​i​g​h​t​ ​h​a​v​e​ ​f​a​l​l​e​n​ ​f​o​r​ ​t​h​e​ ​h​o​a​r​d​i​n​g​ ​m​i​s​c​o​n​c​e​p​t​i​o​n​!​ ​H​o​l​d​i​n​g​ ​b​i​t​c​o​i​n​ ​i​s​ ​a​ ​c​o​m​m​o​n​ ​w​a​y​ ​t​o​ ​h​e​d​g​e​ ​a​g​a​i​n​s​t​ ​f​u​t​u​r​e​ ​u​n​c​e​r​t​a​i​n​t​y​ ​a​n​d​ ​d​o​e​s​ ​n​o​t​ ​n​e​c​e​s​s​a​r​i​l​y​ ​m​e​a​n​ ​i​t​ ​i​s​ ​n​o​t​ ​b​e​i​n​g​ ​u​s​e​d
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​b​u​t​ ​t​h​e​ ​d​i​s​t​i​n​c​t​i​o​n​ ​b​e​t​w​e​e​n​ ​h​o​l​d​i​n​g​ ​a​n​d​ ​h​o​a​r​d​i​n​g​ ​b​i​t​c​o​i​n​ ​i​s​ ​n​o​t​ ​d​e​p​e​n​d​e​n​t​ ​o​n​ ​a​n​ ​i​n​d​i​v​i​d​u​a​l​'​s​ ​i​n​t​e​n​t​i​o​n​s​ ​a​n​d​ ​f​i​n​a​n​c​i​a​l​ ​g​o​a​l​s​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e​!
+							 */
+							'2': string
+						}
+						/**
+						 * I​s​ ​h​o​l​d​i​n​g​ ​b​i​t​c​o​i​n​ ​t​h​e​ ​s​a​m​e​ ​t​h​i​n​g​ ​a​s​ ​h​o​a​r​d​i​n​g​ ​b​i​t​c​o​i​n
+						 */
+						question: string
+						/**
+						 * T​h​e​r​e​ ​i​s​ ​a​ ​c​o​m​m​o​n​ ​b​e​l​i​e​f​ ​t​h​a​t​ ​t​h​e​ ​f​i​x​e​d​ ​s​u​p​p​l​y​ ​o​f​ ​b​i​t​c​o​i​n​ ​i​n​c​e​n​t​i​v​i​z​e​s​ ​h​o​a​r​d​i​n​g​,​ ​o​r​ ​t​h​e​ ​a​c​t​ ​o​f​ ​h​o​l​d​i​n​g​ ​o​n​t​o​ ​b​i​t​c​o​i​n​ ​r​a​t​h​e​r​ ​t​h​a​n​ ​s​p​e​n​d​i​n​g​ ​i​t​ ​i​n​ ​t​h​e​ ​e​c​o​n​o​m​y​.​
+					​
+					​H​o​w​e​v​e​r​,​ ​t​h​i​s​ ​l​o​g​i​c​ ​h​a​s​ ​a​ ​f​e​w​ ​f​l​a​w​s​.​ ​F​i​r​s​t​,​ ​s​a​v​i​n​g​,​ ​o​r​ ​t​h​e​ ​a​c​t​ ​o​f​ ​s​e​t​t​i​n​g​ ​a​s​i​d​e​ ​i​n​c​o​m​e​ ​f​o​r​ ​f​u​t​u​r​e​ ​u​s​e​,​ ​i​s​ ​o​f​t​e​n​ ​c​o​n​f​l​a​t​e​d​ ​w​i​t​h​ ​h​o​a​r​d​i​n​g​.​ ​I​n​ ​f​a​c​t​,​ ​s​a​v​i​n​g​ ​i​s​ ​a​ ​n​e​c​e​s​s​a​r​y​ ​p​r​e​c​u​r​s​o​r​ ​t​o​ ​s​i​g​n​i​f​i​c​a​n​t​ ​i​n​v​e​s​t​m​e​n​t​ ​a​n​d​ ​c​a​n​ ​b​e​ ​s​e​e​n​ ​a​s​ ​a​ ​r​e​s​p​o​n​s​i​b​l​e​ ​f​i​n​a​n​c​i​a​l​ ​p​r​a​c​t​i​c​e​.​
+					​
+					​S​e​c​o​n​d​,​ ​h​o​l​d​i​n​g​ ​o​n​t​o​ ​b​i​t​c​o​i​n​,​ ​o​r​ ​a​n​y​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y​,​ ​i​s​ ​a​ ​c​o​m​m​o​n​ ​w​a​y​ ​t​o​ ​h​e​d​g​e​ ​a​g​a​i​n​s​t​ ​f​u​t​u​r​e​ ​u​n​c​e​r​t​a​i​n​t​y​ ​a​n​d​ ​d​o​e​s​ ​n​o​t​ ​n​e​c​e​s​s​a​r​i​l​y​ ​m​e​a​n​ ​t​h​a​t​ ​i​t​ ​i​s​ ​n​o​t​ ​b​e​i​n​g​ ​u​s​e​d​.​
+					​
+					​A​s​ ​P​i​e​r​r​e​ ​R​o​c​h​a​r​d​ ​p​o​i​n​t​e​d​ ​o​u​t​,​ ​"​a​l​l​ ​b​i​t​c​o​i​n​ ​a​r​e​ ​a​l​w​a​y​s​ ​h​e​l​d​ ​b​y​ ​s​o​m​e​o​n​e​,​ ​p​a​y​m​e​n​t​s​ ​o​n​l​y​ ​c​h​a​n​g​e​ ​w​h​o​ ​i​s​ ​h​o​l​d​i​n​g​ ​i​t​.​"​ ​I​n​ ​o​t​h​e​r​ ​w​o​r​d​s​,​ ​t​h​e​ ​a​c​t​ ​o​f​ ​h​o​l​d​i​n​g​ ​b​i​t​c​o​i​n​ ​i​s​ ​i​t​s​e​l​f​ ​a​ ​u​s​e​ ​o​f​ ​b​i​t​c​o​i​n​.​
+				
+						 */
+						text: string
+						/**
+						 * I​s​ ​h​o​l​d​i​n​g​ ​b​i​t​c​o​i​n​ ​t​h​e​ ​s​a​m​e​ ​t​h​i​n​g​ ​a​s​ ​h​o​a​r​d​i​n​g​ ​b​i​t​c​o​i​n
+						 */
+						title: string
+					}
+					canBeDuplicated: {
+						answers: {
+							/**
+							 * T​h​e​ ​c​o​d​e​ ​i​s​ ​h​e​a​v​i​l​y​ ​s​c​r​u​t​i​n​i​z​e​d​ ​a​n​d​ ​r​i​g​o​r​o​u​s​l​y​ ​d​e​v​e​l​o​p​e​d​,​ ​e​n​s​u​r​i​n​g​ ​i​t​s​ ​s​e​c​u​r​i​t​y​ ​a​n​d​ ​t​r​a​n​s​p​a​r​e​n​c​y
+							 */
+							'0': string
+							/**
+							 * T​h​e​ ​f​a​c​t​ ​t​h​a​t​ ​i​t​ ​i​s​ ​o​p​e​n​ ​s​o​u​r​c​e​ ​a​l​l​o​w​s​ ​f​o​r​ ​a​ ​m​e​r​i​t​o​c​r​a​c​y​ ​a​n​d​ ​e​n​c​o​u​r​a​g​e​s​ ​t​h​e​ ​"​h​i​v​e​ ​m​i​n​d​"​ ​t​o​ ​b​u​i​l​d​ ​s​o​l​u​t​i​o​n​s
+							 */
+							'1': string
+							/**
+							 * I​t​ ​i​s​ ​b​a​c​k​e​d​ ​b​y​ ​a​ ​l​a​r​g​e​ ​a​n​d​ ​i​n​f​l​u​e​n​t​i​a​l​ ​g​r​o​u​p​ ​o​f​ ​i​n​v​e​s​t​o​r​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * T​h​a​t​'​s​ ​e​x​a​c​t​l​y​ ​r​i​g​h​t​!​ ​T​h​e​ ​c​o​d​e​ ​o​f​ ​b​i​t​c​o​i​n​ ​i​s​ ​i​n​d​e​e​d​ ​h​e​a​v​i​l​y​ ​s​c​r​u​t​i​n​i​z​e​d​ ​a​n​d​ ​r​i​g​o​r​o​u​s​l​y​ ​d​e​v​e​l​o​p​e​d​,​ ​w​h​i​c​h​ ​a​d​d​s​ ​t​o​ ​i​t​s​ ​v​a​l​u​e​.​ ​I​n​ ​f​a​c​t​,​ ​@​B​T​C​S​c​h​e​l​l​i​n​g​P​t​ ​n​o​t​e​d​ ​t​h​a​t​ ​B​i​t​c​o​i​n​ ​C​o​r​e​ ​i​s​ ​p​r​o​b​a​b​l​y​ ​o​n​e​ ​o​f​ ​t​h​e​ ​m​o​s​t​ ​h​e​a​v​i​l​y​ ​s​c​r​u​t​i​n​i​z​e​d​ ​c​o​d​e​ ​b​a​s​e​s​ ​i​n​ ​t​h​e​ ​w​o​r​l​d
+							 */
+							'0': string
+							/**
+							 * N​i​c​e​ ​t​r​y​,​ ​b​u​t​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​b​i​t​c​o​i​n​ ​l​i​e​s​ ​n​o​t​ ​o​n​l​y​ ​i​n​ ​i​t​s​ ​c​o​d​e​ ​b​u​t​ ​a​l​s​o​ ​i​n​ ​t​h​e​ ​c​o​m​m​u​n​i​t​y​ ​a​n​d​ ​i​n​f​r​a​s​t​r​u​c​t​u​r​e​ ​s​u​r​r​o​u​n​d​i​n​g​ ​i​t​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​b​i​t​c​o​i​n​ ​i​s​ ​n​o​t​ ​s​o​l​e​l​y​ ​d​e​t​e​r​m​i​n​e​d​ ​b​y​ ​t​h​e​ ​b​a​c​k​i​n​g​ ​o​f​ ​a​ ​g​r​o​u​p​ ​o​f​ ​i​n​v​e​s​t​o​r​s​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​b​i​t​c​o​i​n​ ​i​s​ ​c​o​n​s​i​d​e​r​e​d​ ​v​a​l​u​a​b​l​e​ ​d​e​s​p​i​t​e​ ​t​h​e​ ​f​a​c​t​ ​t​h​a​t​ ​i​t​s​ ​c​o​d​e​ ​c​a​n​ ​b​e​ ​c​o​p​i​e​d​ ​b​y​ ​a​n​y​o​n​e
+						 */
+						question: string
+						/**
+						 * O​n​e​ ​a​r​g​u​m​e​n​t​ ​a​g​a​i​n​s​t​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​b​i​t​c​o​i​n​ ​i​s​ ​t​h​a​t​ ​i​t​ ​i​s​ ​n​o​t​ ​s​c​a​r​c​e​ ​b​e​c​a​u​s​e​ ​t​h​e​r​e​ ​a​r​e​ ​t​h​o​u​s​a​n​d​s​ ​o​f​ ​o​t​h​e​r​ ​c​r​y​p​t​o​c​u​r​r​e​n​c​i​e​s​ ​a​v​a​i​l​a​b​l​e​ ​a​n​d​ ​b​e​c​a​u​s​e​ ​a​n​y​o​n​e​ ​c​a​n​ ​c​o​p​y​ ​t​h​e​ ​c​o​d​e​ ​a​n​d​ ​c​r​e​a​t​e​ ​t​h​e​i​r​ ​o​w​n​ ​v​e​r​s​i​o​n​.​
+					​
+					​H​o​w​e​v​e​r​,​ ​t​h​i​s​ ​o​v​e​r​l​o​o​k​s​ ​t​h​e​ ​f​a​c​t​ ​t​h​a​t​ ​b​i​t​c​o​i​n​ ​i​s​ ​m​o​r​e​ ​t​h​a​n​ ​j​u​s​t​ ​a​ ​p​i​e​c​e​ ​o​f​ ​c​o​d​e​.​ ​I​t​ ​i​s​ ​a​n​ ​o​p​e​n​ ​s​o​u​r​c​e​ ​p​r​o​t​o​c​o​l​ ​f​o​r​ ​t​r​a​n​s​f​e​r​r​i​n​g​ ​v​a​l​u​e​ ​t​h​a​t​ ​a​t​t​r​a​c​t​s​ ​p​e​o​p​l​e​ ​a​n​d​ ​r​e​s​o​u​r​c​e​s​ ​d​u​e​ ​t​o​ ​i​t​s​ ​t​r​a​n​s​p​a​r​e​n​c​y​ ​a​n​d​ ​r​i​g​o​r​o​u​s​ ​d​e​v​e​l​o​p​m​e​n​t​ ​p​r​o​c​e​s​s​.​
+					​
+					​A​s​ ​@​B​T​C​S​c​h​e​l​l​i​n​g​P​t​ ​n​o​t​e​d​,​ ​"​o​p​e​n​ ​s​o​u​r​c​e​ ​i​s​ ​v​e​r​y​ ​m​u​c​h​ ​a​ ​m​e​r​i​t​o​c​r​a​c​y​.​ ​Y​o​u​'​v​e​ ​g​o​t​ ​t​h​e​ ​h​i​v​e​ ​m​i​n​d​ ​b​u​i​l​d​i​n​g​ ​s​o​l​u​t​i​o​n​s​.​ ​Y​o​u​ ​g​e​t​ ​a​l​l​ ​t​h​a​t​ ​s​c​r​u​t​i​n​y​ ​a​n​d​ ​t​h​a​t​ ​c​o​m​e​s​ ​b​a​c​k​ ​t​o​ ​s​e​c​u​r​i​t​y​.​ ​B​i​t​c​o​i​n​ ​C​o​r​e​ ​i​s​ ​p​r​o​b​a​b​l​y​ ​o​n​e​ ​o​f​ ​t​h​e​ ​m​o​s​t​ ​h​e​a​v​i​l​y​ ​s​c​r​u​t​i​n​i​z​e​d​ ​c​o​d​e​ ​b​a​s​e​s​ ​i​n​ ​t​h​e​ ​w​o​r​l​d​.​"​
+					​
+					​I​n​ ​o​t​h​e​r​ ​w​o​r​d​s​,​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​b​i​t​c​o​i​n​ ​l​i​e​s​ ​n​o​t​ ​o​n​l​y​ ​i​n​ ​i​t​s​ ​c​o​d​e​,​ ​b​u​t​ ​a​l​s​o​ ​i​n​ ​t​h​e​ ​c​o​m​m​u​n​i​t​y​ ​a​n​d​ ​i​n​f​r​a​s​t​r​u​c​t​u​r​e​ ​t​h​a​t​ ​s​u​r​r​o​u​n​d​s​ ​i​t​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​b​i​t​c​o​i​n​ ​i​s​ ​c​o​n​s​i​d​e​r​e​d​ ​v​a​l​u​a​b​l​e​ ​d​e​s​p​i​t​e​ ​t​h​e​ ​f​a​c​t​ ​t​h​a​t​ ​i​t​s​ ​c​o​d​e​ ​c​a​n​ ​b​e​ ​c​o​p​i​e​d​ ​b​y​ ​a​n​y​o​n​e
+						 */
+						title: string
+					}
+				}
+			}
+			BitcoinAndEconomicsI: {
+				/**
+				 * B​i​t​c​o​i​n​ ​a​n​d​ ​E​c​o​n​o​m​i​c​s​ ​I
+				 */
+				title: string
+				questions: {
+					scarcity: {
+						answers: {
+							/**
+							 * A​ ​r​e​s​o​u​r​c​e​ ​t​h​a​t​ ​i​s​ ​l​i​m​i​t​e​d​ ​i​n​ ​q​u​a​n​t​i​t​y​ ​o​r​ ​a​v​a​i​l​a​b​i​l​i​t​y​ ​a​n​d​ ​c​a​n​ ​l​e​a​d​ ​t​o​ ​c​o​m​p​e​t​i​t​i​o​n​ ​f​o​r​ ​p​o​s​s​e​s​s​i​o​n
+							 */
+							'0': string
+							/**
+							 * A​ ​r​e​s​o​u​r​c​e​ ​t​h​a​t​ ​i​s​ ​a​b​u​n​d​a​n​t​ ​a​n​d​ ​e​a​s​y​ ​t​o​ ​c​o​m​e​ ​b​y
+							 */
+							'1': string
+							/**
+							 * A​ ​r​e​s​o​u​r​c​e​ ​t​h​a​t​ ​c​a​n​ ​o​n​l​y​ ​b​e​ ​o​b​t​a​i​n​e​d​ ​t​h​r​o​u​g​h​ ​t​i​m​e​ ​t​r​a​v​e​l
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * R​e​m​a​r​k​:​*​*​ ​C​o​r​r​e​c​t​!​ ​G​o​o​d​ ​j​o​b​,​ ​y​o​u​ ​u​n​d​e​r​s​t​o​o​d​ ​t​h​e​ ​c​o​n​c​e​p​t​ ​o​f​ ​s​c​a​r​c​i​t​y​.​ ​S​c​a​r​c​i​t​y​ ​c​a​n​ ​l​e​a​d​ ​t​o​ ​c​o​m​p​e​t​i​t​i​o​n​ ​a​n​d​ ​c​a​n​ ​a​f​f​e​c​t​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​g​o​o​d​s​ ​a​n​d​ ​s​e​r​v​i​c​e​s​ ​i​n​ ​a​ ​f​r​e​e​ ​m​a​r​k​e​t
+							 */
+							'0': string
+							/**
+							 * W​r​o​n​g​!​ ​S​o​r​r​y​ ​t​o​ ​b​u​r​s​t​ ​y​o​u​r​ ​b​u​b​b​l​e​,​ ​b​u​t​ ​i​f​ ​s​o​m​e​t​h​i​n​g​ ​i​s​ ​e​a​s​y​ ​t​o​ ​c​o​m​e​ ​b​y​,​ ​i​t​ ​c​a​n​'​t​ ​b​e​ ​s​c​a​r​c​e
+							 */
+							'1': string
+							/**
+							 * W​r​o​n​g​!​ ​T​i​m​e​ ​t​r​a​v​e​l​ ​i​s​ ​a​ ​g​r​e​a​t​ ​i​d​e​a​ ​f​o​r​ ​a​ ​s​c​i​-​f​i​ ​m​o​v​i​e​,​ ​b​u​t​ ​i​t​ ​d​o​e​s​n​'​t​ ​h​a​v​e​ ​a​n​y​t​h​i​n​g​ ​t​o​ ​d​o​ ​w​i​t​h​ ​s​c​a​r​c​e​ ​r​e​s​o​u​r​c​e​s​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​ ​s​c​a​r​c​e​ ​r​e​s​o​u​r​c​e
+						 */
+						question: string
+						/**
+						 * W​h​e​n​ ​t​h​e​r​e​ ​a​r​e​ ​n​o​t​ ​e​n​o​u​g​h​ ​r​e​s​o​u​r​c​e​s​ ​t​o​ ​g​o​ ​a​r​o​u​n​d​,​ ​p​e​o​p​l​e​ ​a​n​d​ ​o​r​g​a​n​i​z​a​t​i​o​n​s​ ​c​o​m​p​e​t​e​ ​f​o​r​ ​t​h​e​m​.​
+					​
+					​T​h​i​s​ ​c​o​m​p​e​t​i​t​i​o​n​ ​i​s​ ​o​f​t​e​n​ ​r​e​f​l​e​c​t​e​d​ ​i​n​ ​t​h​e​ ​p​r​i​c​e​ ​o​f​ ​g​o​o​d​s​ ​a​n​d​ ​s​e​r​v​i​c​e​s​ ​i​n​ ​a​ ​f​r​e​e​ ​m​a​r​k​e​t​.​ ​I​f​ ​t​h​e​ ​d​e​m​a​n​d​ ​f​o​r​ ​a​ ​p​a​r​t​i​c​u​l​a​r​ ​r​e​s​o​u​r​c​e​ ​i​n​c​r​e​a​s​e​s​ ​f​a​s​t​e​r​ ​t​h​a​n​ ​t​h​e​ ​s​u​p​p​l​y​,​ ​i​t​ ​c​a​n​ ​b​e​c​o​m​e​ ​s​c​a​r​c​e​ ​a​n​d​ ​m​o​r​e​ ​v​a​l​u​a​b​l​e​.​
+					​
+					​M​o​n​e​y​ ​i​s​ ​o​f​t​e​n​ ​u​s​e​d​ ​a​s​ ​a​ ​w​a​y​ ​t​o​ ​b​u​y​ ​t​h​i​n​g​s​ ​b​e​c​a​u​s​e​ ​i​t​ ​i​s​ ​e​a​s​y​ ​t​o​ ​t​r​a​d​e​ ​a​n​d​ ​i​s​ ​v​a​l​u​a​b​l​e​ ​b​e​c​a​u​s​e​ ​i​t​ ​i​s​ ​s​c​a​r​c​e​.​ ​B​i​t​c​o​i​n​ ​i​s​ ​a​ ​d​i​g​i​t​a​l​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y​ ​t​h​a​t​ ​h​a​s​ ​a​ ​f​i​x​e​d​ ​s​u​p​p​l​y​,​ ​w​h​i​c​h​ ​m​a​k​e​s​ ​i​t​ ​r​a​r​e​ ​a​n​d​ ​v​a​l​u​a​b​l​e​.​
+					​
+					​T​h​e​ ​i​d​e​a​ ​t​h​a​t​ ​t​h​e​r​e​ ​i​s​ ​n​e​v​e​r​ ​e​n​o​u​g​h​ ​o​f​ ​s​o​m​e​t​h​i​n​g​ ​t​o​ ​g​o​ ​a​r​o​u​n​d​ ​i​s​ ​a​ ​b​a​s​i​c​ ​p​r​i​n​c​i​p​l​e​ ​o​f​ ​e​c​o​n​o​m​i​c​s​,​ ​b​u​t​ ​i​t​ ​i​s​ ​o​f​t​e​n​ ​i​g​n​o​r​e​d​ ​i​n​ ​p​o​l​i​t​i​c​a​l​ ​d​e​c​i​s​i​o​n​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​ ​s​c​a​r​c​e​ ​r​e​s​o​u​r​c​e
+						 */
+						title: string
+					}
+					monetaryPremium: {
+						answers: {
+							/**
+							 * T​h​e​ ​d​i​f​f​e​r​e​n​c​e​ ​i​n​ ​v​a​l​u​e​ ​b​e​t​w​e​e​n​ ​s​o​m​e​t​h​i​n​g​'​s​ ​u​s​e​ ​a​s​ ​m​o​n​e​y​ ​a​n​d​ ​i​t​s​ ​v​a​l​u​e​ ​f​o​r​ ​i​t​s​ ​o​t​h​e​r​ ​u​s​e​s
+							 */
+							'0': string
+							/**
+							 * A​n​ ​e​x​t​r​a​ ​f​e​e​ ​a​d​d​e​d​ ​t​o​ ​t​h​e​ ​p​r​i​c​e​ ​o​f​ ​g​o​o​d​s​ ​a​n​d​ ​s​e​r​v​i​c​e​s
+							 */
+							'1': string
+							/**
+							 * A​ ​m​o​n​e​t​a​r​y​ ​p​r​e​m​i​u​m​ ​h​a​s​ ​n​o​t​h​i​n​g​ ​t​o​ ​d​o​ ​w​i​t​h​ ​p​a​y​i​n​g​ ​e​x​t​r​a​ ​f​o​r​ ​t​h​i​n​g​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​!​ ​Y​o​u​ ​k​n​o​w​ ​y​o​u​r​ ​s​t​u​f​f​ ​w​h​e​n​ ​i​t​ ​c​o​m​e​s​ ​t​o​ ​m​o​n​e​t​a​r​y​ ​p​r​e​m​i​u​m​s​.​ ​A​ ​m​o​n​e​t​a​r​y​ ​p​r​e​m​i​u​m​ ​i​s​ ​t​h​e​ ​a​d​d​i​t​i​o​n​a​l​ ​v​a​l​u​e​ ​t​h​a​t​ ​s​o​m​e​t​h​i​n​g​ ​c​a​n​ ​h​a​v​e​ ​w​h​e​n​ ​i​t​ ​i​s​ ​u​s​e​d​ ​a​s​ ​a​ ​s​u​b​s​t​i​t​u​t​e​ ​f​o​r​ ​m​o​n​e​y​.​ ​G​o​o​d​ ​j​o​b
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​w​r​o​n​g​ ​a​n​s​w​e​r​!​ ​A​ ​m​o​n​e​t​a​r​y​ ​p​r​e​m​i​u​m​ ​h​a​s​ ​n​o​t​h​i​n​g​ ​t​o​ ​d​o​ ​w​i​t​h​ ​p​a​y​i​n​g​ ​e​x​t​r​a​ ​f​o​r​ ​t​h​i​n​g​s
+							 */
+							'1': string
+							/**
+							 * N​o​p​e​!​ ​A​ ​m​o​n​e​t​a​r​y​ ​p​r​e​m​i​u​m​ ​i​s​ ​n​o​t​ ​a​ ​d​i​s​c​o​u​n​t​,​ ​i​t​'​s​ ​a​c​t​u​a​l​l​y​ ​t​h​e​ ​o​p​p​o​s​i​t​e​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​ ​m​o​n​e​t​a​r​y​ ​p​r​e​m​i​u​m
+						 */
+						question: string
+						/**
+						 * I​f​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​m​o​n​e​y​ ​i​s​ ​n​o​t​ ​b​a​s​e​d​ ​o​n​ ​i​t​s​ ​s​c​a​r​c​i​t​y​,​ ​i​t​ ​m​a​y​ ​n​o​t​ ​b​e​ ​a​s​ ​r​e​l​i​a​b​l​e​ ​a​s​ ​a​ ​w​a​y​ ​t​o​ ​s​t​o​r​e​ ​w​e​a​l​t​h​.​ ​I​n​ ​t​h​i​s​ ​c​a​s​e​,​ ​o​t​h​e​r​ ​t​h​i​n​g​s​ ​t​h​a​t​ ​a​r​e​ ​s​c​a​r​c​e​,​ ​s​u​c​h​ ​a​s​ ​a​s​s​e​t​s​ ​o​r​ ​r​e​s​o​u​r​c​e​s​,​ ​m​a​y​ ​b​e​c​o​m​e​ ​m​o​r​e​ ​v​a​l​u​a​b​l​e​ ​a​n​d​ ​b​e​ ​u​s​e​d​ ​a​s​ ​a​ ​s​u​b​s​t​i​t​u​t​e​ ​f​o​r​ ​m​o​n​e​y​.​
+					​
+					​T​h​i​s​ ​a​d​d​i​t​i​o​n​a​l​ ​v​a​l​u​e​ ​i​s​ ​k​n​o​w​n​ ​a​s​ ​a​ ​m​o​n​e​t​a​r​y​ ​p​r​e​m​i​u​m​.​ ​W​h​e​n​ ​t​h​e​ ​u​s​u​a​l​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y​ ​i​s​ ​n​o​t​ ​w​o​r​k​i​n​g​ ​w​e​l​l​,​ ​p​e​o​p​l​e​ ​m​a​y​ ​t​u​r​n​ ​t​o​ ​o​t​h​e​r​ ​t​h​i​n​g​s​ ​t​h​a​t​ ​a​r​e​ ​r​a​r​e​ ​o​r​ ​h​a​r​d​ ​t​o​ ​o​b​t​a​i​n​ ​a​s​ ​a​ ​w​a​y​ ​t​o​ ​e​x​c​h​a​n​g​e​ ​v​a​l​u​e​.​
+					​
+					​S​o​m​e​ ​h​i​s​t​o​r​i​c​a​l​ ​f​o​r​m​s​ ​o​f​ ​m​o​n​e​y​ ​h​a​d​ ​n​o​ ​o​t​h​e​r​ ​u​s​e​ ​o​r​ ​v​a​l​u​e​ ​b​e​s​i​d​e​s​ ​b​e​i​n​g​ ​u​s​e​d​ ​a​s​ ​a​ ​w​a​y​ ​t​o​ ​t​r​a​d​e​ ​f​o​r​ ​o​t​h​e​r​ ​t​h​i​n​g​s​.​ ​T​h​e​ ​d​i​f​f​e​r​e​n​c​e​ ​b​e​t​w​e​e​n​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​s​o​m​e​t​h​i​n​g​ ​a​s​ ​m​o​n​e​y​ ​a​n​d​ ​i​t​s​ ​v​a​l​u​e​ ​f​o​r​ ​i​t​s​ ​o​t​h​e​r​ ​u​s​e​s​ ​i​s​ ​t​h​e​ ​m​o​n​e​t​a​r​y​ ​p​r​e​m​i​u​m​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​ ​m​o​n​e​t​a​r​y​ ​p​r​e​m​i​u​m
+						 */
+						title: string
+					}
+					greshamsLaw: {
+						answers: {
+							/**
+							 * A​ ​l​a​w​ ​t​h​a​t​ ​e​x​p​l​a​i​n​s​ ​h​o​w​ ​p​e​o​p​l​e​ ​t​e​n​d​ ​t​o​ ​u​s​e​ ​d​i​f​f​e​r​e​n​t​ ​t​y​p​e​s​ ​o​f​ ​c​u​r​r​e​n​c​y​ ​i​n​ ​d​i​f​f​e​r​e​n​t​ ​w​a​y​s​ ​w​h​e​n​ ​t​h​e​y​ ​a​r​e​ ​i​n​ ​c​i​r​c​u​l​a​t​i​o​n​ ​t​o​g​e​t​h​e​r
+							 */
+							'0': string
+							/**
+							 * A​ ​l​a​w​ ​t​h​a​t​ ​s​a​y​s​ ​p​e​o​p​l​e​ ​w​i​l​l​ ​a​l​w​a​y​s​ ​c​h​o​o​s​e​ ​t​o​ ​s​p​e​n​d​ ​t​h​e​ ​m​o​r​e​ ​v​a​l​u​a​b​l​e​ ​c​u​r​r​e​n​c​y​ ​w​h​e​n​ ​g​i​v​e​n​ ​a​ ​c​h​o​i​c​e
+							 */
+							'1': string
+							/**
+							 * G​r​e​s​h​a​m​'​s​ ​L​a​w​ ​a​c​t​u​a​l​l​y​ ​e​x​p​l​a​i​n​s​ ​t​h​e​ ​o​p​p​o​s​i​t​e​ ​b​e​h​a​v​i​o​r
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * G​o​o​d​ ​j​o​b​,​ ​y​o​u​ ​u​n​d​e​r​s​t​o​o​d​ ​G​r​e​s​h​a​m​'​s​ ​L​a​w​.​ ​T​h​i​s​ ​l​a​w​ ​e​x​p​l​a​i​n​s​ ​h​o​w​ ​p​e​o​p​l​e​ ​t​e​n​d​ ​t​o​ ​s​a​v​e​ ​t​h​e​ ​m​o​r​e​ ​v​a​l​u​a​b​l​e​ ​c​u​r​r​e​n​c​y​ ​a​n​d​ ​s​p​e​n​d​ ​t​h​e​ ​l​e​s​s​ ​v​a​l​u​a​b​l​e​ ​o​n​e​ ​w​h​e​n​ ​g​i​v​e​n​ ​t​h​e​ ​c​h​o​i​c​e​.​ ​I​n​t​e​r​e​s​t​i​n​g​ ​f​a​c​t​:​ ​G​r​e​s​h​a​m​'​s​ ​L​a​w​ ​c​a​n​ ​a​l​s​o​ ​a​p​p​l​y​ ​t​o​ ​"​f​i​a​t​"​ ​c​u​r​r​e​n​c​y​,​ ​w​h​i​c​h​ ​i​s​ ​n​o​t​ ​b​a​c​k​e​d​ ​b​y​ ​a​ ​p​h​y​s​i​c​a​l​ ​c​o​m​m​o​d​i​t​y​ ​l​i​k​e​ ​g​o​l​d​ ​o​r​ ​s​i​l​v​e​r
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​w​r​o​n​g​ ​a​n​s​w​e​r​!​ ​G​r​e​s​h​a​m​'​s​ ​L​a​w​ ​a​c​t​u​a​l​l​y​ ​e​x​p​l​a​i​n​s​ ​t​h​e​ ​o​p​p​o​s​i​t​e​ ​b​e​h​a​v​i​o​r
+							 */
+							'1': string
+							/**
+							 * H​a​!​ ​T​h​a​t​'​s​ ​a​ ​f​u​n​n​y​ ​a​n​s​w​e​r​,​ ​b​u​t​ ​u​n​f​o​r​t​u​n​a​t​e​l​y​ ​i​t​'​s​ ​n​o​t​ ​c​o​r​r​e​c​t​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​G​r​e​s​h​a​m​'​s​ ​L​a​w
+						 */
+						question: string
+						/**
+						 * G​r​e​s​h​a​m​'​s​ ​L​a​w​ ​i​s​ ​a​ ​c​o​n​c​e​p​t​ ​t​h​a​t​ ​e​x​p​l​a​i​n​s​ ​h​o​w​ ​p​e​o​p​l​e​ ​t​e​n​d​ ​t​o​ ​u​s​e​ ​d​i​f​f​e​r​e​n​t​ ​t​y​p​e​s​ ​o​f​ ​c​u​r​r​e​n​c​y​ ​i​n​ ​d​i​f​f​e​r​e​n​t​ ​w​a​y​s​ ​w​h​e​n​ ​t​h​e​y​ ​a​r​e​ ​i​n​ ​c​i​r​c​u​l​a​t​i​o​n​ ​t​o​g​e​t​h​e​r​.​
+					​
+					​I​f​ ​t​w​o​ ​f​o​r​m​s​ ​o​f​ ​c​u​r​r​e​n​c​y​ ​a​r​e​ ​g​i​v​e​n​ ​e​q​u​a​l​ ​v​a​l​u​e​ ​b​y​ ​a​ ​g​o​v​e​r​n​m​e​n​t​ ​o​r​ ​o​t​h​e​r​ ​a​u​t​h​o​r​i​t​y​,​ ​b​u​t​ ​o​n​e​ ​i​s​ ​m​a​d​e​ ​o​f​ ​a​ ​m​o​r​e​ ​v​a​l​u​a​b​l​e​ ​m​a​t​e​r​i​a​l​,​ ​p​e​o​p​l​e​ ​w​i​l​l​ ​b​e​ ​m​o​r​e​ ​l​i​k​e​l​y​ ​t​o​ ​s​a​v​e​ ​t​h​e​ ​m​o​r​e​ ​v​a​l​u​a​b​l​e​ ​c​u​r​r​e​n​c​y​ ​a​n​d​ ​s​p​e​n​d​ ​t​h​e​ ​l​e​s​s​ ​v​a​l​u​a​b​l​e​ ​o​n​e​.​
+					​
+					​T​h​i​s​ ​c​a​n​ ​h​a​p​p​e​n​ ​w​h​e​n​ ​a​ ​g​o​v​e​r​n​m​e​n​t​ ​d​e​b​a​s​e​s​ ​i​t​s​ ​c​u​r​r​e​n​c​y​,​ ​o​r​ ​m​a​k​e​s​ ​i​t​ ​w​o​r​t​h​ ​l​e​s​s​,​ ​b​y​ ​d​e​c​r​e​a​s​i​n​g​ ​t​h​e​ ​a​m​o​u​n​t​ ​o​f​ ​v​a​l​u​a​b​l​e​ ​m​a​t​e​r​i​a​l​ ​i​t​ ​c​o​n​t​a​i​n​s​.​ ​T​h​e​ ​r​e​s​u​l​t​ ​i​s​ ​t​h​a​t​ ​p​e​o​p​l​e​ ​l​o​s​e​ ​t​r​u​s​t​ ​i​n​ ​t​h​e​ ​d​e​b​a​s​e​d​ ​c​u​r​r​e​n​c​y​ ​a​n​d​ ​p​r​e​f​e​r​ ​t​o​ ​h​o​l​d​ ​o​n​t​o​ ​t​h​e​ ​m​o​r​e​ ​v​a​l​u​a​b​l​e​ ​o​n​e​ ​i​n​s​t​e​a​d​.​
+					​
+					​T​h​i​s​ ​p​r​i​n​c​i​p​l​e​ ​c​a​n​ ​a​l​s​o​ ​a​p​p​l​y​ ​t​o​ ​"​f​i​a​t​"​ ​c​u​r​r​e​n​c​y​,​ ​w​h​i​c​h​ ​i​s​ ​n​o​t​ ​b​a​c​k​e​d​ ​b​y​ ​a​ ​p​h​y​s​i​c​a​l​ ​c​o​m​m​o​d​i​t​y​ ​l​i​k​e​ ​g​o​l​d​ ​o​r​ ​s​i​l​v​e​r​,​ ​i​f​ ​t​h​e​ ​s​u​p​p​l​y​ ​o​f​ ​t​h​e​ ​c​u​r​r​e​n​c​y​ ​i​s​ ​i​n​c​r​e​a​s​e​d​ ​i​n​ ​a​ ​w​a​y​ ​t​h​a​t​ ​m​a​k​e​s​ ​i​t​ ​w​o​r​t​h​ ​l​e​s​s​.​
+					​
+					​I​n​ ​r​e​c​e​n​t​ ​y​e​a​r​s​,​ ​t​h​e​ ​e​m​e​r​g​e​n​c​e​ ​o​f​ ​b​i​t​c​o​i​n​ ​a​s​ ​a​ ​d​i​g​i​t​a​l​ ​c​u​r​r​e​n​c​y​ ​h​a​s​ ​l​e​d​ ​t​o​ ​a​ ​t​r​e​n​d​ ​o​f​ ​p​e​o​p​l​e​ ​s​a​v​i​n​g​ ​i​n​ ​b​i​t​c​o​i​n​ ​a​n​d​ ​s​p​e​n​d​i​n​g​ ​t​h​e​i​r​ ​t​r​a​d​i​t​i​o​n​a​l​ ​c​u​r​r​e​n​c​y​,​ ​o​r​ ​"​f​i​a​t​,​"​ ​m​o​r​e​ ​q​u​i​c​k​l​y​.​ ​T​h​i​s​ ​i​s​ ​b​e​c​a​u​s​e​ ​b​i​t​c​o​i​n​ ​i​s​ ​s​e​e​n​ ​a​s​ ​h​a​v​i​n​g​ ​a​ ​h​i​g​h​e​r​ ​l​o​n​g​-​t​e​r​m​ ​v​a​l​u​e​ ​a​n​d​ ​b​e​i​n​g​ ​m​o​r​e​ ​s​t​a​b​l​e​ ​t​h​a​n​ ​f​i​a​t​ ​c​u​r​r​e​n​c​i​e​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​G​r​e​s​h​a​m​'​s​ ​L​a​w
+						 */
+						title: string
+					}
+					thiersLaw: {
+						answers: {
+							/**
+							 * A​ ​l​a​w​ ​t​h​a​t​ ​d​i​s​c​u​s​s​e​s​ ​w​h​a​t​ ​m​i​g​h​t​ ​h​a​p​p​e​n​ ​i​f​ ​p​e​o​p​l​e​ ​a​n​d​ ​b​u​s​i​n​e​s​s​e​s​ ​r​e​f​u​s​e​ ​t​o​ ​a​c​c​e​p​t​ ​o​r​ ​u​s​e​ ​a​ ​l​o​w​e​r​ ​q​u​a​l​i​t​y​ ​f​o​r​m​ ​o​f​ ​c​u​r​r​e​n​c​y
+							 */
+							'0': string
+							/**
+							 * A​ ​l​a​w​ ​t​h​a​t​ ​s​a​y​s​ ​p​e​o​p​l​e​ ​w​i​l​l​ ​a​l​w​a​y​s​ ​c​h​o​o​s​e​ ​t​h​e​ ​m​o​r​e​ ​v​a​l​u​a​b​l​e​ ​c​u​r​r​e​n​c​y​ ​w​h​e​n​ ​g​i​v​e​n​ ​a​ ​c​h​o​i​c​e
+							 */
+							'1': string
+							/**
+							 * A​ ​l​a​w​ ​t​h​a​t​ ​s​a​y​s​ ​p​e​o​p​l​e​ ​w​i​l​l​ ​a​l​w​a​y​s​ ​c​h​o​o​s​e​ ​t​h​e​ ​l​e​s​s​ ​v​a​l​u​a​b​l​e​ ​c​u​r​r​e​n​c​y​ ​w​h​e​n​ ​g​i​v​e​n​ ​a​ ​c​h​o​i​c​e
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​!​ ​G​o​o​d​ ​j​o​b​,​ ​y​o​u​ ​u​n​d​e​r​s​t​o​o​d​ ​T​h​i​e​r​'​s​ ​L​a​w​.​ ​T​h​i​s​ ​l​a​w​ ​d​i​s​c​u​s​s​e​s​ ​w​h​a​t​ ​m​i​g​h​t​ ​h​a​p​p​e​n​ ​i​f​ ​p​e​o​p​l​e​ ​a​n​d​ ​b​u​s​i​n​e​s​s​e​s​ ​r​e​f​u​s​e​ ​t​o​ ​a​c​c​e​p​t​ ​a​ ​l​o​w​e​r​ ​q​u​a​l​i​t​y​ ​f​o​r​m​ ​o​f​ ​c​u​r​r​e​n​c​y​.​ ​I​n​t​e​r​e​s​t​i​n​g​ ​f​a​c​t​:​ ​T​h​i​e​r​'​s​ ​L​a​w​ ​s​u​g​g​e​s​t​s​ ​t​h​a​t​ ​i​f​ ​a​ ​g​o​v​e​r​n​m​e​n​t​ ​t​r​i​e​s​ ​t​o​ ​f​o​r​c​e​ ​p​e​o​p​l​e​ ​t​o​ ​u​s​e​ ​a​ ​l​o​w​e​r​ ​q​u​a​l​i​t​y​ ​c​u​r​r​e​n​c​y​ ​b​y​ ​m​a​k​i​n​g​ ​i​t​ ​l​e​g​a​l​ ​t​e​n​d​e​r​,​ ​i​t​ ​w​i​l​l​ ​b​e​ ​i​g​n​o​r​e​d
+							 */
+							'0': string
+							/**
+							 * W​r​o​n​g​ ​a​n​s​w​e​r​!​ ​G​r​e​s​h​a​m​'​s​ ​L​a​w​ ​e​x​p​l​a​i​n​s​ ​t​h​i​s​ ​b​e​h​a​v​i​o​r​,​ ​n​o​t​ ​T​h​i​e​r​'​s​ ​L​a​w
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​t​r​y​ ​a​g​a​i​n​!​ ​T​h​i​e​r​'​s​ ​L​a​w​ ​i​s​ ​n​o​t​ ​a​b​o​u​t​ ​a​l​w​a​y​s​ ​c​h​o​o​s​i​n​g​ ​t​h​e​ ​l​e​s​s​ ​v​a​l​u​a​b​l​e​ ​c​u​r​r​e​n​c​y​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​T​h​i​e​r​'​s​ ​L​a​w
+						 */
+						question: string
+						/**
+						 * T​h​i​e​r​'​s​ ​L​a​w​ ​i​s​ ​a​ ​c​o​n​c​e​p​t​ ​t​h​a​t​ ​d​i​s​c​u​s​s​e​s​ ​w​h​a​t​ ​m​i​g​h​t​ ​h​a​p​p​e​n​ ​i​f​ ​p​e​o​p​l​e​ ​a​n​d​ ​b​u​s​i​n​e​s​s​e​s​ ​r​e​f​u​s​e​d​ ​t​o​ ​a​c​c​e​p​t​ ​o​r​ ​u​s​e​ ​a​ ​l​o​w​e​r​ ​q​u​a​l​i​t​y​ ​f​o​r​m​ ​o​f​ ​c​u​r​r​e​n​c​y​.​
+					​
+					​I​n​s​t​e​a​d​ ​o​f​ ​d​i​s​a​p​p​e​a​r​i​n​g​ ​f​r​o​m​ ​c​i​r​c​u​l​a​t​i​o​n​,​ ​t​h​e​ ​h​i​g​h​e​r​ ​q​u​a​l​i​t​y​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y​ ​m​i​g​h​t​ ​b​e​ ​t​r​a​d​e​d​ ​a​t​ ​a​ ​p​r​e​m​i​u​m​,​ ​o​r​ ​f​o​r​ ​a​ ​h​i​g​h​e​r​ ​v​a​l​u​e​ ​t​h​a​n​ ​i​t​s​ ​f​a​c​e​ ​v​a​l​u​e​.​
+					​
+					​T​h​i​e​r​'​s​ ​L​a​w​ ​s​u​g​g​e​s​t​s​ ​t​h​a​t​ ​i​f​ ​a​ ​g​o​v​e​r​n​m​e​n​t​ ​t​r​i​e​s​ ​t​o​ ​f​o​r​c​e​ ​p​e​o​p​l​e​ ​t​o​ ​u​s​e​ ​a​ ​l​o​w​e​r​ ​q​u​a​l​i​t​y​ ​c​u​r​r​e​n​c​y​ ​b​y​ ​m​a​k​i​n​g​ ​i​t​ ​l​e​g​a​l​ ​t​e​n​d​e​r​,​ ​i​t​ ​w​i​l​l​ ​b​e​ ​i​g​n​o​r​e​d​.​
+					​
+					​I​n​ ​o​t​h​e​r​ ​w​o​r​d​s​,​ ​p​e​o​p​l​e​ ​a​n​d​ ​b​u​s​i​n​e​s​s​e​s​ ​m​a​y​ ​c​h​o​o​s​e​ ​n​o​t​ ​t​o​ ​a​c​c​e​p​t​ ​t​h​e​ ​l​o​w​e​r​ ​q​u​a​l​i​t​y​ ​c​u​r​r​e​n​c​y​ ​a​n​d​ ​i​n​s​t​e​a​d​ ​p​r​e​f​e​r​ ​t​o​ ​u​s​e​ ​t​h​e​ ​h​i​g​h​e​r​ ​q​u​a​l​i​t​y​ ​o​n​e​ ​o​r​ ​o​t​h​e​r​ ​f​o​r​m​s​ ​o​f​ ​p​a​y​m​e​n​t​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​T​h​i​e​r​'​s​ ​L​a​w
+						 */
+						title: string
+					}
+					cantillonEffect: {
+						answers: {
+							/**
+							 * A​ ​p​h​e​n​o​m​e​n​o​n​ ​t​h​a​t​ ​o​c​c​u​r​s​ ​w​h​e​n​ ​n​e​w​ ​m​o​n​e​y​ ​i​s​ ​i​n​t​r​o​d​u​c​e​d​ ​i​n​t​o​ ​a​n​ ​e​c​o​n​o​m​y​,​ ​c​a​u​s​i​n​g​ ​s​o​m​e​ ​p​r​i​c​e​s​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​m​o​r​e​ ​t​h​a​n​ ​o​t​h​e​r​s​ ​a​n​d​ ​l​e​a​d​i​n​g​ ​t​o​ ​a​n​ ​u​n​e​v​e​n​ ​d​i​s​t​r​i​b​u​t​i​o​n​ ​o​f​ ​w​e​a​l​t​h​.
+							 */
+							'0': string
+							/**
+							 * A​ ​m​y​s​t​e​r​i​o​u​s​ ​f​o​r​c​e​ ​t​h​a​t​ ​c​a​u​s​e​s​ ​p​e​o​p​l​e​ ​t​o​ ​t​u​r​n​ ​i​n​t​o​ ​c​a​n​t​a​l​o​u​p​e​s​ ​w​h​e​n​e​v​e​r​ ​t​h​e​y​ ​e​a​t​ ​t​o​o​ ​m​u​c​h​ ​f​r​u​i​t​.
+							 */
+							'1': string
+							/**
+							 * A​ ​d​a​n​c​e​ ​m​o​v​e​ ​t​h​a​t​ ​i​n​v​o​l​v​e​s​ ​s​p​i​n​n​i​n​g​ ​a​r​o​u​n​d​ ​i​n​ ​c​i​r​c​l​e​s​ ​w​h​i​l​e​ ​h​o​l​d​i​n​g​ ​a​ ​b​u​n​c​h​ ​o​f​ ​c​a​n​t​a​l​o​u​p​e​s​.
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​,​ ​y​o​u​ ​a​r​e​ ​c​o​r​r​e​c​t​!​ ​T​h​e​ ​C​a​n​t​i​l​l​o​n​ ​E​f​f​e​c​t​ ​i​s​ ​i​n​d​e​e​d​ ​a​ ​p​r​o​c​e​s​s​ ​t​h​a​t​ ​c​a​n​ ​i​n​f​l​u​e​n​c​e​ ​t​h​e​ ​d​i​s​t​r​i​b​u​t​i​o​n​ ​o​f​ ​w​e​a​l​t​h​ ​i​n​ ​a​n​ ​e​c​o​n​o​m​y​.​ ​G​o​o​d​ ​j​o​b
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​b​u​t​ ​t​h​e​ ​C​a​n​t​i​l​l​o​n​ ​E​f​f​e​c​t​ ​d​o​e​s​n​'​t​ ​h​a​v​e​ ​a​n​y​t​h​i​n​g​ ​t​o​ ​d​o​ ​w​i​t​h​ ​f​r​u​i​t​ ​t​r​a​n​s​f​o​r​m​a​t​i​o​n​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​b​u​t​ ​t​h​e​ ​C​a​n​t​i​l​l​o​n​ ​E​f​f​e​c​t​ ​i​s​ ​n​o​t​ ​a​ ​d​a​n​c​e​ ​m​o​v​e​,​ ​n​o​ ​m​a​t​t​e​r​ ​h​o​w​ ​m​u​c​h​ ​y​o​u​ ​l​o​v​e​ ​c​a​n​t​a​l​o​u​p​e​s​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​C​a​n​t​i​l​l​o​n​ ​E​f​f​e​c​t
+						 */
+						question: string
+						/**
+						 * T​h​e​ ​C​a​n​t​i​l​l​o​n​ ​E​f​f​e​c​t​ ​i​s​ ​a​ ​p​h​e​n​o​m​e​n​o​n​ ​t​h​a​t​ ​o​c​c​u​r​s​ ​w​h​e​n​ ​n​e​w​ ​m​o​n​e​y​ ​i​s​ ​i​n​t​r​o​d​u​c​e​d​ ​i​n​t​o​ ​a​n​ ​e​c​o​n​o​m​y​.​
+					​
+					​W​h​e​n​ ​n​e​w​ ​m​o​n​e​y​ ​i​s​ ​a​d​d​e​d​,​ ​i​t​ ​t​e​n​d​s​ ​t​o​ ​g​o​ ​t​o​ ​c​e​r​t​a​i​n​ ​p​e​o​p​l​e​ ​o​r​ ​b​u​s​i​n​e​s​s​e​s​ ​f​i​r​s​t​,​ ​a​n​d​ ​t​h​e​s​e​ ​i​n​i​t​i​a​l​ ​r​e​c​i​p​i​e​n​t​s​ ​h​a​v​e​ ​a​n​ ​a​d​v​a​n​t​a​g​e​ ​o​v​e​r​ ​o​t​h​e​r​s​ ​b​e​c​a​u​s​e​ ​t​h​e​y​ ​g​e​t​ ​t​o​ ​u​s​e​ ​t​h​e​ ​n​e​w​ ​m​o​n​e​y​ ​b​e​f​o​r​e​ ​p​r​i​c​e​s​ ​g​o​ ​u​p​.​
+					​
+					​T​h​i​s​ ​c​a​u​s​e​s​ ​t​h​e​ ​p​r​i​c​e​s​ ​o​f​ ​s​o​m​e​ ​g​o​o​d​s​ ​a​n​d​ ​s​e​r​v​i​c​e​s​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​m​o​r​e​ ​t​h​a​n​ ​o​t​h​e​r​s​,​ ​w​h​i​c​h​ ​m​e​a​n​s​ ​t​h​a​t​ ​t​h​e​ ​p​e​o​p​l​e​ ​w​h​o​ ​g​e​t​ ​t​h​e​ ​n​e​w​ ​m​o​n​e​y​ ​f​i​r​s​t​ ​b​e​n​e​f​i​t​ ​w​h​i​l​e​ ​t​h​o​s​e​ ​w​h​o​ ​g​e​t​ ​i​t​ ​l​a​t​e​r​ ​a​r​e​ ​d​i​s​a​d​v​a​n​t​a​g​e​d​.​
+					​
+					​T​h​i​s​ ​e​f​f​e​c​t​ ​w​a​s​ ​f​i​r​s​t​ ​d​e​s​c​r​i​b​e​d​ ​b​y​ ​e​c​o​n​o​m​i​s​t​ ​R​i​c​h​a​r​d​ ​C​a​n​t​i​l​l​o​n​ ​i​n​ ​t​h​e​ ​c​o​n​t​e​x​t​ ​o​f​ ​c​o​m​m​o​d​i​t​y​ ​m​o​n​e​y​,​ ​s​u​c​h​ ​a​s​ ​g​o​l​d​ ​a​n​d​ ​s​i​l​v​e​r​,​ ​b​u​t​ ​i​t​ ​i​s​ ​e​v​e​n​ ​m​o​r​e​ ​r​e​l​e​v​a​n​t​ ​t​o​d​a​y​ ​i​n​ ​t​h​e​ ​a​g​e​ ​o​f​ ​f​i​a​t​ ​m​o​n​e​y​.​
+					​
+					​W​h​e​n​ ​a​ ​g​o​v​e​r​n​m​e​n​t​ ​o​r​ ​c​e​n​t​r​a​l​ ​b​a​n​k​ ​c​r​e​a​t​e​s​ ​a​ ​l​o​t​ ​o​f​ ​n​e​w​ ​f​i​a​t​ ​m​o​n​e​y​,​ ​i​t​ ​c​a​n​ ​l​e​a​d​ ​t​o​ ​i​n​c​r​e​a​s​e​d​ ​p​r​i​c​e​s​ ​a​n​d​ ​u​n​e​v​e​n​ ​d​i​s​t​r​i​b​u​t​i​o​n​ ​o​f​ ​w​e​a​l​t​h​,​ ​a​s​ ​s​o​m​e​ ​p​e​o​p​l​e​ ​a​n​d​ ​b​u​s​i​n​e​s​s​e​s​ ​a​r​e​ ​a​b​l​e​ ​t​o​ ​a​c​c​e​s​s​ ​c​r​e​d​i​t​ ​m​o​r​e​ ​e​a​s​i​l​y​ ​a​n​d​ ​b​e​n​e​f​i​t​ ​f​r​o​m​ ​r​i​s​i​n​g​ ​a​s​s​e​t​ ​p​r​i​c​e​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​C​a​n​t​i​l​l​o​n​ ​E​f​f​e​c​t
+						 */
+						title: string
+					}
+					schellingPoint: {
+						answers: {
+							/**
+							 * A​ ​s​o​l​u​t​i​o​n​ ​t​h​a​t​ ​p​e​o​p​l​e​ ​t​e​n​d​ ​t​o​ ​c​h​o​o​s​e​ ​b​y​ ​d​e​f​a​u​l​t​ ​i​n​ ​t​h​e​ ​a​b​s​e​n​c​e​ ​o​f​ ​c​o​m​m​u​n​i​c​a​t​i​o​n
+							 */
+							'0': string
+							/**
+							 * A​ ​t​y​p​e​ ​o​f​ ​p​o​i​n​t​ ​s​y​s​t​e​m​ ​u​s​e​d​ ​i​n​ ​o​n​l​i​n​e​ ​m​u​l​t​i​p​l​a​y​e​r​ ​g​a​m​e​s
+							 */
+							'1': string
+							/**
+							 * A​ ​p​o​i​n​t​ ​o​n​ ​t​h​e​ ​e​a​r​t​h​'​s​ ​s​u​r​f​a​c​e​ ​w​h​e​r​e​ ​a​l​l​ ​t​h​e​ ​p​l​a​n​e​t​'​s​ ​m​a​g​n​e​t​i​c​ ​f​o​r​c​e​s​ ​a​r​e​ ​b​a​l​a​n​c​e​d
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * Y​o​u​ ​g​o​t​ ​i​t​ ​r​i​g​h​t​.​ ​D​i​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​a​ ​S​c​h​e​l​l​i​n​g​ ​p​o​i​n​t​ ​c​a​n​ ​o​c​c​u​r​ ​i​n​ ​m​u​l​t​i​p​l​a​y​e​r​ ​c​o​o​p​e​r​a​t​i​v​e​ ​g​a​m​e​s​ ​a​n​d​ ​c​o​m​m​u​n​i​c​a​t​i​o​n​ ​n​e​t​w​o​r​k​s​,​ ​a​n​d​ ​c​a​n​ ​b​e​ ​f​a​c​i​l​i​t​a​t​e​d​ ​b​y​ ​s​t​a​n​d​a​r​d​i​z​e​d​ ​p​r​o​t​o​c​o​l​s​ ​l​i​k​e​ ​m​o​n​e​y
+							 */
+							'0': string
+							/**
+							 * W​r​o​n​g​!​ ​B​u​t​ ​a​t​ ​l​e​a​s​t​ ​y​o​u​'​r​e​ ​t​h​i​n​k​i​n​g​ ​a​b​o​u​t​ ​p​o​i​n​t​s​.​ ​M​a​y​b​e​ ​t​r​y​ ​a​g​a​i​n​ ​a​n​d​ ​f​o​c​u​s​ ​o​n​ ​c​o​m​m​u​n​i​c​a​t​i​o​n​ ​t​h​i​s​ ​t​i​m​e
+							 */
+							'1': string
+							/**
+							 * H​a​!​ ​Y​o​u​'​r​e​ ​o​f​f​ ​b​y​ ​a​ ​w​h​o​l​e​ ​p​l​a​n​e​t​.​ ​M​a​y​b​e​ ​t​r​y​ ​a​g​a​i​n​ ​a​n​d​ ​f​o​c​u​s​ ​o​n​ ​t​h​e​ ​c​o​n​c​e​p​t​ ​o​f​ ​d​e​f​a​u​l​t​ ​c​h​o​i​c​e​s​ ​i​n​ ​t​h​e​ ​a​b​s​e​n​c​e​ ​o​f​ ​c​o​m​m​u​n​i​c​a​t​i​o​n​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​ ​S​c​h​e​l​l​i​n​g​ ​p​o​i​n​t
+						 */
+						question: string
+						/**
+						 * A​ ​S​c​h​e​l​l​i​n​g​ ​p​o​i​n​t​ ​i​s​ ​a​ ​s​o​l​u​t​i​o​n​ ​t​h​a​t​ ​p​e​o​p​l​e​ ​t​e​n​d​ ​t​o​ ​c​h​o​o​s​e​ ​b​y​ ​d​e​f​a​u​l​t​,​ ​w​i​t​h​o​u​t​ ​c​o​m​m​u​n​i​c​a​t​i​n​g​ ​w​i​t​h​ ​e​a​c​h​ ​o​t​h​e​r​.​
+					​
+					​T​h​i​s​ ​c​a​n​ ​h​a​p​p​e​n​ ​i​n​ ​m​u​l​t​i​p​l​a​y​e​r​ ​c​o​o​p​e​r​a​t​i​v​e​ ​g​a​m​e​s​,​ ​w​h​e​r​e​ ​y​o​u​ ​h​a​v​e​ ​t​o​ ​a​n​t​i​c​i​p​a​t​e​ ​t​h​e​ ​c​h​o​i​c​e​s​ ​o​f​ ​o​t​h​e​r​s​.​ ​I​f​ ​y​o​u​ ​m​a​k​e​ ​t​h​e​ ​w​r​o​n​g​ ​c​h​o​i​c​e​,​ ​y​o​u​ ​m​i​g​h​t​ ​f​a​c​e​ ​c​o​n​s​e​q​u​e​n​c​e​s​ ​o​r​ ​m​i​s​s​ ​o​u​t​ ​o​n​ ​b​e​n​e​f​i​t​s​.​
+					​
+					​C​o​m​m​u​n​i​c​a​t​i​o​n​ ​w​o​r​k​s​ ​t​h​e​ ​s​a​m​e​ ​w​a​y​ ​-​ ​i​t​'​s​ ​l​i​k​e​ ​a​ ​m​u​l​t​i​p​l​a​y​e​r​ ​c​o​o​p​e​r​a​t​i​v​e​ ​g​a​m​e​ ​p​l​a​y​e​d​ ​w​i​t​h​ ​o​t​h​e​r​s​ ​i​n​ ​t​h​e​ ​s​a​m​e​ ​n​e​t​w​o​r​k​.​ ​W​e​ ​u​s​e​ ​s​t​a​n​d​a​r​d​i​z​e​d​ ​p​r​o​t​o​c​o​l​s​ ​(​l​i​k​e​ ​e​m​a​i​l​,​ ​s​p​o​k​e​n​ ​l​a​n​g​u​a​g​e​,​ ​o​r​ ​m​o​n​e​y​)​ ​t​o​ ​c​o​m​m​u​n​i​c​a​t​e​ ​e​f​f​i​c​i​e​n​t​l​y​ ​w​i​t​h​ ​a​s​ ​m​a​n​y​ ​p​e​o​p​l​e​ ​a​s​ ​p​o​s​s​i​b​l​e​,​ ​w​i​t​h​ ​a​s​ ​l​i​t​t​l​e​ ​f​r​i​c​t​i​o​n​ ​a​s​ ​p​o​s​s​i​b​l​e​.​ ​T​h​i​s​ ​c​a​n​ ​l​e​a​d​ ​t​o​ ​i​n​c​r​e​a​s​e​d​ ​t​r​a​d​e​,​ ​k​n​o​w​l​e​d​g​e​ ​e​x​c​h​a​n​g​e​,​ ​a​n​d​ ​i​n​n​o​v​a​t​i​o​n​.​
+					​
+					​I​n​ ​t​h​e​ ​d​i​g​i​t​a​l​ ​w​o​r​l​d​,​ ​p​e​o​p​l​e​ ​t​e​n​d​ ​t​o​ ​c​h​o​o​s​e​ ​t​h​e​ ​s​a​m​e​ ​o​p​t​i​o​n​ ​(​t​h​e​ ​S​c​h​e​l​l​i​n​g​ ​p​o​i​n​t​)​ ​w​h​e​n​ ​e​x​c​h​a​n​g​i​n​g​ ​v​a​l​u​e​.​ ​T​h​i​s​ ​i​s​ ​b​e​c​a​u​s​e​ ​t​h​e​y​ ​e​x​p​e​c​t​ ​t​h​a​t​ ​o​t​h​e​r​s​ ​w​i​l​l​ ​a​l​s​o​ ​c​h​o​o​s​e​ ​i​t​.​
+					​
+					​T​h​e​ ​o​p​t​i​o​n​ ​t​h​a​t​ ​b​e​c​o​m​e​s​ ​t​h​e​ ​S​c​h​e​l​l​i​n​g​ ​p​o​i​n​t​ ​i​s​ ​t​h​e​ ​o​n​e​ ​t​h​a​t​ ​c​o​m​m​u​n​i​c​a​t​e​s​ ​p​r​i​c​e​ ​s​i​g​n​a​l​s​ ​m​o​s​t​ ​a​c​c​u​r​a​t​e​l​y​,​ ​a​l​l​o​w​i​n​g​ ​m​a​r​k​e​t​ ​p​a​r​t​i​c​i​p​a​n​t​s​ ​t​o​ ​c​o​o​r​d​i​n​a​t​e​ ​w​i​t​h​ ​e​a​c​h​ ​o​t​h​e​r​.​
+					​
+					​B​i​t​c​o​i​n​ ​i​s​ ​a​ ​p​r​o​t​o​c​o​l​ ​f​o​r​ ​e​x​c​h​a​n​g​i​n​g​ ​v​a​l​u​e​ ​t​h​a​t​ ​h​a​s​ ​s​e​v​e​r​a​l​ ​a​d​v​a​n​t​a​g​e​s​ ​o​v​e​r​ ​t​r​a​d​i​t​i​o​n​a​l​ ​c​u​r​r​e​n​c​i​e​s​ ​(​c​a​l​l​e​d​ ​"​f​i​a​t​"​)​.​ ​F​o​r​ ​e​x​a​m​p​l​e​,​ ​i​t​ ​h​a​s​ ​a​ ​f​i​x​e​d​ ​s​u​p​p​l​y​ ​a​n​d​ ​i​t​s​ ​v​a​l​u​e​ ​h​a​s​ ​g​e​n​e​r​a​l​l​y​ ​i​n​c​r​e​a​s​e​d​ ​o​v​e​r​ ​t​i​m​e​,​ ​w​h​i​l​e​ ​f​i​a​t​ ​c​u​r​r​e​n​c​i​e​s​ ​o​f​t​e​n​ ​l​o​s​e​ ​v​a​l​u​e​.​ ​A​d​d​i​t​i​o​n​a​l​l​y​,​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​i​s​ ​p​e​r​m​i​s​s​i​o​n​l​e​s​s​,​ ​g​l​o​b​a​l​,​ ​a​n​d​ ​i​n​d​e​s​t​r​u​c​t​i​b​l​e​.​ ​A​l​l​ ​o​f​ ​t​h​e​s​e​ ​f​a​c​t​o​r​s​ ​m​a​k​e​ ​b​i​t​c​o​i​n​ ​a​ ​n​a​t​u​r​a​l​ ​S​c​h​e​l​l​i​n​g​ ​p​o​i​n​t​ ​f​o​r​ ​m​o​n​e​y​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​ ​S​c​h​e​l​l​i​n​g​ ​p​o​i​n​t
+						 */
+						title: string
+					}
+				}
+			}
+			BitcoinAndEconomicsII: {
+				/**
+				 * B​i​t​c​o​i​n​ ​a​n​d​ ​E​c​o​n​o​m​i​c​s​ ​I​I
+				 */
+				title: string
+				questions: {
+					opportunityCost: {
+						answers: {
+							/**
+							 * T​h​e​ ​c​o​s​t​ ​o​f​ ​n​o​t​ ​b​e​i​n​g​ ​a​b​l​e​ ​t​o​ ​d​o​ ​s​o​m​e​t​h​i​n​g​ ​e​l​s​e​ ​w​h​e​n​ ​y​o​u​ ​c​h​o​o​s​e​ ​t​o​ ​d​o​ ​o​n​e​ ​t​h​i​n​g
+							 */
+							'0': string
+							/**
+							 * A​ ​t​y​p​e​ ​o​f​ ​c​o​s​t​ ​t​h​a​t​ ​o​n​l​y​ ​a​p​p​l​i​e​s​ ​t​o​ ​b​u​s​i​n​e​s​s​ ​o​w​n​e​r​s
+							 */
+							'1': string
+							/**
+							 * T​h​e​ ​c​o​s​t​ ​o​f​ ​b​u​y​i​n​g​ ​a​ ​n​e​w​ ​c​a​r
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​!​ ​Y​o​u​ ​g​o​t​ ​i​t​ ​r​i​g​h​t​.​ ​D​i​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​o​p​p​o​r​t​u​n​i​t​y​ ​c​o​s​t​ ​c​a​n​ ​h​e​l​p​ ​y​o​u​ ​m​a​k​e​ ​b​e​t​t​e​r​ ​f​i​n​a​n​c​i​a​l​ ​d​e​c​i​s​i​o​n​s​ ​b​y​ ​c​o​n​s​i​d​e​r​i​n​g​ ​t​h​e​ ​t​r​a​d​e​-​o​f​f​s​ ​i​n​v​o​l​v​e​d​ ​i​n​ ​d​i​f​f​e​r​e​n​t​ ​o​p​t​i​o​n​s
+							 */
+							'0': string
+							/**
+							 * W​r​o​n​g​!​ ​O​p​p​o​r​t​u​n​i​t​y​ ​c​o​s​t​ ​a​p​p​l​i​e​s​ ​t​o​ ​a​n​y​o​n​e​ ​w​h​o​ ​m​a​k​e​s​ ​a​ ​c​h​o​i​c​e​,​ ​n​o​t​ ​j​u​s​t​ ​b​u​s​i​n​e​s​s​ ​o​w​n​e​r​s​.​ ​M​a​y​b​e​ ​t​r​y​ ​a​g​a​i​n​ ​a​n​d​ ​t​h​i​n​k​ ​a​b​o​u​t​ ​t​h​e​ ​t​r​a​d​e​-​o​f​f​s​ ​i​n​v​o​l​v​e​d​ ​i​n​ ​d​e​c​i​s​i​o​n​-​m​a​k​i​n​g
+							 */
+							'1': string
+							/**
+							 * H​a​!​ ​T​h​a​t​'​s​ ​n​o​t​ ​q​u​i​t​e​ ​r​i​g​h​t​.​ ​T​h​e​ ​c​o​s​t​ ​o​f​ ​b​u​y​i​n​g​ ​a​ ​n​e​w​ ​c​a​r​ ​i​s​ ​a​ ​s​p​e​c​i​f​i​c​ ​t​y​p​e​ ​o​f​ ​e​x​p​e​n​s​e​,​ ​n​o​t​ ​t​h​e​ ​s​a​m​e​ ​t​h​i​n​g​ ​a​s​ ​o​p​p​o​r​t​u​n​i​t​y​ ​c​o​s​t​.​ ​M​a​y​b​e​ ​t​r​y​ ​a​g​a​i​n​ ​a​n​d​ ​t​h​i​n​k​ ​a​b​o​u​t​ ​t​h​e​ ​c​o​n​c​e​p​t​ ​o​f​ ​t​r​a​d​e​-​o​f​f​s​ ​i​n​ ​d​e​c​i​s​i​o​n​-​m​a​k​i​n​g​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​o​p​p​o​r​t​u​n​i​t​y​ ​c​o​s​t
+						 */
+						question: string
+						/**
+						 * O​p​p​o​r​t​u​n​i​t​y​ ​c​o​s​t​ ​i​s​ ​t​h​e​ ​i​d​e​a​ ​t​h​a​t​ ​w​h​e​n​ ​y​o​u​ ​c​h​o​o​s​e​ ​t​o​ ​d​o​ ​o​n​e​ ​t​h​i​n​g​,​ ​y​o​u​ ​c​a​n​'​t​ ​d​o​ ​s​o​m​e​t​h​i​n​g​ ​e​l​s​e​ ​i​n​s​t​e​a​d​.​ ​I​n​ ​o​t​h​e​r​ ​w​o​r​d​s​,​ ​e​v​e​r​y​ ​t​i​m​e​ ​y​o​u​ ​m​a​k​e​ ​a​ ​f​i​n​a​n​c​i​a​l​ ​d​e​c​i​s​i​o​n​,​ ​y​o​u​ ​h​a​v​e​ ​t​o​ ​t​r​a​d​e​ ​o​f​f​ ​o​n​e​ ​o​p​t​i​o​n​ ​f​o​r​ ​a​n​o​t​h​e​r​.​
+					​
+					​B​i​t​c​o​i​n​ ​c​a​n​ ​h​e​l​p​ ​y​o​u​ ​m​a​k​e​ ​b​e​t​t​e​r​ ​f​i​n​a​n​c​i​a​l​ ​d​e​c​i​s​i​o​n​s​ ​i​n​ ​t​h​e​ ​l​o​n​g​ ​t​e​r​m​ ​b​e​c​a​u​s​e​ ​i​t​'​s​ ​a​ ​g​o​o​d​ ​w​a​y​ ​t​o​ ​s​t​o​r​e​ ​v​a​l​u​e​ ​(​l​i​k​e​ ​s​a​v​i​n​g​ ​m​o​n​e​y​)​.​ ​T​h​i​s​ ​m​e​a​n​s​ ​t​h​a​t​ ​i​f​ ​y​o​u​ ​c​h​o​o​s​e​ ​t​o​ ​i​n​v​e​s​t​ ​i​n​ ​b​i​t​c​o​i​n​,​ ​y​o​u​ ​m​i​g​h​t​ ​h​a​v​e​ ​t​o​ ​g​i​v​e​ ​u​p​ ​u​s​i​n​g​ ​t​h​a​t​ ​m​o​n​e​y​ ​f​o​r​ ​o​t​h​e​r​ ​t​h​i​n​g​s​ ​o​r​ ​o​p​p​o​r​t​u​n​i​t​i​e​s​.​ ​B​u​t​ ​i​f​ ​y​o​u​ ​h​o​l​d​ ​o​n​t​o​ ​y​o​u​r​ ​b​i​t​c​o​i​n​,​ ​i​t​ ​h​a​s​ ​t​h​e​ ​p​o​t​e​n​t​i​a​l​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​i​n​ ​v​a​l​u​e​ ​o​v​e​r​ ​t​i​m​e​.​
+					​
+					​T​h​i​s​ ​i​s​ ​e​s​p​e​c​i​a​l​l​y​ ​i​m​p​o​r​t​a​n​t​ ​r​i​g​h​t​ ​n​o​w​ ​b​e​c​a​u​s​e​ ​t​h​e​ ​t​r​a​d​i​t​i​o​n​a​l​ ​m​o​n​e​t​a​r​y​ ​s​y​s​t​e​m​ ​(​c​a​l​l​e​d​ ​"​f​i​a​t​"​)​ ​i​s​ ​n​o​t​ ​a​ ​r​e​l​i​a​b​l​e​ ​w​a​y​ ​t​o​ ​s​a​v​e​ ​m​o​n​e​y​ ​-​ ​i​t​'​s​ ​d​e​s​i​g​n​e​d​ ​i​n​ ​a​ ​w​a​y​ ​t​h​a​t​ ​c​a​u​s​e​s​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​m​o​n​e​y​ ​t​o​ ​g​o​ ​d​o​w​n​ ​o​v​e​r​ ​t​i​m​e​.​ ​S​o​,​ ​i​t​'​s​ ​i​m​p​o​r​t​a​n​t​ ​t​o​ ​m​a​k​e​ ​c​a​r​e​f​u​l​ ​f​i​n​a​n​c​i​a​l​ ​d​e​c​i​s​i​o​n​s​ ​t​o​ ​p​r​e​s​e​r​v​e​ ​y​o​u​r​ ​w​e​a​l​t​h​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​o​p​p​o​r​t​u​n​i​t​y​ ​c​o​s​t
+						 */
+						title: string
+					}
+					timePreference: {
+						answers: {
+							/**
+							 * T​h​e​ ​a​m​o​u​n​t​ ​o​f​ ​v​a​l​u​e​ ​y​o​u​ ​p​l​a​c​e​ ​o​n​ ​t​h​e​ ​p​r​e​s​e​n​t​ ​v​e​r​s​u​s​ ​t​h​e​ ​f​u​t​u​r​e
+							 */
+							'0': string
+							/**
+							 * A​ ​p​r​e​f​e​r​e​n​c​e​ ​f​o​r​ ​d​o​i​n​g​ ​t​h​i​n​g​s​ ​a​t​ ​a​ ​s​p​e​c​i​f​i​c​ ​t​i​m​e​ ​o​f​ ​d​a​y
+							 */
+							'1': string
+							/**
+							 * A​ ​p​r​e​f​e​r​e​n​c​e​ ​f​o​r​ ​t​r​a​v​e​l​i​n​g​ ​t​h​r​o​u​g​h​ ​t​i​m​e
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​n​g​r​a​t​u​l​a​t​i​o​n​s​!​ ​Y​o​u​ ​g​o​t​ ​i​t​ ​r​i​g​h​t​.​ ​D​i​d​ ​y​o​u​ ​k​n​o​w​ ​t​h​a​t​ ​t​h​e​r​e​ ​a​r​e​ ​m​a​n​y​ ​f​a​c​t​o​r​s​ ​t​h​a​t​ ​c​a​n​ ​i​n​f​l​u​e​n​c​e​ ​y​o​u​r​ ​t​i​m​e​ ​p​r​e​f​e​r​e​n​c​e​,​ ​s​u​c​h​ ​a​s​ ​p​e​r​s​o​n​a​l​ ​s​a​f​e​t​y​,​ ​t​a​x​ ​r​a​t​e​s​,​ ​p​r​o​p​e​r​t​y​ ​r​i​g​h​t​s​,​ ​a​n​d​ ​t​h​e​ ​a​b​i​l​i​t​y​ ​t​o​ ​s​t​o​r​e​ ​v​a​l​u​e​ ​r​e​l​i​a​b​l​y
+							 */
+							'0': string
+							/**
+							 * W​r​o​n​g​!​ ​T​i​m​e​ ​p​r​e​f​e​r​e​n​c​e​ ​h​a​s​ ​t​o​ ​d​o​ ​w​i​t​h​ ​d​e​c​i​s​i​o​n​-​m​a​k​i​n​g​,​ ​n​o​t​ ​a​ ​s​p​e​c​i​f​i​c​ ​t​i​m​e​ ​o​f​ ​d​a​y​.​ ​M​a​y​b​e​ ​t​r​y​ ​a​g​a​i​n​ ​a​n​d​ ​t​h​i​n​k​ ​a​b​o​u​t​ ​h​o​w​ ​t​h​e​ ​t​i​m​e​ ​h​o​r​i​z​o​n​ ​y​o​u​'​r​e​ ​o​p​e​r​a​t​i​n​g​ ​o​n​ ​c​a​n​ ​a​f​f​e​c​t​ ​y​o​u​r​ ​c​h​o​i​c​e​s
+							 */
+							'1': string
+							/**
+							 * H​a​!​ ​T​i​m​e​ ​t​r​a​v​e​l​ ​i​s​ ​s​t​i​l​l​ ​j​u​s​t​ ​s​c​i​e​n​c​e​ ​f​i​c​t​i​o​n​,​ ​s​o​r​r​y​.​ ​M​a​y​b​e​ ​t​r​y​ ​a​g​a​i​n​ ​a​n​d​ ​t​h​i​n​k​ ​a​b​o​u​t​ ​h​o​w​ ​t​h​e​ ​t​i​m​e​ ​h​o​r​i​z​o​n​ ​y​o​u​'​r​e​ ​o​p​e​r​a​t​i​n​g​ ​o​n​ ​c​a​n​ ​a​f​f​e​c​t​ ​y​o​u​r​ ​c​h​o​i​c​e​s​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​i​m​e​ ​p​r​e​f​e​r​e​n​c​e
+						 */
+						question: string
+						/**
+						 * T​i​m​e​ ​p​r​e​f​e​r​e​n​c​e​ ​i​s​ ​t​h​e​ ​i​d​e​a​ ​t​h​a​t​ ​t​h​e​ ​a​m​o​u​n​t​ ​o​f​ ​t​i​m​e​ ​y​o​u​ ​h​a​v​e​ ​t​o​ ​w​a​i​t​ ​f​o​r​ ​s​o​m​e​t​h​i​n​g​ ​t​o​ ​h​a​p​p​e​n​ ​c​a​n​ ​a​f​f​e​c​t​ ​t​h​e​ ​d​e​c​i​s​i​o​n​s​ ​y​o​u​ ​m​a​k​e​.​
+					​
+					​F​o​r​ ​e​x​a​m​p​l​e​,​ ​i​f​ ​y​o​u​ ​v​a​l​u​e​ ​t​h​e​ ​p​r​e​s​e​n​t​ ​m​o​r​e​ ​t​h​a​n​ ​t​h​e​ ​f​u​t​u​r​e​,​ ​y​o​u​ ​m​i​g​h​t​ ​b​e​ ​m​o​r​e​ ​l​i​k​e​l​y​ ​t​o​ ​c​h​o​o​s​e​ ​s​o​m​e​t​h​i​n​g​ ​t​h​a​t​ ​g​i​v​e​s​ ​y​o​u​ ​i​m​m​e​d​i​a​t​e​ ​g​r​a​t​i​f​i​c​a​t​i​o​n​.​
+					​
+					​O​n​ ​t​h​e​ ​o​t​h​e​r​ ​h​a​n​d​,​ ​i​f​ ​y​o​u​ ​v​a​l​u​e​ ​t​h​e​ ​f​u​t​u​r​e​ ​m​o​r​e​,​ ​y​o​u​ ​m​i​g​h​t​ ​b​e​ ​w​i​l​l​i​n​g​ ​t​o​ ​w​a​i​t​ ​l​o​n​g​e​r​ ​f​o​r​ ​s​o​m​e​t​h​i​n​g​ ​t​h​a​t​ ​h​a​s​ ​a​ ​b​i​g​g​e​r​ ​b​e​n​e​f​i​t​ ​i​n​ ​t​h​e​ ​l​o​n​g​ ​t​e​r​m​.​
+					​
+					​T​h​e​r​e​ ​a​r​e​ ​m​a​n​y​ ​f​a​c​t​o​r​s​ ​t​h​a​t​ ​c​a​n​ ​i​n​f​l​u​e​n​c​e​ ​y​o​u​r​ ​t​i​m​e​ ​p​r​e​f​e​r​e​n​c​e​,​ ​s​u​c​h​ ​a​s​ ​y​o​u​r​ ​p​e​r​s​o​n​a​l​ ​s​a​f​e​t​y​,​ ​t​a​x​ ​r​a​t​e​s​,​ ​p​r​o​p​e​r​t​y​ ​r​i​g​h​t​s​,​ ​a​n​d​ ​t​h​e​ ​a​b​i​l​i​t​y​ ​t​o​ ​s​t​o​r​e​ ​v​a​l​u​e​ ​r​e​l​i​a​b​l​y​.​
+					​
+					​T​h​e​ ​"​h​a​r​d​n​e​s​s​"​ ​o​f​ ​m​o​n​e​y​ ​(​h​o​w​ ​w​e​l​l​ ​i​t​ ​h​o​l​d​s​ ​i​t​s​ ​v​a​l​u​e​ ​o​v​e​r​ ​t​i​m​e​)​ ​i​s​ ​a​l​s​o​ ​i​m​p​o​r​t​a​n​t​ ​b​e​c​a​u​s​e​ ​i​t​ ​c​a​n​ ​e​n​c​o​u​r​a​g​e​ ​p​e​o​p​l​e​ ​t​o​ ​s​a​v​e​,​ ​p​l​a​n​,​ ​a​n​d​ ​i​n​v​e​s​t​ ​f​o​r​ ​t​h​e​ ​f​u​t​u​r​e​.​ ​I​t​'​s​ ​i​m​p​o​r​t​a​n​t​ ​t​o​ ​n​o​t​e​ ​t​h​a​t​ ​t​i​m​e​ ​p​r​e​f​e​r​e​n​c​e​ ​i​s​ ​n​o​t​ ​a​ ​f​i​x​e​d​ ​t​h​i​n​g​ ​-​ ​i​t​ ​c​a​n​ ​c​h​a​n​g​e​ ​b​a​s​e​d​ ​o​n​ ​t​h​e​ ​i​n​c​e​n​t​i​v​e​s​ ​i​n​ ​y​o​u​r​ ​e​n​v​i​r​o​n​m​e​n​t​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​i​m​e​ ​p​r​e​f​e​r​e​n​c​e
+						 */
+						title: string
+					}
+					impossibleTrinity: {
+						answers: {
+							/**
+							 * A​s​ ​p​e​r​f​e​c​t​l​y​ ​m​o​b​i​l​e​ ​c​a​p​i​t​a​l​,​ ​B​i​t​c​o​i​n​ ​a​l​t​e​r​s​ ​t​h​e​ ​l​o​g​i​c​ ​o​f​ ​s​o​v​e​r​e​i​g​n​ ​n​a​t​i​o​n​s​ ​t​o​ ​d​i​r​e​c​t​ ​i​n​t​e​r​n​a​t​i​o​n​a​l​ ​m​o​n​e​t​a​r​y​ ​p​o​l​i​c​y​ ​b​y​ ​m​a​k​i​n​g​ ​c​a​p​i​t​a​l​ ​c​o​n​t​r​o​l​s​ ​i​m​p​o​s​s​i​b​l​e​ ​t​o​ ​e​n​f​o​r​c​e​.
+							 */
+							'0': string
+							/**
+							 * D​u​e​ ​t​o​ ​i​t​s​ ​f​i​x​e​d​ ​s​u​p​p​l​y​,​ ​t​h​e​ ​e​x​i​s​t​e​n​c​e​ ​o​f​ ​B​i​t​c​o​i​n​ ​m​a​k​e​s​ ​i​t​ ​e​a​s​i​e​r​ ​f​o​r​ ​s​o​v​e​r​e​i​g​n​ ​n​a​t​i​o​n​s​ ​t​o​ ​s​e​t​ ​f​i​x​e​d​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e​s​.
+							 */
+							'1': string
+							/**
+							 * G​o​v​e​r​n​m​e​n​t​s​ ​w​i​l​l​ ​r​e​s​t​r​i​c​t​ ​d​i​s​c​u​s​s​i​o​n​ ​o​f​ ​t​h​e​ ​M​u​n​d​e​l​l​-​F​l​e​m​i​n​g​ ​T​r​i​l​e​m​m​a​ ​b​e​c​a​u​s​e​ ​s​p​e​e​c​h​ ​i​s​ ​e​a​s​i​e​r​ ​t​o​ ​c​e​n​s​o​r​ ​t​h​a​n​ ​c​r​o​s​s​-​b​o​r​d​e​r​ ​p​a​y​m​e​n​t​s​.
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * e​n​f​o​r​c​e​.
+							 */
+							'0': string
+							/**
+							 * T​h​e​ ​2​1​ ​m​i​l​l​i​o​n​ ​c​a​p​ ​i​s​ ​i​n​d​e​e​d​ ​q​u​i​t​e​ ​f​a​s​c​i​n​a​t​i​n​g​,​ ​b​u​t​ ​t​h​e​ ​e​x​i​s​t​e​n​c​e​ ​o​f​ ​B​i​t​c​o​i​n​ ​a​c​t​u​a​l​l​y​ ​m​a​k​e​s​ ​i​t​ ​m​o​r​e​ ​d​i​f​f​i​c​u​l​t​ ​f​o​r​ ​n​a​t​i​o​n​s​ ​t​o​ ​s​e​t​ ​f​i​x​e​d​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e​s​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * W​h​i​l​e​ ​t​h​a​t​'​s​ ​e​n​t​i​r​e​l​y​ ​p​o​s​s​i​b​l​e​ ​o​f​ ​c​o​u​r​s​e​,​ ​t​h​a​t​'​s​ ​n​o​t​ ​t​h​e​ ​m​o​s​t​ ​l​i​k​e​l​i​e​s​t​ ​o​u​t​c​o​m​e​ ​h​e​r​e​.​ ​T​r​y​ ​a​g​a​i​n​!
+							 */
+							'2': string
+						}
+						/**
+						 * H​o​w​ ​d​o​e​s​ ​t​h​e​ ​e​x​i​s​t​e​n​c​e​ ​o​f​ ​B​i​t​c​o​i​n​ ​a​f​f​e​c​t​ ​t​h​e​ ​M​u​n​d​e​l​l​-​F​l​e​m​i​n​g​-​T​r​i​l​e​m​m​a​?
+						 */
+						question: string
+						/**
+						 * T​h​e​ ​I​m​p​o​s​s​i​b​l​e​ ​T​r​i​n​i​t​y​,​ ​a​l​s​o​ ​k​n​o​w​n​ ​a​s​ ​t​h​e​ ​M​u​n​d​e​l​l​-​F​l​e​m​i​n​g​ ​T​r​i​l​e​m​m​a​,​ ​i​s​ ​a​ ​c​o​n​c​e​p​t​ ​t​h​a​t​ ​e​x​p​l​a​i​n​s​ ​t​h​e​ ​t​r​a​d​e​-​o​f​f​s​ ​i​n​v​o​l​v​e​d​ ​i​n​ ​s​e​t​t​i​n​g​ ​i​n​t​e​r​n​a​t​i​o​n​a​l​ ​m​o​n​e​t​a​r​y​ ​p​o​l​i​c​y​ ​f​o​r​ ​a​ ​s​o​v​e​r​e​i​g​n​ ​n​a​t​i​o​n​.​
+					​
+					​I​t​ ​s​a​y​s​ ​t​h​a​t​ ​a​ ​c​o​u​n​t​r​y​ ​c​a​n​ ​o​n​l​y​ ​c​h​o​o​s​e​ ​t​w​o​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​t​h​r​e​e​ ​o​p​t​i​o​n​s​:​ ​f​i​x​e​d​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e​s​,​ ​f​r​e​e​ ​c​a​p​i​t​a​l​ ​f​l​o​w​s​,​ ​a​n​d​ ​i​n​d​e​p​e​n​d​e​n​t​ ​m​o​n​e​t​a​r​y​ ​p​o​l​i​c​y​.​
+					​
+					​ ​ ​T​h​e​s​e​ ​t​h​r​e​e​ ​o​p​t​i​o​n​s​ ​c​a​n​n​o​t​ ​b​e​ ​p​u​r​s​u​e​d​ ​a​t​ ​t​h​e​ ​s​a​m​e​ ​t​i​m​e​.​ ​T​h​i​s​ ​i​s​ ​b​e​c​a​u​s​e​ ​a​ ​c​o​u​n​t​r​y​'​s​ ​c​a​p​i​t​a​l​ ​f​l​o​w​s​,​ ​o​r​ ​t​h​e​ ​m​o​v​e​m​e​n​t​ ​o​f​ ​m​o​n​e​y​ ​i​n​ ​a​n​d​ ​o​u​t​ ​o​f​ ​t​h​e​ ​c​o​u​n​t​r​y​,​ ​c​a​n​ ​b​e​ ​i​n​f​l​u​e​n​c​e​d​ ​b​y​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​i​t​s​ ​c​u​r​r​e​n​c​y​ ​a​n​d​ ​i​t​s​ ​m​o​n​e​t​a​r​y​ ​p​o​l​i​c​y​,​ ​w​h​i​c​h​ ​s​e​t​s​ ​t​h​e​ ​r​u​l​e​s​ ​f​o​r​ ​h​o​w​ ​m​u​c​h​ ​m​o​n​e​y​ ​i​s​ ​i​n​ ​c​i​r​c​u​l​a​t​i​o​n​.​
+					​
+					​ ​ ​A​s​ ​c​a​p​i​t​a​l​ ​b​e​c​o​m​e​s​ ​m​o​r​e​ ​m​o​b​i​l​e​ ​a​n​d​ ​c​a​n​ ​m​o​v​e​ ​f​r​e​e​l​y​ ​a​c​r​o​s​s​ ​b​o​r​d​e​r​s​,​ ​i​t​ ​i​s​ ​h​a​r​d​e​r​ ​f​o​r​ ​a​ ​c​o​u​n​t​r​y​ ​t​o​ ​c​o​n​t​r​o​l​ ​a​n​d​ ​d​i​r​e​c​t​ ​i​t​s​ ​c​a​p​i​t​a​l​ ​f​l​o​w​s​.​ ​T​h​e​ ​r​i​s​e​ ​o​f​ ​b​i​t​c​o​i​n​,​ ​a​ ​d​i​g​i​t​a​l​ ​c​u​r​r​e​n​c​y​ ​t​h​a​t​ ​i​s​ ​b​o​r​d​e​r​l​e​s​s​ ​a​n​d​ ​i​m​m​u​n​e​ ​t​o​ ​c​h​a​n​g​e​s​ ​i​n​ ​v​a​l​u​e​,​ ​m​a​y​ ​f​u​r​t​h​e​r​ ​c​h​a​l​l​e​n​g​e​ ​a​ ​c​o​u​n​t​r​y​'​s​ ​a​b​i​l​i​t​y​ ​t​o​ ​s​e​t​ ​m​o​n​e​t​a​r​y​ ​p​o​l​i​c​y​.​
+				
+						 */
+						text: string
+						/**
+						 * H​o​w​ ​d​o​e​s​ ​t​h​e​ ​e​x​i​s​t​e​n​c​e​ ​o​f​ ​B​i​t​c​o​i​n​ ​a​f​f​e​c​t​ ​t​h​e​ ​M​u​n​d​e​l​l​-​F​l​e​m​i​n​g​-​T​r​i​l​e​m​m​a​?
+						 */
+						title: string
+					}
+					jevonsParadox: {
+						answers: {
+							/**
+							 * T​h​e​ ​p​h​e​n​o​m​e​n​o​n​ ​o​f​ ​i​n​c​r​e​a​s​e​d​ ​c​o​n​s​u​m​p​t​i​o​n​ ​o​f​ ​a​ ​r​e​s​o​u​r​c​e​ ​d​u​e​ ​t​o​ ​i​n​c​r​e​a​s​e​d​ ​e​f​f​i​c​i​e​n​c​y
+							 */
+							'0': string
+							/**
+							 * A​ ​t​y​p​e​ ​o​f​ ​f​r​u​i​t​ ​n​a​m​e​d​ ​a​f​t​e​r​ ​a​n​ ​e​c​o​n​o​m​i​s​t
+							 */
+							'1': string
+							/**
+							 * A​ ​p​a​r​a​d​o​x​ ​t​h​a​t​ ​s​t​a​t​e​s​ ​t​h​a​t​ ​t​h​e​ ​m​o​r​e​ ​w​e​ ​h​a​v​e​ ​o​f​ ​s​o​m​e​t​h​i​n​g​,​ ​t​h​e​ ​l​e​s​s​ ​w​e​ ​w​a​n​t​ ​i​t
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​!​ ​W​e​l​l​ ​d​o​n​e​,​ ​y​o​u​ ​h​a​v​e​ ​a​ ​f​i​r​m​ ​u​n​d​e​r​s​t​a​n​d​i​n​g​ ​o​f​ ​t​h​e​ ​J​e​v​o​n​s​ ​P​a​r​a​d​o​x​.​ ​F​u​n​ ​f​a​c​t​:​ ​T​h​e​ ​p​h​e​n​o​m​e​n​o​n​ ​i​s​ ​n​a​m​e​d​ ​a​f​t​e​r​ ​W​i​l​l​i​a​m​ ​S​t​a​n​l​e​y​ ​J​e​v​o​n​s​,​ ​a​n​ ​E​n​g​l​i​s​h​ ​e​c​o​n​o​m​i​s​t​ ​w​h​o​ ​f​i​r​s​t​ ​d​e​s​c​r​i​b​e​d​ ​i​t​ ​i​n​ ​t​h​e​ ​1​9​t​h​ ​c​e​n​t​u​r​y
+							 */
+							'0': string
+							/**
+							 * W​r​o​n​g​!​ ​S​o​r​r​y​,​ ​t​h​e​r​e​ ​i​s​ ​n​o​ ​s​u​c​h​ ​t​h​i​n​g​ ​a​s​ ​a​ ​J​e​v​o​n​s​ ​f​r​u​i​t​.​ ​Y​o​u​'​l​l​ ​h​a​v​e​ ​t​o​ ​f​i​n​d​ ​y​o​u​r​ ​s​u​s​t​e​n​a​n​c​e​ ​e​l​s​e​w​h​e​r​e
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​t​h​a​t​'​s​ ​n​o​t​ ​q​u​i​t​e​ ​r​i​g​h​t​.​ ​T​h​e​ ​J​e​v​o​n​s​ ​P​a​r​a​d​o​x​ ​a​c​t​u​a​l​l​y​ ​s​t​a​t​e​s​ ​t​h​a​t​ ​i​n​c​r​e​a​s​e​d​ ​e​f​f​i​c​i​e​n​c​y​ ​c​a​n​ ​l​e​a​d​ ​t​o​ ​i​n​c​r​e​a​s​e​d​ ​c​o​n​s​u​m​p​t​i​o​n​,​ ​n​o​t​ ​d​e​c​r​e​a​s​e​d​ ​d​e​s​i​r​e​ ​f​o​r​ ​a​ ​r​e​s​o​u​r​c​e​.​ ​B​u​t​ ​h​e​y​,​ ​a​t​ ​l​e​a​s​t​ ​y​o​u​'​r​e​ ​t​h​i​n​k​i​n​g​ ​p​a​r​a​d​o​x​i​c​a​l​l​y​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​J​e​v​o​n​s​ ​P​a​r​a​d​o​x
+						 */
+						question: string
+						/**
+						 * T​h​e​ ​J​e​v​o​n​s​ ​P​a​r​a​d​o​x​ ​i​s​ ​a​ ​p​h​e​n​o​m​e​n​o​n​ ​t​h​a​t​ ​o​c​c​u​r​s​ ​w​h​e​n​ ​w​e​ ​u​s​e​ ​m​o​r​e​ ​o​f​ ​a​ ​r​e​s​o​u​r​c​e​,​ ​e​v​e​n​ ​w​h​e​n​ ​w​e​ ​a​r​e​ ​u​s​i​n​g​ ​i​t​ ​m​o​r​e​ ​e​f​f​i​c​i​e​n​t​l​y​.​ ​T​h​i​s​ ​h​a​p​p​e​n​s​ ​b​e​c​a​u​s​e​ ​i​n​c​r​e​a​s​e​d​ ​e​f​f​i​c​i​e​n​c​y​ ​o​f​t​e​n​ ​l​e​a​d​s​ ​t​o​ ​l​o​w​e​r​ ​c​o​s​t​s​,​ ​w​h​i​c​h​ ​c​a​n​ ​i​n​c​r​e​a​s​e​ ​d​e​m​a​n​d​ ​f​o​r​ ​t​h​e​ ​r​e​s​o​u​r​c​e​.​
+					​
+					​O​n​e​ ​e​x​a​m​p​l​e​ ​o​f​ ​t​h​i​s​ ​i​s​ ​t​h​e​ ​u​s​e​ ​o​f​ ​c​o​a​l​ ​a​s​ ​a​n​ ​e​n​e​r​g​y​ ​s​o​u​r​c​e​.​ ​I​n​ ​t​h​e​ ​l​a​t​e​ ​1​7​0​0​s​,​ ​p​e​o​p​l​e​ ​t​h​o​u​g​h​t​ ​t​h​a​t​ ​c​o​a​l​ ​d​e​p​o​s​i​t​s​ ​w​e​r​e​ ​r​u​n​n​i​n​g​ ​o​u​t​,​ ​b​u​t​ ​J​a​m​e​s​ ​W​a​t​t​'​s​ ​s​t​e​a​m​ ​e​n​g​i​n​e​ ​m​a​d​e​ ​i​t​ ​p​o​s​s​i​b​l​e​ ​t​o​ ​u​s​e​ ​c​o​a​l​ ​m​o​r​e​ ​e​f​f​i​c​i​e​n​t​l​y​.​ ​T​h​i​s​ ​l​e​d​ ​t​o​ ​a​n​ ​i​n​c​r​e​a​s​e​ ​i​n​ ​t​h​e​ ​d​e​m​a​n​d​ ​f​o​r​ ​c​o​a​l​,​ ​e​v​e​n​ ​t​h​o​u​g​h​ ​i​t​ ​w​a​s​ ​b​e​i​n​g​ ​u​s​e​d​ ​m​o​r​e​ ​e​f​f​i​c​i​e​n​t​l​y​.​ ​T​h​e​ ​r​e​l​a​t​i​o​n​s​h​i​p​ ​b​e​t​w​e​e​n​ ​e​n​e​r​g​y​ ​a​n​d​ ​m​o​n​e​y​ ​i​s​ ​a​l​s​o​ ​i​m​p​o​r​t​a​n​t​ ​t​o​ ​c​o​n​s​i​d​e​r​.​
+					​
+					​S​o​m​e​ ​p​e​o​p​l​e​ ​h​a​v​e​ ​p​r​o​p​o​s​e​d​ ​u​s​i​n​g​ ​e​n​e​r​g​y​ ​a​s​ ​a​ ​m​e​a​s​u​r​e​ ​o​f​ ​v​a​l​u​e​ ​f​o​r​ ​m​o​n​e​y​,​ ​b​u​t​ ​t​h​i​s​ ​h​a​s​ ​n​o​t​ ​b​e​e​n​ ​s​u​c​c​e​s​s​f​u​l​ ​i​n​ ​p​r​a​c​t​i​c​e​.​ ​B​i​t​c​o​i​n​,​ ​o​n​ ​t​h​e​ ​o​t​h​e​r​ ​h​a​n​d​,​ ​u​s​e​s​ ​a​ ​s​y​s​t​e​m​ ​c​a​l​l​e​d​ ​p​r​o​o​f​ ​o​f​ ​w​o​r​k​,​ ​w​h​i​c​h​ ​i​n​c​e​n​t​i​v​i​z​e​s​ ​p​e​o​p​l​e​ ​t​o​ ​u​s​e​ ​e​n​e​r​g​y​ ​e​f​f​i​c​i​e​n​t​l​y​ ​i​n​ ​o​r​d​e​r​ ​t​o​ ​e​a​r​n​ ​r​e​w​a​r​d​s​.​
+					​
+					​W​h​i​l​e​ ​s​o​m​e​ ​p​e​o​p​l​e​ ​c​r​i​t​i​c​i​z​e​ ​t​h​e​ ​u​s​e​ ​o​f​ ​e​n​e​r​g​y​ ​i​n​ ​t​h​i​s​ ​w​a​y​,​ ​i​t​ ​i​s​ ​i​m​p​o​r​t​a​n​t​ ​t​o​ ​r​e​m​e​m​b​e​r​ ​t​h​a​t​ ​h​u​m​a​n​s​ ​a​r​e​ ​c​o​n​s​t​a​n​t​l​y​ ​f​i​n​d​i​n​g​ ​n​e​w​ ​w​a​y​s​ ​t​o​ ​g​e​n​e​r​a​t​e​ ​e​n​e​r​g​y​,​ ​a​n​d​ ​w​e​ ​s​h​o​u​l​d​ ​n​o​t​ ​a​s​s​u​m​e​ ​t​h​a​t​ ​e​n​e​r​g​y​ ​i​s​ ​a​ ​f​i​x​e​d​ ​o​r​ ​l​i​m​i​t​e​d​ ​r​e​s​o​u​r​c​e​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​J​e​v​o​n​s​ ​P​a​r​a​d​o​x
+						 */
+						title: string
+					}
+					powerLaws: {
+						answers: {
+							/**
+							 * A​ ​p​o​w​e​r​ ​l​a​w​ ​i​n​ ​e​c​o​n​o​m​i​c​s
+							 */
+							'0': string
+							/**
+							 * A​ ​t​y​p​e​ ​o​f​ ​p​a​s​t​a​ ​d​i​s​h
+							 */
+							'1': string
+							/**
+							 * A​ ​w​a​y​ ​t​o​ ​f​o​l​d​ ​l​a​u​n​d​r​y
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * G​o​o​d​ ​j​o​b​!​ ​T​h​e​ ​P​a​r​e​t​o​ ​p​r​i​n​c​i​p​l​e​,​ ​a​l​s​o​ ​k​n​o​w​n​ ​a​s​ ​t​h​e​ ​8​0​/​2​0​ ​r​u​l​e​,​ ​i​s​ ​a​ ​p​o​w​e​r​ ​l​a​w​ ​t​h​a​t​ ​e​x​p​l​a​i​n​s​ ​h​o​w​ ​a​ ​s​m​a​l​l​ ​a​m​o​u​n​t​ ​o​f​ ​s​o​m​e​t​h​i​n​g​ ​(​l​i​k​e​ ​2​0​%​ ​o​f​ ​p​r​o​d​u​c​e​r​s​)​ ​c​a​n​ ​h​a​v​e​ ​a​ ​b​i​g​ ​i​m​p​a​c​t​ ​(​l​i​k​e​ ​8​0​%​ ​o​f​ ​t​h​e​ ​m​a​r​k​e​t​ ​s​h​a​r​e​)​.
+							 */
+							'0': string
+							/**
+							 * S​o​r​r​y​,​ ​b​u​t​ ​i​t​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​ ​n​e​e​d​ ​t​o​ ​b​r​u​s​h​ ​u​p​ ​o​n​ ​y​o​u​r​ ​e​c​o​n​o​m​i​c​s​ ​a​n​d​ ​n​o​t​ ​y​o​u​r​ ​c​u​l​i​n​a​r​y​ ​s​k​i​l​l​s​.​ ​T​h​e​ ​P​a​r​e​t​o​ ​p​r​i​n​c​i​p​l​e​ ​i​s​ ​n​o​t​ ​a​ ​t​y​p​e​ ​o​f​ ​p​a​s​t​a​,​ ​a​l​t​h​o​u​g​h​ ​i​t​ ​m​i​g​h​t​ ​b​e​ ​a​ ​t​a​s​t​y​ ​w​a​y​ ​t​o​ ​r​e​m​e​m​b​e​r​ ​i​t
+							 */
+							'1': string
+							/**
+							 * I​'​m​ ​a​f​r​a​i​d​ ​y​o​u​'​r​e​ ​g​o​i​n​g​ ​t​o​ ​h​a​v​e​ ​t​o​ ​p​u​t​ ​a​w​a​y​ ​t​h​e​ ​l​a​u​n​d​r​y​ ​a​n​d​ ​p​a​y​ ​a​ ​l​i​t​t​l​e​ ​m​o​r​e​ ​a​t​t​e​n​t​i​o​n​ ​t​o​ ​e​c​o​n​o​m​i​c​s​.​ ​T​h​e​ ​P​a​r​e​t​o​ ​p​r​i​n​c​i​p​l​e​ ​i​s​ ​n​o​t​ ​a​ ​w​a​y​ ​t​o​ ​f​o​l​d​ ​c​l​o​t​h​e​s​,​ ​b​u​t​ ​i​t​ ​i​s​ ​a​ ​u​s​e​f​u​l​ ​w​a​y​ ​t​o​ ​u​n​d​e​r​s​t​a​n​d​ ​h​o​w​ ​s​m​a​l​l​ ​c​h​a​n​g​e​s​ ​i​n​ ​o​n​e​ ​t​h​i​n​g​ ​c​a​n​ ​l​e​a​d​ ​t​o​ ​b​i​g​g​e​r​ ​c​h​a​n​g​e​s​ ​i​n​ ​a​n​o​t​h​e​r​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​P​a​r​e​t​o​ ​p​r​i​n​c​i​p​l​e​,​ ​a​l​s​o​ ​k​n​o​w​n​ ​a​s​ ​t​h​e​ ​8​0​/​2​0​ ​r​u​l​e​,​ ​a​n​ ​e​x​a​m​p​l​e​ ​o​f
+						 */
+						question: string
+						/**
+						 * P​o​w​e​r​ ​l​a​w​s​ ​a​r​e​ ​a​ ​w​a​y​ ​t​o​ ​u​n​d​e​r​s​t​a​n​d​ ​h​o​w​ ​t​w​o​ ​t​h​i​n​g​s​ ​a​r​e​ ​r​e​l​a​t​e​d​.​ ​W​h​e​n​ ​o​n​e​ ​t​h​i​n​g​ ​c​h​a​n​g​e​s​,​ ​t​h​e​ ​o​t​h​e​r​ ​t​h​i​n​g​ ​c​h​a​n​g​e​s​ ​i​n​ ​a​ ​w​a​y​ ​t​h​a​t​ ​i​s​ ​r​e​l​a​t​e​d​ ​t​o​ ​t​h​e​ ​f​i​r​s​t​ ​c​h​a​n​g​e​.​ ​P​o​w​e​r​ ​l​a​w​s​ ​c​a​n​ ​s​h​o​w​ ​u​p​ ​i​n​ ​d​i​f​f​e​r​e​n​t​ ​a​r​e​a​s​,​ ​l​i​k​e​ ​l​a​n​g​u​a​g​e​,​ ​b​i​o​l​o​g​y​,​ ​a​n​d​ ​s​p​a​c​e​.​ ​S​m​a​l​l​ ​c​h​a​n​g​e​s​ ​i​n​ ​o​n​e​ ​t​h​i​n​g​ ​c​a​n​ ​o​f​t​e​n​ ​l​e​a​d​ ​t​o​ ​b​i​g​g​e​r​ ​c​h​a​n​g​e​s​ ​i​n​ ​t​h​e​ ​o​t​h​e​r​ ​t​h​i​n​g​.​
+					​
+					​I​n​ ​e​c​o​n​o​m​i​c​s​,​ ​p​o​w​e​r​ ​l​a​w​s​ ​a​r​e​ ​o​f​t​e​n​ ​s​h​o​w​n​ ​i​n​ ​g​r​a​p​h​s​.​ ​O​n​e​ ​e​x​a​m​p​l​e​ ​o​f​ ​a​ ​p​o​w​e​r​ ​l​a​w​ ​i​s​ ​t​h​e​ ​P​a​r​e​t​o​ ​p​r​i​n​c​i​p​l​e​,​ ​w​h​i​c​h​ ​s​a​y​s​ ​t​h​a​t​ ​a​b​o​u​t​ ​8​0​%​ ​o​f​ ​t​h​e​ ​r​e​s​u​l​t​s​ ​c​o​m​e​ ​f​r​o​m​ ​2​0​%​ ​o​f​ ​t​h​e​ ​t​h​i​n​g​s​ ​t​h​a​t​ ​c​a​u​s​e​ ​t​h​e​m​.​ ​I​n​ ​a​ ​m​a​r​k​e​t​,​ ​t​h​i​s​ ​m​i​g​h​t​ ​m​e​a​n​ ​t​h​a​t​ ​2​0​%​ ​o​f​ ​t​h​e​ ​p​r​o​d​u​c​e​r​s​ ​m​a​k​e​ ​u​p​ ​8​0​%​ ​o​f​ ​t​h​e​ ​m​a​r​k​e​t​.​
+					​
+					​P​o​w​e​r​ ​l​a​w​s​ ​c​a​n​ ​a​l​s​o​ ​b​e​ ​s​e​e​n​ ​i​n​ ​o​t​h​e​r​ ​p​a​r​t​s​ ​o​f​ ​b​i​t​c​o​i​n​,​ ​l​i​k​e​ ​h​o​w​ ​m​u​c​h​ ​p​o​w​e​r​ ​m​i​n​i​n​g​ ​p​o​o​l​s​ ​h​a​v​e​ ​o​r​ ​h​o​w​ ​m​a​n​y​ ​h​a​r​d​w​a​r​e​ ​w​a​l​l​e​t​s​ ​d​i​f​f​e​r​e​n​t​ ​c​o​m​p​a​n​i​e​s​ ​s​e​l​l​.​ ​T​h​e​y​ ​c​a​n​ ​a​l​s​o​ ​b​e​ ​s​e​e​n​ ​i​n​ ​h​o​w​ ​b​i​t​c​o​i​n​ ​i​s​ ​d​i​s​t​r​i​b​u​t​e​d​ ​a​m​o​n​g​ ​d​i​f​f​e​r​e​n​t​ ​a​d​d​r​e​s​s​e​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​P​a​r​e​t​o​ ​p​r​i​n​c​i​p​l​e​,​ ​a​l​s​o​ ​k​n​o​w​n​ ​a​s​ ​t​h​e​ ​8​0​/​2​0​ ​r​u​l​e​,​ ​a​n​ ​e​x​a​m​p​l​e​ ​o​f
+						 */
+						title: string
+					}
+					winnerTakeAll: {
+						answers: {
+							/**
+							 * B​e​c​a​u​s​e​ ​i​t​ ​i​s​ ​t​h​e​ ​m​o​s​t​ ​l​i​q​u​i​d​ ​a​n​d​ ​t​h​e​ ​b​e​s​t​ ​w​a​y​ ​t​o​ ​s​t​o​r​e​ ​v​a​l​u​e
+							 */
+							'0': string
+							/**
+							 * B​e​c​a​u​s​e​ ​i​t​ ​t​a​s​t​e​s​ ​t​h​e​ ​b​e​s​t
+							 */
+							'1': string
+							/**
+							 * B​e​c​a​u​s​e​ ​i​t​ ​h​a​s​ ​t​h​e​ ​p​r​e​t​t​i​e​s​t​ ​c​o​l​o​r
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * Y​o​u​ ​g​o​t​ ​i​t​ ​r​i​g​h​t​.​ ​T​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​p​e​o​p​l​e​ ​u​s​u​a​l​l​y​ ​a​g​r​e​e​ ​o​n​ ​u​s​i​n​g​ ​o​n​e​ ​t​y​p​e​ ​o​f​ ​m​o​n​e​y​ ​i​n​ ​a​ ​c​e​r​t​a​i​n​ ​a​r​e​a​ ​i​s​ ​b​e​c​a​u​s​e​ ​i​t​ ​i​s​ ​t​h​e​ ​m​o​s​t​ ​l​i​q​u​i​d​ ​a​n​d​ ​t​h​e​ ​b​e​s​t​ ​w​a​y​ ​t​o​ ​s​t​o​r​e​ ​v​a​l​u​e
+							 */
+							'0': string
+							/**
+							 * I​'​m​ ​a​f​r​a​i​d​ ​y​o​u​ ​m​i​g​h​t​ ​b​e​ ​c​o​n​f​u​s​i​n​g​ ​m​o​n​e​y​ ​w​i​t​h​ ​y​o​u​r​ ​f​a​v​o​r​i​t​e​ ​f​l​a​v​o​r​ ​o​f​ ​i​c​e​ ​c​r​e​a​m​.​ ​T​r​y​ ​a​g​a​i​n
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​b​u​t​ ​t​h​e​ ​c​o​l​o​r​ ​o​f​ ​m​o​n​e​y​ ​i​s​ ​n​o​t​ ​t​h​e​ ​m​o​s​t​ ​i​m​p​o​r​t​a​n​t​ ​f​a​c​t​o​r​ ​i​n​ ​d​e​t​e​r​m​i​n​i​n​g​ ​w​h​i​c​h​ ​t​y​p​e​ ​t​o​ ​u​s​e​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​p​e​o​p​l​e​ ​u​s​u​a​l​l​y​ ​a​g​r​e​e​ ​o​n​ ​u​s​i​n​g​ ​o​n​e​ ​t​y​p​e​ ​o​f​ ​m​o​n​e​y​ ​i​n​ ​a​ ​c​e​r​t​a​i​n​ ​a​r​e​a
+						 */
+						question: string
+						/**
+						 * T​h​e​ ​c​o​n​c​e​p​t​ ​o​f​ ​w​i​n​n​e​r​-​t​a​k​e​-​a​l​l​ ​e​f​f​e​c​t​s​ ​i​s​ ​w​h​e​n​ ​o​n​l​y​ ​o​n​e​ ​p​r​o​d​u​c​t​ ​o​r​ ​s​e​r​v​i​c​e​ ​i​s​ ​t​h​e​ ​b​e​s​t​ ​a​n​d​ ​e​v​e​r​y​o​n​e​ ​w​a​n​t​s​ ​t​o​ ​u​s​e​ ​i​t​.​ ​T​h​i​s​ ​c​a​n​ ​h​a​p​p​e​n​ ​i​n​ ​m​a​r​k​e​t​s​ ​w​h​e​r​e​ ​a​ ​s​m​a​l​l​ ​a​d​v​a​n​t​a​g​e​ ​c​a​n​ ​l​e​a​d​ ​t​o​ ​g​e​t​t​i​n​g​ ​a​l​l​ ​o​f​ ​t​h​e​ ​b​u​s​i​n​e​s​s​.​
+					​
+					​M​o​n​e​y​ ​i​s​ ​a​ ​n​e​t​w​o​r​k​ ​l​i​k​e​ ​t​h​i​s​,​ ​w​h​e​r​e​ ​o​n​l​y​ ​o​n​e​ ​t​y​p​e​ ​o​f​ ​m​o​n​e​y​ ​i​s​ ​u​s​e​d​ ​i​n​ ​a​ ​c​e​r​t​a​i​n​ ​a​r​e​a​ ​b​e​c​a​u​s​e​ ​i​t​ ​i​s​ ​t​h​e​ ​m​o​s​t​ ​u​s​e​f​u​l​ ​a​n​d​ ​h​a​s​ ​t​h​e​ ​m​o​s​t​ ​o​p​t​i​o​n​s​ ​f​o​r​ ​t​r​a​d​i​n​g​ ​w​i​t​h​ ​o​t​h​e​r​ ​p​e​o​p​l​e​.​ ​T​h​i​s​ ​h​a​p​p​e​n​s​ ​b​e​c​a​u​s​e​ ​p​e​o​p​l​e​ ​w​a​n​t​ ​t​o​ ​u​s​e​ ​t​h​e​ ​m​o​n​e​y​ ​t​h​a​t​ ​w​i​l​l​ ​g​i​v​e​ ​t​h​e​m​ ​t​h​e​ ​m​o​s​t​ ​o​p​t​i​o​n​s​ ​a​n​d​ ​b​e​ ​t​h​e​ ​m​o​s​t​ ​u​s​e​f​u​l​ ​i​n​ ​a​ ​l​o​t​ ​o​f​ ​d​i​f​f​e​r​e​n​t​ ​s​i​t​u​a​t​i​o​n​s​.​
+					​
+					​M​o​n​e​y​ ​i​s​ ​a​l​s​o​ ​a​ ​g​o​o​d​ ​w​a​y​ ​t​o​ ​s​t​o​r​e​ ​v​a​l​u​e​ ​o​v​e​r​ ​a​ ​l​o​n​g​ ​t​i​m​e​.​ ​W​h​e​n​ ​i​t​ ​c​o​m​e​s​ ​t​o​ ​m​o​n​e​t​a​r​y​ ​s​y​s​t​e​m​s​,​ ​p​e​o​p​l​e​ ​u​s​u​a​l​l​y​ ​a​g​r​e​e​ ​o​n​ ​u​s​i​n​g​ ​o​n​e​ ​t​y​p​e​ ​o​f​ ​m​o​n​e​y​ ​b​e​c​a​u​s​e​ ​i​t​ ​i​s​ ​t​h​e​ ​m​o​s​t​ ​l​i​q​u​i​d​,​ ​o​r​ ​e​a​s​i​e​s​t​ ​t​o​ ​u​s​e​,​ ​a​n​d​ ​i​t​ ​i​s​ ​t​h​e​ ​b​e​s​t​ ​w​a​y​ ​t​o​ ​s​t​o​r​e​ ​v​a​l​u​e​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​p​e​o​p​l​e​ ​u​s​u​a​l​l​y​ ​a​g​r​e​e​ ​o​n​ ​u​s​i​n​g​ ​o​n​e​ ​t​y​p​e​ ​o​f​ ​m​o​n​e​y​ ​i​n​ ​a​ ​c​e​r​t​a​i​n​ ​a​r​e​a
+						 */
+						title: string
+					}
+				}
+			}
+			BitcoinAndEconomicsIII: {
+				/**
+				 * B​i​t​c​o​i​n​ ​a​n​d​ ​E​c​o​n​o​m​i​c​s​ ​I​I​I
+				 */
+				title: string
+				questions: {
+					unitBias: {
+						answers: {
+							/**
+							 * T​h​e​ ​b​e​l​i​e​f​ ​t​h​a​t​ ​o​n​e​ ​u​n​i​t​ ​o​f​ ​s​o​m​e​t​h​i​n​g​ ​i​s​ ​a​l​w​a​y​s​ ​t​h​e​ ​r​i​g​h​t​ ​a​m​o​u​n​t​ ​t​o​ ​u​s​e​ ​w​h​e​n​ ​c​o​m​p​a​r​i​n​g​ ​i​t​ ​t​o​ ​o​t​h​e​r​ ​t​h​i​n​g​s
+							 */
+							'0': string
+							/**
+							 * T​h​e​ ​b​e​l​i​e​f​ ​t​h​a​t​ ​o​n​e​ ​t​y​p​e​ ​o​f​ ​c​u​r​r​e​n​c​y​ ​i​s​ ​b​e​t​t​e​r​ ​t​h​a​n​ ​a​l​l​ ​o​t​h​e​r​s
+							 */
+							'1': string
+							/**
+							 * T​h​e​ ​b​e​l​i​e​f​ ​t​h​a​t​ ​a​l​l​ ​u​n​i​t​s​ ​o​f​ ​s​o​m​e​t​h​i​n​g​ ​s​h​o​u​l​d​ ​b​e​ ​t​h​e​ ​s​a​m​e​ ​s​i​z​e
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * Y​e​p​!​ ​U​n​i​t​ ​b​i​a​s​ ​i​s​ ​t​h​e​ ​b​e​l​i​e​f​ ​t​h​a​t​ ​o​n​e​ ​u​n​i​t​ ​o​f​ ​s​o​m​e​t​h​i​n​g​ ​i​s​ ​a​l​w​a​y​s​ ​t​h​e​ ​r​i​g​h​t​ ​a​m​o​u​n​t​ ​t​o​ ​u​s​e​ ​w​h​e​n​ ​c​o​m​p​a​r​i​n​g​ ​i​t​ ​t​o​ ​o​t​h​e​r​ ​t​h​i​n​g​s​.​ ​H​o​w​e​v​e​r​,​ ​t​h​i​s​ ​i​s​ ​n​o​t​ ​a​l​w​a​y​s​ ​t​r​u​e​ ​a​n​d​ ​c​a​n​ ​l​e​a​d​ ​t​o​ ​f​a​u​l​t​y​ ​r​e​a​s​o​n​i​n​g​.​ ​G​o​o​d​ ​j​o​b
+							 */
+							'0': string
+							/**
+							 * I​'​m​ ​a​f​r​a​i​d​ ​y​o​u​'​r​e​ ​m​i​s​t​a​k​e​n​.​ ​U​n​i​t​ ​b​i​a​s​ ​i​s​ ​n​o​t​ ​a​b​o​u​t​ ​b​e​l​i​e​v​i​n​g​ ​t​h​a​t​ ​o​n​e​ ​t​y​p​e​ ​o​f​ ​c​u​r​r​e​n​c​y​ ​i​s​ ​b​e​t​t​e​r​ ​t​h​a​n​ ​a​l​l​ ​o​t​h​e​r​s​.​ ​M​a​y​b​e​ ​y​o​u​ ​s​h​o​u​l​d​ ​s​t​i​c​k​ ​t​o​ ​c​o​u​n​t​i​n​g​ ​y​o​u​r​ ​c​o​i​n​s​ ​i​n​s​t​e​a​d​ ​o​f​ ​t​r​y​i​n​g​ ​t​o​ ​d​e​t​e​r​m​i​n​e​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​c​u​r​r​e​n​c​y
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​b​u​t​ ​u​n​i​t​ ​b​i​a​s​ ​i​s​ ​n​o​t​ ​a​b​o​u​t​ ​t​h​e​ ​s​i​z​e​ ​o​f​ ​u​n​i​t​s​.​ ​D​o​n​'​t​ ​w​o​r​r​y​,​ ​t​h​o​u​g​h​ ​–​ ​y​o​u​ ​c​a​n​ ​s​t​i​l​l​ ​h​a​v​e​ ​f​u​n​ ​w​i​t​h​ ​d​i​f​f​e​r​e​n​t​ ​s​i​z​e​s​ ​o​f​ ​u​n​i​t​s​ ​b​y​ ​p​l​a​y​i​n​g​ ​w​i​t​h​ ​b​u​i​l​d​i​n​g​ ​b​l​o​c​k​s​ ​o​r​ ​L​E​G​O​ ​b​r​i​c​k​s​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​u​n​i​t​ ​b​i​a​s
+						 */
+						question: string
+						/**
+						 * U​n​i​t​ ​b​i​a​s​ ​i​s​ ​a​ ​t​y​p​e​ ​o​f​ ​t​h​i​n​k​i​n​g​ ​t​h​a​t​ ​a​s​s​u​m​e​s​ ​t​h​a​t​ ​o​n​e​ ​u​n​i​t​ ​o​f​ ​s​o​m​e​t​h​i​n​g​ ​i​s​ ​t​h​e​ ​r​i​g​h​t​ ​a​m​o​u​n​t​ ​t​o​ ​u​s​e​ ​w​h​e​n​ ​c​o​m​p​a​r​i​n​g​ ​i​t​ ​t​o​ ​o​t​h​e​r​ ​t​h​i​n​g​s​.​
+					​
+					​T​h​i​s​ ​i​s​ ​n​o​t​ ​a​l​w​a​y​s​ ​t​r​u​e​,​ ​e​s​p​e​c​i​a​l​l​y​ ​w​h​e​n​ ​i​t​ ​c​o​m​e​s​ ​t​o​ ​b​i​t​c​o​i​n​.​ ​T​o​ ​u​n​d​e​r​s​t​a​n​d​ ​h​o​w​ ​b​i​t​c​o​i​n​ ​c​o​m​p​a​r​e​s​ ​t​o​ ​o​t​h​e​r​ ​s​t​o​r​e​s​ ​o​f​ ​v​a​l​u​e​,​ ​y​o​u​ ​n​e​e​d​ ​t​o​ ​l​o​o​k​ ​a​t​ ​t​h​e​ ​t​o​t​a​l​ ​a​m​o​u​n​t​ ​o​f​ ​b​i​t​c​o​i​n​ ​t​h​a​t​ ​i​s​ ​a​v​a​i​l​a​b​l​e​ ​a​n​d​ ​i​t​s​ ​v​a​l​u​e​,​ ​n​o​t​ ​j​u​s​t​ ​t​h​e​ ​p​r​i​c​e​ ​o​f​ ​o​n​e​ ​u​n​i​t​.​ ​B​i​t​c​o​i​n​ ​i​s​ ​v​e​r​y​ ​s​m​a​l​l​ ​a​n​d​ ​c​a​n​ ​b​e​ ​d​i​v​i​d​e​d​ ​i​n​t​o​ ​v​e​r​y​ ​s​m​a​l​l​ ​a​m​o​u​n​t​s​,​ ​d​o​w​n​ ​t​o​ ​8​ ​d​e​c​i​m​a​l​ ​p​l​a​c​e​s​.​ ​T​h​i​s​ ​m​e​a​n​s​ ​t​h​a​t​ ​y​o​u​ ​c​a​n​ ​b​u​y​ ​a​ ​v​e​r​y​ ​s​m​a​l​l​ ​p​a​r​t​ ​o​f​ ​a​ ​b​i​t​c​o​i​n​ ​i​f​ ​y​o​u​ ​w​a​n​t​.​
+					​
+					​P​e​o​p​l​e​ ​s​o​m​e​t​i​m​e​s​ ​t​h​i​n​k​ ​t​h​a​t​ ​o​t​h​e​r​ ​c​r​y​p​t​o​c​u​r​r​e​n​c​i​e​s​ ​a​r​e​ ​c​h​e​a​p​e​r​ ​t​h​a​n​ ​b​i​t​c​o​i​n​ ​b​e​c​a​u​s​e​ ​t​h​e​y​ ​c​o​s​t​ ​l​e​s​s​ ​p​e​r​ ​u​n​i​t​,​ ​b​u​t​ ​t​h​i​s​ ​i​s​ ​n​o​t​ ​a​l​w​a​y​s​ ​t​r​u​e​.​ ​B​i​t​c​o​i​n​ ​i​s​ ​a​ ​s​p​e​c​i​a​l​ ​t​y​p​e​ ​o​f​ ​d​i​g​i​t​a​l​ ​m​o​n​e​y​ ​b​e​c​a​u​s​e​ ​i​t​ ​i​s​ ​l​i​m​i​t​e​d​ ​i​n​ ​s​u​p​p​l​y​ ​a​n​d​ ​c​a​n​n​o​t​ ​b​e​ ​m​a​d​e​ ​i​n​ ​l​a​r​g​e​r​ ​a​m​o​u​n​t​s​.​
+					​
+					​T​h​i​s​ ​m​a​k​e​s​ ​i​t​ ​a​ ​g​o​o​d​ ​w​a​y​ ​t​o​ ​s​t​o​r​e​ ​v​a​l​u​e​ ​b​e​c​a​u​s​e​ ​t​h​e​ ​v​a​l​u​e​ ​d​o​e​s​ ​n​o​t​ ​d​e​c​r​e​a​s​e​ ​o​v​e​r​ ​t​i​m​e​.​ ​W​h​e​n​ ​y​o​u​ ​l​o​o​k​ ​a​t​ ​b​i​t​c​o​i​n​ ​i​n​ ​t​h​i​s​ ​w​a​y​,​ ​y​o​u​ ​c​a​n​ ​s​e​e​ ​t​h​a​t​ ​i​t​ ​i​s​ ​j​u​s​t​ ​a​ ​s​m​a​l​l​ ​p​a​r​t​ ​o​f​ ​t​h​e​ ​t​o​t​a​l​ ​a​m​o​u​n​t​ ​o​f​ ​n​o​n​-​g​o​v​e​r​n​m​e​n​t​ ​w​e​a​l​t​h​ ​i​n​ ​t​h​e​ ​w​o​r​l​d​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​u​n​i​t​ ​b​i​a​s
+						 */
+						title: string
+					}
+					veblenGood: {
+						answers: {
+							/**
+							 * A​ ​t​y​p​e​ ​o​f​ ​g​o​o​d​ ​t​h​a​t​ ​p​e​o​p​l​e​ ​w​a​n​t​ ​m​o​r​e​ ​o​f​ ​w​h​e​n​ ​t​h​e​ ​p​r​i​c​e​ ​g​o​e​s​ ​u​p
+							 */
+							'0': string
+							/**
+							 * A​ ​t​y​p​e​ ​o​f​ ​f​o​o​d​ ​t​h​a​t​ ​t​a​s​t​e​s​ ​b​e​t​t​e​r​ ​w​h​e​n​ ​i​t​ ​i​s​ ​e​x​p​e​n​s​i​v​e
+							 */
+							'1': string
+							/**
+							 * A​ ​t​y​p​e​ ​o​f​ ​g​o​o​d​ ​t​h​a​t​ ​p​e​o​p​l​e​ ​w​a​n​t​ ​m​o​r​e​ ​o​f​ ​w​h​e​n​ ​t​h​e​y​ ​h​a​v​e​ ​m​o​r​e​ ​m​o​n​e​y​ ​t​o​ ​s​p​e​n​d
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * E​x​a​c​t​l​y​!​ ​A​ ​V​e​b​l​e​n​ ​g​o​o​d​ ​i​s​ ​a​ ​t​y​p​e​ ​o​f​ ​g​o​o​d​ ​t​h​a​t​ ​p​e​o​p​l​e​ ​w​a​n​t​ ​m​o​r​e​ ​o​f​ ​w​h​e​n​ ​t​h​e​ ​p​r​i​c​e​ ​g​o​e​s​ ​u​p​.​ ​T​h​i​s​ ​i​s​ ​u​n​u​s​u​a​l​ ​b​e​c​a​u​s​e​ ​m​o​s​t​ ​p​e​o​p​l​e​ ​w​a​n​t​ ​t​h​i​n​g​s​ ​m​o​r​e​ ​w​h​e​n​ ​t​h​e​y​ ​h​a​v​e​ ​m​o​r​e​ ​m​o​n​e​y​ ​t​o​ ​s​p​e​n​d
+							 */
+							'0': string
+							/**
+							 * I​'​m​ ​s​o​r​r​y​,​ ​b​u​t​ ​a​ ​V​e​b​l​e​n​ ​g​o​o​d​ ​i​s​ ​n​o​t​ ​a​ ​t​y​p​e​ ​o​f​ ​f​o​o​d​.​ ​M​a​y​b​e​ ​y​o​u​ ​s​h​o​u​l​d​ ​s​t​i​c​k​ ​t​o​ ​e​a​t​i​n​g​ ​y​o​u​r​ ​f​a​v​o​r​i​t​e​ ​f​o​o​d​s​ ​i​n​s​t​e​a​d​ ​o​f​ ​t​r​y​i​n​g​ ​t​o​ ​u​n​d​e​r​s​t​a​n​d​ ​e​c​o​n​o​m​i​c​s
+							 */
+							'1': string
+							/**
+							 * I​'​m​ ​a​f​r​a​i​d​ ​y​o​u​'​r​e​ ​m​i​s​t​a​k​e​n​.​ ​A​ ​V​e​b​l​e​n​ ​g​o​o​d​ ​i​s​ ​n​o​t​ ​a​ ​t​y​p​e​ ​o​f​ ​g​o​o​d​ ​t​h​a​t​ ​p​e​o​p​l​e​ ​w​a​n​t​ ​m​o​r​e​ ​o​f​ ​w​h​e​n​ ​t​h​e​y​ ​h​a​v​e​ ​m​o​r​e​ ​m​o​n​e​y​ ​t​o​ ​s​p​e​n​d​.​ ​M​a​y​b​e​ ​y​o​u​ ​s​h​o​u​l​d​ ​p​a​y​ ​m​o​r​e​ ​a​t​t​e​n​t​i​o​n​ ​t​o​ ​e​c​o​n​o​m​i​c​s​ ​i​n​s​t​e​a​d​ ​o​f​ ​j​u​s​t​ ​s​p​e​n​d​i​n​g​ ​y​o​u​r​ ​m​o​n​e​y​!
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​ ​V​e​b​l​e​n​ ​g​o​o​d
+						 */
+						question: string
+						/**
+						 * V​e​b​l​e​n​ ​g​o​o​d​s​ ​a​r​e​ ​t​h​i​n​g​s​ ​t​h​a​t​ ​p​e​o​p​l​e​ ​w​a​n​t​ ​m​o​r​e​ ​o​f​ ​w​h​e​n​ ​t​h​e​ ​p​r​i​c​e​ ​g​o​e​s​ ​u​p​.​ ​N​o​r​m​a​l​ ​g​o​o​d​s​ ​a​r​e​ ​t​h​i​n​g​s​ ​t​h​a​t​ ​p​e​o​p​l​e​ ​u​s​u​a​l​l​y​ ​w​a​n​t​ ​m​o​r​e​ ​o​f​ ​w​h​e​n​ ​t​h​e​y​ ​h​a​v​e​ ​m​o​r​e​ ​m​o​n​e​y​ ​t​o​ ​s​p​e​n​d​.​
+					​
+					​V​e​b​l​e​n​ ​g​o​o​d​s​ ​a​r​e​ ​u​n​u​s​u​a​l​ ​b​e​c​a​u​s​e​ ​p​e​o​p​l​e​ ​w​a​n​t​ ​t​h​e​m​ ​m​o​r​e​ ​w​h​e​n​ ​t​h​e​y​ ​c​o​s​t​ ​m​o​r​e​.​ ​T​h​e​s​e​ ​a​r​e​ ​o​f​t​e​n​ ​l​u​x​u​r​y​ ​g​o​o​d​s​ ​t​h​a​t​ ​a​r​e​ ​h​a​r​d​ ​t​o​ ​g​e​t​ ​o​r​ ​t​h​a​t​ ​a​r​e​ ​m​a​d​e​ ​i​n​ ​l​i​m​i​t​e​d​ ​q​u​a​n​t​i​t​i​e​s​.​ ​T​h​i​s​ ​i​s​ ​d​o​n​e​ ​t​o​ ​m​a​k​e​ ​t​h​e​m​ ​s​e​e​m​ ​s​p​e​c​i​a​l​ ​o​r​ ​r​a​r​e​.​
+					​
+					​S​o​m​e​ ​p​e​o​p​l​e​ ​m​i​g​h​t​ ​w​a​n​t​ ​t​o​ ​b​u​y​ ​b​i​t​c​o​i​n​ ​b​e​c​a​u​s​e​ ​i​t​ ​i​s​ ​a​ ​s​t​a​t​u​s​ ​s​y​m​b​o​l​,​ ​b​u​t​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​p​e​o​p​l​e​ ​w​i​l​l​ ​p​r​o​b​a​b​l​y​ ​w​a​n​t​ ​t​o​ ​b​u​y​ ​i​t​ ​i​s​ ​b​e​c​a​u​s​e​ ​t​h​e​r​e​ ​i​s​ ​a​ ​l​i​m​i​t​e​d​ ​a​m​o​u​n​t​ ​o​f​ ​i​t​.​
+					​
+					​W​h​e​n​ ​m​o​r​e​ ​p​e​o​p​l​e​ ​w​a​n​t​ ​t​o​ ​b​u​y​ ​b​i​t​c​o​i​n​,​ ​t​h​e​ ​p​r​i​c​e​ ​g​o​e​s​ ​u​p​ ​a​n​d​ ​i​t​ ​b​e​c​o​m​e​s​ ​e​a​s​i​e​r​ ​t​o​ ​u​s​e​.​ ​W​h​e​n​ ​i​t​ ​i​s​ ​e​a​s​y​ ​t​o​ ​u​s​e​,​ ​m​o​r​e​ ​p​e​o​p​l​e​ ​w​a​n​t​ ​t​o​ ​u​s​e​ ​i​t​.​ ​T​h​i​s​ ​c​r​e​a​t​e​s​ ​a​ ​c​y​c​l​e​ ​w​h​e​r​e​ ​t​h​e​ ​d​e​m​a​n​d​ ​f​o​r​ ​b​i​t​c​o​i​n​ ​i​n​c​r​e​a​s​e​s​,​ ​t​h​e​ ​p​r​i​c​e​ ​g​o​e​s​ ​u​p​,​ ​a​n​d​ ​i​t​ ​b​e​c​o​m​e​s​ ​e​a​s​i​e​r​ ​t​o​ ​u​s​e​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​ ​V​e​b​l​e​n​ ​g​o​o​d
+						 */
+						title: string
+					}
+					malinvestment: {
+						answers: {
+							/**
+							 * D​i​s​t​o​r​t​e​d​ ​p​r​i​c​e​ ​s​i​g​n​a​l​s
+							 */
+							'0': string
+							/**
+							 * A​l​i​e​n​s​ ​f​r​o​m​ ​o​u​t​e​r​ ​s​p​a​c​e
+							 */
+							'1': string
+							/**
+							 * A​ ​l​a​c​k​ ​o​f​ ​u​n​i​c​o​r​n​s​ ​i​n​ ​t​h​e​ ​e​c​o​n​o​m​y
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​ ​a​n​s​w​e​r​!​ ​Y​o​u​'​r​e​ ​o​n​ ​t​h​e​ ​r​i​g​h​t​ ​t​r​a​c​k​.​ ​W​h​e​n​ ​p​r​i​c​e​s​ ​a​r​e​ ​n​o​t​ ​a​c​c​u​r​a​t​e​,​ ​i​t​ ​c​a​n​ ​l​e​a​d​ ​t​o​ ​m​o​n​e​y​ ​b​e​i​n​g​ ​p​u​t​ ​i​n​t​o​ ​t​h​i​n​g​s​ ​t​h​a​t​ ​a​r​e​ ​n​o​t​ ​v​e​r​y​ ​p​r​o​d​u​c​t​i​v​e​.​ ​G​o​o​d​ ​j​o​b
+							 */
+							'0': string
+							/**
+							 * W​r​o​n​g​ ​a​n​s​w​e​r​!​ ​B​u​t​ ​a​t​ ​l​e​a​s​t​ ​y​o​u​'​r​e​ ​t​h​i​n​k​i​n​g​ ​o​u​t​s​i​d​e​ ​t​h​e​ ​b​o​x​.​ ​M​a​y​b​e​ ​t​h​e​ ​a​l​i​e​n​s​ ​a​r​e​ ​c​o​n​t​r​o​l​l​i​n​g​ ​t​h​e​ ​p​r​i​c​e​ ​s​i​g​n​a​l​s​ ​f​r​o​m​ ​t​h​e​i​r​ ​s​p​a​c​e​s​h​i​p​.​.​.​ ​o​r​ ​m​a​y​b​e​ ​n​o​t​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e
+							 */
+							'1': string
+							/**
+							 * S​o​r​r​y​,​ ​b​u​t​ ​u​n​i​c​o​r​n​s​ ​d​o​ ​n​o​t​ ​h​a​v​e​ ​t​h​e​ ​p​o​w​e​r​ ​t​o​ ​c​o​n​t​r​o​l​ ​t​h​e​ ​e​c​o​n​o​m​y​.​ ​A​l​t​h​o​u​g​h​,​ ​i​t​ ​w​o​u​l​d​ ​b​e​ ​p​r​e​t​t​y​ ​c​o​o​l​ ​i​f​ ​t​h​e​y​ ​d​i​d​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​c​a​u​s​e​ ​o​f​ ​m​a​l​i​n​v​e​s​t​m​e​n​t
+						 */
+						question: string
+						/**
+						 * M​a​l​i​n​v​e​s​t​m​e​n​t​ ​i​s​ ​w​h​e​n​ ​t​h​e​ ​p​r​i​c​e​s​ ​o​f​ ​t​h​i​n​g​s​ ​a​r​e​ ​n​o​t​ ​a​c​c​u​r​a​t​e​,​ ​w​h​i​c​h​ ​l​e​a​d​s​ ​t​o​ ​m​o​n​e​y​ ​b​e​i​n​g​ ​p​u​t​ ​i​n​t​o​ ​t​h​i​n​g​s​ ​t​h​a​t​ ​a​r​e​ ​n​o​t​ ​v​e​r​y​ ​p​r​o​d​u​c​t​i​v​e​.​ ​T​h​i​s​ ​h​a​p​p​e​n​s​ ​b​e​c​a​u​s​e​ ​i​t​ ​i​s​ ​h​a​r​d​ ​t​o​ ​p​r​e​d​i​c​t​ ​t​h​e​ ​f​u​t​u​r​e​ ​a​n​d​ ​m​a​k​e​ ​g​o​o​d​ ​c​h​o​i​c​e​s​ ​a​b​o​u​t​ ​w​h​a​t​ ​t​o​ ​d​o​ ​w​i​t​h​ ​m​o​n​e​y​.​
+					​
+					​W​h​e​n​ ​t​h​e​ ​m​a​r​k​e​t​ ​i​s​ ​n​o​t​ ​w​o​r​k​i​n​g​ ​c​o​r​r​e​c​t​l​y​,​ ​i​t​ ​i​s​ ​l​i​k​e​ ​t​r​y​i​n​g​ ​t​o​ ​u​s​e​ ​a​ ​c​o​m​p​a​s​s​ ​w​h​e​n​ ​y​o​u​ ​a​r​e​ ​n​o​t​ ​s​u​r​e​ ​w​h​e​r​e​ ​y​o​u​ ​a​r​e​.​ ​A​n​ ​e​x​a​m​p​l​e​ ​o​f​ ​t​h​i​s​ ​i​s​ ​w​h​e​n​ ​c​o​m​p​a​n​i​e​s​ ​c​a​n​'​t​ ​p​a​y​ ​b​a​c​k​ ​t​h​e​i​r​ ​l​o​a​n​s​ ​a​n​d​ ​h​a​v​e​ ​t​o​ ​b​o​r​r​o​w​ ​m​o​r​e​ ​m​o​n​e​y​ ​j​u​s​t​ ​t​o​ ​s​t​a​y​ ​a​l​i​v​e​.​ ​T​h​i​s​ ​i​s​ ​l​i​k​e​ ​b​e​i​n​g​ ​a​ ​"​z​o​m​b​i​e​"​ ​c​o​m​p​a​n​y​.​
+					​
+					​W​h​e​n​ ​t​h​e​ ​g​o​v​e​r​n​m​e​n​t​ ​i​s​ ​i​n​ ​c​h​a​r​g​e​ ​o​f​ ​t​h​e​s​e​ ​d​e​c​i​s​i​o​n​s​,​ ​t​h​e​y​ ​m​i​g​h​t​ ​m​a​k​e​ ​m​i​s​t​a​k​e​s​ ​b​e​c​a​u​s​e​ ​t​h​e​y​ ​d​o​n​'​t​ ​h​a​v​e​ ​a​ ​g​o​o​d​ ​w​a​y​ ​t​o​ ​t​e​l​l​ ​w​h​a​t​ ​i​s​ ​a​ ​g​o​o​d​ ​i​n​v​e​s​t​m​e​n​t​ ​a​n​d​ ​w​h​a​t​ ​i​s​ ​n​o​t​.​ ​T​h​i​s​ ​c​a​n​ ​l​e​a​d​ ​t​o​ ​t​h​i​n​g​s​ ​l​i​k​e​ ​b​u​i​l​d​i​n​g​ ​a​ ​s​u​b​w​a​y​ ​w​i​t​h​o​u​t​ ​e​n​o​u​g​h​ ​t​r​a​i​n​s​ ​o​r​ ​b​u​i​l​d​i​n​g​ ​a​ ​d​a​m​ ​w​i​t​h​o​u​t​ ​e​n​o​u​g​h​ ​p​o​w​e​r​ ​l​i​n​e​s​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​c​a​u​s​e​ ​o​f​ ​m​a​l​i​n​v​e​s​t​m​e​n​t
+						 */
+						title: string
+					}
+					asymmetricPayoff: {
+						answers: {
+							/**
+							 * W​h​e​n​ ​t​h​e​ ​p​o​t​e​n​t​i​a​l​ ​u​p​s​i​d​e​ ​i​s​ ​d​i​s​p​r​o​p​o​r​t​i​o​n​a​t​e​l​y​ ​g​r​e​a​t​e​r​ ​t​h​a​n​ ​t​h​e​ ​d​o​w​n​s​i​d​e​ ​r​i​s​k
+							 */
+							'0': string
+							/**
+							 * W​h​e​n​ ​t​h​e​ ​p​o​t​e​n​t​i​a​l​ ​u​p​s​i​d​e​ ​a​n​d​ ​d​o​w​n​s​i​d​e​ ​a​r​e​ ​e​q​u​a​l
+							 */
+							'1': string
+							/**
+							 * W​h​e​n​ ​t​h​e​ ​p​o​t​e​n​t​i​a​l​ ​u​p​s​i​d​e​ ​i​s​ ​a​ ​t​a​l​k​i​n​g​ ​l​l​a​m​a​ ​a​n​d​ ​t​h​e​ ​d​o​w​n​s​i​d​e​ ​i​s​ ​a​ ​m​u​t​e​ ​g​i​r​a​f​f​e
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​ ​a​n​s​w​e​r​!​ ​Y​o​u​ ​g​o​t​ ​i​t​!​ ​A​n​ ​a​s​y​m​m​e​t​r​i​c​ ​p​a​y​o​f​f​ ​m​e​a​n​s​ ​t​h​a​t​ ​t​h​e​ ​p​o​t​e​n​t​i​a​l​ ​f​o​r​ ​g​a​i​n​ ​i​s​ ​m​u​c​h​ ​g​r​e​a​t​e​r​ ​t​h​a​n​ ​t​h​e​ ​p​o​t​e​n​t​i​a​l​ ​f​o​r​ ​l​o​s​s​.​ ​G​o​o​d​ ​j​o​b
+							 */
+							'0': string
+							/**
+							 * W​r​o​n​g​ ​a​n​s​w​e​r​!​ ​A​n​ ​a​s​y​m​m​e​t​r​i​c​ ​p​a​y​o​f​f​ ​m​e​a​n​s​ ​t​h​a​t​ ​t​h​e​ ​p​o​t​e​n​t​i​a​l​ ​f​o​r​ ​g​a​i​n​ ​o​r​ ​l​o​s​s​ ​i​s​ ​u​n​e​v​e​n​,​ ​n​o​t​ ​e​q​u​a​l​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e
+							 */
+							'1': string
+							/**
+							 * W​r​o​n​g​ ​a​n​s​w​e​r​!​ ​W​h​i​l​e​ ​a​ ​t​a​l​k​i​n​g​ ​l​l​a​m​a​ ​a​n​d​ ​m​u​t​e​ ​g​i​r​a​f​f​e​ ​m​i​g​h​t​ ​m​a​k​e​ ​f​o​r​ ​a​n​ ​i​n​t​e​r​e​s​t​i​n​g​ ​i​n​v​e​s​t​m​e​n​t​,​ ​t​h​e​y​ ​d​o​ ​n​o​t​ ​d​e​f​i​n​e​ ​a​n​ ​a​s​y​m​m​e​t​r​i​c​ ​p​a​y​o​f​f​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e​.
+							 */
+							'2': string
+						}
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​n​ ​a​s​y​m​m​e​t​r​i​c​ ​p​a​y​o​f​f​ ​i​n​ ​t​h​e​ ​c​o​n​t​e​x​t​ ​o​f​ ​i​n​v​e​s​t​m​e​n​t​ ​d​e​c​i​s​i​o​n​s
+						 */
+						question: string
+						/**
+						 * W​h​e​n​ ​w​e​ ​m​a​k​e​ ​d​e​c​i​s​i​o​n​s​ ​a​b​o​u​t​ ​i​n​v​e​s​t​i​n​g​ ​o​u​r​ ​m​o​n​e​y​,​ ​w​e​ ​t​r​y​ ​t​o​ ​p​r​e​d​i​c​t​ ​w​h​a​t​ ​m​i​g​h​t​ ​h​a​p​p​e​n​ ​a​n​d​ ​h​o​w​ ​m​u​c​h​ ​m​o​n​e​y​ ​w​e​ ​c​o​u​l​d​ ​m​a​k​e​ ​o​r​ ​l​o​s​e​.​ ​S​o​m​e​t​i​m​e​s​,​ ​t​h​e​ ​a​m​o​u​n​t​ ​o​f​ ​m​o​n​e​y​ ​w​e​ ​c​a​n​ ​m​a​k​e​ ​o​r​ ​l​o​s​e​ ​i​s​ ​n​o​t​ ​e​q​u​a​l​.​
+					​
+					​F​o​r​ ​e​x​a​m​p​l​e​,​ ​i​f​ ​w​e​ ​i​n​v​e​s​t​ ​i​n​ ​s​o​m​e​t​h​i​n​g​ ​t​h​a​t​ ​h​a​s​ ​a​ ​b​i​g​ ​c​h​a​n​c​e​ ​o​f​ ​m​a​k​i​n​g​ ​u​s​ ​a​ ​l​o​t​ ​o​f​ ​m​o​n​e​y​,​ ​b​u​t​ ​o​n​l​y​ ​a​ ​s​m​a​l​l​ ​c​h​a​n​c​e​ ​o​f​ ​l​o​s​i​n​g​ ​a​ ​l​i​t​t​l​e​ ​b​i​t​ ​o​f​ ​m​o​n​e​y​,​ ​w​e​ ​m​i​g​h​t​ ​c​a​l​l​ ​t​h​i​s​ ​a​n​ ​"​a​s​y​m​m​e​t​r​i​c​ ​p​a​y​o​f​f​.​"​ ​T​h​i​s​ ​m​e​a​n​s​ ​t​h​a​t​ ​t​h​e​ ​p​o​t​e​n​t​i​a​l​ ​u​p​s​i​d​e​ ​(​h​o​w​ ​m​u​c​h​ ​w​e​ ​c​a​n​ ​m​a​k​e​)​ ​i​s​ ​m​u​c​h​ ​b​i​g​g​e​r​ ​t​h​a​n​ ​t​h​e​ ​p​o​t​e​n​t​i​a​l​ ​d​o​w​n​s​i​d​e​ ​(​h​o​w​ ​m​u​c​h​ ​w​e​ ​c​a​n​ ​l​o​s​e​)​.​
+					​
+					​O​n​e​ ​e​x​a​m​p​l​e​ ​o​f​ ​t​h​i​s​ ​i​s​ ​b​i​t​c​o​i​n​.​ ​B​i​t​c​o​i​n​'​s​ ​p​o​t​e​n​t​i​a​l​ ​o​u​t​c​o​m​e​s​ ​a​r​e​ ​s​i​m​i​l​a​r​ ​t​o​ ​a​n​ ​o​p​t​i​o​n​,​ ​m​e​a​n​i​n​g​ ​i​t​ ​e​i​t​h​e​r​ ​s​u​c​c​e​e​d​s​ ​o​r​ ​f​a​i​l​s​.​ ​I​f​ ​i​t​ ​e​x​p​e​r​i​e​n​c​e​s​ ​a​ ​c​a​t​a​s​t​r​o​p​h​i​c​ ​e​v​e​n​t​,​ ​t​h​e​ ​r​i​s​k​ ​o​f​ ​l​o​s​i​n​g​ ​m​o​n​e​y​ ​i​s​ ​m​i​n​i​m​i​z​e​d​.​
+					​
+					​H​o​w​e​v​e​r​,​ ​t​h​e​ ​p​o​t​e​n​t​i​a​l​ ​u​p​s​i​d​e​ ​i​s​ ​m​u​c​h​ ​g​r​e​a​t​e​r​,​ ​a​s​ ​b​i​t​c​o​i​n​'​s​ ​t​o​t​a​l​ ​a​d​d​r​e​s​s​a​b​l​e​ ​m​a​r​k​e​t​ ​h​a​s​ ​t​h​e​ ​p​o​t​e​n​t​i​a​l​ ​t​o​ ​b​e​ ​a​ ​p​r​i​m​a​r​y​ ​g​l​o​b​a​l​ ​s​t​o​r​e​ ​o​f​ ​w​e​a​l​t​h​.​
+					​
+					​A​s​y​m​m​e​t​r​y​ ​i​n​ ​p​a​y​o​f​f​s​,​ ​o​r​ ​u​n​e​v​e​n​ ​p​o​t​e​n​t​i​a​l​ ​o​u​t​c​o​m​e​s​,​ ​o​n​l​y​ ​o​c​c​u​r​s​ ​w​h​e​n​ ​t​h​e​r​e​ ​i​s​ ​u​n​e​v​e​n​ ​u​n​d​e​r​s​t​a​n​d​i​n​g​ ​o​r​ ​i​n​f​o​r​m​a​t​i​o​n​ ​a​b​o​u​t​ ​a​n​ ​i​n​v​e​s​t​m​e​n​t​.​ ​I​f​ ​e​v​e​r​y​o​n​e​ ​f​u​l​l​y​ ​u​n​d​e​r​s​t​o​o​d​ ​b​i​t​c​o​i​n​,​ ​i​t​ ​w​o​u​l​d​ ​a​l​r​e​a​d​y​ ​b​e​ ​w​i​d​e​l​y​ ​u​s​e​d​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​c​u​r​r​e​n​c​y​.​
+					​
+					​C​u​r​r​e​n​t​l​y​,​ ​n​o​t​ ​e​v​e​r​y​o​n​e​ ​i​s​ ​a​w​a​r​e​ ​o​f​ ​b​i​t​c​o​i​n​'​s​ ​p​o​t​e​n​t​i​a​l​ ​a​s​ ​a​ ​s​u​p​e​r​i​o​r​ ​m​o​n​e​t​a​r​y​ ​o​p​t​i​o​n​,​ ​s​o​ ​t​h​e​ ​p​o​t​e​n​t​i​a​l​ ​f​o​r​ ​i​t​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​i​n​ ​v​a​l​u​e​ ​d​e​p​e​n​d​s​ ​o​n​ ​t​h​e​ ​d​e​m​a​n​d​ ​f​o​r​ ​i​t​ ​i​n​c​r​e​a​s​i​n​g​ ​w​i​t​h​o​u​t​ ​a​ ​c​o​r​r​e​s​p​o​n​d​i​n​g​ ​i​n​c​r​e​a​s​e​ ​i​n​ ​t​h​e​ ​s​u​p​p​l​y​.​
+				
+						 */
+						text: string
+						/**
+						 * W​h​a​t​ ​i​s​ ​a​n​ ​a​s​y​m​m​e​t​r​i​c​ ​p​a​y​o​f​f​ ​i​n​ ​t​h​e​ ​c​o​n​t​e​x​t​ ​o​f​ ​i​n​v​e​s​t​m​e​n​t​ ​d​e​c​i​s​i​o​n​s
+						 */
+						title: string
+					}
+					ansoffMatrix: {
+						answers: {
+							/**
+							 * I​t​ ​h​e​l​p​s​ ​i​d​e​n​t​i​f​y​ ​p​o​t​e​n​t​i​a​l​ ​g​r​o​w​t​h​ ​s​t​r​a​t​e​g​i​e​s​ ​f​o​r​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​p​r​o​t​o​c​o​l
+							 */
+							'0': string
+							/**
+							 * I​t​ ​h​e​l​p​s​ ​d​e​t​e​r​m​i​n​e​ ​t​h​e​ ​o​p​t​i​m​a​l​ ​t​e​m​p​e​r​a​t​u​r​e​ ​f​o​r​ ​s​t​o​r​i​n​g​ ​b​i​t​c​o​i​n
+							 */
+							'1': string
+							/**
+							 * I​t​ ​h​e​l​p​s​ ​c​a​l​c​u​l​a​t​e​ ​t​h​e​ ​p​o​t​e​n​t​i​a​l​ ​r​e​t​u​r​n​ ​o​n​ ​i​n​v​e​s​t​m​e​n​t​ ​f​o​r​ ​b​i​t​c​o​i​n​ ​m​i​n​i​n​g​ ​o​p​e​r​a​t​i​o​n​s
+							 */
+							'2': string
+						}
+						feedback: {
+							/**
+							 * C​o​r​r​e​c​t​ ​a​n​s​w​e​r​!​ ​Y​o​u​ ​g​o​t​ ​i​t​!​ ​T​h​e​ ​A​n​s​o​f​f​ ​M​a​t​r​i​x​ ​c​a​n​ ​b​e​ ​u​s​e​d​ ​t​o​ ​o​u​t​l​i​n​e​ ​g​r​o​w​t​h​ ​s​t​r​a​t​e​g​i​e​s​ ​f​o​r​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​p​r​o​t​o​c​o​l​,​ ​s​u​c​h​ ​a​s​ ​d​e​v​e​l​o​p​i​n​g​ ​a​n​d​ ​s​e​l​l​i​n​g​ ​i​t​ ​t​o​ ​d​i​f​f​e​r​e​n​t​ ​m​a​r​k​e​t​s​.​ ​G​o​o​d​ ​j​o​b
+							 */
+							'0': string
+							/**
+							 * N​o​p​e​!​ ​S​t​o​r​a​g​e​ ​t​e​m​p​e​r​a​t​u​r​e​ ​f​o​r​ ​b​i​t​c​o​i​n​ ​p​r​i​v​a​t​e​ ​k​e​y​s​ ​i​s​ ​n​o​t​ ​a​ ​r​e​a​l​ ​i​s​s​u​e​,​ ​a​n​d​ ​i​t​ ​i​s​ ​n​o​t​ ​r​e​l​a​t​e​d​ ​t​o​ ​t​h​e​ ​A​n​s​o​f​f​ ​M​a​t​r​i​x​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e
+							 */
+							'1': string
+							/**
+							 * W​r​o​n​g​ ​a​n​s​w​e​r​!​ ​W​h​i​l​e​ ​c​a​l​c​u​l​a​t​i​n​g​ ​p​o​t​e​n​t​i​a​l​ ​r​e​t​u​r​n​s​ ​o​n​ ​i​n​v​e​s​t​m​e​n​t​ ​i​s​ ​i​m​p​o​r​t​a​n​t​ ​f​o​r​ ​b​i​t​c​o​i​n​ ​m​i​n​e​r​s​,​ ​i​t​ ​i​s​ ​n​o​t​ ​d​i​r​e​c​t​l​y​ ​r​e​l​a​t​e​d​ ​t​o​ ​t​h​e​ ​A​n​s​o​f​f​ ​M​a​t​r​i​x​.​ ​B​e​t​t​e​r​ ​l​u​c​k​ ​n​e​x​t​ ​t​i​m​e​.
+							 */
+							'2': string
+						}
+						/**
+						 * H​o​w​ ​i​s​ ​t​h​e​ ​A​n​s​o​f​f​ ​M​a​t​r​i​x​ ​r​e​l​e​v​a​n​t​ ​t​o​ ​t​h​e​ ​g​r​o​w​t​h​ ​a​n​d​ ​p​o​t​e​n​t​i​a​l​ ​o​f​ ​b​i​t​c​o​i​n
+						 */
+						question: string
+						/**
+						 * T​h​e​ ​A​n​s​o​f​f​ ​M​a​t​r​i​x​ ​i​s​ ​a​ ​t​o​o​l​ ​t​h​a​t​ ​h​e​l​p​s​ ​c​o​m​p​a​n​i​e​s​ ​t​h​i​n​k​ ​a​b​o​u​t​ ​h​o​w​ ​t​h​e​y​ ​c​a​n​ ​g​r​o​w​ ​a​n​d​ ​m​a​k​e​ ​m​o​r​e​ ​m​o​n​e​y​.​ ​I​t​ ​h​e​l​p​s​ ​t​h​e​m​ ​f​i​g​u​r​e​ ​o​u​t​ ​w​h​a​t​ ​t​o​ ​d​o​ ​w​i​t​h​ ​a​ ​p​r​o​d​u​c​t​ ​o​r​ ​s​e​r​v​i​c​e​ ​t​h​e​y​ ​h​a​v​e​,​ ​a​n​d​ ​h​o​w​ ​t​o​ ​s​e​l​l​ ​i​t​ ​t​o​ ​d​i​f​f​e​r​e​n​t​ ​g​r​o​u​p​s​ ​o​f​ ​p​e​o​p​l​e​.​
+					​
+					​I​n​ ​t​h​e​ ​c​a​s​e​ ​o​f​ ​b​i​t​c​o​i​n​,​ ​i​t​ ​i​s​ ​a​ ​p​r​o​d​u​c​t​ ​t​h​a​t​ ​i​s​ ​l​i​k​e​ ​a​ ​t​y​p​e​ ​o​f​ ​d​i​g​i​t​a​l​ ​m​o​n​e​y​.​ ​I​t​ ​h​a​s​ ​t​h​e​ ​p​o​t​e​n​t​i​a​l​ ​t​o​ ​b​e​ ​u​s​e​d​ ​b​y​ ​a​ ​l​o​t​ ​o​f​ ​p​e​o​p​l​e​ ​i​n​ ​a​ ​l​o​t​ ​o​f​ ​d​i​f​f​e​r​e​n​t​ ​w​a​y​s​.​ ​T​h​e​ ​p​e​o​p​l​e​ ​w​h​o​ ​w​o​r​k​ ​o​n​ ​b​i​t​c​o​i​n​,​ ​l​i​k​e​ ​t​h​e​ ​p​e​o​p​l​e​ ​w​h​o​ ​w​r​i​t​e​ ​t​h​e​ ​c​o​d​e​ ​a​n​d​ ​h​e​l​p​ ​o​t​h​e​r​s​ ​u​n​d​e​r​s​t​a​n​d​ ​h​o​w​ ​t​o​ ​u​s​e​ ​i​t​,​ ​a​r​e​ ​t​r​y​i​n​g​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​t​h​e​ ​n​u​m​b​e​r​ ​o​f​ ​p​e​o​p​l​e​ ​w​h​o​ ​u​s​e​ ​i​t​ ​a​n​d​ ​m​a​k​e​ ​i​t​ ​e​a​s​i​e​r​ ​f​o​r​ ​t​h​e​m​ ​t​o​ ​d​o​ ​s​o​.​
+					​
+					​B​i​t​c​o​i​n​ ​c​a​n​ ​b​e​ ​u​s​e​d​ ​t​o​ ​s​a​v​e​ ​m​o​n​e​y​ ​a​n​d​ ​p​r​o​t​e​c​t​ ​i​t​ ​f​r​o​m​ ​b​e​i​n​g​ ​t​a​k​e​n​ ​a​w​a​y​,​ ​o​r​ ​i​t​ ​c​a​n​ ​b​e​ ​u​s​e​d​ ​t​o​ ​s​e​n​d​ ​a​n​d​ ​r​e​c​e​i​v​e​ ​s​m​a​l​l​ ​a​m​o​u​n​t​s​ ​o​f​ ​m​o​n​e​y​ ​q​u​i​c​k​l​y​,​ ​w​i​t​h​o​u​t​ ​h​a​v​i​n​g​ ​t​o​ ​g​o​ ​t​h​r​o​u​g​h​ ​a​ ​l​o​t​ ​o​f​ ​s​t​e​p​s​.​ ​A​s​ ​m​o​r​e​ ​p​e​o​p​l​e​ ​s​t​a​r​t​ ​u​s​i​n​g​ ​b​i​t​c​o​i​n​,​ ​i​t​ ​h​a​s​ ​t​h​e​ ​p​o​t​e​n​t​i​a​l​ ​t​o​ ​g​r​o​w​ ​a​n​d​ ​b​e​c​o​m​e​ ​m​o​r​e​ ​p​o​p​u​l​a​r​.​
+					​
+					​I​t​ ​i​s​ ​a​l​s​o​ ​p​o​s​s​i​b​l​e​ ​f​o​r​ ​p​e​o​p​l​e​ ​a​n​d​ ​c​o​m​p​a​n​i​e​s​ ​t​o​ ​u​s​e​ ​b​i​t​c​o​i​n​ ​a​s​ ​p​a​r​t​ ​o​f​ ​t​h​e​i​r​ ​f​i​n​a​n​c​i​a​l​ ​p​l​a​n​s​,​ ​t​o​ ​h​e​l​p​ ​p​r​o​t​e​c​t​ ​t​h​e​i​r​ ​m​o​n​e​y​ ​f​r​o​m​ ​l​o​s​i​n​g​ ​v​a​l​u​e​.​ ​W​h​i​l​e​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​p​e​o​p​l​e​ ​m​i​g​h​t​ ​u​s​e​ ​b​i​t​c​o​i​n​ ​n​o​w​ ​i​s​ ​t​o​ ​p​r​o​t​e​c​t​ ​t​h​e​i​r​ ​w​e​a​l​t​h​,​ ​t​h​e​ ​p​a​y​m​e​n​t​ ​u​s​e​ ​c​a​s​e​ ​h​a​s​ ​b​e​e​n​ ​g​r​o​w​i​n​g​ ​f​a​s​t​ ​s​i​n​c​e​ ​t​h​e​ ​i​n​c​e​p​t​i​o​n​ ​o​f​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​a​n​d​ ​o​t​h​e​r​ ​u​s​e​ ​c​a​s​e​s​ ​m​a​y​ ​e​m​e​r​g​e​.​
+				
+						 */
+						text: string
+						/**
+						 * H​o​w​ ​i​s​ ​t​h​e​ ​A​n​s​o​f​f​ ​M​a​t​r​i​x​ ​r​e​l​e​v​a​n​t​ ​t​o​ ​t​h​e​ ​g​r​o​w​t​h​ ​a​n​d​ ​p​o​t​e​n​t​i​a​l​ ​o​f​ ​b​i​t​c​o​i​n
+						 */
+						title: string
+					}
+				}
+			}
 		}
 		/**
 		 * T​h​a​t​'​s​ ​a​l​l​ ​f​o​r​ ​n​o​w​,​ ​w​e​'​l​l​ ​l​e​t​ ​y​o​u​ ​k​n​o​w​ ​w​h​e​n​ ​t​h​e​r​e​'​s​ ​m​o​r​e​ ​t​o​ ​u​n​e​a​r​t​h
@@ -5110,6 +9962,4858 @@ export type TranslationFunctions = {
 						/**
 						 * Special Characteristic #5: 
 					Secure -- Part II
+						 */
+						title: () => LocalizedString
+					}
+				}
+			}
+			TheOriginsOfMoney: {
+				/**
+				 * The Origins of Money
+				 */
+				title: () => LocalizedString
+				questions: {
+					originsOfMoney: {
+						answers: {
+							/**
+							 * To store and transfer wealth
+							 */
+							'0': () => LocalizedString
+							/**
+							 * To serve as a form of entertainment
+							 */
+							'1': () => LocalizedString
+							/**
+							 * To act as a status symbol
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations! You hit the nail on the head. Collectibles have long been used as a medium for storing and transferring wealth, much like how Bitcoin is used today as a decentralized digital currency
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, but collectibles aren't just for show - they have a deeper purpose
+							 */
+							'1': () => LocalizedString
+							/**
+							 * While collectibles may serve as a status symbol for some, there's more to it than just showing off.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the primary and ultimate evolutionary function of collectibles
+						 */
+						question: () => LocalizedString
+						/**
+						 * The earliest human societies engaged in trade through barter, but this method had several limitations. One issue was the "double coincidence of wants" problem, where two people needed to desire the same item at the same time in order to complete a trade.
+				
+					To overcome this issue, humans began to collect and value certain items for their rarity and symbolic significance, such as shells, animal teeth, and flint.
+				
+					These collectibles served as a way for early humans to store and transfer wealth, providing an evolutionary advantage over other species such as Homo neanderthalensis.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the primary and ultimate evolutionary function of collectibles
+						 */
+						title: () => LocalizedString
+					}
+					primitiveMoney: {
+						answers: {
+							/**
+							 * To store value
+							 */
+							'0': () => LocalizedString
+							/**
+							 * To serve as a form of entertainment
+							 */
+							'1': () => LocalizedString
+							/**
+							 * To act as a medium of exchange
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations! You're right on the money (pun intended). Collectibles served as a store of value in paleolithic societies, much like how Bitcoin and other cryptocurrencies are used today as a digital store of value
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, collectibles might be fun to collect, but they had a more practical purpose in ancient societies
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Collectibles were not used as frequently as modern currency, so they didn't quite play the same role as a medium of exchange.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What was the primary role of collectibles in paleolithic societies
+						 */
+						question: () => LocalizedString
+						/**
+						 * Collectibles served as a precursor to money by allowing trade between different groups and facilitating the transfer of wealth between generations. Although they were not used as frequently as modern money in paleolithic societies, collectibles still served as a store of value and could sometimes even facilitate trade.
+				
+					Primitive forms of money, such as collectibles, had a low velocity compared to modern currency and might only be transferred a few times during an individual's lifetime. However, durable collectibles that were passed down through generations had substantial value at each transfer and sometimes made trade possible.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What was the primary role of collectibles in paleolithic societies
+						 */
+						title: () => LocalizedString
+					}
+					anticipatingDemand: {
+						answers: {
+							/**
+							 * The ability to buy collectibles at a lower price before they became widely sought after
+							 */
+							'0': () => LocalizedString
+							/**
+							 * The ability to trade collectibles for other useful items
+							 */
+							'1': () => LocalizedString
+							/**
+							 * The ability to impress others with their collection of rare and valuable items
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations, you are correct! It seems that the concept of "buy low, sell high" is not a modern invention, as early humans also sought to acquire collectibles at a lower cost before their demand and trade value increased. Fun fact: this principle also applies to bitcoin, where early adopters were able to acquire bitcoins at a much lower price before their value skyrocketed
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, that is not the correct answer. While being able to trade collectibles for other useful items may have been a benefit of correctly anticipating demand, it was not the main advantage
+							 */
+							'1': () => LocalizedString
+							/**
+							 * I'm afraid that is not the correct answer. While having a collection of rare and valuable items may have been a source of pride and admiration, it was not the main advantage
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What was the main advantage of being able to anticipate future demand for collectible items in early human societies
+						 */
+						question: () => LocalizedString
+						/**
+						 * The choice of which items to collect or create posed a significant problem for early humans, as they had to anticipate which objects would be desired by others. The ability to correctly predict which items would be in demand for their collectible value gave a significant advantage to the owner in terms of their ability to trade and accumulate wealth.
+				
+					Some Native American tribes, such as the Narragansetts, even focused on producing collectibles that had little practical use, but were valuable in trade.
+				
+					The earlier a collectible is anticipated to be in future demand, the greater the advantage its possessor has, as it can be obtained at a lower cost before it becomes widely sought after and its trade value increases as the number of people demanding it grows.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What was the main advantage of being able to anticipate future demand for collectible items in early human societies
+						 */
+						title: () => LocalizedString
+					}
+					nashEquilibrium: {
+						answers: {
+							/**
+							 * A concept that helps societies decide on a single store of value
+							 */
+							'0': () => LocalizedString
+							/**
+							 * A type of dance that promotes trade and the division of labor
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A musical instrument that makes it easier to conduct trade and specialize in different tasks
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations, you are correct! A Nash Equilibrium is a concept in game theory that refers to a situation in which no player can gain an advantage by changing their strategy. In the context of choosing a store of value, achieving a Nash Equilibrium means that society has converged on a single store of value, which greatly facilitates trade and the division of labor. Fun fact: Bitcoin is often cited as an example of a Nash Equilibrium, as it has become the dominant cryptocurrency due to its perceived value and widespread adoption
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, that is not the correct answer. While a Nash Equilibrium has nothing to do with dance, it is an important concept in game theory that can benefit society
+							 */
+							'1': () => LocalizedString
+							/**
+							 * I'm afraid that is not the correct answer. While music can bring people together and facilitate cooperation, a Nash Equilibrium has nothing to do with musical instruments. It is a concept in game theory that refers to a situation in which no player can gain an advantage by changing their strategy.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is a Nash Equilibrium and how does it benefit society
+						 */
+						question: () => LocalizedString
+						/**
+						 * Acquiring an item with the expectation that it will be desired as a future store of value can accelerate its adoption for that purpose. This process can create a feedback loop that drives societies towards adopting a single store of value.
+				
+					In game theory, this is known as a "Nash Equilibrium". Reaching a Nash Equilibrium for a store of value can greatly benefit a society, as it makes trade and the division of labor easier and paves the way for the development of civilization.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is a Nash Equilibrium and how does it benefit society
+						 */
+						title: () => LocalizedString
+					}
+					singleStoreOfValue: {
+						answers: {
+							/**
+							 * To increase the purchasing power of their savings
+							 */
+							'0': () => LocalizedString
+							/**
+							 * To learn about other cultures and societies
+							 */
+							'1': () => LocalizedString
+							/**
+							 * To show off their wealth and status
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct! Merchants and traders had an incentive to promote the adoption of a foreign store of value in their own society because it increased the purchasing power of their savings. This not only benefited the merchants, but also the society as a whole, as the adoption of a single store of value reduced the cost of completing trade with other societies and increased trade-based wealth. Fun fact: Bitcoin is an example of a store of value that has been adopted by many societies, and its widespread adoption has increased its purchasing power and facilitated trade
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, that is not the correct answer. While learning about other cultures and societies may have been a side benefit of promoting the adoption of a foreign store of value, it was not the main reason
+							 */
+							'1': () => LocalizedString
+							/**
+							 * I'm afraid that is not the correct answer. While showing off wealth and status may have been a motivation for some individuals, it was not the main reason for why merchants and traders had an incentive to promote the adoption of a foreign store of value in their own society.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * Why did merchants and traders in early human societies have an incentive to promote the adoption of a foreign store of value in their own society
+						 */
+						question: () => LocalizedString
+						/**
+						 * As human societies and trade routes developed over time, stores of value that emerged in different societies began to compete with each other. Merchants and traders had to decide whether to save their profits in the store of value of their own society or in the store of value of the society they were trading with, or a combination of both.
+				
+					Holding savings in a foreign store of value gave merchants the ability to complete trade more easily in that society, and also gave them an incentive to promote the adoption of that store of value in their own society, as it would increase the purchasing power of their savings.
+				
+					When two societies adopt the same store of value, they see a significant reduction in the cost of trading with each other and an increase in trade-based wealth. In the 19th century, most of the world converged on a single store of value – gold – and this period saw the greatest increase in trade in history.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * Why did merchants and traders in early human societies have an incentive to promote the adoption of a foreign store of value in their own society
+						 */
+						title: () => LocalizedString
+					}
+				}
+			}
+			AttributesOfAGoodStoreOfValue: {
+				/**
+				 * Attributes of a good Store of Value
+				 */
+				title: () => LocalizedString
+				questions: {
+					whatIsGoodSOV: {
+						answers: {
+							/**
+							 * Durability, portability, interchangeability, verifiability, divisibility, scarcity, long history, and resistance to censorship
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Tastiness, cuteness, softness, and Instagram-ability
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Rarity, beauty, and sentimental value
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Yes! A good store of value should have attributes such as durability, portability, interchangeability, verifiability, divisibility, scarcity, a long history, and resistance to censorship. These characteristics make it easier to use as a medium of exchange and store of value, and increase its demand over time
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, that is not the correct answer. While tastiness, cuteness, softness, and Instagram-ability may be desirable qualities in other contexts, they are not typically considered important attributes for a store of value
+							 */
+							'1': () => LocalizedString
+							/**
+							 * I'm afraid that is not the correct answer. While rarity, beauty, and sentimental value may make an item valuable to a particular individual, they are not typically considered important attributes for a store of value that is widely accepted and used as a medium of exchange.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What are some attributes that make a good store of value
+						 */
+						question: () => LocalizedString
+						/**
+						 * When stores of value compete with each other, the attributes that make a good store of value allow it to outperform its competitors and increase demand over time.
+				
+					Many goods have been used as stores of value but certain attributes are particularly desirable and allow these goods to be more successful.
+				
+					An ideal store of value should be durable, portable, interchangeable, verifiable, divisible, scarce, have a long history, and resistant to censorship.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What are some attributes that make a good store of value
+						 */
+						title: () => LocalizedString
+					}
+					durability: {
+						answers: {
+							/**
+							 * The network that secures the currency
+							 */
+							'0': () => LocalizedString
+							/**
+							 * The physical manifestation of the currency
+							 */
+							'1': () => LocalizedString
+							/**
+							 * The institution that issues the currency
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * You got it right. The network that secures the currency is an important factor in determining its durability, especially for digital currencies like bitcoin. Did you know that bitcoin has displayed a high level of "anti-fragility" despite attempts to regulate it and attacks by hackers? That's quite impressive for a currency that's still in its early stages
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Nope, sorry! The physical manifestation of the currency is actually not as important as the institution that issues it or the network that secures it. Don't worry though, you're not alone in making this mistake. Even the Ancient Greeks used to mint their coins out of perishable materials like bronze and copper
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Close, but not quite! The institution that issues the currency is actually an important factor in determining its durability. But hey, at least you're not alone in this mistake. There have been many governments and currencies that have come and gone over the centuries.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * Which of the following is an important factor in determining the durability of a good store of value
+						 */
+						question: () => LocalizedString
+						/**
+						 * The good used as money should not be perishable or easily destroyed. Gold is known for its durability and is often considered the "king" in this regard.
+				
+					A large portion of the gold that has ever been mined or minted, including the gold of the Pharaohs, still exists today and is likely to remain available for many more years. Gold coins that were used as money in ancient times still hold significant value today.
+				
+					Fiat currencies and bitcoins are digital records that may take physical form, such as paper bills. However, it is not the physical manifestation of these currencies that should be considered for their durability, but rather the durability of the institution that issues them.
+				
+					Many governments and their currencies have come and gone over the centuries, while others, such as the US dollar and British pound, have survived for a longer period of time. Bitcoins have no issuing authority, so their durability depends on the network that secures them. While it is still early to draw strong conclusions about the durability of bitcoins, there are signs that the network has displayed a high level of "anti-fragility" despite attempts to regulate it and attacks by hackers.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * Which of the following is an important factor in determining the durability of a good store of value
+						 */
+						title: () => LocalizedString
+					}
+					portability: {
+						answers: {
+							/**
+							 * Its physical form
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Its ability to be easily transported and stored
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Its ability to facilitate long-distance trade
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * You got it right. The physical form of the good is not a factor that makes it portable. In fact, digital currencies like bitcoin are the most portable stores of value because they can be easily stored on a small device and transmitted quickly across long distances. Did you know that private keys representing hundreds of millions of dollars can be stored on a tiny USB drive and easily carried anywhere with bitcoin? That's pretty impressive
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, that's incorrect! The ability to be easily transported and stored is actually an important factor that makes a good store of value portable. But don't worry, it's a common mistake. After all, who wouldn't want to carry around a cow as a store of value? It would make for a pretty impressive conversation starter at least
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Oops, that's not the right answer! The ability to facilitate long-distance trade is actually an important factor that makes a good store of value portable. But hey, at least you're not alone in this mistake. It's easy to see how someone might think that cows are the perfect portable store of value, given their ability to produce milk and beef.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * Which of the following is NOT a factor that makes a good store of value portable
+						 */
+						question: () => LocalizedString
+						/**
+						 * 
+					"Portability" refers to how easy it is to move or transport a good from one place to another.
+				
+					Bitcoins are highly portable, allowing for easy storage on a small USB drive and quick transmission across long distances. Similarly, fiat currencies are also digital and therefore portable, but government regulations and capital controls can make large transfers of value difficult or impossible.
+				
+					On the other hand, gold, being physical in form and very dense, is the least portable store of value, with the majority of bullion never being transported and the transfer of physical gold being costly, risky, and time-consuming.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * Which of the following is NOT a factor that makes a good store of value portable
+						 */
+						title: () => LocalizedString
+					}
+					fungibility: {
+						answers: {
+							/**
+							 * The shape and quality of diamonds are irregular
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Gold is more valuable than diamonds
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Gold is more abundant than diamonds
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Exactly**!** The irregular shape and quality of diamonds makes them less interchangeable than gold, which is why gold is considered more fungible. Did you also know that bitcoin is considered fungible at the network level, but its traceability on the blockchain can sometimes lead to it being treated as non-fungible by merchants or exchanges
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Wrong answer! Gold may be more valuable than diamonds, but that's not the main reason it's considered more fungible. Looks like you need to brush up on your fungibility knowledge
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Nope, sorry! While gold may be more abundant than diamonds, that's not the main reason it's considered more fungible. Better luck next time!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the main reason that gold is considered more fungible than diamonds
+						 */
+						question: () => LocalizedString
+						/**
+						 * 
+					"Fungibility" means that one unit of a currency is interchangeable with another unit of the same currency. This is an important attribute for a good store of value.
+				
+					Gold is a highly fungible store of value, as when melted down, an ounce of gold is essentially indistinguishable from any other. Fiat currencies, on the other hand, may not always be completely fungible, as their issuing institutions may treat different denominations differently.
+				
+					Like gold, units of bitcoin are fungible, but there are some nuances to it. We'll dive into this in a later chapter.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the main reason that gold is considered more fungible than diamonds
+						 */
+						title: () => LocalizedString
+					}
+					verifiability: {
+						answers: {
+							/**
+							 * By using cryptographic signatures
+							 */
+							'0': () => LocalizedString
+							/**
+							 * By checking for gold-plated tungsten
+							 */
+							'1': () => LocalizedString
+							/**
+							 * By checking for features on banknotes to prevent counterfeiting
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations! You are correct. Bitcoin can be verified with mathematical certainty using cryptographic signatures
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, but that's not quite right. Better luck next time
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Wrong! Bitcoin is purely digital and doesn't utilize banknotes. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * How can bitcoin be verified
+						 */
+						question: () => LocalizedString
+						/**
+						 * It is important for a good store of value to be easily verifiable as authentic. This increases confidence in trade and the likelihood that a transaction will be completed.
+				
+					Both fiat currencies and gold are generally easy to verify, but they are not foolproof. Counterfeit bills and gold-plated tungsten have been used to deceive people in the past.
+				
+					On the other hand, the use of cryptography makes verification very easy for bitcoin and makes counterfeiting impossible.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * How can bitcoin be verified
+						 */
+						title: () => LocalizedString
+					}
+					divisibility: {
+						answers: {
+							/**
+							 * Gold
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Bitcoin
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Fiat currency
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * You are correct. Gold is difficult divide into small quantities for everyday trade. Did you know that gold has been used as a store of value for thousands of years due to its rarity and durability
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, but that's not quite right. Bitcoin is highly divisible into its base unit 'satoshi', and it can even be divided into milli-satoshis (1/1000 of a satoshi) on the Lightning Network
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Nope**.** While fiat currencies are not as divisible as bitcoin, they are easily divisible into smaller denominations.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * Which of the following is NOT a good store of value due to its difficulty in being easily divided for day-to-day trade
+						 */
+						question: () => LocalizedString
+						/**
+						 * The ability to divide a good is an important attribute for it to be a good store of value.
+				
+					Imagine you have a $100 bill and want to buy a pack of chewing gum that costs 10 cents. The success of the trade depends on the seller having $99.90 in change available in that moment.
+				
+					In societies where trade is prevalent, the ability to divide a good into smaller quantities allows for more precise exchange and can make it easier to use in day-to-day transactions.
+				
+					Bitcoin is particularly useful in this regard, as it can be divided down to a hundred millionth of a unit and transmitted in tiny and exact amounts.
+				
+					Fiat currencies are typically divisible down to pocket change, which has little purchasing power, making fiat divisible enough in practice.
+				
+					Gold, while physically divisible, can be difficult to use in small quantities for everyday trade.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * Which of the following is NOT a good store of value due to its difficulty in being easily divided for day-to-day trade
+						 */
+						title: () => LocalizedString
+					}
+					scarce: {
+						answers: {
+							/**
+							 * Scarcity
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Abundance
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Ease of production
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations! You are correct. Did you know that there will only ever be a maximum of 21 million bitcoins in circulation, making it a scarce and valuable asset
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, but abundance is not the most important attribute for a store of value. Better luck next time
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, but ease of production is not the most important attribute for a store of value. Better luck next time!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the most important attribute of a store of value
+						 */
+						question: () => LocalizedString
+						/**
+						 * A good store of value should have a limited supply, or be scarce.
+				
+					This is because scarcity can create value, as people often desire rare or hard-to-obtain items. Bitcoin, for instance, is designed to have a maximum of 21 million units, which gives each owner a known percentage of the total possible supply.
+				
+					In contrast, the supply of gold can potentially increase through new mining methods, and fiat currencies are often prone to inflation, leading to a decline in value over time.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the most important attribute of a store of value
+						 */
+						title: () => LocalizedString
+					}
+					establishedHistory: {
+						answers: {
+							/**
+							 * The new arrival has a significant advantage over the established good
+							 */
+							'0': () => LocalizedString
+							/**
+							 * The established good has a longer history of being valued by society
+							 */
+							'1': () => LocalizedString
+							/**
+							 * The new arrival is cheaper to produce
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * You are correct. A long-established store of value is less likely to be displaced by a new arrival unless the new arrival has a significant advantage over the established good
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, but this is actually the reason that a long-established store of value is less likely to be displaced. Better luck next time
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Nope, wrong. Did you not pay attention in the previous lesson on scarcity?
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the main reason that a long-established store of value could be displaced by a new arrival
+						 */
+						question: () => LocalizedString
+						/**
+						 * This is because a well-established store of value is less likely to be displaced by a newcomer, unless it has a significant advantage over the established good.
+				
+					Additionally, people are creatures of habit and will keep using what they already know.
+				
+					Gold, for example, has a long history of being valued and has maintained its value over time. In contrast, fiat currencies, which are a relatively recent invention, have a tendency to lose value over time due to inflation.
+				
+					Bitcoin, although it has only been around for a short time, has shown resilience in the market and is likely to continue to be valued.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the main reason that a long-established store of value could be displaced by a new arrival
+						 */
+						title: () => LocalizedString
+					}
+					censorshipResistance: {
+						answers: {
+							/**
+							 * Its decentralized, peer-to-peer network
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Its physical nature
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Its regulation by states
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * You are correct. The decentralized, peer-to-peer network of Bitcoin allows for transactions to be made without permission, making it a censorship-resistant good
+							 */
+							'0': () => LocalizedString
+							/**
+							 * No. In fact, physical goods often require permission to cross borders and can easily be confiscated. Better luck next time
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, but the opposite is actually true. The fiat banking system, which is regulated by states, requires human intervention to report and prevent certain uses of monetary goods, making it prone to censorship. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * Which of the following is NOT a reason that Bitcoin is considered a censorship-resistant good
+						 */
+						question: () => LocalizedString
+						/**
+						 * Censorship-resistance is an attribute that has become increasingly important in the digital age, as it refers to the difficulty that external parties, such as corporations or governments, have in preventing an individual from using a particular good.
+				
+					This attribute is particularly valuable for individuals living under regimes that enforce capital controls or prohibit certain forms of trade. Bitcoin is often cited as being a censorship-resistant good due to its decentralized, peer-to-peer network, which allows for transactions to be made without human intervention or permission.
+				
+					In contrast, the fiat banking system is regulated by states and requires human intervention to report and prevent certain uses of monetary goods, such as capital controls.
+				
+					Gold, although it is not issued by states, can be difficult to transmit at a distance and is therefore more subject to state regulation.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * Which of the following is NOT a reason that Bitcoin is considered a censorship-resistant good
+						 */
+						title: () => LocalizedString
+					}
+				}
+			}
+			TheEvolutionOfMoneyI: {
+				/**
+				 * The Evolution of Money I
+				 */
+				title: () => LocalizedString
+				questions: {
+					evolutionMoney: {
+						answers: {
+							/**
+							 * The use of money as a way to exchange goods and services
+							 */
+							'0': () => LocalizedString
+							/**
+							 * The history of money's development
+							 */
+							'1': () => LocalizedString
+							/**
+							 * The exclusive power of governments to create money
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congrats, you got it right! It's interesting to note that the use of money as a medium of exchange has become more important in modern times due to the rise of electronic payment methods
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Wrong! But it's good that you're interested in the history of money. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, that's incorrect. It's true that governments do have a lot of control over the creation and issuance of money, but that's not the main focus of modern monetary economics. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the main focus of modern monetary economics
+						 */
+						question: () => LocalizedString
+						/**
+						 * In modern times, many people in the field of monetary economics focus on the idea that money is mainly used as a way to exchange goods and services.
+				
+					In the past century, however, governments have had the exclusive power to create money and have often made it difficult for money to hold its value. This lead people to believe that the main purpose of money is to be used for exchange.
+				
+					Some have argued that Bitcoin is not a good form of money because its value tends to change too much to be used effectively in transactions.
+				
+					However, this way of thinking is backwards. Throughout history, the use of money has developed in stages, with its value as a store of value coming before its use as a medium of exchange.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the main focus of modern monetary economics
+						 */
+						title: () => LocalizedString
+					}
+					collectible: {
+						answers: {
+							/**
+							 * Coins made of copper and silver
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Shells, beads, and gold
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Paper bills with pictures of famous leaders
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Sorry, that's incorrect. Copper and silver coins were not used as money in the very beginning of its evolution
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Congratulations, you got it right! It's interesting to note that shells, beads, and gold were all valued for their appearance or special qualities before becoming widely used as money
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Wrong! But at least you're thinking about the more modern forms of money. Paper bills with pictures of famous leaders were not used in the very beginning of money's evolution.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What were some examples of early forms of money that were valued for their appearance or special qualities
+						 */
+						question: () => LocalizedString
+						/**
+						 * Throughout history, money has gone through four stages of development. In the very beginning, people only wanted money because of its special qualities, and it was mostly seen as a decorative item or a collectible.;
+				
+					Examples of this include shells, beads, and gold, which were all collectibles before becoming widely used as money.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What were some examples of early forms of money that were valued for their appearance or special qualities
+						 */
+						title: () => LocalizedString
+					}
+					storeOfValue: {
+						answers: {
+							/**
+							 * The number of people who want it as a store of value
+							 */
+							'0': () => LocalizedString
+							/**
+							 * The weather
+							 */
+							'1': () => LocalizedString
+							/**
+							 * The color of the store of value
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Nice work! The purchasing power of a store of value is determined by the number of people who want to use it as a way to store value. As more people want to use it for this purpose, the value of the store of value increases
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, the weather is definitely a factor in many things, but it's not quite the right answer for this question. Maybe try looking at other factors that could affect the value of a store of value
+							 */
+							'1': () => LocalizedString
+							/**
+							 * I'm sorry to say that the color of a store of value probably doesn't have much of an effect on its purchasing power. It's definitely an interesting idea though! Maybe try considering other characteristics that could affect the value of a store of value.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What determines the purchasing power of a store of value
+						 */
+						question: () => LocalizedString
+						/**
+						 * The store of value is the second stage of money's evolution. When enough people want money because of its special qualities, it becomes a way to keep and save value over time, to transport hard earned wealth into the future.
+				
+					As more people recognize a good as a good way to store value, the good's value increases as more people want it for this purpose.
+				
+					Eventually, the value of a store of value will stop increasing as it becomes widely held and fewer new people want it as a store of value.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What determines the purchasing power of a store of value
+						 */
+						title: () => LocalizedString
+					}
+					mediumOfExchange: {
+						answers: {
+							/**
+							 * The first time bitcoin had market value
+							 */
+							'0': () => LocalizedString
+							/**
+							 * The invention of pineapple as a pizza topping
+							 */
+							'1': () => LocalizedString
+							/**
+							 * again
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * You got it right. Bitcoin Pizza Day is celebrated to mark the first time that bitcoin had market value, which was when Laszlo Hanyecz traded 10,000 bitcoins for two pizzas. It's an important event in the evolution of bitcoin
+							 */
+							'0': () => LocalizedString
+							/**
+							 * While pineapple is a beautiful fruit, it has no place on a real pizza! Apart from this side note, your answer is wrong. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, the best pizza recipe is a matter of personal preference. While pizza is always delicious, it's not the focus of Bitcoin Pizza Day. Maybe try considering the significance of the event in the history of bitcoin.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is Bitcoin Pizza Day celebrated for
+						 */
+						question: () => LocalizedString
+						/**
+						 * When money is used to store value, its value becomes stable eventually. And when the value of money is stable, it becomes the best option to facilitate trade as it's easy to use and doesn't have the coordination burden of barter.
+				
+					In the early days of Bitcoin in 2010, some people did not recognize the opportunity cost to use Bitcoin as a medium of exchange rather than a nascent store of value.
+				
+					There is a famous story about Laszlo Hanyecz who traded 10,000 bitcoins (which were worth about $165 million at the time of this writing) for just two pizzas. When Laszlo acquired those pizzas, it marked the first time that bitcoin had market value.
+				
+					Today, Laszlo's pizza is celebrated globally on May 22 as Bitcoin Pizza Day as an important step and milestone in the evolution of bitcoin as money.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is Bitcoin Pizza Day celebrated for
+						 */
+						title: () => LocalizedString
+					}
+					unitOfAccount: {
+						answers: {
+							/**
+							 * When merchants are willing to accept it as payment without considering the exchange rate with other currencies
+							 */
+							'0': () => LocalizedString
+							/**
+							 * When it is used to buy ice cream
+							 */
+							'1': () => LocalizedString
+							/**
+							 * When it is used to play games with friends
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congrats! For bitcoin to be considered a unit of account, it needs to be widely accepted as a form of payment without regard to its exchange rate with other currencies. This means that merchants would be willing to accept it as payment without considering the value of bitcoin in terms of other currencie
+							 */
+							'0': () => LocalizedString
+							/**
+							 * I'm sorry, but while ice cream is delicious, it's not quite the right answer. Maybe try considering other factors that could affect the acceptance of bitcoin as a unit of account
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Playing games with friends is always fun, but unfortunately it's not the correct answer. Maybe try thinking about what it would take for bitcoin to be widely accepted as a form of payment."
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * How can bitcoin be considered a unit of account
+						 */
+						question: () => LocalizedString
+						/**
+						 * When money is commonly used for trading, goods are priced in terms of it. This means that most goods can be exchanged for money at a certain rate.
+				
+					It is not accurate to say that many goods can be bought with bitcoin today. For example, while a cup of coffee might be available for purchase using bitcoin, the price listed is not the true value of bitcoin. Instead, it is the dollar price that the merchant wants, converted into bitcoin based on the current exchange rate between dollars and bitcoin.
+				
+					If the value of bitcoin goes down in terms of dollars, the merchant will ask for more bitcoin to equal the same dollar amount.
+				
+					Bitcoin can only be considered a unit of account (a standard way to measure the value of goods) when merchants are willing to accept it for payment without considering the exchange rate with other currencies.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * How can bitcoin be considered a unit of account
+						 */
+						title: () => LocalizedString
+					}
+					partlyMonetized: {
+						answers: {
+							/**
+							 * A good that is not yet widely used as a unit of account
+							 */
+							'0': () => LocalizedString
+							/**
+							 * A currency that is only accepted in certain countries
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A good that is used as a medium of exchange but not for storing value or measuring the value of goods
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations! You've chosen the correct answer. A partly monetized good is one that is not yet widely accepted as a unit of account, which means it is not commonly used as a standard way to measure the value of other goods. This can include goods like gold, which is often used to store value but not typically used for everyday transactions
+							 */
+							'0': () => LocalizedString
+							/**
+							 * That's a creative answer, but unfortunately not quite right. Better luck next time
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Not quite correct, but close! Keep thinking.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the meaning of the term "partly monetized"
+						 */
+						question: () => LocalizedString
+						/**
+						 * Goods that are not widely accepted as a unit of account may be considered "partly monetized" because they are used for some purposes related to money, but not all.
+				
+					Gold is an example of a partly monetized good that is used to store value but is not widely used as a medium of exchange or unit of account. In some countries, different goods may be used for different purposes related to money, such as one good being used as a medium of exchange and another being used as a store of value or unit of account.
+				
+					The dollar is an example of a good that is widely used for all three purposes of money in the United States, while the peso was an example of a good that was used as a medium of exchange in Argentina but was not a good store of value because of its volatility and regular loss of purchasing power.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the meaning of the term "partly monetized"
+						 */
+						title: () => LocalizedString
+					}
+					monetizationStage: {
+						answers: {
+							/**
+							 * It is in the process of becoming more widely accepted as money
+							 */
+							'0': () => LocalizedString
+							/**
+							 * It is currently being used as a way to trade goods and services, like other currencies.
+							 */
+							'1': () => LocalizedString
+							/**
+							 * It has already completed the process of becoming more widely accepted as money and is now being used as a form of currency.
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Bingo! You're right on the money (pun intended) with this answer. Did you know that the process of Bitcoin becoming more widely accepted as money is similar to the process gold went through to become a widely accepted form of currency
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Ha! You must have missed the part about it taking several years for Bitcoin to reach this stage. Keep reading
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry to break it to you, but Bitcoin is still in the process of becoming more widely accepted as money. Better luck next time!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the current stage of Bitcoin's evolution
+						 */
+						question: () => LocalizedString
+						/**
+						 * Bitcoin is currently changing from the first stage of being used as money to the second stage. It may take several years for Bitcoin to be used as a way to trade goods and services, like other currencies.
+				
+					The process of Bitcoin becoming more widely accepted as money is uncertain, as the same process took a long time for gold and no one alive has seen a good become money in the same way that is happening with Bitcoin. There is not a lot of experience with this process, but developments around the world are very promising and happening faster in the interconnected digital age.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the current stage of Bitcoin's evolution
+						 */
+						title: () => LocalizedString
+					}
+				}
+			}
+			TheEvolutionOfMoneyII: {
+				/**
+				 * The Evolution of Money II
+				 */
+				title: () => LocalizedString
+				questions: {
+					notFromGovernment: {
+						answers: {
+							/**
+							 * Money is the most tradable good in any given market.
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Money is a government creation.
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Money is a magical substance created by fairies.
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct. It's interesting to think about how different societies throughout history have used different items as a form of currency, from seashells to cattle to gold. But ultimately, it's the willingness of people to trade and accept an item as payment that determines its value as money
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Nope, sorry! Looks like the government isn't as powerful as we thought they were. Better luck next time
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, but it looks like the tooth fairy is the only one making magic money these days. Better luck with your next answer!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is money
+						 */
+						question: () => LocalizedString
+						/**
+						 * There is a popular misconception that money is a government creation and cannot exist without government. This is false.
+				
+					The history of money goes back thousands of years to times when governments did not exist, but money did.
+				
+					This proves that money is emergent and simply the most tradable good in a market. It is not a government creation and certainly does not require a government to make money work.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is money
+						 */
+						title: () => LocalizedString
+					}
+					primaryFunction: {
+						answers: {
+							/**
+							 * To improve the workings of small barter networks.
+							 */
+							'0': () => LocalizedString
+							/**
+							 * To facilitate large scale trade networks.
+							 */
+							'1': () => LocalizedString
+							/**
+							 * To reduce the need for credit.
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations! It's interesting to think about how money has evolved over time, from its early use as a means of facilitating trade in small communities to its current role as a medium of exchange in modern economies
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, looks like you got it backwards! Better luck with your next guess
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Wrong! Credit has been around for almost as long as money, and it's likely here to stay. Better luck with your next answer.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What was the primary function of money
+						 */
+						question: () => LocalizedString
+						/**
+						 * Primitive money existed long before large scale trade networks. Archeologists found that early humans used valuable tools like arrowheads, collectibles like cowry shells and commodities like barley as primitive money.
+				
+					The main advantage and primary function of these primitive moneys was to improve the workings of even small barter networks. Primitive moneys achieved this by eliminating the need to match coincidences of wants, interests, supply or skill. They also greatly reduced the need for credit, which, in the absence of writing in prehistoric times, was difficult to keep track of.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What was the primary function of money
+						 */
+						title: () => LocalizedString
+					}
+					monetaryMetals: {
+						answers: {
+							/**
+							 * Their ability to withstand time and wear.
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Their rarity and difficulty to produce.
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Their colorful and decorative appearance.
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct! It's impressive to think about how certain materials, like metal, have been able to hold value over centuries and even millennia. Good work
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Nice try, but not quite right. Better luck with your next answer
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, looks like you were a little off the mark this time. Maybe try focusing on the functional aspects of money rather than its aesthetic appeal.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What made metals valuable as a form of money
+						 */
+						question: () => LocalizedString
+						/**
+						 * Metals were difficult to make, which made them rare. They also lasted longer than other materials like shells, grains, and beads. This made them valuable and easy to carry, or portable.
+				
+					As technology improved, especially in the production of metal, humans were able to create more advanced, better forms of money.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What made metals valuable as a form of money
+						 */
+						title: () => LocalizedString
+					}
+					stockToFlow: {
+						answers: {
+							/**
+							 * A measure of the rate at which new units of a monetary good are introduced into the existing supply.
+							 */
+							'0': () => LocalizedString
+							/**
+							 * A measure of a company's financial stability.
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A ratio used to compare the value of different currencies.
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * That's right! The Stock to Flow ratio can be a useful tool for understanding the stability and scarcity of a particular currency or commodity. Good job
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, looks like you're mixing up your business jargon. Better luck with your next answer
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Wrong! But hey, at least you're thinking about the global economy. Better luck with your next guess.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the Stock to Flow ratio
+						 */
+						question: () => LocalizedString
+						/**
+						 * The Stock to Flow ratio is a measure of the rate at which new units of money are added to the existing supply.
+				
+					To calculate it, you divide the existing amount of money by the amount produced each year.
+				
+					For something to be a good way to save value, it should become more valuable when people want to use it to save, but the people who make it should not be able to add too much of it, which would make it less valuable.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the Stock to Flow ratio
+						 */
+						title: () => LocalizedString
+					}
+					hardMoney: {
+						answers: {
+							/**
+							 * The difficulty of producing new units of a monetary good.
+							 */
+							'0': () => LocalizedString
+							/**
+							 * The value of money compared to other currencies.
+							 */
+							'1': () => LocalizedString
+							/**
+							 * The amount of money in circulation.
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * That's it! **** It's interesting to think about how the hardness of money can change over time as technology advances and what was once difficult to produce becomes easier. Good job
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, looks like you got it backwards! Better luck with your next guess
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Wrong! The hardness of money has more to do with its production than its quantity. Better luck with your next answer.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the hardness of money
+						 */
+						question: () => LocalizedString
+						/**
+						 * The difficulty of producing new units of money compared to other forms of money is called its hardness. This can change over time as technology improves and what was once difficult to produce could become easier.
+				
+					In precolonial Ghana (Africa), aggry beads (made of glass) were used as money. Glassmaking was an expensive craft in that region, which gave the aggry beads a high stock-to-flow ratio and made them rather scarce.
+				
+					In the 16th century, European explorers discovered the high value ascribed to these beads by the west Africans and began importing them in mass quantities; as European glassmaking technology made them extremely cheap to produce.
+				
+					Slowly but surely, the Europeans used these cheaply produced beads to acquire most of the precious resources of Africa. The net effect of this incursion into Africa was the transference its vast natural resource wealth to Europeans and the conversion of aggry beads from hard money to soft money.
+				
+					As societies continued to evolve, they began to move away from artifact money like stones and glass beads and towards monetary metals.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the hardness of money
+						 */
+						title: () => LocalizedString
+					}
+				}
+			}
+			TheEvolutionOfMoneyIII: {
+				/**
+				 * The Evolution of Money III
+				 */
+				title: () => LocalizedString
+				questions: {
+					convergingOnGold: {
+						answers: {
+							/**
+							 * Because it cannot be destroyed or synthesized from other materials.
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Because it is abundant and easy to find.
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Because it is the most attractive and visually appealing metal.
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Exactly**.** It's interesting to think about how the qualities of different materials, such as gold's durability and rarity, can make them more valuable and desirable as a form of money. Good job
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, looks like you got it backwards! Better luck with your next guess
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Wrong! While gold may have a certain aesthetic appeal, it's ultimately its functional qualities that make it a valuable form of money. Better luck with your next answer.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * Why did the free market choose gold as a form of money
+						 */
+						question: () => LocalizedString
+						/**
+						 * From all monetary metals, the free market ultimately chose gold as a form of money because it has two important qualities that keep its value stable over long periods of time and across many regions of the world:
+				
+					1\) Gold cannot be destroyed, and
+				
+					2\) Gold cannot be made from other materials.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * Why did the free market choose gold as a form of money
+						 */
+						title: () => LocalizedString
+					}
+					originsOfPaperMoney: {
+						answers: {
+							/**
+							 * To allow for the convenient exchange of gold in place of physically transporting it
+							 */
+							'0': () => LocalizedString
+							/**
+							 * To represent a promise to pay a debt
+							 */
+							'1': () => LocalizedString
+							/**
+							 * To transport large amounts of gold
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations! You're a gold exchange genius! Did you know that these paper notes were also known as "bearer instruments," which means that they could be traded and redeemed by anyone in possession of them
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Oh no, it looks like you've got a case of promissory confusion! Better luck next time
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Transporting gold in paper form? That's a bold move.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What were paper notes used for during the expansion of trade routes
+						 */
+						question: () => LocalizedString
+						/**
+						 * Gold can be made into coins or bars of a specific weight and purity. When trade routes expanded, it became riskier to transport large amounts of gold.
+				
+					As a solution, paper notes from trusted banks that could be exchanged for gold were used. In 900 CE, Chinese merchants initiated the use of paper currency to avoid having to carry thousands of coins over long distances. They started trading paper receipts from custodians where they had deposited money or goods.
+				
+					In the beginning these paper notes were personally registered, but they soon became a written order to pay the amount to whomever had it in their possession (bearer instrument). These notes can be seen as a predecessor to today's banknotes.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What were paper notes used for during the expansion of trade routes
+						 */
+						title: () => LocalizedString
+					}
+					fractionalReserve: {
+						answers: {
+							/**
+							 * To allow people to earn money from their gold
+							 */
+							'0': () => LocalizedString
+							/**
+							 * To make it easier for banks to hold large amounts of gold
+							 */
+							'1': () => LocalizedString
+							/**
+							 * To make it easier for banks to make loans
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations! You're a banking history expert! Did you know that Fractional Reserve Banking is a system in which banks are allowed to hold only a fraction of the deposits they receive as reserves, while using the rest to make loans
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Hmm, it looks like you're a little off the mark. Better luck next time
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, but it looks like you're mixing up your banking systems. Better luck next time!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * Why did Fractional Reserve Banking develop
+						 */
+						question: () => LocalizedString
+						/**
+						 * Fractional Reserve Banking is a system in which banks are allowed to hold only a fraction of the deposits they receive as reserves, while using the rest to make loans.
+				
+					One reason this system developed is because people wanted to earn money from their gold, rather than paying to store it.
+				
+					They could do this by allowing a bank or vault to lend out their gold and receiving interest payment in return.
+				
+					If more people deposited their gold than wanted to take it back, the bank could make more profit by using the same gold as collateral for multiple loans, hence keeping only a fraction of loans in reserve.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * Why did Fractional Reserve Banking develop
+						 */
+						title: () => LocalizedString
+					}
+					bankRun: {
+						answers: {
+							/**
+							 * A sudden drain of deposits en masse, leading to systemic fears and drying up of liquidity
+							 */
+							'0': () => LocalizedString
+							/**
+							 * A nice vacation for everyone
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A sudden increase in the price of gasoline
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * masse, leading to systemic fears and drying up of liquidity
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, taking a vacation isn't quite the outcome we're looking for here. Better luck next time
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Gas prices might fluctuate for a variety of reasons, but this particular scenario doesn't have much to do with it. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is a potential outcome of banks issuing more paper notes than they held deposits
+						 */
+						question: () => LocalizedString
+						/**
+						 * Banks sometimes issued more paper notes than they had deposits, which could cause problems in the economy. If people started to doubt the solvency of a bank, they might rush to withdraw their money all at once before others do. This is called a bank run.
+				
+					The sudden loss of deposits from the bank run could reveal that the bank was using too much leverage through Fractional Reserve Banking. This could cause a lack of liquidity and bring the whole financial system to a stop.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is a potential outcome of banks issuing more paper notes than they held deposits
+						 */
+						title: () => LocalizedString
+					}
+					modernCentralBanking: {
+						answers: {
+							/**
+							 * To create a unified national currency and provide a backup plan for other banks
+							 */
+							'0': () => LocalizedString
+							/**
+							 * To sell ice cream and provide a place for people to play games
+							 */
+							'1': () => LocalizedString
+							/**
+							 * To act as a personal stylist and wardrobe consultant for the royal family
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations, you got it right! Did you know that central banks also act as the "lender of last resort," meaning they can give out money when needed to make sure people's deposits are secure
+							 */
+							'0': () => LocalizedString
+							/**
+							 * I'm sorry, but central banks do not sell ice cream or provide a place for people to play games. They have much more important responsibilities
+							 */
+							'1': () => LocalizedString
+							/**
+							 * I'm afraid you are mistaken. Central banks do not act as personal stylists or wardrobe consultants for the royal family. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the purpose of a central bank
+						 */
+						question: () => LocalizedString
+						/**
+						 * To counter the problem of bank runs, governments created their own banks called "central banks."
+				
+					These central banks have the special power to create money. They act as a backup plan for when commercial banks run out of reserves and need extra money to stay open.
+				
+					Because of this function, central banks are also called the "lenders of last resort," meaning they can create and give out money when commercial banks need liquidity to service withdrawals.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the purpose of a central bank
+						 */
+						title: () => LocalizedString
+					}
+					goldBacked: {
+						answers: {
+							/**
+							 * It made it difficult for governments to borrow money
+							 */
+							'0': () => LocalizedString
+							/**
+							 * It made it hard for people to save money in the bank
+							 */
+							'1': () => LocalizedString
+							/**
+							 * It required governments to hold a petting zoo in their treasury
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Yep! The gold standard made it difficult for governments to borrow money because they had to hold a certain amount of gold in reserve in order to issue a certain amount of currency
+							 */
+							'0': () => LocalizedString
+							/**
+							 * I'm sorry, but the gold standard did not make it hard for people to save money in the bank. It was actually a problem for citizens because it did not provide any guarantee that their deposits in the bank would be safe, as the value of their money was dependent on the government's ability to maintain its gold reserves
+							 */
+							'1': () => LocalizedString
+							/**
+							 * An amusing idea, but nonsense nevertheless! Try again.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What was the main problem with the gold standard system for governments and citizens
+						 */
+						question: () => LocalizedString
+						/**
+						 * In the past, some governments linked the value of their currency to a specific amount of gold, a system known as a "gold standard." This meant that the government had to hold a certain amount of gold in reserve in order to issue a certain amount of currency.
+				
+					This system limited the government's ability to borrow money because they could not simply print more currency to cover the cost of borrowing. Governments often borrowed money to finance wars or other expensive projects, but the gold standard made it difficult for them to do so without first accumulating enough gold to back the new currency they wanted to issue.
+				
+					The gold standard was also problematic for citizens because it did not provide any guarantee that their deposits in the bank would be safe, as the value of their money was dependent on the government's ability to maintain its gold reserves.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What was the main problem with the gold standard system for governments and citizens
+						 */
+						title: () => LocalizedString
+					}
+					brettonWoods: {
+						answers: {
+							/**
+							 * To link the value of other countries' currencies to the value of gold through the US dollar
+							 */
+							'0': () => LocalizedString
+							/**
+							 * To create a new global currency made out of chocolate coins
+							 */
+							'1': () => LocalizedString
+							/**
+							 * To establish a network of trampoline parks in every major city
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * That's right. The Bretton Woods system was established after World War II in order to address global economic instability and high levels of debt. It linked the value of other countries' currencies to the value of the US dollar, which was itself pegged to the value of gold at a fixed exchange rate
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sweet idea, but not very practical. Or would you prefer your money to melt away even faster? Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Trampoline parks would have surely made for a great distraction of the public from the strange machinations of the Bretton Woods system. Have you considered applying as an advisor at the IMF or World Bank? Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What was the main purpose of the Bretton Woods system
+						 */
+						question: () => LocalizedString
+						/**
+						 * After World War I and II, many countries were financially exhausted and did not have a lot of money. The United States had a lot of gold because they sold a lot of weapons and other military equipment to other countries during the wars. As a result, the United States controlled about two-thirds of the world's gold.
+				
+					In order to fix the global economy, a new system was created where countries would link their own currencies to the value of the US dollar.
+				
+					The US dollar, in turn, would be linked to the value of gold. This meant that the value of other countries' currencies would be based on the value of the US dollar, which was based on the amount of gold the United States had.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What was the main purpose of the Bretton Woods system
+						 */
+						title: () => LocalizedString
+					}
+					globalReserve: {
+						answers: {
+							/**
+							 * A type of money that is widely used in international trade and financial transactions
+							 */
+							'0': () => LocalizedString
+							/**
+							 * A currency made out of rainbow-colored paper and glitter
+							 */
+							'1': () => LocalizedString
+							/**
+							 * The currency of the nation that pays the biggest share of the World Trade Organization's budget
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct! A global reserve currency is a type of money that is widely used in international trade and financial transactions. It is the preferred or most in-demand currency for settling transactions, as it is generally stable and widely accepted
+							 */
+							'0': () => LocalizedString
+							/**
+							 * While most banknotes are made of colorful pieces of paper with strings of glitter as security features in them, this is not what defines a global reserve currency. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Surely this would benefit the WTO's funding immensely, but this is not how the global reserve currency is defined or chosen. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is a global reserve currency
+						 */
+						question: () => LocalizedString
+						/**
+						 * A global reserve currency is a type of money that is widely used in international trade and financial transactions. It is the preferred or most in-demand currency for settling transactions, as it is generally stable and widely accepted.
+				
+					Changes to the global reserve currency can have significant geopolitical implications, as it can affect the balance of power between countries.
+				
+					The dominant global reserve currency has typically had a lifespan of several decades, with the US dollar serving as the dominant global reserve currency for much of the 20th century.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is a global reserve currency
+						 */
+						title: () => LocalizedString
+					}
+				}
+			}
+			TheEvolutionOfMoneyIV: {
+				/**
+				 * The Evolution of Money IV
+				 */
+				title: () => LocalizedString
+				questions: {
+					nixonShock: {
+						answers: {
+							/**
+							 * It ended and was replaced by a new monetary system based on floating exchange rates
+							 */
+							'0': () => LocalizedString
+							/**
+							 * It became a popular TV game show
+							 */
+							'1': () => LocalizedString
+							/**
+							 * It was turned into a giant roller coaster ride
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct! In 1971, President Nixon directed the US Treasury Secretary to stop allowing foreign governments to exchange their dollars for gold
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Not quite, but a game show version of the Bretton Woods system sounds like it could be entertaining
+							 */
+							'1': () => LocalizedString
+							/**
+							 * I see what you did there, but this isn't the correct answer here. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What happened to the Bretton Woods system in 1971
+						 */
+						question: () => LocalizedString
+						/**
+						 * The Bretton Woods system was a monetary system established after World War II in order to address global economic instability and high levels of debt.
+				
+					Under this system, many countries pegged their own currencies to the value of the US dollar, which was itself pegged to the value of gold at a fixed exchange rate. This meant that the value of other countries' currencies was indirectly tied to the value of gold through the US dollar.
+				
+					In 1971, United States President Richard Nixon directed the US Treasury to stop allowing foreign governments to exchange their dollars for gold, a process known as "convertibility."
+				
+					The sudden end of convertibility of dollars for gold shocked the world and became known as the Nixon Shock, effectively ending the Bretton Woods system fixed exchange rates. It marked the beginning of a new monetary system based on floating exchange rates.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What happened to the Bretton Woods system in 1971
+						 */
+						title: () => LocalizedString
+					}
+					fiatEra: {
+						answers: {
+							/**
+							 * A currency issued by a government decree
+							 */
+							'0': () => LocalizedString
+							/**
+							 * A type of currency that is only accepted by merchants who love pizza
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A currency made out of precious gems and metals
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Good job. Fiat money, such as Federal Reserve notes, is a type of currency issued by a government that is not directly exchangeable for a fixed amount of something else, like gold or silver. Its value comes from the fact that the government says it is valuable and people trust that they will be able to use it to buy things
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Not quite, but a currency that is only accepted by pizza-loving merchants sounds like it could be a delicious way to pay for things
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Nope, but a currency made out of precious gems and metals would definitely be shiny and eye-catching.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What does the word "fiat" mean when it is used to talk about money
+						 */
+						question: () => LocalizedString
+						/**
+						 * "Fiat" is a word that comes from Latin and means "let it be done." When it is used to talk about money, it means that a government is creating a currency by decree alone.
+				
+					Since the Nixon Shock, fiat money is not backed by gold or silver and neither can it be directly converted for a fixed amount of gold, as it used to be before.
+				
+					This means that their value comes from the fact that the government says they are valuable and that people trust that they will be able to use them to buy things.
+				
+					In addition, governments often make it a law (legal tender) that merchants have to accept this type of fiat currency and that it is the only type of currency that can be used to pay taxes.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What does the word "fiat" mean when it is used to talk about money
+						 */
+						title: () => LocalizedString
+					}
+					digitalFiat: {
+						answers: {
+							/**
+							 * A government issued money that exists only in digital form, like on a computer or phone
+							 */
+							'0': () => LocalizedString
+							/**
+							 * A type of currency that can only be used to buy things in the internet
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A currency that can only be sent by email
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Good job. Digital fiat is a type of money that exists only in digital form, like on a computer or phone. It is a digital representation of physical cash, such as paper money or coins, and is becoming increasingly popular due to its lower costs, faster speeds, and increased capabilities for surveillance
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Not quite. While digital fiat is digital like the internet, it is also widely accepted at brick and mortar merchants. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Nope, you guessed wrong. The use of such a currency would be extremely limited and doesn't exist to our knowledge. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is digital fiat
+						 */
+						question: () => LocalizedString
+						/**
+						 * Digital fiat is a type of money that exists only in digital form, like on a computer or phone. It is a digital representation of physical cash, such as paper money or coins.
+				
+					Digital fiat became possible with the proliferation of digital communication networks, like the internet, and the growth of consumer devices like computers and phones that can connect to these networks. Standardized payment protocols, which are established ways of making payments online, also played a role in the emergence of digital fiat.
+				
+					Digital fiat is increasingly replacing physical fiat due to its lower costs, faster speeds, and increased capabilities for surveillance. In other words, it is cheaper and faster to use digital fiat and it is easier to track transactions made with digital fiat.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is digital fiat
+						 */
+						title: () => LocalizedString
+					}
+					plasticCredit: {
+						answers: {
+							/**
+							 * A type of payment card that allows people to borrow money to pay for things
+							 */
+							'0': () => LocalizedString
+							/**
+							 * A card that grants the holder special powers, like the ability to fly
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A card that allows people to pay for things by waving their hand over a sensor
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct. A credit card is a type of payment card that allows people to borrow money from the credit card company to pay for things now, rather than saving up money to pay for things later. There are about three billion credit cards in use around the world today
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Not quite, but a credit card that grants special powers like the ability to fly sounds like it could be a lot of fun
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Nope, but a credit card that allows people to pay for things by waving their hand over a sensor sounds like something out of a science fiction movie, not real life.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is a credit card
+						 */
+						question: () => LocalizedString
+						/**
+						 * The credit card is a type of payment card that allows people to borrow money to pay for things. When people use credit cards, they are borrowing money from the credit card company to pay for things now, rather than saving up money to pay for things later.
+				
+					This has gradually normalized the act of borrowing for consumption, something that impacts the time preference of users. Instead of waiting to save up the money, the invention of credit cards has made it more common for people to borrow money to buy things they want right away
+				
+					Today, there are about three billion credit cards in use around the world.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is a credit card
+						 */
+						title: () => LocalizedString
+					}
+					doubleSpendProblem: {
+						answers: {
+							/**
+							 * The ability to ensure that the same digital unit of money cannot be spent more than once by its owner
+							 */
+							'0': () => LocalizedString
+							/**
+							 * The desire to create a digital currency that could only be spent on Mars
+							 */
+							'1': () => LocalizedString
+							/**
+							 * The idea of rewarding honesty and making dishonesty very costly
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Good job. In the digital world, where it is easy to copy things, it is important to make sure that the same digital unit of money (like a digital coin) cannot be spent more than once by its owner. This was a key factor in the creation of Bitcoin, as it is important for a monetary system that works without a central authority (like a government)
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Not quite, but a digital currency that could only be spent on Mars sounds like it could be a fun way to support the colonization of the red planet
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Nope, but the idea of rewarding honesty and making dishonesty very costly is a key factor in the creation of any monetary system, as it helps to ensure trust and cooperation among participants.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What was a key factor in the creation of Bitcoin
+						 */
+						question: () => LocalizedString
+						/**
+						 * In the digital world, it is easy to copy things, so it is important to make sure that the same digital unit of money cannot be spent more than once by its owner.
+				
+					In a monetary system with a central authority (like a government), this problem is trivially solved by keeping a ledger of transactions managed by the central authority. However, this normally represents a single point of failure from both availability and trust viewpoints.
+				
+					In a decentralized system, the double-spending problem is significantly harder to solve. Many people have tried to create digital money that is not controlled by a government, but they have all had their own unique challenges.
+				
+					Satoshi Nakamoto took all of these lessons into account and was the first to solve the double spending problem with the implementation of Bitcoin by creating a decentralized system that rewards honesty and makes it very costly to be dishonest.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What was a key factor in the creation of Bitcoin
+						 */
+						title: () => LocalizedString
+					}
+					satoshisBreakthrough: {
+						answers: {
+							/**
+							 * The double spending problem
+							 */
+							'0': () => LocalizedString
+							/**
+							 * The problem of double coincidence of wants
+							 */
+							'1': () => LocalizedString
+							/**
+							 * The halving problem
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Good job. Bitcoin uses a proof-of-work consensus mechanism where transactions are batched into blocks and chained together to a blockchain. This way, every user knows that every coin is only spent once
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Not quite. The double coincidence of wants is a problem of barter that can be solved with money. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Hah no. The halving in bitcoin is not a problem, but part of the solution that Satoshi designed! More on that in Chapter 302. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * Which problem did Satoshi have to solve to create Bitcoin
+						 */
+						question: () => LocalizedString
+						/**
+						 * Satoshi's solution to the double spending problem was a breakthrough in computer science and distributed systems. Until Bitcoin, many believed that it would be unsolvable.
+				
+					His solution allowed Satoshi to develop a new electronic cash system that for the first time made it possible for people to send digital money directly to each other, without needing a bank or other organization to help.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * Which problem did Satoshi have to solve to create Bitcoin
+						 */
+						title: () => LocalizedString
+					}
+					nativelyDigital: {
+						answers: {
+							/**
+							 * Digital fiat money is based on a product from the industrial age, while Bitcoin is a purpose-built money for the digital age
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Digital fiat money is open-source, while Bitcoin is a closed system
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Digital fiat money is designed to increase in value over time, while Bitcoin is designed to lose value
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * for the digital age
+							 */
+							'0': () => LocalizedString
+							/**
+							 * It seems you got things mixed up. It's actually the other way around. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, that's not quite right. Bitcoin is likely to increase in value over time due to its strictly fixed supply and growing deman, while inflation decreases the value of fiat currencies quite reliably.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the main difference between digital fiat money and Bitcoin
+						 */
+						question: () => LocalizedString
+						/**
+						 * Digital fiat money is a digital version of a product that was designed for the industrial age. It has all of the same problems and limitations as the original product. It is a closed system that is heavily controlled and designed to lose value over time.
+				
+					Bitcoin is a type of digital money that was specifically designed for the digital age. It can be improved and updated, and anyone can see and change the code that it is based on. It benefits from the ideas and creativity of anyone who works on it.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the main difference between digital fiat money and Bitcoin
+						 */
+						title: () => LocalizedString
+					}
+					CBDCs: {
+						answers: {
+							/**
+							 * To provide surveillance and censorship capabilities to the issuer
+							 */
+							'0': () => LocalizedString
+							/**
+							 * To compete with Bitcoin as a store of value
+							 */
+							'1': () => LocalizedString
+							/**
+							 * To create a decentralized and permissionless digital currency
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * That's correct! CBDCs are like the Big Brother of digital currencies, designed to provide surveillance and censorship capabilities to the issuer. Creepy, but correct
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Haha, sorry but no. While Bitcoin and CBDCs are both digital currencies, they have very different purposes and characteristics. CBDCs are issued and backed by central banks, while Bitcoin is decentralized and not controlled by any government or financial institution
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Oh boy, that's a creative answer but unfortunately not quite right. CBDCs are not designed to be decentralized or permissionless like Bitcoin. In fact, they are issued and backed by central banks, and their main purpose is to be the ultimate tool for control in the digital age. Better luck next time!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the main purpose of central bank digital currencies (CBDCs)
+						 */
+						question: () => LocalizedString
+						/**
+						 * Central bank digital currencies (CBDCs) are digital versions of traditional currency that are issued and backed by a central bank.
+				
+					CBDCs are not decentralized or permissionless like Bitcoin, and are instead intended to compete with other forms of digital payment methods for market dominance.
+				
+					One of the main reasons for the development of CBDCs is the surveillance and censorship capabilities they provide the issuer.
+				
+					Additionally, in an age of negative real interest rates (when the inflation rate is higher than the interest rate), the widespread adoption of CBDCs often goes hand in hand with the phasing out of physical cash, which can lead to the devaluation of the currency in real terms.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the main purpose of central bank digital currencies (CBDCs)
+						 */
+						title: () => LocalizedString
+					}
+				}
+			}
+			BitcoinWhyWasItCreated: {
+				/**
+				 * Bitcoin: Why was it created?
+				 */
+				title: () => LocalizedString
+				questions: {
+					rootProblem: {
+						answers: {
+							/**
+							 * The trust that is required to make it work
+							 */
+							'0': () => LocalizedString
+							/**
+							 * The color of the physical bills
+							 */
+							'1': () => LocalizedString
+							/**
+							 * The fact that it requires physical storage
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * You got it right! The root problem with conventional currency is the trust that is required to make it work. It's an interesting point, as trust is a fundamental aspect of any currency system
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Interesting take, but unfortunately not the correct answer. Conventional currency isn't just about the aesthetics of its physical form, although I'm sure some people might argue otherwise
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Haha, while it might be inconvenient to lug around a wallet full of cash, that's not the root problem with conventional currency. But don't worry, you can try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the root problem with conventional currency according to Satoshi Nakamoto
+						 */
+						question: () => LocalizedString
+						/**
+						 * So what was the motivation to create Bitcoin? In his announcement of the project, Satoshi Nakamoto gave the following explanation:
+				
+					"The root problem with conventional currency is all the trust that’s required to make it work. The central bank must be trusted not to debase the currency, but the history of fiat currencies is full of breaches of that trust. Banks must be trusted to hold our money and transfer it electronically, but they lend it out in waves of credit bubbles with barely a fraction in reserve."
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the root problem with conventional currency according to Satoshi Nakamoto
+						 */
+						title: () => LocalizedString
+					}
+					bitcoinCreator: {
+						answers: {
+							/**
+							 * An unknown programmer who used the pseudonym "Satoshi Nakamoto"
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Craig Wright
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Elon Musk
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct! It's an interesting mystery, but it's worth noting that the bitcoin protocol is based on open source code, meaning that anyone can review it. This transparency makes it the most reviewed code in existence. Despite the mystery of its creator, bitcoin itself is an open and transparent monetary network that can be examined and used by anyone
+							 */
+							'0': () => LocalizedString
+							/**
+							 * I'm sorry, but it looks like Craig Wright's claim to being the creator of bitcoin has been thoroughly debunked. Better luck with the next answer
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Nope! Elon Musk's talents might be better suited to launching rockets and building electric cars rather than creating revolutionary digital currencies. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * Who is the creator of bitcoin
+						 */
+						question: () => LocalizedString
+						/**
+						 * The creator of bitcoin, who used the pseudonym "Satoshi Nakamoto," is unknown and no claims of being the creator have been verified. Satoshi was only involved in the project for a short time before disappearing.
+				
+					The bitcoin protocol is based on open source code, meaning that anyone can review it. This transparency makes it the most reviewed code in existence. Despite the mystery of its creator, bitcoin itself is an open and transparent monetary network that can be examined and used by anyone.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * Who is the creator of bitcoin
+						 */
+						title: () => LocalizedString
+					}
+					fiatRequiresTrust: {
+						answers: {
+							/**
+							 * The need for trusted third parties to make a currency work
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Lack of a physical form for currency
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Inflation caused by central authorities issuing more units
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Exactly. Bitcoin requires no trusted third party and allows for transactions to be made directly between individuals, called peer-to-peer, rather than through a central authority or intermediaries
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Nope. That's not it. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Arbitrary inflation of the money supply by centralized issuers is indeed a problem that bitcoin solves elegantly, but there's a more foundational problem that Satoshi addressed. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What was the main issue that Satoshi Nakamoto aimed to address with the creation of bitcoin
+						 */
+						question: () => LocalizedString
+						/**
+						 * The post-1971 fiat currency system requires trust at all levels because it is debt-based and lacks a scarce anchor. This includes trust in the ability to pay off debts in the future, trust in commercial and central banks not to debase the currency, and trust in their ability to allow access to and freedom to use funds for transactions.
+				
+					This trust has been violated numerous times, including during the 2008/09 Global Financial Crisis. In order to address this issue, Satoshi Nakamoto aimed to create a digital form of money that did not require trusting third parties for transactions and could not be debased by a central authority issuing more units.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What was the main issue that Satoshi Nakamoto aimed to address with the creation of bitcoin
+						 */
+						title: () => LocalizedString
+					}
+					moneyPrinting: {
+						answers: {
+							/**
+							 * Asset bubbles in stock and real estate markets that experience corrections roughly every decade
+							 */
+							'0': () => LocalizedString
+							/**
+							 * A sudden increase in the popularity of polka music
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A decrease in the number of people who believe in extraterrestrial life forms
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Bullseye! Asset bubbles in stock and real estate markets are indeed one of the main consequences of excessive money printing and credit expansion. It's worth noting that these bubbles often disproportionately benefit those closest to the source of new money, while lower income individuals are often the most affected by the inflation and economic booms and busts that result
+							 */
+							'0': () => LocalizedString
+							/**
+							 * That's not the right wavelength here! While some believe easy money has a negative impact on music, this is not the right answer
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Your guess is out of this world. While it's certainly interesting to speculate about the existence of aliens, it has nothing to do with the consequences of excessive money printing and credit expansion.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is one of the main consequences of excessive money printing and credit expansion
+						 */
+						question: () => LocalizedString
+						/**
+						 * Excessive money printing and credit expansion can cause numerous social and economic issues, including asset bubbles in stocks and real estate markets which tend to experience corrections roughly every decade.
+				
+					While those closest to the source of new money often benefit greatly from these cycles, lower income individuals who don't own valuable assets and rely on regular paychecks are often the most affected by inflation and economic booms and busts created by the fiat currency system.
+				
+					A well-known example of this is the Global Financial Crisis that began in 2008, which was preceded by a significant accumulation of debt and risk in the commercial banking sector.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is one of the main consequences of excessive money printing and credit expansion
+						 */
+						title: () => LocalizedString
+					}
+					genesisBlock: {
+						answers: {
+							/**
+							 * To take financial control back from financial elites, giving ordinary people a chance to take part in a decentralized financial system
+							 */
+							'0': () => LocalizedString
+							/**
+							 * To create a digital form of money that could be easily debased by a central authority
+							 */
+							'1': () => LocalizedString
+							/**
+							 * To make it easier for third parties to facilitate transactions
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * That's exactly right. Take a wild guess what those financial elites think about bitcoin
+							 */
+							'0': () => LocalizedString
+							/**
+							 * No, silly. We already have that with fiat. Try again and think about Satoshi's message in the Genesis Block before you answer
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, that's not quite right. While third parties can be useful for facilitating transactions, trust in these intermediaries was one of the issues that Satoshi Nakamoto aimed to address with the creation of Bitcoin. Maybe try again with a different answer.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * Why did Satoshi Nakamoto create Bitcoin
+						 */
+						question: () => LocalizedString
+						/**
+						 * It is clear why Satoshi Nakamoto created Bitcoin when we examine the first block of the Bitcoin blockchain, called the Genesis block.
+				
+					This block was created by Satoshi when he launched Bitcoin in 2009 and includes a reference to banks receiving bailouts following the 2008/09 Global Financial Crisis.
+				
+					"The Times 03/Jan/2009 Chancellor on the brink of second bailout for banks"
+				
+					This crisis, in which trust in traditional financial systems was severely damaged, inspired Satoshi to create a digital form of money that does not require trusting third parties for transactions and cannot be debased by a central authority issuing more units.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * Why did Satoshi Nakamoto create Bitcoin
+						 */
+						title: () => LocalizedString
+					}
+					cypherpunks: {
+						answers: {
+							/**
+							 * The Cypherpunks are a group of individuals who seek to use cryptography to promote privacy and security in the digital age
+							 */
+							'0': () => LocalizedString
+							/**
+							 * The Cypherpunks are a group of hackers who aim to steal personal data and sensitive information through the use of cryptography
+							 */
+							'1': () => LocalizedString
+							/**
+							 * The Cypherpunks are a group of cryptographers who seek to create complex mathematical equations that are difficult to solve
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Well done! It's interesting to note that the Cypherpunks' goal of using cryptography to promote privacy and security is particularly relevant in today's digital age, where increasing surveillance can lead to the erosion of freedoms
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, that's not quite right. While the use of cryptography can certainly be beneficial for hackers, the Cypherpunks seek to use cryptography for the opposite purpose. Maybe try again with a different answer
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Nope. While cryptography does involve the use of complex mathematical equations, the Cypherpunks are not primarily interested in creating these equations for their own sake. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * Who are the Cypherpunks and what is their goal
+						 */
+						question: () => LocalizedString
+						/**
+						 * Bitcoin is the result of decades of research work by a group of individuals who call themselves Cypherpunks. They are interested in using cryptography to promote privacy and security in a world where increasing surveillance in the digital age can lead to erosion of freedoms.
+				
+					Earlier digital cash systems that relied on peer-to-peer (P2P) networks had one or both of the following problems:
+				
+					  * They required a central authority to manage the ledger of ownership.
+					  * The currency units could be copied, resulting in the "double-spending problem" where a single unit could be spent multiple times.
+				
+					  Satoshi addressed both of these issues by combining existing technologies in the creation of Bitcoin. The first issue is resolved because the decentralized nature of the Bitcoin network means that there is no central authority that users need to trust. The second issue is addressed because the unique cryptographic techniques used in Bitcoin make it impossible to copy the currency units.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * Who are the Cypherpunks and what is their goal
+						 */
+						title: () => LocalizedString
+					}
+				}
+			}
+			BitcoinHowDoesItWork: {
+				/**
+				 * Bitcoin: How does it work?
+				 */
+				title: () => LocalizedString
+				questions: {
+					peer2Peer: {
+						answers: {
+							/**
+							 * The blockchain
+							 */
+							'0': () => LocalizedString
+							/**
+							 * The internet
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A decentralized network of nodes
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct! Satoshi was the first to successfully implement the blockchain - a concept first described in 1991 by Stuart Haber and W. Scott Stornetta. It's a decentralized form of bookkeeping that is resistant to tampering and allows users to make and verify transactions without the need for a central authority
+							 */
+							'0': () => LocalizedString
+							/**
+							 * No. The internet is a global network of interconnected computers, but it was not invented by Satoshi and does not solve issues of centralization and double spends. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A decentralized network of nodes is an important part of Bitcoin, but it does not solve issues of centralization and double spends by itself. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * Which technology did Satoshi implement to solve issues of centralization and double spends
+						 */
+						question: () => LocalizedString
+						/**
+						 * To solve the earlier mentioned issues of centralization and possible double spends, Satoshi invented a solution based on a decentralized network of nodes.
+				
+					Nodes are computers that are in constant contact with each other. This by itself is nothing new. The internet itself has a similar infrastructure of interconnected nodes.
+				
+					All bitcoin nodes, however, store a copy of the ledger of all transactions in the history of the Bitcoin network.
+				
+					This new, decentralized form of bookkeeping, called blockchain, was first successfully implemented in Bitcoin and is extremely resistant to tampering.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * Which technology did Satoshi implement to solve issues of centralization and double spends
+						 */
+						title: () => LocalizedString
+					}
+					blockchain: {
+						answers: {
+							/**
+							 * To create a tamper-evident record of all transactions on the blockchain
+							 */
+							'0': () => LocalizedString
+							/**
+							 * To ensure that blocks can be altered or replaced easily
+							 */
+							'1': () => LocalizedString
+							/**
+							 * To make sure that the Artificial Intelligence that created Bitcoin has enough computation power to take over the world
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct! The cryptographic hash function helps to create a tamper-evident record of all transactions on the blockchain, which can be used to verify the integrity of the data stored on the chain. Did you know that the cryptographic hash function is also an essential part of the proof-of-work mechanism that helps to secure the Bitcoin network
+							 */
+							'0': () => LocalizedString
+							/**
+							 * That's a hilarious idea, but no, the cryptographic hash function actually ensures the opposite. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Ha! I'm not sure who told you that the Bitcoin blockchain was created by AI, but I think they might have been pulling your leg. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the purpose of the cryptographic hash function in the Bitcoin blockchain
+						 */
+						question: () => LocalizedString
+						/**
+						 * The Bitcoin blockchain is a distributed database that maintains a continuously growing list of Bitcoin transactions called blocks.
+				
+					Blocks are anchored to each other through the use of cryptographic hashes. Each block contains a cryptographic hash of the previous block, as well as a timestamp and transaction data. This creates a chain of blocks that are all linked together, with each block building on the one before it.
+				
+					The cryptographic hash function ensures that once a block has been added to the chain, it cannot be altered or replaced without also changing all of the subsequent blocks in the chain.
+				
+					This creates a tamper-evident record of all transactions that have occurred on the blockchain, which can be used to verify the integrity of the data stored on the chain.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the purpose of the cryptographic hash function in the Bitcoin blockchain
+						 */
+						title: () => LocalizedString
+					}
+					privateKey: {
+						answers: {
+							/**
+							 * To sign transactions and prove ownership of Bitcoins
+							 */
+							'0': () => LocalizedString
+							/**
+							 * To verify the ownership of a Bitcoin address
+							 */
+							'1': () => LocalizedString
+							/**
+							 * To make a stranger fall in love by posting it on social media
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct! The private key is used to sign transactions and prove ownership of Bitcoins. It's an essential part of the process of sending and receiving Bitcoin payments, and it's important to keep it secret and secure. Good job
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Almost. **** While the private key can be used to verify the ownership of a Bitcoin address, that's not its primary purpose
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Posting it on social media would be like posting your bank account login information online - it's a surefire way to get your Bitcoins stolen. Better stick to more traditional methods of winning someone's heart!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the purpose of the private key in a Bitcoin transaction
+						 */
+						question: () => LocalizedString
+						/**
+						 * Another cornerstone of Bitcoin is Public Key Cryptography that uses a pair of keys - a public key and a private key - to sign transactions and verify the ownership of Bitcoin addresses.
+				
+					The private key is a long string of characters that is used to authorize Bitcoin transactions. It is often represented as a combination of 12 words (sometimes 24). Only in the correct order do the words result in the corresponding private key.
+				
+					Whoever knows the private key of a bitcoin address can control the bitcoin in that address. Therefore it is important that it is kept secret and never shared with anyone. Ideally, it should be stored offline, so that no unwanted program can access it. 
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the purpose of the private key in a Bitcoin transaction
+						 */
+						title: () => LocalizedString
+					}
+					publicKey: {
+						answers: {
+							/**
+							 * To generate an unlimited number of Bitcoin addresses from a single key
+							 */
+							'0': () => LocalizedString
+							/**
+							 * To authorize Bitcoin transactions
+							 */
+							'1': () => LocalizedString
+							/**
+							 * To verify that the supply of all bitcoin in existence does not exceed 21 million
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct! It's worth noting that, while funds can only be moved with the private key, it might be a good idea to not share the master public key on a public forum to preserve financial privacy. Only share Bitcoin addresses with payers to receive payments
+							 */
+							'0': () => LocalizedString
+							/**
+							 * No, the master public key is not used to authorize Bitcoin transactions. That's the job of the private key. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * No. While every user can independently verify the monetary supply of in the bitcoin network with a bitcoin node, this is not what the master public key is used for. Try again.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the purpose of a master public key in Bitcoin
+						 */
+						question: () => LocalizedString
+						/**
+						 * A master public key in Bitcoin is a key that is cryptographically derived from a Bitcoin private key and is used to generate Bitcoin addresses that payers can send Bitcoin to.
+				
+					It can be used to generate an unlimited number of Bitcoin addresses from a single master public key.
+				
+					While the private key is used to authorize Bitcoin transactions and therefore needs to be kept private, the Bitcoin addresses derived from the public key can be shared with a payer to receive payments from them.
+				
+					Master public keys consist of a long sequence of numbers and letters and begin with xpub, ypub or zpub.
+				
+					A Bitcoin address for receiving payments starts with either 1, 3 or bc1.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the purpose of a master public key in Bitcoin
+						 */
+						title: () => LocalizedString
+					}
+					mining: {
+						answers: {
+							/**
+							 * To add transactions to the blockchain and secure the network
+							 */
+							'0': () => LocalizedString
+							/**
+							 * To make a lot of money
+							 */
+							'1': () => LocalizedString
+							/**
+							 * To amass giant amounts of computation power for AI to take over the world
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct! Miners perform work in the form of computations and compete with other miners for who can add the next block of transactions to the blockchain and earn the block reward
+							 */
+							'0': () => LocalizedString
+							/**
+							 * That's not the main purpose of mining. **** While it's true that miners do receive a reward in bitcoin for their efforts, they also have to pay for the electricity they use to perform computations. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Wow, that's an ambitious goal! While it's true that mining requires a significant amount of computational power, I'm pretty sure the main purpose is not to create an army of AI overlords. Better luck next time!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the main purpose of mining in the bitcoin network
+						 */
+						question: () => LocalizedString
+						/**
+						 * When a user wants to send a transaction in the bitcoin network, they need to sign the transaction with their private key to prove that they are the owner of the funds being transferred. Once the transaction is signed, it is broadcasted to the peer-to-peer network.
+				
+					Mining is the process of adding transactions to the bitcoin blockchain. When a transaction is broadcasted to the network, it is picked up by miners, who verify that the transaction is valid (i.e., the user has the necessary funds and the private key used to sign the transaction corresponds to the public key associated with the funds).
+				
+					Once a transaction has been verified, it is added to a block of transactions, along with a mathematical puzzle. Miners compete to solve the puzzle, and the first one to solve it gets to add the block to the blockchain and claim a reward in bitcoin. The reward is currently 6.25 bitcoins, plus any transaction fees that were included in the block.
+				
+					In addition to adding transactions to the blockchain, mining also serves to secure the bitcoin network. This is because solving the puzzle requires a significant amount of computational power, and adding a block to the blockchain requires other miners to verify the solution. This makes it very difficult for any one person or group to manipulate the blockchain.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the main purpose of mining in the bitcoin network
+						 */
+						title: () => LocalizedString
+					}
+					proofOfWork: {
+						answers: {
+							/**
+							 * Through proof of work, which involves miners competing to solve a mathematical puzzle
+							 */
+							'0': () => LocalizedString
+							/**
+							 * By holding a lottery among all those that have bitcoins in a wallet
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Through a process of majority voting
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct! Congrats on understanding how the bitcoin network creates a source of truth that cannot be manipulated by wealthy elites or insiders
+							 */
+							'0': () => LocalizedString
+							/**
+							 * No, this would be proof of stake, which is a different consensus mechanism that involves choosing the next block producer proportional to their stake (how many coins they hold) in the network. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Wrong, but it's an interesting idea. The bitcoin network does not use a process of majority voting to create a source of truth. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * How does the Bitcoin network create a source of truth despite having no central authority
+						 */
+						question: () => LocalizedString
+						/**
+						 * Decentralized systems, by definition, do not have a single source of truth.
+				
+					Satoshi's breakthrough was to build a system that allows all participants to zero in on the same truth independently. Proof of work is what allows this to happen. The point of proof of work is to create an irrefutable history. If two histories compete, the one with the most work embedded in it wins.
+				
+					The chain with the most work is the truth, by definition. This is called Nakamoto consensus. This works because work requires energy. In Bitcoin, work is computation. Not any kind of computation, but computation that has no shortcut: guessing.
+				
+					  In the absence of a central authority, proof of work is necessary because it ensures that there is no shortcut to adding transactions to the blockchain.
+				
+					  Miners must compete to solve the puzzle through brute force computation, which is probabilistic in nature, and the proof that the work has been done becomes self-evident in the outcome of the work. This makes it very difficult for any one person or group to manipulate the transaction history.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * How does the Bitcoin network create a source of truth despite having no central authority
+						 */
+						title: () => LocalizedString
+					}
+					difficultyAdjustment: {
+						answers: {
+							/**
+							 * It is reduced by half
+							 */
+							'0': () => LocalizedString
+							/**
+							 * It is doubled
+							 */
+							'1': () => LocalizedString
+							/**
+							 * It is multiplied by a random number chosen by the bitcoin software
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * That's right! Satoshi determined the reduction of new bitcoin supply by half in the very first release of the Bitcoin software in 2009 and it is practically impossible to change
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, but the block reward is not doubled every four years. You must be confusing Bitcoin with the supplies of fiat currencies which are ever expanding at a faster rate. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Very creative, but wrong. The Bitcoin supply schedule is anything but random. Its predictability provides certainty for economic actors unlike anything in the history of mankind. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What happens to the block reward in the bitcoin network every four years
+						 */
+						question: () => LocalizedString
+						/**
+						 * A crucial element of the Bitcoin protocol is the Difficulty Adjustment. This algorithm ensures that new blocks are found every 10 minutes on average.
+				
+					When more miners join the network, the average time required to find a new block goes down. In the opposite case, when miners leave the network, it takes longer to add a new block. The Difficulty Adjustment algorithm adjusts the difficulty of the mathematical puzzle to match changes in the combined computing power of all miners. This prevents the creation of more (or less) bitcoin units than the predetermined supply schedule.
+				
+					This is in stark contrast to physical mining of precious metals like gold where adding more gold miners leads to a higher supply of gold and therefore a decrease in its price. In Bitcoin however, the addition of new miners only adds more security to the network.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What happens to the block reward in the bitcoin network every four years
+						 */
+						title: () => LocalizedString
+					}
+					halving: {
+						answers: {
+							/**
+							 * It is reduced by half
+							 */
+							'0': () => LocalizedString
+							/**
+							 * It is doubled
+							 */
+							'1': () => LocalizedString
+							/**
+							 * It is multiplied by a random number chosen by the bitcoin software
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * That's right! Satoshi determined the reduction of new bitcoin supply by half in the very first release of the Bitcoin software in 2009 and it is practically impossible to change
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, but the block reward is not doubled every four years. You must be confusing Bitcoin with the supplies of fiat currencies which are ever expanding at a faster rate. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Very creative, but wrong. The Bitcoin supply schedule is anything but random. Its predictability provides certainty for economic actors unlike anything in the history of mankind. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What happens to the block reward in the bitcoin network every four years
+						 */
+						question: () => LocalizedString
+						/**
+						 * One final element that is important to understand, is that the block reward in the bitcoin network is reduced by half every four years, or every 210,000 blocks.
+				
+					This event, known as the "halving", is programmed into the bitcoin software that all users run. When bitcoin was first launched, miners received 50 new bitcoins for each block they added to the blockchain. Currently, the block reward is 6.25 bitcoins, but it will be reduced to 3.125 bitcoins in 2024 when the next halving occurs.
+				
+					These halvings will continue to take place until the year 2140, at which point the total number of bitcoins that will have been mined will be capped at 21 million. As of 2023, around 92% of all bitcoins (\~19.3 million) have already been mined.
+				
+					Unlike fiat currencies, which can be inflationary, bitcoin is disinflationary in nature. This makes it more scarce than fiat and precious metals such as gold and silver, or anything else known in the universe.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What happens to the block reward in the bitcoin network every four years
+						 */
+						title: () => LocalizedString
+					}
+				}
+			}
+			LightningWhatDoesItSolve: {
+				/**
+				 * Lightning: What does it solve?
+				 */
+				title: () => LocalizedString
+				questions: {
+					bitcoinDrawbacks: {
+						answers: {
+							/**
+							 * It takes too long to confirm transactions
+							 */
+							'0': () => LocalizedString
+							/**
+							 * It is difficult to use
+							 */
+							'1': () => LocalizedString
+							/**
+							 * It is not a trusted intermediary
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct! Great job! You may be pleased to hear that solutions have been deployed to improve the settlement time of Bitcoin payments to a few seconds.&#x20
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Wrong! But you are forgiven, Bitcoin is actually very easy to use. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Wrong! But don't worry, Bitcoin actually allows anyone to send value without a trusted intermediary. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is a drawback of Bitcoin's design
+						 */
+						question: () => LocalizedString
+						/**
+						 * Bitcoin, the world's most widely used and valuable digital currency, allows anyone to send value without a trusted intermediary.
+				
+					There are, however, some drawbacks to bitcoin's design which prioritizes security and decentralization at the cost of scalability.
+				
+					Transactions confirmed on the bitcoin blockchain take up to one hour before they are irreversible.
+				
+					Micropayments, or payments less than a few cents, are inconsistently confirmed, and fees render such transactions unviable on the network today.
+				
+					Currently, Bitcoin's blockchain can process around 3 transactions per second. This is generally seen as an impediment for Bitcoin to become a currency that facilitates the everyday retail transactions of millions around the world.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is a drawback of Bitcoin's design
+						 */
+						title: () => LocalizedString
+					}
+					blocksizeWars: {
+						answers: {
+							/**
+							 * Whether or not to increase the blocksize
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Whether or not to censor certain transactions
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Whether or not to change the consensus algorithm to proof of stake
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct. The users ultimately prevailed in preserving the decentralization and censorship-resistance of the Bitcoin network, showing that Bitcoin is controlled by users, not corporations
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Not quite. Both sides were publicly in favor of preserving censorship-resistance, however companies in the Bitcoin ecosystem were willing to accept some centralization in exchange for quick wins in scalability. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Haha, but no. While there are some dubious voices that demand the abolishment of proof of work in favor of proof of stake, this was never a debate in Bitcoin, and never will be. Try again.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What was the contention in the Blocksize Wars
+						 */
+						question: () => LocalizedString
+						/**
+						 * These drawbacks lead to a debate within the Bitcoin community about the best way to scale the Bitcoin network, often dubbed the Blocksize Wars.
+				
+					Companies in the Bitcoin ecosystem argued that increasing the blocksize, which is the maximum size of a block of transactions on the blockchain, would allow more transactions to be processed per second, making the network more efficient and able to handle a larger volume of transactions.
+				
+					Bitcoin users on the other side of the debate argued that increasing the blocksize would centralize the network, as it would require more expensive and powerful computers to process the larger blocks, and could potentially lead to Bitcoin becoming prone to censorship.
+				
+					The users ultimately prevailed in preserving the decentralization and censorship-resistance of the Bitcoin network and demonstrated that Bitcoin is controlled by users, not corporations. This also meant that scaling Bitcoin would require a different enigneering solution than merely increasing the blocksize.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What was the contention in the Blocksize Wars
+						 */
+						title: () => LocalizedString
+					}
+					lightningNetwork: {
+						answers: {
+							/**
+							 * It allows users to make small, near instant payments at low cost
+							 */
+							'0': () => LocalizedString
+							/**
+							 * It helps users preserve the decentralization of the Bitcoin network
+							 */
+							'1': () => LocalizedString
+							/**
+							 * It ensures that every transaction is added to the Bitcoin blockchain
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct! The Lightning Network allows users to make small, near instant payments at low cost, and it eliminates the need for every transaction to be added to the Bitcoin blockchain. Congrats! As a fun fact, the Lightning Network has helped increase the adoption of Bitcoin by allowing it to process more transactions per second and handle higher volumes of transactions
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Incorrect! The Lightning Network is actually a scaling solution built on top of the Bitcoin protocol. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Incorrect! The Lightning Network actually eliminates the need for every transaction to be added to the Bitcoin blockchain, as it allows for smaller payments to be made off-chain.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What does the Lightning Network do
+						 */
+						question: () => LocalizedString
+						/**
+						 * While users prevailed and preserved the decentralization of the Bitcoin network, a solution to scale Bitcoin proposed by researchers Tadge Dryja and Joseph Poon, called the Lightning Network, started to gain traction and was launched in 2017.
+				
+					The Lightning Network, often referred to as just Lightning or LN, is a scaling solution built on top of the Bitcoin protocol. It facilitates smaller, near instant payments between users at very low cost and eliminates the need for every transaction to be added to the Bitcoin blockchain whilst ensuring that the value being transacted abides by the rules of the Bitcoin network.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What does the Lightning Network do
+						 */
+						title: () => LocalizedString
+					}
+					instantPayments: {
+						answers: {
+							/**
+							 * A matter of seconds
+							 */
+							'0': () => LocalizedString
+							/**
+							 * 10 minutes
+							 */
+							'1': () => LocalizedString
+							/**
+							 * 1 hour
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct! This makes the Lightning Network a great option for situations where you need to make a payment immediately, such as retail transactions or peer-to-peer payments
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Incorrect! On the Bitcoin network, transactions are grouped into blocks that are added to the blockchain about every 10 minutes. However, on the Lightning Network, payments do not need to wait for block confirmations to be considered secure. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Incorrect! On the Bitcoin network, payments are considered secure after they have been confirmed by six blocks, or about an hour. However, on the Lightning Network, payments do not need to wait for block confirmations to be considered secure.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * How long does it take for a payment to be considered secure on the Lightning Network
+						 */
+						question: () => LocalizedString
+						/**
+						 * In the Bitcoin network, transactions are grouped together in blocks, and new blocks are added to the blockchain about every 10 minutes. When a payment is made using Bitcoin, it is considered secure after it has been confirmed by six blocks, or about an hour.
+				
+					On the Lightning Network, payments do not have to wait for block confirmations to be considered secure. Instead, they are instant and completed all at once in a matter of few seconds.
+				
+					This makes it possible to use the Lightning Network for retail transactions, peer-to-peer payments, or any other situation where you need to make a payment immediately.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * How long does it take for a payment to be considered secure on the Lightning Network
+						 */
+						title: () => LocalizedString
+					}
+					micropayments: {
+						answers: {
+							/**
+							 * A payment for a small amount of money, often less than a dollar
+							 */
+							'0': () => LocalizedString
+							/**
+							 * A payment that requires a minimum amount and fixed fee
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A payment made using the Lightning Network
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Exactly! These types of payments can be difficult to make using traditional financial systems or the Bitcoin network, as they often have minimum amounts that can be transferred and fixed fees that can make small payments impractical
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Nope**.** While traditional financial systems may require a minimum amount and fixed fee for payments, the Lightning Network allows for the possibility of making very small payments without these limitations
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Not quite! While the Lightning Network does allow for the possibility of making micropayments, a micropayment is not defined as a payment made using the Lightning Network. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is a micropayment
+						 */
+						question: () => LocalizedString
+						/**
+						 * Micropayments refer to very small financial transactions, often for amounts less than a dollar. These types of payments can be difficult to make using traditional financial systems, as they often have minimum amounts that can be transferred and fixed fees that can make small payments impractical.
+				
+					The Lightning Network allows for the possibility of making micropayments using Bitcoin. It enables users to send very small amounts of Bitcoin, down to 1 sat, without the risk of losing control of their funds to a third party (called "custodial risk").&#x20;
+				
+					In contrast, the Bitcoin blockchain currently has minimum transaction amounts and fees that make micropayments impractical. The Lightning Network allows for minimal payments denominated in Bitcoin, using actual Bitcoin transactions. This opens up the possibility of creating new markets and making small payments more practical.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is a micropayment
+						 */
+						title: () => LocalizedString
+					}
+					scalability: {
+						answers: {
+							/**
+							 * To meet the demand for retail and automated payments
+							 */
+							'0': () => LocalizedString
+							/**
+							 * To make Bitcoin more attractive to investors
+							 */
+							'1': () => LocalizedString
+							/**
+							 * To get the required licences for interoperability with financial institutions
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * That's right. The Lightning Network helps the Bitcoin network achieve scalability by allowing users to conduct nearly unlimited transactions off-chain on a second layer
+							 */
+							'0': () => LocalizedString
+							/**
+							 * That's not it! While improving the attractiveness of Bitcoin to investors could be a benefit of improving scalability, it is not the main reason why scalability is important for the Bitcoin network
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Try again! **** Obtaining required licenses for interoperability with financial institutions may be a goal for some organizations working with Bitcoin, but it is not directly related to the concept of scalability.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * Why is scalability important for the Bitcoin network
+						 */
+						question: () => LocalizedString
+						/**
+						 * Scalability refers to the ability of a system, such as a network or platform, to handle a large amount of usage or traffic without experiencing issues or slowdowns.
+				
+					Scalability is important for Bitcoin because the network will need to be able to support a much higher volume of transactions in order to meet the demand of retail and automated payments.
+				
+					The Lightning Network allows users to conduct nearly unlimited transactions between each other outside of the Bitcoin blockchain, or off-chain.
+				
+					This means that transactions can be conducted without the need for each one to be recorded on the blockchain, which helps to reduce the load on the network and allows it to handle more transactions.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * Why is scalability important for the Bitcoin network
+						 */
+						title: () => LocalizedString
+					}
+					paymentChannels: {
+						answers: {
+							/**
+							 * By pushing bitcoin from one side of the channel to the other each time a payment is made
+							 */
+							'0': () => LocalizedString
+							/**
+							 * By broadcasting every transaction immediately to the Bitcoin blockchain as soon as it happens
+							 */
+							'1': () => LocalizedString
+							/**
+							 * By paying a commission to a 3rd party payment provider
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * That's right! Think of moving bitcoin in a Lightning channel like moving beads on an abacus. Each side keeps track of how much is on their side until it's time to settle on the Bitcoin blockchain. Good job
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Quite the opposite! Payment channels in Lightning avoid broadcasting every transaction by aggregating them. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Uhm no, actually payments in Lightning Network save the users fees for not settling every transaction on the blockchain. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * How do payment channels in the Lightning Network allow users to pay each other
+						 */
+						question: () => LocalizedString
+						/**
+						 * The Lightning Network consists of thousands of two party payment channels.
+				
+					You may think of a Lightning channel like opening a tab at your local bar. Instead of pulling out your wallet and paying each time you order a drink, it makes sense to save time, energy and fees by tallying all your drinks together at the end of the night and making the final settlement in one payment.
+				
+					Lightning works similar. Each time a payment is made from person A to person B, bitcoin are pushed from one side of the channel to the other. Two users can pay one another back and forth as many times as they like, almost instantly and with close to no fees.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * How do payment channels in the Lightning Network allow users to pay each other
+						 */
+						title: () => LocalizedString
+					}
+					routing: {
+						answers: {
+							/**
+							 * By using a network of intermediaries to route payments between users
+							 */
+							'0': () => LocalizedString
+							/**
+							 * By using teleportation to instantly transfer bitcoin from one user to another
+							 */
+							'1': () => LocalizedString
+							/**
+							 * By using a virtual reality simulation to simulate the transfer of bitcoin between users
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct! This is like delivering a package from one person to another by passing it along a series of friendly postmen! Congrats
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Hah no, this isn't science-fiction from Star Trek, but real world cryptographic engineering! Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * May I interest you for a simulation of a simulation? Jokes aside, this isn't it. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * How does the Lightning Network allow users to pay each other if they are not directly connected through a payment channel
+						 */
+						question: () => LocalizedString
+						/**
+						 * You may be thinking that setting up a payment channel with hundreds of businesses could be tedious, but no. The beauty of the Lightning Network is that it is a network of channels stitched together.
+				
+					Let us say Bob convinced his friend Carol to also join the Lightning Network. Alice has a channel with Bob, and Bob has a channel with Carol. Alice and Carol can then pay each other by “routing” through Bob.
+				
+					Some pretty clever cryptographic tricks guarantee that Bob cannot steal the money while it’s passing through him.
+				
+					When you make a payment on the Lightning Network, your node searches for a path of channels between you and your destination. This is what’s referred to as routing. This is of course all done automatically by the involved Lightning nodes, enabling it to happen in the blink of an eye.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * How does the Lightning Network allow users to pay each other if they are not directly connected through a payment channel
+						 */
+						title: () => LocalizedString
+					}
+				}
+			}
+			BitcoinCriticismsFallaciesI: {
+				/**
+				 * Bitcoin Criticisms & Fallacies I
+				 */
+				title: () => LocalizedString
+				questions: {
+					itsaBubble: {
+						answers: {
+							/**
+							 * It has consistently gone up
+							 */
+							'0': () => LocalizedString
+							/**
+							 * It has consistently gone down
+							 */
+							'1': () => LocalizedString
+							/**
+							 * It has gone up and down randomly
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Well done! You seem to have a good grasp on the overall trend of bitcoin's exchange rate. Despite some fluctuations, it has consistently been on the rise. Keep up the good work
+							 */
+							'0': () => LocalizedString
+							/**
+							 * I'm sorry, that's not quite right. While the exchange rate of bitcoin has certainly had its ups and downs, the overall trend has not been consistently downward. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, that's incorrect. While the exchange rate of bitcoin has certainly had its ups and downs, the overall trend has not been completely random. Keep trying!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * How has the exchange rate of bitcoin trended over time
+						 */
+						question: () => LocalizedString
+						/**
+						 * Over the years, bitcoin has often been called a bubble by various people. While its price has had several significant declines that may have warranted this label, the overall trend for bitcoin has been consistently upward.
+				
+					Critics who have proclaimed the death of bitcoin after each market cycle have been proven wrong, as the nascent digital money has continued to thrive despite their predictions. As these critics run out of analogies to use, it has become clear that their accusations are unfounded.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * How has the exchange rate of bitcoin trended over time
+						 */
+						title: () => LocalizedString
+					}
+					itstooVolatile: {
+						answers: {
+							/**
+							 * Buyers and sellers reaching agreements in real-time
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Government intervention
+							 */
+							'1': () => LocalizedString
+							/**
+							 * The phase of the moon
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * You're correct! The primary factor influencing the volatility of bitcoin's price is actually the agreements reached in real-time between buyers and sellers
+							 */
+							'0': () => LocalizedString
+							/**
+							 * I'm sorry, that's not quite right. While government intervention can certainly affect the price of bitcoin, it is not the primary factor influencing its volatility
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, that's incorrect. While the phase of the moon may have some strange effects on certain things, it does not play a significant role in the volatility of bitcoin's exchange rate. Keep trying!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the primary factor influencing the volatility of bitcoin's exchange rate
+						 */
+						question: () => LocalizedString
+						/**
+						 * It is subjective to expect bitcoin to maintain a specific price range, as it is traded around the clock, every day of the year, across the world. There are no requirements for registration, bank holidays, circuit breakers, or bailouts in the bitcoin market, which operates as a truly free market.
+				
+					Any and all volatility in bitcoin's price is the result of buyers and sellers reaching agreements in real-time without interference from governments. As bitcoin continues its journey towards becoming a primary global store of value in the Information Age, it is unrealistic to assume that its progress would be linear.
+				
+					As adoption of bitcoin increases, it becomes less risky and potential upside decreases, leading to a decrease in volatility.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the primary factor influencing the volatility of bitcoin's exchange rate
+						 */
+						title: () => LocalizedString
+					}
+					itsnotBacked: {
+						answers: {
+							/**
+							 * The credibility of its monetary properties
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Rarity
+							 */
+							'1': () => LocalizedString
+							/**
+							 * The color purple
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Spot on! According to Parker Lewis, the only thing that backs any money is the credibility of its monetary properties
+							 */
+							'0': () => LocalizedString
+							/**
+							 * That's not quite right. While rarity can certainly contribute to the value of money, it is not the only thing that backs it. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * That's incorrect. While the color purple may be a beautiful and regal choice for a currency, it does not actually play a role in backing money.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the only thing that backs any money, according to Parker Lewis
+						 */
+						question: () => LocalizedString
+						/**
+						 * The idea of backed money is contradictory, as the backing itself would then be considered money. Part of the value of money comes from its rarity. Bitcoin does not need to be backed by something else that is rare because it is inherently scarce.
+				
+					Verifiable and auditable through independent means, bitcoin is free of counterparty risk. There is no third party that must be trusted to keep and secure commodities or assets. If anything, it is possible that the future will be backed by bitcoin.
+				
+					As Parker Lewis stated, "Ultimately, bitcoin is backed by something, and it's the only thing that backs any money: the credibility of its monetary properties."
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the only thing that backs any money, according to Parker Lewis
+						 */
+						title: () => LocalizedString
+					}
+					willbecomeObsolete: {
+						answers: {
+							/**
+							 * No, it is not possible for bitcoin to become obsolete because it represents absolute scarcity and has a dominant position in the market.
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Yes, it is possible that bitcoin could become obsolete if a more secure or widely used digital monetary network is developed.
+							 */
+							'1': () => LocalizedString
+							/**
+							 * that, but let's be real here - who's going to invent a digital currency that's more scarce than absolute scarcity? That's like trying to invent a circle that's rounder than round. Good luck with that
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * bitcoin to become obsolete because it represents absolute scarcity and has a dominant position in the market.
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Well, you're not wrong about that, but let's be real here - who's going to invent a digital currency that's more scarce than absolute scarcity? That's like trying to invent a circle that's rounder than round. Good luck with that
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Uh oh, looks like you're playing it safe but not quite hitting the mark. While it's true that no one can predict the future, it's pretty clear that bitcoin has a solid grip on the digital monetary network game. Try again.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * Is it possible that bitcoin becomes obsolete one day
+						 */
+						question: () => LocalizedString
+						/**
+						 * Bitcoin represents a unique discovery of absolute scarcity, similar to the discovery of fire, electricity, or the field of mathematics.
+				
+					It is not logical or possible to compete with bitcoin in terms of scarcity, as there is no level of scarcity higher than absolute scarcity. Criticisms of bitcoin's perceived limitations or drawbacks assume that there are no trade-offs in terms of security and incentive design, or that bitcoin's current form does not already provide significant benefits to millions of users.
+				
+					As a rapidly growing, unrestricted network with a 99.98% uptime over more than a decade, having processed trillions of dollars in value and secured by billions of dollars in hardware, it is unlikely that bitcoin will be displaced as the dominant digital monetary network at this point.
+				
+					As Michael Saylor stated, "There's never been an example of a $100B monster digital network that was vanquished once it got to that dominant position."
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * Is it possible that bitcoin becomes obsolete one day
+						 */
+						title: () => LocalizedString
+					}
+					toomuchEnergy: {
+						answers: {
+							/**
+							 * It helps to even out the distribution of energy consumption around the world.
+							 */
+							'0': () => LocalizedString
+							/**
+							 * It increases the distribution of energy consumption around the world.
+							 */
+							'1': () => LocalizedString
+							/**
+							 * It decreases the distribution of energy consumption around the world.
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * You got it right. Did you know that bitcoin's fixed energy price helps to incentivize the use of renewable energy sources in areas where they may not have been economically viable before
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Well, I see you're a fan of chaos and global energy inequality, but this answer is wrong
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Looks like you're trying to save the world one energy imbalance at a time. This answer is clearly incorrect.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * How does bitcoin impact global energy consumption
+						 */
+						question: () => LocalizedString
+						/**
+						 * Bitcoin is a decentralized digital currency that is accessible to users around the world and is resistant to censorship due to its Proof of Work mechanism.
+				
+					With an estimated four billion people currently living under authoritarianism, bitcoin provides a way for individuals to send, receive, save, and transport wealth. It is important to consider the amount of energy that a monetary network like this should consume and to carefully evaluate who is best equipped to make decisions about this.
+				
+					One way to think about the impact of bitcoin on global energy consumption is to imagine a topographic map of the world, with local electricity costs represented by the peaks and troughs. Adding bitcoin to the mix is like pouring a glass of water over the map - it settles in the troughs, smoothing them out. This is because bitcoin is a global buyer of energy at a fixed price, which helps to even out the distribution of energy consumption around the world.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * How does bitcoin impact global energy consumption
+						 */
+						title: () => LocalizedString
+					}
+					strandedEnergy: {
+						answers: {
+							/**
+							 * By using it to power onsite equipment that generates hashes to produce bitcoin
+							 */
+							'0': () => LocalizedString
+							/**
+							 * By selling it on the bitcoin market
+							 */
+							'1': () => LocalizedString
+							/**
+							 * By creating a new form of renewable energy
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations! You've correctly identified the use of excess energy in bitcoin mining. Did you know that this process can be done in any location, even in areas where there is no local demand for the energy being generated
+							 */
+							'0': () => LocalizedString
+							/**
+							 * I see you're a fan of making money through unconventional means. Too bad that's not what this lesson is about. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * It looks like you're trying to save the world one renewable energy source at a time. While that's admirable, unfortunately that's not the right answer.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * How can excess energy be used through bitcoin mining
+						 */
+						question: () => LocalizedString
+						/**
+						 * Exactly**.** Bitcoin mining provides a portable solution for utilizing energy assets in regions where there is no local demand or means of transportation. By using onsite equipment to generate hashes, it is possible to produce bitcoin, which can then be held for future value appreciation or sold on the highly liquid and globally accessible bitcoin market.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * How can excess energy be used through bitcoin mining
+						 */
+						title: () => LocalizedString
+					}
+				}
+			}
+			BitcoinCriticismsFallaciesII: {
+				/**
+				 * Bitcoin Criticisms & Fallacies II
+				 */
+				title: () => LocalizedString
+				questions: {
+					internetDependent: {
+						answers: {
+							/**
+							 * By sending a transaction via SMS
+							 */
+							'0': () => LocalizedString
+							/**
+							 * By posting a message on a social media platform
+							 */
+							'1': () => LocalizedString
+							/**
+							 * By sending an email
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * You've identified a way to send bitcoin transactions even when the internet is down. Good thinking
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Well, it looks like you're trying to stay connected in the digital age even during an internet outage, but that's incorrect
+							 */
+							'1': () => LocalizedString
+							/**
+							 * I see you're trying to stay connected through traditional means, but unfortunately sending an email might not be the most reliable way to send bitcoin transactions during an internet outage. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * How can bitcoin transactions be sent in the event of an internet disruption
+						 */
+						question: () => LocalizedString
+						/**
+						 * There is a risk, of course, that internet access may be lost due to infrastructure failures, natural disasters, or intentional outages. However, it is possible to transact bitcoin using offline methods and other communication networks.
+				
+					For instance, a signed bitcoin transaction can be transmitted to a single node and broadcast to the network for inclusion in a block by miners. There are various ways to do this, such as sending a transaction via SMS, using a physical wallet with a one-time use tamper-evident private key, or receiving blocks via satellite. These options allow for bitcoin to be used even in the event of an internet disruption.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * How can bitcoin transactions be sent in the event of an internet disruption
+						 */
+						title: () => LocalizedString
+					}
+					forcrimeOnly: {
+						answers: {
+							/**
+							 * No
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Yes
+							 */
+							'1': () => LocalizedString
+							/**
+							 * It depends on the individual circumstances
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Well done! You've correctly identified that it is not accurate to claim that bitcoin's properties have led to an overall increase in criminal activity.
+							 */
+							'0': () => LocalizedString
+							/**
+							 * I see you're a fan of sensational headlines and jumping to conclusions. Unfortunately, that's not based in reality
+							 */
+							'1': () => LocalizedString
+							/**
+							 * It looks like you're trying to take a balanced approach, but is not accurate to make this claim regardless of individual circumstances. Try again.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * Is it accurate to claim that bitcoin's properties have led to an overall increase in criminal activity
+						 */
+						question: () => LocalizedString
+						/**
+						 * Bitcoin is a neutral tool for exchanging value, and it has no inherent beliefs, opinions, or values. Its meaning is determined by how it is used. It is not accurate to claim that bitcoin's properties have led to an overall increase in criminal activity.
+				
+					Crime does not stem from access to tools, but rather from individual circumstances. If bitcoin is useful, it can be used by anyone, including criminals. If it is not useful, it cannot be used by anyone, including criminals.
+				
+					As Parker Lewis stated, "There is nothing inherent about the tools used to facilitate crimes that makes them criminal in themselves. Despite criminal use, no one is calling for the ban of roads, the internet, mail, etc."
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * Is it accurate to claim that bitcoin's properties have led to an overall increase in criminal activity
+						 */
+						title: () => LocalizedString
+					}
+					ponziScheme: {
+						answers: {
+							/**
+							 * It is a form of money
+							 */
+							'0': () => LocalizedString
+							/**
+							 * It is a ponzi scheme
+							 */
+							'1': () => LocalizedString
+							/**
+							 * It is an open-source investment scheme
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations! You've earned some sats for correctly identifying that bitcoin is a form of money. Did you know that bitcoin was the first decentralized digital currency to be created, and it operates without a central bank or single administrator
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Ah hah! You fell for the old ponzi scheme trick! Just kidding, but seriously, that's not what bitcoin is
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Nope, sorry! Bitcoin isn't an open-source investment scheme. But hey, at least you're learning about it, right?
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * Which of the following statements is true about bitcoin
+						 */
+						question: () => LocalizedString
+						/**
+						 * Calling bitcoin a ponzi scheme shows a lack of understanding of both bitcoin and the definition of a ponzi scheme. A ponzi scheme involves promises of above-market returns to investors, but as a permissionless network, bitcoin does not have a central authority that can make such promises.
+				
+					Additionally, bitcoin is not an investment scheme, it is a form of money. Unlike opaque investment opportunities that may be promoted to unsuspecting individuals, bitcoin's code is open-source and its supply can be independently verified at all times.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * Which of the following statements is true about bitcoin
+						 */
+						title: () => LocalizedString
+					}
+					bitcoinisTooSlow: {
+						answers: {
+							/**
+							 * Credit card payments go through multiple parties before reaching the merchant, while bitcoin payments go directly to the recipient without intermediaries
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Credit card payments are final once they are confirmed, while bitcoin payments can be reversed
+							 */
+							'1': () => LocalizedString
+							/**
+							 * but at least you're learning about bitcoin
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations! You've unlocked the ultimate bitcoin payment mastery. You seem to understand that bitcoin operates without a central bank or single administrator
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Uh oh, looks like you might have gotten the wrong answer, but at least you're learning about bitcoin
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Nope, sorry! Credit card payments are being censored all the time, but good try. Keep learning about bitcoin!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the main difference between paying with a credit card and paying with bitcoin on-chain
+						 */
+						question: () => LocalizedString
+						/**
+						 * Paying with bitcoin is not the same as using a credit card to make a purchase. When you use a credit card, your payment goes through multiple parties before reaching the merchant's bank account after days or even weeks of processing.
+				
+					In contrast, when you pay with bitcoin on the main blockchain, you are sending actual money directly to the recipient without any intermediaries. This means there is no risk of censorship and the transaction is considered final once it has been confirmed by six blocks on the blockchain.
+				
+					The proper comparison would be between bitcoin base layer and the Fed as currency issuer and as a clearing mechanism.
+				
+					Since the advent of the Lightning Network, the "Bitcoin is too slow" criticism has largely fallen silent.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the main difference between paying with a credit card and paying with bitcoin on-chain
+						 */
+						title: () => LocalizedString
+					}
+					supplyLimit: {
+						answers: {
+							/**
+							 * Through a decentralized consensus process in which every transaction is independently validated by nodes on the network
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Through a centralized process in which a single authority controls the issuance of new coins
+							 */
+							'1': () => LocalizedString
+							/**
+							 * By fixing the maximum supply at an arbitrary number, such as 100 million
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations! You've unlocked the ultimate bitcoin supply mastery. Did you know that the decentralized nature of the bitcoin network allows for greater transparency, as every transaction is independently validated by nodes on the network
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Nope, sorry! Bitcoin's supply isn't controlled by a central authority. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Uh oh, looks like you might have gotten the wrong answer. The maximum supply of bitcoin is fixed at 21 million, not 100 million. But at least you're learning about bitcoin!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * How is the supply of bitcoin protected from being corrupted
+						 */
+						question: () => LocalizedString
+						/**
+						 * Bitcoin's decentralized nature allows for its supply to be independently validated by each node on the network, ensuring that it cannot be corrupted. This is achieved through a consensus process in which every transaction that has been confirmed on the bitcoin network is independently validated.
+				
+					While anyone can fork the code and make changes to the rules, it is unlikely that this version of the code would be adopted by the wider network. The decentralized consensus process and the incorruptible supply of bitcoin are crucial to its appeal as a form of money.
+				
+					The maximum supply of bitcoin is fixed at 21 million, and any attempt to increase this limit would require consensus from a significant portion of the bitcoin network, which is highly unlikely to happen.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * How is the supply of bitcoin protected from being corrupted
+						 */
+						title: () => LocalizedString
+					}
+					governmentBan: {
+						answers: {
+							/**
+							 * No, because the decentralized nature of the bitcoin network makes it difficult to enforce a ban
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Yes, by preventing the generation of random numbers
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Yes, by shutting down the internet
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct. The decentralized nature of the bitcoin network makes it difficult to enforce a ban
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Nope, silly! While it is technically possible for governments to ban bitcoin, it would be nearly impossible to enforce such a ban. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Uh oh, looks like you might have gotten the wrong answer. Shutting down the internet wouldn't necessarily stop people from using bitcoin.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * Can governments effectively ban bitcoin
+						 */
+						question: () => LocalizedString
+						/**
+						 * It is technically possible for governments to ban bitcoin, but enforcing such a ban would be difficult due to the decentralized nature of the bitcoin network.
+				
+					Bitcoin relies on private keys, which are simply random numbers, to control access to transactions recorded on the blockchain. These private keys can be generated and stored anywhere, making them largely undectectable.
+				
+					Additionally, the infrastructure required to access the bitcoin network is relatively simple and widely available, making it easy for people to trustlessly verify transactions.
+				
+					As Saifedean Ammous said, "Banning bitcoin is not much different from trying to ban math. It will just prove its utility & drive more people to it."
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * Can governments effectively ban bitcoin
+						 */
+						title: () => LocalizedString
+					}
+				}
+			}
+			BitcoinCriticismsFallaciesIII: {
+				/**
+				 * Bitcoin Criticisms & Fallacies III
+				 */
+				title: () => LocalizedString
+				questions: {
+					concentratedOwnership: {
+						answers: {
+							/**
+							 * Yes, but these wallets belong to exchanges that have millions of customers
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Yes, and these wallets belong to individuals who have hoarded large amounts of bitcoin
+							 */
+							'1': () => LocalizedString
+							/**
+							 * No, the vast majority of bitcoin is evenly distributed among a large number of users
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations! You've unlocked the ultimate bitcoin wallet mastery. Did you know that it is generally considered best practice to keep bitcoin in a self-hosted wallet for security and privacy reasons
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Nope, sorry! While it is technically true that a small number of wallets hold the majority of all bitcoin, these wallets don't necessarily belong to individuals who have hoarded large amounts of bitcoin. Keep learning about bitcoin
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Uh oh, looks like you might have gotten the wrong answer. The distribution of bitcoin among users is not necessarily even. But at least you're learning about bitcoin!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * Is it true that a small number of wallets hold the majority of all bitcoin
+						 */
+						question: () => LocalizedString
+						/**
+						 * It is often said that a small number of wallets hold the majority of all bitcoin. While this is technically true, it is important to note that these wallets are typically owned by exchanges that have millions of customers.
+				
+					Many people choose to leave their bitcoin on an exchange, but it is generally considered best practice to keep bitcoin in a personal wallet for security and privacy reasons.
+				
+					It is also worth noting that a single bitcoin address can contain bitcoin belonging to multiple users, and a single user can control multiple wallets. To maintain privacy, it is recommended to generate a new address for each receiving transaction instead of reusing the same address.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * Is it true that a small number of wallets hold the majority of all bitcoin
+						 */
+						title: () => LocalizedString
+					}
+					centralizedMining: {
+						answers: {
+							/**
+							 * No, because they have a strong incentive to follow the rules of the network and maintain the integrity of the blockchain
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Yes, because they have a majority of the hashing power
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Yes, but only if they are acting in their own self-interest
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Yep, that's right. Did you know that the decentralized nature of the bitcoin network ensures that no single entity, including mining pools, can disrupt the network or censor transactions
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Nope, sorry! While mining pools do have a significant amount of hashing power, individual miners are extremely mobile and can trivially direct their hashrate to an honest mining pool
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Incorrect. While it is true that mining pools have an incentive to act in their own self-interest, this does not mean that they can disrupt the bitcoin network or censor transactions.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * Can mining pools disrupt the bitcoin network or censor transactions
+						 */
+						question: () => LocalizedString
+						/**
+						 * Some people believe that mining pools, which are groups of miners that work together to increase their chances of finding a block, could potentially disrupt the bitcoin network or censor transactions.
+				
+					However, this concern stems from a lack of understanding of the incentives of miners and their role in the network. In reality, miners have a strong incentive to follow the rules of the network and maintain the integrity of the blockchain, as their own profits depend on it.
+				
+					As Jimmy Song said, "A majority of hashing power can't: take coins you already possess away, change the rules of bitcoin, or hurt you without hurting themselves."
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * Can mining pools disrupt the bitcoin network or censor transactions
+						 */
+						title: () => LocalizedString
+					}
+					tooExpensive: {
+						answers: {
+							/**
+							 * By comparing the entire market capitalization of bitcoin to that of other asset classes
+							 */
+							'0': () => LocalizedString
+							/**
+							 * By comparing the unit price of one bitcoin to the unit price of another asset, such as gold
+							 */
+							'1': () => LocalizedString
+							/**
+							 * By consulting a crystal ball and going with your gut feeling
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations, you're on the right track! It's important to consider the entire market cap of bitcoin when comparing it to other assets. Did you know that the total market cap of bitcoin reached over $1 trillion in 2021
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Uh oh, it looks like you might have fallen for the unit bias trap! Better luck next time
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, consulting a crystal ball might work for predicting the weather, but it's not a reliable way to assess the value of bitcoin. Better luck next time!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * How can you accurately compare the value of bitcoin to other assets
+						 */
+						question: () => LocalizedString
+						/**
+						 * One common misconception about bitcoin is that it is too expensive to purchase.
+				
+					However, this belief is based on unit bias, as it is more accurate to compare the entire market capitalization of bitcoin to other assets rather than just the unit price of a single bitcoin.
+				
+					It's also worth noting that a single bitcoin can be divided into 100 million smaller units called satoshis. As the saying goes, "you can buy a fraction of a bitcoin!"
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * How can you accurately compare the value of bitcoin to other assets
+						 */
+						title: () => LocalizedString
+					}
+					prohibitivelyHigh: {
+						answers: {
+							/**
+							 * The efficiency and reliability of the bitcoin network as a settlement layer
+							 */
+							'0': () => LocalizedString
+							/**
+							 * The use of secondary layers such as lightning, liquid, or federated side-chains for smaller transactions
+							 */
+							'1': () => LocalizedString
+							/**
+							 * The fact that bitcoin is still a relatively new technology and has not yet reached its full potential
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations, you've hit the nail on the head! The efficiency and reliability of the bitcoin network certainly play a role in keeping transaction fees low. Did you know that the bitcoin network can process up to 7 transactions per second, making it faster than some traditional payment systems
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Nice try, but it looks like you're missing a key piece of information. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, but being a newer technology does not necessarily equate to lower transaction fees. Better luck next time!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the main reason that transaction fees on the main layer of bitcoin remain relatively low compared to traditional financial systems
+						 */
+						question: () => LocalizedString
+						/**
+						 * Another misconception about bitcoin is that its transaction costs are prohibitively high.
+				
+					However, confirmed transactions on the main layer of bitcoin provide a level of finality that is unmatched in the traditional financial system. While it is true that transaction fees may occasionally spike due to the limited capacity of each block, the bitcoin network remains an efficient and reliable settlement layer for high-value transactions.
+				
+					In fact, according to Saifedean Ammous, "between October 2010 and July 2021, the average daily transaction fees came up to around 0.02% of the value of the transactions."
+				
+					In addition, smaller transactions, including microtransactions, are often migrated to secondary layers such as lightning, liquid, or federated side-chains where fees are significantly lower than those offered by retail banks.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the main reason that transaction fees on the main layer of bitcoin remain relatively low compared to traditional financial systems
+						 */
+						title: () => LocalizedString
+					}
+					willBeHoarded: {
+						answers: {
+							/**
+							 * No, holding bitcoin is a way to hedge against future uncertainty and does not necessarily mean it is not being used
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Yes, holding bitcoin is the same thing as hoarding bitcoin
+							 */
+							'1': () => LocalizedString
+							/**
+							 * It depends on the individual's intentions and financial goals
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations, you're on the right track! As Pierre Rochard pointed out, 'all bitcoin are always held by someone, payments only change who is holding it.' Well done
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Uh oh, it looks like you might have fallen for the hoarding misconception! Holding bitcoin is a common way to hedge against future uncertainty and does not necessarily mean it is not being used
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, but the distinction between holding and hoarding bitcoin is not dependent on an individual's intentions and financial goals. Better luck next time!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * Is holding bitcoin the same thing as hoarding bitcoin
+						 */
+						question: () => LocalizedString
+						/**
+						 * There is a common belief that the fixed supply of bitcoin incentivizes hoarding, or the act of holding onto bitcoin rather than spending it in the economy.
+				
+					However, this logic has a few flaws. First, saving, or the act of setting aside income for future use, is often conflated with hoarding. In fact, saving is a necessary precursor to significant investment and can be seen as a responsible financial practice.
+				
+					Second, holding onto bitcoin, or any form of money, is a common way to hedge against future uncertainty and does not necessarily mean that it is not being used.
+				
+					As Pierre Rochard pointed out, "all bitcoin are always held by someone, payments only change who is holding it." In other words, the act of holding bitcoin is itself a use of bitcoin.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * Is holding bitcoin the same thing as hoarding bitcoin
+						 */
+						title: () => LocalizedString
+					}
+					canBeDuplicated: {
+						answers: {
+							/**
+							 * The code is heavily scrutinized and rigorously developed, ensuring its security and transparency
+							 */
+							'0': () => LocalizedString
+							/**
+							 * The fact that it is open source allows for a meritocracy and encourages the "hive mind" to build solutions
+							 */
+							'1': () => LocalizedString
+							/**
+							 * It is backed by a large and influential group of investors
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * That's exactly right! The code of bitcoin is indeed heavily scrutinized and rigorously developed, which adds to its value. In fact, @BTCSchellingPt noted that Bitcoin Core is probably one of the most heavily scrutinized code bases in the world
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Nice try, but the value of bitcoin lies not only in its code but also in the community and infrastructure surrounding it. Better luck next time
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, the value of bitcoin is not solely determined by the backing of a group of investors. Better luck next time!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the main reason that bitcoin is considered valuable despite the fact that its code can be copied by anyone
+						 */
+						question: () => LocalizedString
+						/**
+						 * One argument against the value of bitcoin is that it is not scarce because there are thousands of other cryptocurrencies available and because anyone can copy the code and create their own version.
+				
+					However, this overlooks the fact that bitcoin is more than just a piece of code. It is an open source protocol for transferring value that attracts people and resources due to its transparency and rigorous development process.
+				
+					As @BTCSchellingPt noted, "open source is very much a meritocracy. You've got the hive mind building solutions. You get all that scrutiny and that comes back to security. Bitcoin Core is probably one of the most heavily scrutinized code bases in the world."
+				
+					In other words, the value of bitcoin lies not only in its code, but also in the community and infrastructure that surrounds it.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the main reason that bitcoin is considered valuable despite the fact that its code can be copied by anyone
+						 */
+						title: () => LocalizedString
+					}
+				}
+			}
+			BitcoinAndEconomicsI: {
+				/**
+				 * Bitcoin and Economics I
+				 */
+				title: () => LocalizedString
+				questions: {
+					scarcity: {
+						answers: {
+							/**
+							 * A resource that is limited in quantity or availability and can lead to competition for possession
+							 */
+							'0': () => LocalizedString
+							/**
+							 * A resource that is abundant and easy to come by
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A resource that can only be obtained through time travel
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Remark:** Correct! Good job, you understood the concept of scarcity. Scarcity can lead to competition and can affect the value of goods and services in a free market
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Wrong! Sorry to burst your bubble, but if something is easy to come by, it can't be scarce
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Wrong! Time travel is a great idea for a sci-fi movie, but it doesn't have anything to do with scarce resources.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is a scarce resource
+						 */
+						question: () => LocalizedString
+						/**
+						 * When there are not enough resources to go around, people and organizations compete for them.
+				
+					This competition is often reflected in the price of goods and services in a free market. If the demand for a particular resource increases faster than the supply, it can become scarce and more valuable.
+				
+					Money is often used as a way to buy things because it is easy to trade and is valuable because it is scarce. Bitcoin is a digital form of money that has a fixed supply, which makes it rare and valuable.
+				
+					The idea that there is never enough of something to go around is a basic principle of economics, but it is often ignored in political decisions.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is a scarce resource
+						 */
+						title: () => LocalizedString
+					}
+					monetaryPremium: {
+						answers: {
+							/**
+							 * The difference in value between something's use as money and its value for its other uses
+							 */
+							'0': () => LocalizedString
+							/**
+							 * An extra fee added to the price of goods and services
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A monetary premium has nothing to do with paying extra for things
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations! You know your stuff when it comes to monetary premiums. A monetary premium is the additional value that something can have when it is used as a substitute for money. Good job
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, wrong answer! A monetary premium has nothing to do with paying extra for things
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Nope! A monetary premium is not a discount, it's actually the opposite.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is a monetary premium
+						 */
+						question: () => LocalizedString
+						/**
+						 * If the value of money is not based on its scarcity, it may not be as reliable as a way to store wealth. In this case, other things that are scarce, such as assets or resources, may become more valuable and be used as a substitute for money.
+				
+					This additional value is known as a monetary premium. When the usual form of money is not working well, people may turn to other things that are rare or hard to obtain as a way to exchange value.
+				
+					Some historical forms of money had no other use or value besides being used as a way to trade for other things. The difference between the value of something as money and its value for its other uses is the monetary premium.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is a monetary premium
+						 */
+						title: () => LocalizedString
+					}
+					greshamsLaw: {
+						answers: {
+							/**
+							 * A law that explains how people tend to use different types of currency in different ways when they are in circulation together
+							 */
+							'0': () => LocalizedString
+							/**
+							 * A law that says people will always choose to spend the more valuable currency when given a choice
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Gresham's Law actually explains the opposite behavior
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Good job, you understood Gresham's Law. This law explains how people tend to save the more valuable currency and spend the less valuable one when given the choice. Interesting fact: Gresham's Law can also apply to "fiat" currency, which is not backed by a physical commodity like gold or silver
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, wrong answer! Gresham's Law actually explains the opposite behavior
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Ha! That's a funny answer, but unfortunately it's not correct.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is Gresham's Law
+						 */
+						question: () => LocalizedString
+						/**
+						 * Gresham's Law is a concept that explains how people tend to use different types of currency in different ways when they are in circulation together.
+				
+					If two forms of currency are given equal value by a government or other authority, but one is made of a more valuable material, people will be more likely to save the more valuable currency and spend the less valuable one.
+				
+					This can happen when a government debases its currency, or makes it worth less, by decreasing the amount of valuable material it contains. The result is that people lose trust in the debased currency and prefer to hold onto the more valuable one instead.
+				
+					This principle can also apply to "fiat" currency, which is not backed by a physical commodity like gold or silver, if the supply of the currency is increased in a way that makes it worth less.
+				
+					In recent years, the emergence of bitcoin as a digital currency has led to a trend of people saving in bitcoin and spending their traditional currency, or "fiat," more quickly. This is because bitcoin is seen as having a higher long-term value and being more stable than fiat currencies.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is Gresham's Law
+						 */
+						title: () => LocalizedString
+					}
+					thiersLaw: {
+						answers: {
+							/**
+							 * A law that discusses what might happen if people and businesses refuse to accept or use a lower quality form of currency
+							 */
+							'0': () => LocalizedString
+							/**
+							 * A law that says people will always choose the more valuable currency when given a choice
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A law that says people will always choose the less valuable currency when given a choice
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct! Good job, you understood Thier's Law. This law discusses what might happen if people and businesses refuse to accept a lower quality form of currency. Interesting fact: Thier's Law suggests that if a government tries to force people to use a lower quality currency by making it legal tender, it will be ignored
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Wrong answer! Gresham's Law explains this behavior, not Thier's Law
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, try again! Thier's Law is not about always choosing the less valuable currency.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is Thier's Law
+						 */
+						question: () => LocalizedString
+						/**
+						 * Thier's Law is a concept that discusses what might happen if people and businesses refused to accept or use a lower quality form of currency.
+				
+					Instead of disappearing from circulation, the higher quality form of money might be traded at a premium, or for a higher value than its face value.
+				
+					Thier's Law suggests that if a government tries to force people to use a lower quality currency by making it legal tender, it will be ignored.
+				
+					In other words, people and businesses may choose not to accept the lower quality currency and instead prefer to use the higher quality one or other forms of payment.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is Thier's Law
+						 */
+						title: () => LocalizedString
+					}
+					cantillonEffect: {
+						answers: {
+							/**
+							 * A phenomenon that occurs when new money is introduced into an economy, causing some prices to increase more than others and leading to an uneven distribution of wealth.
+							 */
+							'0': () => LocalizedString
+							/**
+							 * A mysterious force that causes people to turn into cantaloupes whenever they eat too much fruit.
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A dance move that involves spinning around in circles while holding a bunch of cantaloupes.
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations, you are correct! The Cantillon Effect is indeed a process that can influence the distribution of wealth in an economy. Good job
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, but the Cantillon Effect doesn't have anything to do with fruit transformation. Better luck next time
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, but the Cantillon Effect is not a dance move, no matter how much you love cantaloupes. Better luck next time!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the Cantillon Effect
+						 */
+						question: () => LocalizedString
+						/**
+						 * The Cantillon Effect is a phenomenon that occurs when new money is introduced into an economy.
+				
+					When new money is added, it tends to go to certain people or businesses first, and these initial recipients have an advantage over others because they get to use the new money before prices go up.
+				
+					This causes the prices of some goods and services to increase more than others, which means that the people who get the new money first benefit while those who get it later are disadvantaged.
+				
+					This effect was first described by economist Richard Cantillon in the context of commodity money, such as gold and silver, but it is even more relevant today in the age of fiat money.
+				
+					When a government or central bank creates a lot of new fiat money, it can lead to increased prices and uneven distribution of wealth, as some people and businesses are able to access credit more easily and benefit from rising asset prices.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the Cantillon Effect
+						 */
+						title: () => LocalizedString
+					}
+					schellingPoint: {
+						answers: {
+							/**
+							 * A solution that people tend to choose by default in the absence of communication
+							 */
+							'0': () => LocalizedString
+							/**
+							 * A type of point system used in online multiplayer games
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A point on the earth's surface where all the planet's magnetic forces are balanced
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * You got it right. Did you know that a Schelling point can occur in multiplayer cooperative games and communication networks, and can be facilitated by standardized protocols like money
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Wrong! But at least you're thinking about points. Maybe try again and focus on communication this time
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Ha! You're off by a whole planet. Maybe try again and focus on the concept of default choices in the absence of communication.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is a Schelling point
+						 */
+						question: () => LocalizedString
+						/**
+						 * A Schelling point is a solution that people tend to choose by default, without communicating with each other.
+				
+					This can happen in multiplayer cooperative games, where you have to anticipate the choices of others. If you make the wrong choice, you might face consequences or miss out on benefits.
+				
+					Communication works the same way - it's like a multiplayer cooperative game played with others in the same network. We use standardized protocols (like email, spoken language, or money) to communicate efficiently with as many people as possible, with as little friction as possible. This can lead to increased trade, knowledge exchange, and innovation.
+				
+					In the digital world, people tend to choose the same option (the Schelling point) when exchanging value. This is because they expect that others will also choose it.
+				
+					The option that becomes the Schelling point is the one that communicates price signals most accurately, allowing market participants to coordinate with each other.
+				
+					Bitcoin is a protocol for exchanging value that has several advantages over traditional currencies (called "fiat"). For example, it has a fixed supply and its value has generally increased over time, while fiat currencies often lose value. Additionally, the bitcoin network is permissionless, global, and indestructible. All of these factors make bitcoin a natural Schelling point for money.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is a Schelling point
+						 */
+						title: () => LocalizedString
+					}
+				}
+			}
+			BitcoinAndEconomicsII: {
+				/**
+				 * Bitcoin and Economics II
+				 */
+				title: () => LocalizedString
+				questions: {
+					opportunityCost: {
+						answers: {
+							/**
+							 * The cost of not being able to do something else when you choose to do one thing
+							 */
+							'0': () => LocalizedString
+							/**
+							 * A type of cost that only applies to business owners
+							 */
+							'1': () => LocalizedString
+							/**
+							 * The cost of buying a new car
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations! You got it right. Did you know that opportunity cost can help you make better financial decisions by considering the trade-offs involved in different options
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Wrong! Opportunity cost applies to anyone who makes a choice, not just business owners. Maybe try again and think about the trade-offs involved in decision-making
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Ha! That's not quite right. The cost of buying a new car is a specific type of expense, not the same thing as opportunity cost. Maybe try again and think about the concept of trade-offs in decision-making.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is opportunity cost
+						 */
+						question: () => LocalizedString
+						/**
+						 * Opportunity cost is the idea that when you choose to do one thing, you can't do something else instead. In other words, every time you make a financial decision, you have to trade off one option for another.
+				
+					Bitcoin can help you make better financial decisions in the long term because it's a good way to store value (like saving money). This means that if you choose to invest in bitcoin, you might have to give up using that money for other things or opportunities. But if you hold onto your bitcoin, it has the potential to increase in value over time.
+				
+					This is especially important right now because the traditional monetary system (called "fiat") is not a reliable way to save money - it's designed in a way that causes the value of money to go down over time. So, it's important to make careful financial decisions to preserve your wealth.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is opportunity cost
+						 */
+						title: () => LocalizedString
+					}
+					timePreference: {
+						answers: {
+							/**
+							 * The amount of value you place on the present versus the future
+							 */
+							'0': () => LocalizedString
+							/**
+							 * A preference for doing things at a specific time of day
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A preference for traveling through time
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Congratulations! You got it right. Did you know that there are many factors that can influence your time preference, such as personal safety, tax rates, property rights, and the ability to store value reliably
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Wrong! Time preference has to do with decision-making, not a specific time of day. Maybe try again and think about how the time horizon you're operating on can affect your choices
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Ha! Time travel is still just science fiction, sorry. Maybe try again and think about how the time horizon you're operating on can affect your choices.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is time preference
+						 */
+						question: () => LocalizedString
+						/**
+						 * Time preference is the idea that the amount of time you have to wait for something to happen can affect the decisions you make.
+				
+					For example, if you value the present more than the future, you might be more likely to choose something that gives you immediate gratification.
+				
+					On the other hand, if you value the future more, you might be willing to wait longer for something that has a bigger benefit in the long term.
+				
+					There are many factors that can influence your time preference, such as your personal safety, tax rates, property rights, and the ability to store value reliably.
+				
+					The "hardness" of money (how well it holds its value over time) is also important because it can encourage people to save, plan, and invest for the future. It's important to note that time preference is not a fixed thing - it can change based on the incentives in your environment.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is time preference
+						 */
+						title: () => LocalizedString
+					}
+					impossibleTrinity: {
+						answers: {
+							/**
+							 * As perfectly mobile capital, Bitcoin alters the logic of sovereign nations to direct international monetary policy by making capital controls impossible to enforce.
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Due to its fixed supply, the existence of Bitcoin makes it easier for sovereign nations to set fixed exchange rates.
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Governments will restrict discussion of the Mundell-Fleming Trilemma because speech is easier to censor than cross-border payments.
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * enforce.
+							 */
+							'0': () => LocalizedString
+							/**
+							 * The 21 million cap is indeed quite fascinating, but the existence of Bitcoin actually makes it more difficult for nations to set fixed exchange rates. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * While that's entirely possible of course, that's not the most likeliest outcome here. Try again!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * How does the existence of Bitcoin affect the Mundell-Fleming-Trilemma?
+						 */
+						question: () => LocalizedString
+						/**
+						 * The Impossible Trinity, also known as the Mundell-Fleming Trilemma, is a concept that explains the trade-offs involved in setting international monetary policy for a sovereign nation.
+				
+					It says that a country can only choose two of the following three options: fixed exchange rates, free capital flows, and independent monetary policy.
+				
+					  These three options cannot be pursued at the same time. This is because a country's capital flows, or the movement of money in and out of the country, can be influenced by the value of its currency and its monetary policy, which sets the rules for how much money is in circulation.
+				
+					  As capital becomes more mobile and can move freely across borders, it is harder for a country to control and direct its capital flows. The rise of bitcoin, a digital currency that is borderless and immune to changes in value, may further challenge a country's ability to set monetary policy.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * How does the existence of Bitcoin affect the Mundell-Fleming-Trilemma?
+						 */
+						title: () => LocalizedString
+					}
+					jevonsParadox: {
+						answers: {
+							/**
+							 * The phenomenon of increased consumption of a resource due to increased efficiency
+							 */
+							'0': () => LocalizedString
+							/**
+							 * A type of fruit named after an economist
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A paradox that states that the more we have of something, the less we want it
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct! Well done, you have a firm understanding of the Jevons Paradox. Fun fact: The phenomenon is named after William Stanley Jevons, an English economist who first described it in the 19th century
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Wrong! Sorry, there is no such thing as a Jevons fruit. You'll have to find your sustenance elsewhere
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, that's not quite right. The Jevons Paradox actually states that increased efficiency can lead to increased consumption, not decreased desire for a resource. But hey, at least you're thinking paradoxically!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the Jevons Paradox
+						 */
+						question: () => LocalizedString
+						/**
+						 * The Jevons Paradox is a phenomenon that occurs when we use more of a resource, even when we are using it more efficiently. This happens because increased efficiency often leads to lower costs, which can increase demand for the resource.
+				
+					One example of this is the use of coal as an energy source. In the late 1700s, people thought that coal deposits were running out, but James Watt's steam engine made it possible to use coal more efficiently. This led to an increase in the demand for coal, even though it was being used more efficiently. The relationship between energy and money is also important to consider.
+				
+					Some people have proposed using energy as a measure of value for money, but this has not been successful in practice. Bitcoin, on the other hand, uses a system called proof of work, which incentivizes people to use energy efficiently in order to earn rewards.
+				
+					While some people criticize the use of energy in this way, it is important to remember that humans are constantly finding new ways to generate energy, and we should not assume that energy is a fixed or limited resource.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the Jevons Paradox
+						 */
+						title: () => LocalizedString
+					}
+					powerLaws: {
+						answers: {
+							/**
+							 * A power law in economics
+							 */
+							'0': () => LocalizedString
+							/**
+							 * A type of pasta dish
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A way to fold laundry
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Good job! The Pareto principle, also known as the 80/20 rule, is a power law that explains how a small amount of something (like 20% of producers) can have a big impact (like 80% of the market share).
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Sorry, but it looks like you need to brush up on your economics and not your culinary skills. The Pareto principle is not a type of pasta, although it might be a tasty way to remember it
+							 */
+							'1': () => LocalizedString
+							/**
+							 * I'm afraid you're going to have to put away the laundry and pay a little more attention to economics. The Pareto principle is not a way to fold clothes, but it is a useful way to understand how small changes in one thing can lead to bigger changes in another.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the Pareto principle, also known as the 80/20 rule, an example of
+						 */
+						question: () => LocalizedString
+						/**
+						 * Power laws are a way to understand how two things are related. When one thing changes, the other thing changes in a way that is related to the first change. Power laws can show up in different areas, like language, biology, and space. Small changes in one thing can often lead to bigger changes in the other thing.
+				
+					In economics, power laws are often shown in graphs. One example of a power law is the Pareto principle, which says that about 80% of the results come from 20% of the things that cause them. In a market, this might mean that 20% of the producers make up 80% of the market.
+				
+					Power laws can also be seen in other parts of bitcoin, like how much power mining pools have or how many hardware wallets different companies sell. They can also be seen in how bitcoin is distributed among different addresses.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the Pareto principle, also known as the 80/20 rule, an example of
+						 */
+						title: () => LocalizedString
+					}
+					winnerTakeAll: {
+						answers: {
+							/**
+							 * Because it is the most liquid and the best way to store value
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Because it tastes the best
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Because it has the prettiest color
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * You got it right. The main reason that people usually agree on using one type of money in a certain area is because it is the most liquid and the best way to store value
+							 */
+							'0': () => LocalizedString
+							/**
+							 * I'm afraid you might be confusing money with your favorite flavor of ice cream. Try again
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, but the color of money is not the most important factor in determining which type to use. Better luck next time!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the main reason that people usually agree on using one type of money in a certain area
+						 */
+						question: () => LocalizedString
+						/**
+						 * The concept of winner-take-all effects is when only one product or service is the best and everyone wants to use it. This can happen in markets where a small advantage can lead to getting all of the business.
+				
+					Money is a network like this, where only one type of money is used in a certain area because it is the most useful and has the most options for trading with other people. This happens because people want to use the money that will give them the most options and be the most useful in a lot of different situations.
+				
+					Money is also a good way to store value over a long time. When it comes to monetary systems, people usually agree on using one type of money because it is the most liquid, or easiest to use, and it is the best way to store value.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the main reason that people usually agree on using one type of money in a certain area
+						 */
+						title: () => LocalizedString
+					}
+				}
+			}
+			BitcoinAndEconomicsIII: {
+				/**
+				 * Bitcoin and Economics III
+				 */
+				title: () => LocalizedString
+				questions: {
+					unitBias: {
+						answers: {
+							/**
+							 * The belief that one unit of something is always the right amount to use when comparing it to other things
+							 */
+							'0': () => LocalizedString
+							/**
+							 * The belief that one type of currency is better than all others
+							 */
+							'1': () => LocalizedString
+							/**
+							 * The belief that all units of something should be the same size
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Yep! Unit bias is the belief that one unit of something is always the right amount to use when comparing it to other things. However, this is not always true and can lead to faulty reasoning. Good job
+							 */
+							'0': () => LocalizedString
+							/**
+							 * I'm afraid you're mistaken. Unit bias is not about believing that one type of currency is better than all others. Maybe you should stick to counting your coins instead of trying to determine the value of currency
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, but unit bias is not about the size of units. Don't worry, though – you can still have fun with different sizes of units by playing with building blocks or LEGO bricks.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is unit bias
+						 */
+						question: () => LocalizedString
+						/**
+						 * Unit bias is a type of thinking that assumes that one unit of something is the right amount to use when comparing it to other things.
+				
+					This is not always true, especially when it comes to bitcoin. To understand how bitcoin compares to other stores of value, you need to look at the total amount of bitcoin that is available and its value, not just the price of one unit. Bitcoin is very small and can be divided into very small amounts, down to 8 decimal places. This means that you can buy a very small part of a bitcoin if you want.
+				
+					People sometimes think that other cryptocurrencies are cheaper than bitcoin because they cost less per unit, but this is not always true. Bitcoin is a special type of digital money because it is limited in supply and cannot be made in larger amounts.
+				
+					This makes it a good way to store value because the value does not decrease over time. When you look at bitcoin in this way, you can see that it is just a small part of the total amount of non-government wealth in the world.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is unit bias
+						 */
+						title: () => LocalizedString
+					}
+					veblenGood: {
+						answers: {
+							/**
+							 * A type of good that people want more of when the price goes up
+							 */
+							'0': () => LocalizedString
+							/**
+							 * A type of food that tastes better when it is expensive
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A type of good that people want more of when they have more money to spend
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Exactly! A Veblen good is a type of good that people want more of when the price goes up. This is unusual because most people want things more when they have more money to spend
+							 */
+							'0': () => LocalizedString
+							/**
+							 * I'm sorry, but a Veblen good is not a type of food. Maybe you should stick to eating your favorite foods instead of trying to understand economics
+							 */
+							'1': () => LocalizedString
+							/**
+							 * I'm afraid you're mistaken. A Veblen good is not a type of good that people want more of when they have more money to spend. Maybe you should pay more attention to economics instead of just spending your money!
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is a Veblen good
+						 */
+						question: () => LocalizedString
+						/**
+						 * Veblen goods are things that people want more of when the price goes up. Normal goods are things that people usually want more of when they have more money to spend.
+				
+					Veblen goods are unusual because people want them more when they cost more. These are often luxury goods that are hard to get or that are made in limited quantities. This is done to make them seem special or rare.
+				
+					Some people might want to buy bitcoin because it is a status symbol, but the main reason people will probably want to buy it is because there is a limited amount of it.
+				
+					When more people want to buy bitcoin, the price goes up and it becomes easier to use. When it is easy to use, more people want to use it. This creates a cycle where the demand for bitcoin increases, the price goes up, and it becomes easier to use.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is a Veblen good
+						 */
+						title: () => LocalizedString
+					}
+					malinvestment: {
+						answers: {
+							/**
+							 * Distorted price signals
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Aliens from outer space
+							 */
+							'1': () => LocalizedString
+							/**
+							 * A lack of unicorns in the economy
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct answer! You're on the right track. When prices are not accurate, it can lead to money being put into things that are not very productive. Good job
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Wrong answer! But at least you're thinking outside the box. Maybe the aliens are controlling the price signals from their spaceship... or maybe not. Better luck next time
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Sorry, but unicorns do not have the power to control the economy. Although, it would be pretty cool if they did. Better luck next time.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is the main cause of malinvestment
+						 */
+						question: () => LocalizedString
+						/**
+						 * Malinvestment is when the prices of things are not accurate, which leads to money being put into things that are not very productive. This happens because it is hard to predict the future and make good choices about what to do with money.
+				
+					When the market is not working correctly, it is like trying to use a compass when you are not sure where you are. An example of this is when companies can't pay back their loans and have to borrow more money just to stay alive. This is like being a "zombie" company.
+				
+					When the government is in charge of these decisions, they might make mistakes because they don't have a good way to tell what is a good investment and what is not. This can lead to things like building a subway without enough trains or building a dam without enough power lines.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is the main cause of malinvestment
+						 */
+						title: () => LocalizedString
+					}
+					asymmetricPayoff: {
+						answers: {
+							/**
+							 * When the potential upside is disproportionately greater than the downside risk
+							 */
+							'0': () => LocalizedString
+							/**
+							 * When the potential upside and downside are equal
+							 */
+							'1': () => LocalizedString
+							/**
+							 * When the potential upside is a talking llama and the downside is a mute giraffe
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct answer! You got it! An asymmetric payoff means that the potential for gain is much greater than the potential for loss. Good job
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Wrong answer! An asymmetric payoff means that the potential for gain or loss is uneven, not equal. Better luck next time
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Wrong answer! While a talking llama and mute giraffe might make for an interesting investment, they do not define an asymmetric payoff. Better luck next time.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * What is an asymmetric payoff in the context of investment decisions
+						 */
+						question: () => LocalizedString
+						/**
+						 * When we make decisions about investing our money, we try to predict what might happen and how much money we could make or lose. Sometimes, the amount of money we can make or lose is not equal.
+				
+					For example, if we invest in something that has a big chance of making us a lot of money, but only a small chance of losing a little bit of money, we might call this an "asymmetric payoff." This means that the potential upside (how much we can make) is much bigger than the potential downside (how much we can lose).
+				
+					One example of this is bitcoin. Bitcoin's potential outcomes are similar to an option, meaning it either succeeds or fails. If it experiences a catastrophic event, the risk of losing money is minimized.
+				
+					However, the potential upside is much greater, as bitcoin's total addressable market has the potential to be a primary global store of wealth.
+				
+					Asymmetry in payoffs, or uneven potential outcomes, only occurs when there is uneven understanding or information about an investment. If everyone fully understood bitcoin, it would already be widely used as a form of currency.
+				
+					Currently, not everyone is aware of bitcoin's potential as a superior monetary option, so the potential for it to increase in value depends on the demand for it increasing without a corresponding increase in the supply.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * What is an asymmetric payoff in the context of investment decisions
+						 */
+						title: () => LocalizedString
+					}
+					ansoffMatrix: {
+						answers: {
+							/**
+							 * It helps identify potential growth strategies for the bitcoin protocol
+							 */
+							'0': () => LocalizedString
+							/**
+							 * It helps determine the optimal temperature for storing bitcoin
+							 */
+							'1': () => LocalizedString
+							/**
+							 * It helps calculate the potential return on investment for bitcoin mining operations
+							 */
+							'2': () => LocalizedString
+						}
+						feedback: {
+							/**
+							 * Correct answer! You got it! The Ansoff Matrix can be used to outline growth strategies for the bitcoin protocol, such as developing and selling it to different markets. Good job
+							 */
+							'0': () => LocalizedString
+							/**
+							 * Nope! Storage temperature for bitcoin private keys is not a real issue, and it is not related to the Ansoff Matrix. Better luck next time
+							 */
+							'1': () => LocalizedString
+							/**
+							 * Wrong answer! While calculating potential returns on investment is important for bitcoin miners, it is not directly related to the Ansoff Matrix. Better luck next time.
+							 */
+							'2': () => LocalizedString
+						}
+						/**
+						 * How is the Ansoff Matrix relevant to the growth and potential of bitcoin
+						 */
+						question: () => LocalizedString
+						/**
+						 * The Ansoff Matrix is a tool that helps companies think about how they can grow and make more money. It helps them figure out what to do with a product or service they have, and how to sell it to different groups of people.
+				
+					In the case of bitcoin, it is a product that is like a type of digital money. It has the potential to be used by a lot of people in a lot of different ways. The people who work on bitcoin, like the people who write the code and help others understand how to use it, are trying to increase the number of people who use it and make it easier for them to do so.
+				
+					Bitcoin can be used to save money and protect it from being taken away, or it can be used to send and receive small amounts of money quickly, without having to go through a lot of steps. As more people start using bitcoin, it has the potential to grow and become more popular.
+				
+					It is also possible for people and companies to use bitcoin as part of their financial plans, to help protect their money from losing value. While the main reason people might use bitcoin now is to protect their wealth, the payment use case has been growing fast since the inception of the Lightning Network and other use cases may emerge.
+				
+						 */
+						text: () => LocalizedString
+						/**
+						 * How is the Ansoff Matrix relevant to the growth and potential of bitcoin
 						 */
 						title: () => LocalizedString
 					}

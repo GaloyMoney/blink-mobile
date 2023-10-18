@@ -28,7 +28,7 @@ import { makeStyles, useTheme } from "@rneui/themed"
 const useStyles = makeStyles(({ colors }) => ({
   answersView: {
     flex: 1,
-    marginHorizontal: 48,
+    marginHorizontal: 10,
     marginTop: 6,
   },
 
@@ -257,36 +257,38 @@ export const EarnQuiz = ({ route }: Props) => {
   let j: ZeroTo2 = 0
   permutation.forEach((i) => {
     answersShuffled.push(
-      <View key={i} style={{ width: "100%" }}>
-        <View style={{ flexDirection: "row", alignItems: "center", width: "100%" }}>
-          <Button
-            title={mappingLetter[j]}
-            buttonStyle={buttonStyleHelper(i)}
-            disabledStyle={buttonStyleHelper(i)}
-            titleStyle={styles.quizButtonTitleStyle}
-            disabledTitleStyle={styles.quizButtonTitleStyle}
-            containerStyle={styles.quizButtonContainerStyle}
-            onPress={() => addRecordedAnswer(i)}
-            disabled={recordedAnswer.indexOf(0) !== -1}
-          />
-          <Button
-            title={answers[i]}
-            titleStyle={styles.quizTextAnswer}
-            disabledTitleStyle={styles.quizTextAnswer}
-            containerStyle={styles.quizTextContainerStyle}
-            // disabledStyle={styles.quizTextContainerStyle}
-            type="clear"
-            onPress={() => addRecordedAnswer(i)}
-            disabled={recordedAnswer.indexOf(0) !== -1}
-          />
+      <TouchableWithoutFeedback>
+        <View key={i} style={{ width: "100%" }}>
+          <View style={{ flexDirection: "row", alignItems: "center", width: "90%" }}>
+            <Button
+              title={mappingLetter[j]}
+              buttonStyle={buttonStyleHelper(i)}
+              disabledStyle={buttonStyleHelper(i)}
+              titleStyle={styles.quizButtonTitleStyle}
+              disabledTitleStyle={styles.quizButtonTitleStyle}
+              containerStyle={styles.quizButtonContainerStyle}
+              onPress={() => addRecordedAnswer(i)}
+              disabled={recordedAnswer.indexOf(0) !== -1}
+            />
+            <Button
+              title={answers[i]}
+              titleStyle={styles.quizTextAnswer}
+              disabledTitleStyle={styles.quizTextAnswer}
+              containerStyle={styles.quizTextContainerStyle}
+              // disabledStyle={styles.quizTextContainerStyle}
+              type="clear"
+              onPress={() => addRecordedAnswer(i)}
+              disabled={recordedAnswer.indexOf(0) !== -1}
+            />
+          </View>
+          {recordedAnswer.length > 0 &&
+          recordedAnswer.indexOf(i) === recordedAnswer.length - 1 ? (
+            <Text style={i === 0 ? styles.correctAnswerText : styles.incorrectAnswerText}>
+              {feedback[i]}
+            </Text>
+          ) : null}
         </View>
-        {recordedAnswer.length > 0 &&
-        recordedAnswer.indexOf(i) === recordedAnswer.length - 1 ? (
-          <Text style={i === 0 ? styles.correctAnswerText : styles.incorrectAnswerText}>
-            {feedback[i]}
-          </Text>
-        ) : null}
-      </View>,
+      </TouchableWithoutFeedback>,
     )
     j = (j + 1) as ZeroTo2
   })
@@ -316,10 +318,10 @@ export const EarnQuiz = ({ route }: Props) => {
               style={{ height: 40, top: -30 }}
             />
           </View>
-          <View style={styles.answersView}>
+          <ScrollView style={styles.answersView}>
             <Text style={styles.title}>{question ?? title}</Text>
             {answersShuffled}
-          </View>
+          </ScrollView>
           <View>
             {recordedAnswer.indexOf(0) === -1 ? null : (
               <Button
