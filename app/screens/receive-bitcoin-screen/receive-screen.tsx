@@ -254,6 +254,7 @@ const ReceiveScreen = () => {
           isActive={displayReceiveNfc}
           setIsActive={setDisplayReceiveNfc}
           settlementAmount={request.settlementAmount}
+          receiveViaNFC={request.receiveViaNFC}
         />
       </Screen>
     </>

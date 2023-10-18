@@ -9,10 +9,10 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { GaloySecondaryButton } from "../atomic/galoy-secondary-button"
 import { parseDestination } from "@app/screens/send-bitcoin-screen/payment-destination"
 import { logParseDestinationResult } from "@app/utils/analytics"
-import { useNavigation } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { DestinationDirection } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
+import {
+  DestinationDirection,
+  ReceiveDestination,
+} from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
 import {
   WalletCurrency,
   useAccountDefaultWalletLazyQuery,
@@ -21,14 +21,23 @@ import {
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { LNURL_DOMAINS } from "@app/config"
 import { isIOS } from "@rneui/base"
-import { WalletAmount, toUsdMoneyAmount } from "@app/types/amounts"
+import {
+  MoneyAmount,
+  WalletAmount,
+  toBtcMoneyAmount,
+  toUsdMoneyAmount,
+} from "@app/types/amounts"
 import { usePriceConversion } from "@app/hooks"
 
 export const ModalNfc: React.FC<{
   isActive: boolean
   setIsActive: (arg: boolean) => void
   settlementAmount?: WalletAmount<WalletCurrency>
-}> = ({ isActive, setIsActive, settlementAmount }) => {
+  receiveViaNFC: (
+    destination: ReceiveDestination,
+    settlementAmount: MoneyAmount<"BTC">,
+  ) => Promise<void>
+}> = ({ isActive, setIsActive, settlementAmount, receiveViaNFC }) => {
   const { data } = useScanningQrCodeScreenQuery({ skip: !useIsAuthed() })
   const wallets = data?.me?.defaultAccount.wallets
   const bitcoinNetwork = data?.globals?.network
@@ -36,10 +45,6 @@ export const ModalNfc: React.FC<{
   const [accountDefaultWalletQuery] = useAccountDefaultWalletLazyQuery({
     fetchPolicy: "no-cache",
   })
-
-  // FIXME: navigation destination?
-  const navigation =
-    useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinDestination">>()
 
   const styles = useStyles()
   const {
@@ -56,13 +61,20 @@ export const ModalNfc: React.FC<{
   const { convertMoneyAmount } = usePriceConversion()
 
   React.useEffect(() => {
-    if (!LL || !wallets || !bitcoinNetwork || !isActive) {
-      return
-    }
-
     if (isActive && !settlementAmount) {
       Alert.alert(LL.ReceiveScreen.enterAmountFirst())
       setIsActive(false)
+      return
+    }
+
+    if (
+      !LL ||
+      !wallets ||
+      !bitcoinNetwork ||
+      !isActive ||
+      !receiveViaNFC ||
+      !settlementAmount
+    ) {
       return
     }
 
@@ -149,19 +161,9 @@ export const ModalNfc: React.FC<{
           destination.validDestination.minWithdrawable = amount * 1000 // coz msats
           destination.validDestination.maxWithdrawable = amount * 1000 // coz msats
 
-          navigation.reset({
-            routes: [
-              {
-                name: "Primary",
-              },
-              {
-                name: "redeemBitcoinDetail",
-                params: {
-                  receiveDestination: destination,
-                },
-              },
-            ],
-          })
+          console.log(destination)
+
+          receiveViaNFC(destination, toBtcMoneyAmount(settlementAmount.amount))
         }
       }
 
@@ -169,12 +171,12 @@ export const ModalNfc: React.FC<{
     }
 
     init()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     LL,
     wallets,
     bitcoinNetwork,
     accountDefaultWalletQuery,
-    navigation,
     isActive,
     dismiss,
     settlementAmount,
