@@ -14,17 +14,21 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { DestinationDirection } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
 import {
+  WalletCurrency,
   useAccountDefaultWalletLazyQuery,
   useScanningQrCodeScreenQuery,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { LNURL_DOMAINS } from "@app/config"
 import { isIOS } from "@rneui/base"
+import { WalletAmount, toUsdMoneyAmount } from "@app/types/amounts"
+import { usePriceConversion } from "@app/hooks"
 
 export const ModalNfc: React.FC<{
   isActive: boolean
   setIsActive: (arg: boolean) => void
-}> = ({ isActive, setIsActive }) => {
+  settlementAmount?: WalletAmount<WalletCurrency>
+}> = ({ isActive, setIsActive, settlementAmount }) => {
   const { data } = useScanningQrCodeScreenQuery({ skip: !useIsAuthed() })
   const wallets = data?.me?.defaultAccount.wallets
   const bitcoinNetwork = data?.globals?.network
@@ -49,8 +53,16 @@ export const ModalNfc: React.FC<{
     NfcManager.cancelTechnologyRequest()
   }, [setIsActive])
 
+  const { convertMoneyAmount } = usePriceConversion()
+
   React.useEffect(() => {
     if (!LL || !wallets || !bitcoinNetwork || !isActive) {
+      return
+    }
+
+    if (isActive && !settlementAmount) {
+      Alert.alert(LL.ReceiveScreen.enterAmountFirst())
+      setIsActive(false)
       return
     }
 
@@ -122,10 +134,21 @@ export const ModalNfc: React.FC<{
       })
       logParseDestinationResult(destination)
 
-      if (destination.valid) {
+      if (destination.valid && settlementAmount && convertMoneyAmount) {
         if (destination.destinationDirection === DestinationDirection.Send) {
           Alert.alert(LL.SettingsScreen.nfcOnlyReceive())
         } else {
+          let amount = settlementAmount.amount
+          if (settlementAmount.currency === WalletCurrency.Usd) {
+            amount = convertMoneyAmount(
+              toUsdMoneyAmount(settlementAmount.amount),
+              WalletCurrency.Btc,
+            ).amount
+          }
+
+          destination.validDestination.minWithdrawable = amount * 1000 // coz msats
+          destination.validDestination.maxWithdrawable = amount * 1000 // coz msats
+
           navigation.reset({
             routes: [
               {
@@ -154,6 +177,9 @@ export const ModalNfc: React.FC<{
     navigation,
     isActive,
     dismiss,
+    settlementAmount,
+    setIsActive,
+    convertMoneyAmount,
   ])
 
   return (

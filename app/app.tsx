@@ -29,7 +29,6 @@ import { ThemeSyncGraphql } from "./utils/theme-sync"
 import { NetworkErrorComponent } from "./graphql/network-error-component"
 import { FeatureFlagContextProvider } from "./config/feature-flags-context"
 import "./utils/logs"
-import { NfcContextProvider } from "./config/nfc-context"
 
 // FIXME should we only load the currently used local?
 // this would help to make the app load faster
@@ -48,19 +47,17 @@ export const App = () => (
       <ThemeProvider theme={theme}>
         <GaloyClient>
           <FeatureFlagContextProvider>
-            <NfcContextProvider>
-              <ErrorBoundary FallbackComponent={ErrorScreen}>
-                <NavigationContainerWrapper>
-                  <RootSiblingParent>
-                    <AppStateWrapper />
-                    <NotificationComponent />
-                    <RootStack />
-                    <GaloyToast />
-                    <NetworkErrorComponent />
-                  </RootSiblingParent>
-                </NavigationContainerWrapper>
-              </ErrorBoundary>
-            </NfcContextProvider>
+            <ErrorBoundary FallbackComponent={ErrorScreen}>
+              <NavigationContainerWrapper>
+                <RootSiblingParent>
+                  <AppStateWrapper />
+                  <NotificationComponent />
+                  <RootStack />
+                  <GaloyToast />
+                  <NetworkErrorComponent />
+                </RootSiblingParent>
+              </NavigationContainerWrapper>
+            </ErrorBoundary>
             <ThemeSyncGraphql />
           </FeatureFlagContextProvider>
         </GaloyClient>

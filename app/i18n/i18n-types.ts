@@ -1617,6 +1617,10 @@ type RootTranslation = {
 	}
 	ReceiveScreen: {
 		/**
+		 * P​l​e​a​s​e​ ​e​n​t​e​r​ ​a​n​ ​a​m​o​u​n​t​ ​f​i​r​s​t
+		 */
+		enterAmountFirst: string
+		/**
 		 * D​o​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​a​c​t​i​v​a​t​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​t​o​ ​b​e​ ​n​o​t​i​f​i​e​d​ ​w​h​e​n​ ​t​h​e​ ​p​a​y​m​e​n​t​ ​h​a​s​ ​a​r​r​i​v​e​d​?
 		 */
 		activateNotifications: string
@@ -5381,6 +5385,10 @@ export type TranslationFunctions = {
 		title: () => LocalizedString
 	}
 	ReceiveScreen: {
+		/**
+		 * Please enter an amount first
+		 */
+		enterAmountFirst: () => LocalizedString
 		/**
 		 * Do you want to activate notifications to be notified when the payment has arrived?
 		 */

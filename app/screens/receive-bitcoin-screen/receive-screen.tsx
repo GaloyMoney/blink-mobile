@@ -4,7 +4,7 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { requestNotificationPermission } from "@app/utils/notifications"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
-import React, { useContext, useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { TouchableOpacity, View } from "react-native"
 import { testProps } from "../../utils/testProps"
 import { withMyLnUpdateSub } from "./my-ln-updates-sub"
@@ -19,7 +19,6 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
 import { GaloyCurrencyBubble } from "@app/components/atomic/galoy-currency-bubble"
 import { ModalNfc } from "@app/components/modal-nfc"
-import { NfcContext } from "@app/config/nfc-context"
 
 const ReceiveScreen = () => {
   const {
@@ -34,7 +33,20 @@ const ReceiveScreen = () => {
 
   const request = useReceiveBitcoin()
 
-  const { displayReceiveNfc, setDisplayReceiveNfc } = useContext(NfcContext)
+  const [displayReceiveNfc, setDisplayReceiveNfc] = useState(false)
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={styles.rotateIconHeaderRight}
+          onPress={() => setDisplayReceiveNfc(true)}
+        >
+          <Icon name="wifi" color={colors.black} size={25} />
+        </TouchableOpacity>
+      ),
+    })
+  })
 
   // notification permission
   useEffect(() => {
@@ -238,7 +250,11 @@ const ReceiveScreen = () => {
           toggleModal={request.toggleIsSetLightningAddressModalVisible}
         />
 
-        <ModalNfc isActive={displayReceiveNfc} setIsActive={setDisplayReceiveNfc} />
+        <ModalNfc
+          isActive={displayReceiveNfc}
+          setIsActive={setDisplayReceiveNfc}
+          settlementAmount={request.settlementAmount}
+        />
       </Screen>
     </>
   )
@@ -327,6 +343,11 @@ const useStyles = makeStyles(({ colors }) => ({
     fontWeight: "700",
   },
   btcLow: {},
+  rotateIconHeaderRight: {
+    transform: [{ rotate: "90deg" }],
+    marginRight: 2,
+    padding: 8,
+  },
 }))
 
 export default withMyLnUpdateSub(ReceiveScreen)
