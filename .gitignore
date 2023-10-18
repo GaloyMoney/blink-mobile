@@ -75,8 +75,6 @@ yalc.lock
 
 *.log
 
-.env
-.envrc
 .dependencies
 ios/assets
 ios/GaloyApp/assets
@@ -84,3 +82,7 @@ android/app/src/main/assets
 
 # Temporary files created by Metro to check the health of the file watcher
 .metro-health-check*
+
+.direnv
+
+vendor
