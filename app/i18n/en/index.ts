@@ -2084,6 +2084,7 @@ const en: BaseTranslation = {
     title: "Home",
   },
   ReceiveScreen: {
+    enterAmountFirst: "Please enter an amount first",
     activateNotifications:
       "Do you want to activate notifications to be notified when the payment has arrived?",
     copyClipboard: "Invoice has been copied in the clipboard",

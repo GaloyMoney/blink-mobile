@@ -81,21 +81,6 @@ import {
 } from "./stack-param-lists"
 import { NotificationSettingsScreen } from "@app/screens/settings-screen/notifications-screen"
 
-const useStyles = makeStyles(({ colors }) => ({
-  bottomNavigatorStyle: {
-    height: "10%",
-    paddingTop: 4,
-    backgroundColor: colors.white,
-    borderTopColor: colors.grey4,
-  },
-  headerStyle: {
-    backgroundColor: colors.white,
-  },
-  title: {
-    color: colors.black,
-  },
-}))
-
 const RootNavigator = createStackNavigator<RootStackParamList>()
 
 export const RootStack = () => {
@@ -571,3 +556,18 @@ export const PrimaryNavigator = () => {
     </Tab.Navigator>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  bottomNavigatorStyle: {
+    height: "10%",
+    paddingTop: 4,
+    backgroundColor: colors.white,
+    borderTopColor: colors.grey4,
+  },
+  headerStyle: {
+    backgroundColor: colors.white,
+  },
+  title: {
+    color: colors.black,
+  },
+}))

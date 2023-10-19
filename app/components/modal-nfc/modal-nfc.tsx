@@ -9,22 +9,35 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { GaloySecondaryButton } from "../atomic/galoy-secondary-button"
 import { parseDestination } from "@app/screens/send-bitcoin-screen/payment-destination"
 import { logParseDestinationResult } from "@app/utils/analytics"
-import { useNavigation } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { DestinationDirection } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
 import {
+  DestinationDirection,
+  ReceiveDestination,
+} from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
+import {
+  WalletCurrency,
   useAccountDefaultWalletLazyQuery,
   useScanningQrCodeScreenQuery,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { LNURL_DOMAINS } from "@app/config"
 import { isIOS } from "@rneui/base"
+import {
+  MoneyAmount,
+  WalletAmount,
+  toBtcMoneyAmount,
+  toUsdMoneyAmount,
+} from "@app/types/amounts"
+import { usePriceConversion } from "@app/hooks"
 
 export const ModalNfc: React.FC<{
   isActive: boolean
   setIsActive: (arg: boolean) => void
-}> = ({ isActive, setIsActive }) => {
+  settlementAmount?: WalletAmount<WalletCurrency>
+  receiveViaNFC: (
+    destination: ReceiveDestination,
+    settlementAmount: MoneyAmount<"BTC">,
+  ) => Promise<void>
+}> = ({ isActive, setIsActive, settlementAmount, receiveViaNFC }) => {
   const { data } = useScanningQrCodeScreenQuery({ skip: !useIsAuthed() })
   const wallets = data?.me?.defaultAccount.wallets
   const bitcoinNetwork = data?.globals?.network
@@ -32,10 +45,6 @@ export const ModalNfc: React.FC<{
   const [accountDefaultWalletQuery] = useAccountDefaultWalletLazyQuery({
     fetchPolicy: "no-cache",
   })
-
-  // FIXME: navigation destination?
-  const navigation =
-    useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinDestination">>()
 
   const styles = useStyles()
   const {
@@ -49,8 +58,23 @@ export const ModalNfc: React.FC<{
     NfcManager.cancelTechnologyRequest()
   }, [setIsActive])
 
+  const { convertMoneyAmount } = usePriceConversion()
+
   React.useEffect(() => {
-    if (!LL || !wallets || !bitcoinNetwork || !isActive) {
+    if (isActive && !settlementAmount) {
+      Alert.alert(LL.ReceiveScreen.enterAmountFirst())
+      setIsActive(false)
+      return
+    }
+
+    if (
+      !LL ||
+      !wallets ||
+      !bitcoinNetwork ||
+      !isActive ||
+      !receiveViaNFC ||
+      !settlementAmount
+    ) {
       return
     }
 
@@ -122,23 +146,22 @@ export const ModalNfc: React.FC<{
       })
       logParseDestinationResult(destination)
 
-      if (destination.valid) {
+      if (destination.valid && settlementAmount && convertMoneyAmount) {
         if (destination.destinationDirection === DestinationDirection.Send) {
           Alert.alert(LL.SettingsScreen.nfcOnlyReceive())
         } else {
-          navigation.reset({
-            routes: [
-              {
-                name: "Primary",
-              },
-              {
-                name: "redeemBitcoinDetail",
-                params: {
-                  receiveDestination: destination,
-                },
-              },
-            ],
-          })
+          let amount = settlementAmount.amount
+          if (settlementAmount.currency === WalletCurrency.Usd) {
+            amount = convertMoneyAmount(
+              toUsdMoneyAmount(settlementAmount.amount),
+              WalletCurrency.Btc,
+            ).amount
+          }
+
+          destination.validDestination.minWithdrawable = amount * 1000 // coz msats
+          destination.validDestination.maxWithdrawable = amount * 1000 // coz msats
+
+          receiveViaNFC(destination, toBtcMoneyAmount(settlementAmount.amount))
         }
       }
 
@@ -146,14 +169,19 @@ export const ModalNfc: React.FC<{
     }
 
     init()
+    // Necessary because receiveViaNFC gets rerendered at useReceiveBitcoin
+    // And rerendering that shouldn't cause this useEffect to retrigger
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     LL,
     wallets,
     bitcoinNetwork,
     accountDefaultWalletQuery,
-    navigation,
     isActive,
     dismiss,
+    settlementAmount,
+    setIsActive,
+    convertMoneyAmount,
   ])
 
   return (

@@ -29,11 +29,13 @@ import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
 import { generateFutureLocalTime, secondsToH, secondsToHMS } from "./payment/helpers"
 import { toastShow } from "@app/utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import fetch from "cross-fetch"
 
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Alert, Share } from "react-native"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
 import { BtcWalletDescriptor } from "@app/types/wallets"
+import { ReceiveDestination } from "../send-bitcoin-screen/payment-destination/index.types"
 
 gql`
   query paymentRequest {
@@ -455,6 +457,57 @@ export const useReceiveBitcoin = () => {
     readablePaymentRequest = `${pr.info.data.username}@${lnAddressHostname}`
   }
 
+  const receiveViaNFC = async (
+    destination: ReceiveDestination,
+    settlementAmount: MoneyAmount<"BTC">,
+  ) => {
+    const { callback, defaultDescription, k1 } = destination.validDestination
+    const { data } = await lnInvoiceCreate({
+      variables: {
+        input: {
+          walletId: prcd.receivingWalletDescriptor.id,
+          amount: settlementAmount.amount,
+          memo: prcd.memo || defaultDescription,
+        },
+      },
+    })
+
+    if (!data) {
+      Alert.alert(LL.RedeemBitcoinScreen.error())
+      return
+    }
+
+    const {
+      lnInvoiceCreate: { invoice, errors },
+    } = data
+
+    if ((errors && errors.length !== 0) || !invoice) {
+      console.error(errors, "error with lnInvoiceCreate")
+      Alert.alert(LL.RedeemBitcoinScreen.error())
+      return
+    }
+
+    const url = `${callback}${callback.includes("?") ? "&" : "?"}k1=${k1}&pr=${
+      invoice.paymentRequest
+    }`
+
+    const result = await fetch(url)
+
+    if (result.ok) {
+      const lnurlResponse = await result.json()
+      if (lnurlResponse?.status?.toLowerCase() !== "ok") {
+        console.error(lnurlResponse, "error with redeeming")
+        Alert.alert(LL.RedeemBitcoinScreen.redeemingError())
+        if (lnurlResponse?.reason) {
+          Alert.alert(lnurlResponse.reason)
+        }
+      }
+    } else {
+      console.error(result.text(), "error with submitting withdrawalRequest")
+      Alert.alert(LL.RedeemBitcoinScreen.submissionError())
+    }
+  }
+
   return {
     ...prcd,
     setType,
@@ -472,5 +525,6 @@ export const useReceiveBitcoin = () => {
     isSetLightningAddressModalVisible,
     toggleIsSetLightningAddressModalVisible,
     readablePaymentRequest,
+    receiveViaNFC,
   }
 }
