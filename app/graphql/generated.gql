@@ -969,6 +969,17 @@ query feedbackModalShown {
   feedbackModalShown @client
 }
 
+query fullOnboardingScreen {
+  me {
+    id
+    defaultAccount {
+      id
+      __typename
+    }
+    __typename
+  }
+}
+
 query hasPromptedSetDefaultAccount {
   hasPromptedSetDefaultAccount @client
 }

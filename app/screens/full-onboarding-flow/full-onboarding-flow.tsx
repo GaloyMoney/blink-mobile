@@ -2,7 +2,7 @@ import { gql } from "@apollo/client"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { Screen } from "@app/components/screen"
 import {
-  useDebugScreenQuery,
+  useFullOnboardingScreenQuery,
   useOnboardingFlowStartMutation,
 } from "@app/graphql/generated"
 import { AccountLevel, useLevel } from "@app/graphql/level-context"
@@ -22,7 +22,7 @@ gql`
     }
   }
 
-  query debugScreen {
+  query fullOnboardingScreen {
     me {
       id
       defaultAccount {
@@ -36,12 +36,11 @@ export const FullOnboardingFlowScreen: React.FC = () => {
   const { LL } = useI18nContext()
 
   const styles = useStyles()
-  styles
 
   const { currentLevel } = useLevel()
 
-  const { data: dataDebug } = useDebugScreenQuery()
-  const accountId = dataDebug?.me?.defaultAccount?.id
+  const { data } = useFullOnboardingScreenQuery()
+  const accountId = data?.me?.defaultAccount?.id
 
   const [onboardingFlowStart] = useOnboardingFlowStartMutation()
 
@@ -111,10 +110,9 @@ export const FullOnboardingFlowScreen: React.FC = () => {
         preset="scroll"
         keyboardShouldPersistTaps="handled"
         keyboardOffset="navigationHeader"
+        style={styles.screenStyle}
       >
-        <Text style={styles.textHeader}>
-          {LL.FullOnboarding.accountVerifiedAlready()}
-        </Text>
+        <Text type="h2">{LL.FullOnboarding.accountVerifiedAlready()}</Text>
       </Screen>
     )
   }
@@ -124,9 +122,12 @@ export const FullOnboardingFlowScreen: React.FC = () => {
       preset="scroll"
       keyboardShouldPersistTaps="handled"
       keyboardOffset="navigationHeader"
+      style={styles.screenStyle}
     >
-      <View style={styles.screenContainer}>
-        <Text style={styles.textHeader}>{LL.FullOnboarding.requirements()}</Text>
+      <Text type="h2" style={styles.textStyle}>
+        {LL.FullOnboarding.requirements()}
+      </Text>
+      <>
         <Input
           placeholder={LL.FullOnboarding.firstName()}
           value={firstName}
@@ -137,6 +138,8 @@ export const FullOnboardingFlowScreen: React.FC = () => {
           value={lastName}
           onChangeText={(text) => setLastName(text)}
         />
+      </>
+      <View style={styles.buttonContainer}>
         <GaloyPrimaryButton
           onPress={confirmNames}
           title={LL.common.next()}
@@ -148,21 +151,17 @@ export const FullOnboardingFlowScreen: React.FC = () => {
 }
 
 const useStyles = makeStyles(() => ({
-  view: {
-    marginHorizontal: 20,
+  screenStyle: {
     padding: 20,
-    borderRadius: 20,
+    flexGrow: 1,
   },
 
-  textHeader: {
-    fontSize: 18,
-    marginBottom: 24,
+  textStyle: {
+    marginBottom: 32,
   },
 
-  mainButton: { marginVertical: 20 },
-
-  screenContainer: {
-    marginHorizontal: 24,
-    marginVertical: 32,
+  buttonContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
   },
 }))

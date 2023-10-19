@@ -438,6 +438,15 @@ export const AccountScreen = () => {
     },
 
     {
+      category: LL.AccountScreen.upgrade(),
+      id: "upgrade-to-level-two",
+      icon: "person-outline",
+      action: () => navigation.navigate("fullOnboardingFlow"),
+      enabled: true,
+      hidden: currentLevel !== AccountLevel.One,
+      styleDivider: true,
+    },
+    {
       category: LL.common.backupAccount(),
       id: "upgrade-to-level-one",
       icon: "person-outline",

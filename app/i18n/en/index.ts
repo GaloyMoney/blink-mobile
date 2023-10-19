@@ -2410,7 +2410,6 @@ const en: BaseTranslation = {
     internalSend: "Send to {bankName: string} User",
     error: "Unable to fetch limits at this time",
     increaseLimits: "Increase your limits",
-    increaseLimitsLevel2: "Increase your limits by providing an ID",
   },
   TransactionScreen: {
     noTransaction: "No transaction to show",
@@ -2767,7 +2766,7 @@ const en: BaseTranslation = {
     firstName: "First name",
     lastName: "Last name",
     confirmNameContent: "Is the spelling of your name correct?\n\n{firstName: string} {lastName: string}\n\nIt must match the name on your ID.",
-    requirements: "To increase your limits, you will have to provide your name, a governement-issued ID and a selfie. We'll start with your name.",
+    requirements: "Upgrading your account will increase your limits and give you additional functionality such as transfer to bank account, in selected countries.\n\nYou will have to provide your name, a governement-issued ID and a selfie. We'll start with your name.",
     accountVerifiedAlready: "You account has already been verified",
     success: "Documents has been successfully received",
     error: "There has been an error with the submission of your documents. You can contact the support is the problem persists."

@@ -62,7 +62,7 @@ export const SendBitcoinDetailsExtraInfo = ({
           ) : null}
           {currentLevel === "ONE" ? (
             <GaloyPrimaryButton
-              title={LL.TransactionLimitsScreen.increaseLimitsLevel2()}
+              title={LL.TransactionLimitsScreen.increaseLimits()}
               onPress={() => navigation.navigate("fullOnboardingFlow")}
             />
           ) : null}

@@ -1013,7 +1013,6 @@ type Mutation
   userPhoneDelete: UserPhoneDeletePayload! @join__field(graph: GALOY)
   userPhoneRegistrationInitiate(input: UserPhoneRegistrationInitiateInput!): SuccessPayload! @join__field(graph: GALOY)
   userPhoneRegistrationValidate(input: UserPhoneRegistrationValidateInput!): UserPhoneRegistrationValidatePayload! @join__field(graph: GALOY)
-  userQuizQuestionUpdateCompleted(input: UserQuizQuestionUpdateCompletedInput!): UserQuizQuestionUpdateCompletedPayload! @join__field(graph: GALOY) @deprecated(reason: "Use QuizCompletedMutation instead")
   userTotpDelete(input: UserTotpDeleteInput!): UserTotpDeletePayload! @join__field(graph: GALOY)
   userTotpRegistrationInitiate(input: UserTotpRegistrationInitiateInput!): UserTotpRegistrationInitiatePayload! @join__field(graph: GALOY)
   userTotpRegistrationValidate(input: UserTotpRegistrationValidateInput!): UserTotpRegistrationValidatePayload! @join__field(graph: GALOY)
@@ -1837,19 +1836,6 @@ type UserQuizQuestion
 {
   completed: Boolean!
   question: QuizQuestion!
-}
-
-input UserQuizQuestionUpdateCompletedInput
-  @join__type(graph: GALOY)
-{
-  id: ID!
-}
-
-type UserQuizQuestionUpdateCompletedPayload
-  @join__type(graph: GALOY)
-{
-  errors: [Error!]!
-  userQuizQuestion: UserQuizQuestion
 }
 
 input UserTotpDeleteInput

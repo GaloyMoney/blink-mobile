@@ -25,7 +25,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   increaseLimitsButtonContainer: {
     marginVertical: 20,
-    paddingHorizontal: 20,
+    marginHorizontal: 20,
   },
   contentTextBox: {
     flexDirection: "row",
@@ -226,7 +226,7 @@ export const TransactionLimitsScreen = () => {
       )}
       {currentLevel === AccountLevel.One && (
         <GaloyPrimaryButton
-          title={LL.TransactionLimitsScreen.increaseLimitsLevel2()}
+          title={LL.TransactionLimitsScreen.increaseLimits()}
           onPress={() => navigation.navigate("fullOnboardingFlow")}
           containerStyle={styles.increaseLimitsButtonContainer}
         />

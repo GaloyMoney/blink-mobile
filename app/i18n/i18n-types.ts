@@ -7505,10 +7505,6 @@ type RootTranslation = {
 		 * I​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t​s
 		 */
 		increaseLimits: string
-		/**
-		 * I​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t​s​ ​b​y​ ​p​r​o​v​i​d​i​n​g​ ​a​n​ ​I​D
-		 */
-		increaseLimitsLevel2: string
 	}
 	TransactionScreen: {
 		/**
@@ -8677,7 +8673,9 @@ type RootTranslation = {
 		 */
 		confirmNameContent: RequiredParams<'firstName' | 'lastName'>
 		/**
-		 * T​o​ ​i​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t​s​,​ ​y​o​u​ ​w​i​l​l​ ​h​a​v​e​ ​t​o​ ​p​r​o​v​i​d​e​ ​y​o​u​r​ ​n​a​m​e​,​ ​a​ ​g​o​v​e​r​n​e​m​e​n​t​-​i​s​s​u​e​d​ ​I​D​ ​a​n​d​ ​a​ ​s​e​l​f​i​e​.​ ​W​e​'​l​l​ ​s​t​a​r​t​ ​w​i​t​h​ ​y​o​u​r​ ​n​a​m​e​.
+		 * U​p​g​r​a​d​i​n​g​ ​y​o​u​r​ ​a​c​c​o​u​n​t​ ​w​i​l​l​ ​i​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t​s​ ​a​n​d​ ​g​i​v​e​ ​y​o​u​ ​a​d​d​i​t​i​o​n​a​l​ ​f​u​n​c​t​i​o​n​a​l​i​t​y​ ​s​u​c​h​ ​a​s​ ​t​r​a​n​s​f​e​r​ ​t​o​ ​b​a​n​k​ ​a​c​c​o​u​n​t​,​ ​i​n​ ​s​e​l​e​c​t​e​d​ ​c​o​u​n​t​r​i​e​s​.​
+	​
+	​Y​o​u​ ​w​i​l​l​ ​h​a​v​e​ ​t​o​ ​p​r​o​v​i​d​e​ ​y​o​u​r​ ​n​a​m​e​,​ ​a​ ​g​o​v​e​r​n​e​m​e​n​t​-​i​s​s​u​e​d​ ​I​D​ ​a​n​d​ ​a​ ​s​e​l​f​i​e​.​ ​W​e​'​l​l​ ​s​t​a​r​t​ ​w​i​t​h​ ​y​o​u​r​ ​n​a​m​e​.
 		 */
 		requirements: string
 		/**
@@ -16117,10 +16115,6 @@ export type TranslationFunctions = {
 		 * Increase your limits
 		 */
 		increaseLimits: () => LocalizedString
-		/**
-		 * Increase your limits by providing an ID
-		 */
-		increaseLimitsLevel2: () => LocalizedString
 	}
 	TransactionScreen: {
 		/**
@@ -17256,7 +17250,9 @@ export type TranslationFunctions = {
 		 */
 		confirmNameContent: (arg: { firstName: string, lastName: string }) => LocalizedString
 		/**
-		 * To increase your limits, you will have to provide your name, a governement-issued ID and a selfie. We'll start with your name.
+		 * Upgrading your account will increase your limits and give you additional functionality such as transfer to bank account, in selected countries.
+
+	You will have to provide your name, a governement-issued ID and a selfie. We'll start with your name.
 		 */
 		requirements: () => LocalizedString
 		/**
