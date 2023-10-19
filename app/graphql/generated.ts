@@ -82,8 +82,6 @@ export type Scalars = {
   Username: { input: string; output: string; }
   /** Unique identifier of a wallet */
   WalletId: { input: string; output: string; }
-  join__FieldSet: { input: string; output: string; }
-  link__Import: { input: string; output: string; }
   _FieldSet: { input: string; output: string; }
 };
 
@@ -303,6 +301,7 @@ export type ConsumerAccount = Account & {
   readonly level: AccountLevel;
   readonly limits: AccountLimits;
   readonly notificationSettings: NotificationSettings;
+  readonly onboardingStatus?: Maybe<OnboardingStatus>;
   /** List the quiz questions of the consumer account */
   readonly quiz: ReadonlyArray<Quiz>;
   readonly realtimePrice: RealtimePrice;
@@ -1138,7 +1137,6 @@ export type OnChainUsdTxFee = {
 };
 
 export type OnboardingFlowStartInput = {
-  readonly accountId: Scalars['String']['input'];
   readonly firstName: Scalars['String']['input'];
   readonly lastName: Scalars['String']['input'];
 };
@@ -1150,6 +1148,18 @@ export type OnboardingFlowStartResult = {
   readonly workflowRunId: Scalars['String']['output'];
 };
 
+export const OnboardingStatus = {
+  Abandoned: 'ABANDONED',
+  Approved: 'APPROVED',
+  AwaitingInput: 'AWAITING_INPUT',
+  Declined: 'DECLINED',
+  Error: 'ERROR',
+  NotStarted: 'NOT_STARTED',
+  Processing: 'PROCESSING',
+  Review: 'REVIEW'
+} as const;
+
+export type OnboardingStatus = typeof OnboardingStatus[keyof typeof OnboardingStatus];
 export type OneDayAccountLimit = AccountLimit & {
   readonly __typename: 'OneDayAccountLimit';
   /** The rolling time interval value in seconds for the current 24 hour period. */
@@ -1283,8 +1293,6 @@ export type Query = {
   readonly __typename: 'Query';
   readonly accountDefaultWallet: PublicWallet;
   readonly beta: Scalars['Boolean']['output'];
-  /** @deprecated Deprecated in favor of realtimePrice */
-  readonly btcPrice?: Maybe<Price>;
   readonly btcPriceList?: Maybe<ReadonlyArray<Maybe<PricePoint>>>;
   readonly businessMapMarkers?: Maybe<ReadonlyArray<Maybe<MapMarker>>>;
   readonly colorScheme: Scalars['String']['output'];
@@ -1292,7 +1300,6 @@ export type Query = {
   readonly feedbackModalShown: Scalars['Boolean']['output'];
   readonly globals?: Maybe<Globals>;
   readonly hasPromptedSetDefaultAccount: Scalars['Boolean']['output'];
-  readonly hello?: Maybe<Scalars['String']['output']>;
   readonly hiddenBalanceToolTip: Scalars['Boolean']['output'];
   readonly hideBalance: Scalars['Boolean']['output'];
   readonly innerCircleValue: Scalars['Int']['output'];
@@ -1318,11 +1325,6 @@ export type Query = {
 export type QueryAccountDefaultWalletArgs = {
   username: Scalars['Username']['input'];
   walletCurrency?: InputMaybe<WalletCurrency>;
-};
-
-
-export type QueryBtcPriceArgs = {
-  currency?: Scalars['DisplayCurrency']['input'];
 };
 
 
@@ -1868,21 +1870,6 @@ export const WelcomeRange = {
 } as const;
 
 export type WelcomeRange = typeof WelcomeRange[keyof typeof WelcomeRange];
-export const Join__Graph = {
-  Circles: 'CIRCLES',
-  Galoy: 'GALOY',
-  Kyc: 'KYC'
-} as const;
-
-export type Join__Graph = typeof Join__Graph[keyof typeof Join__Graph];
-export const Link__Purpose = {
-  /** `EXECUTION` features provide metadata necessary for operation execution. */
-  Execution: 'EXECUTION',
-  /** `SECURITY` features provide metadata necessary to securely resolve fields. */
-  Security: 'SECURITY'
-} as const;
-
-export type Link__Purpose = typeof Link__Purpose[keyof typeof Link__Purpose];
 export type MobileUpdateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2064,7 +2051,7 @@ export type OnboardingFlowStartMutation = { readonly __typename: 'Mutation', rea
 export type FullOnboardingScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FullOnboardingScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string } } | null };
+export type FullOnboardingScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly onboardingStatus?: OnboardingStatus | null } } | null };
 
 export type AddressScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3778,7 +3765,10 @@ export const FullOnboardingScreenDocument = gql`
   me {
     id
     defaultAccount {
-      id
+      ... on ConsumerAccount {
+        id
+        onboardingStatus
+      }
     }
   }
 }
@@ -6881,6 +6871,7 @@ export type ResolversTypes = {
   OnChainUsdTxFee: ResolverTypeWrapper<OnChainUsdTxFee>;
   OnboardingFlowStartInput: OnboardingFlowStartInput;
   OnboardingFlowStartResult: ResolverTypeWrapper<OnboardingFlowStartResult>;
+  OnboardingStatus: OnboardingStatus;
   OneDayAccountLimit: ResolverTypeWrapper<OneDayAccountLimit>;
   OneTimeAuthCode: ResolverTypeWrapper<Scalars['OneTimeAuthCode']['output']>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
@@ -6967,10 +6958,6 @@ export type ResolversTypes = {
   WelcomeLeaderboardInput: WelcomeLeaderboardInput;
   WelcomeProfile: ResolverTypeWrapper<WelcomeProfile>;
   WelcomeRange: WelcomeRange;
-  join__FieldSet: ResolverTypeWrapper<Scalars['join__FieldSet']['output']>;
-  join__Graph: Join__Graph;
-  link__Import: ResolverTypeWrapper<Scalars['link__Import']['output']>;
-  link__Purpose: Link__Purpose;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -7164,67 +7151,14 @@ export type ResolversParentTypes = {
   WalletId: Scalars['WalletId']['output'];
   WelcomeLeaderboardInput: WelcomeLeaderboardInput;
   WelcomeProfile: WelcomeProfile;
-  join__FieldSet: Scalars['join__FieldSet']['output'];
-  link__Import: Scalars['link__Import']['output'];
 };
 
-export type Join__EnumValueDirectiveArgs = {
-  graph: Join__Graph;
+export type DeferDirectiveArgs = {
+  if?: Scalars['Boolean']['input'];
+  label?: Maybe<Scalars['String']['input']>;
 };
 
-export type Join__EnumValueDirectiveResolver<Result, Parent, ContextType = any, Args = Join__EnumValueDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
-export type Join__FieldDirectiveArgs = {
-  external?: Maybe<Scalars['Boolean']['input']>;
-  graph?: Maybe<Join__Graph>;
-  override?: Maybe<Scalars['String']['input']>;
-  provides?: Maybe<Scalars['join__FieldSet']['input']>;
-  requires?: Maybe<Scalars['join__FieldSet']['input']>;
-  type?: Maybe<Scalars['String']['input']>;
-  usedOverridden?: Maybe<Scalars['Boolean']['input']>;
-};
-
-export type Join__FieldDirectiveResolver<Result, Parent, ContextType = any, Args = Join__FieldDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
-export type Join__GraphDirectiveArgs = {
-  name: Scalars['String']['input'];
-  url: Scalars['String']['input'];
-};
-
-export type Join__GraphDirectiveResolver<Result, Parent, ContextType = any, Args = Join__GraphDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
-export type Join__ImplementsDirectiveArgs = {
-  graph: Join__Graph;
-  interface: Scalars['String']['input'];
-};
-
-export type Join__ImplementsDirectiveResolver<Result, Parent, ContextType = any, Args = Join__ImplementsDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
-export type Join__TypeDirectiveArgs = {
-  extension?: Scalars['Boolean']['input'];
-  graph: Join__Graph;
-  isInterfaceObject?: Scalars['Boolean']['input'];
-  key?: Maybe<Scalars['join__FieldSet']['input']>;
-  resolvable?: Scalars['Boolean']['input'];
-};
-
-export type Join__TypeDirectiveResolver<Result, Parent, ContextType = any, Args = Join__TypeDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
-export type Join__UnionMemberDirectiveArgs = {
-  graph: Join__Graph;
-  member: Scalars['String']['input'];
-};
-
-export type Join__UnionMemberDirectiveResolver<Result, Parent, ContextType = any, Args = Join__UnionMemberDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
-export type LinkDirectiveArgs = {
-  as?: Maybe<Scalars['String']['input']>;
-  for?: Maybe<Link__Purpose>;
-  import?: Maybe<ReadonlyArray<Maybe<Scalars['link__Import']['input']>>>;
-  url?: Maybe<Scalars['String']['input']>;
-};
-
-export type LinkDirectiveResolver<Result, Parent, ContextType = any, Args = LinkDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+export type DeferDirectiveResolver<Result, Parent, ContextType = any, Args = DeferDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type AccountResolvers<ContextType = any, ParentType extends ResolversParentTypes['Account'] = ResolversParentTypes['Account']> = {
   __resolveType: TypeResolveFn<'ConsumerAccount', ParentType, ContextType>;
@@ -7357,6 +7291,7 @@ export type ConsumerAccountResolvers<ContextType = any, ParentType extends Resol
   level?: Resolver<ResolversTypes['AccountLevel'], ParentType, ContextType>;
   limits?: Resolver<ResolversTypes['AccountLimits'], ParentType, ContextType>;
   notificationSettings?: Resolver<ResolversTypes['NotificationSettings'], ParentType, ContextType>;
+  onboardingStatus?: Resolver<Maybe<ResolversTypes['OnboardingStatus']>, ParentType, ContextType>;
   quiz?: Resolver<ReadonlyArray<ResolversTypes['Quiz']>, ParentType, ContextType>;
   realtimePrice?: Resolver<ResolversTypes['RealtimePrice'], ParentType, ContextType>;
   transactions?: Resolver<Maybe<ResolversTypes['TransactionConnection']>, ParentType, ContextType, Partial<ConsumerAccountTransactionsArgs>>;
@@ -7809,7 +7744,6 @@ export type PublicWalletResolvers<ContextType = any, ParentType extends Resolver
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   accountDefaultWallet?: Resolver<ResolversTypes['PublicWallet'], ParentType, ContextType, RequireFields<QueryAccountDefaultWalletArgs, 'username'>>;
   beta?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  btcPrice?: Resolver<Maybe<ResolversTypes['Price']>, ParentType, ContextType, RequireFields<QueryBtcPriceArgs, 'currency'>>;
   btcPriceList?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['PricePoint']>>>, ParentType, ContextType, RequireFields<QueryBtcPriceListArgs, 'range'>>;
   businessMapMarkers?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['MapMarker']>>>, ParentType, ContextType>;
   colorScheme?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -7817,7 +7751,6 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   feedbackModalShown?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   globals?: Resolver<Maybe<ResolversTypes['Globals']>, ParentType, ContextType>;
   hasPromptedSetDefaultAccount?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  hello?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   hiddenBalanceToolTip?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   hideBalance?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   innerCircleValue?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -8134,14 +8067,6 @@ export type WelcomeProfileResolvers<ContextType = any, ParentType extends Resolv
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface Join__FieldSetScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['join__FieldSet'], any> {
-  name: 'join__FieldSet';
-}
-
-export interface Link__ImportScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['link__Import'], any> {
-  name: 'link__Import';
-}
-
 export type Resolvers<ContextType = any> = {
   Account?: AccountResolvers<ContextType>;
   AccountDeletePayload?: AccountDeletePayloadResolvers<ContextType>;
@@ -8275,16 +8200,8 @@ export type Resolvers<ContextType = any> = {
   Wallet?: WalletResolvers<ContextType>;
   WalletId?: GraphQLScalarType;
   WelcomeProfile?: WelcomeProfileResolvers<ContextType>;
-  join__FieldSet?: GraphQLScalarType;
-  link__Import?: GraphQLScalarType;
 };
 
 export type DirectiveResolvers<ContextType = any> = {
-  join__enumValue?: Join__EnumValueDirectiveResolver<any, any, ContextType>;
-  join__field?: Join__FieldDirectiveResolver<any, any, ContextType>;
-  join__graph?: Join__GraphDirectiveResolver<any, any, ContextType>;
-  join__implements?: Join__ImplementsDirectiveResolver<any, any, ContextType>;
-  join__type?: Join__TypeDirectiveResolver<any, any, ContextType>;
-  join__unionMember?: Join__UnionMemberDirectiveResolver<any, any, ContextType>;
-  link?: LinkDirectiveResolver<any, any, ContextType>;
+  defer?: DeferDirectiveResolver<any, any, ContextType>;
 };

@@ -2762,14 +2762,20 @@ const en: BaseTranslation = {
   },
   FullOnboarding: {
     title: "Full onboarding",
-    confirmNameTitle: "Confirm your name",
+    confirmNameTitle: "Name confirmation",
     firstName: "First name",
     lastName: "Last name",
     confirmNameContent: "Is the spelling of your name correct?\n\n{firstName: string} {lastName: string}\n\nIt must match the name on your ID.",
-    requirements: "Upgrading your account will increase your limits and give you additional functionality such as transfer to bank account, in selected countries.\n\nYou will have to provide your name, a governement-issued ID and a selfie. We'll start with your name.",
-    accountVerifiedAlready: "You account has already been verified",
-    success: "Documents has been successfully received",
-    error: "There has been an error with the submission of your documents. You can contact the support is the problem persists."
+    requirements: "Upgrading your account will increase your limits and give you additional functionality such as transfer to bank accounts in selected countries.\n\nYou will have to provide your name, a governement issued ID and a selfie. We'll start with your name.",
+    success: "Documents has been successfully received and will be processed shortly. you can come back to this page to have an update on the status of your onboarding",
+    error: "There has been an error with the submission of your documents. You can contact the support is the problem persists.",
+    status: "Your onboarding status is: ",
+    ABANDONED: "Abandoned",
+    APPROVED: "Approved",
+    DECLINED: "Declined",
+    ERROR: "Error",
+    PROCESSING: "Processing",
+    REVIEW: "Review",
   }
 }
 

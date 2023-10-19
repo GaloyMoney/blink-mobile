@@ -290,6 +290,7 @@ type ConsumerAccount implements Account
   @join__implements(graph: GALOY, interface: "Account")
   @join__type(graph: CIRCLES, key: "id")
   @join__type(graph: GALOY)
+  @join__type(graph: KYC, key: "id")
 {
   id: ID!
   welcomeProfile: WelcomeProfile @join__field(graph: CIRCLES)
@@ -327,6 +328,7 @@ type ConsumerAccount implements Account
     walletIds: [WalletId]
   ): TransactionConnection @join__field(graph: GALOY)
   wallets: [Wallet!]! @join__field(graph: GALOY)
+  onboardingStatus: OnboardingStatus @join__field(graph: KYC)
 }
 
 """
@@ -1065,7 +1067,6 @@ input OnboardingFlowStartInput
 {
   firstName: String!
   lastName: String!
-  accountId: String!
 }
 
 type OnboardingFlowStartResult
@@ -1074,6 +1075,19 @@ type OnboardingFlowStartResult
   workflowRunId: String!
   tokenAndroid: String!
   tokenIos: String!
+}
+
+enum OnboardingStatus
+  @join__type(graph: KYC)
+{
+  NOT_STARTED @join__enumValue(graph: KYC)
+  AWAITING_INPUT @join__enumValue(graph: KYC)
+  PROCESSING @join__enumValue(graph: KYC)
+  ABANDONED @join__enumValue(graph: KYC)
+  ERROR @join__enumValue(graph: KYC)
+  APPROVED @join__enumValue(graph: KYC)
+  REVIEW @join__enumValue(graph: KYC)
+  DECLINED @join__enumValue(graph: KYC)
 }
 
 """An address for an on-chain bitcoin destination"""
@@ -1348,7 +1362,6 @@ type Query
 {
   welcomeLeaderboard(input: WelcomeLeaderboardInput!): Leaderboard! @join__field(graph: CIRCLES)
   accountDefaultWallet(username: Username!, walletCurrency: WalletCurrency): PublicWallet! @join__field(graph: GALOY)
-  btcPrice(currency: DisplayCurrency! = "USD"): Price @join__field(graph: GALOY) @deprecated(reason: "Deprecated in favor of realtimePrice")
   btcPriceList(range: PriceGraphRange!): [PricePoint] @join__field(graph: GALOY)
   businessMapMarkers: [MapMarker] @join__field(graph: GALOY)
   currencyList: [Currency!]! @join__field(graph: GALOY)
@@ -1365,7 +1378,6 @@ type Query
   realtimePrice(currency: DisplayCurrency = "USD"): RealtimePrice! @join__field(graph: GALOY)
   userDefaultWalletId(username: Username!): WalletId! @join__field(graph: GALOY) @deprecated(reason: "will be migrated to AccountDefaultWalletId")
   usernameAvailable(username: Username!): Boolean @join__field(graph: GALOY)
-  hello: String @join__field(graph: KYC)
 }
 
 type Quiz

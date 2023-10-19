@@ -1,6 +1,6 @@
 overwrite: true
-# schema: "https://api.staging.galoy.io/graphql"
-schema: "./supergraph.graphql"
+schema: "https://api.staging.galoy.io/graphql"
+# schema: "./supergraph.graphql"
 documents:
   - "app/**/*.ts"
   - "app/**/*.tsx"

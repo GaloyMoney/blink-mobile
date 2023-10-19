@@ -973,7 +973,11 @@ query fullOnboardingScreen {
   me {
     id
     defaultAccount {
-      id
+      ... on ConsumerAccount {
+        id
+        onboardingStatus
+        __typename
+      }
       __typename
     }
     __typename
