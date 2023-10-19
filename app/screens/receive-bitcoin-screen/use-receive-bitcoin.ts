@@ -473,7 +473,8 @@ export const useReceiveBitcoin = () => {
     })
 
     if (!data) {
-      throw new Error("No data returned from lnInvoiceCreate")
+      Alert.alert(LL.RedeemBitcoinScreen.error())
+      return
     }
 
     const {
