@@ -161,8 +161,6 @@ export const ModalNfc: React.FC<{
           destination.validDestination.minWithdrawable = amount * 1000 // coz msats
           destination.validDestination.maxWithdrawable = amount * 1000 // coz msats
 
-          console.log(destination)
-
           receiveViaNFC(destination, toBtcMoneyAmount(settlementAmount.amount))
         }
       }
@@ -171,6 +169,8 @@ export const ModalNfc: React.FC<{
     }
 
     init()
+    // Necessary because receiveViaNFC gets rerendered at useReceiveBitcoin
+    // And rerendering that shouldn't cause this useEffect to retrigger
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     LL,
