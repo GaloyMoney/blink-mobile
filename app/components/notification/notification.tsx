@@ -37,14 +37,13 @@ export const NotificationComponent = (): JSX.Element => {
         )
       }
 
-      const notificationType = remoteMessage.data?.notificationType
-      if (notificationType) {
-        switch (true) {
-          case circlesNotificationTypes.includes(notificationType):
-            primaryNavigation.navigate("People")
-            setTimeout(() => circlesNavigation.navigate("circlesDashboard"), 200)
-            break
-        }
+      const notificationType = remoteMessage.data?.notificationType ?? ""
+      if (
+        typeof notificationType === "string" &&
+        circlesNotificationTypes.includes(notificationType)
+      ) {
+        primaryNavigation.navigate("People")
+        setTimeout(() => circlesNavigation.navigate("circlesDashboard"), 200)
       }
     }
 
