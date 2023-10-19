@@ -1262,8 +1262,6 @@ export type Query = {
   readonly __typename: 'Query';
   readonly accountDefaultWallet: PublicWallet;
   readonly beta: Scalars['Boolean']['output'];
-  /** @deprecated Deprecated in favor of realtimePrice */
-  readonly btcPrice?: Maybe<Price>;
   readonly btcPriceList?: Maybe<ReadonlyArray<Maybe<PricePoint>>>;
   readonly businessMapMarkers?: Maybe<ReadonlyArray<Maybe<MapMarker>>>;
   readonly colorScheme: Scalars['String']['output'];
@@ -1296,11 +1294,6 @@ export type Query = {
 export type QueryAccountDefaultWalletArgs = {
   username: Scalars['Username']['input'];
   walletCurrency?: InputMaybe<WalletCurrency>;
-};
-
-
-export type QueryBtcPriceArgs = {
-  currency?: Scalars['DisplayCurrency']['input'];
 };
 
 
@@ -7619,7 +7612,6 @@ export type PublicWalletResolvers<ContextType = any, ParentType extends Resolver
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   accountDefaultWallet?: Resolver<ResolversTypes['PublicWallet'], ParentType, ContextType, RequireFields<QueryAccountDefaultWalletArgs, 'username'>>;
   beta?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  btcPrice?: Resolver<Maybe<ResolversTypes['Price']>, ParentType, ContextType, RequireFields<QueryBtcPriceArgs, 'currency'>>;
   btcPriceList?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['PricePoint']>>>, ParentType, ContextType, RequireFields<QueryBtcPriceListArgs, 'range'>>;
   businessMapMarkers?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['MapMarker']>>>, ParentType, ContextType>;
   colorScheme?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
