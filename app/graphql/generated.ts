@@ -301,6 +301,7 @@ export type ConsumerAccount = Account & {
   readonly level: AccountLevel;
   readonly limits: AccountLimits;
   readonly notificationSettings: NotificationSettings;
+  readonly onboardingStatus?: Maybe<OnboardingStatus>;
   /** List the quiz questions of the consumer account */
   readonly quiz: ReadonlyArray<Quiz>;
   readonly realtimePrice: RealtimePrice;
@@ -777,6 +778,7 @@ export type Mutation = {
   readonly onChainPaymentSendAll: PaymentSendPayload;
   readonly onChainUsdPaymentSend: PaymentSendPayload;
   readonly onChainUsdPaymentSendAsBtcDenominated: PaymentSendPayload;
+  readonly onboardingFlowStart: OnboardingFlowStartResult;
   readonly quizCompleted: QuizCompletedPayload;
   /** @deprecated will be moved to AccountContact */
   readonly userContactUpdateAlias: UserContactUpdateAliasPayload;
@@ -963,6 +965,11 @@ export type MutationOnChainUsdPaymentSendAsBtcDenominatedArgs = {
 };
 
 
+export type MutationOnboardingFlowStartArgs = {
+  input: OnboardingFlowStartInput;
+};
+
+
 export type MutationQuizCompletedArgs = {
   input: QuizCompletedInput;
 };
@@ -1129,6 +1136,30 @@ export type OnChainUsdTxFee = {
   readonly amount: Scalars['CentAmount']['output'];
 };
 
+export type OnboardingFlowStartInput = {
+  readonly firstName: Scalars['String']['input'];
+  readonly lastName: Scalars['String']['input'];
+};
+
+export type OnboardingFlowStartResult = {
+  readonly __typename: 'OnboardingFlowStartResult';
+  readonly tokenAndroid: Scalars['String']['output'];
+  readonly tokenIos: Scalars['String']['output'];
+  readonly workflowRunId: Scalars['String']['output'];
+};
+
+export const OnboardingStatus = {
+  Abandoned: 'ABANDONED',
+  Approved: 'APPROVED',
+  AwaitingInput: 'AWAITING_INPUT',
+  Declined: 'DECLINED',
+  Error: 'ERROR',
+  NotStarted: 'NOT_STARTED',
+  Processing: 'PROCESSING',
+  Review: 'REVIEW'
+} as const;
+
+export type OnboardingStatus = typeof OnboardingStatus[keyof typeof OnboardingStatus];
 export type OneDayAccountLimit = AccountLimit & {
   readonly __typename: 'OneDayAccountLimit';
   /** The rolling time interval value in seconds for the current 24 hour period. */
@@ -2009,6 +2040,18 @@ export type UserEmailRegistrationValidateMutationVariables = Exact<{
 
 
 export type UserEmailRegistrationValidateMutation = { readonly __typename: 'Mutation', readonly userEmailRegistrationValidate: { readonly __typename: 'UserEmailRegistrationValidatePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
+
+export type OnboardingFlowStartMutationVariables = Exact<{
+  input: OnboardingFlowStartInput;
+}>;
+
+
+export type OnboardingFlowStartMutation = { readonly __typename: 'Mutation', readonly onboardingFlowStart: { readonly __typename: 'OnboardingFlowStartResult', readonly workflowRunId: string, readonly tokenAndroid: string, readonly tokenIos: string } };
+
+export type FullOnboardingScreenQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FullOnboardingScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly onboardingStatus?: OnboardingStatus | null } } | null };
 
 export type AddressScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3682,6 +3725,81 @@ export function useUserEmailRegistrationValidateMutation(baseOptions?: Apollo.Mu
 export type UserEmailRegistrationValidateMutationHookResult = ReturnType<typeof useUserEmailRegistrationValidateMutation>;
 export type UserEmailRegistrationValidateMutationResult = Apollo.MutationResult<UserEmailRegistrationValidateMutation>;
 export type UserEmailRegistrationValidateMutationOptions = Apollo.BaseMutationOptions<UserEmailRegistrationValidateMutation, UserEmailRegistrationValidateMutationVariables>;
+export const OnboardingFlowStartDocument = gql`
+    mutation onboardingFlowStart($input: OnboardingFlowStartInput!) {
+  onboardingFlowStart(input: $input) {
+    workflowRunId
+    tokenAndroid
+    tokenIos
+  }
+}
+    `;
+export type OnboardingFlowStartMutationFn = Apollo.MutationFunction<OnboardingFlowStartMutation, OnboardingFlowStartMutationVariables>;
+
+/**
+ * __useOnboardingFlowStartMutation__
+ *
+ * To run a mutation, you first call `useOnboardingFlowStartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useOnboardingFlowStartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [onboardingFlowStartMutation, { data, loading, error }] = useOnboardingFlowStartMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useOnboardingFlowStartMutation(baseOptions?: Apollo.MutationHookOptions<OnboardingFlowStartMutation, OnboardingFlowStartMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<OnboardingFlowStartMutation, OnboardingFlowStartMutationVariables>(OnboardingFlowStartDocument, options);
+      }
+export type OnboardingFlowStartMutationHookResult = ReturnType<typeof useOnboardingFlowStartMutation>;
+export type OnboardingFlowStartMutationResult = Apollo.MutationResult<OnboardingFlowStartMutation>;
+export type OnboardingFlowStartMutationOptions = Apollo.BaseMutationOptions<OnboardingFlowStartMutation, OnboardingFlowStartMutationVariables>;
+export const FullOnboardingScreenDocument = gql`
+    query fullOnboardingScreen {
+  me {
+    id
+    defaultAccount {
+      ... on ConsumerAccount {
+        id
+        onboardingStatus
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useFullOnboardingScreenQuery__
+ *
+ * To run a query within a React component, call `useFullOnboardingScreenQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFullOnboardingScreenQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFullOnboardingScreenQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFullOnboardingScreenQuery(baseOptions?: Apollo.QueryHookOptions<FullOnboardingScreenQuery, FullOnboardingScreenQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FullOnboardingScreenQuery, FullOnboardingScreenQueryVariables>(FullOnboardingScreenDocument, options);
+      }
+export function useFullOnboardingScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FullOnboardingScreenQuery, FullOnboardingScreenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FullOnboardingScreenQuery, FullOnboardingScreenQueryVariables>(FullOnboardingScreenDocument, options);
+        }
+export type FullOnboardingScreenQueryHookResult = ReturnType<typeof useFullOnboardingScreenQuery>;
+export type FullOnboardingScreenLazyQueryHookResult = ReturnType<typeof useFullOnboardingScreenLazyQuery>;
+export type FullOnboardingScreenQueryResult = Apollo.QueryResult<FullOnboardingScreenQuery, FullOnboardingScreenQueryVariables>;
 export const AddressScreenDocument = gql`
     query addressScreen {
   me {
@@ -6751,6 +6869,9 @@ export type ResolversTypes = {
   OnChainUsdPaymentSendAsBtcDenominatedInput: OnChainUsdPaymentSendAsBtcDenominatedInput;
   OnChainUsdPaymentSendInput: OnChainUsdPaymentSendInput;
   OnChainUsdTxFee: ResolverTypeWrapper<OnChainUsdTxFee>;
+  OnboardingFlowStartInput: OnboardingFlowStartInput;
+  OnboardingFlowStartResult: ResolverTypeWrapper<OnboardingFlowStartResult>;
+  OnboardingStatus: OnboardingStatus;
   OneDayAccountLimit: ResolverTypeWrapper<OneDayAccountLimit>;
   OneTimeAuthCode: ResolverTypeWrapper<Scalars['OneTimeAuthCode']['output']>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
@@ -6951,6 +7072,8 @@ export type ResolversParentTypes = {
   OnChainUsdPaymentSendAsBtcDenominatedInput: OnChainUsdPaymentSendAsBtcDenominatedInput;
   OnChainUsdPaymentSendInput: OnChainUsdPaymentSendInput;
   OnChainUsdTxFee: OnChainUsdTxFee;
+  OnboardingFlowStartInput: OnboardingFlowStartInput;
+  OnboardingFlowStartResult: OnboardingFlowStartResult;
   OneDayAccountLimit: OneDayAccountLimit;
   OneTimeAuthCode: Scalars['OneTimeAuthCode']['output'];
   PageInfo: PageInfo;
@@ -7168,6 +7291,7 @@ export type ConsumerAccountResolvers<ContextType = any, ParentType extends Resol
   level?: Resolver<ResolversTypes['AccountLevel'], ParentType, ContextType>;
   limits?: Resolver<ResolversTypes['AccountLimits'], ParentType, ContextType>;
   notificationSettings?: Resolver<ResolversTypes['NotificationSettings'], ParentType, ContextType>;
+  onboardingStatus?: Resolver<Maybe<ResolversTypes['OnboardingStatus']>, ParentType, ContextType>;
   quiz?: Resolver<ReadonlyArray<ResolversTypes['Quiz']>, ParentType, ContextType>;
   realtimePrice?: Resolver<ResolversTypes['RealtimePrice'], ParentType, ContextType>;
   transactions?: Resolver<Maybe<ResolversTypes['TransactionConnection']>, ParentType, ContextType, Partial<ConsumerAccountTransactionsArgs>>;
@@ -7447,6 +7571,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   onChainPaymentSendAll?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationOnChainPaymentSendAllArgs, 'input'>>;
   onChainUsdPaymentSend?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationOnChainUsdPaymentSendArgs, 'input'>>;
   onChainUsdPaymentSendAsBtcDenominated?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationOnChainUsdPaymentSendAsBtcDenominatedArgs, 'input'>>;
+  onboardingFlowStart?: Resolver<ResolversTypes['OnboardingFlowStartResult'], ParentType, ContextType, RequireFields<MutationOnboardingFlowStartArgs, 'input'>>;
   quizCompleted?: Resolver<ResolversTypes['QuizCompletedPayload'], ParentType, ContextType, RequireFields<MutationQuizCompletedArgs, 'input'>>;
   userContactUpdateAlias?: Resolver<ResolversTypes['UserContactUpdateAliasPayload'], ParentType, ContextType, RequireFields<MutationUserContactUpdateAliasArgs, 'input'>>;
   userEmailDelete?: Resolver<ResolversTypes['UserEmailDeletePayload'], ParentType, ContextType>;
@@ -7518,6 +7643,13 @@ export type OnChainUpdateResolvers<ContextType = any, ParentType extends Resolve
 
 export type OnChainUsdTxFeeResolvers<ContextType = any, ParentType extends ResolversParentTypes['OnChainUsdTxFee'] = ResolversParentTypes['OnChainUsdTxFee']> = {
   amount?: Resolver<ResolversTypes['CentAmount'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type OnboardingFlowStartResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['OnboardingFlowStartResult'] = ResolversParentTypes['OnboardingFlowStartResult']> = {
+  tokenAndroid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  tokenIos?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  workflowRunId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -8007,6 +8139,7 @@ export type Resolvers<ContextType = any> = {
   OnChainTxHash?: GraphQLScalarType;
   OnChainUpdate?: OnChainUpdateResolvers<ContextType>;
   OnChainUsdTxFee?: OnChainUsdTxFeeResolvers<ContextType>;
+  OnboardingFlowStartResult?: OnboardingFlowStartResultResolvers<ContextType>;
   OneDayAccountLimit?: OneDayAccountLimitResolvers<ContextType>;
   OneTimeAuthCode?: GraphQLScalarType;
   PageInfo?: PageInfoResolvers<ContextType>;

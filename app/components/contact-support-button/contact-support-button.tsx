@@ -10,7 +10,7 @@ import { useAppConfig } from "@app/hooks"
 export const ContactSupportButton = ({
   containerStyle,
 }: {
-  containerStyle: StyleProp<ViewStyle>
+  containerStyle?: StyleProp<ViewStyle>
 }) => {
   const [showContactSupport, setShowContactSupport] = useState(false)
   const { LL } = useI18nContext()

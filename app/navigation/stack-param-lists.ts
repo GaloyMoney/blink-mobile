@@ -91,6 +91,7 @@ export type RootStackParamList = {
   totpRegistrationValidate: { totpRegistrationId: string }
   totpLoginValidate: { authToken: string }
   webView: { url: string; initialTitle?: string }
+  fullOnboardingFlow: undefined
 }
 
 export type PeopleStackParamList = {

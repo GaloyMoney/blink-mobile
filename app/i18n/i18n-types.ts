@@ -7506,19 +7506,6 @@ type RootTranslation = {
 		 */
 		error: string
 		/**
-		 * H​i​,​ ​I​ ​w​i​l​l​ ​l​i​k​e​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​t​h​e​ ​t​r​a​n​s​a​c​t​i​o​n​ ​l​i​m​i​t​s​ ​o​f​ ​m​y​ ​{​b​a​n​k​N​a​m​e​}​ ​a​c​c​o​u​n​t​.
-		 * @param {string} bankName
-		 */
-		contactUsMessageBody: RequiredParams<'bankName'>
-		/**
-		 * R​e​q​u​e​s​t​ ​T​o​ ​I​n​c​r​e​a​s​e​ ​T​r​a​n​s​a​c​t​i​o​n​ ​L​i​m​i​t​s
-		 */
-		contactUsMessageSubject: string
-		/**
-		 * C​o​n​t​a​c​t​ ​s​u​p​p​o​r​t​ ​t​o​ ​p​e​r​f​o​r​m​ ​m​a​n​u​a​l​ ​K​Y​C​ ​t​o​ ​i​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t
-		 */
-		contactSupportToPerformKyc: string
-		/**
 		 * I​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t​s
 		 */
 		increaseLimits: string
@@ -8661,6 +8648,76 @@ type RootTranslation = {
 			 */
 			fullDetails: string
 		}
+	}
+	FullOnboarding: {
+		/**
+		 * F​u​l​l​ ​o​n​b​o​a​r​d​i​n​g
+		 */
+		title: string
+		/**
+		 * N​a​m​e​ ​c​o​n​f​i​r​m​a​t​i​o​n
+		 */
+		confirmNameTitle: string
+		/**
+		 * F​i​r​s​t​ ​n​a​m​e
+		 */
+		firstName: string
+		/**
+		 * L​a​s​t​ ​n​a​m​e
+		 */
+		lastName: string
+		/**
+		 * I​s​ ​t​h​e​ ​s​p​e​l​l​i​n​g​ ​o​f​ ​y​o​u​r​ ​n​a​m​e​ ​c​o​r​r​e​c​t​?​
+	​
+	​{​f​i​r​s​t​N​a​m​e​}​ ​{​l​a​s​t​N​a​m​e​}​
+	​
+	​I​t​ ​m​u​s​t​ ​m​a​t​c​h​ ​t​h​e​ ​n​a​m​e​ ​o​n​ ​y​o​u​r​ ​I​D​.
+		 * @param {string} firstName
+		 * @param {string} lastName
+		 */
+		confirmNameContent: RequiredParams<'firstName' | 'lastName'>
+		/**
+		 * U​p​g​r​a​d​i​n​g​ ​y​o​u​r​ ​a​c​c​o​u​n​t​ ​w​i​l​l​ ​i​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t​s​ ​a​n​d​ ​g​i​v​e​ ​y​o​u​ ​a​d​d​i​t​i​o​n​a​l​ ​f​u​n​c​t​i​o​n​a​l​i​t​y​ ​s​u​c​h​ ​a​s​ ​t​r​a​n​s​f​e​r​ ​t​o​ ​b​a​n​k​ ​a​c​c​o​u​n​t​s​ ​i​n​ ​s​e​l​e​c​t​e​d​ ​c​o​u​n​t​r​i​e​s​.​
+	​
+	​Y​o​u​ ​w​i​l​l​ ​h​a​v​e​ ​t​o​ ​p​r​o​v​i​d​e​ ​y​o​u​r​ ​n​a​m​e​,​ ​a​ ​g​o​v​e​r​n​e​m​e​n​t​ ​i​s​s​u​e​d​ ​I​D​ ​a​n​d​ ​a​ ​s​e​l​f​i​e​.​ ​W​e​'​l​l​ ​s​t​a​r​t​ ​w​i​t​h​ ​y​o​u​r​ ​n​a​m​e​.
+		 */
+		requirements: string
+		/**
+		 * D​o​c​u​m​e​n​t​s​ ​h​a​s​ ​b​e​e​n​ ​s​u​c​c​e​s​s​f​u​l​l​y​ ​r​e​c​e​i​v​e​d​ ​a​n​d​ ​w​i​l​l​ ​b​e​ ​p​r​o​c​e​s​s​e​d​ ​s​h​o​r​t​l​y​.​ ​y​o​u​ ​c​a​n​ ​c​o​m​e​ ​b​a​c​k​ ​t​o​ ​t​h​i​s​ ​p​a​g​e​ ​t​o​ ​h​a​v​e​ ​a​n​ ​u​p​d​a​t​e​ ​o​n​ ​t​h​e​ ​s​t​a​t​u​s​ ​o​f​ ​y​o​u​r​ ​o​n​b​o​a​r​d​i​n​g
+		 */
+		success: string
+		/**
+		 * T​h​e​r​e​ ​h​a​s​ ​b​e​e​n​ ​a​n​ ​e​r​r​o​r​ ​w​i​t​h​ ​t​h​e​ ​s​u​b​m​i​s​s​i​o​n​ ​o​f​ ​y​o​u​r​ ​d​o​c​u​m​e​n​t​s​.​ ​Y​o​u​ ​c​a​n​ ​c​o​n​t​a​c​t​ ​t​h​e​ ​s​u​p​p​o​r​t​ ​i​s​ ​t​h​e​ ​p​r​o​b​l​e​m​ ​p​e​r​s​i​s​t​s​.
+		 */
+		error: string
+		/**
+		 * Y​o​u​r​ ​o​n​b​o​a​r​d​i​n​g​ ​s​t​a​t​u​s​ ​i​s​:​ 
+		 */
+		status: string
+		/**
+		 * A​b​a​n​d​o​n​e​d
+		 */
+		ABANDONED: string
+		/**
+		 * A​p​p​r​o​v​e​d
+		 */
+		APPROVED: string
+		/**
+		 * D​e​c​l​i​n​e​d
+		 */
+		DECLINED: string
+		/**
+		 * E​r​r​o​r
+		 */
+		ERROR: string
+		/**
+		 * P​r​o​c​e​s​s​i​n​g
+		 */
+		PROCESSING: string
+		/**
+		 * R​e​v​i​e​w
+		 */
+		REVIEW: string
 	}
 }
 
@@ -16087,18 +16144,6 @@ export type TranslationFunctions = {
 		 */
 		error: () => LocalizedString
 		/**
-		 * Hi, I will like to increase the transaction limits of my {bankName} account.
-		 */
-		contactUsMessageBody: (arg: { bankName: string }) => LocalizedString
-		/**
-		 * Request To Increase Transaction Limits
-		 */
-		contactUsMessageSubject: () => LocalizedString
-		/**
-		 * Contact support to perform manual KYC to increase your limit
-		 */
-		contactSupportToPerformKyc: () => LocalizedString
-		/**
 		 * Increase your limits
 		 */
 		increaseLimits: () => LocalizedString
@@ -17210,6 +17255,74 @@ export type TranslationFunctions = {
 			 */
 			fullDetails: () => LocalizedString
 		}
+	}
+	FullOnboarding: {
+		/**
+		 * Full onboarding
+		 */
+		title: () => LocalizedString
+		/**
+		 * Name confirmation
+		 */
+		confirmNameTitle: () => LocalizedString
+		/**
+		 * First name
+		 */
+		firstName: () => LocalizedString
+		/**
+		 * Last name
+		 */
+		lastName: () => LocalizedString
+		/**
+		 * Is the spelling of your name correct?
+
+	{firstName} {lastName}
+
+	It must match the name on your ID.
+		 */
+		confirmNameContent: (arg: { firstName: string, lastName: string }) => LocalizedString
+		/**
+		 * Upgrading your account will increase your limits and give you additional functionality such as transfer to bank accounts in selected countries.
+
+	You will have to provide your name, a governement issued ID and a selfie. We'll start with your name.
+		 */
+		requirements: () => LocalizedString
+		/**
+		 * Documents has been successfully received and will be processed shortly. you can come back to this page to have an update on the status of your onboarding
+		 */
+		success: () => LocalizedString
+		/**
+		 * There has been an error with the submission of your documents. You can contact the support is the problem persists.
+		 */
+		error: () => LocalizedString
+		/**
+		 * Your onboarding status is: 
+		 */
+		status: () => LocalizedString
+		/**
+		 * Abandoned
+		 */
+		ABANDONED: () => LocalizedString
+		/**
+		 * Approved
+		 */
+		APPROVED: () => LocalizedString
+		/**
+		 * Declined
+		 */
+		DECLINED: () => LocalizedString
+		/**
+		 * Error
+		 */
+		ERROR: () => LocalizedString
+		/**
+		 * Processing
+		 */
+		PROCESSING: () => LocalizedString
+		/**
+		 * Review
+		 */
+		REVIEW: () => LocalizedString
 	}
 }
 

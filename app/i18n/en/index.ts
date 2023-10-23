@@ -2410,11 +2410,6 @@ const en: BaseTranslation = {
     stablesatTransfers: "Stablesat Transfers",
     internalSend: "Send to {bankName: string} User",
     error: "Unable to fetch limits at this time",
-    contactUsMessageBody:
-      "Hi, I will like to increase the transaction limits of my {bankName: string} account.",
-    contactUsMessageSubject: "Request To Increase Transaction Limits",
-    contactSupportToPerformKyc:
-      "Contact support to perform manual KYC to increase your limit",
     increaseLimits: "Increase your limits",
   },
   TransactionScreen: {
@@ -2764,8 +2759,25 @@ const en: BaseTranslation = {
       details: "We're giving away 1,000,000 sats!\n\n Share your Circles on social with tag `#blinkcircles` to enter! The winner will be chosen at random on October 31st.\n\n You must have at least one person in your Inner Circle to enter!",
       connectOnSocial: "Connect on social: ",
       fullDetails: "Full details at "
-    }
+    },
   },
+  FullOnboarding: {
+    title: "Full onboarding",
+    confirmNameTitle: "Name confirmation",
+    firstName: "First name",
+    lastName: "Last name",
+    confirmNameContent: "Is the spelling of your name correct?\n\n{firstName: string} {lastName: string}\n\nIt must match the name on your ID.",
+    requirements: "Upgrading your account will increase your limits and give you additional functionality such as transfer to bank accounts in selected countries.\n\nYou will have to provide your name, a governement issued ID and a selfie. We'll start with your name.",
+    success: "Documents has been successfully received and will be processed shortly. you can come back to this page to have an update on the status of your onboarding",
+    error: "There has been an error with the submission of your documents. You can contact the support is the problem persists.",
+    status: "Your onboarding status is: ",
+    ABANDONED: "Abandoned",
+    APPROVED: "Approved",
+    DECLINED: "Declined",
+    ERROR: "Error",
+    PROCESSING: "Processing",
+    REVIEW: "Review",
+  }
 }
 
 export default en

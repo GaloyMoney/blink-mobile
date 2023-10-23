@@ -103,6 +103,10 @@ android {
         versionCode 583
         versionName "2.2.125"
         missingDimensionStrategy 'react-native-camera', 'general' // React native camera
+
+        // onfido requirement
+        multiDexEnabled true
+
     }
     splits {
         abi {
@@ -147,6 +151,12 @@ android {
             }
         }
     }
+
+    configurations.all {
+        resolutionStrategy {
+            force 'com.google.android.play:core-common:2.0.2'
+        }
+    }
 }
 
 dependencies {
@@ -168,6 +178,15 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+    // https://github.com/KjellConnelly/react-native-rate/issues/117
+    // https://chat.openai.com/c/ba241381-615e-48b1-baa3-ce3dbc7246b7
+    implementation(project(":react-native-rate")) {
+        exclude group: 'com.google.android.play', module: 'core-common'
+        exclude group: 'com.google.android.play', module: 'review'
+    }
+
+    implementation 'androidx.multidex:multidex:2.0.1'
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

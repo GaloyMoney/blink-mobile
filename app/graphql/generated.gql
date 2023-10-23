@@ -455,6 +455,15 @@ mutation onChainUsdPaymentSendAsBtcDenominated($input: OnChainUsdPaymentSendAsBt
   }
 }
 
+mutation onboardingFlowStart($input: OnboardingFlowStartInput!) {
+  onboardingFlowStart(input: $input) {
+    workflowRunId
+    tokenAndroid
+    tokenIos
+    __typename
+  }
+}
+
 mutation quizCompleted($input: QuizCompletedInput!) {
   quizCompleted(input: $input) {
     errors {
@@ -958,6 +967,21 @@ query displayCurrency {
 
 query feedbackModalShown {
   feedbackModalShown @client
+}
+
+query fullOnboardingScreen {
+  me {
+    id
+    defaultAccount {
+      ... on ConsumerAccount {
+        id
+        onboardingStatus
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
 }
 
 query hasPromptedSetDefaultAccount {

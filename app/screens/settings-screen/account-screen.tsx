@@ -143,7 +143,7 @@ export const AccountScreen = () => {
   const openUpgradeAccountModal = () => setUpgradeAccountModalVisible(true)
 
   const { data } = useAccountScreenQuery({
-    fetchPolicy: "cache-first",
+    fetchPolicy: "cache-and-network",
     skip: !isAtLeastLevelZero,
   })
 
@@ -437,6 +437,15 @@ export const AccountScreen = () => {
       styleDivider: true,
     },
 
+    {
+      category: LL.AccountScreen.upgrade(),
+      id: "upgrade-to-level-two",
+      icon: "person-outline",
+      action: () => navigation.navigate("fullOnboardingFlow"),
+      enabled: true,
+      hidden: currentLevel !== AccountLevel.One,
+      styleDivider: true,
+    },
     {
       category: LL.common.backupAccount(),
       id: "upgrade-to-level-one",

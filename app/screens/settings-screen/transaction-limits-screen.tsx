@@ -1,5 +1,5 @@
 import React from "react"
-import { ActivityIndicator, Button, Pressable, View } from "react-native"
+import { ActivityIndicator, Button, View } from "react-native"
 import { LocalizedString } from "typesafe-i18n"
 
 import { Screen } from "@app/components/screen"
@@ -11,13 +11,12 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useAppConfig, usePriceConversion } from "@app/hooks"
 import { DisplayCurrency, toUsdMoneyAmount } from "@app/types/amounts"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
-import ContactModal, {
-  SupportChannels,
-} from "@app/components/contact-modal/contact-modal"
-import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
 import { AccountLevel, useLevel } from "@app/graphql/level-context"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 
 const useStyles = makeStyles(({ colors }) => ({
   limitWrapper: {
@@ -26,7 +25,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   increaseLimitsButtonContainer: {
     marginVertical: 20,
-    paddingHorizontal: 20,
+    marginHorizontal: 20,
   },
   contentTextBox: {
     flexDirection: "row",
@@ -119,6 +118,8 @@ gql`
 `
 
 export const TransactionLimitsScreen = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+
   const styles = useStyles()
   const {
     theme: { colors },
@@ -134,22 +135,12 @@ export const TransactionLimitsScreen = () => {
   const { name: bankName } = appConfig.galoyInstance
   const { currentLevel } = useLevel()
 
-  const [isContactModalVisible, setIsContactModalVisible] = React.useState(false)
   const [isUpgradeAccountModalVisible, setIsUpgradeAccountModalVisible] =
     React.useState(false)
-
-  const toggleIsContactModalVisible = () => {
-    setIsContactModalVisible(!isContactModalVisible)
-  }
 
   const toggleIsUpgradeAccountModalVisible = () => {
     setIsUpgradeAccountModalVisible(!isUpgradeAccountModalVisible)
   }
-
-  const messageBody = LL.TransactionLimitsScreen.contactUsMessageBody({
-    bankName,
-  })
-  const messageSubject = LL.TransactionLimitsScreen.contactUsMessageSubject()
 
   if (error) {
     return (
@@ -226,31 +217,21 @@ export const TransactionLimitsScreen = () => {
           <TransactionLimitsPeriod key={index} {...data} />
         ))}
       </View>
-      {currentLevel === AccountLevel.Zero ? (
+      {currentLevel === AccountLevel.Zero && (
         <GaloyPrimaryButton
           title={LL.TransactionLimitsScreen.increaseLimits()}
-          onPress={toggleIsUpgradeAccountModalVisible}
+          onPress={() => navigation.navigate("phoneFlow")}
           containerStyle={styles.increaseLimitsButtonContainer}
         />
-      ) : (
-        <Pressable
-          style={styles.increaseLimitsContainer}
-          onPress={toggleIsContactModalVisible}
-        >
-          <Text style={styles.increaseLimitsText}>
-            {LL.TransactionLimitsScreen.contactSupportToPerformKyc()}
-          </Text>
-          <GaloyIcon name="question" size={20} color={styles.increaseLimitsText.color} />
-        </Pressable>
+      )}
+      {currentLevel === AccountLevel.One && (
+        <GaloyPrimaryButton
+          title={LL.TransactionLimitsScreen.increaseLimits()}
+          onPress={() => navigation.navigate("fullOnboardingFlow")}
+          containerStyle={styles.increaseLimitsButtonContainer}
+        />
       )}
 
-      <ContactModal
-        isVisible={isContactModalVisible}
-        toggleModal={toggleIsContactModalVisible}
-        messageBody={messageBody}
-        messageSubject={messageSubject}
-        supportChannels={[SupportChannels.Email, SupportChannels.WhatsApp]}
-      />
       <UpgradeAccountModal
         isVisible={isUpgradeAccountModalVisible}
         closeModal={toggleIsUpgradeAccountModalVisible}

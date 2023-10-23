@@ -3,8 +3,12 @@ subgraphs:
   galoy:
     routing_url: url
     schema:
-      file: ../galoy/dev/apollo-federation/supergraph.graphql
+      file: ../galoy/core/api/dev/apollo-federation/supergraph.graphql
   circles:
     routing_url: url
     schema:
       file: ../blink-circles/src/graphql/schema.graphql
+  kyc:
+    routing_url: url
+    schema:
+      file: ../blink-kyc/app/graphql/schema.graphql
