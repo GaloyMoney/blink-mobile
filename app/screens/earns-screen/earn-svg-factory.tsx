@@ -6,8 +6,8 @@ import WhereBitcoinExistSVG from "./03-where-do-the-bitcoins-exist-01.svg"
 import WhoControlsBitcoinSVG from "./04-who-controls-Bitcoin-01.svg"
 import CopyBitcoinSVG from "./05-cant-copy-bitcoin-01.svg"
 
-import MoneySocialAggrement from "./01-money-is-a-social-agreement-01.svg"
-import MoneySocialAggrementDark from "./01-money-is-a-social-agreement-02.svg"
+import MoneySocialAgreement from "./01-money-is-a-social-agreement-01.svg"
+import MoneySocialAgreementDark from "./01-money-is-a-social-agreement-02.svg"
 import CoincidenceOfWants from "./02-coincidence-of-wants-01.svg"
 import MoneyEvolution from "./03-money-has-evolved-01.svg"
 import WhyStonesShellGold from "./04-why-used-as-money-01.svg"
@@ -158,11 +158,11 @@ export const SVGs = ({ name, width, theme }: ISVGs): React.ReactNode => {
     case "copyBitcoin":
       return <CopyBitcoinSVG width={rWidth} />
 
-    case "moneySocialAggrement":
+    case "moneySocialAgreement":
       return theme === "dark" ? (
-        <MoneySocialAggrementDark width={rWidth} />
+        <MoneySocialAgreementDark width={rWidth} />
       ) : (
-        <MoneySocialAggrement width={rWidth} />
+        <MoneySocialAgreement width={rWidth} />
       )
     case "coincidenceOfWants":
       return <CoincidenceOfWants width={rWidth} />

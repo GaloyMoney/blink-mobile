@@ -158,7 +158,7 @@ const en: BaseTranslation = {
       WhatIsMoney: {
         title: "What is Money? ",
         questions: {
-          moneySocialAggrement: {
+          moneySocialAgreement: {
             answers: [
               "Because people trust that other people will value money similarly",
               "Because your mother told you so",
