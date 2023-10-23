@@ -7,7 +7,6 @@ import { useCirclesQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { ShareCircles } from "./share-circles-card"
-import { SeptemberChallengeCard } from "@app/components/september-challenge"
 
 import LogoDarkMode from "@app/assets/logo/app-logo-dark.svg"
 import LogoLightMode from "@app/assets/logo/blink-logo-light.svg"
@@ -16,6 +15,7 @@ import { InviteFriendsCard } from "./invite-friends-card"
 import { OctoberChallengeCard } from "@app/components/october-challenge"
 import { Screen } from "../../../components/screen"
 import { IntroducingCirclesModal } from "@app/components/introducing-circles-modal"
+import { NovemberChallengeCard } from "@app/components/november-challenge"
 
 gql`
   query Circles {
@@ -151,8 +151,8 @@ export const CirclesDashboardScreen: React.FC = () => {
             </Text>
           </View>
         )}
-        <SeptemberChallengeCard />
         <OctoberChallengeCard />
+        <NovemberChallengeCard />
         {isLonely ? <InviteFriendsCard /> : <ShareCircles />}
       </ScrollView>
     </Screen>

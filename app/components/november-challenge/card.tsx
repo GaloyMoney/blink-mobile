@@ -1,12 +1,12 @@
-import { TouchableOpacity, View } from "react-native"
+import { View } from "react-native"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { GaloyIcon } from "../atomic/galoy-icon"
 import { useEffect, useState } from "react"
-import { SeptemberChallengeModal } from "./modal"
-import { useCirclesQuery } from "@app/graphql/generated"
+import { NovemberChallengeModal } from "./modal"
+import { PressableCard } from "../pressable-card"
 
-import { OCT_1_EPOCH, SEPT_1_EPOCH } from "./dates"
+import { NOV_1_12_AM_UTC_MINUS_6, DEC_1_12_AM_UTC_MINUS_6 } from "./dates"
 
 function secondsToDDMMSS(totalSeconds: number) {
   if (totalSeconds < 0) return ""
@@ -24,11 +24,17 @@ function secondsToDDMMSS(totalSeconds: number) {
   return `${formattedDays}:${formattedHours}:${formattedMinutes}:${formattedSeconds}`
 }
 
-export const SeptemberChallengeCard: React.FC = () => {
+const getTimeLeft = () => {
+  const dateNow = Date.now()
+  if (dateNow > DEC_1_12_AM_UTC_MINUS_6 || dateNow < NOV_1_12_AM_UTC_MINUS_6) return ""
+
+  const sLeft = (DEC_1_12_AM_UTC_MINUS_6 - dateNow) / 1000
+  return secondsToDDMMSS(sLeft)
+}
+
+export const NovemberChallengeCard: React.FC = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const openModal = () => setModalIsOpen(true)
-
-  const { data } = useCirclesQuery()
 
   const {
     theme: { colors },
@@ -36,57 +42,41 @@ export const SeptemberChallengeCard: React.FC = () => {
   const styles = useStyles()
   const { LL } = useI18nContext()
 
-  const [countDown, setCountDown] = useState("")
+  const [countDown, setCountDown] = useState(getTimeLeft())
 
   useEffect(() => {
     const dateNow = Date.now()
-    if (dateNow > OCT_1_EPOCH) return
+    if (dateNow > DEC_1_12_AM_UTC_MINUS_6) return
 
     const t = setInterval(() => {
-      const dateNow = Date.now()
-
-      if (dateNow > SEPT_1_EPOCH) {
-        const sLeft = (OCT_1_EPOCH - dateNow) / 1000
-        if (sLeft < 10 * 24 * 60 * 60)
-          // display when less than 10 days are left to end
-          setCountDown(secondsToDDMMSS(sLeft))
-      } else {
-        const sLeft = (SEPT_1_EPOCH - dateNow) / 1000
-        setCountDown(secondsToDDMMSS(sLeft))
-      }
+      setCountDown(getTimeLeft())
     }, 1000)
 
     return () => clearInterval(t)
   }, [setCountDown])
 
-  if (Date.now() > OCT_1_EPOCH) return <></>
+  const currentTime = Date.now()
+  if (currentTime > DEC_1_12_AM_UTC_MINUS_6 || currentTime < NOV_1_12_AM_UTC_MINUS_6)
+    return <></>
 
   return (
-    <TouchableOpacity onPress={openModal}>
-      <SeptemberChallengeModal isVisible={modalIsOpen} setIsVisible={setModalIsOpen} />
+    <PressableCard onPress={openModal}>
+      <NovemberChallengeModal isVisible={modalIsOpen} setIsVisible={setModalIsOpen} />
       <View style={styles.card}>
         <View style={styles.textContainer}>
           <View style={styles.beside}>
             <Text type="p1" bold>
-              {LL.Circles.septChallenge.title()}
+              {LL.Circles.novemberChallenge.title()}
             </Text>
             <Text color={colors.grey3}>{countDown}</Text>
           </View>
-          <Text type="p2">
-            {LL.Circles.septChallenge.description({
-              innerCircle:
-                Date.now() < SEPT_1_EPOCH
-                  ? 0
-                  : data?.me?.defaultAccount.welcomeProfile?.innerCircleThisMonthCount ||
-                    0,
-            })}
-          </Text>
+          <Text type="p2">{LL.Circles.novemberChallenge.description()}</Text>
         </View>
         <View>
           <GaloyIcon color={colors.primary} size={28} name="rank" />
         </View>
       </View>
-    </TouchableOpacity>
+    </PressableCard>
   )
 }
 
@@ -96,12 +86,11 @@ const useStyles = makeStyles(({ colors }) => ({
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 16,
-    borderColor: colors.grey4,
-    borderWidth: 0.5,
     borderRadius: 10,
-    marginBottom: -10,
+    backgroundColor: colors.grey5,
   },
   textContainer: {
+    flex: 1,
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",

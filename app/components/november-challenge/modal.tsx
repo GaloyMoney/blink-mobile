@@ -8,19 +8,19 @@ import { makeStyles, useTheme, Text } from "@rneui/themed"
 import { GaloyIconButton } from "../atomic/galoy-icon-button"
 import { GaloyToast } from "../galoy-toast"
 import { GaloyIcon } from "../atomic/galoy-icon"
-import { useCirclesQuery } from "@app/graphql/generated"
-
-import { OCT_1_EPOCH, SEPT_1_EPOCH } from "./dates"
+import { useCirclesCard } from "@app/screens/people-screen/circles/use-circles-card"
+import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
 
 const CHALLENGE_PAGE = "blink.sv/circles"
 const CHALLENGE_PAGE_URL = "https://www.blink.sv/circles"
+const SOCIAL_LINK_TREE = "https://linktr.ee/blinkbtc"
 
 type Props = {
   isVisible: boolean
   setIsVisible: (isVisible: boolean) => void
 }
 
-export const SeptemberChallengeModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
+export const NovemberChallengeModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
   const { LL } = useI18nContext()
 
   const {
@@ -28,28 +28,11 @@ export const SeptemberChallengeModal: React.FC<Props> = ({ isVisible, setIsVisib
   } = useTheme()
   const styles = useStyles()
 
-  const { data } = useCirclesQuery({
-    fetchPolicy: "cache-first",
-  })
-
-  const isLonely =
-    data?.me?.defaultAccount.welcomeProfile === null ||
-    data?.me?.defaultAccount.welcomeProfile?.innerCircleAllTimeCount === 0
-
-  const isSept = Date.now() > SEPT_1_EPOCH && Date.now() < OCT_1_EPOCH
-
-  const innerCircle = isSept
-    ? (data?.me?.defaultAccount.welcomeProfile?.innerCircleThisMonthCount || 0) + "/21"
-    : "0/21"
-  const rank = isSept
-    ? data?.me?.defaultAccount.welcomeProfile?.thisMonthRank
-      ? `#${data?.me?.defaultAccount.welcomeProfile?.thisMonthRank}`
-      : "-"
-    : "-"
-
   const acknowledgeModal = () => {
     setIsVisible(false)
   }
+
+  const { ShareImg, share } = useCirclesCard()
 
   return (
     <Modal
@@ -69,32 +52,25 @@ export const SeptemberChallengeModal: React.FC<Props> = ({ isVisible, setIsVisib
           />
           <GaloyIcon style={styles.top} name="rank" size={40} color={colors.primary} />
           <Text type="h1" bold>
-            {LL.Circles.septChallenge.title()}
+            {LL.Circles.novemberChallenge.title()}
           </Text>
           <Text type="p1" style={styles.details}>
-            {LL.Circles.septChallenge.details()}
+            {LL.Circles.novemberChallenge.details()}
           </Text>
-          {!isLonely && (
-            <>
-              <View style={styles.containerData}>
-                <Text type="h1">{innerCircle}</Text>
-                <Text type="p3" color={colors.grey3}>
-                  {LL.Circles.septChallenge.peopleWelcomedSoFar()}
-                </Text>
-              </View>
-              <View style={styles.containerData}>
-                <Text type="h1">{rank}</Text>
-                <Text type="p3" color={colors.grey3}>
-                  {LL.Circles.septChallenge.yourRank()}
-                </Text>
-              </View>
-            </>
-          )}
+          {ShareImg}
+          <GaloyPrimaryButton onPress={share} title={LL.Circles.shareCircles()} />
           <Text style={styles.reminder} type="p3" color={colors.grey3}>
-            {LL.Circles.septChallenge.reminder()}
+            {LL.Circles.octoberChallenge.connectOnSocial()}
+            <Text
+              style={styles.underline}
+              color={colors.grey3}
+              onPress={() => Linking.openURL(SOCIAL_LINK_TREE)}
+            >
+              {SOCIAL_LINK_TREE}
+            </Text>
           </Text>
           <Text style={styles.reminder} type="p3">
-            {LL.Circles.septChallenge.fullDetails()}{" "}
+            {LL.Circles.octoberChallenge.fullDetails()}
             <Text
               style={styles.underline}
               color={colors.grey3}
@@ -140,7 +116,7 @@ const useStyles = makeStyles(({ colors }) => ({
   reminder: {
     textAlign: "center",
     paddingHorizontal: 20,
-    color: colors.grey3,
+    color: colors.grey2,
   },
   underline: {
     textDecorationLine: "underline",

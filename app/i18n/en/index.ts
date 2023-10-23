@@ -2760,6 +2760,11 @@ const en: BaseTranslation = {
       connectOnSocial: "Connect on social: ",
       fullDetails: "Full details at "
     },
+    novemberChallenge: {
+      title: "November Challenge!",
+      description: "Earn 2,100 sats for every person you welcome to Blink in November!",
+      details: "Earn 2,100 sats for every person you welcome to Blink in November!\n\nTo claim your sats, simply share your Circles on social any time during November with the tag `#blinkcircles`.\n\nYour sats will be paid out on December 1, 2023."
+    },
   },
   FullOnboarding: {
     title: "Full onboarding",
