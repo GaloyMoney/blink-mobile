@@ -85,7 +85,7 @@ const expectedEnglishQuizSections = [
     section: { id: "WhatIsMoney", title: "What is Money? " },
     content: [
       {
-        id: "moneySocialAggrement",
+        id: "moneySocialAgreement",
         title: "Money is a social agreement.",
         text: "Money requires people to trust. \n\nPeople trust the paper dollar bills in their pocket. They trust the digits in their online bank account. They trust the balance on a store gift card will be redeemable. \n\nHaving money allows people to easy trade it immediately for a good, or a service.",
         question: "Why does money have value?",

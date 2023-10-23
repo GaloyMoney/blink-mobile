@@ -92,7 +92,7 @@ const mocksSection0 = [
                 __typename: "Quiz",
               },
               {
-                id: "moneySocialAggrement",
+                id: "moneySocialAgreement",
                 amount: 4,
                 completed: false,
                 __typename: "Quiz",

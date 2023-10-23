@@ -2,8 +2,13 @@
 import { Button } from "@rneui/base"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { Text, View } from "react-native"
-import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView,
+  TouchableWithoutFeedback,
+} from "react-native"
 import Modal from "react-native-modal"
 import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -27,9 +32,11 @@ import { makeStyles, useTheme } from "@rneui/themed"
 
 const useStyles = makeStyles(({ colors }) => ({
   answersView: {
-    flex: 1,
-    marginHorizontal: 10,
-    marginTop: 6,
+    rowGap: 20,
+    padding: 20,
+  },
+  scrollViewStyle: {
+    width: "100%",
   },
 
   bottomContainer: {
@@ -57,12 +64,14 @@ const useStyles = makeStyles(({ colors }) => ({
 
   correctAnswerText: {
     color: colors.green,
+    flex: 1,
     fontSize: 16,
   },
 
   incorrectAnswerText: {
     color: colors.error,
     fontSize: 16,
+    flex: 1,
   },
 
   keepDiggingContainerStyle: {
@@ -79,7 +88,7 @@ const useStyles = makeStyles(({ colors }) => ({
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     justifyContent: "flex-end",
-    minHeight: 630,
+    height: 630,
   },
 
   quizButtonContainerStyle: {
@@ -87,39 +96,43 @@ const useStyles = makeStyles(({ colors }) => ({
     width: 48,
   },
 
+  buttonRow: {
+    flexDirection: "row",
+    columnGap: 20,
+    alignItems: "center",
+  },
+
   quizButtonStyle: {
     backgroundColor: colors._lightBlue,
-    borderRadius: 32,
-    padding: 12,
+    height: 50,
+    width: 50,
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   quizButtonTitleStyle: {
     color: colors._white,
     fontWeight: "bold",
+    fontSize: 16,
   },
 
   quizCorrectButtonStyle: {
     backgroundColor: colors.green,
-    borderRadius: 32,
-    padding: 12,
-  },
-
-  quizTextAnswer: {
-    color: colors._darkGrey,
-    textAlign: "left",
-    width: "100%",
-  },
-
-  quizTextContainerStyle: {
-    alignItems: "flex-start",
-    marginLeft: 12,
-    marginRight: 36,
+    height: 50,
+    width: 50,
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   quizWrongButtonStyle: {
     backgroundColor: colors.error,
-    borderRadius: 32,
-    padding: 12,
+    height: 50,
+    width: 50,
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   svgContainer: {
@@ -129,6 +142,11 @@ const useStyles = makeStyles(({ colors }) => ({
 
   text: {
     fontSize: 24,
+  },
+
+  answerChoiceText: {
+    fontSize: 20,
+    flex: 1,
   },
 
   textContainer: {
@@ -152,6 +170,11 @@ const useStyles = makeStyles(({ colors }) => ({
     color: colors._white,
     fontSize: 18,
     fontWeight: "bold",
+  },
+
+  buttonRowWithFeedback: {
+    rowGap: 10,
+    flex: 1,
   },
 }))
 
@@ -209,7 +232,7 @@ export const EarnQuiz = ({ route }: Props) => {
   const card = augmentCardWithGqlData({ card: cardNoMetadata, quizServerData })
   const { title, text, amount, answers, feedback, question, completed } = card
 
-  const [quizCompleted] = useQuizCompletedMutation()
+  const [quizCompleted, { loading: quizCompletedLoading }] = useQuizCompletedMutation()
   const [quizVisible, setQuizVisible] = useState(false)
   const [recordedAnswer, setRecordedAnswer] = useState<number[]>([])
 
@@ -221,10 +244,11 @@ export const EarnQuiz = ({ route }: Props) => {
 
   useEffect(() => {
     ;(async () => {
-      if (recordedAnswer.indexOf(0) !== -1) {
+      if (recordedAnswer.indexOf(0) !== -1 && !completed && !quizCompletedLoading) {
         const { data } = await quizCompleted({
           variables: { input: { id } },
         })
+
         if (data?.quizCompleted?.errors?.length) {
           // FIXME: message is hidden by the modal
           toastShow({
@@ -234,7 +258,7 @@ export const EarnQuiz = ({ route }: Props) => {
         }
       }
     })()
-  }, [recordedAnswer, id, quizCompleted, LL])
+  }, [recordedAnswer, id, quizCompleted, LL, completed, quizCompletedLoading])
 
   const close = async () => {
     if (quizVisible) {
@@ -257,38 +281,22 @@ export const EarnQuiz = ({ route }: Props) => {
   let j: ZeroTo2 = 0
   permutation.forEach((i) => {
     answersShuffled.push(
-      <TouchableWithoutFeedback>
-        <View key={i} style={{ width: "100%" }}>
-          <View style={{ flexDirection: "row", alignItems: "center", width: "90%" }}>
-            <Button
-              title={mappingLetter[j]}
-              buttonStyle={buttonStyleHelper(i)}
-              disabledStyle={buttonStyleHelper(i)}
-              titleStyle={styles.quizButtonTitleStyle}
-              disabledTitleStyle={styles.quizButtonTitleStyle}
-              containerStyle={styles.quizButtonContainerStyle}
-              onPress={() => addRecordedAnswer(i)}
-              disabled={recordedAnswer.indexOf(0) !== -1}
-            />
-            <Button
-              title={answers[i]}
-              titleStyle={styles.quizTextAnswer}
-              disabledTitleStyle={styles.quizTextAnswer}
-              containerStyle={styles.quizTextContainerStyle}
-              // disabledStyle={styles.quizTextContainerStyle}
-              type="clear"
-              onPress={() => addRecordedAnswer(i)}
-              disabled={recordedAnswer.indexOf(0) !== -1}
-            />
+      <View style={styles.buttonRowWithFeedback}>
+        <TouchableOpacity key={i} onPress={() => addRecordedAnswer(i)}>
+          <View style={styles.buttonRow}>
+            <View style={buttonStyleHelper(i)}>
+              <Text style={styles.quizButtonTitleStyle}>{mappingLetter[j]}</Text>
+            </View>
+            <Text style={styles.answerChoiceText}>{answers[i]}</Text>
           </View>
-          {recordedAnswer.length > 0 &&
-          recordedAnswer.indexOf(i) === recordedAnswer.length - 1 ? (
-            <Text style={i === 0 ? styles.correctAnswerText : styles.incorrectAnswerText}>
-              {feedback[i]}
-            </Text>
-          ) : null}
-        </View>
-      </TouchableWithoutFeedback>,
+        </TouchableOpacity>
+        {recordedAnswer.length > 0 &&
+        recordedAnswer.indexOf(i) === recordedAnswer.length - 1 ? (
+          <Text style={i === 0 ? styles.correctAnswerText : styles.incorrectAnswerText}>
+            {feedback[i]}
+          </Text>
+        ) : null}
+      </View>,
     )
     j = (j + 1) as ZeroTo2
   })
@@ -318,7 +326,10 @@ export const EarnQuiz = ({ route }: Props) => {
               style={{ height: 40, top: -30 }}
             />
           </View>
-          <ScrollView style={styles.answersView}>
+          <ScrollView
+            style={styles.scrollViewStyle}
+            contentContainerStyle={styles.answersView}
+          >
             <Text style={styles.title}>{question ?? title}</Text>
             {answersShuffled}
           </ScrollView>

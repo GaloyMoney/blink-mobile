@@ -495,7 +495,7 @@ type RootTranslation = {
 				 */
 				title: string
 				questions: {
-					moneySocialAggrement: {
+					moneySocialAgreement: {
 						answers: {
 							/**
 							 * B​e​c​a​u​s​e​ ​p​e​o​p​l​e​ ​t​r​u​s​t​ ​t​h​a​t​ ​o​t​h​e​r​ ​p​e​o​p​l​e​ ​w​i​l​l​ ​v​a​l​u​e​ ​m​o​n​e​y​ ​s​i​m​i​l​a​r​l​y
@@ -9176,7 +9176,7 @@ export type TranslationFunctions = {
 				 */
 				title: () => LocalizedString
 				questions: {
-					moneySocialAggrement: {
+					moneySocialAgreement: {
 						answers: {
 							/**
 							 * Because people trust that other people will value money similarly

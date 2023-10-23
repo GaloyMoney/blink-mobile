@@ -12,7 +12,7 @@ export const earnSections = {
   },
   WhatIsMoney: {
     questions: [
-      "moneySocialAggrement",
+      "moneySocialAgreement",
       "coincidenceOfWants",
       "moneyEvolution",
       "whyStonesShellGold",
