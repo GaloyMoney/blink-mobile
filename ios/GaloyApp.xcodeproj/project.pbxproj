@@ -435,7 +435,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 575;
+				CURRENT_PROJECT_VERSION = 591;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = AYPCPV46WW;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = AYPCPV46WW;
@@ -445,7 +445,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Blink;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.2.125;
+				MARKETING_VERSION = 2.2.142;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -471,7 +471,7 @@
 				CODE_SIGN_ENTITLEMENTS = GaloyApp/GaloyApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 575;
+				CURRENT_PROJECT_VERSION = 591;
 				DEVELOPMENT_TEAM = AYPCPV46WW;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -479,7 +479,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Blink;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.2.125;
+				MARKETING_VERSION = 2.2.142;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
