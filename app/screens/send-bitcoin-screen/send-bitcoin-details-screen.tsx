@@ -38,6 +38,8 @@ import { requestInvoice, utils } from "lnurl-pay"
 import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 import { getBtcWallet, getDefaultWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { NoteInput } from "@app/components/note-input"
+// import Breez SDK Wallet
+import useBreezBalance from "@app/hooks/useBreezBalance"
 
 gql`
   query sendBitcoinDetailsScreen {
@@ -124,10 +126,15 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     data?.me?.defaultAccount?.defaultWalletId,
   )
 
+  // import and use breez balance
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [breezBalance, setBreezBalance] = useBreezBalance()
+
+  // deconstruct the btcwallet and change the balance to the breez balance
   const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
   const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
-  const network = data?.globals?.network
+  const network = "mainnet" // data?.globals?.network
 
   const wallets = data?.me?.defaultAccount?.wallets
   const { paymentDestination } = route.params
@@ -197,6 +204,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     defaultWallet,
     btcWallet,
     zeroDisplayAmount,
+    breezBalance,
   ])
 
   if (!paymentDetail) {
@@ -207,7 +215,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const lnurlParams =
     paymentDetail?.paymentType === "lnurl" ? paymentDetail?.lnurlParams : undefined
 
-  const btcBalanceMoneyAmount = toBtcMoneyAmount(btcWallet?.balance)
+  const btcBalanceMoneyAmount = toBtcMoneyAmount(breezBalance || btcWallet?.balance)
 
   const usdBalanceMoneyAmount = toUsdMoneyAmount(usdWallet?.balance)
 
@@ -386,7 +394,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
     if (paymentDetail.sendingWalletDescriptor.currency === WalletCurrency.Btc) {
       moneyAmount = {
-        amount: btcWallet?.balance ?? 0,
+        amount: breezBalance ?? 0,
         currency: WalletCurrency.Btc,
         currencyCode: "BTC",
       }

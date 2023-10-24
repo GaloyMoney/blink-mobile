@@ -26,15 +26,19 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { CommonActions, RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
-import React, { useMemo, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import { ActivityIndicator, View } from "react-native"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { testProps } from "../../utils/testProps"
-import useFee from "./use-fee"
+import useFee, { FeeType } from "./use-fee"
 import { useSendPayment } from "./use-send-payment"
 import { AmountInput } from "@app/components/amount-input"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+
+// Breez SDK
+import useBreezBalance from "@app/hooks/useBreezBalance"
+import { fetchReverseSwapFeesBreezSDK } from "@app/utils/breez-sdk"
 
 gql`
   query sendBitcoinConfirmationScreen {
@@ -82,10 +86,14 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
 
   const { data } = useSendBitcoinConfirmationScreenQuery({ skip: !useIsAuthed() })
 
+  // import and use breez balance
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [breezBalance, setBreezBalance] = useBreezBalance()
+
   const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
   const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
-  const btcBalanceMoneyAmount = toBtcMoneyAmount(btcWallet?.balance)
+  const btcBalanceMoneyAmount = toBtcMoneyAmount(breezBalance || btcWallet?.balance)
 
   const usdBalanceMoneyAmount = toUsdMoneyAmount(usdWallet?.balance)
 
@@ -102,13 +110,46 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
   const { LL } = useI18nContext()
 
-  const fee = useFee(getFee)
+  const [fee, setFee] = useState<FeeType>({ status: "loading" })
+  const getLightningFee = useFee(getFee ? getFee : null)
+  // Moved this logic outside of the if-else statement to make sure hooks are not called conditionally
+  useEffect(() => {
+    if (
+      paymentDetail.paymentType === "lightning" ||
+      paymentDetail.paymentType === "lnurl"
+    ) {
+      console.log("lightning")
+      setFee(getLightningFee)
+    } else if (paymentDetail.sendingWalletDescriptor.currency === WalletCurrency.Btc) {
+      console.log("not lightning")
+      const getBreezFee = async (): Promise<void> => {
+        const rawBreezFee = await fetchReverseSwapFeesBreezSDK({
+          sendAmountSat: settlementAmount.amount,
+        })
+        const formattedBreezFee: FeeType = {
+          amount: {
+            amount: rawBreezFee.feesClaim,
+            currency: "BTC",
+            currencyCode: "BTC",
+          },
+          status: "set",
+        }
+        setFee(formattedBreezFee)
+      }
+
+      // This ensures that getBreezFee is only called when the component mounts
+      getBreezFee()
+    } else {
+      setFee(getLightningFee)
+    }
+  }, [getLightningFee, paymentDetail.paymentType])
+  console.log("fee", fee)
 
   const {
     loading: sendPaymentLoading,
     sendPayment,
     hasAttemptedSend,
-  } = useSendPayment(sendPaymentMutation)
+  } = useSendPayment(sendPaymentMutation, destination, settlementAmount)
 
   let feeDisplayText = ""
   if (fee.amount) {

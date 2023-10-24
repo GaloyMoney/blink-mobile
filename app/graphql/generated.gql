@@ -946,41 +946,27 @@ query network {
   }
 }
 
-query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!, $targetConfirmations: TargetConfirmations) {
-  onChainTxFee(
-    walletId: $walletId
-    address: $address
-    amount: $amount
-    targetConfirmations: $targetConfirmations
-  ) {
+query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!) {
+  onChainTxFee(walletId: $walletId, address: $address, amount: $amount) {
     amount
-    targetConfirmations
     __typename
   }
 }
 
-query onChainUsdTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: CentAmount!, $targetConfirmations: TargetConfirmations) {
-  onChainUsdTxFee(
-    walletId: $walletId
-    address: $address
-    amount: $amount
-    targetConfirmations: $targetConfirmations
-  ) {
+query onChainUsdTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: CentAmount!) {
+  onChainUsdTxFee(walletId: $walletId, address: $address, amount: $amount) {
     amount
-    targetConfirmations
     __typename
   }
 }
 
-query onChainUsdTxFeeAsBtcDenominated($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!, $targetConfirmations: TargetConfirmations) {
+query onChainUsdTxFeeAsBtcDenominated($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!) {
   onChainUsdTxFeeAsBtcDenominated(
     walletId: $walletId
     address: $address
     amount: $amount
-    targetConfirmations: $targetConfirmations
   ) {
     amount
-    targetConfirmations
     __typename
   }
 }

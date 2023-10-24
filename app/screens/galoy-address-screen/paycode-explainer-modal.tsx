@@ -34,7 +34,7 @@ type SetAddressModalProps = {
   toggleModal: () => void
 }
 
-const wallets = ["Muun", "Chivo", "Strike"]
+const wallets = ["Blink", "Breez", "Strike"]
 
 export const PayCodeExplainerModal = ({
   modalVisible,

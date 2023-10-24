@@ -29,11 +29,15 @@ export type Scalars = {
   EmailAddress: string;
   /** An id to be passed between registrationInitiate and registrationValidate for confirming email */
   EmailRegistrationId: string;
+  EndpointId: string;
+  /** Url that will be fetched on events for the account */
+  EndpointUrl: string;
   /** Feedback shared with our user */
   Feedback: string;
   /** Hex-encoded string of 32 bytes */
   Hex32Bytes: string;
   Language: string;
+  LeaderboardName: string;
   LnPaymentPreImage: string;
   /** BOLT11 lightning invoice payment request with the amount included */
   LnPaymentRequest: string;
@@ -42,6 +46,7 @@ export type Scalars = {
   Memo: string;
   /** (Positive) amount of minutes */
   Minutes: string;
+  NotificationCategory: string;
   /** An address for an on-chain bitcoin destination */
   OnChainAddress: string;
   OnChainTxHash: string;
@@ -60,8 +65,6 @@ export type Scalars = {
   SignedAmount: number;
   /** A string amount (of a currency) that can be negative (e.g. in a transaction) */
   SignedDisplayMajorAmount: string;
-  /** (Positive) Number of blocks in which the transaction is expected to be confirmed */
-  TargetConfirmations: number;
   /** Timestamp field, serialized as Unix time (the number of seconds since the Unix epoch) */
   Timestamp: number;
   /** A time-based one-time password */
@@ -78,6 +81,7 @@ export type Scalars = {
 
 export type Account = {
   readonly btcWallet?: Maybe<BtcWallet>;
+  readonly callbackEndpoints: ReadonlyArray<CallbackEndpoint>;
   readonly csvTransactions: Scalars['String'];
   readonly defaultWallet?: Maybe<Wallet>;
   readonly defaultWalletId: Scalars['WalletId'];
@@ -85,6 +89,7 @@ export type Account = {
   readonly id: Scalars['ID'];
   readonly level: AccountLevel;
   readonly limits: AccountLimits;
+  readonly notificationSettings: NotificationSettings;
   readonly realtimePrice: RealtimePrice;
   readonly transactions?: Maybe<TransactionConnection>;
   readonly usdWallet?: Maybe<UsdWallet>;
@@ -109,6 +114,24 @@ export type AccountDeletePayload = {
   readonly __typename: 'AccountDeletePayload';
   readonly errors: ReadonlyArray<Error>;
   readonly success: Scalars['Boolean'];
+};
+
+export type AccountDisableNotificationCategoryInput = {
+  readonly category: Scalars['NotificationCategory'];
+  readonly channel?: InputMaybe<NotificationChannel>;
+};
+
+export type AccountDisableNotificationChannelInput = {
+  readonly channel: NotificationChannel;
+};
+
+export type AccountEnableNotificationCategoryInput = {
+  readonly category: Scalars['NotificationCategory'];
+  readonly channel?: InputMaybe<NotificationChannel>;
+};
+
+export type AccountEnableNotificationChannelInput = {
+  readonly channel: NotificationChannel;
 };
 
 export const AccountLevel = {
@@ -157,6 +180,12 @@ export type AccountUpdateDisplayCurrencyPayload = {
   readonly errors: ReadonlyArray<Error>;
 };
 
+export type AccountUpdateNotificationSettingsPayload = {
+  readonly __typename: 'AccountUpdateNotificationSettingsPayload';
+  readonly account?: Maybe<ConsumerAccount>;
+  readonly errors: ReadonlyArray<Error>;
+};
+
 export type AuthTokenPayload = {
   readonly __typename: 'AuthTokenPayload';
   readonly authToken?: Maybe<Scalars['AuthToken']>;
@@ -200,9 +229,29 @@ export type BtcWalletTransactionsByAddressArgs = {
 
 export type BuildInformation = {
   readonly __typename: 'BuildInformation';
-  readonly buildTime?: Maybe<Scalars['Timestamp']>;
   readonly commitHash?: Maybe<Scalars['String']>;
   readonly helmRevision?: Maybe<Scalars['Int']>;
+};
+
+export type CallbackEndpoint = {
+  readonly __typename: 'CallbackEndpoint';
+  readonly id: Scalars['EndpointId'];
+  readonly url: Scalars['EndpointUrl'];
+};
+
+export type CallbackEndpointAddInput = {
+  /** callback endpoint to be called */
+  readonly url: Scalars['EndpointUrl'];
+};
+
+export type CallbackEndpointAddPayload = {
+  readonly __typename: 'CallbackEndpointAddPayload';
+  readonly errors: ReadonlyArray<Error>;
+  readonly id?: Maybe<Scalars['EndpointId']>;
+};
+
+export type CallbackEndpointDeleteInput = {
+  readonly id: Scalars['EndpointId'];
 };
 
 export type CaptchaCreateChallengePayload = {
@@ -236,6 +285,7 @@ export type CentAmountPayload = {
 export type ConsumerAccount = Account & {
   readonly __typename: 'ConsumerAccount';
   readonly btcWallet?: Maybe<BtcWallet>;
+  readonly callbackEndpoints: ReadonlyArray<CallbackEndpoint>;
   /** return CSV stream, base64 encoded, of the list of transactions in the wallet */
   readonly csvTransactions: Scalars['String'];
   readonly defaultWallet?: Maybe<Wallet>;
@@ -244,6 +294,8 @@ export type ConsumerAccount = Account & {
   readonly id: Scalars['ID'];
   readonly level: AccountLevel;
   readonly limits: AccountLimits;
+  readonly notificationSettings: NotificationSettings;
+  readonly onboardingStatus?: Maybe<OnboardingStatus>;
   /** List the quiz questions of the consumer account */
   readonly quiz: ReadonlyArray<Quiz>;
   readonly realtimePrice: RealtimePrice;
@@ -251,6 +303,7 @@ export type ConsumerAccount = Account & {
   readonly transactions?: Maybe<TransactionConnection>;
   readonly usdWallet?: Maybe<UsdWallet>;
   readonly wallets: ReadonlyArray<Wallet>;
+  readonly welcomeProfile?: Maybe<WelcomeProfile>;
 };
 
 
@@ -414,6 +467,19 @@ export const InvoicePaymentStatus = {
 } as const;
 
 export type InvoicePaymentStatus = typeof InvoicePaymentStatus[keyof typeof InvoicePaymentStatus];
+export type Leader = {
+  readonly __typename: 'Leader';
+  readonly name?: Maybe<Scalars['LeaderboardName']>;
+  readonly points: Scalars['Int'];
+  readonly rank: Scalars['Int'];
+};
+
+export type Leaderboard = {
+  readonly __typename: 'Leaderboard';
+  readonly leaders: ReadonlyArray<Leader>;
+  readonly range: WelcomeRange;
+};
+
 export type LnInvoice = {
   readonly __typename: 'LnInvoice';
   readonly paymentHash: Scalars['PaymentHash'];
@@ -547,6 +613,18 @@ export type LnUpdate = {
   readonly walletId: Scalars['WalletId'];
 };
 
+export type LnUsdInvoiceBtcDenominatedCreateOnBehalfOfRecipientInput = {
+  /** Amount in satoshis. */
+  readonly amount: Scalars['SatAmount'];
+  readonly descriptionHash?: InputMaybe<Scalars['Hex32Bytes']>;
+  /** Optional invoice expiration time in minutes. */
+  readonly expiresIn?: InputMaybe<Scalars['Minutes']>;
+  /** Optional memo for the lightning invoice. Acts as a note to the recipient. */
+  readonly memo?: InputMaybe<Scalars['Memo']>;
+  /** Wallet ID for a USD wallet which belongs to the account of any user. */
+  readonly recipientWalletId: Scalars['WalletId'];
+};
+
 export type LnUsdInvoiceCreateInput = {
   /** Amount in USD cents. */
   readonly amount: Scalars['CentAmount'];
@@ -597,8 +675,14 @@ export type MobileVersions = {
 export type Mutation = {
   readonly __typename: 'Mutation';
   readonly accountDelete: AccountDeletePayload;
+  readonly accountDisableNotificationCategory: AccountUpdateNotificationSettingsPayload;
+  readonly accountDisableNotificationChannel: AccountUpdateNotificationSettingsPayload;
+  readonly accountEnableNotificationCategory: AccountUpdateNotificationSettingsPayload;
+  readonly accountEnableNotificationChannel: AccountUpdateNotificationSettingsPayload;
   readonly accountUpdateDefaultWalletId: AccountUpdateDefaultWalletIdPayload;
   readonly accountUpdateDisplayCurrency: AccountUpdateDisplayCurrencyPayload;
+  readonly callbackEndpointAdd: CallbackEndpointAddPayload;
+  readonly callbackEndpointDelete: SuccessPayload;
   readonly captchaCreateChallenge: CaptchaCreateChallengePayload;
   readonly captchaRequestAuthCode: SuccessPayload;
   readonly deviceNotificationTokenCreate: SuccessPayload;
@@ -664,6 +748,13 @@ export type Mutation = {
    * Returns a lightning invoice denominated in satoshis for an associated wallet.
    * When invoice is paid the equivalent value at invoice creation will be credited to a USD wallet.
    * Expires after 'expiresIn' or 5 minutes (short expiry time because there is a USD/BTC exchange rate
+   *   associated with the amount).
+   */
+  readonly lnUsdInvoiceBtcDenominatedCreateOnBehalfOfRecipient: LnInvoicePayload;
+  /**
+   * Returns a lightning invoice denominated in satoshis for an associated wallet.
+   * When invoice is paid the equivalent value at invoice creation will be credited to a USD wallet.
+   * Expires after 'expiresIn' or 5 minutes (short expiry time because there is a USD/BTC exchange rate
    * associated with the amount).
    */
   readonly lnUsdInvoiceCreate: LnInvoicePayload;
@@ -681,6 +772,7 @@ export type Mutation = {
   readonly onChainPaymentSendAll: PaymentSendPayload;
   readonly onChainUsdPaymentSend: PaymentSendPayload;
   readonly onChainUsdPaymentSendAsBtcDenominated: PaymentSendPayload;
+  readonly onboardingFlowStart: OnboardingFlowStartResult;
   readonly quizCompleted: QuizCompletedPayload;
   /** @deprecated will be moved to AccountContact */
   readonly userContactUpdateAlias: UserContactUpdateAliasPayload;
@@ -693,15 +785,32 @@ export type Mutation = {
   readonly userPhoneDelete: UserPhoneDeletePayload;
   readonly userPhoneRegistrationInitiate: SuccessPayload;
   readonly userPhoneRegistrationValidate: UserPhoneRegistrationValidatePayload;
-  /** @deprecated Use QuizCompletedMutation instead */
-  readonly userQuizQuestionUpdateCompleted: UserQuizQuestionUpdateCompletedPayload;
-  readonly userRequestAuthCode: SuccessPayload;
   readonly userTotpDelete: UserTotpDeletePayload;
   readonly userTotpRegistrationInitiate: UserTotpRegistrationInitiatePayload;
   readonly userTotpRegistrationValidate: UserTotpRegistrationValidatePayload;
   readonly userUpdateLanguage: UserUpdateLanguagePayload;
   /** @deprecated Username will be moved to @Handle in Accounts. Also SetUsername naming should be used instead of UpdateUsername to reflect the idempotency of Handles */
   readonly userUpdateUsername: UserUpdateUsernamePayload;
+};
+
+
+export type MutationAccountDisableNotificationCategoryArgs = {
+  input: AccountDisableNotificationCategoryInput;
+};
+
+
+export type MutationAccountDisableNotificationChannelArgs = {
+  input: AccountDisableNotificationChannelInput;
+};
+
+
+export type MutationAccountEnableNotificationCategoryArgs = {
+  input: AccountEnableNotificationCategoryInput;
+};
+
+
+export type MutationAccountEnableNotificationChannelArgs = {
+  input: AccountEnableNotificationChannelInput;
 };
 
 
@@ -712,6 +821,16 @@ export type MutationAccountUpdateDefaultWalletIdArgs = {
 
 export type MutationAccountUpdateDisplayCurrencyArgs = {
   input: AccountUpdateDisplayCurrencyInput;
+};
+
+
+export type MutationCallbackEndpointAddArgs = {
+  input: CallbackEndpointAddInput;
+};
+
+
+export type MutationCallbackEndpointDeleteArgs = {
+  input: CallbackEndpointDeleteInput;
 };
 
 
@@ -790,6 +909,11 @@ export type MutationLnNoAmountUsdInvoicePaymentSendArgs = {
 };
 
 
+export type MutationLnUsdInvoiceBtcDenominatedCreateOnBehalfOfRecipientArgs = {
+  input: LnUsdInvoiceBtcDenominatedCreateOnBehalfOfRecipientInput;
+};
+
+
 export type MutationLnUsdInvoiceCreateArgs = {
   input: LnUsdInvoiceCreateInput;
 };
@@ -835,6 +959,11 @@ export type MutationOnChainUsdPaymentSendAsBtcDenominatedArgs = {
 };
 
 
+export type MutationOnboardingFlowStartArgs = {
+  input: OnboardingFlowStartInput;
+};
+
+
 export type MutationQuizCompletedArgs = {
   input: QuizCompletedInput;
 };
@@ -866,7 +995,7 @@ export type MutationUserLoginUpgradeArgs = {
 
 
 export type MutationUserLogoutArgs = {
-  input: UserLogoutInput;
+  input?: InputMaybe<UserLogoutInput>;
 };
 
 
@@ -877,16 +1006,6 @@ export type MutationUserPhoneRegistrationInitiateArgs = {
 
 export type MutationUserPhoneRegistrationValidateArgs = {
   input: UserPhoneRegistrationValidateInput;
-};
-
-
-export type MutationUserQuizQuestionUpdateCompletedArgs = {
-  input: UserQuizQuestionUpdateCompletedInput;
-};
-
-
-export type MutationUserRequestAuthCodeArgs = {
-  input: UserRequestAuthCodeInput;
 };
 
 
@@ -929,6 +1048,22 @@ export const Network = {
 } as const;
 
 export type Network = typeof Network[keyof typeof Network];
+export const NotificationChannel = {
+  Push: 'PUSH'
+} as const;
+
+export type NotificationChannel = typeof NotificationChannel[keyof typeof NotificationChannel];
+export type NotificationChannelSettings = {
+  readonly __typename: 'NotificationChannelSettings';
+  readonly disabledCategories: ReadonlyArray<Scalars['NotificationCategory']>;
+  readonly enabled: Scalars['Boolean'];
+};
+
+export type NotificationSettings = {
+  readonly __typename: 'NotificationSettings';
+  readonly push: NotificationChannelSettings;
+};
+
 export type OnChainAddressCreateInput = {
   readonly walletId: Scalars['WalletId'];
 };
@@ -947,8 +1082,6 @@ export type OnChainPaymentSendAllInput = {
   readonly address: Scalars['OnChainAddress'];
   readonly memo?: InputMaybe<Scalars['Memo']>;
   readonly speed?: InputMaybe<PayoutSpeed>;
-  /** @deprecated Ignored - will be replaced */
-  readonly targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
   readonly walletId: Scalars['WalletId'];
 };
 
@@ -957,16 +1090,12 @@ export type OnChainPaymentSendInput = {
   readonly amount: Scalars['SatAmount'];
   readonly memo?: InputMaybe<Scalars['Memo']>;
   readonly speed?: InputMaybe<PayoutSpeed>;
-  /** @deprecated Ignored - will be replaced */
-  readonly targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
   readonly walletId: Scalars['WalletId'];
 };
 
 export type OnChainTxFee = {
   readonly __typename: 'OnChainTxFee';
   readonly amount: Scalars['SatAmount'];
-  /** @deprecated Ignored - will be removed */
-  readonly targetConfirmations: Scalars['TargetConfirmations'];
 };
 
 export type OnChainUpdate = {
@@ -985,8 +1114,6 @@ export type OnChainUsdPaymentSendAsBtcDenominatedInput = {
   readonly amount: Scalars['SatAmount'];
   readonly memo?: InputMaybe<Scalars['Memo']>;
   readonly speed?: InputMaybe<PayoutSpeed>;
-  /** @deprecated Ignored - will be replaced */
-  readonly targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
   readonly walletId: Scalars['WalletId'];
 };
 
@@ -995,18 +1122,38 @@ export type OnChainUsdPaymentSendInput = {
   readonly amount: Scalars['CentAmount'];
   readonly memo?: InputMaybe<Scalars['Memo']>;
   readonly speed?: InputMaybe<PayoutSpeed>;
-  /** @deprecated Ignored - will be replaced */
-  readonly targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
   readonly walletId: Scalars['WalletId'];
 };
 
 export type OnChainUsdTxFee = {
   readonly __typename: 'OnChainUsdTxFee';
   readonly amount: Scalars['CentAmount'];
-  /** @deprecated Ignored - will be removed */
-  readonly targetConfirmations: Scalars['TargetConfirmations'];
 };
 
+export type OnboardingFlowStartInput = {
+  readonly firstName: Scalars['String'];
+  readonly lastName: Scalars['String'];
+};
+
+export type OnboardingFlowStartResult = {
+  readonly __typename: 'OnboardingFlowStartResult';
+  readonly tokenAndroid: Scalars['String'];
+  readonly tokenIos: Scalars['String'];
+  readonly workflowRunId: Scalars['String'];
+};
+
+export const OnboardingStatus = {
+  Abandoned: 'ABANDONED',
+  Approved: 'APPROVED',
+  AwaitingInput: 'AWAITING_INPUT',
+  Declined: 'DECLINED',
+  Error: 'ERROR',
+  NotStarted: 'NOT_STARTED',
+  Processing: 'PROCESSING',
+  Review: 'REVIEW'
+} as const;
+
+export type OnboardingStatus = typeof OnboardingStatus[keyof typeof OnboardingStatus];
 export type OneDayAccountLimit = AccountLimit & {
   readonly __typename: 'OneDayAccountLimit';
   /** The rolling time interval value in seconds for the current 24 hour period. */
@@ -1140,8 +1287,6 @@ export type Query = {
   readonly __typename: 'Query';
   readonly accountDefaultWallet: PublicWallet;
   readonly beta: Scalars['Boolean'];
-  /** @deprecated Deprecated in favor of realtimePrice */
-  readonly btcPrice?: Maybe<Price>;
   readonly btcPriceList?: Maybe<ReadonlyArray<Maybe<PricePoint>>>;
   readonly businessMapMarkers?: Maybe<ReadonlyArray<Maybe<MapMarker>>>;
   readonly colorScheme: Scalars['String'];
@@ -1165,17 +1310,13 @@ export type Query = {
   /** @deprecated will be migrated to AccountDefaultWalletId */
   readonly userDefaultWalletId: Scalars['WalletId'];
   readonly usernameAvailable?: Maybe<Scalars['Boolean']>;
+  readonly welcomeLeaderboard: Leaderboard;
 };
 
 
 export type QueryAccountDefaultWalletArgs = {
   username: Scalars['Username'];
   walletCurrency?: InputMaybe<WalletCurrency>;
-};
-
-
-export type QueryBtcPriceArgs = {
-  currency?: Scalars['DisplayCurrency'];
 };
 
 
@@ -1193,7 +1334,6 @@ export type QueryOnChainTxFeeArgs = {
   address: Scalars['OnChainAddress'];
   amount: Scalars['SatAmount'];
   speed?: InputMaybe<PayoutSpeed>;
-  targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
   walletId: Scalars['WalletId'];
 };
 
@@ -1202,7 +1342,6 @@ export type QueryOnChainUsdTxFeeArgs = {
   address: Scalars['OnChainAddress'];
   amount: Scalars['CentAmount'];
   speed?: InputMaybe<PayoutSpeed>;
-  targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
   walletId: Scalars['WalletId'];
 };
 
@@ -1211,7 +1350,6 @@ export type QueryOnChainUsdTxFeeAsBtcDenominatedArgs = {
   address: Scalars['OnChainAddress'];
   amount: Scalars['SatAmount'];
   speed?: InputMaybe<PayoutSpeed>;
-  targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
   walletId: Scalars['WalletId'];
 };
 
@@ -1228,6 +1366,11 @@ export type QueryUserDefaultWalletIdArgs = {
 
 export type QueryUsernameAvailableArgs = {
   username: Scalars['Username'];
+};
+
+
+export type QueryWelcomeLeaderboardArgs = {
+  input: WelcomeLeaderboardInput;
 };
 
 export type Quiz = {
@@ -1566,7 +1709,7 @@ export type UserLoginUpgradeInput = {
 };
 
 export type UserLogoutInput = {
-  readonly authToken: Scalars['AuthToken'];
+  readonly deviceToken: Scalars['String'];
 };
 
 export type UserPhoneDeletePayload = {
@@ -1595,21 +1738,6 @@ export type UserQuizQuestion = {
   readonly __typename: 'UserQuizQuestion';
   readonly completed: Scalars['Boolean'];
   readonly question: QuizQuestion;
-};
-
-export type UserQuizQuestionUpdateCompletedInput = {
-  readonly id: Scalars['ID'];
-};
-
-export type UserQuizQuestionUpdateCompletedPayload = {
-  readonly __typename: 'UserQuizQuestionUpdateCompletedPayload';
-  readonly errors: ReadonlyArray<Error>;
-  readonly userQuizQuestion?: Maybe<UserQuizQuestion>;
-};
-
-export type UserRequestAuthCodeInput = {
-  readonly channel?: InputMaybe<PhoneCodeChannelType>;
-  readonly phone: Scalars['Phone'];
 };
 
 export type UserTotpDeleteInput = {
@@ -1711,6 +1839,29 @@ export const WalletCurrency = {
 } as const;
 
 export type WalletCurrency = typeof WalletCurrency[keyof typeof WalletCurrency];
+export type WelcomeLeaderboardInput = {
+  readonly range: WelcomeRange;
+};
+
+export type WelcomeProfile = {
+  readonly __typename: 'WelcomeProfile';
+  readonly allTimePoints: Scalars['Int'];
+  readonly allTimeRank: Scalars['Int'];
+  readonly innerCircleAllTimeCount: Scalars['Int'];
+  readonly innerCircleThisMonthCount: Scalars['Int'];
+  readonly leaderboardName?: Maybe<Scalars['LeaderboardName']>;
+  readonly outerCircleAllTimeCount: Scalars['Int'];
+  readonly outerCircleThisMonthCount: Scalars['Int'];
+  readonly thisMonthPoints: Scalars['Int'];
+  readonly thisMonthRank: Scalars['Int'];
+};
+
+export const WelcomeRange = {
+  AllTime: 'AllTime',
+  ThisMonth: 'ThisMonth'
+} as const;
+
+export type WelcomeRange = typeof WelcomeRange[keyof typeof WelcomeRange];
 export type MobileUpdateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2054,31 +2205,28 @@ export type OnChainTxFeeQueryVariables = Exact<{
   walletId: Scalars['WalletId'];
   address: Scalars['OnChainAddress'];
   amount: Scalars['SatAmount'];
-  targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
 }>;
 
 
-export type OnChainTxFeeQuery = { readonly __typename: 'Query', readonly onChainTxFee: { readonly __typename: 'OnChainTxFee', readonly amount: number, readonly targetConfirmations: number } };
+export type OnChainTxFeeQuery = { readonly __typename: 'Query', readonly onChainTxFee: { readonly __typename: 'OnChainTxFee', readonly amount: number } };
 
 export type OnChainUsdTxFeeQueryVariables = Exact<{
   walletId: Scalars['WalletId'];
   address: Scalars['OnChainAddress'];
   amount: Scalars['CentAmount'];
-  targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
 }>;
 
 
-export type OnChainUsdTxFeeQuery = { readonly __typename: 'Query', readonly onChainUsdTxFee: { readonly __typename: 'OnChainUsdTxFee', readonly amount: number, readonly targetConfirmations: number } };
+export type OnChainUsdTxFeeQuery = { readonly __typename: 'Query', readonly onChainUsdTxFee: { readonly __typename: 'OnChainUsdTxFee', readonly amount: number } };
 
 export type OnChainUsdTxFeeAsBtcDenominatedQueryVariables = Exact<{
   walletId: Scalars['WalletId'];
   address: Scalars['OnChainAddress'];
   amount: Scalars['SatAmount'];
-  targetConfirmations?: InputMaybe<Scalars['TargetConfirmations']>;
 }>;
 
 
-export type OnChainUsdTxFeeAsBtcDenominatedQuery = { readonly __typename: 'Query', readonly onChainUsdTxFeeAsBtcDenominated: { readonly __typename: 'OnChainUsdTxFee', readonly amount: number, readonly targetConfirmations: number } };
+export type OnChainUsdTxFeeAsBtcDenominatedQuery = { readonly __typename: 'Query', readonly onChainUsdTxFeeAsBtcDenominated: { readonly __typename: 'OnChainUsdTxFee', readonly amount: number } };
 
 export type IntraLedgerPaymentSendMutationVariables = Exact<{
   input: IntraLedgerPaymentSendInput;
@@ -4585,15 +4733,9 @@ export type LnNoAmountUsdInvoiceFeeProbeMutationHookResult = ReturnType<typeof u
 export type LnNoAmountUsdInvoiceFeeProbeMutationResult = Apollo.MutationResult<LnNoAmountUsdInvoiceFeeProbeMutation>;
 export type LnNoAmountUsdInvoiceFeeProbeMutationOptions = Apollo.BaseMutationOptions<LnNoAmountUsdInvoiceFeeProbeMutation, LnNoAmountUsdInvoiceFeeProbeMutationVariables>;
 export const OnChainTxFeeDocument = gql`
-    query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!, $targetConfirmations: TargetConfirmations) {
-  onChainTxFee(
-    walletId: $walletId
-    address: $address
-    amount: $amount
-    targetConfirmations: $targetConfirmations
-  ) {
+    query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!) {
+  onChainTxFee(walletId: $walletId, address: $address, amount: $amount) {
     amount
-    targetConfirmations
   }
 }
     `;
@@ -4613,7 +4755,6 @@ export const OnChainTxFeeDocument = gql`
  *      walletId: // value for 'walletId'
  *      address: // value for 'address'
  *      amount: // value for 'amount'
- *      targetConfirmations: // value for 'targetConfirmations'
  *   },
  * });
  */
@@ -4629,15 +4770,9 @@ export type OnChainTxFeeQueryHookResult = ReturnType<typeof useOnChainTxFeeQuery
 export type OnChainTxFeeLazyQueryHookResult = ReturnType<typeof useOnChainTxFeeLazyQuery>;
 export type OnChainTxFeeQueryResult = Apollo.QueryResult<OnChainTxFeeQuery, OnChainTxFeeQueryVariables>;
 export const OnChainUsdTxFeeDocument = gql`
-    query onChainUsdTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: CentAmount!, $targetConfirmations: TargetConfirmations) {
-  onChainUsdTxFee(
-    walletId: $walletId
-    address: $address
-    amount: $amount
-    targetConfirmations: $targetConfirmations
-  ) {
+    query onChainUsdTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: CentAmount!) {
+  onChainUsdTxFee(walletId: $walletId, address: $address, amount: $amount) {
     amount
-    targetConfirmations
   }
 }
     `;
@@ -4657,7 +4792,6 @@ export const OnChainUsdTxFeeDocument = gql`
  *      walletId: // value for 'walletId'
  *      address: // value for 'address'
  *      amount: // value for 'amount'
- *      targetConfirmations: // value for 'targetConfirmations'
  *   },
  * });
  */
@@ -4673,15 +4807,13 @@ export type OnChainUsdTxFeeQueryHookResult = ReturnType<typeof useOnChainUsdTxFe
 export type OnChainUsdTxFeeLazyQueryHookResult = ReturnType<typeof useOnChainUsdTxFeeLazyQuery>;
 export type OnChainUsdTxFeeQueryResult = Apollo.QueryResult<OnChainUsdTxFeeQuery, OnChainUsdTxFeeQueryVariables>;
 export const OnChainUsdTxFeeAsBtcDenominatedDocument = gql`
-    query onChainUsdTxFeeAsBtcDenominated($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!, $targetConfirmations: TargetConfirmations) {
+    query onChainUsdTxFeeAsBtcDenominated($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!) {
   onChainUsdTxFeeAsBtcDenominated(
     walletId: $walletId
     address: $address
     amount: $amount
-    targetConfirmations: $targetConfirmations
   ) {
     amount
-    targetConfirmations
   }
 }
     `;
@@ -4701,7 +4833,6 @@ export const OnChainUsdTxFeeAsBtcDenominatedDocument = gql`
  *      walletId: // value for 'walletId'
  *      address: // value for 'address'
  *      amount: // value for 'amount'
- *      targetConfirmations: // value for 'targetConfirmations'
  *   },
  * });
  */

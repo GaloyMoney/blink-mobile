@@ -7,7 +7,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
-import { View } from "react-native"
+import { Platform, TouchableOpacity, View } from "react-native"
 import { LocalizedString } from "typesafe-i18n"
 import { DeviceAccountFailModal } from "./device-account-fail-modal"
 import { useEffect } from "react"
@@ -50,6 +50,7 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
 
   const [hasError, setHasError] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
+  const [isBasicSelected, setIsBasicSelected] = React.useState<boolean | null>(null)
   const styles = useStyles()
   const {
     theme: { colors },
@@ -93,9 +94,13 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
         method: "POST",
         headers: {
           Authorization: `Basic ${auth}`,
-          Appcheck: appCheckToken || "undefined",
+          Appcheck: `${appCheckToken}` || "undefined",
         },
       })
+      if (!res.ok) {
+        console.error(`Error fetching from server: ${res.status} ${res.statusText}`)
+        return // Or handle this error appropriately
+      }
 
       const data: {
         result: string | undefined
@@ -118,7 +123,6 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
       if (error instanceof Error) {
         crashlytics().recordError(error)
       }
-      console.log("Error with device account: ", error)
     }
 
     setLoading(false)
@@ -140,6 +144,14 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
     closeModal()
   }
 
+  const onPressBasic = () => {
+    createDeviceAccountAndLogin()
+  }
+
+  const onPressFull = () => {
+    navigateToPhoneLogin()
+  }
+
   return hasError ? (
     <DeviceAccountFailModal
       isVisible={isVisible}
@@ -152,20 +164,31 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
       isVisible={isVisible}
       toggleModal={closeModal}
       image={<GaloyIcon name="info" color={colors.primary3} size={100} />}
-      title={LL.GetStartedScreen.trialAccountHasLimits()}
+      title={LL.GetStartedScreen.chooseAccountType()}
       body={
         <View style={styles.modalBody}>
-          <LimitItem text={LL.GetStartedScreen.trialAccountLimits.noBackup()} />
-          <LimitItem text={LL.GetStartedScreen.trialAccountLimits.sendingLimit()} />
-          <LimitItem text={LL.GetStartedScreen.trialAccountLimits.noOnchain()} />
+          <View style={styles.columnContainer}>
+            <View style={styles.cellContainer}>
+              <AccountTypeButton
+                onPress={onPressBasic}
+                selected={isBasicSelected === true}
+                title={"BASIC⚡"}
+              />
+              <LimitItem text={"No Phone# required"} />
+              <LimitItem text={"Receive in seconds"} />
+            </View>
+            <View style={styles.cellContainer}>
+              <AccountTypeButton
+                onPress={onPressFull}
+                selected={isBasicSelected === false}
+                title={"FULL✅"}
+              />
+              <LimitItem text={"No sending limits"} />
+              <LimitItem text={"Safe wallet backup"} />
+            </View>
+          </View>
         </View>
       }
-      primaryButtonTitle={LL.GetStartedScreen.startWithTrialAccount()}
-      primaryButtonOnPress={createDeviceAccountAndLogin}
-      primaryButtonLoading={loading}
-      primaryButtonDisabled={loading}
-      secondaryButtonTitle={LL.GetStartedScreen.registerPhoneAccount()}
-      secondaryButtonOnPress={navigateToPhoneLogin}
     />
   )
 }
@@ -175,22 +198,84 @@ const LimitItem = ({ text }: { text: LocalizedString }) => {
 
   return (
     <View style={styles.limitRow}>
-      <Text type="h2" style={styles.limitText}>
-        - {text}
+      <Text type="p2" style={styles.limitText}>
+        {text}
       </Text>
     </View>
   )
 }
 
-const useStyles = makeStyles(() => ({
+const AccountTypeButton = ({
+  title,
+  onPress,
+  selected,
+}: {
+  title: string
+  onPress: () => void
+  selected: boolean
+}) => {
+  const styles = useStyles()
+
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.btnContainer, selected ? styles.btnSelected : styles.btnUnselected]}
+    >
+      <Text type="h1" style={styles.txtBtnTitle}>
+        {title}
+      </Text>
+    </TouchableOpacity>
+  )
+}
+
+type UseStylesProps = {
+  hasPrimaryButtonTextAbove: boolean
+  minHeight?: string
+  titleTextAlignment?: "auto" | "center" | "left" | "right" | "justify"
+  titleMaxWidth?: string
+}
+
+const useStyles = makeStyles(({ colors }, props: UseStylesProps) => ({
   limitRow: {
     flexDirection: "row",
     alignItems: "center",
   },
-  limitText: {
-    marginLeft: 12,
-  },
+  limitText: {},
   modalBody: {
     rowGap: 8,
+  },
+  columnContainer: {
+    flexDirection: "row",
+    paddingBottom: 100,
+  },
+  cellContainer: {
+    flex: 1,
+    alignItems: "center",
+  },
+  btnContainer: {
+    borderWidth: 1,
+    width: "97%",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 120,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  txtBtnTitle: {
+    fontSize: 24,
+    fontWeight: Platform.OS === "ios" ? "600" : "700",
+    lineHeight: 32,
+    maxWidth: "80%",
+    textAlign: "center",
+    color: colors.black,
+  },
+  btnSelected: {
+    // backgroundColor: colors.grey5,
+    backgroundColor: colors._lighterBlue,
+    borderColor: colors._borderBlue,
+  },
+  btnUnselected: {
+    backgroundColor: colors.grey5,
+    borderColor: colors.greyOutline,
   },
 }))

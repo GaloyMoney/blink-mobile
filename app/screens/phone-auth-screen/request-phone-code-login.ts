@@ -137,7 +137,7 @@ export const useRequestPhoneCodeLogin = (): UseRequestPhoneCodeReturn => {
 
   useEffect(() => {
     const getCountryCodeFromIP = async () => {
-      let defaultCountryCode = "SV" as CountryCode
+      let defaultCountryCode = "JM" as CountryCode
       try {
         const response = await axios({
           method: "get",
@@ -153,7 +153,8 @@ export const useRequestPhoneCodeLogin = (): UseRequestPhoneCodeReturn => {
           console.warn("no data or country_code in response")
         }
       } catch (error) {
-        console.error(error)
+        // console.error(error)
+        // Handle the error gracefully by not logging it
       }
 
       setCountryCode(defaultCountryCode)

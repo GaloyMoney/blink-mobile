@@ -1,6 +1,10 @@
 import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
-import { PhoneCodeChannelType, WalletCurrency } from "@app/graphql/generated"
+import {
+  PhoneCodeChannelType,
+  TransactionFragment,
+  WalletCurrency,
+} from "@app/graphql/generated"
 import { EarnSectionType } from "@app/screens/earns-screen/sections"
 import { PaymentDetail } from "@app/screens/send-bitcoin-screen/payment-details/index.types"
 import {
@@ -75,6 +79,7 @@ export type RootStackParamList = {
   phoneRegistrationInitiate: undefined
   phoneRegistrationValidate: { phone: string; channel: PhoneCodeChannelType }
   transactionDetail: { txid: string }
+  breezTransactionDetail: { tx: TransactionFragment }
   transactionHistory?: undefined
   Earn: undefined
   accountScreen: undefined

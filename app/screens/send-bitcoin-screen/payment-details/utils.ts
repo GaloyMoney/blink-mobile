@@ -10,6 +10,7 @@ import {
   UsdMoneyAmount,
   greaterThan,
   isNonZeroMoneyAmount,
+  lessThan,
   moneyAmountIsCurrencyType,
   toUsdMoneyAmount,
 } from "@app/types/amounts"
@@ -71,6 +72,19 @@ export const isValidAmount = ({
       validAmount: false,
       invalidReason: AmountInvalidReason.InsufficientBalance,
       balance: usdWalletAmount,
+    }
+  }
+
+  if (
+    moneyAmountIsCurrencyType(settlementAmount, WalletCurrency.Usd) &&
+    lessThan({
+      value: settlementAmount,
+      lessThan: toUsdMoneyAmount(200),
+    })
+  ) {
+    return {
+      validAmount: false,
+      invalidReason: AmountInvalidReason.MinOnChainLimit,
     }
   }
 

@@ -1,5 +1,5 @@
 overwrite: true
-schema: "https://raw.githubusercontent.com/lnflash/flash/main/src/graphql/main/schema.graphql"
+schema: "https://api.staging.galoy.io/graphql"
 # schema: "../galoy/src/graphql/main/schema.graphql"
 documents:
   - "app/**/*.ts"
@@ -56,3 +56,10 @@ generates:
         TotpCode: "string"
         Feedback: "string"
         Minutes: "string"
+        LeaderboardName: "string"
+        join__FieldSet: "string"
+        link__Import: "string"
+        _FieldSet: "string"
+        EndpointId: "string"
+        EndpointUrl: "string"
+        NotificationCategory: "string"

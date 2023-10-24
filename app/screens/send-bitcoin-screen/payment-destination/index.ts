@@ -21,13 +21,13 @@ export * from "./onchain"
 export const parseDestination = async ({
   rawInput,
   myWalletIds,
-  bitcoinNetwork,
+  // bitcoinNetwork, // hard coded to mainnet
   lnurlDomains,
   accountDefaultWalletQuery,
 }: ParseDestinationParams): Promise<ParseDestinationResult> => {
   const parsedDestination = parsePaymentDestination({
     destination: rawInput,
-    network: bitcoinNetwork as NetworkGaloyClient,
+    network: "mainnet" as NetworkGaloyClient, // hard coded to mainnet
     lnAddressDomains: lnurlDomains,
   })
 

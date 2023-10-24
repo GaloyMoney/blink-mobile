@@ -36,6 +36,11 @@ import { isIos } from "@app/utils/helper"
 import { SetDefaultAccountModal } from "@app/components/set-default-account-modal"
 import { useAppConfig } from "@app/hooks"
 
+import { Payment } from "@breeztech/react-native-breez-sdk"
+import { BreezTransactionItem } from "../../components/transaction-item/breez-transaction-item"
+import { formatPaymentsBreezSDK } from "@app/hooks/useBreezPayments"
+import { listPaymentsBreezSDK } from "@app/utils/breez-sdk"
+
 const TransactionCountToTriggerSetDefaultAccountModal = 1
 
 gql`
@@ -141,6 +146,8 @@ export const HomeScreen: React.FC = () => {
       refetchRealtimePrice()
       refetchAuthed()
       refetchUnauthed()
+      setRefreshTriggered(true)
+      setTimeout(() => setRefreshTriggered(false), 1000)
     }
   }, [isAuthed, refetchAuthed, refetchRealtimePrice, refetchUnauthed])
 
@@ -150,6 +157,7 @@ export const HomeScreen: React.FC = () => {
   const [modalVisible, setModalVisible] = React.useState(false)
   const [isStablesatModalVisible, setIsStablesatModalVisible] = React.useState(false)
   const [isContentVisible, setIsContentVisible] = React.useState(false)
+  const [refreshTriggered, setRefreshTriggered] = React.useState(false)
 
   React.useEffect(() => {
     setIsContentVisible(isBalanceVisible)
@@ -202,7 +210,33 @@ export const HomeScreen: React.FC = () => {
       }
     | undefined = undefined
 
-  const TRANSACTIONS_TO_SHOW = 2
+  const TRANSACTIONS_TO_SHOW = 3
+
+  // replace these transactions with the ones from breez using listPaymentsBreezSDK function
+  const [breezTransactions, setBreezTransactions] = React.useState<Payment[]>([])
+  React.useEffect(() => {
+    const listPaymentsBreez = async () => {
+      // eslint-disable-next-line no-promise-executor-return
+      await new Promise((resolve) => setTimeout(resolve, 3000))
+      // const res = await executeDevCommandBreezSDK("listchannels").catch((e) => {
+      //   console.log("Error listing peer channels:", e)
+      //   return []
+      // })
+      // console.log("Peer Channels:", res || [])
+      const payments = await listPaymentsBreezSDK()
+      setBreezTransactions(payments)
+    }
+    listPaymentsBreez()
+  }, [breezTransactions.length, refetchAuthed])
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [btcInDisplay, setBtcInDisplay] = React.useState(0)
+  // fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd")
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     setBtcInDisplay(data.bitcoin.usd)
+  //   })
+  //   .catch((error) => console.error("Error fetching BTC price:", error))
 
   if (isAuthed && transactionsEdges?.length) {
     recentTransactionsData = {
@@ -223,6 +257,28 @@ export const HomeScreen: React.FC = () => {
                   />
                 ),
             )}
+        </>
+      ),
+    }
+  }
+
+  if (isAuthed && breezTransactions?.length) {
+    const txs = breezTransactions
+      .slice(0, TRANSACTIONS_TO_SHOW)
+      .map((tx) => formatPaymentsBreezSDK(tx.id, breezTransactions, btcInDisplay))
+    recentTransactionsData = {
+      title: LL.TransactionScreen.title(),
+      details: (
+        <>
+          {breezTransactions.slice(0, TRANSACTIONS_TO_SHOW).map((tx, index, array) => (
+            <BreezTransactionItem
+              tx={txs[index]}
+              key={`transaction-${tx.id}`}
+              subtitle
+              isOnHomeScreen={true}
+              isLast={index === array.length - 1}
+            />
+          ))}
         </>
       ),
     }
@@ -327,6 +383,7 @@ export const HomeScreen: React.FC = () => {
         }
       >
         <WalletOverview
+          refreshTriggered={refreshTriggered}
           isContentVisible={isContentVisible}
           setIsContentVisible={setIsContentVisible}
           loading={loading}

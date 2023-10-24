@@ -18,6 +18,9 @@ import {
 } from "@app/types/amounts"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
+// import Breez SDK Wallet
+import useBreezBalance from "@app/hooks/useBreezBalance"
+
 const Loader = () => {
   const styles = useStyles()
   return (
@@ -66,6 +69,9 @@ export const BalanceHeader: React.FC<Props> = ({
   const { formatMoneyAmount } = useDisplayCurrency()
   const { convertMoneyAmount } = usePriceConversion()
 
+  // get Breez SDK Balance
+  const [breezBalance, refreshBreezBalance] = useBreezBalance()
+
   // TODO: use suspense for this component with the apollo suspense hook (in beta)
   // so there is no need to pass loading from parent?
   const { data } = useBalanceHeaderQuery({ skip: !isAuthed })
@@ -82,7 +88,9 @@ export const BalanceHeader: React.FC<Props> = ({
 
     const usdWalletBalance = toUsdMoneyAmount(usdWallet?.balance)
 
-    const btcWalletBalance = toBtcMoneyAmount(btcWallet?.balance)
+    // const btcWalletBalance = toBtcMoneyAmount(btcWallet?.balance)
+    // add Breez SDK Balance
+    const btcWalletBalance = toBtcMoneyAmount(breezBalance ?? NaN)
 
     const btcBalanceInDisplayCurrency =
       convertMoneyAmount && convertMoneyAmount(btcWalletBalance, DisplayCurrency)

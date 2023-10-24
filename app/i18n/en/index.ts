@@ -486,6 +486,7 @@ const en: BaseTranslation = {
       sendingLimit: "Reduced daily sending limit",
       noOnchain: "No receiving bitcoin onchain",
     },
+    chooseAccountType:"Choose Account Type",
   },
   MapScreen: {
     locationPermissionMessage:
@@ -565,7 +566,7 @@ const en: BaseTranslation = {
     paycode: "Paycode",
     onchain: "Onchain",
     bitcoin: "Bitcoin",
-    stablesats: "Stablesats",
+    stablesats: "Cash",
     regenerateInvoiceButtonTitle: "Regenerate Invoice",
     setUsernameButtonTitle: "Set Username",
     invoiceHasExpired: "Invoice has expired",
@@ -683,6 +684,7 @@ const en: BaseTranslation = {
   },
   SendBitcoinScreen: {
     amount: "Amount",
+    MinOnChainLimit: "Minimum amount for this transaction is US$2.00",
     amountExceed: "Amount exceeds your balance of {balance: string}",
     amountExceedsLimit: "Amount exceeds your remaining daily limit of {limit: string}",
     upgradeAccountToIncreaseLimit: "Upgrade your account to increase your limit",
@@ -746,7 +748,7 @@ const en: BaseTranslation = {
     logoutAlertContentPhone: "You will need to re-enter your phone number to log back in.\nyour phone number is {phoneNumber: string} so make sure you have access to it to log back in",
     logoutAlertContentEmail: "You will need to re-enter your email to log back in.\nyour email is {email: string} so make sure you have access to it to log back in",
     logoutAlertContentPhoneEmail: "You will need to re-enter either your phone number or email to log back in.\nyour phone number is {phoneNumber: string} and your email is {email: string} so make sure you have access to those to log back in",
-    usdBalanceWarning: "You have a Stablesats balance of {balance: string}.",
+    usdBalanceWarning: "You have a Cash balance of {balance: string}.",
     btcBalanceWarning: "You have a bitcoin balance of {balance: string}.",
     secureYourAccount: "Register to secure your account",
     tapToAdd: "Tap to add",
@@ -790,7 +792,7 @@ const en: BaseTranslation = {
   DefaultWalletScreen: {
     title: "Default Account",
     info:
-      "Pick which account to set as default for receiving and sending. You can adjust the send and receive account for individual payments in the mobile app. Payments received through the cash register or your Lightning address will always go to the default account.\n\nTo avoid Bitcoin's volatility, choose Stablesats. This allows you to maintain a stable amount of money while still being able to send and receive payments.\n\nYou can change this setting at any time, and it won't affect your current balance.",
+      "Pick which account to set as default for receiving and sending. You can adjust the send and receive account for individual payments in the mobile app. Payments received through the cash register or your Lightning address will always go to the default account.\n\nTo avoid Bitcoin's volatility, choose Cash. This allows you to maintain a stable amount of money while still being able to send and receive payments.\n\nYou can change this setting at any time, and it won't affect your current balance.",
   },
   ThemeScreen: {
     title: "Theme",
@@ -1016,7 +1018,7 @@ const en: BaseTranslation = {
     soon: "Coming soon!",
     submit: "Submit",
     success: "Success!",
-    stablesatsUsd: "Stablesats USD",
+    stablesatsUsd: "USD Cash",
     to: "To",
     total: "Total",
     transactions: "Transactions",
@@ -1109,7 +1111,8 @@ const en: BaseTranslation = {
     minAmountNotMet: "Amount must be at least {minAmount: string}.",
   },
   AmountInputButton: {
-    tapToSetAmount: "Tap to set amount",
+    tapToSetAmount: "Tap to set amount (Default: 1 satoshi for invoices)",
+    tapToSetOnChainAmount: "Tap to set amount",
   },
   AppUpdate: {
     needToUpdateSupportMessage:

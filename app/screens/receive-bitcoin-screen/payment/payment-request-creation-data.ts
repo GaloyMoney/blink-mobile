@@ -28,7 +28,7 @@ export const createPaymentRequestCreationData = <T extends WalletCurrency>(
   const {
     type,
     defaultWalletDescriptor,
-    bitcoinWalletDescriptor,
+    // bitcoinWalletDescriptor,
     convertMoneyAmount,
     memo,
   } = params
@@ -74,9 +74,10 @@ export const createPaymentRequestCreationData = <T extends WalletCurrency>(
   }
 
   // Paycode only to Bitcoin
-  if (type === "PayCode") {
-    receivingWalletDescriptor = bitcoinWalletDescriptor as WalletDescriptor<T>
-  }
+  // FLASH FORK: removed
+  // if (type === "PayCode") {
+  //   receivingWalletDescriptor = bitcoinWalletDescriptor as WalletDescriptor<T>
+  // }
 
   // Set settlement amount if unit of account amount is set
   const { unitOfAccountAmount } = params

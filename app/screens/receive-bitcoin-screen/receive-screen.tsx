@@ -19,6 +19,9 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
 import { GaloyCurrencyBubble } from "@app/components/atomic/galoy-currency-bubble"
 
+// Breez SDK
+import { addEventListener } from "@breeztech/react-native-breez-sdk"
+
 const ReceiveScreen = () => {
   const {
     theme: { colors },
@@ -58,12 +61,36 @@ const ReceiveScreen = () => {
     }
   }, [request?.type, LL.ReceiveScreen, navigation])
 
+  const [updatedPaymentState, setUpdatedPaymentState] = React.useState<
+    string | undefined
+  >(undefined)
+
   useEffect(() => {
-    if (request?.state === PaymentRequestState.Paid) {
-      const id = setTimeout(() => navigation.goBack(), 5000)
-      return () => clearTimeout(id)
+    const handleBreezEvent = (type: string) => {
+      if (type === "invoicePaid" && request) {
+        request.state = PaymentRequestState.Paid
+        if (request?.state === PaymentRequestState.Paid) {
+          setUpdatedPaymentState(PaymentRequestState.Paid)
+          const id = setTimeout(() => {
+            if (navigation.canGoBack()) {
+              navigation.goBack()
+            }
+          }, 5000)
+          return () => clearTimeout(id)
+        }
+      }
     }
+    addEventListener(handleBreezEvent)
   }, [request?.state, navigation])
+
+  // FLASH FORK DEBUGGING -----------------------------
+  // console.log("request", request?.info?.data?.paymentRequest)
+  // const requestString: string = request?.info?.data?.paymentRequest
+  // if (requestString) {
+  //   const decodedInvoiceState = decodeInvoiceString(requestString, "mainnet")
+  //   console.log("decodedInvoiceState", JSON.stringify(decodedInvoiceState, null, 2))
+  // }
+  // --------------------------------------------------
 
   if (!request) return <></>
 
@@ -124,7 +151,10 @@ const ReceiveScreen = () => {
           type={request.info?.data?.invoiceType || Invoice.OnChain}
           getFullUri={request.info?.data?.getFullUriFn}
           loading={request.state === PaymentRequestState.Loading}
-          completed={request.state === PaymentRequestState.Paid}
+          completed={
+            updatedPaymentState === PaymentRequestState.Paid ||
+            request.state === PaymentRequestState.Paid
+          }
           err={
             request.state === PaymentRequestState.Error ? LL.ReceiveScreen.error() : ""
           }
@@ -157,7 +187,23 @@ const ReceiveScreen = () => {
                   </TouchableOpacity>
                 </View>
                 <View>
-                  <Text color={colors.grey2}>{request.extraDetails || ""}</Text>
+                  <Text color={colors.grey2}>
+                    {request.info?.data?.invoiceType === Invoice.OnChain &&
+                    request.receivingWalletDescriptor.currency === WalletCurrency.Btc
+                      ? "Bitcoin On-chain Address"
+                      : request.info?.data?.invoiceType === Invoice.OnChain &&
+                        request.receivingWalletDescriptor.currency === WalletCurrency.Usd
+                      ? "Cash On-chain Address"
+                      : request.info?.data?.invoiceType === Invoice.Lightning &&
+                        request.receivingWalletDescriptor.currency === WalletCurrency.Btc
+                      ? "Bitcoin Invoice | Valid for 7 days"
+                      : request.info?.data?.invoiceType === Invoice.Lightning &&
+                        request.receivingWalletDescriptor.currency === WalletCurrency.Usd
+                      ? "Cash Invoice | Valid for 7 days"
+                      : request.info?.data?.invoiceType === Invoice.PayCode
+                      ? "Lightning Address"
+                      : "Invoice | Valid for 1 day"}
+                  </Text>
                 </View>
                 <View style={styles.shareInvoiceContainer}>
                   <TouchableOpacity

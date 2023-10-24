@@ -1,6 +1,10 @@
 import React from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
-import { Pressable, View, Alert } from "react-native"
+import {
+  Pressable,
+  View,
+  // Alert
+} from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack" // import this at the top
 
 import { gql } from "@apollo/client"
@@ -19,7 +23,17 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 // import Breez SDK Wallet
-// import useBreezBalance from "@app/hooks/useBreezBalance"
+import useBreezBalance from "@app/hooks/useBreezBalance"
+import { useIsFocused } from "@react-navigation/native"
+import * as sdk from "@breeztech/react-native-breez-sdk"
+
+sdk.addEventListener((type, data) => {
+  if (data) {
+    console.log(`received event ${type} with data: ${JSON.stringify(data)}`)
+  } else {
+    console.log(`received event ${type}`)
+  }
+})
 
 const Loader = () => {
   const styles = useStyles()
@@ -60,6 +74,7 @@ type Props = {
   setIsContentVisible: React.Dispatch<React.SetStateAction<boolean>>
   setIsStablesatModalVisible: (value: boolean) => void
   navigation?: StackNavigationProp<RootStackParamList, "conversionDetails">
+  refreshTriggered: boolean
 }
 
 const WalletOverview: React.FC<Props> = ({
@@ -67,7 +82,8 @@ const WalletOverview: React.FC<Props> = ({
   isContentVisible,
   setIsContentVisible,
   setIsStablesatModalVisible,
-  navigation,
+  // navigation,
+  refreshTriggered,
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isGaloyWalletVisible, setIsGaloyWalletVisible] = React.useState(false)
@@ -81,8 +97,22 @@ const WalletOverview: React.FC<Props> = ({
 
   const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
     useDisplayCurrency()
+  const isFocused = useIsFocused()
+  React.useLayoutEffect(() => {
+    // refresh balance when screen is focused or refresh is triggered
+    if (refreshTriggered || isFocused) {
+      refreshBreezBalance()
+      // bsdk.executeDevCommandBreezSDK("listfunds")
+      // addLogListenerBreezSDK()
+    }
+    // wait for 10 seconds and then refresh again
+    const _timeout = setTimeout(() => {
+      refreshBreezBalance()
+    }, 10000)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refreshTriggered, isFocused])
 
-  const breezBalance = 0 // useBreezBalance()
+  const [breezBalance, refreshBreezBalance] = useBreezBalance()
   let btcInDisplayCurrencyFormatted: string | undefined = "$-0.01"
   let usdInDisplayCurrencyFormatted: string | undefined = "$-0.01"
   let extBtcInDisplayCurrencyFormatted: string | undefined = "$-0.01"
@@ -138,11 +168,6 @@ const WalletOverview: React.FC<Props> = ({
     }
   }
 
-  React.useEffect(() => {
-    console.log("extBtcWalletBalance", extBtcInDisplayCurrencyFormatted)
-    console.log("extUsdWalletBalance", extUsdInDisplayCurrencyFormatted)
-  }, [extBtcInDisplayCurrencyFormatted, extUsdInDisplayCurrencyFormatted])
-
   const toggleIsContentVisible = () => {
     setIsContentVisible((prevState) => !prevState)
   }
@@ -162,8 +187,8 @@ const WalletOverview: React.FC<Props> = ({
       <View style={styles.displayTextView}>
         <View style={styles.currency}>
           <GaloyCurrencyBubble currency="USD" />
-          <Text type="p1">eCash (USD)</Text>
-          <Pressable
+          <Text type="p1">Cash (USD)</Text>
+          {/* <Pressable
             onPress={() => {
               if (navigation) {
                 navigation.navigate("conversionDetails")
@@ -176,7 +201,7 @@ const WalletOverview: React.FC<Props> = ({
             }}
           >
             <GaloyIcon color={colors.green} name="bank" size={18} />
-          </Pressable>
+          </Pressable> */}
         </View>
         {loading ? (
           <Loader />

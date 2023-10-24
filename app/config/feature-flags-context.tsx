@@ -14,7 +14,7 @@ type RemoteConfig = {
 }
 
 const defaultRemoteConfig: RemoteConfig = {
-  deviceAccountEnabledRestAuth: false,
+  deviceAccountEnabledRestAuth: true,
 }
 
 const defaultFeatureFlags = {

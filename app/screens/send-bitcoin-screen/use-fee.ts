@@ -14,7 +14,7 @@ import {
 import { gql } from "@apollo/client"
 import { GetFee } from "./payment-details/index.types"
 
-type FeeType =
+export type FeeType =
   | {
       status: "loading" | "error" | "unset"
       amount?: undefined | null
@@ -69,16 +69,9 @@ gql`
     $walletId: WalletId!
     $address: OnChainAddress!
     $amount: SatAmount!
-    $targetConfirmations: TargetConfirmations
   ) {
-    onChainTxFee(
-      walletId: $walletId
-      address: $address
-      amount: $amount
-      targetConfirmations: $targetConfirmations
-    ) {
+    onChainTxFee(walletId: $walletId, address: $address, amount: $amount) {
       amount
-      targetConfirmations
     }
   }
 
@@ -86,16 +79,9 @@ gql`
     $walletId: WalletId!
     $address: OnChainAddress!
     $amount: CentAmount!
-    $targetConfirmations: TargetConfirmations
   ) {
-    onChainUsdTxFee(
-      walletId: $walletId
-      address: $address
-      amount: $amount
-      targetConfirmations: $targetConfirmations
-    ) {
+    onChainUsdTxFee(walletId: $walletId, address: $address, amount: $amount) {
       amount
-      targetConfirmations
     }
   }
 
@@ -103,16 +89,13 @@ gql`
     $walletId: WalletId!
     $address: OnChainAddress!
     $amount: SatAmount!
-    $targetConfirmations: TargetConfirmations
   ) {
     onChainUsdTxFeeAsBtcDenominated(
       walletId: $walletId
       address: $address
       amount: $amount
-      targetConfirmations: $targetConfirmations
     ) {
       amount
-      targetConfirmations
     }
   }
 `
@@ -126,7 +109,7 @@ const useFee = <T extends WalletCurrency>(getFeeFn?: GetFee<T> | null): FeeType 
   const [lnNoAmountInvoiceFeeProbe] = useLnNoAmountInvoiceFeeProbeMutation()
   const [lnUsdInvoiceFeeProbe] = useLnUsdInvoiceFeeProbeMutation()
   const [lnNoAmountUsdInvoiceFeeProbe] = useLnNoAmountUsdInvoiceFeeProbeMutation()
-  const [onChainTxFee] = useOnChainTxFeeLazyQuery()
+  const [onChainTxFee] = [undefined] // useOnChainTxFeeLazyQuery()
   const [onChainUsdTxFee] = useOnChainUsdTxFeeLazyQuery()
   const [onChainUsdTxFeeAsBtcDenominated] = useOnChainUsdTxFeeAsBtcDenominatedLazyQuery()
 

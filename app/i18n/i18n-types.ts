@@ -1486,6 +1486,10 @@ type RootTranslation = {
 			 */
 			noOnchain: string
 		}
+		/**
+		 * Choose Account Type
+		 */
+		chooseAccountType: string		
 	}
 	MapScreen: {
 		/**
@@ -2138,6 +2142,10 @@ type RootTranslation = {
 		 * A​m​o​u​n​t
 		 */
 		amount: string
+		/**
+		 * Minimum amount for this transaction is US$2.00
+		 */
+		MinOnChainLimit: string
 		/**
 		 * A​m​o​u​n​t​ ​e​x​c​e​e​d​s​ ​y​o​u​r​ ​b​a​l​a​n​c​e​ ​o​f​ ​{​b​a​l​a​n​c​e​}
 		 * @param {string} balance
@@ -5027,6 +5035,10 @@ export type TranslationFunctions = {
 			 */
 			noOnchain: () => LocalizedString
 		}
+		/**
+		 * Trial account has limits
+		 */
+		chooseAccountType: () => LocalizedString
 	}
 	MapScreen: {
 		/**
@@ -5648,6 +5660,10 @@ export type TranslationFunctions = {
 		 * Amount
 		 */
 		amount: () => LocalizedString
+		/**
+		 * Minimum amount for this transaction is US$2.00
+		 */
+		MinOnChainLimit: () => LocalizedString
 		/**
 		 * Amount exceeds your balance of {balance}
 		 */

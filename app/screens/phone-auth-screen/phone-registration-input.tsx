@@ -74,6 +74,7 @@ export const PhoneRegistrationInitiateScreen: React.FC = () => {
         break
       case ErrorType.UnsupportedCountryError:
         errorMessage = LL.PhoneRegistrationInitiateScreen.errorUnsupportedCountry()
+        console.log("Supported Countries", supportedCountries)
         break
     }
   }

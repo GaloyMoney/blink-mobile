@@ -89,12 +89,14 @@ const CustomModal: React.FC<CustomModalProps> = ({
                 {primaryButtonTextAbove}
               </Text>
             )}
-            <GaloyPrimaryButton
-              title={primaryButtonTitle}
-              onPress={primaryButtonOnPress}
-              loading={primaryButtonLoading}
-              disabled={primaryButtonDisabled}
-            />
+            {primaryButtonTitle && primaryButtonOnPress && (
+              <GaloyPrimaryButton
+                title={primaryButtonTitle}
+                onPress={primaryButtonOnPress}
+                loading={primaryButtonLoading}
+                disabled={primaryButtonDisabled}
+              />
+            )}
           </View>
           {secondaryButtonTitle && secondaryButtonOnPress && (
             <GaloySecondaryButton
