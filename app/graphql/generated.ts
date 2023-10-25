@@ -1134,7 +1134,7 @@ export type OnChainAddressPayload = {
 export type OnChainPaymentSendAllInput = {
   readonly address: Scalars['OnChainAddress']['input'];
   readonly memo?: InputMaybe<Scalars['Memo']['input']>;
-  readonly speed?: InputMaybe<PayoutSpeed>;
+  readonly speed?: PayoutSpeed;
   readonly walletId: Scalars['WalletId']['input'];
 };
 
@@ -1142,7 +1142,7 @@ export type OnChainPaymentSendInput = {
   readonly address: Scalars['OnChainAddress']['input'];
   readonly amount: Scalars['SatAmount']['input'];
   readonly memo?: InputMaybe<Scalars['Memo']['input']>;
-  readonly speed?: InputMaybe<PayoutSpeed>;
+  readonly speed?: PayoutSpeed;
   readonly walletId: Scalars['WalletId']['input'];
 };
 
@@ -1166,7 +1166,7 @@ export type OnChainUsdPaymentSendAsBtcDenominatedInput = {
   readonly address: Scalars['OnChainAddress']['input'];
   readonly amount: Scalars['SatAmount']['input'];
   readonly memo?: InputMaybe<Scalars['Memo']['input']>;
-  readonly speed?: InputMaybe<PayoutSpeed>;
+  readonly speed?: PayoutSpeed;
   readonly walletId: Scalars['WalletId']['input'];
 };
 
@@ -1174,7 +1174,7 @@ export type OnChainUsdPaymentSendInput = {
   readonly address: Scalars['OnChainAddress']['input'];
   readonly amount: Scalars['CentAmount']['input'];
   readonly memo?: InputMaybe<Scalars['Memo']['input']>;
-  readonly speed?: InputMaybe<PayoutSpeed>;
+  readonly speed?: PayoutSpeed;
   readonly walletId: Scalars['WalletId']['input'];
 };
 
@@ -1388,7 +1388,7 @@ export type QueryLnInvoicePaymentStatusArgs = {
 export type QueryOnChainTxFeeArgs = {
   address: Scalars['OnChainAddress']['input'];
   amount: Scalars['SatAmount']['input'];
-  speed?: InputMaybe<PayoutSpeed>;
+  speed?: PayoutSpeed;
   walletId: Scalars['WalletId']['input'];
 };
 
@@ -1396,7 +1396,7 @@ export type QueryOnChainTxFeeArgs = {
 export type QueryOnChainUsdTxFeeArgs = {
   address: Scalars['OnChainAddress']['input'];
   amount: Scalars['CentAmount']['input'];
-  speed?: InputMaybe<PayoutSpeed>;
+  speed?: PayoutSpeed;
   walletId: Scalars['WalletId']['input'];
 };
 
@@ -1404,7 +1404,7 @@ export type QueryOnChainUsdTxFeeArgs = {
 export type QueryOnChainUsdTxFeeAsBtcDenominatedArgs = {
   address: Scalars['OnChainAddress']['input'];
   amount: Scalars['SatAmount']['input'];
-  speed?: InputMaybe<PayoutSpeed>;
+  speed?: PayoutSpeed;
   walletId: Scalars['WalletId']['input'];
 };
 
