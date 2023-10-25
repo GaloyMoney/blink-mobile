@@ -19514,11 +19514,6 @@ react-native-randombytes@^3.5.1:
     buffer "^4.9.1"
     sjcl "^1.0.3"
 
-react-native-rate@^1.2.12:
-  version "1.2.12"
-  resolved "https://registry.npmjs.org/react-native-rate/-/react-native-rate-1.2.12.tgz#d4307b2994f9c849b987eb65599ec467db4aee04"
-  integrity sha512-A/z3s7Zth08aXcJnru6S4p71NG8acx2w5LhIfItwTJUbQruNJugk8WrN51dLBCSDv8W33kbS5YoUT4M9jOP5gA==
-
 react-native-ratings@^8.1.0:
   version "8.1.0"
   resolved "https://registry.npmjs.org/react-native-ratings/-/react-native-ratings-8.1.0.tgz#3fa9ad29128dc3a88e59518ba151e61c59dd0647"
@@ -19582,6 +19577,11 @@ react-native-size-matters@^0.4.0:
   version "0.4.2"
   resolved "https://registry.npmjs.org/react-native-size-matters/-/react-native-size-matters-0.4.2.tgz#4348bdd6fc47383f60326d58ad69870c998a5f9a"
   integrity sha512-DKE3f/sdcozd24oASgkP1iGg+YU3HoajRa5k3a4wkRzpiqREq8SGX12Y5zBgAt/8IivLQoTMYkyQu1/Giuy+zQ==
+
+react-native-store-review@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.npmjs.org/react-native-store-review/-/react-native-store-review-0.4.1.tgz#c9f1dbe95bb7968d6ac8e873ec28df9046d15681"
+  integrity sha512-24RCu4CAkA4AjfTxGzWGiop7TMulZpe2Mg4UlUeM96eOEmU0aGgo2S9MGS0gWFM5VCES7250s33DpzXp6GevqQ==
 
 react-native-svg-transformer@^1.0.0:
   version "1.1.0"

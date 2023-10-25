@@ -542,8 +542,6 @@ PODS:
   - RNQrGenerator (1.3.1):
     - React
     - ZXingObjC
-  - RNRate (1.2.12):
-    - React-Core
   - RNReactNativeHapticFeedback (2.2.0):
     - React-Core
   - RNReanimated (2.17.0):
@@ -579,6 +577,8 @@ PODS:
   - RNSecureRandom (1.0.1):
     - React
   - RNShare (9.4.1):
+    - React-Core
+  - RNStoreReview (0.4.1):
     - React-Core
   - RNSVG (13.14.0):
     - React-Core
@@ -658,12 +658,12 @@ DEPENDENCIES:
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNQrGenerator (from `../node_modules/rn-qr-generator`)
-  - RNRate (from `../node_modules/react-native-rate`)
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSecureRandom (from `../node_modules/react-native-securerandom`)
   - RNShare (from `../node_modules/react-native-share`)
+  - RNStoreReview (from `../node_modules/react-native-store-review`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
@@ -820,8 +820,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-localize"
   RNQrGenerator:
     :path: "../node_modules/rn-qr-generator"
-  RNRate:
-    :path: "../node_modules/react-native-rate"
   RNReactNativeHapticFeedback:
     :path: "../node_modules/react-native-haptic-feedback"
   RNReanimated:
@@ -832,6 +830,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-securerandom"
   RNShare:
     :path: "../node_modules/react-native-share"
+  RNStoreReview:
+    :path: "../node_modules/react-native-store-review"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -926,12 +926,12 @@ SPEC CHECKSUMS:
   RNKeychain: a65256b6ca6ba6976132cc4124b238a5b13b3d9c
   RNLocalize: d4b8af4e442d4bcca54e68fc687a2129b4d71a81
   RNQrGenerator: 90461ba3ca88c1d38ef73da50fade35d9648215d
-  RNRate: ef3bcff84f39bb1d1e41c5593d3eea4aab2bd73a
   RNReactNativeHapticFeedback: ec56a5f81c3941206fd85625fa669ffc7b4545f9
   RNReanimated: f186e85d9f28c9383d05ca39e11dd194f59093ec
   RNScreens: 3c2d122f5e08c192e254c510b212306da97d2581
   RNSecureRandom: 07efbdf2cd99efe13497433668e54acd7df49fef
   RNShare: 32e97adc8d8c97d4a26bcdd3c45516882184f8b6
+  RNStoreReview: 923b1c888c13469925bf0256dc2c046eab557ce5
   RNSVG: d00c8f91c3cbf6d476451313a18f04d220d4f396
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   VisionCamera: 8236090a11d42da555d38c3f334633cfc7457516

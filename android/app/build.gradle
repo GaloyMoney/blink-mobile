@@ -150,12 +150,6 @@ android {
             }
         }
     }
-
-    configurations.all {
-        resolutionStrategy {
-            force 'com.google.android.play:core-common:2.0.2'
-        }
-    }
 }
 
 dependencies {
@@ -178,9 +172,7 @@ dependencies {
         implementation jscFlavor
     }
 
-    // https://github.com/KjellConnelly/react-native-rate/issues/117
-    // https://chat.openai.com/c/ba241381-615e-48b1-baa3-ce3dbc7246b7
-    implementation(project(":react-native-rate")) {
+    implementation(project(":react-native-store-review")) {
         exclude group: 'com.google.android.play', module: 'core-common'
         exclude group: 'com.google.android.play', module: 'review'
     }
