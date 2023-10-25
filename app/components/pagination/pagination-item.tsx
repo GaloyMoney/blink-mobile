@@ -40,6 +40,9 @@ export const PaginationItem: React.FC<{
     ],
   }
 
+  // not sure why it's needed. maybe need to look into when upgrading react native reanimated
+  /* eslint @typescript-eslint/ban-ts-comment: "off" */
+  // @ts-ignore-next-line
   const animStyle = useAnimatedStyle(() => {
     let inputRange = [index - 1, index, index + 1]
     let outputRange = [-width, 0, width]

@@ -2,8 +2,7 @@ import React from "react"
 import { View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 
-// eslint-disable-next-line camelcase
-import { useFragment_experimental } from "@apollo/client"
+import { useFragment } from "@apollo/client"
 import {
   TransactionFragment,
   TransactionFragmentDoc,
@@ -23,13 +22,14 @@ import HideableArea from "../hideable-area/hideable-area"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { DeepPartialObject } from "./index.types"
 
 // This should extend the Transaction directly from the cache
 export const useDescriptionDisplay = ({
   tx,
   bankName,
 }: {
-  tx: TransactionFragment | undefined
+  tx: TransactionFragment | DeepPartialObject<TransactionFragment>
   bankName: string
 }) => {
   const { LL } = useI18nContext()
@@ -45,7 +45,7 @@ export const useDescriptionDisplay = ({
 
   const isReceive = direction === "RECEIVE"
 
-  switch (settlementVia.__typename) {
+  switch (settlementVia?.__typename) {
     case "SettlementViaOnChain":
       return "OnChain Payment"
     case "SettlementViaLn":
@@ -98,7 +98,7 @@ export const TransactionItem: React.FC<Props> = ({
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
-  const { data: tx } = useFragment_experimental<TransactionFragment>({
+  const { data: tx } = useFragment<TransactionFragment>({
     fragment: TransactionFragmentDoc,
     fragmentName: "Transaction",
     from: {
@@ -120,6 +120,17 @@ export const TransactionItem: React.FC<Props> = ({
   })
 
   if (!tx || Object.keys(tx).length === 0) {
+    return null
+  }
+
+  if (
+    !tx.settlementCurrency ||
+    !tx.settlementDisplayAmount ||
+    !tx.settlementDisplayCurrency ||
+    !tx.id ||
+    !tx.createdAt ||
+    !tx.status
+  ) {
     return null
   }
 
@@ -151,12 +162,12 @@ export const TransactionItem: React.FC<Props> = ({
       containerStyle={styles.container}
       onPress={() =>
         navigation.navigate("transactionDetail", {
-          txid: tx.id,
+          txid,
         })
       }
     >
       <IconTransaction
-        onChain={tx.settlementVia.__typename === "SettlementViaOnChain"}
+        onChain={tx.settlementVia?.__typename === "SettlementViaOnChain"}
         isReceive={isReceive}
         pending={isPending}
         walletCurrency={walletCurrency}
@@ -170,7 +181,13 @@ export const TransactionItem: React.FC<Props> = ({
           {description}
         </ListItem.Title>
         <ListItem.Subtitle>
-          {subtitle ? <TransactionDate diffDate={true} {...tx} /> : undefined}
+          {subtitle ? (
+            <TransactionDate
+              diffDate={true}
+              createdAt={tx.createdAt}
+              status={tx.status}
+            />
+          ) : undefined}
         </ListItem.Subtitle>
       </ListItem.Content>
 

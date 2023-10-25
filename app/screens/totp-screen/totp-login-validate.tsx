@@ -56,7 +56,7 @@ export const TotpLoginValidateScreen: React.FC<Props> = ({ route }) => {
           navigation.reset({
             routes: [{ name: "Primary" }],
           })
-          return
+          return null
         }
       } catch (err) {
         console.error(err, "error axios")

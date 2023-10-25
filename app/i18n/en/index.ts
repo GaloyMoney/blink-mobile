@@ -2154,6 +2154,7 @@ const en: BaseTranslation = {
     invalidTitle: "Invalid QR Code",
     noQrCode: "We could not find a QR code in the image",
     title: "Scan QR",
+    permissionCamera: "We need permission to use your camera",
     invalidContentLnurl: "We found:\n\n{found: string}\n\n is not currently supported",
     imageLibraryPermissionsNotGranted: "We don't have permissions to access the image library.  Please check app settings for your platform.",
   },

@@ -145,7 +145,7 @@ export const PhoneLoginInitiateScreen: React.FC<PhoneLoginInitiateScreenProps> =
   const { LL } = useI18nContext()
 
   const isDisabledCountryAndCreateAccount =
-    route.params.type === PhoneLoginInitiateType.CreateAccount &&
+    route.params?.type === PhoneLoginInitiateType.CreateAccount &&
     phoneInputInfo?.countryCode &&
     DisableCountriesForAccountCreation.includes(phoneInputInfo.countryCode)
 

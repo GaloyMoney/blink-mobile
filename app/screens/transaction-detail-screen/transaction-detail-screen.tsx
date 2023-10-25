@@ -3,7 +3,7 @@ import { Linking, TouchableWithoutFeedback, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 
 // eslint-disable-next-line camelcase
-import { useFragment_experimental } from "@apollo/client"
+import { useFragment } from "@apollo/client"
 import { TransactionDate } from "@app/components/transaction-date"
 import { useDescriptionDisplay } from "@app/components/transaction-item"
 import { WalletSummary } from "@app/components/wallet-summary"
@@ -28,6 +28,7 @@ import { toWalletAmount } from "@app/types/amounts"
 import { isIos } from "@app/utils/helper"
 import { GaloyInfo } from "@app/components/atomic/galoy-info"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
+import { DeepPartialObject } from "@app/components/transaction-item/index.types"
 
 const Row = ({
   entry,
@@ -65,7 +66,11 @@ const Row = ({
   )
 }
 
-const typeDisplay = (instance: SettlementVia) => {
+const typeDisplay = (instance?: SettlementVia | DeepPartialObject<SettlementVia>) => {
+  if (!instance || !instance.__typename) {
+    return "Unknown"
+  }
+
   switch (instance.__typename) {
     case "SettlementViaOnChain":
       return "OnChain"
@@ -73,6 +78,8 @@ const typeDisplay = (instance: SettlementVia) => {
       return "Lightning"
     case "SettlementViaIntraLedger":
       return "IntraLedger"
+    default:
+      return "Unknown"
   }
 }
 
@@ -96,7 +103,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   const viewInExplorer = (hash: string): Promise<Linking> =>
     Linking.openURL(galoyInstance.blockExplorer + hash)
 
-  const { data: tx } = useFragment_experimental<TransactionFragment>({
+  const { data: tx } = useFragment<TransactionFragment>({
     fragment: TransactionFragmentDoc,
     fragmentName: "Transaction",
     from: {
@@ -129,7 +136,23 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
 
     settlementVia,
     initiationVia,
+    createdAt,
+    status,
   } = tx
+
+  if (
+    !settlementCurrency ||
+    !settlementAmount ||
+    !settlementDisplayFee ||
+    !settlementDisplayAmount ||
+    !settlementDisplayCurrency ||
+    !settlementFee ||
+    !settlementVia ||
+    !createdAt ||
+    !status
+  ) {
+    return <Text>missing values to render the screen</Text>
+  }
 
   const isReceive = tx.direction === "RECEIVE"
 
@@ -156,10 +179,10 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   })
 
   const onChainTxBroadcasted =
-    settlementVia.__typename === "SettlementViaOnChain" &&
+    settlementVia?.__typename === "SettlementViaOnChain" &&
     settlementVia.transactionHash !== null
   const onChainTxNotBroadcasted =
-    settlementVia.__typename === "SettlementViaOnChain" &&
+    settlementVia?.__typename === "SettlementViaOnChain" &&
     settlementVia.transactionHash === null
 
   // only show a secondary amount if it is in a different currency than the primary amount
@@ -227,19 +250,22 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
           }
           content={Wallet}
         />
-        <Row entry={LL.common.date()} value={<TransactionDate {...tx} />} />
+        <Row
+          entry={LL.common.date()}
+          value={<TransactionDate createdAt={createdAt} status={status} />}
+        />
         {!isReceive && <Row entry={LL.common.fees()} value={formattedFeeText} />}
         <Row entry={LL.common.description()} value={description} />
-        {settlementVia.__typename === "SettlementViaIntraLedger" && (
+        {settlementVia?.__typename === "SettlementViaIntraLedger" && (
           <Row
             entry={LL.TransactionDetailScreen.paid()}
             value={settlementVia.counterPartyUsername || galoyInstance.name}
           />
         )}
         <Row entry={LL.common.type()} value={typeDisplay(settlementVia)} />
-        {settlementVia.__typename === "SettlementViaLn" &&
-          initiationVia.__typename === "InitiationViaLn" && (
-            <Row entry="Hash" value={initiationVia.paymentHash} />
+        {settlementVia?.__typename === "SettlementViaLn" &&
+          initiationVia?.__typename === "InitiationViaLn" && (
+            <Row entry="Hash" value={initiationVia?.paymentHash} />
           )}
         {onChainTxBroadcasted && (
           <TouchableWithoutFeedback

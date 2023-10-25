@@ -30,7 +30,6 @@ module.exports = {
       "|@react-native" +
       "|@react-navigation" +
       "|react-native-animatable" +
-      "|react-native-camera" +
       "|react-native-country-picker-modal" +
       "|react-native-error-boundary" +
       "|react-native-extended-stylesheet" +

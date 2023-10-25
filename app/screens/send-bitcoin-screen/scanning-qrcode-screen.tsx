@@ -1,84 +1,39 @@
-import { useIsFocused, useNavigation } from "@react-navigation/native"
-import * as React from "react"
-import { Alert, Dimensions, Linking, Pressable, StyleSheet, View } from "react-native"
-import {
-  Camera,
-  CameraPermissionStatus,
-  useCameraDevices,
-} from "react-native-vision-camera"
-import Svg, { Circle } from "react-native-svg"
-import Icon from "react-native-vector-icons/Ionicons"
-import { Screen } from "../../components/screen"
-import Reanimated from "react-native-reanimated"
-import { RootStackParamList } from "../../navigation/stack-param-lists"
-import { StackNavigationProp } from "@react-navigation/stack"
-import Clipboard from "@react-native-clipboard/clipboard"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import RNQRGenerator from "rn-qr-generator"
-import { BarcodeFormat, useScanBarcodes } from "vision-camera-code-scanner"
-import { launchImageLibrary } from "react-native-image-picker"
-import crashlytics from "@react-native-firebase/crashlytics"
 import { gql } from "@apollo/client"
+import { LNURL_DOMAINS } from "@app/config"
 import {
   useAccountDefaultWalletLazyQuery,
   useRealtimePriceQuery,
   useScanningQrCodeScreenQuery,
 } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { logParseDestinationResult } from "@app/utils/analytics"
+import { toastShow } from "@app/utils/toast"
+import Clipboard from "@react-native-clipboard/clipboard"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { useIsFocused, useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
+import * as React from "react"
+import { Alert, Dimensions, Pressable, StyleSheet, View } from "react-native"
+import { launchImageLibrary } from "react-native-image-picker"
+import Svg, { Circle } from "react-native-svg"
+import Icon from "react-native-vector-icons/Ionicons"
+import {
+  Camera,
+  CameraRuntimeError,
+  useCameraDevice,
+  useCameraPermission,
+  useCodeScanner,
+} from "react-native-vision-camera"
+import RNQRGenerator from "rn-qr-generator"
+import { Screen } from "../../components/screen"
+import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { parseDestination } from "./payment-destination"
 import { DestinationDirection } from "./payment-destination/index.types"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { logParseDestinationResult } from "@app/utils/analytics"
-import { LNURL_DOMAINS } from "@app/config"
-import { makeStyles, useTheme } from "@rneui/themed"
-import { toastShow } from "@app/utils/toast"
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
-
-const useStyles = makeStyles(({ colors }) => ({
-  close: {
-    alignSelf: "flex-end",
-    height: 64,
-    marginRight: 16,
-    marginTop: 40,
-    width: 64,
-  },
-
-  openGallery: {
-    height: 128,
-    left: 32,
-    position: "absolute",
-    top: screenHeight - 96,
-    width: screenWidth,
-  },
-
-  rectangle: {
-    borderColor: colors.primary,
-    borderWidth: 2,
-    height: screenWidth * 0.65,
-    width: screenWidth * 0.65,
-  },
-
-  rectangleContainer: {
-    alignItems: "center",
-    bottom: 0,
-    justifyContent: "center",
-    left: 0,
-    position: "absolute",
-    right: 0,
-    top: 0,
-  },
-
-  noPermissionsView: {
-    ...StyleSheet.absoluteFillObject,
-  },
-
-  iconClose: { position: "absolute", top: -2, color: colors._black },
-
-  iconGalery: { opacity: 0.8 },
-
-  iconClipboard: { opacity: 0.8, position: "absolute", bottom: "5%", right: "15%" },
-}))
 
 gql`
   query scanningQRCodeScreen {
@@ -124,30 +79,30 @@ export const ScanningQRCodeScreen: React.FC = () => {
   })
 
   const { LL } = useI18nContext()
-  const devices = useCameraDevices()
-  const [cameraPermissionStatus, setCameraPermissionStatus] =
-    React.useState<CameraPermissionStatus>("not-determined")
+  const device = useCameraDevice("back")
+  const { hasPermission, requestPermission } = useCameraPermission()
+
   const isFocused = useIsFocused()
-  const [frameProcessor, barcodes] = useScanBarcodes([BarcodeFormat.QR_CODE], {
-    checkInverted: true,
-  })
-  const device = devices.back
 
-  const requestCameraPermission = React.useCallback(async () => {
-    const permission = await Camera.requestCameraPermission()
-    if (permission === "denied") await Linking.openSettings()
-    setCameraPermissionStatus(permission)
-  }, [])
+  // const requestCameraPermission = React.useCallback(async () => {
+  //   const permission = await Camera.requestCameraPermission()
+  //   if (permission === "denied") await Linking.openSettings()
+  // }, [])
 
+  // React.useEffect(() => {
+  //   if (cameraPermissionStatus !== "authorized") {
+  //     requestCameraPermission()
+  //   }
+  // }, [cameraPermissionStatus, navigation, requestCameraPermission])
   React.useEffect(() => {
-    if (cameraPermissionStatus !== "authorized") {
-      requestCameraPermission()
+    if (!hasPermission) {
+      requestPermission()
     }
-  }, [cameraPermissionStatus, navigation, requestCameraPermission])
+  }, [hasPermission, requestPermission])
 
   const decodeInvoice = React.useMemo(() => {
-    return async (data: string) => {
-      if (pending || !wallets || !bitcoinNetwork) {
+    return async (data: string | undefined) => {
+      if (pending || !wallets || !bitcoinNetwork || !data) {
         return
       }
       try {
@@ -225,11 +180,13 @@ export const ScanningQRCodeScreen: React.FC = () => {
   ])
   const styles = useStyles()
 
-  React.useEffect(() => {
-    if (barcodes.length > 0 && barcodes[0].rawValue && isFocused) {
-      decodeInvoice(barcodes[0].rawValue)
-    }
-  }, [barcodes, decodeInvoice, isFocused])
+  const codeScanner = useCodeScanner({
+    codeTypes: ["qr", "ean-13"],
+    onCodeScanned: (codes) => {
+      codes.forEach((code) => decodeInvoice(code.value))
+      console.log(`Scanned ${codes.length} codes!`)
+    },
+  })
 
   const handleInvoicePaste = async () => {
     try {
@@ -269,24 +226,34 @@ export const ScanningQRCodeScreen: React.FC = () => {
     }
   }
 
-  if (cameraPermissionStatus !== "authorized") {
-    return <View style={styles.noPermissionsView} />
+  const onError = React.useCallback((error: CameraRuntimeError) => {
+    console.error(error)
+  }, [])
+
+  if (!hasPermission) {
+    return (
+      <Screen>
+        <View style={styles.noPermissionsView}>
+          <Text>{LL.ScanningQRCodeScreen.permissionCamera()}</Text>
+        </View>
+      </Screen>
+    )
   }
+
+  // TODO text to say there is no camera to be found
+  if (device === null || device === undefined)
+    return <View style={styles.noPermissionsView} />
 
   return (
     <Screen unsafe>
       <View style={StyleSheet.absoluteFill}>
-        {device && (
-          <Reanimated.View style={StyleSheet.absoluteFill}>
-            <Camera
-              style={StyleSheet.absoluteFill}
-              device={device}
-              isActive={isFocused}
-              frameProcessor={frameProcessor}
-              frameProcessorFps={5}
-            />
-          </Reanimated.View>
-        )}
+        <Camera
+          style={StyleSheet.absoluteFill}
+          device={device}
+          isActive={isFocused}
+          onError={onError}
+          codeScanner={codeScanner}
+        />
         <View style={styles.rectangleContainer}>
           <View style={styles.rectangle} />
         </View>
@@ -321,3 +288,48 @@ export const ScanningQRCodeScreen: React.FC = () => {
     </Screen>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  close: {
+    alignSelf: "flex-end",
+    height: 64,
+    marginRight: 16,
+    marginTop: 40,
+    width: 64,
+  },
+
+  openGallery: {
+    height: 128,
+    left: 32,
+    position: "absolute",
+    top: screenHeight - 96,
+    width: screenWidth,
+  },
+
+  rectangle: {
+    borderColor: colors.primary,
+    borderWidth: 2,
+    height: screenWidth * 0.65,
+    width: screenWidth * 0.65,
+  },
+
+  rectangleContainer: {
+    alignItems: "center",
+    bottom: 0,
+    justifyContent: "center",
+    left: 0,
+    position: "absolute",
+    right: 0,
+    top: 0,
+  },
+
+  noPermissionsView: {
+    ...StyleSheet.absoluteFillObject,
+  },
+
+  iconClose: { position: "absolute", top: -2, color: colors._black },
+
+  iconGalery: { opacity: 0.8 },
+
+  iconClipboard: { opacity: 0.8, position: "absolute", bottom: "5%", right: "15%" },
+}))

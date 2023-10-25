@@ -6727,6 +6727,10 @@ type RootTranslation = {
 		 */
 		title: string
 		/**
+		 * W​e​ ​n​e​e​d​ ​p​e​r​m​i​s​s​i​o​n​ ​t​o​ ​u​s​e​ ​y​o​u​r​ ​c​a​m​e​r​a
+		 */
+		permissionCamera: string
+		/**
 		 * W​e​ ​f​o​u​n​d​:​
 	​
 	​{​f​o​u​n​d​}​
@@ -15410,6 +15414,10 @@ export type TranslationFunctions = {
 		 * Scan QR
 		 */
 		title: () => LocalizedString
+		/**
+		 * We need permission to use your camera
+		 */
+		permissionCamera: () => LocalizedString
 		/**
 		 * We found:
 
