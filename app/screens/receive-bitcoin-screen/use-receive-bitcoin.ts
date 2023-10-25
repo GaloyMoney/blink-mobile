@@ -72,6 +72,7 @@ gql`
         paymentHash
         paymentRequest
         paymentSecret
+        paymentStatus
       }
     }
   }
@@ -85,6 +86,7 @@ gql`
         paymentHash
         paymentRequest
         paymentSecret
+        paymentStatus
         satoshis
       }
     }
@@ -108,6 +110,7 @@ gql`
         paymentHash
         paymentRequest
         paymentSecret
+        paymentStatus
         satoshis
       }
     }
@@ -269,7 +272,7 @@ export const useReceiveBitcoin = () => {
   // For Expires In
   useLayoutEffect(() => {
     if (pr?.info?.data?.invoiceType === "Lightning" && pr.info?.data?.expiresAt) {
-      let intervalId: undefined | NodeJS.Timer = undefined
+      let intervalId: undefined | NodeJS.Timeout = undefined
 
       const setExpiresTime = () => {
         const currentTime = new Date()

@@ -54,7 +54,7 @@
     "splash": "yarn react-native generate-bootsplash --background-color \"#000\" --logo-width 300 app/assets/logo/app-logo-dark.svg"
   },
   "dependencies": {
-    "@apollo/client": "^3.7.11",
+    "@apollo/client": "^3.8.6",
     "@formatjs/intl-getcanonicallocales": "^2.2.1",
     "@formatjs/intl-locale": "^3.3.1",
     "@formatjs/intl-relativetimeformat": "^11.2.3",
@@ -128,7 +128,7 @@
     "react-native-toast-message": "^2.1.5",
     "react-native-vector-icons": "^9.1.0",
     "react-native-view-shot": "^3.7.0",
-    "react-native-vision-camera": "^2.15.6",
+    "react-native-vision-camera": "3.5",
     "react-native-walkthrough-tooltip": "^1.4.0",
     "react-native-webln": "^0.1.11",
     "react-native-webview": "^13.6.0",
@@ -140,7 +140,7 @@
     "uuid": "^9.0.0",
     "validator": "^13.9.0",
     "victory-native": "^36.5.0",
-    "vision-camera-code-scanner": "^0.2.0"
+    "webln": "^0.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.21.8",
@@ -213,7 +213,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.5.0",
     "eslint-plugin-react-native": "^4.0.0",
-    "jest": "^29.3.1",
+    "jest": "^29.7.0",
     "jest-circus": "^29.4.1",
     "jest-transform-stub": "^2.0.0",
     "jest-ts-auto-mock": "^2.1.0",
@@ -233,14 +233,13 @@
     "sharp": "^0.32.5",
     "solidarity": "^3.0.0",
     "ts-auto-mock": "^3.6.4",
-    "ts-jest": "^29.0.5",
+    "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.2",
     "tsx": "^3.12.7",
     "ttypescript": "^1.5.15",
-    "typescript": "^4.9.5",
+    "typescript": "4.9.x",
     "webdriverio": "^8.15.4",
-    "webln": "^0.3.2",
     "yalc": "^1.0.0-pre.53"
   },
   "peerDependencies": {
@@ -254,5 +253,8 @@
       "pattern": "**/*.stories.tsx",
       "outputFile": "./.storybook/storyLoader.ts"
     }
+  },
+  "resolutions": {
+    "types-ramda": "0.29.4"
   }
 }

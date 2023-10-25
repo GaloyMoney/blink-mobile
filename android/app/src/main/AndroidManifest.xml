@@ -67,6 +67,12 @@
       android:name="com.google.android.geo.API_KEY"
       android:value="AIzaSyCttrzic-C_V-mbnZjU0qLhw80f82HZ50k"/>
     <!-- TODO: key (a new one) should be added dynamically during the build? -->
+    
+    <meta-data
+      android:name="com.google.mlkit.vision.DEPENDENCIES"
+      android:value="barcode"
+      tools:replace="android:value"
+       />
 
      <!-- You will also only need to add this uses-library tag -->
     <uses-library android:name="org.apache.http.legacy" android:required="false"/>

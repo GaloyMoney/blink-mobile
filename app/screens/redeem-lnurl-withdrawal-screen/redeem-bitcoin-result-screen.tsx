@@ -2,7 +2,6 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { ActivityIndicator, View } from "react-native"
-// import { PaymentRequest } from "../receive-bitcoin-screen/payment-requests/index.types"
 
 import {
   HomeAuthedDocument,

@@ -19,7 +19,7 @@ const route = {
   },
 } as const
 
-// FIXME: this doesn't work with useFragment_experimental
+// FIXME: this doesn't work with useFragment
 
 export const Default = () => (
   <PersistentStateProvider>
