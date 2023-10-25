@@ -22,9 +22,11 @@ Clone into the project
 
 cd into the directory
 
-type `yarn install`
-
-type `yarn start`
+type 
+```
+yarn install
+yarn start
+```
 
 In another window
 type `yarn ios` or `yarn android` to run locally.
