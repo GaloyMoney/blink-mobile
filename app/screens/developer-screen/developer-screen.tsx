@@ -19,6 +19,7 @@ import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { ScrollView } from "react-native-gesture-handler"
 
 gql`
   query debugScreen {
@@ -185,209 +186,211 @@ export const DeveloperScreen: React.FC = () => {
   }
 
   return (
-    <Screen preset="scroll">
-      <View style={styles.screenContainer}>
-        <Button
-          title="Log out"
-          containerStyle={styles.button}
-          onPress={async () => {
-            await logout()
-            Alert.alert("state successfully deleted. Restart your app")
-          }}
-          {...testProps("logout button")}
-        />
-        <Button
-          title="Send device token"
-          containerStyle={styles.button}
-          onPress={async () => {
-            if (token && client) {
-              addDeviceToken(client)
-            }
-          }}
-        />
-        <Button
-          title={`Beta features: ${beta}`}
-          containerStyle={styles.button}
-          onPress={async () => activateBeta(client, !beta)}
-        />
-        {__DEV__ && (
-          <>
-            <Button
-              title="Reload"
-              containerStyle={styles.button}
-              onPress={() => DevSettings.reload()}
-            />
-            <Button
-              title="Crash test"
-              containerStyle={styles.button}
-              onPress={() => {
-                crashlytics().log("Testing crash")
-                crashlytics().crash()
-              }}
-            />
-          </>
-        )}
-        <GaloyInput
-          {...testProps("Url in app browser")}
-          label="Url in app browser"
-          value={urlInAppBrowser}
-          onChangeText={setUrlInAppBrowser}
-          selectTextOnFocus
-        />
-        <Button
-          title="Open in app browser"
-          containerStyle={styles.button}
-          {...testProps("Open in app browser")}
-          onPress={openInAppBrowser}
-        />
-        <GaloyInput
-          {...testProps("Url webview")}
-          label="Url webview"
-          value={urlWebView}
-          onChangeText={setUrlWebView}
-          selectTextOnFocus
-        />
-        <Button
-          title="Navigate to webview"
-          containerStyle={styles.button}
-          {...testProps("Navigate to webview")}
-          onPress={() =>
-            navigate("webView", {
-              url: urlWebView,
-            })
-          }
-        />
-        <View>
-          <Text style={styles.textHeader}>Account info</Text>
-          <Text>AccountId: </Text>
-          <Text selectable>{accountId}</Text>
-          <Text>Level: {level}</Text>
-          <Text>Token Present: {String(Boolean(token))}</Text>
-          <Text style={styles.textHeader}>Environment Information</Text>
-          <Text selectable>Galoy Instance: {appConfig.galoyInstance.id}</Text>
-          <Text selectable>GQL_URL: {appConfig.galoyInstance.graphqlUri}</Text>
-          <Text selectable>GQL_WS_URL: {appConfig.galoyInstance.graphqlWsUri}</Text>
-          <Text selectable>POS URL: {appConfig.galoyInstance.posUrl}</Text>
-          <Text selectable>
-            LN Address Hostname: {appConfig.galoyInstance.lnAddressHostname}
-          </Text>
-          <Text selectable>
-            USD per 1 sat: {usdPerSat ? `$${usdPerSat}` : "No price data"}
-          </Text>
-          <Text>Hermes: {String(Boolean(usingHermes))}</Text>
+    <Screen>
+      <ScrollView>
+        <View style={styles.screenContainer}>
           <Button
-            {...testProps("Save Changes")}
-            title="Save changes"
-            style={styles.button}
-            onPress={handleSave}
-            disabled={!changesHaveBeenMade}
-          />
-          <Text style={styles.textHeader}>Update Environment</Text>
-          {possibleGaloyInstanceNames.map((instanceName) => (
-            <Button
-              key={instanceName}
-              title={instanceName}
-              onPress={() => {
-                setNewGaloyInstance(instanceName)
-              }}
-              {...testProps(`${instanceName} button`)}
-              buttonStyle={
-                instanceName === newGaloyInstance
-                  ? styles.selectedInstanceButton
-                  : styles.notSelectedInstanceButton
-              }
-              titleStyle={
-                instanceName === newGaloyInstance
-                  ? styles.selectedInstanceButton
-                  : styles.notSelectedInstanceButton
-              }
-              containerStyle={
-                instanceName === newGaloyInstance
-                  ? styles.selectedInstanceButton
-                  : styles.notSelectedInstanceButton
-              }
-              {...testProps(`${instanceName} Button`)}
-            />
-          ))}
-          <GaloyInput
-            {...testProps("Input access token")}
-            label="Access Token"
-            placeholder={"Access token"}
-            value={newToken}
-            secureTextEntry={true}
-            onChangeText={setNewToken}
-            selectTextOnFocus
-          />
-          <Button
-            {...testProps("Copy access token")}
-            title="Copy access token"
+            title="Log out"
             containerStyle={styles.button}
             onPress={async () => {
-              Clipboard.setString(newToken || "")
-              Alert.alert("Token copied in clipboard.")
+              await logout()
+              Alert.alert("state successfully deleted. Restart your app")
             }}
-            disabled={!newToken}
+            {...testProps("logout button")}
           />
           <Button
-            {...testProps("Share access token")}
-            title="Share access token"
+            title="Send device token"
             containerStyle={styles.button}
             onPress={async () => {
-              Share.share({ message: newToken || "" })
+              if (token && client) {
+                addDeviceToken(client)
+              }
             }}
-            disabled={!newToken}
           />
-          {newGaloyInstance === "Custom" && (
+          <Button
+            title={`Beta features: ${beta}`}
+            containerStyle={styles.button}
+            onPress={async () => activateBeta(client, !beta)}
+          />
+          {__DEV__ && (
             <>
-              <GaloyInput
-                label="Graphql Uri"
-                placeholder={"Graphql Uri"}
-                autoCapitalize="none"
-                autoCorrect={false}
-                value={newGraphqlUri}
-                onChangeText={setNewGraphqlUri}
-                selectTextOnFocus
+              <Button
+                title="Reload"
+                containerStyle={styles.button}
+                onPress={() => DevSettings.reload()}
               />
-              <GaloyInput
-                label="Graphql Ws Uri"
-                placeholder={"Graphql Ws Uri"}
-                autoCapitalize="none"
-                autoCorrect={false}
-                value={newGraphqlWslUri}
-                onChangeText={setNewGraphqlWslUri}
-                selectTextOnFocus
-              />
-              <GaloyInput
-                label="POS Url"
-                placeholder={"POS Url"}
-                autoCapitalize="none"
-                autoCorrect={false}
-                value={newPosUrl}
-                onChangeText={setNewPosUrl}
-                selectTextOnFocus
-              />
-              <GaloyInput
-                label="Rest Url"
-                placeholder={"Rest Url"}
-                autoCapitalize="none"
-                autoCorrect={false}
-                value={newRestUrl}
-                onChangeText={setNewRestUrl}
-                selectTextOnFocus
-              />
-              <GaloyInput
-                label="LN Address Hostname"
-                placeholder={"LN Address Hostname"}
-                autoCapitalize="none"
-                autoCorrect={false}
-                value={newLnAddressHostname}
-                onChangeText={setNewLnAddressHostname}
-                selectTextOnFocus
+              <Button
+                title="Crash test"
+                containerStyle={styles.button}
+                onPress={() => {
+                  crashlytics().log("Testing crash")
+                  crashlytics().crash()
+                }}
               />
             </>
           )}
+          <GaloyInput
+            {...testProps("Url in app browser")}
+            label="Url in app browser"
+            value={urlInAppBrowser}
+            onChangeText={setUrlInAppBrowser}
+            selectTextOnFocus
+          />
+          <Button
+            title="Open in app browser"
+            containerStyle={styles.button}
+            {...testProps("Open in app browser")}
+            onPress={openInAppBrowser}
+          />
+          <GaloyInput
+            {...testProps("Url webview")}
+            label="Url webview"
+            value={urlWebView}
+            onChangeText={setUrlWebView}
+            selectTextOnFocus
+          />
+          <Button
+            title="Navigate to webview"
+            containerStyle={styles.button}
+            {...testProps("Navigate to webview")}
+            onPress={() =>
+              navigate("webView", {
+                url: urlWebView,
+              })
+            }
+          />
+          <View>
+            <Text style={styles.textHeader}>Account info</Text>
+            <Text>AccountId: </Text>
+            <Text selectable>{accountId}</Text>
+            <Text>Level: {level}</Text>
+            <Text>Token Present: {String(Boolean(token))}</Text>
+            <Text style={styles.textHeader}>Environment Information</Text>
+            <Text selectable>Galoy Instance: {appConfig.galoyInstance.id}</Text>
+            <Text selectable>GQL_URL: {appConfig.galoyInstance.graphqlUri}</Text>
+            <Text selectable>GQL_WS_URL: {appConfig.galoyInstance.graphqlWsUri}</Text>
+            <Text selectable>POS URL: {appConfig.galoyInstance.posUrl}</Text>
+            <Text selectable>
+              LN Address Hostname: {appConfig.galoyInstance.lnAddressHostname}
+            </Text>
+            <Text selectable>
+              USD per 1 sat: {usdPerSat ? `$${usdPerSat}` : "No price data"}
+            </Text>
+            <Text>Hermes: {String(Boolean(usingHermes))}</Text>
+            <Button
+              {...testProps("Save Changes")}
+              title="Save changes"
+              style={styles.button}
+              onPress={handleSave}
+              disabled={!changesHaveBeenMade}
+            />
+            <Text style={styles.textHeader}>Update Environment</Text>
+            {possibleGaloyInstanceNames.map((instanceName) => (
+              <Button
+                key={instanceName}
+                title={instanceName}
+                onPress={() => {
+                  setNewGaloyInstance(instanceName)
+                }}
+                {...testProps(`${instanceName} button`)}
+                buttonStyle={
+                  instanceName === newGaloyInstance
+                    ? styles.selectedInstanceButton
+                    : styles.notSelectedInstanceButton
+                }
+                titleStyle={
+                  instanceName === newGaloyInstance
+                    ? styles.selectedInstanceButton
+                    : styles.notSelectedInstanceButton
+                }
+                containerStyle={
+                  instanceName === newGaloyInstance
+                    ? styles.selectedInstanceButton
+                    : styles.notSelectedInstanceButton
+                }
+                {...testProps(`${instanceName} Button`)}
+              />
+            ))}
+            <GaloyInput
+              {...testProps("Input access token")}
+              label="Access Token"
+              placeholder={"Access token"}
+              value={newToken}
+              secureTextEntry={true}
+              onChangeText={setNewToken}
+              selectTextOnFocus
+            />
+            <Button
+              {...testProps("Copy access token")}
+              title="Copy access token"
+              containerStyle={styles.button}
+              onPress={async () => {
+                Clipboard.setString(newToken || "")
+                Alert.alert("Token copied in clipboard.")
+              }}
+              disabled={!newToken}
+            />
+            <Button
+              {...testProps("Share access token")}
+              title="Share access token"
+              containerStyle={styles.button}
+              onPress={async () => {
+                Share.share({ message: newToken || "" })
+              }}
+              disabled={!newToken}
+            />
+            {newGaloyInstance === "Custom" && (
+              <>
+                <GaloyInput
+                  label="Graphql Uri"
+                  placeholder={"Graphql Uri"}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  value={newGraphqlUri}
+                  onChangeText={setNewGraphqlUri}
+                  selectTextOnFocus
+                />
+                <GaloyInput
+                  label="Graphql Ws Uri"
+                  placeholder={"Graphql Ws Uri"}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  value={newGraphqlWslUri}
+                  onChangeText={setNewGraphqlWslUri}
+                  selectTextOnFocus
+                />
+                <GaloyInput
+                  label="POS Url"
+                  placeholder={"POS Url"}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  value={newPosUrl}
+                  onChangeText={setNewPosUrl}
+                  selectTextOnFocus
+                />
+                <GaloyInput
+                  label="Rest Url"
+                  placeholder={"Rest Url"}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  value={newRestUrl}
+                  onChangeText={setNewRestUrl}
+                  selectTextOnFocus
+                />
+                <GaloyInput
+                  label="LN Address Hostname"
+                  placeholder={"LN Address Hostname"}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  value={newLnAddressHostname}
+                  onChangeText={setNewLnAddressHostname}
+                  selectTextOnFocus
+                />
+              </>
+            )}
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </Screen>
   )
 }
