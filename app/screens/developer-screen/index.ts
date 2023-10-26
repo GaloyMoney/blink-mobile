@@ -1,1 +1,1 @@
-export * from "./developer-screen"
+export * from "./debug-screen"
