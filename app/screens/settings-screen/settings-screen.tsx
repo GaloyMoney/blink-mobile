@@ -35,6 +35,7 @@ import { SetLightningAddressModal } from "@app/components/set-lightning-address-
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { SettingsRow } from "./settings-row"
 import { useShowWarningSecureAccount } from "./show-warning-secure-account"
+import { ScrollView } from "react-native-gesture-handler"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -162,7 +163,7 @@ export const SettingsScreen: React.FC = () => {
   }
 
   const rateUs = () => {
-    isIos && InAppReview.RequestInAppReview() // FIXME
+    isIos && InAppReview.RequestInAppReview()
   }
 
   const contactMessageBody = LL.support.defaultSupportMessage({
@@ -337,22 +338,24 @@ export const SettingsScreen: React.FC = () => {
   ]
 
   return (
-    <Screen preset="scroll" keyboardShouldPersistTaps="handled">
-      {settingsList.map((setting) => (
-        <SettingsRow setting={setting} key={setting?.id} />
-      ))}
-      <VersionComponent />
-      <ContactModal
-        isVisible={isContactModalVisible}
-        toggleModal={toggleIsContactModalVisible}
-        messageBody={contactMessageBody}
-        messageSubject={contactMessageSubject}
-        supportChannels={contactMethods}
-      />
-      <SetLightningAddressModal
-        isVisible={isSetLightningAddressModalVisible}
-        toggleModal={toggleIsSetLightningAddressModalVisible}
-      />
+    <Screen keyboardShouldPersistTaps="handled">
+      <ScrollView>
+        {settingsList.map((setting) => (
+          <SettingsRow setting={setting} key={setting?.id} />
+        ))}
+        <VersionComponent />
+        <ContactModal
+          isVisible={isContactModalVisible}
+          toggleModal={toggleIsContactModalVisible}
+          messageBody={contactMessageBody}
+          messageSubject={contactMessageSubject}
+          supportChannels={contactMethods}
+        />
+        <SetLightningAddressModal
+          isVisible={isSetLightningAddressModalVisible}
+          toggleModal={toggleIsSetLightningAddressModalVisible}
+        />
+      </ScrollView>
     </Screen>
   )
 }

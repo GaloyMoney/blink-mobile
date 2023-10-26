@@ -1,24 +1,4 @@
-import jwtDecode from "jwt-decode"
-
 import { GALOY_INSTANCES, GaloyInstance, GaloyInstanceInput } from "@app/config"
-import { Network } from "@app/graphql/generated"
-import { loadString } from "@app/utils/storage"
-
-type PersistentState_0 = {
-  schemaVersion: 0
-  isUsdDisabled: boolean
-}
-
-type PersistentState_1 = {
-  schemaVersion: 1
-  isUsdDisabled: boolean
-}
-
-type PersistentState_2 = {
-  schemaVersion: 2
-  hasShownStableSatsWelcome: boolean
-  isUsdDisabled: boolean
-}
 
 type PersistentState_3 = {
   schemaVersion: 3
@@ -48,23 +28,6 @@ type PersistentState_6 = {
   schemaVersion: 6
   galoyInstance: GaloyInstanceInput
   galoyAuthToken: string
-}
-
-type JwtPayload = {
-  uid: string
-  network: Network
-}
-
-const decodeToken = (token: string): { uid: string; network: Network } | null => {
-  try {
-    const { uid, network } = jwtDecode<JwtPayload>(token)
-    return { uid, network }
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      console.debug(err.toString())
-    }
-    return null
-  }
 }
 
 const migrate6ToCurrent = (state: PersistentState_6): Promise<PersistentState> =>
@@ -130,64 +93,7 @@ const migrate3ToCurrent = (state: PersistentState_3): Promise<PersistentState> =
   })
 }
 
-const migrate2ToCurrent = async (state: PersistentState_2): Promise<PersistentState> => {
-  const LEGACY_TOKEN_KEY = "GaloyToken"
-  const token = await loadString(LEGACY_TOKEN_KEY)
-
-  if (token && decodeToken(token)) {
-    const decodedToken = decodeToken(token)
-    const network = decodedToken?.network
-    if (network === "mainnet") {
-      const galoyInstance = GALOY_INSTANCES.find(
-        (instance) => instance.name === "BBW" || instance.name === "Blink",
-      )
-      if (galoyInstance) {
-        return migrate3ToCurrent({
-          ...state,
-          schemaVersion: 3,
-          galoyInstance,
-          galoyAuthToken: token,
-          isAnalyticsEnabled: true,
-        })
-      }
-    }
-  }
-
-  const newGaloyInstance = GALOY_INSTANCES.find(
-    (instance) => instance.name === "BBW" || instance.name === "Blink",
-  )
-  if (!newGaloyInstance) {
-    throw new Error("Galoy instance not found")
-  }
-
-  return migrate3ToCurrent({
-    ...state,
-    schemaVersion: 3,
-    galoyInstance: newGaloyInstance,
-    galoyAuthToken: "",
-    isAnalyticsEnabled: true,
-  })
-}
-
-const migrate1ToCurrent = (state: PersistentState_1): Promise<PersistentState> => {
-  return migrate2ToCurrent({
-    ...state,
-    hasShownStableSatsWelcome: false,
-    schemaVersion: 2,
-  })
-}
-
-const migrate0ToCurrent = (state: PersistentState_0): Promise<PersistentState> => {
-  return migrate1ToCurrent({
-    schemaVersion: 1,
-    isUsdDisabled: state.isUsdDisabled,
-  })
-}
-
 type StateMigrations = {
-  0: (state: PersistentState_0) => Promise<PersistentState>
-  1: (state: PersistentState_1) => Promise<PersistentState>
-  2: (state: PersistentState_2) => Promise<PersistentState>
   3: (state: PersistentState_3) => Promise<PersistentState>
   4: (state: PersistentState_4) => Promise<PersistentState>
   5: (state: PersistentState_5) => Promise<PersistentState>
@@ -195,9 +101,6 @@ type StateMigrations = {
 }
 
 const stateMigrations: StateMigrations = {
-  0: migrate0ToCurrent,
-  1: migrate1ToCurrent,
-  2: migrate2ToCurrent,
   3: migrate3ToCurrent,
   4: migrate4ToCurrent,
   5: migrate5ToCurrent,
@@ -219,7 +122,7 @@ export const migrateAndGetPersistentState = async (
   data: any,
 ): Promise<PersistentState> => {
   if (Boolean(data) && data.schemaVersion in stateMigrations) {
-    const schemaVersion: 0 | 1 | 2 | 3 | 4 | 5 = data.schemaVersion
+    const schemaVersion: 3 | 4 | 5 | 6 = data.schemaVersion
     try {
       const migration = stateMigrations[schemaVersion]
       const persistentState = await migration(data)
