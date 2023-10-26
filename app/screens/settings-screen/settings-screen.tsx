@@ -13,7 +13,6 @@ import ContactModal, {
 import crashlytics from "@react-native-firebase/crashlytics"
 
 import { gql } from "@apollo/client"
-import { ratingOptions } from "@app/config"
 import {
   useSettingsScreenQuery,
   useWalletCsvTransactionsLazyQuery,
@@ -30,11 +29,12 @@ import Clipboard from "@react-native-clipboard/clipboard"
 import { useNavigation } from "@react-navigation/native"
 import { useTheme } from "@rneui/themed"
 import { getReadableVersion } from "react-native-device-info"
-import Rate from "react-native-rate"
-import { SettingsRow } from "./settings-row"
-import { useShowWarningSecureAccount } from "./show-warning-secure-account"
+import InAppReview from "react-native-in-app-review"
+
 import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+import { SettingsRow } from "./settings-row"
+import { useShowWarningSecureAccount } from "./show-warning-secure-account"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -162,14 +162,7 @@ export const SettingsScreen: React.FC = () => {
   }
 
   const rateUs = () => {
-    Rate.rate(ratingOptions, (success, errorMessage) => {
-      if (success) {
-        crashlytics().log("User went to the review page")
-      }
-      if (errorMessage) {
-        crashlytics().recordError(new Error(errorMessage))
-      }
-    })
+    isIos && InAppReview.RequestInAppReview() // FIXME
   }
 
   const contactMessageBody = LL.support.defaultSupportMessage({
@@ -339,6 +332,7 @@ export const SettingsScreen: React.FC = () => {
       action: rateUs,
       enabled: true,
       greyed: false,
+      hidden: !isIos, // FIXME: remove when android is working
     },
   ]
 

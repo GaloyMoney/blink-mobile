@@ -13,14 +13,13 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { makeStyles, Text } from "@rneui/themed"
 import { View, Alert } from "react-native"
 import { testProps } from "../../utils/testProps"
-import Rate from "react-native-rate"
-import { ratingOptions } from "@app/config"
-import crashlytics from "@react-native-firebase/crashlytics"
 import { useApolloClient } from "@apollo/client"
 import { useFeedbackModalShownQuery } from "@app/graphql/generated"
 import { setFeedbackModalShown } from "@app/graphql/client-only-query"
 import { SuggestionModal } from "./suggestion-modal"
 import { logAppFeedback } from "@app/utils/analytics"
+import InAppReview from "react-native-in-app-review"
+import { isIos } from "@app/utils/helper"
 
 const SendBitcoinSuccessScreen = () => {
   const styles = useStyles()
@@ -44,14 +43,7 @@ const SendBitcoinSuccessScreen = () => {
     logAppFeedback({
       isEnjoingApp: true,
     })
-    Rate.rate(ratingOptions, (success, errorMessage) => {
-      if (success) {
-        crashlytics().log("User went to the review page")
-      }
-      if (errorMessage) {
-        crashlytics().recordError(new Error(errorMessage))
-      }
-    })
+    isIos && InAppReview.RequestInAppReview()
   }
 
   const requestFeedback = useCallback(() => {
