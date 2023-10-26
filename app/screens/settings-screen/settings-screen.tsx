@@ -29,12 +29,12 @@ import Clipboard from "@react-native-clipboard/clipboard"
 import { useNavigation } from "@react-navigation/native"
 import { useTheme } from "@rneui/themed"
 import { getReadableVersion } from "react-native-device-info"
-import * as StoreReview from "react-native-store-review"
+import InAppReview from "react-native-in-app-review"
 
-import { SettingsRow } from "./settings-row"
-import { useShowWarningSecureAccount } from "./show-warning-secure-account"
 import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+import { SettingsRow } from "./settings-row"
+import { useShowWarningSecureAccount } from "./show-warning-secure-account"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -162,7 +162,7 @@ export const SettingsScreen: React.FC = () => {
   }
 
   const rateUs = () => {
-    isIos && StoreReview.requestReview()
+    isIos && InAppReview.RequestInAppReview() // FIXME
   }
 
   const contactMessageBody = LL.support.defaultSupportMessage({
@@ -187,17 +187,6 @@ export const SettingsScreen: React.FC = () => {
         }),
       hidden: currentLevel !== AccountLevel.NonAuth,
       enabled: true,
-    },
-    {
-      category: LL.SettingsScreen.rateUs({
-        storeName: isIos ? "App Store" : "Play Store",
-      }),
-      id: "leave-feedback",
-      icon: "star-outline",
-      action: rateUs,
-      enabled: true,
-      greyed: false,
-      hidden: !isIos,
     },
     {
       category: LL.common.account(),
@@ -343,6 +332,7 @@ export const SettingsScreen: React.FC = () => {
       action: rateUs,
       enabled: true,
       greyed: false,
+      hidden: !isIos, // FIXME: remove when android is working
     },
   ]
 

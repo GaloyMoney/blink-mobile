@@ -13,12 +13,12 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { makeStyles, Text } from "@rneui/themed"
 import { View, Alert } from "react-native"
 import { testProps } from "../../utils/testProps"
-import * as StoreReview from "react-native-store-review"
 import { useApolloClient } from "@apollo/client"
 import { useFeedbackModalShownQuery } from "@app/graphql/generated"
 import { setFeedbackModalShown } from "@app/graphql/client-only-query"
 import { SuggestionModal } from "./suggestion-modal"
 import { logAppFeedback } from "@app/utils/analytics"
+import InAppReview from "react-native-in-app-review"
 import { isIos } from "@app/utils/helper"
 
 const SendBitcoinSuccessScreen = () => {
@@ -43,7 +43,7 @@ const SendBitcoinSuccessScreen = () => {
     logAppFeedback({
       isEnjoingApp: true,
     })
-    isIos && StoreReview.requestReview()
+    isIos && InAppReview.RequestInAppReview()
   }
 
   const requestFeedback = useCallback(() => {

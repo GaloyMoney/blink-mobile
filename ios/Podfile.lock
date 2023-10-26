@@ -397,6 +397,8 @@ PODS:
     - React-Core
   - react-native-image-picker (7.0.2):
     - React-Core
+  - react-native-in-app-review (4.3.3):
+    - React-Core
   - react-native-maps (1.8.0):
     - React-Core
   - react-native-nfc-manager (3.14.8):
@@ -578,8 +580,6 @@ PODS:
     - React
   - RNShare (9.4.1):
     - React-Core
-  - RNStoreReview (0.4.1):
-    - React-Core
   - RNSVG (13.14.0):
     - React-Core
   - RNVectorIcons (9.2.0):
@@ -622,6 +622,7 @@ DEPENDENCIES:
   - react-native-fingerprint-scanner (from `../node_modules/react-native-fingerprint-scanner`)
   - "react-native-geetest-module (from `../node_modules/@galoymoney/react-native-geetest-module`)"
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - react-native-in-app-review (from `../node_modules/react-native-in-app-review`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-nfc-manager (from `../node_modules/react-native-nfc-manager`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -663,7 +664,6 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSecureRandom (from `../node_modules/react-native-securerandom`)
   - RNShare (from `../node_modules/react-native-share`)
-  - RNStoreReview (from `../node_modules/react-native-store-review`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
@@ -748,6 +748,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@galoymoney/react-native-geetest-module"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-in-app-review:
+    :path: "../node_modules/react-native-in-app-review"
   react-native-maps:
     :path: "../node_modules/react-native-maps"
   react-native-nfc-manager:
@@ -830,8 +832,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-securerandom"
   RNShare:
     :path: "../node_modules/react-native-share"
-  RNStoreReview:
-    :path: "../node_modules/react-native-store-review"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -890,6 +890,7 @@ SPEC CHECKSUMS:
   react-native-fingerprint-scanner: ac6656f18c8e45a7459302b84da41a44ad96dbbe
   react-native-geetest-module: ed6a20774a7975640b79a2f639327c674a488cb5
   react-native-image-picker: 2e2e82aba9b6a91a7c78f7d9afde341a2659c7b8
+  react-native-in-app-review: db8bb167a5f238e7ceca5c242d6b36ce8c4404a4
   react-native-maps: f699e0753c22c4d5c3a44d03895b193a4dbca6c2
   react-native-nfc-manager: 15a9dd22258cb8e1a6bbb71179baf5c9137a933d
   react-native-safe-area-context: 238cd8b619e05cb904ccad97ef42e84d1b5ae6ec
@@ -931,7 +932,6 @@ SPEC CHECKSUMS:
   RNScreens: 3c2d122f5e08c192e254c510b212306da97d2581
   RNSecureRandom: 07efbdf2cd99efe13497433668e54acd7df49fef
   RNShare: 32e97adc8d8c97d4a26bcdd3c45516882184f8b6
-  RNStoreReview: 923b1c888c13469925bf0256dc2c046eab557ce5
   RNSVG: d00c8f91c3cbf6d476451313a18f04d220d4f396
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   VisionCamera: 8236090a11d42da555d38c3f334633cfc7457516

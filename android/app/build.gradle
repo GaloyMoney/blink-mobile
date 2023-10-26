@@ -172,7 +172,7 @@ dependencies {
         implementation jscFlavor
     }
 
-    implementation(project(":react-native-store-review")) {
+    implementation(project(":react-native-in-app-review")) {
         exclude group: 'com.google.android.play', module: 'core-common'
         exclude group: 'com.google.android.play', module: 'review'
     }
