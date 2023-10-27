@@ -142,11 +142,11 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
 
   if (
     !settlementCurrency ||
-    !settlementAmount ||
-    !settlementDisplayFee ||
-    !settlementDisplayAmount ||
+    settlementAmount === undefined ||
+    settlementDisplayFee === undefined ||
+    settlementDisplayAmount === undefined ||
     !settlementDisplayCurrency ||
-    !settlementFee ||
+    settlementFee === undefined ||
     !settlementVia ||
     !createdAt ||
     !status
