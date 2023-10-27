@@ -6651,6 +6651,10 @@ type RootTranslation = {
 		 * P​a​y​c​o​d​e​ ​/​ ​L​N​U​R​L
 		 */
 		payCodeOrLNURL: string
+		/**
+		 * Y​o​u​ ​c​a​n​'​t​ ​r​e​c​e​i​v​e​ ​z​e​r​o​ ​s​a​t​s​.​ ​P​l​e​a​s​e​ ​e​n​t​e​r​ ​a​n​ ​a​m​o​u​n​t​ ​c​o​r​r​e​s​p​o​n​d​i​n​g​ ​t​o​ ​1​ ​o​r​ ​m​o​r​e​ ​s​a​t​s​.
+		 */
+		cantReceiveZeroSats: string
 	}
 	RedeemBitcoinScreen: {
 		/**
@@ -15346,6 +15350,10 @@ export type TranslationFunctions = {
 		 * Paycode / LNURL
 		 */
 		payCodeOrLNURL: () => LocalizedString
+		/**
+		 * You can't receive zero sats. Please enter an amount corresponding to 1 or more sats.
+		 */
+		cantReceiveZeroSats: () => LocalizedString
 	}
 	RedeemBitcoinScreen: {
 		/**

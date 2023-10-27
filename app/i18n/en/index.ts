@@ -2133,6 +2133,7 @@ const en: BaseTranslation = {
     receiveViaPaycode: "Receive via Paycode",
     receiveViaOnchain: "Receive via Onchain",
     payCodeOrLNURL: "Paycode / LNURL",
+    cantReceiveZeroSats: "You can't receive zero sats. Please enter an amount corresponding to 1 or more sats."
   },
   RedeemBitcoinScreen: {
     title: "Redeem Bitcoin",

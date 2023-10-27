@@ -21,22 +21,14 @@ import {
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { LNURL_DOMAINS } from "@app/config"
 import { isIOS } from "@rneui/base"
-import {
-  MoneyAmount,
-  WalletAmount,
-  toBtcMoneyAmount,
-  toUsdMoneyAmount,
-} from "@app/types/amounts"
+import { WalletAmount, toUsdMoneyAmount } from "@app/types/amounts"
 import { usePriceConversion } from "@app/hooks"
 
 export const ModalNfc: React.FC<{
   isActive: boolean
   setIsActive: (arg: boolean) => void
   settlementAmount?: WalletAmount<WalletCurrency>
-  receiveViaNFC: (
-    destination: ReceiveDestination,
-    settlementAmount: MoneyAmount<"BTC">,
-  ) => Promise<void>
+  receiveViaNFC: (destination: ReceiveDestination) => Promise<void>
 }> = ({ isActive, setIsActive, settlementAmount, receiveViaNFC }) => {
   const { data } = useScanningQrCodeScreenQuery({ skip: !useIsAuthed() })
   const wallets = data?.me?.defaultAccount.wallets
@@ -63,6 +55,20 @@ export const ModalNfc: React.FC<{
   React.useEffect(() => {
     if (isActive && !settlementAmount) {
       Alert.alert(LL.ReceiveScreen.enterAmountFirst())
+      setIsActive(false)
+      return
+    }
+
+    if (!convertMoneyAmount) return
+
+    if (
+      isActive &&
+      settlementAmount &&
+      convertMoneyAmount &&
+      convertMoneyAmount(toUsdMoneyAmount(settlementAmount?.amount), WalletCurrency.Btc)
+        .amount === 0
+    ) {
+      Alert.alert(LL.ReceiveScreen.cantReceiveZeroSats())
       setIsActive(false)
       return
     }
@@ -161,7 +167,7 @@ export const ModalNfc: React.FC<{
           destination.validDestination.minWithdrawable = amount * 1000 // coz msats
           destination.validDestination.maxWithdrawable = amount * 1000 // coz msats
 
-          receiveViaNFC(destination, toBtcMoneyAmount(settlementAmount.amount))
+          receiveViaNFC(destination)
         }
       }
 
