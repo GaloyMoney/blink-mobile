@@ -133,21 +133,14 @@ export const QRView: React.FC<Props> = ({
       return null
     }
 
-    const getQrSize = () => {
-      if (Platform.OS === "android") {
-        if (scale > 3) {
-          return 195
-        }
-      }
-      return size
-    }
+    const qrSize = Platform.OS === "android" && scale > 3 ? 240 : size
 
     if (displayingQR && getFullUri) {
       const uri = getFullUri({ uppercase: true })
       return (
         <View style={[styles.container, style]} {...testProps("QR-Code")}>
           <QRCode
-            size={getQrSize()}
+            size={qrSize}
             value={uri}
             logoBackgroundColor="white"
             ecl={type && configByType[type].ecl}
