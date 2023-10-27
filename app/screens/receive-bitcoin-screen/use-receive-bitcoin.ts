@@ -387,10 +387,7 @@ export const useReceiveBitcoin = () => {
         const lnurlResponse = await result.json()
         if (lnurlResponse?.status?.toLowerCase() !== "ok") {
           console.error(lnurlResponse, "error with redeeming")
-          Alert.alert(LL.RedeemBitcoinScreen.redeemingError())
-          if (lnurlResponse?.reason) {
-            Alert.alert(lnurlResponse.reason)
-          }
+          Alert.alert(LL.RedeemBitcoinScreen.redeemingError(), lnurlResponse.reason)
         }
       } else {
         console.error(result.text(), "error with submitting withdrawalRequest")
