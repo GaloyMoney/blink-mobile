@@ -36,17 +36,27 @@ const ReceiveScreen = () => {
   const [displayReceiveNfc, setDisplayReceiveNfc] = useState(false)
 
   useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity
-          style={styles.rotateIconHeaderRight}
-          onPress={() => setDisplayReceiveNfc(true)}
-        >
-          <Icon name="wifi" color={colors.black} size={25} />
-        </TouchableOpacity>
-      ),
-    })
-  })
+    if (request?.type === "Lightning" && request.state === "Created")
+      navigation.setOptions({
+        headerRight: () => (
+          <TouchableOpacity
+            style={styles.rotateIconHeaderRight}
+            onPress={() => setDisplayReceiveNfc(true)}
+          >
+            <Icon name="wifi" color={colors.black} size={25} />
+          </TouchableOpacity>
+        ),
+      })
+    else {
+      navigation.setOptions({ headerRight: () => <></> })
+    }
+  }, [
+    colors.black,
+    navigation,
+    request?.state,
+    request?.type,
+    styles.rotateIconHeaderRight,
+  ])
 
   // notification permission
   useEffect(() => {
