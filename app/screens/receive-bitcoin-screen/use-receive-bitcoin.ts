@@ -30,6 +30,7 @@ import { generateFutureLocalTime, secondsToH, secondsToHMS } from "./payment/hel
 import { toastShow } from "@app/utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import fetch from "cross-fetch"
+import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Alert, Share } from "react-native"
@@ -265,6 +266,9 @@ export const useReceiveBitcoin = () => {
       lastHash === pr.info.data.paymentHash
     ) {
       setPR((pq) => pq && pq.setState(PaymentRequestState.Paid))
+      ReactNativeHapticFeedback.trigger("notificationSuccess", {
+        ignoreAndroidSystemSettings: true,
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastHash])
