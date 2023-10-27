@@ -36,7 +36,7 @@ const ReceiveScreen = () => {
   const [displayReceiveNfc, setDisplayReceiveNfc] = useState(false)
 
   useEffect(() => {
-    if (request?.type === "Lightning")
+    if (request?.type === "Lightning" && request.state === "Created")
       navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity
@@ -50,7 +50,13 @@ const ReceiveScreen = () => {
     else {
       navigation.setOptions({ headerRight: () => <></> })
     }
-  }, [colors.black, navigation, request?.type, styles.rotateIconHeaderRight])
+  }, [
+    colors.black,
+    navigation,
+    request?.state,
+    request?.type,
+    styles.rotateIconHeaderRight,
+  ])
 
   // notification permission
   useEffect(() => {
