@@ -1879,14 +1879,14 @@
   dependencies:
     tslib "^2.4.0"
 
-"@formatjs/intl-getcanonicallocales@2.3.0", "@formatjs/intl-getcanonicallocales@^2.2.1":
+"@formatjs/intl-getcanonicallocales@2.3.0", "@formatjs/intl-getcanonicallocales@^2.3.0":
   version "2.3.0"
   resolved "https://registry.npmjs.org/@formatjs/intl-getcanonicallocales/-/intl-getcanonicallocales-2.3.0.tgz#b6c6fa1c664e30a61f27fa6399a76159d82a5842"
   integrity sha512-BOXbLwqQ7nKua/l7tKqDLRN84WupDXFDhGJQMFvsMVA2dKuOdRaWTxWpL3cJ7qPkoNw11Jf+Xpj4OSPBBvW0eQ==
   dependencies:
     tslib "^2.4.0"
 
-"@formatjs/intl-locale@^3.3.1":
+"@formatjs/intl-locale@^3.4.0":
   version "3.4.0"
   resolved "https://registry.npmjs.org/@formatjs/intl-locale/-/intl-locale-3.4.0.tgz#ad926a3070e59fa47240bb36eabd68fb3a6a8d50"
   integrity sha512-Grsgb9zigHzA8nddMxR4o8YGNc/7dNevz0lUugDAQ/AOqeApSVAgj2yE5QxevMCmcmgCh3DnUk9h4cyVvA56GQ==
@@ -1903,7 +1903,7 @@
   dependencies:
     tslib "^2.4.0"
 
-"@formatjs/intl-relativetimeformat@^11.2.3":
+"@formatjs/intl-relativetimeformat@^11.2.7":
   version "11.2.7"
   resolved "https://registry.npmjs.org/@formatjs/intl-relativetimeformat/-/intl-relativetimeformat-11.2.7.tgz#51f71d6c447cd64310b9a83f10dcc29fa5ea13b9"
   integrity sha512-Faf71hROcX8SkqnuqG9KSXano4FP3xiqaeeGmK7ii8cvsMh8xAIVpQaBaXEMI1GvJIZPVlor7rUVdf4286Cz2w==
@@ -3906,7 +3906,7 @@
   dependencies:
     merge-options "^3.0.4"
 
-"@react-native-clipboard/clipboard@^1.11.1":
+"@react-native-clipboard/clipboard@^1.12.1":
   version "1.12.1"
   resolved "https://registry.npmjs.org/@react-native-clipboard/clipboard/-/clipboard-1.12.1.tgz#a23f9defb732077afa860d0598baa95f5ee9f54b"
   integrity sha512-+PNk8kflpGte0W1Nz61/Dp8gHTxyuRjkVyRYBawymSIGTDHCC/zOJSbig6kGIkD8MeaGHC2vGYQJyUyCrgVPBQ==
@@ -4121,40 +4121,40 @@
   resolved "https://registry.npmjs.org/@react-native-community/slider/-/slider-4.4.3.tgz#9b9dc639b88f5bfda72bd72a9dff55cbf9f777ed"
   integrity sha512-WdjvGtqJfqcCiLwtbzie53Z/H6w6dIfRHhlW832D89ySAdE5DxLAsqRhDOG0eacuAxxEB+T9sGCkVMD0fa3aBg==
 
-"@react-native-firebase/analytics@^18.5.0":
-  version "18.5.0"
-  resolved "https://registry.npmjs.org/@react-native-firebase/analytics/-/analytics-18.5.0.tgz#cca5858e44f3f8cbf387fa7cd6debb95fbcf8023"
-  integrity sha512-+8fkDedcftieOBEkNdqEW0lS/FB9SKzfUc3yYXnJcLTy3Ceg9JZga/tWz4BGbbxPddUy1Sm2UuWDuOxsdkFUyA==
+"@react-native-firebase/analytics@^18.6.0":
+  version "18.6.0"
+  resolved "https://registry.npmjs.org/@react-native-firebase/analytics/-/analytics-18.6.0.tgz#2fbcab066c871e54f8dce5936063ecf1ff1e1892"
+  integrity sha512-RQN8Ch/sGlRrSk/wv+5bwzRq6yLxI9k1mCxF2c+Hovv+/XsUCvQdkWokQX2L5HdNQRCnLWJVlaPI6TcJbHNsdA==
 
-"@react-native-firebase/app-check@^18.5.0":
-  version "18.5.0"
-  resolved "https://registry.npmjs.org/@react-native-firebase/app-check/-/app-check-18.5.0.tgz#a0a20c1fb2ad5c76aee699d4e40b64f4c7812b6b"
-  integrity sha512-CUy9Ix2yrh3zxK3Dgcq6ZETLebMqcDC82iQJ4MkFiG9j6Ga1kTNl1VRDuirdiRSiwtu+XhRHHSD3X6esTEjPvQ==
+"@react-native-firebase/app-check@^18.6.0":
+  version "18.6.0"
+  resolved "https://registry.npmjs.org/@react-native-firebase/app-check/-/app-check-18.6.0.tgz#a51e5a10fafe21289732797e557fe8f858fe71c7"
+  integrity sha512-ReuAsEIZbfxf0msHTQqHIh4zxxaKGm/E+cJyjFrVz8aJHYaMEO1Jv7rwHcNqkOyLcTPnfX3Qc6YnRdR26i5WuA==
 
-"@react-native-firebase/app@^18.5.0":
-  version "18.5.0"
-  resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-18.5.0.tgz#198a133229d1b8710f257e76d9703dcb7e4cd6e0"
-  integrity sha512-AhHQi5KFDlKZn/lH7rEYtLfpsGamEq+P/cXZWcNPcP0WGlmi++abk7Pxnn4MjnG7TNhEyG/C9uq//qb6VhXaZg==
+"@react-native-firebase/app@^18.6.0":
+  version "18.6.0"
+  resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-18.6.0.tgz#939c92fda17c2641079314f30d52797db43a673e"
+  integrity sha512-pJwq2D0VBk8QvmIw6qZ5P3Y5Uaq4LL9NarAcTdEIA342VlhmTB1rovcYHE/F/hohdGBwFzi5qXAQnZmTxv27sg==
   dependencies:
-    opencollective-postinstall "^2.0.1"
+    opencollective-postinstall "^2.0.3"
     superstruct "^0.6.2"
 
-"@react-native-firebase/crashlytics@^18.5.0":
-  version "18.5.0"
-  resolved "https://registry.npmjs.org/@react-native-firebase/crashlytics/-/crashlytics-18.5.0.tgz#b5c1e15d260d5243c5ffb2963114bb7e42fe2b7f"
-  integrity sha512-i/jt/kNyhLws10/DeYgSQbGIekNPCAdtdg36NmFSw7URZf+1JUczKePbHqq3TvMFZJi5OjnDj06Fj9oenQKjWA==
+"@react-native-firebase/crashlytics@^18.6.0":
+  version "18.6.0"
+  resolved "https://registry.npmjs.org/@react-native-firebase/crashlytics/-/crashlytics-18.6.0.tgz#3a37d03178de6f2a1019f8054376f015f940503a"
+  integrity sha512-VGBvY8hNbyk30Fd1rTsQlUvSO425AnOootB+B0HCmuS2Mhn02RDA/ylPbkjGAavX+bM8TB6bOZ7hbpCAFgpa0Q==
   dependencies:
-    stacktrace-js "^2.0.0"
+    stacktrace-js "^2.0.2"
 
-"@react-native-firebase/messaging@^18.5.0":
-  version "18.5.0"
-  resolved "https://registry.npmjs.org/@react-native-firebase/messaging/-/messaging-18.5.0.tgz#2a80b25816470e9843682e031a3a113566067ce6"
-  integrity sha512-y1FApYxBMcygmbWBqUPFC+fCfvx6Yf6TdZewun7kPwx+S+tkYzoKx1IsXtxOXtqyJjCNEYirjFgNrs5SSd02zA==
+"@react-native-firebase/messaging@^18.6.0":
+  version "18.6.0"
+  resolved "https://registry.npmjs.org/@react-native-firebase/messaging/-/messaging-18.6.0.tgz#be0a7b8841c65a7b6d4dfd8407e9e216e7b57633"
+  integrity sha512-0fBDvbu13MJazAJhiT1rm//hnxhzOSu1ZpqmGUKpNu73llxPqVYDk4L8uZ7WBRtu3e6TP7Mw8IfH3gGB1qeelA==
 
-"@react-native-firebase/remote-config@^18.5.0":
-  version "18.5.0"
-  resolved "https://registry.npmjs.org/@react-native-firebase/remote-config/-/remote-config-18.5.0.tgz#5ece65cdd2b2c2179b6be409287f3b837ef39824"
-  integrity sha512-EOXToa1tLtskWjCAjW9RZHB19BHk8+MiLLS4B2DSAHs/t6QVRtjlK+xqI2nSppHSFdzMI6Nd9wi869baK/y5RA==
+"@react-native-firebase/remote-config@^18.6.0":
+  version "18.6.0"
+  resolved "https://registry.npmjs.org/@react-native-firebase/remote-config/-/remote-config-18.6.0.tgz#d69a2e343b6f7665c31d9bd0c2443fedbd38d5ca"
+  integrity sha512-H6pKDLt2TW5dIVjepnBl5aoWCV4amja8ClWmaOul/RB+FTR7IRae3vWrsy5B8+Dgd5dFpWALFu0G822YPJdSEw==
 
 "@react-native/assets@1.0.0":
   version "1.0.0"
@@ -4179,7 +4179,7 @@
     invariant "^2.2.4"
     nullthrows "^1.1.1"
 
-"@react-navigation/bottom-tabs@^6.5.4":
+"@react-navigation/bottom-tabs@^6.5.11":
   version "6.5.11"
   resolved "https://registry.npmjs.org/@react-navigation/bottom-tabs/-/bottom-tabs-6.5.11.tgz#b6e67a3aa19e60ed9c1139fa0253586c479832d5"
   integrity sha512-CBN/NOdxnMvmjw+AJQI1kltOYaClTZmGec5pQ3ZNTPX86ytbIOylDIITKMfTgHZcIEFQDymx1SHeS++PIL3Szw==
@@ -4205,7 +4205,7 @@
   resolved "https://registry.npmjs.org/@react-navigation/elements/-/elements-1.3.21.tgz#debac6becc6b6692da09ec30e705e476a780dfe1"
   integrity sha512-eyS2C6McNR8ihUoYfc166O1D8VYVh9KIl0UQPI8/ZJVsStlfSTgeEEh+WXge6+7SFPnZ4ewzEJdSAHH+jzcEfg==
 
-"@react-navigation/native@^6.1.3":
+"@react-navigation/native@^6.1.9":
   version "6.1.9"
   resolved "https://registry.npmjs.org/@react-navigation/native/-/native-6.1.9.tgz#8ef87095cd9c2ed094308c726157c7f6fc28796e"
   integrity sha512-AMuJDpwXE7UlfyhIXaUCCynXmv69Kb8NzKgKJO7v0k0L+u6xUTbt6xvshmJ79vsvaFyaEH9Jg5FMzek5/S5qNw==
@@ -4222,7 +4222,7 @@
   dependencies:
     nanoid "^3.1.23"
 
-"@react-navigation/stack@^6.3.12":
+"@react-navigation/stack@^6.3.20":
   version "6.3.20"
   resolved "https://registry.npmjs.org/@react-navigation/stack/-/stack-6.3.20.tgz#8eec944888f317bb1ba1ff30e7f513806bea16c2"
   integrity sha512-vE6mgZzOgoa5Uy7ayT97Cj+ZIK7DK+JBYVuKUViILlWZy6IWK7HFDuqoChSbZ1ajTIfAxj/acVGg1jkbAKsToA==
@@ -4236,7 +4236,7 @@
   resolved "https://registry.npmjs.org/@repeaterjs/repeater/-/repeater-3.0.4.tgz#a04d63f4d1bf5540a41b01a921c9a7fddc3bd1ca"
   integrity sha512-AW8PKd6iX3vAZ0vA43nOUOnbq/X5ihgU+mSXXqunMkeQADGiqw/PY0JNeYtD5sr0PAy51YPgAPbDoeapv9r8WA==
 
-"@rneui/base@^4.0.0-rc.7":
+"@rneui/base@^4.0.0-rc.8":
   version "4.0.0-rc.8"
   resolved "https://registry.npmjs.org/@rneui/base/-/base-4.0.0-rc.8.tgz#6fbf9b3049a9207d47c3c53b70c0f68f3627a170"
   integrity sha512-teJ6bUki+TQ+r+abefEWYb2wRUaMgRhp1oxtKa84UfDqTiCF0ItyJ0L8FhMb6AAkTOkWC34301T7j3H4df6ueA==
@@ -4248,7 +4248,7 @@
     react-native-ratings "^8.1.0"
     react-native-size-matters "^0.4.0"
 
-"@rneui/themed@^4.0.0-rc.7":
+"@rneui/themed@^4.0.0-rc.8":
   version "4.0.0-rc.8"
   resolved "https://registry.npmjs.org/@rneui/themed/-/themed-4.0.0-rc.8.tgz#5c0e1aaa3d190ead88936693c5cef50ec404cd05"
   integrity sha512-8L/XOrL9OK/r+/iBLvx63TbIdZOXF8SIjN9eArMYm6kRbMr8m4BitXllDN8nBhBsSPNYvL6EAgjk+i2MfY4sBA==
@@ -12729,7 +12729,7 @@ graphql-ws@5.12.1:
   resolved "https://registry.npmjs.org/graphql-ws/-/graphql-ws-5.12.1.tgz#c62d5ac54dbd409cc6520b0b39de374b3d59d0dd"
   integrity sha512-umt4f5NnMK46ChM2coO36PTFhHouBrK9stWWBczERguwYrGnPNxJ9dimU6IyOBfOkC6Izhkg4H8+F51W/8CYDg==
 
-graphql-ws@^5.11.3, graphql-ws@^5.14.0:
+graphql-ws@^5.14.0, graphql-ws@^5.14.2:
   version "5.14.2"
   resolved "https://registry.npmjs.org/graphql-ws/-/graphql-ws-5.14.2.tgz#7db6f6138717a544d9480f0213f65f2841ed1c52"
   integrity sha512-LycmCwhZ+Op2GlHz4BZDsUYHKRiiUz+3r9wbhBATMETNlORQJAaFlAgTFoeRh6xQoQegwYwIylVD1Qns9/DA3w==
@@ -12752,7 +12752,7 @@ graphql-yoga@3.9.1:
     lru-cache "^7.14.1"
     tslib "^2.3.1"
 
-graphql@^16.5.0:
+graphql@^16.8.1:
   version "16.8.1"
   resolved "https://registry.npmjs.org/graphql/-/graphql-16.8.1.tgz#1930a965bef1170603702acdb68aedd3f3cf6f07"
   integrity sha512-59LZHPdGZVh695Ud9lRzPBVTtlX9ZCV150Er2W43ro37wVof0ctenSaskPPjN7lVTIN8mSZt8PHUNKZuNQUuxw==
@@ -13457,10 +13457,10 @@ intl-messageformat@^4.4.0:
   dependencies:
     intl-messageformat-parser "^1.8.1"
 
-intl-pluralrules@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.npmjs.org/intl-pluralrules/-/intl-pluralrules-1.3.1.tgz#304ec4038a597894f6616633cbf5e66fb3dbee04"
-  integrity sha512-sNYPls1Q4fyN0EGLFVJ7TIuaMWln01LupLozfIBt69rHK0DHehghMSz6ejfnSklgRddnyQSEaQPIU6d9TCKH3w==
+intl-pluralrules@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/intl-pluralrules/-/intl-pluralrules-2.0.1.tgz#de16c3df1e09437635829725e88ea70c9ad79569"
+  integrity sha512-astxTLzIdXPeN0K9Rumi6LfMpm3rvNO0iJE+h/k8Kr/is+wPbRe4ikyDjlLr6VTh/mEfNv8RjN+gu3KwDiuhqg==
 
 intl@^1.2.5:
   version "1.2.5"
@@ -15404,11 +15404,6 @@ junk@^3.1.0:
   version "3.1.0"
   resolved "https://registry.npmjs.org/junk/-/junk-3.1.0.tgz#31499098d902b7e98c5d9b9c80f43457a88abfa1"
   integrity sha512-pBxcB3LFc8QVgdggvZWyeys+hnrNWg4OcZIU/1X59k5jQdLBlCsYGRQaz234SqoRLTCgMH00fY0xRJH+F9METQ==
-
-jwt-decode@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.npmjs.org/jwt-decode/-/jwt-decode-3.1.2.tgz#3fb319f3675a2df0c2895c8f5e9fa4b67b04ed59"
-  integrity sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==
 
 keyv@^3.0.0:
   version "3.1.0"
@@ -17898,7 +17893,7 @@ open@^7.0.3, open@^7.3.1, open@^7.4.2:
     is-docker "^2.0.0"
     is-wsl "^2.1.1"
 
-opencollective-postinstall@^2.0.1, opencollective-postinstall@^2.0.3:
+opencollective-postinstall@^2.0.3:
   version "2.0.3"
   resolved "https://registry.npmjs.org/opencollective-postinstall/-/opencollective-postinstall-2.0.3.tgz#7a0fff978f6dbfa4d006238fbac98ed4198c3259"
   integrity sha512-8AV/sCtuzUeTo8gQK5qDZzARrulB3egtLzFgteqB2tcT4Mw7B8Kt7JcDHmltjz6FOAHsvTevk70gZEbhM4ZS9Q==
@@ -19317,9 +19312,10 @@ react-native-bootsplash@^4.6.0:
     picocolors "^1.0.0"
     sharp "^0.32.1"
 
-"react-native-bundle-visualizer@https://github.com/IjzerenHein/react-native-bundle-visualizer.git#fix-remove-minify-false":
+react-native-bundle-visualizer@^3.1.3:
   version "3.1.3"
-  resolved "https://github.com/IjzerenHein/react-native-bundle-visualizer.git#4ff16715831ae6f87f9ea05fb4707fae385e6332"
+  resolved "https://registry.npmjs.org/react-native-bundle-visualizer/-/react-native-bundle-visualizer-3.1.3.tgz#afac782d0170b002cd74a0ce111c4f6dd6e15f52"
+  integrity sha512-FPnrQS3t/WM67S3fBdaQ0pvkpk/ZJOC4nZpiQCHTpjNZTUmbO5vQ4QbAlOpSayHp5n3nu1Ml/KIJaC6R5cwVng==
   dependencies:
     chalk "^4.1.2"
     execa "^5.1.1"
@@ -19376,12 +19372,12 @@ react-native-crypto@^2.0.1:
     public-encrypt "^4.0.0"
     randomfill "^1.0.3"
 
-react-native-currency-input@^1.0.1:
+react-native-currency-input@^1.1.1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/react-native-currency-input/-/react-native-currency-input-1.1.1.tgz#d7820d959390b5bd56f6d34b102247b3124d256b"
   integrity sha512-DLsYqXkhpbvwa1M3znaG0bfKh8jlzkf+iO8TRlAJ/t8c+3gXyKwO2YdWqsBUuX0ZHLY4IVBzDjURMEofjq3ypg==
 
-react-native-device-info@^10.6.0:
+react-native-device-info@^10.11.0:
   version "10.11.0"
   resolved "https://registry.npmjs.org/react-native-device-info/-/react-native-device-info-10.11.0.tgz#2c9f378f1c3c5eb9aafa803d015b84325991a9aa"
   integrity sha512-qRzhuYOm5ZXQi5dhfJFjDq157oipxcEW/fo0QyMm5+TI6V6/+P/tju+Hif6z0rpLCf7MV7iDVRv2Kqha4D/yvQ==
@@ -19652,7 +19648,7 @@ react-native-webview@^13.6.0:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"
 
-react-native@^0.71.8:
+react-native@0.71:
   version "0.71.14"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.71.14.tgz#df12b405a7913b736de01b0347af14e4be7bf324"
   integrity sha512-7uhzas8aKpU2EARhlONt7yiclh+7PXEOJk469ewpQyId8Owq5WNtZvQm/z3k4mHUriMeQ37vgSGkOInSKcCazw==
@@ -21439,7 +21435,7 @@ stacktrace-gps@^3.0.4:
     source-map "0.5.6"
     stackframe "^1.3.4"
 
-stacktrace-js@^2.0.0:
+stacktrace-js@^2.0.2:
   version "2.0.2"
   resolved "https://registry.npmjs.org/stacktrace-js/-/stacktrace-js-2.0.2.tgz#4ca93ea9f494752d55709a081d400fdaebee897b"
   integrity sha512-Je5vBeY4S1r/RnLydLl0TBTi3F2qdfWmYsGvtfZgEI+SCprPppaIhQf5nGcal4gI4cGpCV/duLcAzT1np6sQqg==

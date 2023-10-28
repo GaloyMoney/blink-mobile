@@ -507,28 +507,28 @@ PODS:
     - React-Core
   - RNDeviceInfo (10.11.0):
     - React-Core
-  - RNFBAnalytics (18.5.0):
+  - RNFBAnalytics (18.6.0):
     - Firebase/AnalyticsWithoutAdIdSupport (= 10.15.0)
     - React-Core
     - RNFBApp
-  - RNFBApp (18.5.0):
+  - RNFBApp (18.6.0):
     - Firebase/CoreOnly (= 10.15.0)
     - React-Core
-  - RNFBAppCheck (18.5.0):
+  - RNFBAppCheck (18.6.0):
     - Firebase/AppCheck (= 10.15.0)
     - React-Core
     - RNFBApp
-  - RNFBCrashlytics (18.5.0):
+  - RNFBCrashlytics (18.6.0):
     - Firebase/Crashlytics (= 10.15.0)
     - FirebaseCoreExtension (= 10.15.0)
     - React-Core
     - RNFBApp
-  - RNFBMessaging (18.5.0):
+  - RNFBMessaging (18.6.0):
     - Firebase/Messaging (= 10.15.0)
     - FirebaseCoreExtension (= 10.15.0)
     - React-Core
     - RNFBApp
-  - RNFBRemoteConfig (18.5.0):
+  - RNFBRemoteConfig (18.6.0):
     - Firebase/RemoteConfig (= 10.15.0)
     - React-Core
     - RNFBApp
@@ -916,12 +916,12 @@ SPEC CHECKSUMS:
   RNCClipboard: d77213bfa269013bf4b857b7a9ca37ee062d8ef1
   RNDateTimePicker: 65e1d202799460b286ff5e741d8baf54695e8abd
   RNDeviceInfo: bf8a32acbcb875f568217285d1793b0e8588c974
-  RNFBAnalytics: cc406ee9bd0ddaad8d14400586cec215660bbf4c
-  RNFBApp: cc9384746945ac0eedd4759171a8abb4c4c5309d
-  RNFBAppCheck: 6e213103efa8b8cef25151dffafd85b95d6eca0b
-  RNFBCrashlytics: e691d843de6074360e9afaf6b475ee285fb65b56
-  RNFBMessaging: 3c573398dced30f6cbaf55a195080916ea23f819
-  RNFBRemoteConfig: 3b872da757ed617b83d4a780d7bd0915cc82bd03
+  RNFBAnalytics: 7619ae77a76074bd6a38e2ae2ea76d323ee40a43
+  RNFBApp: 5e457a31687a849c91ca96af024ec90e2cdb9e6c
+  RNFBAppCheck: 5984fb82f398a7ec497e6e6d6b683dd4e3efa57f
+  RNFBCrashlytics: a0e63f706abf28bd46c090ca1a717e43d3b81c33
+  RNFBMessaging: 9b2b79eab3cd1c746a041c1bcd109be6aa385f32
+  RNFBRemoteConfig: f45f8e526c84531c101703f71959e15a12d5d676
   RNGestureHandler: 6e46dde1f87e5f018a54fe5d40cd0e0b942b49ee
   RNInAppBrowser: e36d6935517101ccba0e875bac8ad7b0cb655364
   RNKeychain: a65256b6ca6ba6976132cc4124b238a5b13b3d9c
