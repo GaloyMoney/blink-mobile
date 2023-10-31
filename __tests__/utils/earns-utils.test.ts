@@ -3,7 +3,10 @@ import { loadLocale } from "../../app/i18n/i18n-util.sync"
 import { getQuizQuestionsContent } from "@app/screens/earns-screen/earns-utils"
 const expectedEnglishQuizSections = [
   {
-    section: { id: "bitcoinWhatIsIt", title: "Bitcoin: What is it?" },
+    section: {
+      id: "bitcoinWhatIsIt",
+      title: "Bitcoin: What is it?",
+    },
     content: [
       {
         id: "whatIsBitcoin",
@@ -82,7 +85,10 @@ const expectedEnglishQuizSections = [
     ],
   },
   {
-    section: { id: "WhatIsMoney", title: "What is Money? " },
+    section: {
+      id: "WhatIsMoney",
+      title: "What is Money? ",
+    },
     content: [
       {
         id: "moneySocialAgreement",
@@ -184,7 +190,10 @@ const expectedEnglishQuizSections = [
     ],
   },
   {
-    section: { id: "HowDoesMoneyWork", title: "How Does Money Work? " },
+    section: {
+      id: "HowDoesMoneyWork",
+      title: "How Does Money Work? ",
+    },
     content: [
       {
         id: "WhatIsFiat",
@@ -269,7 +278,10 @@ const expectedEnglishQuizSections = [
     ],
   },
   {
-    section: { id: "BitcoinWhySpecial", title: "Bitcoin: Why is it special? " },
+    section: {
+      id: "BitcoinWhySpecial",
+      title: "Bitcoin: Why is it special? ",
+    },
     content: [
       {
         id: "LimitedSupply",
@@ -377,7 +389,7 @@ const expectedEnglishQuizSections = [
     content: [
       {
         id: "originsOfMoney",
-        title: "What is the primary and ultimate evolutionary function of collectibles",
+        title: "The origins of money",
         text: 'The earliest human societies engaged in trade through barter, but this method had several limitations. One issue was the "double coincidence of wants" problem, where two people needed to desire the same item at the same time in order to complete a trade.\n\nTo overcome this issue, humans began to collect and value certain items for their rarity and symbolic significance, such as shells, animal teeth, and flint.\n\nThese collectibles served as a way for early humans to store and transfer wealth, providing an evolutionary advantage over other species such as Homo neanderthalensis.\n',
         question:
           "What is the primary and ultimate evolutionary function of collectibles",
@@ -394,7 +406,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "primitiveMoney",
-        title: "What was the primary role of collectibles in paleolithic societies",
+        title: "Primitive forms of money",
         text: "Collectibles served as a precursor to money by allowing trade between different groups and facilitating the transfer of wealth between generations. Although they were not used as frequently as modern money in paleolithic societies, collectibles still served as a store of value and could sometimes even facilitate trade.\n\nPrimitive forms of money, such as collectibles, had a low velocity compared to modern currency and might only be transferred a few times during an individual's lifetime. However, durable collectibles that were passed down through generations had substantial value at each transfer and sometimes made trade possible.\n",
         question: "What was the primary role of collectibles in paleolithic societies",
         answers: [
@@ -410,8 +422,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "anticipatingDemand",
-        title:
-          "What was the main advantage of being able to anticipate future demand for collectible items in early human societies",
+        title: "Anticipating Demand",
         text: "The choice of which items to collect or create posed a significant problem for early humans, as they had to anticipate which objects would be desired by others. The ability to correctly predict which items would be in demand for their collectible value gave a significant advantage to the owner in terms of their ability to trade and accumulate wealth.\n\nSome Native American tribes, such as the Narragansetts, even focused on producing collectibles that had little practical use, but were valuable in trade.\n\nThe earlier a collectible is anticipated to be in future demand, the greater the advantage its possessor has, as it can be obtained at a lower cost before it becomes widely sought after and its trade value increases as the number of people demanding it grows.\n",
         question:
           "What was the main advantage of being able to anticipate future demand for collectible items in early human societies",
@@ -428,7 +439,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "nashEquilibrium",
-        title: "What is a Nash Equilibrium and how does it benefit society",
+        title: "The Key to Facilitating Trade",
         text: 'Acquiring an item with the expectation that it will be desired as a future store of value can accelerate its adoption for that purpose. This process can create a feedback loop that drives societies towards adopting a single store of value.\n\nIn game theory, this is known as a "Nash Equilibrium". Reaching a Nash Equilibrium for a store of value can greatly benefit a society, as it makes trade and the division of labor easier and paves the way for the development of civilization.\n',
         question: "What is a Nash Equilibrium and how does it benefit society",
         answers: [
@@ -444,8 +455,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "singleStoreOfValue",
-        title:
-          "Why did merchants and traders in early human societies have an incentive to promote the adoption of a foreign store of value in their own society",
+        title: "The Benefits of Converging on a Single Store of Value",
         text: "As human societies and trade routes developed over time, stores of value that emerged in different societies began to compete with each other. Merchants and traders had to decide whether to save their profits in the store of value of their own society or in the store of value of the society they were trading with, or a combination of both.\n\nHolding savings in a foreign store of value gave merchants the ability to complete trade more easily in that society, and also gave them an incentive to promote the adoption of that store of value in their own society, as it would increase the purchasing power of their savings.\n\nWhen two societies adopt the same store of value, they see a significant reduction in the cost of trading with each other and an increase in trade-based wealth. In the 19th century, most of the world converged on a single store of value – gold – and this period saw the greatest increase in trade in history.\n",
         question:
           "Why did merchants and traders in early human societies have an incentive to promote the adoption of a foreign store of value in their own society",
@@ -470,7 +480,7 @@ const expectedEnglishQuizSections = [
     content: [
       {
         id: "whatIsGoodSOV",
-        title: "What are some attributes that make a good store of value",
+        title: "Some stores of value are better than others",
         text: "When stores of value compete with each other, the attributes that make a good store of value allow it to outperform its competitors and increase demand over time.\n\nMany goods have been used as stores of value but certain attributes are particularly desirable and allow these goods to be more successful.\n\nAn ideal store of value should be durable, portable, interchangeable, verifiable, divisible, scarce, have a long history, and resistant to censorship.\n",
         question: "What are some attributes that make a good store of value",
         answers: [
@@ -486,8 +496,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "durability",
-        title:
-          "Which of the following is an important factor in determining the durability of a good store of value",
+        title: "Durability is an important attribute for a good store of value",
         text: 'The good used as money should not be perishable or easily destroyed. Gold is known for its durability and is often considered the "king" in this regard.\n\nA large portion of the gold that has ever been mined or minted, including the gold of the Pharaohs, still exists today and is likely to remain available for many more years. Gold coins that were used as money in ancient times still hold significant value today.\n\nFiat currencies and bitcoins are digital records that may take physical form, such as paper bills. However, it is not the physical manifestation of these currencies that should be considered for their durability, but rather the durability of the institution that issues them.\n\nMany governments and their currencies have come and gone over the centuries, while others, such as the US dollar and British pound, have survived for a longer period of time. Bitcoins have no issuing authority, so their durability depends on the network that secures them. While it is still early to draw strong conclusions about the durability of bitcoins, there are signs that the network has displayed a high level of "anti-fragility" despite attempts to regulate it and attacks by hackers.\n',
         question:
           "Which of the following is an important factor in determining the durability of a good store of value",
@@ -504,8 +513,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "portability",
-        title:
-          "Which of the following is NOT a factor that makes a good store of value portable",
+        title: "The good must be easy to transport and store",
         text: '\n"Portability" refers to how easy it is to move or transport a good from one place to another.\n\nBitcoins are highly portable, allowing for easy storage on a small USB drive and quick transmission across long distances. Similarly, fiat currencies are also digital and therefore portable, but government regulations and capital controls can make large transfers of value difficult or impossible.\n\nOn the other hand, gold, being physical in form and very dense, is the least portable store of value, with the majority of bullion never being transported and the transfer of physical gold being costly, risky, and time-consuming.\n',
         question:
           "Which of the following is NOT a factor that makes a good store of value portable",
@@ -522,8 +530,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "fungibility",
-        title:
-          "What is the main reason that gold is considered more fungible than diamonds",
+        title: "One specimen should be interchangeable with another of equal quantity",
         text: '\n"Fungibility" means that one unit of a currency is interchangeable with another unit of the same currency. This is an important attribute for a good store of value.\n\nGold is a highly fungible store of value, as when melted down, an ounce of gold is essentially indistinguishable from any other. Fiat currencies, on the other hand, may not always be completely fungible, as their issuing institutions may treat different denominations differently.\n\nLike gold, units of bitcoin are fungible, but there are some nuances to it. We\'ll dive into this in a later chapter.\n',
         question:
           "What is the main reason that gold is considered more fungible than diamonds",
@@ -540,7 +547,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "verifiability",
-        title: "How can bitcoin be verified",
+        title: "The good must be easy to quickly identify and verify as authentic",
         text: "It is important for a good store of value to be easily verifiable as authentic. This increases confidence in trade and the likelihood that a transaction will be completed.\n\nBoth fiat currencies and gold are generally easy to verify, but they are not foolproof. Counterfeit bills and gold-plated tungsten have been used to deceive people in the past.\n\nOn the other hand, the use of cryptography makes verification very easy for bitcoin and makes counterfeiting impossible.\n",
         question: "How can bitcoin be verified",
         answers: [
@@ -556,8 +563,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "divisibility",
-        title:
-          "Which of the following is NOT a good store of value due to its difficulty in being easily divided for day-to-day trade",
+        title: "The good must be easy to subdivide",
         text: "The ability to divide a good is an important attribute for it to be a good store of value.\n\nImagine you have a $100 bill and want to buy a pack of chewing gum that costs 10 cents. The success of the trade depends on the seller having $99.90 in change available in that moment.\n\nIn societies where trade is prevalent, the ability to divide a good into smaller quantities allows for more precise exchange and can make it easier to use in day-to-day transactions.\n\nBitcoin is particularly useful in this regard, as it can be divided down to a hundred millionth of a unit and transmitted in tiny and exact amounts.\n\nFiat currencies are typically divisible down to pocket change, which has little purchasing power, making fiat divisible enough in practice.\n\nGold, while physically divisible, can be difficult to use in small quantities for everyday trade.\n",
         question:
           "Which of the following is NOT a good store of value due to its difficulty in being easily divided for day-to-day trade",
@@ -570,7 +576,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "scarce",
-        title: "What is the most important attribute of a store of value",
+        title: "A monetary good must scarce",
         text: "A good store of value should have a limited supply, or be scarce.\n\nThis is because scarcity can create value, as people often desire rare or hard-to-obtain items. Bitcoin, for instance, is designed to have a maximum of 21 million units, which gives each owner a known percentage of the total possible supply.\n\nIn contrast, the supply of gold can potentially increase through new mining methods, and fiat currencies are often prone to inflation, leading to a decline in value over time.\n",
         question: "What is the most important attribute of a store of value",
         answers: ["Scarcity", "Abundance", "Ease of production"],
@@ -582,8 +588,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "establishedHistory",
-        title:
-          "What is the main reason that a long-established store of value could be displaced by a new arrival",
+        title: "An established history of being valued by society",
         text: "This is because a well-established store of value is less likely to be displaced by a newcomer, unless it has a significant advantage over the established good.\n\nAdditionally, people are creatures of habit and will keep using what they already know.\n\nGold, for example, has a long history of being valued and has maintained its value over time. In contrast, fiat currencies, which are a relatively recent invention, have a tendency to lose value over time due to inflation.\n\nBitcoin, although it has only been around for a short time, has shown resilience in the market and is likely to continue to be valued.\n",
         question:
           "What is the main reason that a long-established store of value could be displaced by a new arrival",
@@ -600,8 +605,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "censorshipResistance",
-        title:
-          "Which of the following is NOT a reason that Bitcoin is considered a censorship-resistant good",
+        title: "No permission required",
         text: "Censorship-resistance is an attribute that has become increasingly important in the digital age, as it refers to the difficulty that external parties, such as corporations or governments, have in preventing an individual from using a particular good.\n\nThis attribute is particularly valuable for individuals living under regimes that enforce capital controls or prohibit certain forms of trade. Bitcoin is often cited as being a censorship-resistant good due to its decentralized, peer-to-peer network, which allows for transactions to be made without human intervention or permission.\n\nIn contrast, the fiat banking system is regulated by states and requires human intervention to report and prevent certain uses of monetary goods, such as capital controls.\n\nGold, although it is not issued by states, can be difficult to transmit at a distance and is therefore more subject to state regulation.\n",
         question:
           "Which of the following is NOT a reason that Bitcoin is considered a censorship-resistant good",
@@ -626,7 +630,7 @@ const expectedEnglishQuizSections = [
     content: [
       {
         id: "evolutionMoney",
-        title: "What is the main focus of modern monetary economics",
+        title: "The Evolution of Money",
         text: "In modern times, many people in the field of monetary economics focus on the idea that money is mainly used as a way to exchange goods and services.\n\nIn the past century, however, governments have had the exclusive power to create money and have often made it difficult for money to hold its value. This lead people to believe that the main purpose of money is to be used for exchange.\n\nSome have argued that Bitcoin is not a good form of money because its value tends to change too much to be used effectively in transactions.\n\nHowever, this way of thinking is backwards. Throughout history, the use of money has developed in stages, with its value as a store of value coming before its use as a medium of exchange.\n",
         question: "What is the main focus of modern monetary economics",
         answers: [
@@ -642,8 +646,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "collectible",
-        title:
-          "What were some examples of early forms of money that were valued for their appearance or special qualities",
+        title: "Four Stages of Money: Collectible",
         text: "Throughout history, money has gone through four stages of development. In the very beginning, people only wanted money because of its special qualities, and it was mostly seen as a decorative item or a collectible.;\n\nExamples of this include shells, beads, and gold, which were all collectibles before becoming widely used as money.\n",
         question:
           "What were some examples of early forms of money that were valued for their appearance or special qualities",
@@ -660,7 +663,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "storeOfValue",
-        title: "What determines the purchasing power of a store of value",
+        title: "Four Stages of Money: Store of Value",
         text: "The store of value is the second stage of money's evolution. When enough people want money because of its special qualities, it becomes a way to keep and save value over time, to transport hard earned wealth into the future.\n\nAs more people recognize a good as a good way to store value, the good's value increases as more people want it for this purpose.\n\nEventually, the value of a store of value will stop increasing as it becomes widely held and fewer new people want it as a store of value.\n",
         question: "What determines the purchasing power of a store of value",
         answers: [
@@ -676,7 +679,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "mediumOfExchange",
-        title: "What is Bitcoin Pizza Day celebrated for",
+        title: "Four Stages of Money: Medium of Exchange",
         text: "When money is used to store value, its value becomes stable eventually. And when the value of money is stable, it becomes the best option to facilitate trade as it's easy to use and doesn't have the coordination burden of barter.\n\nIn the early days of Bitcoin in 2010, some people did not recognize the opportunity cost to use Bitcoin as a medium of exchange rather than a nascent store of value.\n\nThere is a famous story about Laszlo Hanyecz who traded 10,000 bitcoins (which were worth about $165 million at the time of this writing) for just two pizzas. When Laszlo acquired those pizzas, it marked the first time that bitcoin had market value.\n\nToday, Laszlo's pizza is celebrated globally on May 22 as Bitcoin Pizza Day as an important step and milestone in the evolution of bitcoin as money.\n",
         question: "What is Bitcoin Pizza Day celebrated for",
         answers: [
@@ -692,7 +695,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "unitOfAccount",
-        title: "How can bitcoin be considered a unit of account",
+        title: "Four Stages of Money: Unit of Account",
         text: "When money is commonly used for trading, goods are priced in terms of it. This means that most goods can be exchanged for money at a certain rate.\n\nIt is not accurate to say that many goods can be bought with bitcoin today. For example, while a cup of coffee might be available for purchase using bitcoin, the price listed is not the true value of bitcoin. Instead, it is the dollar price that the merchant wants, converted into bitcoin based on the current exchange rate between dollars and bitcoin.\n\nIf the value of bitcoin goes down in terms of dollars, the merchant will ask for more bitcoin to equal the same dollar amount.\n\nBitcoin can only be considered a unit of account (a standard way to measure the value of goods) when merchants are willing to accept it for payment without considering the exchange rate with other currencies.\n",
         question: "How can bitcoin be considered a unit of account",
         answers: [
@@ -708,7 +711,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "partlyMonetized",
-        title: 'What is the meaning of the term "partly monetized"',
+        title: "Partial Monetization",
         text: 'Goods that are not widely accepted as a unit of account may be considered "partly monetized" because they are used for some purposes related to money, but not all.\n\nGold is an example of a partly monetized good that is used to store value but is not widely used as a medium of exchange or unit of account. In some countries, different goods may be used for different purposes related to money, such as one good being used as a medium of exchange and another being used as a store of value or unit of account.\n\nThe dollar is an example of a good that is widely used for all three purposes of money in the United States, while the peso was an example of a good that was used as a medium of exchange in Argentina but was not a good store of value because of its volatility and regular loss of purchasing power.\n',
         question: 'What is the meaning of the term "partly monetized"',
         answers: [
@@ -724,7 +727,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "monetizationStage",
-        title: "What is the current stage of Bitcoin's evolution",
+        title: "Bitcoin is in the stage of monetization",
         text: "Bitcoin is currently changing from the first stage of being used as money to the second stage. It may take several years for Bitcoin to be used as a way to trade goods and services, like other currencies.\n\nThe process of Bitcoin becoming more widely accepted as money is uncertain, as the same process took a long time for gold and no one alive has seen a good become money in the same way that is happening with Bitcoin. There is not a lot of experience with this process, but developments around the world are very promising and happening faster in the interconnected digital age.\n",
         question: "What is the current stage of Bitcoin's evolution",
         answers: [
@@ -748,7 +751,7 @@ const expectedEnglishQuizSections = [
     content: [
       {
         id: "notFromGovernment",
-        title: "What is money",
+        title: "Money is not a government creation",
         text: "There is a popular misconception that money is a government creation and cannot exist without government. This is false.\n\nThe history of money goes back thousands of years to times when governments did not exist, but money did.\n\nThis proves that money is emergent and simply the most tradable good in a market. It is not a government creation and certainly does not require a government to make money work.\n",
         question: "What is money",
         answers: [
@@ -764,7 +767,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "primaryFunction",
-        title: "What was the primary function of money",
+        title: "The primary function of money",
         text: "Primitive money existed long before large scale trade networks. Archeologists found that early humans used valuable tools like arrowheads, collectibles like cowry shells and commodities like barley as primitive money.\n\nThe main advantage and primary function of these primitive moneys was to improve the workings of even small barter networks. Primitive moneys achieved this by eliminating the need to match coincidences of wants, interests, supply or skill. They also greatly reduced the need for credit, which, in the absence of writing in prehistoric times, was difficult to keep track of.\n",
         question: "What was the primary function of money",
         answers: [
@@ -780,7 +783,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "monetaryMetals",
-        title: "What made metals valuable as a form of money",
+        title: "Monetary Metals",
         text: "Metals were difficult to make, which made them rare. They also lasted longer than other materials like shells, grains, and beads. This made them valuable and easy to carry, or portable.\n\nAs technology improved, especially in the production of metal, humans were able to create more advanced, better forms of money.\n",
         question: "What made metals valuable as a form of money",
         answers: [
@@ -796,7 +799,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "stockToFlow",
-        title: "What is the Stock to Flow ratio",
+        title: "Understanding the Stock to Flow Ratio",
         text: "The Stock to Flow ratio is a measure of the rate at which new units of money are added to the existing supply.\n\nTo calculate it, you divide the existing amount of money by the amount produced each year.\n\nFor something to be a good way to save value, it should become more valuable when people want to use it to save, but the people who make it should not be able to add too much of it, which would make it less valuable.\n",
         question: "What is the Stock to Flow ratio",
         answers: [
@@ -812,7 +815,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "hardMoney",
-        title: "What is the hardness of money",
+        title: "Hard Money and Easy Money",
         text: "The difficulty of producing new units of money compared to other forms of money is called its hardness. This can change over time as technology improves and what was once difficult to produce could become easier.\n\nIn precolonial Ghana (Africa), aggry beads (made of glass) were used as money. Glassmaking was an expensive craft in that region, which gave the aggry beads a high stock-to-flow ratio and made them rather scarce.\n\nIn the 16th century, European explorers discovered the high value ascribed to these beads by the west Africans and began importing them in mass quantities; as European glassmaking technology made them extremely cheap to produce.\n\nSlowly but surely, the Europeans used these cheaply produced beads to acquire most of the precious resources of Africa. The net effect of this incursion into Africa was the transference its vast natural resource wealth to Europeans and the conversion of aggry beads from hard money to soft money.\n\nAs societies continued to evolve, they began to move away from artifact money like stones and glass beads and towards monetary metals.\n",
         question: "What is the hardness of money",
         answers: [
@@ -836,7 +839,7 @@ const expectedEnglishQuizSections = [
     content: [
       {
         id: "convergingOnGold",
-        title: "Why did the free market choose gold as a form of money",
+        title: "Convergence on Gold",
         text: "From all monetary metals, the free market ultimately chose gold as a form of money because it has two important qualities that keep its value stable over long periods of time and across many regions of the world:\n\n1\\) Gold cannot be destroyed, and\n\n2\\) Gold cannot be made from other materials.\n",
         question: "Why did the free market choose gold as a form of money",
         answers: [
@@ -852,7 +855,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "originsOfPaperMoney",
-        title: "What were paper notes used for during the expansion of trade routes",
+        title: "The Origins of Paper Money Backed by Gold",
         text: "Gold can be made into coins or bars of a specific weight and purity. When trade routes expanded, it became riskier to transport large amounts of gold.\n\nAs a solution, paper notes from trusted banks that could be exchanged for gold were used. In 900 CE, Chinese merchants initiated the use of paper currency to avoid having to carry thousands of coins over long distances. They started trading paper receipts from custodians where they had deposited money or goods.\n\nIn the beginning these paper notes were personally registered, but they soon became a written order to pay the amount to whomever had it in their possession (bearer instrument). These notes can be seen as a predecessor to today's banknotes.\n",
         question: "What were paper notes used for during the expansion of trade routes",
         answers: [
@@ -868,7 +871,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "fractionalReserve",
-        title: "Why did Fractional Reserve Banking develop",
+        title: "The Invention of Fractional Reserve Banking",
         text: "Fractional Reserve Banking is a system in which banks are allowed to hold only a fraction of the deposits they receive as reserves, while using the rest to make loans.\n\nOne reason this system developed is because people wanted to earn money from their gold, rather than paying to store it.\n\nThey could do this by allowing a bank or vault to lend out their gold and receiving interest payment in return.\n\nIf more people deposited their gold than wanted to take it back, the bank could make more profit by using the same gold as collateral for multiple loans, hence keeping only a fraction of loans in reserve.\n",
         question: "Why did Fractional Reserve Banking develop",
         answers: [
@@ -884,8 +887,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "bankRun",
-        title:
-          "What is a potential outcome of banks issuing more paper notes than they held deposits",
+        title: "Problems of Fractional Reserve Banking",
         text: "Banks sometimes issued more paper notes than they had deposits, which could cause problems in the economy. If people started to doubt the solvency of a bank, they might rush to withdraw their money all at once before others do. This is called a bank run.\n\nThe sudden loss of deposits from the bank run could reveal that the bank was using too much leverage through Fractional Reserve Banking. This could cause a lack of liquidity and bring the whole financial system to a stop.\n",
         question:
           "What is a potential outcome of banks issuing more paper notes than they held deposits",
@@ -902,7 +904,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "modernCentralBanking",
-        title: "What is the purpose of a central bank",
+        title: "Modern Central Banking",
         text: 'To counter the problem of bank runs, governments created their own banks called "central banks."\n\nThese central banks have the special power to create money. They act as a backup plan for when commercial banks run out of reserves and need extra money to stay open.\n\nBecause of this function, central banks are also called the "lenders of last resort," meaning they can create and give out money when commercial banks need liquidity to service withdrawals.\n',
         question: "What is the purpose of a central bank",
         answers: [
@@ -918,8 +920,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "goldBacked",
-        title:
-          "What was the main problem with the gold standard system for governments and citizens",
+        title: "From Gold to Gold-Backed",
         text: "In the past, some governments linked the value of their currency to a specific amount of gold, a system known as a \"gold standard.\" This meant that the government had to hold a certain amount of gold in reserve in order to issue a certain amount of currency.\n\nThis system limited the government's ability to borrow money because they could not simply print more currency to cover the cost of borrowing. Governments often borrowed money to finance wars or other expensive projects, but the gold standard made it difficult for them to do so without first accumulating enough gold to back the new currency they wanted to issue.\n\nThe gold standard was also problematic for citizens because it did not provide any guarantee that their deposits in the bank would be safe, as the value of their money was dependent on the government's ability to maintain its gold reserves.\n",
         question:
           "What was the main problem with the gold standard system for governments and citizens",
@@ -936,7 +937,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "brettonWoods",
-        title: "What was the main purpose of the Bretton Woods system",
+        title: "The Bretton Woods System",
         text: "After World War I and II, many countries were financially exhausted and did not have a lot of money. The United States had a lot of gold because they sold a lot of weapons and other military equipment to other countries during the wars. As a result, the United States controlled about two-thirds of the world's gold.\n\nIn order to fix the global economy, a new system was created where countries would link their own currencies to the value of the US dollar.\n\nThe US dollar, in turn, would be linked to the value of gold. This meant that the value of other countries' currencies would be based on the value of the US dollar, which was based on the amount of gold the United States had.\n",
         question: "What was the main purpose of the Bretton Woods system",
         answers: [
@@ -952,7 +953,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "globalReserve",
-        title: "What is a global reserve currency",
+        title: "The Global Reserve Currency",
         text: "A global reserve currency is a type of money that is widely used in international trade and financial transactions. It is the preferred or most in-demand currency for settling transactions, as it is generally stable and widely accepted.\n\nChanges to the global reserve currency can have significant geopolitical implications, as it can affect the balance of power between countries.\n\nThe dominant global reserve currency has typically had a lifespan of several decades, with the US dollar serving as the dominant global reserve currency for much of the 20th century.\n",
         question: "What is a global reserve currency",
         answers: [
@@ -976,7 +977,7 @@ const expectedEnglishQuizSections = [
     content: [
       {
         id: "nixonShock",
-        title: "What happened to the Bretton Woods system in 1971",
+        title: "The Nixon Shock",
         text: 'The Bretton Woods system was a monetary system established after World War II in order to address global economic instability and high levels of debt.\n\nUnder this system, many countries pegged their own currencies to the value of the US dollar, which was itself pegged to the value of gold at a fixed exchange rate. This meant that the value of other countries\' currencies was indirectly tied to the value of gold through the US dollar.\n\nIn 1971, United States President Richard Nixon directed the US Treasury to stop allowing foreign governments to exchange their dollars for gold, a process known as "convertibility."\n\nThe sudden end of convertibility of dollars for gold shocked the world and became known as the Nixon Shock, effectively ending the Bretton Woods system fixed exchange rates. It marked the beginning of a new monetary system based on floating exchange rates.\n',
         question: "What happened to the Bretton Woods system in 1971",
         answers: [
@@ -992,7 +993,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "fiatEra",
-        title: 'What does the word "fiat" mean when it is used to talk about money',
+        title: "The Fiat Era",
         text: '"Fiat" is a word that comes from Latin and means "let it be done." When it is used to talk about money, it means that a government is creating a currency by decree alone.\n\nSince the Nixon Shock, fiat money is not backed by gold or silver and neither can it be directly converted for a fixed amount of gold, as it used to be before.\n\nThis means that their value comes from the fact that the government says they are valuable and that people trust that they will be able to use them to buy things.\n\nIn addition, governments often make it a law (legal tender) that merchants have to accept this type of fiat currency and that it is the only type of currency that can be used to pay taxes.\n',
         question: 'What does the word "fiat" mean when it is used to talk about money',
         answers: [
@@ -1008,7 +1009,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "digitalFiat",
-        title: "What is digital fiat",
+        title: "Digital Fiat",
         text: "Digital fiat is a type of money that exists only in digital form, like on a computer or phone. It is a digital representation of physical cash, such as paper money or coins.\n\nDigital fiat became possible with the proliferation of digital communication networks, like the internet, and the growth of consumer devices like computers and phones that can connect to these networks. Standardized payment protocols, which are established ways of making payments online, also played a role in the emergence of digital fiat.\n\nDigital fiat is increasingly replacing physical fiat due to its lower costs, faster speeds, and increased capabilities for surveillance. In other words, it is cheaper and faster to use digital fiat and it is easier to track transactions made with digital fiat.\n",
         question: "What is digital fiat",
         answers: [
@@ -1024,7 +1025,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "plasticCredit",
-        title: "What is a credit card",
+        title: "Plastic Credit",
         text: "The credit card is a type of payment card that allows people to borrow money to pay for things. When people use credit cards, they are borrowing money from the credit card company to pay for things now, rather than saving up money to pay for things later.\n\nThis has gradually normalized the act of borrowing for consumption, something that impacts the time preference of users. Instead of waiting to save up the money, the invention of credit cards has made it more common for people to borrow money to buy things they want right away\n\nToday, there are about three billion credit cards in use around the world.\n",
         question: "What is a credit card",
         answers: [
@@ -1040,7 +1041,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "doubleSpendProblem",
-        title: "What was a key factor in the creation of Bitcoin",
+        title: "The Double Spending Problem",
         text: "In the digital world, it is easy to copy things, so it is important to make sure that the same digital unit of money cannot be spent more than once by its owner.\n\nIn a monetary system with a central authority (like a government), this problem is trivially solved by keeping a ledger of transactions managed by the central authority. However, this normally represents a single point of failure from both availability and trust viewpoints.\n\nIn a decentralized system, the double-spending problem is significantly harder to solve. Many people have tried to create digital money that is not controlled by a government, but they have all had their own unique challenges.\n\nSatoshi Nakamoto took all of these lessons into account and was the first to solve the double spending problem with the implementation of Bitcoin by creating a decentralized system that rewards honesty and makes it very costly to be dishonest.\n",
         question: "What was a key factor in the creation of Bitcoin",
         answers: [
@@ -1056,7 +1057,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "satoshisBreakthrough",
-        title: "Which problem did Satoshi have to solve to create Bitcoin",
+        title: "Satoshi's Breakthrough",
         text: "Satoshi's solution to the double spending problem was a breakthrough in computer science and distributed systems. Until Bitcoin, many believed that it would be unsolvable.\n\nHis solution allowed Satoshi to develop a new electronic cash system that for the first time made it possible for people to send digital money directly to each other, without needing a bank or other organization to help.\n",
         question: "Which problem did Satoshi have to solve to create Bitcoin",
         answers: [
@@ -1072,7 +1073,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "nativelyDigital",
-        title: "What is the main difference between digital fiat money and Bitcoin",
+        title: "Purpose-built for the Digital Age",
         text: "Digital fiat money is a digital version of a product that was designed for the industrial age. It has all of the same problems and limitations as the original product. It is a closed system that is heavily controlled and designed to lose value over time.\n\nBitcoin is a type of digital money that was specifically designed for the digital age. It can be improved and updated, and anyone can see and change the code that it is based on. It benefits from the ideas and creativity of anyone who works on it.\n",
         question: "What is the main difference between digital fiat money and Bitcoin",
         answers: [
@@ -1088,7 +1089,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "CBDCs",
-        title: "What is the main purpose of central bank digital currencies (CBDCs)",
+        title: "Central Bank Digital Currencies",
         text: "Central bank digital currencies (CBDCs) are digital versions of traditional currency that are issued and backed by a central bank.\n\nCBDCs are not decentralized or permissionless like Bitcoin, and are instead intended to compete with other forms of digital payment methods for market dominance.\n\nOne of the main reasons for the development of CBDCs is the surveillance and censorship capabilities they provide the issuer.\n\nAdditionally, in an age of negative real interest rates (when the inflation rate is higher than the interest rate), the widespread adoption of CBDCs often goes hand in hand with the phasing out of physical cash, which can lead to the devaluation of the currency in real terms.\n",
         question: "What is the main purpose of central bank digital currencies (CBDCs)",
         answers: [
@@ -1112,8 +1113,7 @@ const expectedEnglishQuizSections = [
     content: [
       {
         id: "rootProblem",
-        title:
-          "What is the root problem with conventional currency according to Satoshi Nakamoto",
+        title: "The Root Problem",
         text: 'So what was the motivation to create Bitcoin? In his announcement of the project, Satoshi Nakamoto gave the following explanation:\n\n"The root problem with conventional currency is all the trust that’s required to make it work. The central bank must be trusted not to debase the currency, but the history of fiat currencies is full of breaches of that trust. Banks must be trusted to hold our money and transfer it electronically, but they lend it out in waves of credit bubbles with barely a fraction in reserve."\n',
         question:
           "What is the root problem with conventional currency according to Satoshi Nakamoto",
@@ -1130,7 +1130,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "bitcoinCreator",
-        title: "Who is the creator of bitcoin",
+        title: "Bitcoin's Creator Satoshi Nakamoto",
         text: 'The creator of bitcoin, who used the pseudonym "Satoshi Nakamoto," is unknown and no claims of being the creator have been verified. Satoshi was only involved in the project for a short time before disappearing.\n\nThe bitcoin protocol is based on open source code, meaning that anyone can review it. This transparency makes it the most reviewed code in existence. Despite the mystery of its creator, bitcoin itself is an open and transparent monetary network that can be examined and used by anyone.\n',
         question: "Who is the creator of bitcoin",
         answers: [
@@ -1146,8 +1146,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "fiatRequiresTrust",
-        title:
-          "What was the main issue that Satoshi Nakamoto aimed to address with the creation of bitcoin",
+        title: "Fiat Currencies Require Trust",
         text: "The post-1971 fiat currency system requires trust at all levels because it is debt-based and lacks a scarce anchor. This includes trust in the ability to pay off debts in the future, trust in commercial and central banks not to debase the currency, and trust in their ability to allow access to and freedom to use funds for transactions.\n\nThis trust has been violated numerous times, including during the 2008/09 Global Financial Crisis. In order to address this issue, Satoshi Nakamoto aimed to create a digital form of money that did not require trusting third parties for transactions and could not be debased by a central authority issuing more units.\n",
         question:
           "What was the main issue that Satoshi Nakamoto aimed to address with the creation of bitcoin",
@@ -1164,8 +1163,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "moneyPrinting",
-        title:
-          "What is one of the main consequences of excessive money printing and credit expansion",
+        title: "Money Printing and Credit Expansion",
         text: "Excessive money printing and credit expansion can cause numerous social and economic issues, including asset bubbles in stocks and real estate markets which tend to experience corrections roughly every decade.\n\nWhile those closest to the source of new money often benefit greatly from these cycles, lower income individuals who don't own valuable assets and rely on regular paychecks are often the most affected by inflation and economic booms and busts created by the fiat currency system.\n\nA well-known example of this is the Global Financial Crisis that began in 2008, which was preceded by a significant accumulation of debt and risk in the commercial banking sector.\n",
         question:
           "What is one of the main consequences of excessive money printing and credit expansion",
@@ -1182,7 +1180,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "genesisBlock",
-        title: "Why did Satoshi Nakamoto create Bitcoin",
+        title: "The Genesis Block",
         text: 'It is clear why Satoshi Nakamoto created Bitcoin when we examine the first block of the Bitcoin blockchain, called the Genesis block.\n\nThis block was created by Satoshi when he launched Bitcoin in 2009 and includes a reference to banks receiving bailouts following the 2008/09 Global Financial Crisis.\n\n"The Times 03/Jan/2009 Chancellor on the brink of second bailout for banks"\n\nThis crisis, in which trust in traditional financial systems was severely damaged, inspired Satoshi to create a digital form of money that does not require trusting third parties for transactions and cannot be debased by a central authority issuing more units.\n',
         question: "Why did Satoshi Nakamoto create Bitcoin",
         answers: [
@@ -1198,7 +1196,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "cypherpunks",
-        title: "Who are the Cypherpunks and what is their goal",
+        title: "Bitcoin is the Result of Decades of Research",
         text: 'Bitcoin is the result of decades of research work by a group of individuals who call themselves Cypherpunks. They are interested in using cryptography to promote privacy and security in a world where increasing surveillance in the digital age can lead to erosion of freedoms.\n\nEarlier digital cash systems that relied on peer-to-peer (P2P) networks had one or both of the following problems:\n\n  * They required a central authority to manage the ledger of ownership.\n  * The currency units could be copied, resulting in the "double-spending problem" where a single unit could be spent multiple times.\n\n  Satoshi addressed both of these issues by combining existing technologies in the creation of Bitcoin. The first issue is resolved because the decentralized nature of the Bitcoin network means that there is no central authority that users need to trust. The second issue is addressed because the unique cryptographic techniques used in Bitcoin make it impossible to copy the currency units.\n',
         question: "Who are the Cypherpunks and what is their goal",
         answers: [
@@ -1222,8 +1220,7 @@ const expectedEnglishQuizSections = [
     content: [
       {
         id: "peer2Peer",
-        title:
-          "Which technology did Satoshi implement to solve issues of centralization and double spends",
+        title: "Peer-to-Peer Network",
         text: "To solve the earlier mentioned issues of centralization and possible double spends, Satoshi invented a solution based on a decentralized network of nodes.\n\nNodes are computers that are in constant contact with each other. This by itself is nothing new. The internet itself has a similar infrastructure of interconnected nodes.\n\nAll bitcoin nodes, however, store a copy of the ledger of all transactions in the history of the Bitcoin network.\n\nThis new, decentralized form of bookkeeping, called blockchain, was first successfully implemented in Bitcoin and is extremely resistant to tampering.\n",
         question:
           "Which technology did Satoshi implement to solve issues of centralization and double spends",
@@ -1236,8 +1233,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "blockchain",
-        title:
-          "What is the purpose of the cryptographic hash function in the Bitcoin blockchain",
+        title: "What is a blockchain exactly?",
         text: "The Bitcoin blockchain is a distributed database that maintains a continuously growing list of Bitcoin transactions called blocks.\n\nBlocks are anchored to each other through the use of cryptographic hashes. Each block contains a cryptographic hash of the previous block, as well as a timestamp and transaction data. This creates a chain of blocks that are all linked together, with each block building on the one before it.\n\nThe cryptographic hash function ensures that once a block has been added to the chain, it cannot be altered or replaced without also changing all of the subsequent blocks in the chain.\n\nThis creates a tamper-evident record of all transactions that have occurred on the blockchain, which can be used to verify the integrity of the data stored on the chain.\n",
         question:
           "What is the purpose of the cryptographic hash function in the Bitcoin blockchain",
@@ -1254,7 +1250,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "privateKey",
-        title: "What is the purpose of the private key in a Bitcoin transaction",
+        title: "Public Key Cryptography",
         text: "Another cornerstone of Bitcoin is Public Key Cryptography that uses a pair of keys - a public key and a private key - to sign transactions and verify the ownership of Bitcoin addresses.\n\nThe private key is a long string of characters that is used to authorize Bitcoin transactions. It is often represented as a combination of 12 words (sometimes 24). Only in the correct order do the words result in the corresponding private key.\n\nWhoever knows the private key of a bitcoin address can control the bitcoin in that address. Therefore it is important that it is kept secret and never shared with anyone. Ideally, it should be stored offline, so that no unwanted program can access it. \n",
         question: "What is the purpose of the private key in a Bitcoin transaction",
         answers: [
@@ -1270,7 +1266,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "publicKey",
-        title: "What is the purpose of a master public key in Bitcoin",
+        title: "Bitcoin Addresses and the Master Public Key",
         text: "A master public key in Bitcoin is a key that is cryptographically derived from a Bitcoin private key and is used to generate Bitcoin addresses that payers can send Bitcoin to.\n\nIt can be used to generate an unlimited number of Bitcoin addresses from a single master public key.\n\nWhile the private key is used to authorize Bitcoin transactions and therefore needs to be kept private, the Bitcoin addresses derived from the public key can be shared with a payer to receive payments from them.\n\nMaster public keys consist of a long sequence of numbers and letters and begin with xpub, ypub or zpub.\n\nA Bitcoin address for receiving payments starts with either 1, 3 or bc1.\n",
         question: "What is the purpose of a master public key in Bitcoin",
         answers: [
@@ -1286,7 +1282,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "mining",
-        title: "What is the main purpose of mining in the bitcoin network",
+        title: "Mining",
         text: "When a user wants to send a transaction in the bitcoin network, they need to sign the transaction with their private key to prove that they are the owner of the funds being transferred. Once the transaction is signed, it is broadcasted to the peer-to-peer network.\n\nMining is the process of adding transactions to the bitcoin blockchain. When a transaction is broadcasted to the network, it is picked up by miners, who verify that the transaction is valid (i.e., the user has the necessary funds and the private key used to sign the transaction corresponds to the public key associated with the funds).\n\nOnce a transaction has been verified, it is added to a block of transactions, along with a mathematical puzzle. Miners compete to solve the puzzle, and the first one to solve it gets to add the block to the blockchain and claim a reward in bitcoin. The reward is currently 6.25 bitcoins, plus any transaction fees that were included in the block.\n\nIn addition to adding transactions to the blockchain, mining also serves to secure the bitcoin network. This is because solving the puzzle requires a significant amount of computational power, and adding a block to the blockchain requires other miners to verify the solution. This makes it very difficult for any one person or group to manipulate the blockchain.\n",
         question: "What is the main purpose of mining in the bitcoin network",
         answers: [
@@ -1302,8 +1298,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "proofOfWork",
-        title:
-          "How does the Bitcoin network create a source of truth despite having no central authority",
+        title: "Proof of Work",
         text: "Decentralized systems, by definition, do not have a single source of truth.\n\nSatoshi's breakthrough was to build a system that allows all participants to zero in on the same truth independently. Proof of work is what allows this to happen. The point of proof of work is to create an irrefutable history. If two histories compete, the one with the most work embedded in it wins.\n\nThe chain with the most work is the truth, by definition. This is called Nakamoto consensus. This works because work requires energy. In Bitcoin, work is computation. Not any kind of computation, but computation that has no shortcut: guessing.\n\n  In the absence of a central authority, proof of work is necessary because it ensures that there is no shortcut to adding transactions to the blockchain.\n\n  Miners must compete to solve the puzzle through brute force computation, which is probabilistic in nature, and the proof that the work has been done becomes self-evident in the outcome of the work. This makes it very difficult for any one person or group to manipulate the transaction history.\n",
         question:
           "How does the Bitcoin network create a source of truth despite having no central authority",
@@ -1320,7 +1315,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "difficultyAdjustment",
-        title: "What happens to the block reward in the bitcoin network every four years",
+        title: "Difficulty Adjustment",
         text: "A crucial element of the Bitcoin protocol is the Difficulty Adjustment. This algorithm ensures that new blocks are found every 10 minutes on average.\n\nWhen more miners join the network, the average time required to find a new block goes down. In the opposite case, when miners leave the network, it takes longer to add a new block. The Difficulty Adjustment algorithm adjusts the difficulty of the mathematical puzzle to match changes in the combined computing power of all miners. This prevents the creation of more (or less) bitcoin units than the predetermined supply schedule.\n\nThis is in stark contrast to physical mining of precious metals like gold where adding more gold miners leads to a higher supply of gold and therefore a decrease in its price. In Bitcoin however, the addition of new miners only adds more security to the network.\n",
         question:
           "What happens to the block reward in the bitcoin network every four years",
@@ -1337,7 +1332,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "halving",
-        title: "What happens to the block reward in the bitcoin network every four years",
+        title: "The Halving",
         text: 'One final element that is important to understand, is that the block reward in the bitcoin network is reduced by half every four years, or every 210,000 blocks.\n\nThis event, known as the "halving", is programmed into the bitcoin software that all users run. When bitcoin was first launched, miners received 50 new bitcoins for each block they added to the blockchain. Currently, the block reward is 6.25 bitcoins, but it will be reduced to 3.125 bitcoins in 2024 when the next halving occurs.\n\nThese halvings will continue to take place until the year 2140, at which point the total number of bitcoins that will have been mined will be capped at 21 million. As of 2023, around 92% of all bitcoins (\\~19.3 million) have already been mined.\n\nUnlike fiat currencies, which can be inflationary, bitcoin is disinflationary in nature. This makes it more scarce than fiat and precious metals such as gold and silver, or anything else known in the universe.\n',
         question:
           "What happens to the block reward in the bitcoin network every four years",
@@ -1362,7 +1357,7 @@ const expectedEnglishQuizSections = [
     content: [
       {
         id: "bitcoinDrawbacks",
-        title: "What is a drawback of Bitcoin's design",
+        title: "Drawbacks of Bitcoin",
         text: "Bitcoin, the world's most widely used and valuable digital currency, allows anyone to send value without a trusted intermediary.\n\nThere are, however, some drawbacks to bitcoin's design which prioritizes security and decentralization at the cost of scalability.\n\nTransactions confirmed on the bitcoin blockchain take up to one hour before they are irreversible.\n\nMicropayments, or payments less than a few cents, are inconsistently confirmed, and fees render such transactions unviable on the network today.\n\nCurrently, Bitcoin's blockchain can process around 3 transactions per second. This is generally seen as an impediment for Bitcoin to become a currency that facilitates the everyday retail transactions of millions around the world.\n",
         question: "What is a drawback of Bitcoin's design",
         answers: [
@@ -1378,7 +1373,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "blocksizeWars",
-        title: "What was the contention in the Blocksize Wars",
+        title: "The Blocksize Wars",
         text: "These drawbacks lead to a debate within the Bitcoin community about the best way to scale the Bitcoin network, often dubbed the Blocksize Wars.\n\nCompanies in the Bitcoin ecosystem argued that increasing the blocksize, which is the maximum size of a block of transactions on the blockchain, would allow more transactions to be processed per second, making the network more efficient and able to handle a larger volume of transactions.\n\nBitcoin users on the other side of the debate argued that increasing the blocksize would centralize the network, as it would require more expensive and powerful computers to process the larger blocks, and could potentially lead to Bitcoin becoming prone to censorship.\n\nThe users ultimately prevailed in preserving the decentralization and censorship-resistance of the Bitcoin network and demonstrated that Bitcoin is controlled by users, not corporations. This also meant that scaling Bitcoin would require a different enigneering solution than merely increasing the blocksize.\n",
         question: "What was the contention in the Blocksize Wars",
         answers: [
@@ -1394,7 +1389,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "lightningNetwork",
-        title: "What does the Lightning Network do",
+        title: "The Lightning Network",
         text: "While users prevailed and preserved the decentralization of the Bitcoin network, a solution to scale Bitcoin proposed by researchers Tadge Dryja and Joseph Poon, called the Lightning Network, started to gain traction and was launched in 2017.\n\nThe Lightning Network, often referred to as just Lightning or LN, is a scaling solution built on top of the Bitcoin protocol. It facilitates smaller, near instant payments between users at very low cost and eliminates the need for every transaction to be added to the Bitcoin blockchain whilst ensuring that the value being transacted abides by the rules of the Bitcoin network.\n",
         question: "What does the Lightning Network do",
         answers: [
@@ -1410,8 +1405,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "instantPayments",
-        title:
-          "How long does it take for a payment to be considered secure on the Lightning Network",
+        title: "Instant Payments",
         text: "In the Bitcoin network, transactions are grouped together in blocks, and new blocks are added to the blockchain about every 10 minutes. When a payment is made using Bitcoin, it is considered secure after it has been confirmed by six blocks, or about an hour.\n\nOn the Lightning Network, payments do not have to wait for block confirmations to be considered secure. Instead, they are instant and completed all at once in a matter of few seconds.\n\nThis makes it possible to use the Lightning Network for retail transactions, peer-to-peer payments, or any other situation where you need to make a payment immediately.\n",
         question:
           "How long does it take for a payment to be considered secure on the Lightning Network",
@@ -1424,7 +1418,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "micropayments",
-        title: "What is a micropayment",
+        title: "Micropayments",
         text: 'Micropayments refer to very small financial transactions, often for amounts less than a dollar. These types of payments can be difficult to make using traditional financial systems, as they often have minimum amounts that can be transferred and fixed fees that can make small payments impractical.\n\nThe Lightning Network allows for the possibility of making micropayments using Bitcoin. It enables users to send very small amounts of Bitcoin, down to 1 sat, without the risk of losing control of their funds to a third party (called "custodial risk").&#x20;\n\nIn contrast, the Bitcoin blockchain currently has minimum transaction amounts and fees that make micropayments impractical. The Lightning Network allows for minimal payments denominated in Bitcoin, using actual Bitcoin transactions. This opens up the possibility of creating new markets and making small payments more practical.\n',
         question: "What is a micropayment",
         answers: [
@@ -1440,7 +1434,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "scalability",
-        title: "Why is scalability important for the Bitcoin network",
+        title: "Scalability",
         text: "Scalability refers to the ability of a system, such as a network or platform, to handle a large amount of usage or traffic without experiencing issues or slowdowns.\n\nScalability is important for Bitcoin because the network will need to be able to support a much higher volume of transactions in order to meet the demand of retail and automated payments.\n\nThe Lightning Network allows users to conduct nearly unlimited transactions between each other outside of the Bitcoin blockchain, or off-chain.\n\nThis means that transactions can be conducted without the need for each one to be recorded on the blockchain, which helps to reduce the load on the network and allows it to handle more transactions.\n",
         question: "Why is scalability important for the Bitcoin network",
         answers: [
@@ -1456,8 +1450,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "paymentChannels",
-        title:
-          "How do payment channels in the Lightning Network allow users to pay each other",
+        title: "How does Lighning work?",
         text: "The Lightning Network consists of thousands of two party payment channels.\n\nYou may think of a Lightning channel like opening a tab at your local bar. Instead of pulling out your wallet and paying each time you order a drink, it makes sense to save time, energy and fees by tallying all your drinks together at the end of the night and making the final settlement in one payment.\n\nLightning works similar. Each time a payment is made from person A to person B, bitcoin are pushed from one side of the channel to the other. Two users can pay one another back and forth as many times as they like, almost instantly and with close to no fees.\n",
         question:
           "How do payment channels in the Lightning Network allow users to pay each other",
@@ -1474,8 +1467,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "routing",
-        title:
-          "How does the Lightning Network allow users to pay each other if they are not directly connected through a payment channel",
+        title: "Routing",
         text: "You may be thinking that setting up a payment channel with hundreds of businesses could be tedious, but no. The beauty of the Lightning Network is that it is a network of channels stitched together.\n\nLet us say Bob convinced his friend Carol to also join the Lightning Network. Alice has a channel with Bob, and Bob has a channel with Carol. Alice and Carol can then pay each other by “routing” through Bob.\n\nSome pretty clever cryptographic tricks guarantee that Bob cannot steal the money while it’s passing through him.\n\nWhen you make a payment on the Lightning Network, your node searches for a path of channels between you and your destination. This is what’s referred to as routing. This is of course all done automatically by the involved Lightning nodes, enabling it to happen in the blink of an eye.\n",
         question:
           "How does the Lightning Network allow users to pay each other if they are not directly connected through a payment channel",
@@ -1500,7 +1492,7 @@ const expectedEnglishQuizSections = [
     content: [
       {
         id: "itsaBubble",
-        title: "How has the exchange rate of bitcoin trended over time",
+        title: "Is bitcoin a bubble?",
         text: "Over the years, bitcoin has often been called a bubble by various people. While its price has had several significant declines that may have warranted this label, the overall trend for bitcoin has been consistently upward.\n\nCritics who have proclaimed the death of bitcoin after each market cycle have been proven wrong, as the nascent digital money has continued to thrive despite their predictions. As these critics run out of analogies to use, it has become clear that their accusations are unfounded.\n",
         question: "How has the exchange rate of bitcoin trended over time",
         answers: [
@@ -1516,8 +1508,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "itstooVolatile",
-        title:
-          "What is the primary factor influencing the volatility of bitcoin's exchange rate",
+        title: "It's too volatile!",
         text: "It is subjective to expect bitcoin to maintain a specific price range, as it is traded around the clock, every day of the year, across the world. There are no requirements for registration, bank holidays, circuit breakers, or bailouts in the bitcoin market, which operates as a truly free market.\n\nAny and all volatility in bitcoin's price is the result of buyers and sellers reaching agreements in real-time without interference from governments. As bitcoin continues its journey towards becoming a primary global store of value in the Information Age, it is unrealistic to assume that its progress would be linear.\n\nAs adoption of bitcoin increases, it becomes less risky and potential upside decreases, leading to a decrease in volatility.\n",
         question:
           "What is the primary factor influencing the volatility of bitcoin's exchange rate",
@@ -1534,7 +1525,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "itsnotBacked",
-        title: "What is the only thing that backs any money, according to Parker Lewis",
+        title: "Should money be backed by something?",
         text: 'The idea of backed money is contradictory, as the backing itself would then be considered money. Part of the value of money comes from its rarity. Bitcoin does not need to be backed by something else that is rare because it is inherently scarce.\n\nVerifiable and auditable through independent means, bitcoin is free of counterparty risk. There is no third party that must be trusted to keep and secure commodities or assets. If anything, it is possible that the future will be backed by bitcoin.\n\nAs Parker Lewis stated, "Ultimately, bitcoin is backed by something, and it\'s the only thing that backs any money: the credibility of its monetary properties."\n',
         question:
           "What is the only thing that backs any money, according to Parker Lewis",
@@ -1551,7 +1542,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "willbecomeObsolete",
-        title: "Is it possible that bitcoin becomes obsolete one day",
+        title: "Will bitcoin become obsolete one day?",
         text: "Bitcoin represents a unique discovery of absolute scarcity, similar to the discovery of fire, electricity, or the field of mathematics.\n\nIt is not logical or possible to compete with bitcoin in terms of scarcity, as there is no level of scarcity higher than absolute scarcity. Criticisms of bitcoin's perceived limitations or drawbacks assume that there are no trade-offs in terms of security and incentive design, or that bitcoin's current form does not already provide significant benefits to millions of users.\n\nAs a rapidly growing, unrestricted network with a 99.98% uptime over more than a decade, having processed trillions of dollars in value and secured by billions of dollars in hardware, it is unlikely that bitcoin will be displaced as the dominant digital monetary network at this point.\n\nAs Michael Saylor stated, \"There's never been an example of a $100B monster digital network that was vanquished once it got to that dominant position.\"\n",
         question: "Is it possible that bitcoin becomes obsolete one day",
         answers: [
@@ -1567,7 +1558,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "toomuchEnergy",
-        title: "How does bitcoin impact global energy consumption",
+        title: "Is bitcoin's energy consumption excessive?",
         text: "Bitcoin is a decentralized digital currency that is accessible to users around the world and is resistant to censorship due to its Proof of Work mechanism.\n\nWith an estimated four billion people currently living under authoritarianism, bitcoin provides a way for individuals to send, receive, save, and transport wealth. It is important to consider the amount of energy that a monetary network like this should consume and to carefully evaluate who is best equipped to make decisions about this.\n\nOne way to think about the impact of bitcoin on global energy consumption is to imagine a topographic map of the world, with local electricity costs represented by the peaks and troughs. Adding bitcoin to the mix is like pouring a glass of water over the map - it settles in the troughs, smoothing them out. This is because bitcoin is a global buyer of energy at a fixed price, which helps to even out the distribution of energy consumption around the world.\n",
         question: "How does bitcoin impact global energy consumption",
         answers: [
@@ -1583,7 +1574,8 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "strandedEnergy",
-        title: "How can excess energy be used through bitcoin mining",
+        title:
+          "Wait, are you telling me that bitcoin can be used to tap into stranded energy?",
         text: "Exactly**.** Bitcoin mining provides a portable solution for utilizing energy assets in regions where there is no local demand or means of transportation. By using onsite equipment to generate hashes, it is possible to produce bitcoin, which can then be held for future value appreciation or sold on the highly liquid and globally accessible bitcoin market.\n",
         question: "How can excess energy be used through bitcoin mining",
         answers: [
@@ -1607,8 +1599,7 @@ const expectedEnglishQuizSections = [
     content: [
       {
         id: "internetDependent",
-        title:
-          "How can bitcoin transactions be sent in the event of an internet disruption",
+        title: "Bitcoin is too dependent on the Internet",
         text: "There is a risk, of course, that internet access may be lost due to infrastructure failures, natural disasters, or intentional outages. However, it is possible to transact bitcoin using offline methods and other communication networks.\n\nFor instance, a signed bitcoin transaction can be transmitted to a single node and broadcast to the network for inclusion in a block by miners. There are various ways to do this, such as sending a transaction via SMS, using a physical wallet with a one-time use tamper-evident private key, or receiving blocks via satellite. These options allow for bitcoin to be used even in the event of an internet disruption.\n",
         question:
           "How can bitcoin transactions be sent in the event of an internet disruption",
@@ -1625,8 +1616,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "forcrimeOnly",
-        title:
-          "Is it accurate to claim that bitcoin's properties have led to an overall increase in criminal activity",
+        title: "Bitcoin is for Criminals",
         text: 'Bitcoin is a neutral tool for exchanging value, and it has no inherent beliefs, opinions, or values. Its meaning is determined by how it is used. It is not accurate to claim that bitcoin\'s properties have led to an overall increase in criminal activity.\n\nCrime does not stem from access to tools, but rather from individual circumstances. If bitcoin is useful, it can be used by anyone, including criminals. If it is not useful, it cannot be used by anyone, including criminals.\n\nAs Parker Lewis stated, "There is nothing inherent about the tools used to facilitate crimes that makes them criminal in themselves. Despite criminal use, no one is calling for the ban of roads, the internet, mail, etc."\n',
         question:
           "Is it accurate to claim that bitcoin's properties have led to an overall increase in criminal activity",
@@ -1639,7 +1629,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "ponziScheme",
-        title: "Which of the following statements is true about bitcoin",
+        title: "Bitcoin is a Ponzi Scheme",
         text: "Calling bitcoin a ponzi scheme shows a lack of understanding of both bitcoin and the definition of a ponzi scheme. A ponzi scheme involves promises of above-market returns to investors, but as a permissionless network, bitcoin does not have a central authority that can make such promises.\n\nAdditionally, bitcoin is not an investment scheme, it is a form of money. Unlike opaque investment opportunities that may be promoted to unsuspecting individuals, bitcoin's code is open-source and its supply can be independently verified at all times.\n",
         question: "Which of the following statements is true about bitcoin",
         answers: [
@@ -1655,8 +1645,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "bitcoinisTooSlow",
-        title:
-          "What is the main difference between paying with a credit card and paying with bitcoin on-chain",
+        title: "Bitcoin is too slow",
         text: 'Paying with bitcoin is not the same as using a credit card to make a purchase. When you use a credit card, your payment goes through multiple parties before reaching the merchant\'s bank account after days or even weeks of processing.\n\nIn contrast, when you pay with bitcoin on the main blockchain, you are sending actual money directly to the recipient without any intermediaries. This means there is no risk of censorship and the transaction is considered final once it has been confirmed by six blocks on the blockchain.\n\nThe proper comparison would be between bitcoin base layer and the Fed as currency issuer and as a clearing mechanism.\n\nSince the advent of the Lightning Network, the "Bitcoin is too slow" criticism has largely fallen silent.\n',
         question:
           "What is the main difference between paying with a credit card and paying with bitcoin on-chain",
@@ -1673,7 +1662,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "supplyLimit",
-        title: "How is the supply of bitcoin protected from being corrupted",
+        title: "Bitcoin's Supply Limit Could Be Corrupted",
         text: "Bitcoin's decentralized nature allows for its supply to be independently validated by each node on the network, ensuring that it cannot be corrupted. This is achieved through a consensus process in which every transaction that has been confirmed on the bitcoin network is independently validated.\n\nWhile anyone can fork the code and make changes to the rules, it is unlikely that this version of the code would be adopted by the wider network. The decentralized consensus process and the incorruptible supply of bitcoin are crucial to its appeal as a form of money.\n\nThe maximum supply of bitcoin is fixed at 21 million, and any attempt to increase this limit would require consensus from a significant portion of the bitcoin network, which is highly unlikely to happen.\n",
         question: "How is the supply of bitcoin protected from being corrupted",
         answers: [
@@ -1689,7 +1678,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "governmentBan",
-        title: "Can governments effectively ban bitcoin",
+        title: "Governments Will Ban Bitcoin",
         text: 'It is technically possible for governments to ban bitcoin, but enforcing such a ban would be difficult due to the decentralized nature of the bitcoin network.\n\nBitcoin relies on private keys, which are simply random numbers, to control access to transactions recorded on the blockchain. These private keys can be generated and stored anywhere, making them largely undectectable.\n\nAdditionally, the infrastructure required to access the bitcoin network is relatively simple and widely available, making it easy for people to trustlessly verify transactions.\n\nAs Saifedean Ammous said, "Banning bitcoin is not much different from trying to ban math. It will just prove its utility & drive more people to it."\n',
         question: "Can governments effectively ban bitcoin",
         answers: [
@@ -1713,8 +1702,7 @@ const expectedEnglishQuizSections = [
     content: [
       {
         id: "concentratedOwnership",
-        title:
-          "Is it true that a small number of wallets hold the majority of all bitcoin",
+        title: "Bitcoin Ownership Is Concentrated on a Few Users",
         text: "It is often said that a small number of wallets hold the majority of all bitcoin. While this is technically true, it is important to note that these wallets are typically owned by exchanges that have millions of customers.\n\nMany people choose to leave their bitcoin on an exchange, but it is generally considered best practice to keep bitcoin in a personal wallet for security and privacy reasons.\n\nIt is also worth noting that a single bitcoin address can contain bitcoin belonging to multiple users, and a single user can control multiple wallets. To maintain privacy, it is recommended to generate a new address for each receiving transaction instead of reusing the same address.\n",
         question:
           "Is it true that a small number of wallets hold the majority of all bitcoin",
@@ -1731,7 +1719,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "centralizedMining",
-        title: "Can mining pools disrupt the bitcoin network or censor transactions",
+        title: "Bitcoin Mining Is Centralized",
         text: 'Some people believe that mining pools, which are groups of miners that work together to increase their chances of finding a block, could potentially disrupt the bitcoin network or censor transactions.\n\nHowever, this concern stems from a lack of understanding of the incentives of miners and their role in the network. In reality, miners have a strong incentive to follow the rules of the network and maintain the integrity of the blockchain, as their own profits depend on it.\n\nAs Jimmy Song said, "A majority of hashing power can\'t: take coins you already possess away, change the rules of bitcoin, or hurt you without hurting themselves."\n',
         question: "Can mining pools disrupt the bitcoin network or censor transactions",
         answers: [
@@ -1747,7 +1735,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "tooExpensive",
-        title: "How can you accurately compare the value of bitcoin to other assets",
+        title: "Bitcoin is too expensive",
         text: 'One common misconception about bitcoin is that it is too expensive to purchase.\n\nHowever, this belief is based on unit bias, as it is more accurate to compare the entire market capitalization of bitcoin to other assets rather than just the unit price of a single bitcoin.\n\nIt\'s also worth noting that a single bitcoin can be divided into 100 million smaller units called satoshis. As the saying goes, "you can buy a fraction of a bitcoin!"\n',
         question: "How can you accurately compare the value of bitcoin to other assets",
         answers: [
@@ -1763,8 +1751,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "prohibitivelyHigh",
-        title:
-          "What is the main reason that transaction fees on the main layer of bitcoin remain relatively low compared to traditional financial systems",
+        title: "Bitcoin transaction costs are prohibitively high",
         text: 'Another misconception about bitcoin is that its transaction costs are prohibitively high.\n\nHowever, confirmed transactions on the main layer of bitcoin provide a level of finality that is unmatched in the traditional financial system. While it is true that transaction fees may occasionally spike due to the limited capacity of each block, the bitcoin network remains an efficient and reliable settlement layer for high-value transactions.\n\nIn fact, according to Saifedean Ammous, "between October 2010 and July 2021, the average daily transaction fees came up to around 0.02% of the value of the transactions."\n\nIn addition, smaller transactions, including microtransactions, are often migrated to secondary layers such as lightning, liquid, or federated side-chains where fees are significantly lower than those offered by retail banks.\n',
         question:
           "What is the main reason that transaction fees on the main layer of bitcoin remain relatively low compared to traditional financial systems",
@@ -1781,7 +1768,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "willBeHoarded",
-        title: "Is holding bitcoin the same thing as hoarding bitcoin",
+        title: "The Misconception of Bitcoin Hoarding",
         text: 'There is a common belief that the fixed supply of bitcoin incentivizes hoarding, or the act of holding onto bitcoin rather than spending it in the economy.\n\nHowever, this logic has a few flaws. First, saving, or the act of setting aside income for future use, is often conflated with hoarding. In fact, saving is a necessary precursor to significant investment and can be seen as a responsible financial practice.\n\nSecond, holding onto bitcoin, or any form of money, is a common way to hedge against future uncertainty and does not necessarily mean that it is not being used.\n\nAs Pierre Rochard pointed out, "all bitcoin are always held by someone, payments only change who is holding it." In other words, the act of holding bitcoin is itself a use of bitcoin.\n',
         question: "Is holding bitcoin the same thing as hoarding bitcoin",
         answers: [
@@ -1797,8 +1784,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "canBeDuplicated",
-        title:
-          "What is the main reason that bitcoin is considered valuable despite the fact that its code can be copied by anyone",
+        title: "Bitcoin is not scarce because there are thousands of cryptocurrencies",
         text: 'One argument against the value of bitcoin is that it is not scarce because there are thousands of other cryptocurrencies available and because anyone can copy the code and create their own version.\n\nHowever, this overlooks the fact that bitcoin is more than just a piece of code. It is an open source protocol for transferring value that attracts people and resources due to its transparency and rigorous development process.\n\nAs @BTCSchellingPt noted, "open source is very much a meritocracy. You\'ve got the hive mind building solutions. You get all that scrutiny and that comes back to security. Bitcoin Core is probably one of the most heavily scrutinized code bases in the world."\n\nIn other words, the value of bitcoin lies not only in its code, but also in the community and infrastructure that surrounds it.\n',
         question:
           "What is the main reason that bitcoin is considered valuable despite the fact that its code can be copied by anyone",
@@ -1823,7 +1809,7 @@ const expectedEnglishQuizSections = [
     content: [
       {
         id: "scarcity",
-        title: "What is a scarce resource",
+        title: "How limited resources are allocated and competed for",
         text: "When there are not enough resources to go around, people and organizations compete for them.\n\nThis competition is often reflected in the price of goods and services in a free market. If the demand for a particular resource increases faster than the supply, it can become scarce and more valuable.\n\nMoney is often used as a way to buy things because it is easy to trade and is valuable because it is scarce. Bitcoin is a digital form of money that has a fixed supply, which makes it rare and valuable.\n\nThe idea that there is never enough of something to go around is a basic principle of economics, but it is often ignored in political decisions.\n",
         question: "What is a scarce resource",
         answers: [
@@ -1839,7 +1825,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "monetaryPremium",
-        title: "What is a monetary premium",
+        title: "Monetary Premium",
         text: "If the value of money is not based on its scarcity, it may not be as reliable as a way to store wealth. In this case, other things that are scarce, such as assets or resources, may become more valuable and be used as a substitute for money.\n\nThis additional value is known as a monetary premium. When the usual form of money is not working well, people may turn to other things that are rare or hard to obtain as a way to exchange value.\n\nSome historical forms of money had no other use or value besides being used as a way to trade for other things. The difference between the value of something as money and its value for its other uses is the monetary premium.\n",
         question: "What is a monetary premium",
         answers: [
@@ -1855,7 +1841,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "greshamsLaw",
-        title: "What is Gresham's Law",
+        title: "Gresham's Law",
         text: 'Gresham\'s Law is a concept that explains how people tend to use different types of currency in different ways when they are in circulation together.\n\nIf two forms of currency are given equal value by a government or other authority, but one is made of a more valuable material, people will be more likely to save the more valuable currency and spend the less valuable one.\n\nThis can happen when a government debases its currency, or makes it worth less, by decreasing the amount of valuable material it contains. The result is that people lose trust in the debased currency and prefer to hold onto the more valuable one instead.\n\nThis principle can also apply to "fiat" currency, which is not backed by a physical commodity like gold or silver, if the supply of the currency is increased in a way that makes it worth less.\n\nIn recent years, the emergence of bitcoin as a digital currency has led to a trend of people saving in bitcoin and spending their traditional currency, or "fiat," more quickly. This is because bitcoin is seen as having a higher long-term value and being more stable than fiat currencies.\n',
         question: "What is Gresham's Law",
         answers: [
@@ -1871,7 +1857,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "thiersLaw",
-        title: "What is Thier's Law",
+        title: "Thier's Law",
         text: "Thier's Law is a concept that discusses what might happen if people and businesses refused to accept or use a lower quality form of currency.\n\nInstead of disappearing from circulation, the higher quality form of money might be traded at a premium, or for a higher value than its face value.\n\nThier's Law suggests that if a government tries to force people to use a lower quality currency by making it legal tender, it will be ignored.\n\nIn other words, people and businesses may choose not to accept the lower quality currency and instead prefer to use the higher quality one or other forms of payment.\n",
         question: "What is Thier's Law",
         answers: [
@@ -1887,7 +1873,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "cantillonEffect",
-        title: "What is the Cantillon Effect",
+        title: "The **** Cantillon Effect",
         text: "The Cantillon Effect is a phenomenon that occurs when new money is introduced into an economy.\n\nWhen new money is added, it tends to go to certain people or businesses first, and these initial recipients have an advantage over others because they get to use the new money before prices go up.\n\nThis causes the prices of some goods and services to increase more than others, which means that the people who get the new money first benefit while those who get it later are disadvantaged.\n\nThis effect was first described by economist Richard Cantillon in the context of commodity money, such as gold and silver, but it is even more relevant today in the age of fiat money.\n\nWhen a government or central bank creates a lot of new fiat money, it can lead to increased prices and uneven distribution of wealth, as some people and businesses are able to access credit more easily and benefit from rising asset prices.\n",
         question: "What is the Cantillon Effect",
         answers: [
@@ -1903,7 +1889,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "schellingPoint",
-        title: "What is a Schelling point",
+        title: "Schelling Point",
         text: 'A Schelling point is a solution that people tend to choose by default, without communicating with each other.\n\nThis can happen in multiplayer cooperative games, where you have to anticipate the choices of others. If you make the wrong choice, you might face consequences or miss out on benefits.\n\nCommunication works the same way - it\'s like a multiplayer cooperative game played with others in the same network. We use standardized protocols (like email, spoken language, or money) to communicate efficiently with as many people as possible, with as little friction as possible. This can lead to increased trade, knowledge exchange, and innovation.\n\nIn the digital world, people tend to choose the same option (the Schelling point) when exchanging value. This is because they expect that others will also choose it.\n\nThe option that becomes the Schelling point is the one that communicates price signals most accurately, allowing market participants to coordinate with each other.\n\nBitcoin is a protocol for exchanging value that has several advantages over traditional currencies (called "fiat"). For example, it has a fixed supply and its value has generally increased over time, while fiat currencies often lose value. Additionally, the bitcoin network is permissionless, global, and indestructible. All of these factors make bitcoin a natural Schelling point for money.\n',
         question: "What is a Schelling point",
         answers: [
@@ -1927,7 +1913,7 @@ const expectedEnglishQuizSections = [
     content: [
       {
         id: "opportunityCost",
-        title: "What is opportunity cost",
+        title: "Opportunity Cost",
         text: "Opportunity cost is the idea that when you choose to do one thing, you can't do something else instead. In other words, every time you make a financial decision, you have to trade off one option for another.\n\nBitcoin can help you make better financial decisions in the long term because it's a good way to store value (like saving money). This means that if you choose to invest in bitcoin, you might have to give up using that money for other things or opportunities. But if you hold onto your bitcoin, it has the potential to increase in value over time.\n\nThis is especially important right now because the traditional monetary system (called \"fiat\") is not a reliable way to save money - it's designed in a way that causes the value of money to go down over time. So, it's important to make careful financial decisions to preserve your wealth.\n",
         question: "What is opportunity cost",
         answers: [
@@ -1943,7 +1929,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "timePreference",
-        title: "What is time preference",
+        title: "Time Preference",
         text: 'Time preference is the idea that the amount of time you have to wait for something to happen can affect the decisions you make.\n\nFor example, if you value the present more than the future, you might be more likely to choose something that gives you immediate gratification.\n\nOn the other hand, if you value the future more, you might be willing to wait longer for something that has a bigger benefit in the long term.\n\nThere are many factors that can influence your time preference, such as your personal safety, tax rates, property rights, and the ability to store value reliably.\n\nThe "hardness" of money (how well it holds its value over time) is also important because it can encourage people to save, plan, and invest for the future. It\'s important to note that time preference is not a fixed thing - it can change based on the incentives in your environment.\n',
         question: "What is time preference",
         answers: [
@@ -1959,7 +1945,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "impossibleTrinity",
-        title: "How does the existence of Bitcoin affect the Mundell-Fleming-Trilemma?",
+        title: "The Impossible Trinity",
         text: "The Impossible Trinity, also known as the Mundell-Fleming Trilemma, is a concept that explains the trade-offs involved in setting international monetary policy for a sovereign nation.\n\nIt says that a country can only choose two of the following three options: fixed exchange rates, free capital flows, and independent monetary policy.\n\n  These three options cannot be pursued at the same time. This is because a country's capital flows, or the movement of money in and out of the country, can be influenced by the value of its currency and its monetary policy, which sets the rules for how much money is in circulation.\n\n  As capital becomes more mobile and can move freely across borders, it is harder for a country to control and direct its capital flows. The rise of bitcoin, a digital currency that is borderless and immune to changes in value, may further challenge a country's ability to set monetary policy.\n",
         question:
           "How does the existence of Bitcoin affect the Mundell-Fleming-Trilemma?",
@@ -1976,7 +1962,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "jevonsParadox",
-        title: "What is the Jevons Paradox",
+        title: "Jevons Paradox",
         text: "The Jevons Paradox is a phenomenon that occurs when we use more of a resource, even when we are using it more efficiently. This happens because increased efficiency often leads to lower costs, which can increase demand for the resource.\n\nOne example of this is the use of coal as an energy source. In the late 1700s, people thought that coal deposits were running out, but James Watt's steam engine made it possible to use coal more efficiently. This led to an increase in the demand for coal, even though it was being used more efficiently. The relationship between energy and money is also important to consider.\n\nSome people have proposed using energy as a measure of value for money, but this has not been successful in practice. Bitcoin, on the other hand, uses a system called proof of work, which incentivizes people to use energy efficiently in order to earn rewards.\n\nWhile some people criticize the use of energy in this way, it is important to remember that humans are constantly finding new ways to generate energy, and we should not assume that energy is a fixed or limited resource.\n",
         question: "What is the Jevons Paradox",
         answers: [
@@ -1992,8 +1978,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "powerLaws",
-        title:
-          "What is the Pareto principle, also known as the 80/20 rule, an example of",
+        title: "Power Laws",
         text: "Power laws are a way to understand how two things are related. When one thing changes, the other thing changes in a way that is related to the first change. Power laws can show up in different areas, like language, biology, and space. Small changes in one thing can often lead to bigger changes in the other thing.\n\nIn economics, power laws are often shown in graphs. One example of a power law is the Pareto principle, which says that about 80% of the results come from 20% of the things that cause them. In a market, this might mean that 20% of the producers make up 80% of the market.\n\nPower laws can also be seen in other parts of bitcoin, like how much power mining pools have or how many hardware wallets different companies sell. They can also be seen in how bitcoin is distributed among different addresses.\n",
         question:
           "What is the Pareto principle, also known as the 80/20 rule, an example of",
@@ -2010,8 +1995,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "winnerTakeAll",
-        title:
-          "What is the main reason that people usually agree on using one type of money in a certain area",
+        title: "Winner-Take-All Effects",
         text: "The concept of winner-take-all effects is when only one product or service is the best and everyone wants to use it. This can happen in markets where a small advantage can lead to getting all of the business.\n\nMoney is a network like this, where only one type of money is used in a certain area because it is the most useful and has the most options for trading with other people. This happens because people want to use the money that will give them the most options and be the most useful in a lot of different situations.\n\nMoney is also a good way to store value over a long time. When it comes to monetary systems, people usually agree on using one type of money because it is the most liquid, or easiest to use, and it is the best way to store value.\n",
         question:
           "What is the main reason that people usually agree on using one type of money in a certain area",
@@ -2036,7 +2020,7 @@ const expectedEnglishQuizSections = [
     content: [
       {
         id: "unitBias",
-        title: "What is unit bias",
+        title: "Unit Bias",
         text: "Unit bias is a type of thinking that assumes that one unit of something is the right amount to use when comparing it to other things.\n\nThis is not always true, especially when it comes to bitcoin. To understand how bitcoin compares to other stores of value, you need to look at the total amount of bitcoin that is available and its value, not just the price of one unit. Bitcoin is very small and can be divided into very small amounts, down to 8 decimal places. This means that you can buy a very small part of a bitcoin if you want.\n\nPeople sometimes think that other cryptocurrencies are cheaper than bitcoin because they cost less per unit, but this is not always true. Bitcoin is a special type of digital money because it is limited in supply and cannot be made in larger amounts.\n\nThis makes it a good way to store value because the value does not decrease over time. When you look at bitcoin in this way, you can see that it is just a small part of the total amount of non-government wealth in the world.\n",
         question: "What is unit bias",
         answers: [
@@ -2052,7 +2036,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "veblenGood",
-        title: "What is a Veblen good",
+        title: "Veblen Good",
         text: "Veblen goods are things that people want more of when the price goes up. Normal goods are things that people usually want more of when they have more money to spend.\n\nVeblen goods are unusual because people want them more when they cost more. These are often luxury goods that are hard to get or that are made in limited quantities. This is done to make them seem special or rare.\n\nSome people might want to buy bitcoin because it is a status symbol, but the main reason people will probably want to buy it is because there is a limited amount of it.\n\nWhen more people want to buy bitcoin, the price goes up and it becomes easier to use. When it is easy to use, more people want to use it. This creates a cycle where the demand for bitcoin increases, the price goes up, and it becomes easier to use.\n",
         question: "What is a Veblen good",
         answers: [
@@ -2068,7 +2052,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "malinvestment",
-        title: "What is the main cause of malinvestment",
+        title: "Malinvestment",
         text: "Malinvestment is when the prices of things are not accurate, which leads to money being put into things that are not very productive. This happens because it is hard to predict the future and make good choices about what to do with money.\n\nWhen the market is not working correctly, it is like trying to use a compass when you are not sure where you are. An example of this is when companies can't pay back their loans and have to borrow more money just to stay alive. This is like being a \"zombie\" company.\n\nWhen the government is in charge of these decisions, they might make mistakes because they don't have a good way to tell what is a good investment and what is not. This can lead to things like building a subway without enough trains or building a dam without enough power lines.\n",
         question: "What is the main cause of malinvestment",
         answers: [
@@ -2084,7 +2068,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "asymmetricPayoff",
-        title: "What is an asymmetric payoff in the context of investment decisions",
+        title: "Asymmetric Payoff",
         text: "When we make decisions about investing our money, we try to predict what might happen and how much money we could make or lose. Sometimes, the amount of money we can make or lose is not equal.\n\nFor example, if we invest in something that has a big chance of making us a lot of money, but only a small chance of losing a little bit of money, we might call this an \"asymmetric payoff.\" This means that the potential upside (how much we can make) is much bigger than the potential downside (how much we can lose).\n\nOne example of this is bitcoin. Bitcoin's potential outcomes are similar to an option, meaning it either succeeds or fails. If it experiences a catastrophic event, the risk of losing money is minimized.\n\nHowever, the potential upside is much greater, as bitcoin's total addressable market has the potential to be a primary global store of wealth.\n\nAsymmetry in payoffs, or uneven potential outcomes, only occurs when there is uneven understanding or information about an investment. If everyone fully understood bitcoin, it would already be widely used as a form of currency.\n\nCurrently, not everyone is aware of bitcoin's potential as a superior monetary option, so the potential for it to increase in value depends on the demand for it increasing without a corresponding increase in the supply.\n",
         question: "What is an asymmetric payoff in the context of investment decisions",
         answers: [
@@ -2100,7 +2084,7 @@ const expectedEnglishQuizSections = [
       },
       {
         id: "ansoffMatrix",
-        title: "How is the Ansoff Matrix relevant to the growth and potential of bitcoin",
+        title: "Ansoff Matrix",
         text: "The Ansoff Matrix is a tool that helps companies think about how they can grow and make more money. It helps them figure out what to do with a product or service they have, and how to sell it to different groups of people.\n\nIn the case of bitcoin, it is a product that is like a type of digital money. It has the potential to be used by a lot of people in a lot of different ways. The people who work on bitcoin, like the people who write the code and help others understand how to use it, are trying to increase the number of people who use it and make it easier for them to do so.\n\nBitcoin can be used to save money and protect it from being taken away, or it can be used to send and receive small amounts of money quickly, without having to go through a lot of steps. As more people start using bitcoin, it has the potential to grow and become more popular.\n\nIt is also possible for people and companies to use bitcoin as part of their financial plans, to help protect their money from losing value. While the main reason people might use bitcoin now is to protect their wealth, the payment use case has been growing fast since the inception of the Lightning Network and other use cases may emerge.\n",
         question:
           "How is the Ansoff Matrix relevant to the growth and potential of bitcoin",
@@ -2118,6 +2102,7 @@ const expectedEnglishQuizSections = [
     ],
   },
 ]
+
 describe("Earn utils test", () => {
   it("Converts quiz sections to proper types", () => {
     loadLocale("en")
