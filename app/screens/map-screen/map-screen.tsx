@@ -21,6 +21,7 @@ import { useBusinessMapMarkersQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { makeStyles, useTheme } from "@rneui/themed"
+import { PhoneLoginInitiateType } from "../phone-auth-screen"
 
 const useStyles = makeStyles(({ colors }) => ({
   android: { marginTop: 18 },
@@ -125,7 +126,12 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
         if (isAuthed && item?.username) {
           navigation.navigate("sendBitcoinDestination", { username: item.username })
         } else {
-          navigation.navigate("phoneFlow")
+          navigation.navigate("phoneFlow", {
+            screen: "phoneLoginInitiate",
+            params: {
+              type: PhoneLoginInitiateType.CreateAccount,
+            },
+          })
         }
       }
 
