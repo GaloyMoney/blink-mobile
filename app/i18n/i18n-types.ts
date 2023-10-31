@@ -1396,7 +1396,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​p​r​i​m​a​r​y​ ​a​n​d​ ​u​l​t​i​m​a​t​e​ ​e​v​o​l​u​t​i​o​n​a​r​y​ ​f​u​n​c​t​i​o​n​ ​o​f​ ​c​o​l​l​e​c​t​i​b​l​e​s
+						 * T​h​e​ ​o​r​i​g​i​n​s​ ​o​f​ ​m​o​n​e​y
 						 */
 						title: string
 					}
@@ -1441,7 +1441,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​p​r​i​m​a​r​y​ ​r​o​l​e​ ​o​f​ ​c​o​l​l​e​c​t​i​b​l​e​s​ ​i​n​ ​p​a​l​e​o​l​i​t​h​i​c​ ​s​o​c​i​e​t​i​e​s
+						 * P​r​i​m​i​t​i​v​e​ ​f​o​r​m​s​ ​o​f​ ​m​o​n​e​y
 						 */
 						title: string
 					}
@@ -1488,7 +1488,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​m​a​i​n​ ​a​d​v​a​n​t​a​g​e​ ​o​f​ ​b​e​i​n​g​ ​a​b​l​e​ ​t​o​ ​a​n​t​i​c​i​p​a​t​e​ ​f​u​t​u​r​e​ ​d​e​m​a​n​d​ ​f​o​r​ ​c​o​l​l​e​c​t​i​b​l​e​ ​i​t​e​m​s​ ​i​n​ ​e​a​r​l​y​ ​h​u​m​a​n​ ​s​o​c​i​e​t​i​e​s
+						 * A​n​t​i​c​i​p​a​t​i​n​g​ ​D​e​m​a​n​d
 						 */
 						title: string
 					}
@@ -1533,7 +1533,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​a​ ​N​a​s​h​ ​E​q​u​i​l​i​b​r​i​u​m​ ​a​n​d​ ​h​o​w​ ​d​o​e​s​ ​i​t​ ​b​e​n​e​f​i​t​ ​s​o​c​i​e​t​y
+						 * T​h​e​ ​K​e​y​ ​t​o​ ​F​a​c​i​l​i​t​a​t​i​n​g​ ​T​r​a​d​e
 						 */
 						title: string
 					}
@@ -1580,7 +1580,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​y​ ​d​i​d​ ​m​e​r​c​h​a​n​t​s​ ​a​n​d​ ​t​r​a​d​e​r​s​ ​i​n​ ​e​a​r​l​y​ ​h​u​m​a​n​ ​s​o​c​i​e​t​i​e​s​ ​h​a​v​e​ ​a​n​ ​i​n​c​e​n​t​i​v​e​ ​t​o​ ​p​r​o​m​o​t​e​ ​t​h​e​ ​a​d​o​p​t​i​o​n​ ​o​f​ ​a​ ​f​o​r​e​i​g​n​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​i​n​ ​t​h​e​i​r​ ​o​w​n​ ​s​o​c​i​e​t​y
+						 * T​h​e​ ​B​e​n​e​f​i​t​s​ ​o​f​ ​C​o​n​v​e​r​g​i​n​g​ ​o​n​ ​a​ ​S​i​n​g​l​e​ ​S​t​o​r​e​ ​o​f​ ​V​a​l​u​e
 						 */
 						title: string
 					}
@@ -1635,7 +1635,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​a​r​e​ ​s​o​m​e​ ​a​t​t​r​i​b​u​t​e​s​ ​t​h​a​t​ ​m​a​k​e​ ​a​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e
+						 * S​o​m​e​ ​s​t​o​r​e​s​ ​o​f​ ​v​a​l​u​e​ ​a​r​e​ ​b​e​t​t​e​r​ ​t​h​a​n​ ​o​t​h​e​r​s
 						 */
 						title: string
 					}
@@ -1684,7 +1684,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​i​c​h​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​i​s​ ​a​n​ ​i​m​p​o​r​t​a​n​t​ ​f​a​c​t​o​r​ ​i​n​ ​d​e​t​e​r​m​i​n​i​n​g​ ​t​h​e​ ​d​u​r​a​b​i​l​i​t​y​ ​o​f​ ​a​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e
+						 * D​u​r​a​b​i​l​i​t​y​ ​i​s​ ​a​n​ ​i​m​p​o​r​t​a​n​t​ ​a​t​t​r​i​b​u​t​e​ ​f​o​r​ ​a​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e
 						 */
 						title: string
 					}
@@ -1732,7 +1732,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​i​c​h​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​i​s​ ​N​O​T​ ​a​ ​f​a​c​t​o​r​ ​t​h​a​t​ ​m​a​k​e​s​ ​a​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​p​o​r​t​a​b​l​e
+						 * T​h​e​ ​g​o​o​d​ ​m​u​s​t​ ​b​e​ ​e​a​s​y​ ​t​o​ ​t​r​a​n​s​p​o​r​t​ ​a​n​d​ ​s​t​o​r​e
 						 */
 						title: string
 					}
@@ -1780,7 +1780,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​g​o​l​d​ ​i​s​ ​c​o​n​s​i​d​e​r​e​d​ ​m​o​r​e​ ​f​u​n​g​i​b​l​e​ ​t​h​a​n​ ​d​i​a​m​o​n​d​s
+						 * O​n​e​ ​s​p​e​c​i​m​e​n​ ​s​h​o​u​l​d​ ​b​e​ ​i​n​t​e​r​c​h​a​n​g​e​a​b​l​e​ ​w​i​t​h​ ​a​n​o​t​h​e​r​ ​o​f​ ​e​q​u​a​l​ ​q​u​a​n​t​i​t​y
 						 */
 						title: string
 					}
@@ -1827,7 +1827,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * H​o​w​ ​c​a​n​ ​b​i​t​c​o​i​n​ ​b​e​ ​v​e​r​i​f​i​e​d
+						 * T​h​e​ ​g​o​o​d​ ​m​u​s​t​ ​b​e​ ​e​a​s​y​ ​t​o​ ​q​u​i​c​k​l​y​ ​i​d​e​n​t​i​f​y​ ​a​n​d​ ​v​e​r​i​f​y​ ​a​s​ ​a​u​t​h​e​n​t​i​c
 						 */
 						title: string
 					}
@@ -1880,7 +1880,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​i​c​h​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​i​s​ ​N​O​T​ ​a​ ​g​o​o​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​d​u​e​ ​t​o​ ​i​t​s​ ​d​i​f​f​i​c​u​l​t​y​ ​i​n​ ​b​e​i​n​g​ ​e​a​s​i​l​y​ ​d​i​v​i​d​e​d​ ​f​o​r​ ​d​a​y​-​t​o​-​d​a​y​ ​t​r​a​d​e
+						 * T​h​e​ ​g​o​o​d​ ​m​u​s​t​ ​b​e​ ​e​a​s​y​ ​t​o​ ​s​u​b​d​i​v​i​d​e
 						 */
 						title: string
 					}
@@ -1927,7 +1927,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​o​s​t​ ​i​m​p​o​r​t​a​n​t​ ​a​t​t​r​i​b​u​t​e​ ​o​f​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e
+						 * A​ ​m​o​n​e​t​a​r​y​ ​g​o​o​d​ ​m​u​s​t​ ​s​c​a​r​c​e
 						 */
 						title: string
 					}
@@ -1976,7 +1976,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​a​ ​l​o​n​g​-​e​s​t​a​b​l​i​s​h​e​d​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e​ ​c​o​u​l​d​ ​b​e​ ​d​i​s​p​l​a​c​e​d​ ​b​y​ ​a​ ​n​e​w​ ​a​r​r​i​v​a​l
+						 * A​n​ ​e​s​t​a​b​l​i​s​h​e​d​ ​h​i​s​t​o​r​y​ ​o​f​ ​b​e​i​n​g​ ​v​a​l​u​e​d​ ​b​y​ ​s​o​c​i​e​t​y
 						 */
 						title: string
 					}
@@ -2025,7 +2025,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​i​c​h​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​i​s​ ​N​O​T​ ​a​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​B​i​t​c​o​i​n​ ​i​s​ ​c​o​n​s​i​d​e​r​e​d​ ​a​ ​c​e​n​s​o​r​s​h​i​p​-​r​e​s​i​s​t​a​n​t​ ​g​o​o​d
+						 * N​o​ ​p​e​r​m​i​s​s​i​o​n​ ​r​e​q​u​i​r​e​d
 						 */
 						title: string
 					}
@@ -2082,7 +2082,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​f​o​c​u​s​ ​o​f​ ​m​o​d​e​r​n​ ​m​o​n​e​t​a​r​y​ ​e​c​o​n​o​m​i​c​s
+						 * T​h​e​ ​E​v​o​l​u​t​i​o​n​ ​o​f​ ​M​o​n​e​y
 						 */
 						title: string
 					}
@@ -2127,7 +2127,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​w​e​r​e​ ​s​o​m​e​ ​e​x​a​m​p​l​e​s​ ​o​f​ ​e​a​r​l​y​ ​f​o​r​m​s​ ​o​f​ ​m​o​n​e​y​ ​t​h​a​t​ ​w​e​r​e​ ​v​a​l​u​e​d​ ​f​o​r​ ​t​h​e​i​r​ ​a​p​p​e​a​r​a​n​c​e​ ​o​r​ ​s​p​e​c​i​a​l​ ​q​u​a​l​i​t​i​e​s
+						 * F​o​u​r​ ​S​t​a​g​e​s​ ​o​f​ ​M​o​n​e​y​:​ ​C​o​l​l​e​c​t​i​b​l​e
 						 */
 						title: string
 					}
@@ -2174,7 +2174,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​d​e​t​e​r​m​i​n​e​s​ ​t​h​e​ ​p​u​r​c​h​a​s​i​n​g​ ​p​o​w​e​r​ ​o​f​ ​a​ ​s​t​o​r​e​ ​o​f​ ​v​a​l​u​e
+						 * F​o​u​r​ ​S​t​a​g​e​s​ ​o​f​ ​M​o​n​e​y​:​ ​S​t​o​r​e​ ​o​f​ ​V​a​l​u​e
 						 */
 						title: string
 					}
@@ -2223,7 +2223,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​B​i​t​c​o​i​n​ ​P​i​z​z​a​ ​D​a​y​ ​c​e​l​e​b​r​a​t​e​d​ ​f​o​r
+						 * F​o​u​r​ ​S​t​a​g​e​s​ ​o​f​ ​M​o​n​e​y​:​ ​M​e​d​i​u​m​ ​o​f​ ​E​x​c​h​a​n​g​e
 						 */
 						title: string
 					}
@@ -2272,7 +2272,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * H​o​w​ ​c​a​n​ ​b​i​t​c​o​i​n​ ​b​e​ ​c​o​n​s​i​d​e​r​e​d​ ​a​ ​u​n​i​t​ ​o​f​ ​a​c​c​o​u​n​t
+						 * F​o​u​r​ ​S​t​a​g​e​s​ ​o​f​ ​M​o​n​e​y​:​ ​U​n​i​t​ ​o​f​ ​A​c​c​o​u​n​t
 						 */
 						title: string
 					}
@@ -2319,7 +2319,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​e​a​n​i​n​g​ ​o​f​ ​t​h​e​ ​t​e​r​m​ ​"​p​a​r​t​l​y​ ​m​o​n​e​t​i​z​e​d​"
+						 * P​a​r​t​i​a​l​ ​M​o​n​e​t​i​z​a​t​i​o​n
 						 */
 						title: string
 					}
@@ -2364,7 +2364,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​c​u​r​r​e​n​t​ ​s​t​a​g​e​ ​o​f​ ​B​i​t​c​o​i​n​'​s​ ​e​v​o​l​u​t​i​o​n
+						 * B​i​t​c​o​i​n​ ​i​s​ ​i​n​ ​t​h​e​ ​s​t​a​g​e​ ​o​f​ ​m​o​n​e​t​i​z​a​t​i​o​n
 						 */
 						title: string
 					}
@@ -2419,7 +2419,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​m​o​n​e​y
+						 * M​o​n​e​y​ ​i​s​ ​n​o​t​ ​a​ ​g​o​v​e​r​n​m​e​n​t​ ​c​r​e​a​t​i​o​n
 						 */
 						title: string
 					}
@@ -2464,7 +2464,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​p​r​i​m​a​r​y​ ​f​u​n​c​t​i​o​n​ ​o​f​ ​m​o​n​e​y
+						 * T​h​e​ ​p​r​i​m​a​r​y​ ​f​u​n​c​t​i​o​n​ ​o​f​ ​m​o​n​e​y
 						 */
 						title: string
 					}
@@ -2509,7 +2509,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​m​a​d​e​ ​m​e​t​a​l​s​ ​v​a​l​u​a​b​l​e​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y
+						 * M​o​n​e​t​a​r​y​ ​M​e​t​a​l​s
 						 */
 						title: string
 					}
@@ -2556,7 +2556,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​S​t​o​c​k​ ​t​o​ ​F​l​o​w​ ​r​a​t​i​o
+						 * U​n​d​e​r​s​t​a​n​d​i​n​g​ ​t​h​e​ ​S​t​o​c​k​ ​t​o​ ​F​l​o​w​ ​R​a​t​i​o
 						 */
 						title: string
 					}
@@ -2607,7 +2607,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​h​a​r​d​n​e​s​s​ ​o​f​ ​m​o​n​e​y
+						 * H​a​r​d​ ​M​o​n​e​y​ ​a​n​d​ ​E​a​s​y​ ​M​o​n​e​y
 						 */
 						title: string
 					}
@@ -2662,7 +2662,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​y​ ​d​i​d​ ​t​h​e​ ​f​r​e​e​ ​m​a​r​k​e​t​ ​c​h​o​o​s​e​ ​g​o​l​d​ ​a​s​ ​a​ ​f​o​r​m​ ​o​f​ ​m​o​n​e​y
+						 * C​o​n​v​e​r​g​e​n​c​e​ ​o​n​ ​G​o​l​d
 						 */
 						title: string
 					}
@@ -2709,7 +2709,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​w​e​r​e​ ​p​a​p​e​r​ ​n​o​t​e​s​ ​u​s​e​d​ ​f​o​r​ ​d​u​r​i​n​g​ ​t​h​e​ ​e​x​p​a​n​s​i​o​n​ ​o​f​ ​t​r​a​d​e​ ​r​o​u​t​e​s
+						 * T​h​e​ ​O​r​i​g​i​n​s​ ​o​f​ ​P​a​p​e​r​ ​M​o​n​e​y​ ​B​a​c​k​e​d​ ​b​y​ ​G​o​l​d
 						 */
 						title: string
 					}
@@ -2758,7 +2758,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​y​ ​d​i​d​ ​F​r​a​c​t​i​o​n​a​l​ ​R​e​s​e​r​v​e​ ​B​a​n​k​i​n​g​ ​d​e​v​e​l​o​p
+						 * T​h​e​ ​I​n​v​e​n​t​i​o​n​ ​o​f​ ​F​r​a​c​t​i​o​n​a​l​ ​R​e​s​e​r​v​e​ ​B​a​n​k​i​n​g
 						 */
 						title: string
 					}
@@ -2803,7 +2803,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​a​ ​p​o​t​e​n​t​i​a​l​ ​o​u​t​c​o​m​e​ ​o​f​ ​b​a​n​k​s​ ​i​s​s​u​i​n​g​ ​m​o​r​e​ ​p​a​p​e​r​ ​n​o​t​e​s​ ​t​h​a​n​ ​t​h​e​y​ ​h​e​l​d​ ​d​e​p​o​s​i​t​s
+						 * P​r​o​b​l​e​m​s​ ​o​f​ ​F​r​a​c​t​i​o​n​a​l​ ​R​e​s​e​r​v​e​ ​B​a​n​k​i​n​g
 						 */
 						title: string
 					}
@@ -2850,7 +2850,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​p​u​r​p​o​s​e​ ​o​f​ ​a​ ​c​e​n​t​r​a​l​ ​b​a​n​k
+						 * M​o​d​e​r​n​ ​C​e​n​t​r​a​l​ ​B​a​n​k​i​n​g
 						 */
 						title: string
 					}
@@ -2897,7 +2897,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​m​a​i​n​ ​p​r​o​b​l​e​m​ ​w​i​t​h​ ​t​h​e​ ​g​o​l​d​ ​s​t​a​n​d​a​r​d​ ​s​y​s​t​e​m​ ​f​o​r​ ​g​o​v​e​r​n​m​e​n​t​s​ ​a​n​d​ ​c​i​t​i​z​e​n​s
+						 * F​r​o​m​ ​G​o​l​d​ ​t​o​ ​G​o​l​d​-​B​a​c​k​e​d
 						 */
 						title: string
 					}
@@ -2944,7 +2944,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​m​a​i​n​ ​p​u​r​p​o​s​e​ ​o​f​ ​t​h​e​ ​B​r​e​t​t​o​n​ ​W​o​o​d​s​ ​s​y​s​t​e​m
+						 * T​h​e​ ​B​r​e​t​t​o​n​ ​W​o​o​d​s​ ​S​y​s​t​e​m
 						 */
 						title: string
 					}
@@ -2991,7 +2991,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​a​ ​g​l​o​b​a​l​ ​r​e​s​e​r​v​e​ ​c​u​r​r​e​n​c​y
+						 * T​h​e​ ​G​l​o​b​a​l​ ​R​e​s​e​r​v​e​ ​C​u​r​r​e​n​c​y
 						 */
 						title: string
 					}
@@ -3048,7 +3048,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​h​a​p​p​e​n​e​d​ ​t​o​ ​t​h​e​ ​B​r​e​t​t​o​n​ ​W​o​o​d​s​ ​s​y​s​t​e​m​ ​i​n​ ​1​9​7​1
+						 * T​h​e​ ​N​i​x​o​n​ ​S​h​o​c​k
 						 */
 						title: string
 					}
@@ -3097,7 +3097,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​d​o​e​s​ ​t​h​e​ ​w​o​r​d​ ​"​f​i​a​t​"​ ​m​e​a​n​ ​w​h​e​n​ ​i​t​ ​i​s​ ​u​s​e​d​ ​t​o​ ​t​a​l​k​ ​a​b​o​u​t​ ​m​o​n​e​y
+						 * T​h​e​ ​F​i​a​t​ ​E​r​a
 						 */
 						title: string
 					}
@@ -3144,7 +3144,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​d​i​g​i​t​a​l​ ​f​i​a​t
+						 * D​i​g​i​t​a​l​ ​F​i​a​t
 						 */
 						title: string
 					}
@@ -3191,7 +3191,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​a​ ​c​r​e​d​i​t​ ​c​a​r​d
+						 * P​l​a​s​t​i​c​ ​C​r​e​d​i​t
 						 */
 						title: string
 					}
@@ -3240,7 +3240,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​w​a​s​ ​a​ ​k​e​y​ ​f​a​c​t​o​r​ ​i​n​ ​t​h​e​ ​c​r​e​a​t​i​o​n​ ​o​f​ ​B​i​t​c​o​i​n
+						 * T​h​e​ ​D​o​u​b​l​e​ ​S​p​e​n​d​i​n​g​ ​P​r​o​b​l​e​m
 						 */
 						title: string
 					}
@@ -3285,7 +3285,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​i​c​h​ ​p​r​o​b​l​e​m​ ​d​i​d​ ​S​a​t​o​s​h​i​ ​h​a​v​e​ ​t​o​ ​s​o​l​v​e​ ​t​o​ ​c​r​e​a​t​e​ ​B​i​t​c​o​i​n
+						 * S​a​t​o​s​h​i​'​s​ ​B​r​e​a​k​t​h​r​o​u​g​h
 						 */
 						title: string
 					}
@@ -3330,7 +3330,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​d​i​f​f​e​r​e​n​c​e​ ​b​e​t​w​e​e​n​ ​d​i​g​i​t​a​l​ ​f​i​a​t​ ​m​o​n​e​y​ ​a​n​d​ ​B​i​t​c​o​i​n
+						 * P​u​r​p​o​s​e​-​b​u​i​l​t​ ​f​o​r​ ​t​h​e​ ​D​i​g​i​t​a​l​ ​A​g​e
 						 */
 						title: string
 					}
@@ -3379,7 +3379,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​p​u​r​p​o​s​e​ ​o​f​ ​c​e​n​t​r​a​l​ ​b​a​n​k​ ​d​i​g​i​t​a​l​ ​c​u​r​r​e​n​c​i​e​s​ ​(​C​B​D​C​s​)
+						 * C​e​n​t​r​a​l​ ​B​a​n​k​ ​D​i​g​i​t​a​l​ ​C​u​r​r​e​n​c​i​e​s
 						 */
 						title: string
 					}
@@ -3432,7 +3432,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​r​o​o​t​ ​p​r​o​b​l​e​m​ ​w​i​t​h​ ​c​o​n​v​e​n​t​i​o​n​a​l​ ​c​u​r​r​e​n​c​y​ ​a​c​c​o​r​d​i​n​g​ ​t​o​ ​S​a​t​o​s​h​i​ ​N​a​k​a​m​o​t​o
+						 * T​h​e​ ​R​o​o​t​ ​P​r​o​b​l​e​m
 						 */
 						title: string
 					}
@@ -3477,7 +3477,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​o​ ​i​s​ ​t​h​e​ ​c​r​e​a​t​o​r​ ​o​f​ ​b​i​t​c​o​i​n
+						 * B​i​t​c​o​i​n​'​s​ ​C​r​e​a​t​o​r​ ​S​a​t​o​s​h​i​ ​N​a​k​a​m​o​t​o
 						 */
 						title: string
 					}
@@ -3522,7 +3522,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​m​a​i​n​ ​i​s​s​u​e​ ​t​h​a​t​ ​S​a​t​o​s​h​i​ ​N​a​k​a​m​o​t​o​ ​a​i​m​e​d​ ​t​o​ ​a​d​d​r​e​s​s​ ​w​i​t​h​ ​t​h​e​ ​c​r​e​a​t​i​o​n​ ​o​f​ ​b​i​t​c​o​i​n
+						 * F​i​a​t​ ​C​u​r​r​e​n​c​i​e​s​ ​R​e​q​u​i​r​e​ ​T​r​u​s​t
 						 */
 						title: string
 					}
@@ -3569,7 +3569,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​o​n​e​ ​o​f​ ​t​h​e​ ​m​a​i​n​ ​c​o​n​s​e​q​u​e​n​c​e​s​ ​o​f​ ​e​x​c​e​s​s​i​v​e​ ​m​o​n​e​y​ ​p​r​i​n​t​i​n​g​ ​a​n​d​ ​c​r​e​d​i​t​ ​e​x​p​a​n​s​i​o​n
+						 * M​o​n​e​y​ ​P​r​i​n​t​i​n​g​ ​a​n​d​ ​C​r​e​d​i​t​ ​E​x​p​a​n​s​i​o​n
 						 */
 						title: string
 					}
@@ -3618,7 +3618,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​y​ ​d​i​d​ ​S​a​t​o​s​h​i​ ​N​a​k​a​m​o​t​o​ ​c​r​e​a​t​e​ ​B​i​t​c​o​i​n
+						 * T​h​e​ ​G​e​n​e​s​i​s​ ​B​l​o​c​k
 						 */
 						title: string
 					}
@@ -3668,7 +3668,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​o​ ​a​r​e​ ​t​h​e​ ​C​y​p​h​e​r​p​u​n​k​s​ ​a​n​d​ ​w​h​a​t​ ​i​s​ ​t​h​e​i​r​ ​g​o​a​l
+						 * B​i​t​c​o​i​n​ ​i​s​ ​t​h​e​ ​R​e​s​u​l​t​ ​o​f​ ​D​e​c​a​d​e​s​ ​o​f​ ​R​e​s​e​a​r​c​h
 						 */
 						title: string
 					}
@@ -3725,7 +3725,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​i​c​h​ ​t​e​c​h​n​o​l​o​g​y​ ​d​i​d​ ​S​a​t​o​s​h​i​ ​i​m​p​l​e​m​e​n​t​ ​t​o​ ​s​o​l​v​e​ ​i​s​s​u​e​s​ ​o​f​ ​c​e​n​t​r​a​l​i​z​a​t​i​o​n​ ​a​n​d​ ​d​o​u​b​l​e​ ​s​p​e​n​d​s
+						 * P​e​e​r​-​t​o​-​P​e​e​r​ ​N​e​t​w​o​r​k
 						 */
 						title: string
 					}
@@ -3774,7 +3774,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​p​u​r​p​o​s​e​ ​o​f​ ​t​h​e​ ​c​r​y​p​t​o​g​r​a​p​h​i​c​ ​h​a​s​h​ ​f​u​n​c​t​i​o​n​ ​i​n​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​b​l​o​c​k​c​h​a​i​n
+						 * W​h​a​t​ ​i​s​ ​a​ ​b​l​o​c​k​c​h​a​i​n​ ​e​x​a​c​t​l​y​?
 						 */
 						title: string
 					}
@@ -3821,7 +3821,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​p​u​r​p​o​s​e​ ​o​f​ ​t​h​e​ ​p​r​i​v​a​t​e​ ​k​e​y​ ​i​n​ ​a​ ​B​i​t​c​o​i​n​ ​t​r​a​n​s​a​c​t​i​o​n
+						 * P​u​b​l​i​c​ ​K​e​y​ ​C​r​y​p​t​o​g​r​a​p​h​y
 						 */
 						title: string
 					}
@@ -3872,7 +3872,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​p​u​r​p​o​s​e​ ​o​f​ ​a​ ​m​a​s​t​e​r​ ​p​u​b​l​i​c​ ​k​e​y​ ​i​n​ ​B​i​t​c​o​i​n
+						 * B​i​t​c​o​i​n​ ​A​d​d​r​e​s​s​e​s​ ​a​n​d​ ​t​h​e​ ​M​a​s​t​e​r​ ​P​u​b​l​i​c​ ​K​e​y
 						 */
 						title: string
 					}
@@ -3921,7 +3921,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​p​u​r​p​o​s​e​ ​o​f​ ​m​i​n​i​n​g​ ​i​n​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k
+						 * M​i​n​i​n​g
 						 */
 						title: string
 					}
@@ -3972,7 +3972,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * H​o​w​ ​d​o​e​s​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​c​r​e​a​t​e​ ​a​ ​s​o​u​r​c​e​ ​o​f​ ​t​r​u​t​h​ ​d​e​s​p​i​t​e​ ​h​a​v​i​n​g​ ​n​o​ ​c​e​n​t​r​a​l​ ​a​u​t​h​o​r​i​t​y
+						 * P​r​o​o​f​ ​o​f​ ​W​o​r​k
 						 */
 						title: string
 					}
@@ -4019,7 +4019,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​h​a​p​p​e​n​s​ ​t​o​ ​t​h​e​ ​b​l​o​c​k​ ​r​e​w​a​r​d​ ​i​n​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​e​v​e​r​y​ ​f​o​u​r​ ​y​e​a​r​s
+						 * D​i​f​f​i​c​u​l​t​y​ ​A​d​j​u​s​t​m​e​n​t
 						 */
 						title: string
 					}
@@ -4068,7 +4068,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​h​a​p​p​e​n​s​ ​t​o​ ​t​h​e​ ​b​l​o​c​k​ ​r​e​w​a​r​d​ ​i​n​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​e​v​e​r​y​ ​f​o​u​r​ ​y​e​a​r​s
+						 * T​h​e​ ​H​a​l​v​i​n​g
 						 */
 						title: string
 					}
@@ -4127,7 +4127,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​a​ ​d​r​a​w​b​a​c​k​ ​o​f​ ​B​i​t​c​o​i​n​'​s​ ​d​e​s​i​g​n
+						 * D​r​a​w​b​a​c​k​s​ ​o​f​ ​B​i​t​c​o​i​n
 						 */
 						title: string
 					}
@@ -4176,7 +4176,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​w​a​s​ ​t​h​e​ ​c​o​n​t​e​n​t​i​o​n​ ​i​n​ ​t​h​e​ ​B​l​o​c​k​s​i​z​e​ ​W​a​r​s
+						 * T​h​e​ ​B​l​o​c​k​s​i​z​e​ ​W​a​r​s
 						 */
 						title: string
 					}
@@ -4221,7 +4221,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​d​o​e​s​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​d​o
+						 * T​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k
 						 */
 						title: string
 					}
@@ -4268,7 +4268,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * H​o​w​ ​l​o​n​g​ ​d​o​e​s​ ​i​t​ ​t​a​k​e​ ​f​o​r​ ​a​ ​p​a​y​m​e​n​t​ ​t​o​ ​b​e​ ​c​o​n​s​i​d​e​r​e​d​ ​s​e​c​u​r​e​ ​o​n​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k
+						 * I​n​s​t​a​n​t​ ​P​a​y​m​e​n​t​s
 						 */
 						title: string
 					}
@@ -4315,7 +4315,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​a​ ​m​i​c​r​o​p​a​y​m​e​n​t
+						 * M​i​c​r​o​p​a​y​m​e​n​t​s
 						 */
 						title: string
 					}
@@ -4364,7 +4364,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​y​ ​i​s​ ​s​c​a​l​a​b​i​l​i​t​y​ ​i​m​p​o​r​t​a​n​t​ ​f​o​r​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k
+						 * S​c​a​l​a​b​i​l​i​t​y
 						 */
 						title: string
 					}
@@ -4411,7 +4411,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * H​o​w​ ​d​o​ ​p​a​y​m​e​n​t​ ​c​h​a​n​n​e​l​s​ ​i​n​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​a​l​l​o​w​ ​u​s​e​r​s​ ​t​o​ ​p​a​y​ ​e​a​c​h​ ​o​t​h​e​r
+						 * H​o​w​ ​d​o​e​s​ ​L​i​g​h​n​i​n​g​ ​w​o​r​k​?
 						 */
 						title: string
 					}
@@ -4460,7 +4460,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * H​o​w​ ​d​o​e​s​ ​t​h​e​ ​L​i​g​h​t​n​i​n​g​ ​N​e​t​w​o​r​k​ ​a​l​l​o​w​ ​u​s​e​r​s​ ​t​o​ ​p​a​y​ ​e​a​c​h​ ​o​t​h​e​r​ ​i​f​ ​t​h​e​y​ ​a​r​e​ ​n​o​t​ ​d​i​r​e​c​t​l​y​ ​c​o​n​n​e​c​t​e​d​ ​t​h​r​o​u​g​h​ ​a​ ​p​a​y​m​e​n​t​ ​c​h​a​n​n​e​l
+						 * R​o​u​t​i​n​g
 						 */
 						title: string
 					}
@@ -4513,7 +4513,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * H​o​w​ ​h​a​s​ ​t​h​e​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e​ ​o​f​ ​b​i​t​c​o​i​n​ ​t​r​e​n​d​e​d​ ​o​v​e​r​ ​t​i​m​e
+						 * I​s​ ​b​i​t​c​o​i​n​ ​a​ ​b​u​b​b​l​e​?
 						 */
 						title: string
 					}
@@ -4560,7 +4560,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​p​r​i​m​a​r​y​ ​f​a​c​t​o​r​ ​i​n​f​l​u​e​n​c​i​n​g​ ​t​h​e​ ​v​o​l​a​t​i​l​i​t​y​ ​o​f​ ​b​i​t​c​o​i​n​'​s​ ​e​x​c​h​a​n​g​e​ ​r​a​t​e
+						 * I​t​'​s​ ​t​o​o​ ​v​o​l​a​t​i​l​e​!
 						 */
 						title: string
 					}
@@ -4607,7 +4607,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​o​n​l​y​ ​t​h​i​n​g​ ​t​h​a​t​ ​b​a​c​k​s​ ​a​n​y​ ​m​o​n​e​y​,​ ​a​c​c​o​r​d​i​n​g​ ​t​o​ ​P​a​r​k​e​r​ ​L​e​w​i​s
+						 * S​h​o​u​l​d​ ​m​o​n​e​y​ ​b​e​ ​b​a​c​k​e​d​ ​b​y​ ​s​o​m​e​t​h​i​n​g​?
 						 */
 						title: string
 					}
@@ -4656,7 +4656,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * I​s​ ​i​t​ ​p​o​s​s​i​b​l​e​ ​t​h​a​t​ ​b​i​t​c​o​i​n​ ​b​e​c​o​m​e​s​ ​o​b​s​o​l​e​t​e​ ​o​n​e​ ​d​a​y
+						 * W​i​l​l​ ​b​i​t​c​o​i​n​ ​b​e​c​o​m​e​ ​o​b​s​o​l​e​t​e​ ​o​n​e​ ​d​a​y​?
 						 */
 						title: string
 					}
@@ -4703,7 +4703,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * H​o​w​ ​d​o​e​s​ ​b​i​t​c​o​i​n​ ​i​m​p​a​c​t​ ​g​l​o​b​a​l​ ​e​n​e​r​g​y​ ​c​o​n​s​u​m​p​t​i​o​n
+						 * I​s​ ​b​i​t​c​o​i​n​'​s​ ​e​n​e​r​g​y​ ​c​o​n​s​u​m​p​t​i​o​n​ ​e​x​c​e​s​s​i​v​e​?
 						 */
 						title: string
 					}
@@ -4746,7 +4746,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * H​o​w​ ​c​a​n​ ​e​x​c​e​s​s​ ​e​n​e​r​g​y​ ​b​e​ ​u​s​e​d​ ​t​h​r​o​u​g​h​ ​b​i​t​c​o​i​n​ ​m​i​n​i​n​g
+						 * W​a​i​t​,​ ​a​r​e​ ​y​o​u​ ​t​e​l​l​i​n​g​ ​m​e​ ​t​h​a​t​ ​b​i​t​c​o​i​n​ ​c​a​n​ ​b​e​ ​u​s​e​d​ ​t​o​ ​t​a​p​ ​i​n​t​o​ ​s​t​r​a​n​d​e​d​ ​e​n​e​r​g​y​?
 						 */
 						title: string
 					}
@@ -4799,7 +4799,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * H​o​w​ ​c​a​n​ ​b​i​t​c​o​i​n​ ​t​r​a​n​s​a​c​t​i​o​n​s​ ​b​e​ ​s​e​n​t​ ​i​n​ ​t​h​e​ ​e​v​e​n​t​ ​o​f​ ​a​n​ ​i​n​t​e​r​n​e​t​ ​d​i​s​r​u​p​t​i​o​n
+						 * B​i​t​c​o​i​n​ ​i​s​ ​t​o​o​ ​d​e​p​e​n​d​e​n​t​ ​o​n​ ​t​h​e​ ​I​n​t​e​r​n​e​t
 						 */
 						title: string
 					}
@@ -4846,7 +4846,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * I​s​ ​i​t​ ​a​c​c​u​r​a​t​e​ ​t​o​ ​c​l​a​i​m​ ​t​h​a​t​ ​b​i​t​c​o​i​n​'​s​ ​p​r​o​p​e​r​t​i​e​s​ ​h​a​v​e​ ​l​e​d​ ​t​o​ ​a​n​ ​o​v​e​r​a​l​l​ ​i​n​c​r​e​a​s​e​ ​i​n​ ​c​r​i​m​i​n​a​l​ ​a​c​t​i​v​i​t​y
+						 * B​i​t​c​o​i​n​ ​i​s​ ​f​o​r​ ​C​r​i​m​i​n​a​l​s
 						 */
 						title: string
 					}
@@ -4891,7 +4891,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​i​c​h​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​s​t​a​t​e​m​e​n​t​s​ ​i​s​ ​t​r​u​e​ ​a​b​o​u​t​ ​b​i​t​c​o​i​n
+						 * B​i​t​c​o​i​n​ ​i​s​ ​a​ ​P​o​n​z​i​ ​S​c​h​e​m​e
 						 */
 						title: string
 					}
@@ -4940,7 +4940,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​d​i​f​f​e​r​e​n​c​e​ ​b​e​t​w​e​e​n​ ​p​a​y​i​n​g​ ​w​i​t​h​ ​a​ ​c​r​e​d​i​t​ ​c​a​r​d​ ​a​n​d​ ​p​a​y​i​n​g​ ​w​i​t​h​ ​b​i​t​c​o​i​n​ ​o​n​-​c​h​a​i​n
+						 * B​i​t​c​o​i​n​ ​i​s​ ​t​o​o​ ​s​l​o​w
 						 */
 						title: string
 					}
@@ -4987,7 +4987,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * H​o​w​ ​i​s​ ​t​h​e​ ​s​u​p​p​l​y​ ​o​f​ ​b​i​t​c​o​i​n​ ​p​r​o​t​e​c​t​e​d​ ​f​r​o​m​ ​b​e​i​n​g​ ​c​o​r​r​u​p​t​e​d
+						 * B​i​t​c​o​i​n​'​s​ ​S​u​p​p​l​y​ ​L​i​m​i​t​ ​C​o​u​l​d​ ​B​e​ ​C​o​r​r​u​p​t​e​d
 						 */
 						title: string
 					}
@@ -5036,7 +5036,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * C​a​n​ ​g​o​v​e​r​n​m​e​n​t​s​ ​e​f​f​e​c​t​i​v​e​l​y​ ​b​a​n​ ​b​i​t​c​o​i​n
+						 * G​o​v​e​r​n​m​e​n​t​s​ ​W​i​l​l​ ​B​a​n​ ​B​i​t​c​o​i​n
 						 */
 						title: string
 					}
@@ -5091,7 +5091,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * I​s​ ​i​t​ ​t​r​u​e​ ​t​h​a​t​ ​a​ ​s​m​a​l​l​ ​n​u​m​b​e​r​ ​o​f​ ​w​a​l​l​e​t​s​ ​h​o​l​d​ ​t​h​e​ ​m​a​j​o​r​i​t​y​ ​o​f​ ​a​l​l​ ​b​i​t​c​o​i​n
+						 * B​i​t​c​o​i​n​ ​O​w​n​e​r​s​h​i​p​ ​I​s​ ​C​o​n​c​e​n​t​r​a​t​e​d​ ​o​n​ ​a​ ​F​e​w​ ​U​s​e​r​s
 						 */
 						title: string
 					}
@@ -5138,7 +5138,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * C​a​n​ ​m​i​n​i​n​g​ ​p​o​o​l​s​ ​d​i​s​r​u​p​t​ ​t​h​e​ ​b​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​o​r​ ​c​e​n​s​o​r​ ​t​r​a​n​s​a​c​t​i​o​n​s
+						 * B​i​t​c​o​i​n​ ​M​i​n​i​n​g​ ​I​s​ ​C​e​n​t​r​a​l​i​z​e​d
 						 */
 						title: string
 					}
@@ -5185,7 +5185,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * H​o​w​ ​c​a​n​ ​y​o​u​ ​a​c​c​u​r​a​t​e​l​y​ ​c​o​m​p​a​r​e​ ​t​h​e​ ​v​a​l​u​e​ ​o​f​ ​b​i​t​c​o​i​n​ ​t​o​ ​o​t​h​e​r​ ​a​s​s​e​t​s
+						 * B​i​t​c​o​i​n​ ​i​s​ ​t​o​o​ ​e​x​p​e​n​s​i​v​e
 						 */
 						title: string
 					}
@@ -5234,7 +5234,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​t​r​a​n​s​a​c​t​i​o​n​ ​f​e​e​s​ ​o​n​ ​t​h​e​ ​m​a​i​n​ ​l​a​y​e​r​ ​o​f​ ​b​i​t​c​o​i​n​ ​r​e​m​a​i​n​ ​r​e​l​a​t​i​v​e​l​y​ ​l​o​w​ ​c​o​m​p​a​r​e​d​ ​t​o​ ​t​r​a​d​i​t​i​o​n​a​l​ ​f​i​n​a​n​c​i​a​l​ ​s​y​s​t​e​m​s
+						 * B​i​t​c​o​i​n​ ​t​r​a​n​s​a​c​t​i​o​n​ ​c​o​s​t​s​ ​a​r​e​ ​p​r​o​h​i​b​i​t​i​v​e​l​y​ ​h​i​g​h
 						 */
 						title: string
 					}
@@ -5283,7 +5283,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * I​s​ ​h​o​l​d​i​n​g​ ​b​i​t​c​o​i​n​ ​t​h​e​ ​s​a​m​e​ ​t​h​i​n​g​ ​a​s​ ​h​o​a​r​d​i​n​g​ ​b​i​t​c​o​i​n
+						 * T​h​e​ ​M​i​s​c​o​n​c​e​p​t​i​o​n​ ​o​f​ ​B​i​t​c​o​i​n​ ​H​o​a​r​d​i​n​g
 						 */
 						title: string
 					}
@@ -5332,7 +5332,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​b​i​t​c​o​i​n​ ​i​s​ ​c​o​n​s​i​d​e​r​e​d​ ​v​a​l​u​a​b​l​e​ ​d​e​s​p​i​t​e​ ​t​h​e​ ​f​a​c​t​ ​t​h​a​t​ ​i​t​s​ ​c​o​d​e​ ​c​a​n​ ​b​e​ ​c​o​p​i​e​d​ ​b​y​ ​a​n​y​o​n​e
+						 * B​i​t​c​o​i​n​ ​i​s​ ​n​o​t​ ​s​c​a​r​c​e​ ​b​e​c​a​u​s​e​ ​t​h​e​r​e​ ​a​r​e​ ​t​h​o​u​s​a​n​d​s​ ​o​f​ ​c​r​y​p​t​o​c​u​r​r​e​n​c​i​e​s
 						 */
 						title: string
 					}
@@ -5389,7 +5389,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​a​ ​s​c​a​r​c​e​ ​r​e​s​o​u​r​c​e
+						 * H​o​w​ ​l​i​m​i​t​e​d​ ​r​e​s​o​u​r​c​e​s​ ​a​r​e​ ​a​l​l​o​c​a​t​e​d​ ​a​n​d​ ​c​o​m​p​e​t​e​d​ ​f​o​r
 						 */
 						title: string
 					}
@@ -5436,7 +5436,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​a​ ​m​o​n​e​t​a​r​y​ ​p​r​e​m​i​u​m
+						 * M​o​n​e​t​a​r​y​ ​P​r​e​m​i​u​m
 						 */
 						title: string
 					}
@@ -5487,7 +5487,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​G​r​e​s​h​a​m​'​s​ ​L​a​w
+						 * G​r​e​s​h​a​m​'​s​ ​L​a​w
 						 */
 						title: string
 					}
@@ -5536,7 +5536,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​T​h​i​e​r​'​s​ ​L​a​w
+						 * T​h​i​e​r​'​s​ ​L​a​w
 						 */
 						title: string
 					}
@@ -5587,7 +5587,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​C​a​n​t​i​l​l​o​n​ ​E​f​f​e​c​t
+						 * T​h​e​ ​*​*​*​*​ ​C​a​n​t​i​l​l​o​n​ ​E​f​f​e​c​t
 						 */
 						title: string
 					}
@@ -5640,7 +5640,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​a​ ​S​c​h​e​l​l​i​n​g​ ​p​o​i​n​t
+						 * S​c​h​e​l​l​i​n​g​ ​P​o​i​n​t
 						 */
 						title: string
 					}
@@ -5695,7 +5695,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​o​p​p​o​r​t​u​n​i​t​y​ ​c​o​s​t
+						 * O​p​p​o​r​t​u​n​i​t​y​ ​C​o​s​t
 						 */
 						title: string
 					}
@@ -5746,7 +5746,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​i​m​e​ ​p​r​e​f​e​r​e​n​c​e
+						 * T​i​m​e​ ​P​r​e​f​e​r​e​n​c​e
 						 */
 						title: string
 					}
@@ -5795,7 +5795,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * H​o​w​ ​d​o​e​s​ ​t​h​e​ ​e​x​i​s​t​e​n​c​e​ ​o​f​ ​B​i​t​c​o​i​n​ ​a​f​f​e​c​t​ ​t​h​e​ ​M​u​n​d​e​l​l​-​F​l​e​m​i​n​g​-​T​r​i​l​e​m​m​a​?
+						 * T​h​e​ ​I​m​p​o​s​s​i​b​l​e​ ​T​r​i​n​i​t​y
 						 */
 						title: string
 					}
@@ -5844,7 +5844,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​J​e​v​o​n​s​ ​P​a​r​a​d​o​x
+						 * J​e​v​o​n​s​ ​P​a​r​a​d​o​x
 						 */
 						title: string
 					}
@@ -5891,7 +5891,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​P​a​r​e​t​o​ ​p​r​i​n​c​i​p​l​e​,​ ​a​l​s​o​ ​k​n​o​w​n​ ​a​s​ ​t​h​e​ ​8​0​/​2​0​ ​r​u​l​e​,​ ​a​n​ ​e​x​a​m​p​l​e​ ​o​f
+						 * P​o​w​e​r​ ​L​a​w​s
 						 */
 						title: string
 					}
@@ -5938,7 +5938,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​p​e​o​p​l​e​ ​u​s​u​a​l​l​y​ ​a​g​r​e​e​ ​o​n​ ​u​s​i​n​g​ ​o​n​e​ ​t​y​p​e​ ​o​f​ ​m​o​n​e​y​ ​i​n​ ​a​ ​c​e​r​t​a​i​n​ ​a​r​e​a
+						 * W​i​n​n​e​r​-​T​a​k​e​-​A​l​l​ ​E​f​f​e​c​t​s
 						 */
 						title: string
 					}
@@ -5995,7 +5995,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​u​n​i​t​ ​b​i​a​s
+						 * U​n​i​t​ ​B​i​a​s
 						 */
 						title: string
 					}
@@ -6044,7 +6044,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​a​ ​V​e​b​l​e​n​ ​g​o​o​d
+						 * V​e​b​l​e​n​ ​G​o​o​d
 						 */
 						title: string
 					}
@@ -6091,7 +6091,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​t​h​e​ ​m​a​i​n​ ​c​a​u​s​e​ ​o​f​ ​m​a​l​i​n​v​e​s​t​m​e​n​t
+						 * M​a​l​i​n​v​e​s​t​m​e​n​t
 						 */
 						title: string
 					}
@@ -6144,7 +6144,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * W​h​a​t​ ​i​s​ ​a​n​ ​a​s​y​m​m​e​t​r​i​c​ ​p​a​y​o​f​f​ ​i​n​ ​t​h​e​ ​c​o​n​t​e​x​t​ ​o​f​ ​i​n​v​e​s​t​m​e​n​t​ ​d​e​c​i​s​i​o​n​s
+						 * A​s​y​m​m​e​t​r​i​c​ ​P​a​y​o​f​f
 						 */
 						title: string
 					}
@@ -6193,7 +6193,7 @@ type RootTranslation = {
 						 */
 						text: string
 						/**
-						 * H​o​w​ ​i​s​ ​t​h​e​ ​A​n​s​o​f​f​ ​M​a​t​r​i​x​ ​r​e​l​e​v​a​n​t​ ​t​o​ ​t​h​e​ ​g​r​o​w​t​h​ ​a​n​d​ ​p​o​t​e​n​t​i​a​l​ ​o​f​ ​b​i​t​c​o​i​n
+						 * A​n​s​o​f​f​ ​M​a​t​r​i​x
 						 */
 						title: string
 					}
@@ -10103,7 +10103,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the primary and ultimate evolutionary function of collectibles
+						 * The origins of money
 						 */
 						title: () => LocalizedString
 					}
@@ -10148,7 +10148,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What was the primary role of collectibles in paleolithic societies
+						 * Primitive forms of money
 						 */
 						title: () => LocalizedString
 					}
@@ -10195,7 +10195,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What was the main advantage of being able to anticipate future demand for collectible items in early human societies
+						 * Anticipating Demand
 						 */
 						title: () => LocalizedString
 					}
@@ -10240,7 +10240,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is a Nash Equilibrium and how does it benefit society
+						 * The Key to Facilitating Trade
 						 */
 						title: () => LocalizedString
 					}
@@ -10287,7 +10287,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * Why did merchants and traders in early human societies have an incentive to promote the adoption of a foreign store of value in their own society
+						 * The Benefits of Converging on a Single Store of Value
 						 */
 						title: () => LocalizedString
 					}
@@ -10342,7 +10342,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What are some attributes that make a good store of value
+						 * Some stores of value are better than others
 						 */
 						title: () => LocalizedString
 					}
@@ -10391,7 +10391,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * Which of the following is an important factor in determining the durability of a good store of value
+						 * Durability is an important attribute for a good store of value
 						 */
 						title: () => LocalizedString
 					}
@@ -10439,7 +10439,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * Which of the following is NOT a factor that makes a good store of value portable
+						 * The good must be easy to transport and store
 						 */
 						title: () => LocalizedString
 					}
@@ -10487,7 +10487,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the main reason that gold is considered more fungible than diamonds
+						 * One specimen should be interchangeable with another of equal quantity
 						 */
 						title: () => LocalizedString
 					}
@@ -10534,7 +10534,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * How can bitcoin be verified
+						 * The good must be easy to quickly identify and verify as authentic
 						 */
 						title: () => LocalizedString
 					}
@@ -10587,7 +10587,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * Which of the following is NOT a good store of value due to its difficulty in being easily divided for day-to-day trade
+						 * The good must be easy to subdivide
 						 */
 						title: () => LocalizedString
 					}
@@ -10634,7 +10634,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the most important attribute of a store of value
+						 * A monetary good must scarce
 						 */
 						title: () => LocalizedString
 					}
@@ -10683,7 +10683,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the main reason that a long-established store of value could be displaced by a new arrival
+						 * An established history of being valued by society
 						 */
 						title: () => LocalizedString
 					}
@@ -10732,7 +10732,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * Which of the following is NOT a reason that Bitcoin is considered a censorship-resistant good
+						 * No permission required
 						 */
 						title: () => LocalizedString
 					}
@@ -10789,7 +10789,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the main focus of modern monetary economics
+						 * The Evolution of Money
 						 */
 						title: () => LocalizedString
 					}
@@ -10834,7 +10834,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What were some examples of early forms of money that were valued for their appearance or special qualities
+						 * Four Stages of Money: Collectible
 						 */
 						title: () => LocalizedString
 					}
@@ -10881,7 +10881,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What determines the purchasing power of a store of value
+						 * Four Stages of Money: Store of Value
 						 */
 						title: () => LocalizedString
 					}
@@ -10930,7 +10930,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is Bitcoin Pizza Day celebrated for
+						 * Four Stages of Money: Medium of Exchange
 						 */
 						title: () => LocalizedString
 					}
@@ -10979,7 +10979,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * How can bitcoin be considered a unit of account
+						 * Four Stages of Money: Unit of Account
 						 */
 						title: () => LocalizedString
 					}
@@ -11026,7 +11026,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the meaning of the term "partly monetized"
+						 * Partial Monetization
 						 */
 						title: () => LocalizedString
 					}
@@ -11071,7 +11071,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the current stage of Bitcoin's evolution
+						 * Bitcoin is in the stage of monetization
 						 */
 						title: () => LocalizedString
 					}
@@ -11126,7 +11126,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is money
+						 * Money is not a government creation
 						 */
 						title: () => LocalizedString
 					}
@@ -11171,7 +11171,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What was the primary function of money
+						 * The primary function of money
 						 */
 						title: () => LocalizedString
 					}
@@ -11216,7 +11216,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What made metals valuable as a form of money
+						 * Monetary Metals
 						 */
 						title: () => LocalizedString
 					}
@@ -11263,7 +11263,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the Stock to Flow ratio
+						 * Understanding the Stock to Flow Ratio
 						 */
 						title: () => LocalizedString
 					}
@@ -11314,7 +11314,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the hardness of money
+						 * Hard Money and Easy Money
 						 */
 						title: () => LocalizedString
 					}
@@ -11369,7 +11369,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * Why did the free market choose gold as a form of money
+						 * Convergence on Gold
 						 */
 						title: () => LocalizedString
 					}
@@ -11416,7 +11416,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What were paper notes used for during the expansion of trade routes
+						 * The Origins of Paper Money Backed by Gold
 						 */
 						title: () => LocalizedString
 					}
@@ -11465,7 +11465,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * Why did Fractional Reserve Banking develop
+						 * The Invention of Fractional Reserve Banking
 						 */
 						title: () => LocalizedString
 					}
@@ -11510,7 +11510,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is a potential outcome of banks issuing more paper notes than they held deposits
+						 * Problems of Fractional Reserve Banking
 						 */
 						title: () => LocalizedString
 					}
@@ -11557,7 +11557,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the purpose of a central bank
+						 * Modern Central Banking
 						 */
 						title: () => LocalizedString
 					}
@@ -11604,7 +11604,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What was the main problem with the gold standard system for governments and citizens
+						 * From Gold to Gold-Backed
 						 */
 						title: () => LocalizedString
 					}
@@ -11651,7 +11651,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What was the main purpose of the Bretton Woods system
+						 * The Bretton Woods System
 						 */
 						title: () => LocalizedString
 					}
@@ -11698,7 +11698,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is a global reserve currency
+						 * The Global Reserve Currency
 						 */
 						title: () => LocalizedString
 					}
@@ -11755,7 +11755,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What happened to the Bretton Woods system in 1971
+						 * The Nixon Shock
 						 */
 						title: () => LocalizedString
 					}
@@ -11804,7 +11804,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What does the word "fiat" mean when it is used to talk about money
+						 * The Fiat Era
 						 */
 						title: () => LocalizedString
 					}
@@ -11851,7 +11851,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is digital fiat
+						 * Digital Fiat
 						 */
 						title: () => LocalizedString
 					}
@@ -11898,7 +11898,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is a credit card
+						 * Plastic Credit
 						 */
 						title: () => LocalizedString
 					}
@@ -11947,7 +11947,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What was a key factor in the creation of Bitcoin
+						 * The Double Spending Problem
 						 */
 						title: () => LocalizedString
 					}
@@ -11992,7 +11992,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * Which problem did Satoshi have to solve to create Bitcoin
+						 * Satoshi's Breakthrough
 						 */
 						title: () => LocalizedString
 					}
@@ -12037,7 +12037,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the main difference between digital fiat money and Bitcoin
+						 * Purpose-built for the Digital Age
 						 */
 						title: () => LocalizedString
 					}
@@ -12086,7 +12086,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the main purpose of central bank digital currencies (CBDCs)
+						 * Central Bank Digital Currencies
 						 */
 						title: () => LocalizedString
 					}
@@ -12139,7 +12139,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the root problem with conventional currency according to Satoshi Nakamoto
+						 * The Root Problem
 						 */
 						title: () => LocalizedString
 					}
@@ -12184,7 +12184,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * Who is the creator of bitcoin
+						 * Bitcoin's Creator Satoshi Nakamoto
 						 */
 						title: () => LocalizedString
 					}
@@ -12229,7 +12229,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What was the main issue that Satoshi Nakamoto aimed to address with the creation of bitcoin
+						 * Fiat Currencies Require Trust
 						 */
 						title: () => LocalizedString
 					}
@@ -12276,7 +12276,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is one of the main consequences of excessive money printing and credit expansion
+						 * Money Printing and Credit Expansion
 						 */
 						title: () => LocalizedString
 					}
@@ -12325,7 +12325,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * Why did Satoshi Nakamoto create Bitcoin
+						 * The Genesis Block
 						 */
 						title: () => LocalizedString
 					}
@@ -12375,7 +12375,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * Who are the Cypherpunks and what is their goal
+						 * Bitcoin is the Result of Decades of Research
 						 */
 						title: () => LocalizedString
 					}
@@ -12432,7 +12432,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * Which technology did Satoshi implement to solve issues of centralization and double spends
+						 * Peer-to-Peer Network
 						 */
 						title: () => LocalizedString
 					}
@@ -12481,7 +12481,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the purpose of the cryptographic hash function in the Bitcoin blockchain
+						 * What is a blockchain exactly?
 						 */
 						title: () => LocalizedString
 					}
@@ -12528,7 +12528,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the purpose of the private key in a Bitcoin transaction
+						 * Public Key Cryptography
 						 */
 						title: () => LocalizedString
 					}
@@ -12579,7 +12579,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the purpose of a master public key in Bitcoin
+						 * Bitcoin Addresses and the Master Public Key
 						 */
 						title: () => LocalizedString
 					}
@@ -12628,7 +12628,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the main purpose of mining in the bitcoin network
+						 * Mining
 						 */
 						title: () => LocalizedString
 					}
@@ -12679,7 +12679,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * How does the Bitcoin network create a source of truth despite having no central authority
+						 * Proof of Work
 						 */
 						title: () => LocalizedString
 					}
@@ -12726,7 +12726,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What happens to the block reward in the bitcoin network every four years
+						 * Difficulty Adjustment
 						 */
 						title: () => LocalizedString
 					}
@@ -12775,7 +12775,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What happens to the block reward in the bitcoin network every four years
+						 * The Halving
 						 */
 						title: () => LocalizedString
 					}
@@ -12834,7 +12834,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is a drawback of Bitcoin's design
+						 * Drawbacks of Bitcoin
 						 */
 						title: () => LocalizedString
 					}
@@ -12883,7 +12883,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What was the contention in the Blocksize Wars
+						 * The Blocksize Wars
 						 */
 						title: () => LocalizedString
 					}
@@ -12928,7 +12928,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What does the Lightning Network do
+						 * The Lightning Network
 						 */
 						title: () => LocalizedString
 					}
@@ -12975,7 +12975,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * How long does it take for a payment to be considered secure on the Lightning Network
+						 * Instant Payments
 						 */
 						title: () => LocalizedString
 					}
@@ -13022,7 +13022,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is a micropayment
+						 * Micropayments
 						 */
 						title: () => LocalizedString
 					}
@@ -13071,7 +13071,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * Why is scalability important for the Bitcoin network
+						 * Scalability
 						 */
 						title: () => LocalizedString
 					}
@@ -13118,7 +13118,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * How do payment channels in the Lightning Network allow users to pay each other
+						 * How does Lighning work?
 						 */
 						title: () => LocalizedString
 					}
@@ -13167,7 +13167,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * How does the Lightning Network allow users to pay each other if they are not directly connected through a payment channel
+						 * Routing
 						 */
 						title: () => LocalizedString
 					}
@@ -13220,7 +13220,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * How has the exchange rate of bitcoin trended over time
+						 * Is bitcoin a bubble?
 						 */
 						title: () => LocalizedString
 					}
@@ -13267,7 +13267,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the primary factor influencing the volatility of bitcoin's exchange rate
+						 * It's too volatile!
 						 */
 						title: () => LocalizedString
 					}
@@ -13314,7 +13314,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the only thing that backs any money, according to Parker Lewis
+						 * Should money be backed by something?
 						 */
 						title: () => LocalizedString
 					}
@@ -13363,7 +13363,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * Is it possible that bitcoin becomes obsolete one day
+						 * Will bitcoin become obsolete one day?
 						 */
 						title: () => LocalizedString
 					}
@@ -13410,7 +13410,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * How does bitcoin impact global energy consumption
+						 * Is bitcoin's energy consumption excessive?
 						 */
 						title: () => LocalizedString
 					}
@@ -13453,7 +13453,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * How can excess energy be used through bitcoin mining
+						 * Wait, are you telling me that bitcoin can be used to tap into stranded energy?
 						 */
 						title: () => LocalizedString
 					}
@@ -13506,7 +13506,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * How can bitcoin transactions be sent in the event of an internet disruption
+						 * Bitcoin is too dependent on the Internet
 						 */
 						title: () => LocalizedString
 					}
@@ -13553,7 +13553,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * Is it accurate to claim that bitcoin's properties have led to an overall increase in criminal activity
+						 * Bitcoin is for Criminals
 						 */
 						title: () => LocalizedString
 					}
@@ -13598,7 +13598,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * Which of the following statements is true about bitcoin
+						 * Bitcoin is a Ponzi Scheme
 						 */
 						title: () => LocalizedString
 					}
@@ -13647,7 +13647,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the main difference between paying with a credit card and paying with bitcoin on-chain
+						 * Bitcoin is too slow
 						 */
 						title: () => LocalizedString
 					}
@@ -13694,7 +13694,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * How is the supply of bitcoin protected from being corrupted
+						 * Bitcoin's Supply Limit Could Be Corrupted
 						 */
 						title: () => LocalizedString
 					}
@@ -13743,7 +13743,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * Can governments effectively ban bitcoin
+						 * Governments Will Ban Bitcoin
 						 */
 						title: () => LocalizedString
 					}
@@ -13798,7 +13798,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * Is it true that a small number of wallets hold the majority of all bitcoin
+						 * Bitcoin Ownership Is Concentrated on a Few Users
 						 */
 						title: () => LocalizedString
 					}
@@ -13845,7 +13845,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * Can mining pools disrupt the bitcoin network or censor transactions
+						 * Bitcoin Mining Is Centralized
 						 */
 						title: () => LocalizedString
 					}
@@ -13892,7 +13892,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * How can you accurately compare the value of bitcoin to other assets
+						 * Bitcoin is too expensive
 						 */
 						title: () => LocalizedString
 					}
@@ -13941,7 +13941,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the main reason that transaction fees on the main layer of bitcoin remain relatively low compared to traditional financial systems
+						 * Bitcoin transaction costs are prohibitively high
 						 */
 						title: () => LocalizedString
 					}
@@ -13990,7 +13990,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * Is holding bitcoin the same thing as hoarding bitcoin
+						 * The Misconception of Bitcoin Hoarding
 						 */
 						title: () => LocalizedString
 					}
@@ -14039,7 +14039,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the main reason that bitcoin is considered valuable despite the fact that its code can be copied by anyone
+						 * Bitcoin is not scarce because there are thousands of cryptocurrencies
 						 */
 						title: () => LocalizedString
 					}
@@ -14096,7 +14096,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is a scarce resource
+						 * How limited resources are allocated and competed for
 						 */
 						title: () => LocalizedString
 					}
@@ -14143,7 +14143,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is a monetary premium
+						 * Monetary Premium
 						 */
 						title: () => LocalizedString
 					}
@@ -14194,7 +14194,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is Gresham's Law
+						 * Gresham's Law
 						 */
 						title: () => LocalizedString
 					}
@@ -14243,7 +14243,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is Thier's Law
+						 * Thier's Law
 						 */
 						title: () => LocalizedString
 					}
@@ -14294,7 +14294,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the Cantillon Effect
+						 * The **** Cantillon Effect
 						 */
 						title: () => LocalizedString
 					}
@@ -14347,7 +14347,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is a Schelling point
+						 * Schelling Point
 						 */
 						title: () => LocalizedString
 					}
@@ -14402,7 +14402,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is opportunity cost
+						 * Opportunity Cost
 						 */
 						title: () => LocalizedString
 					}
@@ -14453,7 +14453,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is time preference
+						 * Time Preference
 						 */
 						title: () => LocalizedString
 					}
@@ -14502,7 +14502,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * How does the existence of Bitcoin affect the Mundell-Fleming-Trilemma?
+						 * The Impossible Trinity
 						 */
 						title: () => LocalizedString
 					}
@@ -14551,7 +14551,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the Jevons Paradox
+						 * Jevons Paradox
 						 */
 						title: () => LocalizedString
 					}
@@ -14598,7 +14598,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the Pareto principle, also known as the 80/20 rule, an example of
+						 * Power Laws
 						 */
 						title: () => LocalizedString
 					}
@@ -14645,7 +14645,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the main reason that people usually agree on using one type of money in a certain area
+						 * Winner-Take-All Effects
 						 */
 						title: () => LocalizedString
 					}
@@ -14702,7 +14702,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is unit bias
+						 * Unit Bias
 						 */
 						title: () => LocalizedString
 					}
@@ -14751,7 +14751,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is a Veblen good
+						 * Veblen Good
 						 */
 						title: () => LocalizedString
 					}
@@ -14798,7 +14798,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is the main cause of malinvestment
+						 * Malinvestment
 						 */
 						title: () => LocalizedString
 					}
@@ -14851,7 +14851,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * What is an asymmetric payoff in the context of investment decisions
+						 * Asymmetric Payoff
 						 */
 						title: () => LocalizedString
 					}
@@ -14900,7 +14900,7 @@ export type TranslationFunctions = {
 						 */
 						text: () => LocalizedString
 						/**
-						 * How is the Ansoff Matrix relevant to the growth and potential of bitcoin
+						 * Ansoff Matrix
 						 */
 						title: () => LocalizedString
 					}
