@@ -8745,6 +8745,12 @@ type RootTranslation = {
 		 */
 		REVIEW: string
 	}
+	Fake: {
+		/**
+		 * T​h​i​s​ ​i​s​ ​t​o​ ​t​r​i​g​g​e​r​ ​t​h​e​ ​t​r​a​n​s​l​a​t​i​o​n​ ​p​i​p​e​l​i​n​e​.​ ​D​o​ ​n​o​t​ ​t​r​a​n​s​l​a​t​e​.
+		 */
+		doNotTranslate: string
+	}
 }
 
 export type TranslationFunctions = {
@@ -17375,6 +17381,12 @@ export type TranslationFunctions = {
 		 * Review
 		 */
 		REVIEW: () => LocalizedString
+	}
+	Fake: {
+		/**
+		 * This is to trigger the translation pipeline. Do not translate.
+		 */
+		doNotTranslate: () => LocalizedString
 	}
 }
 
