@@ -1,6 +1,6 @@
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
-import { getAccessTokenFromClipboard } from "./helpers.spec"
+import { getAccessTokenFromClipboard } from "./helpers"
 import {
   clickBackButton,
   clickButton,
