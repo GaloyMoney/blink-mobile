@@ -2801,9 +2801,6 @@ const en: BaseTranslation = {
     PROCESSING: "Processing",
     REVIEW: "Review",
   },
-  Fake: {
-    doNotTranslate: "This is to trigger the translation pipeline. Do not translate."
-  }
 }
 
 export default en
