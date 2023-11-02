@@ -36,7 +36,7 @@ export const createPaymentRequestCreationData = <T extends WalletCurrency>(
   // Permissions for the specified type
   const permissions = {
     canSetReceivingWalletDescriptor: false,
-    canSetMemo: true,
+    canSetMemo: false,
     canSetAmount: true,
   }
   if (type === Invoice.Lightning || type === Invoice.OnChain) {

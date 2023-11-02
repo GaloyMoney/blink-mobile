@@ -209,23 +209,23 @@ export const createPaymentRequest = (
 
       // Paycode
     } else if (pr.type === Invoice.PayCode && pr.username) {
-      const baseLnurl = `${pr.posUrl}/.well-known/lnurlp/${pr.username}`
-      const url = new URL(baseLnurl)
-
-      if (pr.unitOfAccountAmount !== undefined && pr.unitOfAccountAmount.amount !== 0) {
-        url.searchParams.append("amount", pr.unitOfAccountAmount.amount.toString())
-        url.searchParams.append("currency", pr.unitOfAccountAmount.currencyCode)
-      }
-
-      if (pr.memo !== "") {
-        url.searchParams.append("comment", pr.memo)
-      }
+      const queryStringForAmount =
+        pr.unitOfAccountAmount === undefined || pr.unitOfAccountAmount.amount === 0
+          ? ""
+          : `amount=${pr.unitOfAccountAmount?.amount}&currency=${pr.unitOfAccountAmount?.currencyCode}`
 
       const lnurl: string = await new Promise((resolve) => {
         resolve(
           bech32.encode(
             "lnurl",
-            bech32.toWords(Buffer.from(url.toString(), "utf8")),
+            bech32.toWords(
+              Buffer.from(
+                `${pr.posUrl}/.well-known/lnurlp/${pr.username}${
+                  queryStringForAmount ? `?${queryStringForAmount}` : ""
+                }`,
+                "utf8",
+              ),
+            ),
             1500,
           ),
         )

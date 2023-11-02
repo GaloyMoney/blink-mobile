@@ -169,7 +169,7 @@ describe("payment request", () => {
       ...defaultParams,
       type: Invoice.PayCode,
       username: "username",
-      posUrl: "https://pay.blink.sv",
+      posUrl: "posUrl",
     })
 
     const pr = createPaymentRequest({ creationData: prcd, mutations })
@@ -181,7 +181,7 @@ describe("payment request", () => {
     expect(prNew.state).toBe(PaymentRequestState.Created)
     expect(prNew.info?.data?.invoiceType).toBe(Invoice.PayCode)
     expect(prNew.info?.data?.getFullUriFn({})).toBe(
-      "LNURL1DP68GURN8GHJ7URP0YHXYMRFDE4JUUMK9UH8WETVDSKKKMN0WAHZ7MRWW4EXCUP0W4EK2UNWV9KK20MRDAKK6ETWWS74QCTE9D6X726ZD35KU6ET2ASKCMR9WS442UM9WGJ246P2",
+      "LNURL1WPHHX4TJDSHJUAM9D3KZ66MWDAMKUTMVDE6HYMRS9A6HXETJDESK6EG3S7SZA",
     )
   })
 
