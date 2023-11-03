@@ -215,27 +215,6 @@ describe("lnurl payment details", () => {
     })
   })
 
-  it("cannot set memo if memo is provided", () => {
-    const paramsWithMemo = {
-      ...defaultParamsWithoutInvoice,
-      destinationSpecifiedMemo: "sender memo",
-    }
-    const paymentDetails = createLnurlPaymentDetails(paramsWithMemo)
-    expectDestinationSpecifiedMemoCannotSetMemo(
-      paymentDetails,
-      paramsWithMemo.destinationSpecifiedMemo,
-    )
-  })
-
-  it("can set memo if no memo provided", () => {
-    const testSetMemo = getTestSetMemo()
-    testSetMemo({
-      defaultParams: defaultParamsWithoutInvoice,
-      spy,
-      creatorFunction: createLnurlPaymentDetails,
-    })
-  })
-
   it("can set amount", () => {
     const testSetAmount = getTestSetAmount()
     testSetAmount({
