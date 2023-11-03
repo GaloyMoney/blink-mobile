@@ -28,6 +28,12 @@ export type Scalars = {
   ContactAlias: { input: string; output: string; }
   /** A CCA2 country code (ex US, FR, etc) */
   CountryCode: { input: string; output: string; }
+  /**
+   * Implement the DateTime<Utc> scalar
+   *
+   * The input/output is a string in RFC3339 format.
+   */
+  DateTime: { input: string; output: string; }
   /** Display currency of an account */
   DisplayCurrency: { input: string; output: string; }
   /** Email address */
@@ -196,6 +202,28 @@ export type AccountUpdateNotificationSettingsPayload = {
   readonly __typename: 'AccountUpdateNotificationSettingsPayload';
   readonly account?: Maybe<ConsumerAccount>;
   readonly errors: ReadonlyArray<Error>;
+};
+
+export type ApiKey = {
+  readonly __typename: 'ApiKey';
+  readonly createdAt: Scalars['DateTime']['output'];
+  readonly expiresAt: Scalars['DateTime']['output'];
+  readonly id: Scalars['ID']['output'];
+  readonly name: Scalars['String']['output'];
+};
+
+export type ApiKeyCreateInput = {
+  readonly name: Scalars['String']['input'];
+};
+
+export type ApiKeyCreatePayload = {
+  readonly __typename: 'ApiKeyCreatePayload';
+  readonly apiKey: ApiKey;
+  readonly apiKeySecret: Scalars['String']['output'];
+};
+
+export type ApiKeyRevokeInput = {
+  readonly id: Scalars['ID']['input'];
 };
 
 export type AuthTokenPayload = {
@@ -734,6 +762,8 @@ export type Mutation = {
   readonly accountEnableNotificationChannel: AccountUpdateNotificationSettingsPayload;
   readonly accountUpdateDefaultWalletId: AccountUpdateDefaultWalletIdPayload;
   readonly accountUpdateDisplayCurrency: AccountUpdateDisplayCurrencyPayload;
+  readonly apiKeyCreate: ApiKeyCreatePayload;
+  readonly apiKeyRevoke: Scalars['Boolean']['output'];
   readonly callbackEndpointAdd: CallbackEndpointAddPayload;
   readonly callbackEndpointDelete: SuccessPayload;
   readonly captchaCreateChallenge: CaptchaCreateChallengePayload;
@@ -874,6 +904,16 @@ export type MutationAccountUpdateDefaultWalletIdArgs = {
 
 export type MutationAccountUpdateDisplayCurrencyArgs = {
   input: AccountUpdateDisplayCurrencyInput;
+};
+
+
+export type MutationApiKeyCreateArgs = {
+  input: ApiKeyCreateInput;
+};
+
+
+export type MutationApiKeyRevokeArgs = {
+  input: ApiKeyRevokeInput;
 };
 
 
@@ -1669,6 +1709,7 @@ export type UsdWalletTransactionsByPaymentHashArgs = {
 
 export type User = {
   readonly __typename: 'User';
+  readonly apiKeys: ReadonlyArray<ApiKey>;
   /**
    * Get single contact details.
    * Can include the transactions associated with the contact.
@@ -6866,6 +6907,10 @@ export type ResolversTypes = {
   AccountUpdateDisplayCurrencyInput: AccountUpdateDisplayCurrencyInput;
   AccountUpdateDisplayCurrencyPayload: ResolverTypeWrapper<AccountUpdateDisplayCurrencyPayload>;
   AccountUpdateNotificationSettingsPayload: ResolverTypeWrapper<AccountUpdateNotificationSettingsPayload>;
+  ApiKey: ResolverTypeWrapper<ApiKey>;
+  ApiKeyCreateInput: ApiKeyCreateInput;
+  ApiKeyCreatePayload: ResolverTypeWrapper<ApiKeyCreatePayload>;
+  ApiKeyRevokeInput: ApiKeyRevokeInput;
   AuthToken: ResolverTypeWrapper<Scalars['AuthToken']['output']>;
   AuthTokenPayload: ResolverTypeWrapper<AuthTokenPayload>;
   BTCWallet: ResolverTypeWrapper<BtcWallet>;
@@ -6887,6 +6932,7 @@ export type ResolversTypes = {
   Country: ResolverTypeWrapper<Country>;
   CountryCode: ResolverTypeWrapper<Scalars['CountryCode']['output']>;
   Currency: ResolverTypeWrapper<Currency>;
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
   DepositFeesInformation: ResolverTypeWrapper<DepositFeesInformation>;
   DeviceNotificationTokenCreateInput: DeviceNotificationTokenCreateInput;
   DisplayCurrency: ResolverTypeWrapper<Scalars['DisplayCurrency']['output']>;
@@ -7074,6 +7120,10 @@ export type ResolversParentTypes = {
   AccountUpdateDisplayCurrencyInput: AccountUpdateDisplayCurrencyInput;
   AccountUpdateDisplayCurrencyPayload: AccountUpdateDisplayCurrencyPayload;
   AccountUpdateNotificationSettingsPayload: AccountUpdateNotificationSettingsPayload;
+  ApiKey: ApiKey;
+  ApiKeyCreateInput: ApiKeyCreateInput;
+  ApiKeyCreatePayload: ApiKeyCreatePayload;
+  ApiKeyRevokeInput: ApiKeyRevokeInput;
   AuthToken: Scalars['AuthToken']['output'];
   AuthTokenPayload: AuthTokenPayload;
   BTCWallet: BtcWallet;
@@ -7095,6 +7145,7 @@ export type ResolversParentTypes = {
   Country: Country;
   CountryCode: Scalars['CountryCode']['output'];
   Currency: Currency;
+  DateTime: Scalars['DateTime']['output'];
   DepositFeesInformation: DepositFeesInformation;
   DeviceNotificationTokenCreateInput: DeviceNotificationTokenCreateInput;
   DisplayCurrency: Scalars['DisplayCurrency']['output'];
@@ -7313,6 +7364,20 @@ export type AccountUpdateNotificationSettingsPayloadResolvers<ContextType = any,
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type ApiKeyResolvers<ContextType = any, ParentType extends ResolversParentTypes['ApiKey'] = ResolversParentTypes['ApiKey']> = {
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  expiresAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ApiKeyCreatePayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['ApiKeyCreatePayload'] = ResolversParentTypes['ApiKeyCreatePayload']> = {
+  apiKey?: Resolver<ResolversTypes['ApiKey'], ParentType, ContextType>;
+  apiKeySecret?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export interface AuthTokenScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['AuthToken'], any> {
   name: 'AuthToken';
 }
@@ -7435,6 +7500,10 @@ export type CurrencyResolvers<ContextType = any, ParentType extends ResolversPar
   symbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
+
+export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
+  name: 'DateTime';
+}
 
 export type DepositFeesInformationResolvers<ContextType = any, ParentType extends ResolversParentTypes['DepositFeesInformation'] = ResolversParentTypes['DepositFeesInformation']> = {
   minBankFee?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -7654,6 +7723,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   accountEnableNotificationChannel?: Resolver<ResolversTypes['AccountUpdateNotificationSettingsPayload'], ParentType, ContextType, RequireFields<MutationAccountEnableNotificationChannelArgs, 'input'>>;
   accountUpdateDefaultWalletId?: Resolver<ResolversTypes['AccountUpdateDefaultWalletIdPayload'], ParentType, ContextType, RequireFields<MutationAccountUpdateDefaultWalletIdArgs, 'input'>>;
   accountUpdateDisplayCurrency?: Resolver<ResolversTypes['AccountUpdateDisplayCurrencyPayload'], ParentType, ContextType, RequireFields<MutationAccountUpdateDisplayCurrencyArgs, 'input'>>;
+  apiKeyCreate?: Resolver<ResolversTypes['ApiKeyCreatePayload'], ParentType, ContextType, RequireFields<MutationApiKeyCreateArgs, 'input'>>;
+  apiKeyRevoke?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationApiKeyRevokeArgs, 'input'>>;
   callbackEndpointAdd?: Resolver<ResolversTypes['CallbackEndpointAddPayload'], ParentType, ContextType, RequireFields<MutationCallbackEndpointAddArgs, 'input'>>;
   callbackEndpointDelete?: Resolver<ResolversTypes['SuccessPayload'], ParentType, ContextType, RequireFields<MutationCallbackEndpointDeleteArgs, 'input'>>;
   captchaCreateChallenge?: Resolver<ResolversTypes['CaptchaCreateChallengePayload'], ParentType, ContextType>;
@@ -8048,6 +8119,7 @@ export type UsdWalletResolvers<ContextType = any, ParentType extends ResolversPa
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  apiKeys?: Resolver<ReadonlyArray<ResolversTypes['ApiKey']>, ParentType, ContextType>;
   contactByUsername?: Resolver<ResolversTypes['UserContact'], ParentType, ContextType, RequireFields<UserContactByUsernameArgs, 'username'>>;
   contacts?: Resolver<ReadonlyArray<ResolversTypes['UserContact']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
@@ -8192,6 +8264,8 @@ export type Resolvers<ContextType = any> = {
   AccountUpdateDefaultWalletIdPayload?: AccountUpdateDefaultWalletIdPayloadResolvers<ContextType>;
   AccountUpdateDisplayCurrencyPayload?: AccountUpdateDisplayCurrencyPayloadResolvers<ContextType>;
   AccountUpdateNotificationSettingsPayload?: AccountUpdateNotificationSettingsPayloadResolvers<ContextType>;
+  ApiKey?: ApiKeyResolvers<ContextType>;
+  ApiKeyCreatePayload?: ApiKeyCreatePayloadResolvers<ContextType>;
   AuthToken?: GraphQLScalarType;
   AuthTokenPayload?: AuthTokenPayloadResolvers<ContextType>;
   BTCWallet?: BtcWalletResolvers<ContextType>;
@@ -8209,6 +8283,7 @@ export type Resolvers<ContextType = any> = {
   Country?: CountryResolvers<ContextType>;
   CountryCode?: GraphQLScalarType;
   Currency?: CurrencyResolvers<ContextType>;
+  DateTime?: GraphQLScalarType;
   DepositFeesInformation?: DepositFeesInformationResolvers<ContextType>;
   DisplayCurrency?: GraphQLScalarType;
   Email?: EmailResolvers<ContextType>;

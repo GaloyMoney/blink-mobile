@@ -47,6 +47,7 @@ interface Account
     last: Int
     walletIds: [WalletId]
   ): TransactionConnection
+  walletById(walletId: WalletId!): Wallet!
   wallets: [Wallet!]!
 }
 
@@ -178,9 +179,11 @@ type BTCWallet implements Wallet
   """A balance stored in BTC."""
   balance: SignedAmount!
   id: ID!
+  invoiceByPaymentHash(paymentHash: PaymentHash!): Invoice!
 
   """An unconfirmed incoming onchain balance."""
   pendingIncomingBalance: SignedAmount!
+  transactionById(transactionId: ID!): Transaction!
 
   """A list of BTC transactions associated with this wallet."""
   transactions(
@@ -212,6 +215,7 @@ type BTCWallet implements Wallet
     """Returns the last n items from the list."""
     last: Int
   ): TransactionConnection
+  transactionsByPaymentHash(paymentHash: PaymentHash!): [Transaction!]!
   walletCurrency: WalletCurrency!
 }
 
@@ -327,6 +331,7 @@ type ConsumerAccount implements Account
     last: Int
     walletIds: [WalletId]
   ): TransactionConnection @join__field(graph: GALOY)
+  walletById(walletId: WalletId!): Wallet! @join__field(graph: GALOY)
   wallets: [Wallet!]! @join__field(graph: GALOY)
   onboardingStatus: OnboardingStatus @join__field(graph: KYC)
 }
@@ -549,6 +554,25 @@ input IntraLedgerUsdPaymentSendInput
   walletId: WalletId!
 }
 
+"""A lightning invoice."""
+interface Invoice
+  @join__type(graph: GALOY)
+{
+  """The payment hash of the lightning invoice."""
+  paymentHash: PaymentHash!
+
+  """The bolt11 invoice to be paid."""
+  paymentRequest: LnPaymentRequest!
+
+  """
+  The payment secret of the lightning invoice. This is not the preimage of the payment hash.
+  """
+  paymentSecret: LnPaymentSecret!
+
+  """The payment status of the invoice."""
+  paymentStatus: InvoicePaymentStatus!
+}
+
 enum InvoicePaymentStatus
   @join__type(graph: GALOY)
 {
@@ -600,12 +624,14 @@ enum link__Purpose {
   EXECUTION
 }
 
-type LnInvoice
+type LnInvoice implements Invoice
+  @join__implements(graph: GALOY, interface: "Invoice")
   @join__type(graph: GALOY)
 {
   paymentHash: PaymentHash!
   paymentRequest: LnPaymentRequest!
   paymentSecret: LnPaymentSecret!
+  paymentStatus: InvoicePaymentStatus!
   satoshis: SatAmount
 }
 
@@ -684,12 +710,14 @@ type LnInvoicePaymentStatusPayload
   status: InvoicePaymentStatus
 }
 
-type LnNoAmountInvoice
+type LnNoAmountInvoice implements Invoice
+  @join__implements(graph: GALOY, interface: "Invoice")
   @join__type(graph: GALOY)
 {
   paymentHash: PaymentHash!
   paymentRequest: LnPaymentRequest!
   paymentSecret: LnPaymentSecret!
+  paymentStatus: InvoicePaymentStatus!
 }
 
 input LnNoAmountInvoiceCreateInput
@@ -1118,7 +1146,7 @@ input OnChainPaymentSendAllInput
 {
   address: OnChainAddress!
   memo: Memo
-  speed: PayoutSpeed = FAST
+  speed: PayoutSpeed! = FAST
   walletId: WalletId!
 }
 
@@ -1128,7 +1156,7 @@ input OnChainPaymentSendInput
   address: OnChainAddress!
   amount: SatAmount!
   memo: Memo
-  speed: PayoutSpeed = FAST
+  speed: PayoutSpeed! = FAST
   walletId: WalletId!
 }
 
@@ -1158,7 +1186,7 @@ input OnChainUsdPaymentSendAsBtcDenominatedInput
   address: OnChainAddress!
   amount: SatAmount!
   memo: Memo
-  speed: PayoutSpeed = FAST
+  speed: PayoutSpeed! = FAST
   walletId: WalletId!
 }
 
@@ -1168,7 +1196,7 @@ input OnChainUsdPaymentSendInput
   address: OnChainAddress!
   amount: CentAmount!
   memo: Memo
-  speed: PayoutSpeed = FAST
+  speed: PayoutSpeed! = FAST
   walletId: WalletId!
 }
 
@@ -1369,9 +1397,9 @@ type Query
   lnInvoicePaymentStatus(input: LnInvoicePaymentStatusInput!): LnInvoicePaymentStatusPayload! @join__field(graph: GALOY)
   me: User @join__field(graph: GALOY)
   mobileVersions: [MobileVersions] @join__field(graph: GALOY)
-  onChainTxFee(address: OnChainAddress!, amount: SatAmount!, speed: PayoutSpeed = FAST, walletId: WalletId!): OnChainTxFee! @join__field(graph: GALOY)
-  onChainUsdTxFee(address: OnChainAddress!, amount: CentAmount!, speed: PayoutSpeed = FAST, walletId: WalletId!): OnChainUsdTxFee! @join__field(graph: GALOY)
-  onChainUsdTxFeeAsBtcDenominated(address: OnChainAddress!, amount: SatAmount!, speed: PayoutSpeed = FAST, walletId: WalletId!): OnChainUsdTxFee! @join__field(graph: GALOY)
+  onChainTxFee(address: OnChainAddress!, amount: SatAmount!, speed: PayoutSpeed! = FAST, walletId: WalletId!): OnChainTxFee! @join__field(graph: GALOY)
+  onChainUsdTxFee(address: OnChainAddress!, amount: CentAmount!, speed: PayoutSpeed! = FAST, walletId: WalletId!): OnChainUsdTxFee! @join__field(graph: GALOY)
+  onChainUsdTxFeeAsBtcDenominated(address: OnChainAddress!, amount: SatAmount!, speed: PayoutSpeed! = FAST, walletId: WalletId!): OnChainUsdTxFee! @join__field(graph: GALOY)
   quizQuestions: [QuizQuestion] @join__field(graph: GALOY) @deprecated(reason: "TODO: remove. we don't need a non authenticated version of this query. the users can only do the query while authenticated")
 
   """Returns 1 Sat and 1 Usd Cent price for the given currency"""
@@ -1637,9 +1665,11 @@ type UsdWallet implements Wallet
   accountId: ID!
   balance: SignedAmount!
   id: ID!
+  invoiceByPaymentHash(paymentHash: PaymentHash!): Invoice!
 
   """An unconfirmed incoming onchain balance."""
   pendingIncomingBalance: SignedAmount!
+  transactionById(transactionId: ID!): Transaction!
   transactions(
     """Returns the items in the list that come after the specified cursor."""
     after: String
@@ -1669,6 +1699,7 @@ type UsdWallet implements Wallet
     """Returns the last n items from the list."""
     last: Int
   ): TransactionConnection
+  transactionsByPaymentHash(paymentHash: PaymentHash!): [Transaction!]!
   walletCurrency: WalletCurrency!
 }
 
@@ -1936,7 +1967,14 @@ interface Wallet
   accountId: ID!
   balance: SignedAmount!
   id: ID!
+  invoiceByPaymentHash(
+    """
+    The lightning invoice with the matching paymentHash belonging to this wallet.
+    """
+    paymentHash: PaymentHash!
+  ): Invoice!
   pendingIncomingBalance: SignedAmount!
+  transactionById(transactionId: ID!): Transaction!
 
   """
   Transactions are ordered anti-chronologically,
@@ -1976,6 +2014,14 @@ interface Wallet
     """Returns the last n items from the list."""
     last: Int
   ): TransactionConnection
+
+  """
+  Returns the transactions that include this paymentHash. This should be a list of size one for a received lightning payment. This can be more that one transaction for a sent lightning payment.
+  """
+  transactionsByPaymentHash(
+    """The payment hash of the lightning invoice paid in this transaction."""
+    paymentHash: PaymentHash!
+  ): [Transaction!]!
   walletCurrency: WalletCurrency!
 }
 
