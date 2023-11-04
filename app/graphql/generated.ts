@@ -28,12 +28,6 @@ export type Scalars = {
   ContactAlias: { input: string; output: string; }
   /** A CCA2 country code (ex US, FR, etc) */
   CountryCode: { input: string; output: string; }
-  /**
-   * Implement the DateTime<Utc> scalar
-   *
-   * The input/output is a string in RFC3339 format.
-   */
-  DateTime: { input: string; output: string; }
   /** Display currency of an account */
   DisplayCurrency: { input: string; output: string; }
   /** Email address */
@@ -206,13 +200,17 @@ export type AccountUpdateNotificationSettingsPayload = {
 
 export type ApiKey = {
   readonly __typename: 'ApiKey';
-  readonly createdAt: Scalars['DateTime']['output'];
-  readonly expiresAt: Scalars['DateTime']['output'];
+  readonly createdAt: Scalars['Timestamp']['output'];
+  readonly expired: Scalars['Boolean']['output'];
+  readonly expiresAt: Scalars['Timestamp']['output'];
   readonly id: Scalars['ID']['output'];
+  readonly lastUsedAt?: Maybe<Scalars['Timestamp']['output']>;
   readonly name: Scalars['String']['output'];
+  readonly revoked: Scalars['Boolean']['output'];
 };
 
 export type ApiKeyCreateInput = {
+  readonly expireInDays?: InputMaybe<Scalars['Int']['input']>;
   readonly name: Scalars['String']['input'];
 };
 
@@ -6932,7 +6930,6 @@ export type ResolversTypes = {
   Country: ResolverTypeWrapper<Country>;
   CountryCode: ResolverTypeWrapper<Scalars['CountryCode']['output']>;
   Currency: ResolverTypeWrapper<Currency>;
-  DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
   DepositFeesInformation: ResolverTypeWrapper<DepositFeesInformation>;
   DeviceNotificationTokenCreateInput: DeviceNotificationTokenCreateInput;
   DisplayCurrency: ResolverTypeWrapper<Scalars['DisplayCurrency']['output']>;
@@ -7145,7 +7142,6 @@ export type ResolversParentTypes = {
   Country: Country;
   CountryCode: Scalars['CountryCode']['output'];
   Currency: Currency;
-  DateTime: Scalars['DateTime']['output'];
   DepositFeesInformation: DepositFeesInformation;
   DeviceNotificationTokenCreateInput: DeviceNotificationTokenCreateInput;
   DisplayCurrency: Scalars['DisplayCurrency']['output'];
@@ -7365,10 +7361,13 @@ export type AccountUpdateNotificationSettingsPayloadResolvers<ContextType = any,
 };
 
 export type ApiKeyResolvers<ContextType = any, ParentType extends ResolversParentTypes['ApiKey'] = ResolversParentTypes['ApiKey']> = {
-  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  expiresAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  expired?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  expiresAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  lastUsedAt?: Resolver<Maybe<ResolversTypes['Timestamp']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  revoked?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -7500,10 +7499,6 @@ export type CurrencyResolvers<ContextType = any, ParentType extends ResolversPar
   symbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
-
-export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
-  name: 'DateTime';
-}
 
 export type DepositFeesInformationResolvers<ContextType = any, ParentType extends ResolversParentTypes['DepositFeesInformation'] = ResolversParentTypes['DepositFeesInformation']> = {
   minBankFee?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -8283,7 +8278,6 @@ export type Resolvers<ContextType = any> = {
   Country?: CountryResolvers<ContextType>;
   CountryCode?: GraphQLScalarType;
   Currency?: CurrencyResolvers<ContextType>;
-  DateTime?: GraphQLScalarType;
   DepositFeesInformation?: DepositFeesInformationResolvers<ContextType>;
   DisplayCurrency?: GraphQLScalarType;
   Email?: EmailResolvers<ContextType>;
