@@ -17,6 +17,7 @@ import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { PhoneLoginInitiateType } from "../phone-auth-screen"
 
 const useStyles = makeStyles(({ colors }) => ({
   limitWrapper: {
@@ -220,7 +221,14 @@ export const TransactionLimitsScreen = () => {
       {currentLevel === AccountLevel.Zero && (
         <GaloyPrimaryButton
           title={LL.TransactionLimitsScreen.increaseLimits()}
-          onPress={() => navigation.navigate("phoneFlow")}
+          onPress={() =>
+            navigation.navigate("phoneFlow", {
+              screen: "phoneLoginInitiate",
+              params: {
+                type: PhoneLoginInitiateType.CreateAccount,
+              },
+            })
+          }
           containerStyle={styles.increaseLimitsButtonContainer}
         />
       )}

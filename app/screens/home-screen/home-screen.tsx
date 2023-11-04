@@ -35,6 +35,7 @@ import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { isIos } from "@app/utils/helper"
 import { SetDefaultAccountModal } from "@app/components/set-default-account-modal"
 import { useAppConfig } from "@app/hooks"
+import { PhoneLoginInitiateType } from "../phone-auth-screen"
 
 const TransactionCountToTriggerSetDefaultAccountModal = 1
 
@@ -181,7 +182,16 @@ export const HomeScreen: React.FC = () => {
   const activateWallet = () => {
     setModalVisible(false)
     // fixes a screen flash from closing the modal to opening the next screen
-    setTimeout(() => navigation.navigate("phoneFlow"), 100)
+    setTimeout(
+      () =>
+        navigation.navigate("phoneFlow", {
+          screen: "phoneLoginInitiate",
+          params: {
+            type: PhoneLoginInitiateType.CreateAccount,
+          },
+        }),
+      100,
+    )
   }
 
   // debug code. verify that we have 2 wallets. mobile doesn't work well with only one wallet

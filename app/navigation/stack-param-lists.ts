@@ -74,7 +74,7 @@ export type RootStackParamList = {
     settlementAmount: MoneyAmount<typeof WalletCurrency.Btc>
     displayAmount: MoneyAmount<DisplayCurrency>
   }
-  phoneFlow?: NavigatorScreenParams<PhoneValidationStackParamList>
+  phoneFlow: NavigatorScreenParams<PhoneValidationStackParamList>
   phoneRegistrationInitiate: undefined
   phoneRegistrationValidate: { phone: string; channel: PhoneCodeChannelType }
   transactionDetail: { txid: string }

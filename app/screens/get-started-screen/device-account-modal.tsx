@@ -21,6 +21,7 @@ import analytics from "@react-native-firebase/analytics"
 import { v4 as uuidv4 } from "uuid"
 import { generateSecureRandom } from "react-native-securerandom"
 import crashlytics from "@react-native-firebase/crashlytics"
+import { PhoneLoginInitiateType } from "../phone-auth-screen"
 
 const generateSecureRandomUUID = async () => {
   const randomBytes = await generateSecureRandom(16) // Generate 16 random bytes
@@ -131,7 +132,12 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
   }, [isVisible])
 
   const navigateToPhoneLogin = () => {
-    navigation.navigate("phoneFlow")
+    navigation.navigate("phoneFlow", {
+      screen: "phoneLoginInitiate",
+      params: {
+        type: PhoneLoginInitiateType.CreateAccount,
+      },
+    })
     closeModal()
   }
 

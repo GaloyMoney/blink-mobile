@@ -8,6 +8,7 @@ import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { LocalizedString } from "typesafe-i18n"
 import { View } from "react-native"
+import { PhoneLoginInitiateType } from "@app/screens/phone-auth-screen"
 
 export type UpgradeAccountModalProps = {
   isVisible: boolean
@@ -23,7 +24,12 @@ export const UpgradeAccountModal: React.FC<UpgradeAccountModalProps> = ({
     useNavigation<StackNavigationProp<RootStackParamList, "getStarted">>()
 
   const navigateToPhoneLogin = () => {
-    navigation.navigate("phoneFlow")
+    navigation.navigate("phoneFlow", {
+      screen: "phoneLoginInitiate",
+      params: {
+        type: PhoneLoginInitiateType.CreateAccount,
+      },
+    })
     closeModal()
   }
 

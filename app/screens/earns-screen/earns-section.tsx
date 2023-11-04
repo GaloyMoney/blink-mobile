@@ -213,7 +213,14 @@ export const EarnSection = ({ route }: Props) => {
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel",
         },
-        { text: "OK", onPress: () => navigation.navigate("phoneFlow") },
+        {
+          text: "OK",
+          onPress: () =>
+            navigation.navigate("phoneFlow", {
+              screen: "phoneLoginInitiate",
+              params: {},
+            }),
+        },
       ])
       return
     }
