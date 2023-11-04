@@ -100,8 +100,8 @@ android {
         applicationId "com.galoyapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 612
-        versionName "2.2.155"
+        versionCode 617
+        versionName "2.2.160"
 
         // onfido requirement
         multiDexEnabled true
