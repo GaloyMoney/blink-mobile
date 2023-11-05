@@ -240,12 +240,14 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     }
   }, [destinationState, goToNextScreenWhenValid, navigation, setGoToNextScreenWhenValid])
 
-  const initiateGoToNextScreen =
-    validateDestination &&
-    (async () => {
-      validateDestination(destinationState.unparsedDestination)
-      setGoToNextScreenWhenValid(true)
-    })
+  const initiateGoToNextScreen = useMemo(() => {
+    return async () => {
+      if (validateDestination) {
+        await validateDestination(destinationState.unparsedDestination)
+        setGoToNextScreenWhenValid(true)
+      }
+    }
+  }, [validateDestination, destinationState.unparsedDestination])
 
   useEffect(() => {
     if (route.params?.payment) {
