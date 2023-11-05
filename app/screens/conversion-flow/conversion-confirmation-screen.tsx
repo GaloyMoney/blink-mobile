@@ -1,6 +1,6 @@
 import { GraphQLError } from "graphql"
 import React, { useState } from "react"
-import { ScrollView, Text, View } from "react-native"
+import { Text, View } from "react-native"
 
 import { Screen } from "@app/components/screen"
 import {
@@ -32,6 +32,7 @@ import { makeStyles } from "@rneui/themed"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+import { ScrollView } from "react-native-gesture-handler"
 
 type Props = {
   route: RouteProp<RootStackParamList, "conversionConfirmation">

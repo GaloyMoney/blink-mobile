@@ -1,11 +1,5 @@
 import React from "react"
-import {
-  Platform,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native"
+import { Platform, View, TouchableOpacity, ActivityIndicator } from "react-native"
 import Modal from "react-native-modal"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { GaloyIcon } from "../atomic/galoy-icon"
@@ -23,6 +17,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { ScrollView } from "react-native-gesture-handler"
 
 gql`
   query setDefaultAccountModal {

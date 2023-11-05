@@ -1,5 +1,6 @@
 import * as React from "react"
-import { ScrollView, View, ViewStyle } from "react-native"
+import { View, ViewStyle } from "react-native"
+import { ScrollView } from "react-native-gesture-handler"
 
 const ROOT: ViewStyle = { flex: 1 }
 
