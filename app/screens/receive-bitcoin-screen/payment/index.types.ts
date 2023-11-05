@@ -46,7 +46,13 @@ export type InvoiceData = (
   getFullUriFn: GetFullUriFn
   getCopyableInvoiceFn: GetCopyableInvoiceFn
 }
-export type LightningInvoiceData = (LnInvoice | LnNoAmountInvoice) & {
+
+export type LnInvoiceNoSecret = Omit<LnInvoice, "paymentSecret">
+type LnInvoiceNoSecretNoAmount = Omit<LnNoAmountInvoice, "paymentSecret">
+
+type LnInvoiceWithOrWithoutAmountNoSecret = LnInvoiceNoSecret | LnInvoiceNoSecretNoAmount
+
+export type LightningInvoiceData = LnInvoiceWithOrWithoutAmountNoSecret & {
   invoiceType: typeof Invoice.Lightning
   expiresAt?: Date
   memo?: string

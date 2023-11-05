@@ -37,7 +37,7 @@ const Row = ({
   content,
 }: {
   entry: string
-  value?: string | JSX.Element
+  value?: string | null | undefined | JSX.Element
   __typename?: "SettlementViaIntraLedger" | "SettlementViaLn" | "SettlementViaOnChain"
   content?: unknown
 }) => {
@@ -266,6 +266,10 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
         {settlementVia?.__typename === "SettlementViaLn" &&
           initiationVia?.__typename === "InitiationViaLn" && (
             <Row entry="Hash" value={initiationVia?.paymentHash} />
+          )}
+        {settlementVia?.__typename === "SettlementViaLn" &&
+          initiationVia?.__typename === "InitiationViaLn" && (
+            <Row entry="Preimage" value={settlementVia?.preImage} />
           )}
         {onChainTxBroadcasted && (
           <TouchableWithoutFeedback

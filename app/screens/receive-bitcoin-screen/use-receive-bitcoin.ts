@@ -72,7 +72,6 @@ gql`
       invoice {
         paymentHash
         paymentRequest
-        paymentSecret
         paymentStatus
       }
     }
@@ -86,7 +85,6 @@ gql`
       invoice {
         paymentHash
         paymentRequest
-        paymentSecret
         paymentStatus
         satoshis
       }
@@ -110,7 +108,6 @@ gql`
       invoice {
         paymentHash
         paymentRequest
-        paymentSecret
         paymentStatus
         satoshis
       }

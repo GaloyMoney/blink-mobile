@@ -40,7 +40,7 @@ export default gql`
         counterPartyUsername
       }
       ... on SettlementViaLn {
-        paymentSecret
+        preImage
       }
       ... on SettlementViaOnChain {
         transactionHash
