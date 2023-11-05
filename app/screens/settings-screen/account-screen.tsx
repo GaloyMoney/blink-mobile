@@ -567,7 +567,9 @@ export const AccountScreen = () => {
         <TextInput style={styles.textInput} onChangeText={setText} value={text} />
         <GaloyPrimaryButton
           title="Confirm"
-          disabled={text.toLowerCase().trim() !== LL.support.delete()}
+          disabled={
+            text.toLowerCase().trim() !== LL.support.delete().toLocaleLowerCase().trim()
+          }
           onPress={() => {
             setModalVisible(false)
             Alert.alert(
