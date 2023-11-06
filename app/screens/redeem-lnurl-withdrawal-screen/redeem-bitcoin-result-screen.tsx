@@ -5,7 +5,6 @@ import { ActivityIndicator, View } from "react-native"
 
 import {
   HomeAuthedDocument,
-  LnInvoice,
   useLnInvoiceCreateMutation,
   WalletCurrency,
 } from "@app/graphql/generated"
@@ -16,12 +15,13 @@ import fetch from "cross-fetch"
 import { testProps } from "../../utils/testProps"
 
 import { useApolloClient } from "@apollo/client"
+import { Screen } from "@app/components/screen"
 import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { RouteProp, useNavigation } from "@react-navigation/native"
-import { makeStyles, useTheme, Text } from "@rneui/themed"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { withMyLnUpdateSub } from "../receive-bitcoin-screen/my-ln-updates-sub"
-import { Screen } from "@app/components/screen"
+import { LnInvoiceNoSecret } from "../receive-bitcoin-screen/payment/index.types"
 
 type Prop = {
   route: RouteProp<RootStackParamList, "redeemBitcoinResult">
@@ -66,7 +66,7 @@ const RedeemBitcoinResultScreen: React.FC<Prop> = ({ route }) => {
 
   const [err, setErr] = useState("")
   const [lnServiceErrorReason, setLnServiceErrorReason] = useState("")
-  const [withdrawalInvoice, setInvoice] = useState<LnInvoice | null>(null)
+  const [withdrawalInvoice, setInvoice] = useState<LnInvoiceNoSecret | null>(null)
 
   const [memo] = useState(defaultDescription)
 
@@ -115,7 +115,7 @@ const RedeemBitcoinResultScreen: React.FC<Prop> = ({ route }) => {
   )
 
   const submitLNURLWithdrawRequest = useCallback(
-    async (generatedInvoice: LnInvoice) => {
+    async (generatedInvoice: LnInvoiceNoSecret) => {
       const url = `${callback}${callback.includes("?") ? "&" : "?"}k1=${k1}&pr=${
         generatedInvoice.paymentRequest
       }`

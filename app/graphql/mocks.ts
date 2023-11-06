@@ -303,8 +303,6 @@ const mocks = [
               "lnbc1p3lwh3npp5z5wkmy86gcww9u2h8tuekqmfz4pwlpkk4rfst8cm7jwzm8fklldsdqqcqzpuxqyz5vqsp52fv968tprd3dqkuqsq78nw8s0xr9zn7rx686ukq2rfnsdf27pwtq9qyyssqhc7m7d3gfvdsywx956d3u3h45xyf7xurc6yv5qxysspjnhhxstl3wet525ldxn3x6xd0g58nk6wuvwle0fhn5sul396za3qs5ma7zxsqjvklym",
             paymentHash:
               "0ab7a842956c260e1270a46d09e964ac15e0623d4f2d8d4b62af5a608f4c5e06",
-            paymentSecret:
-              "8c92e0f1db2374806ec11e8fea3d1513171bee9304dd54e33a4f2c0347b42006",
             __typename: "LnNoAmountInvoice",
           },
           errors: [],
@@ -409,8 +407,6 @@ const mocks = [
               "121f799e7fc7758ccb00ccf6ead8166c1585bb98992e2f22070abc1bf12c9345",
             paymentRequest:
               "lntbs1pjt954upp5zg0hn8nlca6cejcqenmw4kqkds2ctwucnyhz7gs8p27phufvjdzsdqqcqzpuxqzfvsp5ctx8tvj2n5mgqjrksy9s8ftt4vf4ymjv09hf4a2stvgjkl7ps9ys9qyyssqhpc4x792tjpj68gs5g9rweff63ajyv4grrk9wp8m84rq747gx8y9g5f8vuutg8em08ns9spxjnf52we54kaqxup095u9n4t7hp8zzpgpwre3fg",
-            paymentSecret:
-              "c2cc75b24a9d36804876810b03a56bab13526e4c796e9af5505b112b7fc18149",
           },
         },
       },
@@ -435,8 +431,6 @@ const mocks = [
               "c2a6e5ca220fde78733f91f8ad2f979daf6009a50e218f6f85fa036bc5772da9",
             paymentRequest:
               "lntbs1pjt95g2pp5c2nwtj3zpl08suelj8u26tuhnkhkqzd9pcsc7mu9lgpkh3th9k5sdqqcqzpuxqzfvsp50gl555nvaln4czxuf65gqeume7uke0c2hf8jyfly8ktkvh0vq4eq9qyyssqcj2ukjdmes4x5zhxty5pfevjf3vtwjds6x7vpcc3layq8hh9k24jl58lw9zugup8wgh9fsgjrwty0g5gga3f94v67s8cv9wr55qhpaqqttp0vx",
-            paymentSecret:
-              "7a3f4a526cefe75c08dc4ea880679bcfb96cbf0aba4f2227e43d97665dec0572",
           },
         },
       },
