@@ -2,7 +2,6 @@ import * as React from "react"
 import { Linking, TouchableWithoutFeedback, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 
-// eslint-disable-next-line camelcase
 import { useFragment } from "@apollo/client"
 import { TransactionDate } from "@app/components/transaction-date"
 import { useDescriptionDisplay } from "@app/components/transaction-item"
