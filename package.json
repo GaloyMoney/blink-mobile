@@ -123,7 +123,7 @@
     "react-native-screens": "^3.25.0",
     "react-native-secure-key-store": "^2.0.9",
     "react-native-securerandom": "^1.0.1",
-    "react-native-share": "^9.2.3",
+    "react-native-share": "^9.4.1",
     "react-native-svg": "^13.9.0",
     "react-native-toast-message": "^2.1.5",
     "react-native-vector-icons": "^9.1.0",
