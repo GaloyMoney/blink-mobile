@@ -1,12 +1,13 @@
 import { useI18nContext } from "@app/i18n/i18n-react"
 import * as React from "react"
-import { View, TouchableOpacity, ScrollView } from "react-native"
+import { View, TouchableOpacity } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import Modal from "react-native-modal"
 import { useAppConfig } from "@app/hooks"
 import { LocalizedString } from "typesafe-i18n"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
+import { ScrollView } from "react-native-gesture-handler"
 
 type ModalTooltipProps = {
   size?: number

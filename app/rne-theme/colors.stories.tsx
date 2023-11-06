@@ -1,7 +1,8 @@
 import React from "react"
 import { createTheme, makeStyles, Text } from "@rneui/themed"
 import { light, dark } from "@app/rne-theme/colors"
-import { ScrollView, View } from "react-native"
+import { View } from "react-native"
+import { ScrollView } from "react-native-gesture-handler"
 
 const theme = createTheme({ lightColors: light, darkColors: dark })
 

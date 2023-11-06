@@ -2,13 +2,7 @@
 import { Button } from "@rneui/base"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import {
-  Text,
-  TouchableOpacity,
-  View,
-  ScrollView,
-  TouchableWithoutFeedback,
-} from "react-native"
+import { Text, TouchableOpacity, View, TouchableWithoutFeedback } from "react-native"
 import Modal from "react-native-modal"
 import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -29,6 +23,7 @@ import { SVGs } from "./earn-svg-factory"
 import { augmentCardWithGqlData, getQuizQuestionsContent } from "./earns-utils"
 import { useQuizServer } from "../earns-map-screen/use-quiz-server"
 import { makeStyles, useTheme } from "@rneui/themed"
+import { ScrollView } from "react-native-gesture-handler"
 
 const useStyles = makeStyles(({ colors }) => ({
   answersView: {

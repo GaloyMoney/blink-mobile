@@ -1,6 +1,6 @@
 import * as React from "react"
-import { RefreshControl, ScrollView, View } from "react-native"
-import { TouchableWithoutFeedback } from "react-native-gesture-handler"
+import { RefreshControl, View } from "react-native"
+import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
 import { LocalizedString } from "typesafe-i18n"
