@@ -350,6 +350,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   btcLow: {},
   nfcIcon: {
+    marginTop: -1,
     marginRight: 4,
     padding: 8,
   },

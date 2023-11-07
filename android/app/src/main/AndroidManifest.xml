@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     <uses-feature android:name="android.hardware.camera.front" android:required="false" />
+    <uses-feature android:name="android.hardware.nfc" android:required="true" />
 
     <!-- https://react-native-share.github.io/react-native-share/docs/share-open -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -58,10 +59,18 @@
         <intent-filter>
           <action android:name="android.nfc.action.NDEF_DISCOVERED" />
           <category android:name="android.intent.category.DEFAULT" />
-          <data android:scheme="https"
-            android:host="pay.blink.sv"
-           />
-        </intent-filter>
+          <data android:scheme="https" android:host="pay.blink.sv" />
+      </intent-filter>
+      <intent-filter>
+          <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+          <category android:name="android.intent.category.DEFAULT" />
+          <data android:scheme="lnurlw" />
+      </intent-filter>
+      <intent-filter>
+          <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+          <category android:name="android.intent.category.DEFAULT" />
+          <data android:scheme="lnurlp" />
+      </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
 
