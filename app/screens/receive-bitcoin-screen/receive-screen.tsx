@@ -19,6 +19,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
 import { GaloyCurrencyBubble } from "@app/components/atomic/galoy-currency-bubble"
 import { ModalNfc } from "@app/components/modal-nfc"
+import { CustomIcon } from "@app/components/custom-icon"
 
 const ReceiveScreen = () => {
   const {
@@ -40,23 +41,17 @@ const ReceiveScreen = () => {
       navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity
-            style={styles.rotateIconHeaderRight}
+            style={styles.nfcIcon}
             onPress={() => setDisplayReceiveNfc(true)}
           >
-            <Icon name="wifi" color={colors.black} size={25} />
+            <CustomIcon name="nfc" color={colors.black} />
           </TouchableOpacity>
         ),
       })
     else {
       navigation.setOptions({ headerRight: () => <></> })
     }
-  }, [
-    colors.black,
-    navigation,
-    request?.state,
-    request?.type,
-    styles.rotateIconHeaderRight,
-  ])
+  }, [colors.black, navigation, request?.state, request?.type, styles.nfcIcon])
 
   // notification permission
   useEffect(() => {
@@ -354,9 +349,8 @@ const useStyles = makeStyles(({ colors }) => ({
     fontWeight: "700",
   },
   btcLow: {},
-  rotateIconHeaderRight: {
-    transform: [{ rotate: "90deg" }],
-    marginRight: 2,
+  nfcIcon: {
+    marginRight: 4,
     padding: 8,
   },
 }))
