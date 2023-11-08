@@ -37,13 +37,14 @@ const ReceiveScreen = () => {
   const [displayReceiveNfc, setDisplayReceiveNfc] = useState(false)
 
   useEffect(() => {
-    if (request?.type === "Lightning" && request.state === "Created")
+    if (request?.type === "Lightning" && request?.state === "Created")
       navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity
             style={styles.nfcIcon}
             onPress={() => setDisplayReceiveNfc(true)}
           >
+            <Text type="p2">{LL.ReceiveScreen.scanNfc()}</Text>
             <CustomIcon name="nfc" color={colors.black} />
           </TouchableOpacity>
         ),
@@ -51,7 +52,14 @@ const ReceiveScreen = () => {
     else {
       navigation.setOptions({ headerRight: () => <></> })
     }
-  }, [colors.black, navigation, request?.state, request?.type, styles.nfcIcon])
+  }, [
+    LL.ReceiveScreen,
+    colors.black,
+    navigation,
+    request?.state,
+    request?.type,
+    styles.nfcIcon,
+  ])
 
   // notification permission
   useEffect(() => {
@@ -351,8 +359,13 @@ const useStyles = makeStyles(({ colors }) => ({
   btcLow: {},
   nfcIcon: {
     marginTop: -1,
-    marginRight: 4,
+    marginRight: 14,
     padding: 8,
+    display: "flex",
+    flexDirection: "row",
+    columnGap: 4,
+    backgroundColor: colors.grey5,
+    borderRadius: 4,
   },
 }))
 

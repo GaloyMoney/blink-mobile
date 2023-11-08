@@ -2100,6 +2100,7 @@ const en: BaseTranslation = {
     title: "Home",
   },
   ReceiveScreen: {
+    scanNfc: "Scan NFC",
     enterAmountFirst: "Please enter an amount first",
     activateNotifications:
       "Do you want to activate notifications to be notified when the payment has arrived?",
