@@ -1014,6 +1014,10 @@ query homeAuthed {
       id
       level
       defaultWalletId
+      pendingTransactions {
+        ...Transaction
+        __typename
+      }
       transactions(first: 20) {
         ...TransactionList
         __typename
@@ -1465,6 +1469,10 @@ query transactionListForDefaultAccount($first: Int, $after: String, $last: Int, 
     id
     defaultAccount {
       id
+      pendingTransactions {
+        ...Transaction
+        __typename
+      }
       transactions(first: $first, after: $after, last: $last, before: $before) {
         ...TransactionList
         __typename
