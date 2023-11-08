@@ -12,6 +12,8 @@ import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import {
+  TransactionFragment,
+  TxStatus,
   useHasPromptedSetDefaultAccountQuery,
   useHideBalanceQuery,
   useHomeAuthedQuery,
@@ -36,6 +38,7 @@ import { isIos } from "@app/utils/helper"
 import { SetDefaultAccountModal } from "@app/components/set-default-account-modal"
 import { useAppConfig } from "@app/hooks"
 import { PhoneLoginInitiateType } from "../phone-auth-screen"
+import { useMemo } from "react"
 
 const TransactionCountToTriggerSetDefaultAccountModal = 1
 
@@ -55,7 +58,9 @@ gql`
         id
         level
         defaultWalletId
-
+        pendingTransactions {
+          ...Transaction
+        }
         transactions(first: 20) {
           ...TransactionList
         }
@@ -145,8 +150,21 @@ export const HomeScreen: React.FC = () => {
     }
   }, [isAuthed, refetchAuthed, refetchRealtimePrice, refetchUnauthed])
 
-  const transactionsEdges =
-    dataAuthed?.me?.defaultAccount?.transactions?.edges ?? undefined
+  const pendingTransactions = dataAuthed?.me?.defaultAccount?.pendingTransactions
+  const transactionsEdges = dataAuthed?.me?.defaultAccount?.transactions?.edges
+
+  const transactions = useMemo(() => {
+    const transactions: TransactionFragment[] = []
+    if (pendingTransactions) {
+      transactions.push(...pendingTransactions)
+    }
+    const settledTransactions =
+      transactionsEdges
+        ?.map((edge) => edge.node)
+        .filter((tx) => tx.status !== TxStatus.Pending) ?? []
+    transactions.push(...settledTransactions)
+    return transactions
+  }, [pendingTransactions, transactionsEdges])
 
   const [modalVisible, setModalVisible] = React.useState(false)
   const [isStablesatModalVisible, setIsStablesatModalVisible] = React.useState(false)
@@ -156,7 +174,7 @@ export const HomeScreen: React.FC = () => {
     setIsContentVisible(isBalanceVisible)
   }, [isBalanceVisible])
 
-  const numberOfTxs = dataAuthed?.me?.defaultAccount?.transactions?.edges?.length ?? 0
+  const numberOfTxs = transactions.length
 
   const onMenuClick = (target: Target) => {
     if (isAuthed) {
@@ -214,19 +232,19 @@ export const HomeScreen: React.FC = () => {
 
   const TRANSACTIONS_TO_SHOW = 2
 
-  if (isAuthed && transactionsEdges?.length) {
+  if (isAuthed && transactions.length > 0) {
     recentTransactionsData = {
       title: LL.TransactionScreen.title(),
       details: (
         <>
-          {transactionsEdges
+          {transactions
             .slice(0, TRANSACTIONS_TO_SHOW)
             .map(
-              ({ node }, index, array) =>
-                node && (
+              (tx, index, array) =>
+                tx && (
                   <TransactionItem
-                    key={`transaction-${node.id}`}
-                    txid={node.id}
+                    key={`transaction-${tx.id}`}
+                    txid={tx.id}
                     subtitle
                     isOnHomeScreen={true}
                     isLast={index === array.length - 1}
