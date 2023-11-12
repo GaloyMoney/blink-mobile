@@ -6739,6 +6739,18 @@ type RootTranslation = {
 		 */
 		permissionCamera: string
 		/**
+		 * N​o​ ​c​a​m​e​r​a​ ​f​o​u​n​d
+		 */
+		noCamera: string
+		/**
+		 * O​p​e​n​ ​S​e​t​t​i​n​g​s
+		 */
+		openSettings: string
+		/**
+		 * U​n​a​b​l​e​ ​t​o​ ​o​p​e​n​ ​s​e​t​t​i​n​g​s
+		 */
+		unableToOpenSettings: string
+		/**
 		 * W​e​ ​f​o​u​n​d​:​
 	​
 	​{​f​o​u​n​d​}​
@@ -15434,6 +15446,18 @@ export type TranslationFunctions = {
 		 * We need permission to use your camera
 		 */
 		permissionCamera: () => LocalizedString
+		/**
+		 * No camera found
+		 */
+		noCamera: () => LocalizedString
+		/**
+		 * Open Settings
+		 */
+		openSettings: () => LocalizedString
+		/**
+		 * Unable to open settings
+		 */
+		unableToOpenSettings: () => LocalizedString
 		/**
 		 * We found:
 
