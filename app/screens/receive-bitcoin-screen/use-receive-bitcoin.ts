@@ -70,6 +70,7 @@ gql`
         message
       }
       invoice {
+        createdAt
         paymentHash
         paymentRequest
         paymentStatus
@@ -83,6 +84,7 @@ gql`
         message
       }
       invoice {
+        createdAt
         paymentHash
         paymentRequest
         paymentStatus
@@ -106,6 +108,7 @@ gql`
         message
       }
       invoice {
+        createdAt
         paymentHash
         paymentRequest
         paymentStatus
