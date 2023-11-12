@@ -73,8 +73,17 @@ export const createPaymentRequestCreationData = <T extends WalletCurrency>(
   }
 
   // Paycode only to Bitcoin
-  if (type === "PayCode") {
+  // FIXME: this is no longer the case
+  if (type === Invoice.PayCode) {
     receivingWalletDescriptor = bitcoinWalletDescriptor as WalletDescriptor<T>
+  }
+
+  // We currently can't set amount for on-chain USD
+  if (
+    type === Invoice.OnChain &&
+    receivingWalletDescriptor.currency === WalletCurrency.Usd
+  ) {
+    permissions.canSetAmount = false
   }
 
   // Set settlement amount if unit of account amount is set
