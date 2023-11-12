@@ -150,15 +150,15 @@ export const createLnurlPaymentDestination = (
     convertMoneyAmount,
     sendingWalletDescriptor,
   }: CreatePaymentDetailParams<T>) => {
+    const minAmount = resolvedLnurlPaymentDestination.lnurlParams.min || 0
+
     return createLnurlPaymentDetails({
       lnurl: resolvedLnurlPaymentDestination.lnurl,
       lnurlParams: resolvedLnurlPaymentDestination.lnurlParams,
       sendingWalletDescriptor,
       destinationSpecifiedMemo: resolvedLnurlPaymentDestination.lnurlParams.description,
       convertMoneyAmount,
-      unitOfAccountAmount: toBtcMoneyAmount(
-        resolvedLnurlPaymentDestination.lnurlParams.min,
-      ),
+      unitOfAccountAmount: toBtcMoneyAmount(minAmount),
     })
   }
   return {
