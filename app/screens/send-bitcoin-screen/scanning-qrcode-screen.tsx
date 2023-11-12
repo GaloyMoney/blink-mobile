@@ -15,7 +15,7 @@ import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 import * as React from "react"
-import { Alert, Dimensions, Pressable, StyleSheet, View } from "react-native"
+import { Alert, Dimensions, Linking, Pressable, StyleSheet, View } from "react-native"
 import { launchImageLibrary } from "react-native-image-picker"
 import Svg, { Circle } from "react-native-svg"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -31,6 +31,7 @@ import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { parseDestination } from "./payment-destination"
 import { DestinationDirection } from "./payment-destination/index.types"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")
@@ -231,18 +232,37 @@ export const ScanningQRCodeScreen: React.FC = () => {
   }, [])
 
   if (!hasPermission) {
+    const openSettings = () => {
+      Linking.openSettings().catch(() => {
+        Alert.alert(LL.ScanningQRCodeScreen.unableToOpenSettings())
+      })
+    }
+
     return (
       <Screen>
-        <View style={styles.noPermissionsView}>
-          <Text>{LL.ScanningQRCodeScreen.permissionCamera()}</Text>
+        <View style={styles.permissionMissing}>
+          <Text type="h1" style={styles.permissionMissingText}>
+            {LL.ScanningQRCodeScreen.permissionCamera()}
+          </Text>
+          <GaloyPrimaryButton
+            title={LL.ScanningQRCodeScreen.openSettings()}
+            onPress={openSettings}
+          />
         </View>
       </Screen>
     )
   }
 
-  // TODO text to say there is no camera to be found
   if (device === null || device === undefined)
-    return <View style={styles.noPermissionsView} />
+    return (
+      <Screen>
+        <View style={styles.permissionMissing}>
+          <Text type="h1" style={styles.permissionMissingText}>
+            {LL.ScanningQRCodeScreen.noCamera()}
+          </Text>
+        </View>
+      </Screen>
+    )
 
   return (
     <Screen unsafe>
@@ -332,4 +352,16 @@ const useStyles = makeStyles(({ colors }) => ({
   iconGalery: { opacity: 0.8 },
 
   iconClipboard: { opacity: 0.8, position: "absolute", bottom: "5%", right: "15%" },
+
+  permissionMissing: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
+    rowGap: 32,
+  },
+
+  permissionMissingText: {
+    width: "80%",
+    textAlign: "center",
+  },
 }))
