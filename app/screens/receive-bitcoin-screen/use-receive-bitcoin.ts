@@ -148,7 +148,7 @@ export const useReceiveBitcoin = () => {
   const isAuthed = useIsAuthed()
 
   const { data } = usePaymentRequestQuery({
-    fetchPolicy: "cache-first",
+    fetchPolicy: "cache-and-network",
     skip: !isAuthed,
   })
 

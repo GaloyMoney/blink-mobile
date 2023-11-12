@@ -70,15 +70,29 @@ describe("create payment request creation data", () => {
     expect(prcd.receivingWalletDescriptor).toBe(btcWalletDescriptor)
   })
 
-  it("onchain set", () => {
+  it("onchain can set amount for btc", () => {
     const prcd = createPaymentRequestCreationData({
       ...defaultParams,
       type: Invoice.OnChain,
+      defaultWalletDescriptor: btcWalletDescriptor,
     })
 
+    expect(prcd.receivingWalletDescriptor).toBe(btcWalletDescriptor)
     expect(prcd.canSetAmount).toBe(true)
     expect(prcd.canSetMemo).toBe(true)
     expect(prcd.canSetReceivingWalletDescriptor).toBe(true)
-    expect(prcd.receivingWalletDescriptor).toBe(defaultParams.defaultWalletDescriptor)
+  })
+
+  it("onchain can't set amount for usd", () => {
+    const prcd = createPaymentRequestCreationData({
+      ...defaultParams,
+      type: Invoice.OnChain,
+      defaultWalletDescriptor: usdWalletDescriptor,
+    })
+
+    expect(prcd.receivingWalletDescriptor).toBe(usdWalletDescriptor)
+    expect(prcd.canSetAmount).toBe(false)
+    expect(prcd.canSetMemo).toBe(true)
+    expect(prcd.canSetReceivingWalletDescriptor).toBe(true)
   })
 })

@@ -49,11 +49,6 @@ type CreateFunctionWithSpy = <T extends (...args: any) => any>() => (
   params: CreateFunctionWithSpyParams<T>,
 ) => void
 
-export const expectCannotSetAmount = (paymentDetails: PaymentDetail<WalletCurrency>) => {
-  expect(paymentDetails.canSetAmount).toBeFalsy()
-  expect(paymentDetails.setAmount).toBeUndefined()
-}
-
 export const expectDestinationSpecifiedMemoCannotSetMemo = <T extends WalletCurrency>(
   paymentDetails: PaymentDetail<T>,
   destinationSpecifiedMemo: string,

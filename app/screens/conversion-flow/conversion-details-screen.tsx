@@ -58,7 +58,7 @@ export const ConversionDetailsScreen = () => {
   })
 
   const { data } = useConversionScreenQuery({
-    fetchPolicy: "cache-first",
+    fetchPolicy: "cache-and-network",
     returnPartialData: true,
   })
 
