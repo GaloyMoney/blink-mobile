@@ -91,7 +91,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   const [goToNextScreenWhenValid, setGoToNextScreenWhenValid] = React.useState(false)
 
   const { data } = useSendBitcoinDestinationQuery({
-    fetchPolicy: "cache-first",
+    fetchPolicy: "cache-and-network",
     returnPartialData: true,
     skip: !isAuthed,
   })
