@@ -8,7 +8,7 @@ import {
   fetchLnurlPaymentParams,
 } from "@galoymoney/client"
 
-import { ZeroBtcMoneyAmount } from "@app/types/amounts"
+import { toBtcMoneyAmount } from "@app/types/amounts"
 import { getParams } from "js-lnurl"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 import { createLnurlPaymentDetails } from "../payment-details"
@@ -156,7 +156,9 @@ export const createLnurlPaymentDestination = (
       sendingWalletDescriptor,
       destinationSpecifiedMemo: resolvedLnurlPaymentDestination.lnurlParams.description,
       convertMoneyAmount,
-      unitOfAccountAmount: ZeroBtcMoneyAmount,
+      unitOfAccountAmount: toBtcMoneyAmount(
+        resolvedLnurlPaymentDestination.lnurlParams.min,
+      ),
     })
   }
   return {
