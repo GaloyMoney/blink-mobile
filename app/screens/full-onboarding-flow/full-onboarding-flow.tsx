@@ -52,6 +52,8 @@ export const FullOnboardingFlowScreen: React.FC = () => {
 
   const onboardingStatus = data?.me?.defaultAccount?.onboardingStatus
 
+  const [loadingOnfido, setLoadingOnfido] = useState(false)
+
   const [onboardingFlowStart] = useOnboardingFlowStartMutation()
 
   const [firstName, setFirstName] = useState("")
@@ -72,27 +74,31 @@ export const FullOnboardingFlowScreen: React.FC = () => {
   }
 
   const onfidoStart = React.useCallback(async () => {
-    const res = await onboardingFlowStart({
-      variables: { input: { firstName, lastName } },
-    })
-
-    const workflowRunId = res.data?.onboardingFlowStart?.workflowRunId
-    if (!workflowRunId) {
-      Alert.alert("no workflowRunId")
-      return
-    }
-
-    const tokenAndroid = res.data?.onboardingFlowStart?.tokenAndroid
-    const tokenIos = res.data?.onboardingFlowStart?.tokenIos
-
-    const sdkToken = isIos ? tokenIos : tokenAndroid
-
-    if (!sdkToken) {
-      Alert.alert("no sdkToken")
-      return
-    }
+    setLoadingOnfido(true)
 
     try {
+      const res = await onboardingFlowStart({
+        variables: { input: { firstName, lastName } },
+      })
+
+      const workflowRunId = res.data?.onboardingFlowStart?.workflowRunId
+      if (!workflowRunId) {
+        Alert.alert("no workflowRunId")
+        setLoadingOnfido(false)
+        return
+      }
+
+      const tokenAndroid = res.data?.onboardingFlowStart?.tokenAndroid
+      const tokenIos = res.data?.onboardingFlowStart?.tokenIos
+
+      const sdkToken = isIos ? tokenIos : tokenAndroid
+
+      if (!sdkToken) {
+        Alert.alert("no sdkToken")
+        setLoadingOnfido(false)
+        return
+      }
+
       /* eslint @typescript-eslint/ban-ts-comment: "off" */
       // @ts-expect-error
       await Onfido.start({
@@ -118,6 +124,7 @@ export const FullOnboardingFlowScreen: React.FC = () => {
 
       if (message.match(/canceled/i)) {
         navigation.goBack()
+        setLoadingOnfido(false)
         return
       }
 
@@ -133,6 +140,8 @@ export const FullOnboardingFlowScreen: React.FC = () => {
           },
         ],
       )
+    } finally {
+      setLoadingOnfido(false)
     }
   }, [LL, firstName, lastName, navigation, onboardingFlowStart])
 
@@ -208,6 +217,7 @@ export const FullOnboardingFlowScreen: React.FC = () => {
           onPress={confirmNames}
           title={LL.common.next()}
           disabled={!firstName || !lastName}
+          loading={loadingOnfido}
         />
       </View>
     </Screen>
