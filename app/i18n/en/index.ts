@@ -2072,6 +2072,7 @@ const en: BaseTranslation = {
     updateAvailable: "An update is available.\nTap to update now",
     useLightning: "We use the Lightning Network.",
     myAccounts: "My Accounts",
+    walletCountNotTwo: "Wallet count is not 2. Please use the dashboard to see all the wallets and funds of this account"
   },
   PinScreen: {
     attemptsRemaining: "Incorrect PIN. {attemptsRemaining: number} attempts remaining.",

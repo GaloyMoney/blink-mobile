@@ -1,5 +1,5 @@
 import * as React from "react"
-import { RefreshControl, View } from "react-native"
+import { RefreshControl, View, Alert } from "react-native"
 import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -12,6 +12,7 @@ import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import {
+  AccountLevel,
   TransactionFragment,
   TxStatus,
   useHasPromptedSetDefaultAccountQuery,
@@ -27,18 +28,18 @@ import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 
+import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { SetDefaultAccountModal } from "@app/components/set-default-account-modal"
+import { useAppConfig } from "@app/hooks"
+import { isIos } from "@app/utils/helper"
+import { useMemo } from "react"
 import { BalanceHeader } from "../../components/balance-header"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { testProps } from "../../utils/testProps"
-import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import { isIos } from "@app/utils/helper"
-import { SetDefaultAccountModal } from "@app/components/set-default-account-modal"
-import { useAppConfig } from "@app/hooks"
 import { PhoneLoginInitiateType } from "../phone-auth-screen"
-import { useMemo } from "react"
 
 const TransactionCountToTriggerSetDefaultAccountModal = 1
 
@@ -138,7 +139,13 @@ export const HomeScreen: React.FC = () => {
     refetch: refetchUnauthed,
     loading: loadingUnauthed,
     data: dataUnauthed,
-  } = useHomeUnauthedQuery()
+  } = useHomeUnauthedQuery({
+    skip: !isAuthed,
+    fetchPolicy: "network-only",
+
+    // this enables offline mode use-case
+    nextFetchPolicy: "cache-and-network",
+  })
 
   const loading = loadingAuthed || loadingPrice || loadingUnauthed
 
@@ -199,17 +206,12 @@ export const HomeScreen: React.FC = () => {
 
   const activateWallet = () => {
     setModalVisible(false)
-    // fixes a screen flash from closing the modal to opening the next screen
-    setTimeout(
-      () =>
-        navigation.navigate("phoneFlow", {
-          screen: "phoneLoginInitiate",
-          params: {
-            type: PhoneLoginInitiateType.CreateAccount,
-          },
-        }),
-      100,
-    )
+    navigation.navigate("phoneFlow", {
+      screen: "phoneLoginInitiate",
+      params: {
+        type: PhoneLoginInitiateType.CreateAccount,
+      },
+    })
   }
 
   // debug code. verify that we have 2 wallets. mobile doesn't work well with only one wallet
@@ -219,9 +221,9 @@ export const HomeScreen: React.FC = () => {
       dataAuthed?.me?.defaultAccount?.wallets?.length !== undefined &&
       dataAuthed?.me?.defaultAccount?.wallets?.length !== 2
     ) {
-      console.error("Wallets count is not 2")
+      Alert.alert(LL.HomeScreen.walletCountNotTwo())
     }
-  }, [dataAuthed])
+  }, [dataAuthed, LL])
 
   let recentTransactionsData:
     | {
@@ -281,7 +283,11 @@ export const HomeScreen: React.FC = () => {
     },
   ]
 
-  if (!isIos || dataUnauthed?.globals?.network !== "mainnet") {
+  if (
+    !isIos ||
+    dataUnauthed?.globals?.network !== "mainnet" ||
+    dataAuthed?.me?.defaultAccount.level === AccountLevel.Two
+  ) {
     buttons.unshift({
       title: LL.ConversionDetailsScreen.title(),
       target: "conversionDetails" as Target,

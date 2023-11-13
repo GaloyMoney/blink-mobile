@@ -6379,6 +6379,10 @@ type RootTranslation = {
 		 * M​y​ ​A​c​c​o​u​n​t​s
 		 */
 		myAccounts: string
+		/**
+		 * W​a​l​l​e​t​ ​c​o​u​n​t​ ​i​s​ ​n​o​t​ ​2​.​ ​P​l​e​a​s​e​ ​u​s​e​ ​t​h​e​ ​d​a​s​h​b​o​a​r​d​ ​t​o​ ​s​e​e​ ​a​l​l​ ​t​h​e​ ​w​a​l​l​e​t​s​ ​a​n​d​ ​f​u​n​d​s​ ​o​f​ ​t​h​i​s​ ​a​c​c​o​u​n​t
+		 */
+		walletCountNotTwo: string
 	}
 	PinScreen: {
 		/**
@@ -15088,6 +15092,10 @@ export type TranslationFunctions = {
 		 * My Accounts
 		 */
 		myAccounts: () => LocalizedString
+		/**
+		 * Wallet count is not 2. Please use the dashboard to see all the wallets and funds of this account
+		 */
+		walletCountNotTwo: () => LocalizedString
 	}
 	PinScreen: {
 		/**
