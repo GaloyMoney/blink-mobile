@@ -161,7 +161,7 @@ export const SettingsScreen: React.FC = () => {
   }
 
   const rateUs = () => {
-    isIos && InAppReview.RequestInAppReview()
+    InAppReview.RequestInAppReview()
   }
 
   const contactMessageBody = LL.support.defaultSupportMessage({

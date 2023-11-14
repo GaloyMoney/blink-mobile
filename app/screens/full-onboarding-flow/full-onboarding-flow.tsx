@@ -8,19 +8,17 @@ import {
   useOnboardingFlowStartMutation,
 } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { isIos } from "@app/utils/helper"
-import Onfido, { OnfidoTheme } from "@onfido/react-native-sdk"
 import { useNavigation } from "@react-navigation/native"
 import { Input, Text, makeStyles, useTheme } from "@rneui/themed"
 import React, { useEffect, useState } from "react"
 import { ActivityIndicator, Alert, View } from "react-native"
+import InAppBrowser from "react-native-inappbrowser-reborn"
 
 gql`
   mutation onboardingFlowStart($input: OnboardingFlowStartInput!) {
     onboardingFlowStart(input: $input) {
       workflowRunId
-      tokenAndroid
-      tokenIos
+      tokenWeb
     }
   }
 
@@ -77,6 +75,7 @@ export const FullOnboardingFlowScreen: React.FC = () => {
     setLoadingOnfido(true)
 
     try {
+      console.log("onfidoStart", firstName, lastName)
       const res = await onboardingFlowStart({
         variables: { input: { firstName, lastName } },
       })
@@ -88,24 +87,13 @@ export const FullOnboardingFlowScreen: React.FC = () => {
         return
       }
 
-      const tokenAndroid = res.data?.onboardingFlowStart?.tokenAndroid
-      const tokenIos = res.data?.onboardingFlowStart?.tokenIos
+      const tokenWeb = res.data?.onboardingFlowStart?.tokenWeb
 
-      const sdkToken = isIos ? tokenIos : tokenAndroid
+      const result = await InAppBrowser.open(
+        `http://localhost:3000/webflow?token=${tokenWeb}`,
+      )
 
-      if (!sdkToken) {
-        Alert.alert("no sdkToken")
-        setLoadingOnfido(false)
-        return
-      }
-
-      /* eslint @typescript-eslint/ban-ts-comment: "off" */
-      // @ts-expect-error
-      await Onfido.start({
-        sdkToken,
-        theme: OnfidoTheme.AUTOMATIC,
-        workflowRunId,
-      })
+      console.log(result)
 
       Alert.alert(LL.common.success(), LL.FullOnboarding.success(), [
         {

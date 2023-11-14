@@ -3832,13 +3832,6 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@onfido/react-native-sdk@^10.4.0":
-  version "10.4.0"
-  resolved "https://registry.npmjs.org/@onfido/react-native-sdk/-/react-native-sdk-10.4.0.tgz#e0cd780f457ae72c54a15f73ea0e76a551b0b437"
-  integrity sha512-bOKxhpepTizfNoJsv/vtEXQS/W9xT8BtC7ahC7lXC0U2nNNihUUk3yxoJFb7aVqD2in5D4DFnh8Uk57NnAfOFg==
-  dependencies:
-    js-base64 "3.7.5"
-
 "@peculiar/asn1-schema@^2.3.6":
   version "2.3.8"
   resolved "https://registry.npmjs.org/@peculiar/asn1-schema/-/asn1-schema-2.3.8.tgz#04b38832a814e25731232dd5be883460a156da3b"
@@ -15186,11 +15179,6 @@ jpeg-js@^0.4.1, jpeg-js@^0.4.4:
   version "0.4.4"
   resolved "https://registry.npmjs.org/jpeg-js/-/jpeg-js-0.4.4.tgz#a9f1c6f1f9f0fa80cdb3484ed9635054d28936aa"
   integrity sha512-WZzeDOEtTOBK4Mdsar0IqEU5sMr3vSV2RqkAIzUEV2BHnUfKGyswWFPFwK5EeDo93K3FohSHbLAjj0s1Wzd+dg==
-
-js-base64@3.7.5:
-  version "3.7.5"
-  resolved "https://registry.npmjs.org/js-base64/-/js-base64-3.7.5.tgz#21e24cf6b886f76d6f5f165bfcd69cc55b9e3fca"
-  integrity sha512-3MEt5DTINKqfScXKfJFrRbxkrnk2AxPWGBL/ycjz4dK8iqiSJ06UxD8jh8xuh6p10TX4t2+7FsBYVxxQbMg+qA==
 
 js-library-detector@^6.4.0:
   version "6.7.0"
