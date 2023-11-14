@@ -19,7 +19,6 @@ import { setFeedbackModalShown } from "@app/graphql/client-only-query"
 import { SuggestionModal } from "./suggestion-modal"
 import { logAppFeedback } from "@app/utils/analytics"
 import InAppReview from "react-native-in-app-review"
-import { isIos } from "@app/utils/helper"
 
 const SendBitcoinSuccessScreen = () => {
   const styles = useStyles()
@@ -43,7 +42,7 @@ const SendBitcoinSuccessScreen = () => {
     logAppFeedback({
       isEnjoingApp: true,
     })
-    isIos && InAppReview.RequestInAppReview()
+    InAppReview.RequestInAppReview()
   }
 
   const requestFeedback = useCallback(() => {

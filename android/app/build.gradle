@@ -102,10 +102,6 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 617
         versionName "2.2.160"
-
-        // onfido requirement
-        multiDexEnabled true
-
     }
     splits {
         abi {
@@ -171,13 +167,6 @@ dependencies {
     } else {
         implementation jscFlavor
     }
-
-    implementation(project(":react-native-in-app-review")) {
-        exclude group: 'com.google.android.play', module: 'core-common'
-        exclude group: 'com.google.android.play', module: 'review'
-    }
-
-    implementation 'androidx.multidex:multidex:2.0.1'
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
