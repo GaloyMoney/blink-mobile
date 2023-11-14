@@ -22,7 +22,7 @@ gql`
       id
       defaultAccount {
         id
-        pendingTransactions {
+        pendingIncomingTransactions {
           ...Transaction
         }
         transactions(first: $first, after: $after, last: $last, before: $before) {
@@ -43,17 +43,20 @@ export const TransactionHistoryScreen: React.FC = () => {
   const { data, error, fetchMore, refetch, loading } =
     useTransactionListForDefaultAccountQuery({ skip: !useIsAuthed() })
 
-  const pendingTransactions = data?.me?.defaultAccount?.pendingTransactions
+  const pendingIncomingTransactions =
+    data?.me?.defaultAccount?.pendingIncomingTransactions
   const transactions = data?.me?.defaultAccount?.transactions
 
   const sections = React.useMemo(
     () =>
       groupTransactionsByDate({
-        pendingTxs: pendingTransactions ? [...pendingTransactions] : [],
+        pendingIncomingTxs: pendingIncomingTransactions
+          ? [...pendingIncomingTransactions]
+          : [],
         txs: transactions?.edges?.map((edge) => edge.node) ?? [],
         common: LL.common,
       }),
-    [pendingTransactions, transactions, LL],
+    [pendingIncomingTransactions, transactions, LL],
   )
 
   if (error) {

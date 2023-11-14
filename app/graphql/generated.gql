@@ -1014,7 +1014,7 @@ query homeAuthed {
       id
       level
       defaultWalletId
-      pendingTransactions {
+      pendingIncomingTransactions {
         ...Transaction
         __typename
       }
@@ -1469,7 +1469,7 @@ query transactionListForDefaultAccount($first: Int, $after: String, $last: Int, 
     id
     defaultAccount {
       id
-      pendingTransactions {
+      pendingIncomingTransactions {
         ...Transaction
         __typename
       }

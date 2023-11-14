@@ -14,6 +14,7 @@ import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import {
   AccountLevel,
   TransactionFragment,
+  TxDirection,
   TxStatus,
   useHasPromptedSetDefaultAccountQuery,
   useHideBalanceQuery,
@@ -59,7 +60,7 @@ gql`
         id
         level
         defaultWalletId
-        pendingTransactions {
+        pendingIncomingTransactions {
           ...Transaction
         }
         transactions(first: 20) {
@@ -157,21 +158,24 @@ export const HomeScreen: React.FC = () => {
     }
   }, [isAuthed, refetchAuthed, refetchRealtimePrice, refetchUnauthed])
 
-  const pendingTransactions = dataAuthed?.me?.defaultAccount?.pendingTransactions
+  const pendingIncomingTransactions =
+    dataAuthed?.me?.defaultAccount?.pendingIncomingTransactions
   const transactionsEdges = dataAuthed?.me?.defaultAccount?.transactions?.edges
 
   const transactions = useMemo(() => {
     const transactions: TransactionFragment[] = []
-    if (pendingTransactions) {
-      transactions.push(...pendingTransactions)
+    if (pendingIncomingTransactions) {
+      transactions.push(...pendingIncomingTransactions)
     }
     const settledTransactions =
       transactionsEdges
         ?.map((edge) => edge.node)
-        .filter((tx) => tx.status !== TxStatus.Pending) ?? []
+        .filter(
+          (tx) => tx.status !== TxStatus.Pending || tx.direction === TxDirection.Send,
+        ) ?? []
     transactions.push(...settledTransactions)
     return transactions
-  }, [pendingTransactions, transactionsEdges])
+  }, [pendingIncomingTransactions, transactionsEdges])
 
   const [modalVisible, setModalVisible] = React.useState(false)
   const [isStablesatModalVisible, setIsStablesatModalVisible] = React.useState(false)
