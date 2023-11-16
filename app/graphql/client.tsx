@@ -39,6 +39,7 @@ import { SCHEMA_VERSION_KEY } from "@app/config"
 import { NetworkError } from "@apollo/client/errors"
 import { LevelContainer } from "./level-component"
 import { getAppCheckToken } from "@app/screens/get-started-screen/use-device-token"
+import { HideAmountContainer } from "./hide-amount-component"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -325,18 +326,20 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
     <ApolloProvider client={apolloClient.client}>
       <IsAuthedContextProvider value={apolloClient.isAuthed}>
         <LevelContainer>
-          <NetworkErrorContextProvider
-            value={{
-              networkError,
-              clearNetworkError,
-            }}
-          >
-            <MessagingContainer />
-            <LanguageSync />
-            <AnalyticsContainer />
-            <MyPriceUpdates />
-            {children}
-          </NetworkErrorContextProvider>
+          <HideAmountContainer>
+            <NetworkErrorContextProvider
+              value={{
+                networkError,
+                clearNetworkError,
+              }}
+            >
+              <MessagingContainer />
+              <LanguageSync />
+              <AnalyticsContainer />
+              <MyPriceUpdates />
+              {children}
+            </NetworkErrorContextProvider>
+          </HideAmountContainer>
         </LevelContainer>
       </IsAuthedContextProvider>
     </ApolloProvider>
