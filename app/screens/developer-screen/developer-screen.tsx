@@ -72,6 +72,10 @@ export const DeveloperScreen: React.FC = () => {
     currentGaloyInstance.id === "Custom" ? currentGaloyInstance.posUrl : "",
   )
 
+  const [newKycUrl, setNewKycUrl] = React.useState(
+    currentGaloyInstance.id === "Custom" ? currentGaloyInstance.kycUrl : "",
+  )
+
   const [newRestUrl, setNewRestUrl] = React.useState(
     currentGaloyInstance.id === "Custom" ? currentGaloyInstance.authUrl : "",
   )
@@ -97,6 +101,7 @@ export const DeveloperScreen: React.FC = () => {
       (newGraphqlUri !== currentGaloyInstance.graphqlUri ||
         newGraphqlWslUri !== currentGaloyInstance.graphqlWsUri ||
         newPosUrl !== currentGaloyInstance.posUrl ||
+        newKycUrl !== currentGaloyInstance.kycUrl ||
         newRestUrl !== currentGaloyInstance.authUrl ||
         newLnAddressHostname !== currentGaloyInstance.lnAddressHostname))
 
@@ -165,6 +170,7 @@ export const DeveloperScreen: React.FC = () => {
           graphqlWsUri: newGraphqlWslUri,
           authUrl: newRestUrl,
           posUrl: newPosUrl,
+          kycUrl: newKycUrl,
           lnAddressHostname: newLnAddressHostname,
           name: "Custom", // TODO: make configurable
           blockExplorer: "https://mempool.space/tx/", // TODO make configurable
@@ -366,6 +372,15 @@ export const DeveloperScreen: React.FC = () => {
                   autoCorrect={false}
                   value={newPosUrl}
                   onChangeText={setNewPosUrl}
+                  selectTextOnFocus
+                />
+                <GaloyInput
+                  label="Kyc Url"
+                  placeholder={"Kyc Url"}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  value={newKycUrl}
+                  onChangeText={setNewKycUrl}
                   selectTextOnFocus
                 />
                 <GaloyInput
