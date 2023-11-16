@@ -32,7 +32,7 @@ import useFee from "./use-fee"
 import { useSendPayment } from "./use-send-payment"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
-import { useHideAmount } from "@app/hooks/use-hide-amount"
+import { useHideAmount } from "@app/graphql/hide-amount-context"
 
 gql`
   query sendBitcoinConfirmationScreen {
@@ -58,7 +58,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinConfirmation">>()
 
-  const hideAmount = useHideAmount()
+  const { hideAmount } = useHideAmount()
 
   const { paymentDetail } = route.params
 

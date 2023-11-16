@@ -14,7 +14,7 @@ import { GaloyIcon } from "../atomic/galoy-icon"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
-import { switchHideAmount, useHideAmount } from "@app/hooks/use-hide-amount"
+import { useHideAmount } from "@app/graphql/hide-amount-context"
 
 const Loader = () => {
   const styles = useStyles()
@@ -55,7 +55,7 @@ type Props = {
 }
 
 const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }) => {
-  const hideAmount = useHideAmount()
+  const { hideAmount, switchMemoryHideAmount } = useHideAmount()
 
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
@@ -104,7 +104,7 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
         <Text type="p1" bold {...testProps(LL.HomeScreen.myAccounts())}>
           {LL.HomeScreen.myAccounts()}
         </Text>
-        <Pressable onPress={switchHideAmount}>
+        <Pressable onPress={switchMemoryHideAmount}>
           <GaloyIcon name={hideAmount ? "eye-slash" : "eye"} size={24} />
         </Pressable>
       </View>

@@ -16,7 +16,7 @@ import {
   toUsdMoneyAmount,
 } from "@app/types/amounts"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
-import { switchHideAmount, useHideAmount } from "@app/hooks/use-hide-amount"
+import { useHideAmount } from "@app/graphql/hide-amount-context"
 
 const Loader = () => {
   const styles = useStyles()
@@ -56,7 +56,7 @@ type Props = {
 export const BalanceHeader: React.FC<Props> = ({ loading }) => {
   const styles = useStyles()
 
-  const hideBalance = useHideAmount()
+  const { hideAmount, switchMemoryHideAmount } = useHideAmount()
 
   const isAuthed = useIsAuthed()
   const { formatMoneyAmount } = useDisplayCurrency()
@@ -98,16 +98,16 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
 
   return (
     <View style={styles.balanceHeaderContainer}>
-      {hideBalance ? (
+      {hideAmount ? (
         <TouchableOpacity
-          onPress={switchHideAmount}
+          onPress={switchMemoryHideAmount}
           style={styles.hiddenBalanceTouchableOpacity}
         >
           <Text style={styles.balanceHiddenText}>****</Text>
         </TouchableOpacity>
       ) : (
         <View style={styles.balancesContainer}>
-          <TouchableOpacity onPress={switchHideAmount}>
+          <TouchableOpacity onPress={switchMemoryHideAmount}>
             <View style={styles.marginBottom}>
               {loading ? (
                 <Loader />
