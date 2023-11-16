@@ -1221,6 +1221,7 @@ type OnboardingFlowStartResult
   workflowRunId: String!
   tokenAndroid: String!
   tokenIos: String!
+  tokenWeb: String!
 }
 
 enum OnboardingStatus

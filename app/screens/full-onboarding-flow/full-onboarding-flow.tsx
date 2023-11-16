@@ -7,11 +7,12 @@ import {
   useFullOnboardingScreenQuery,
   useOnboardingFlowStartMutation,
 } from "@app/graphql/generated"
+import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import { Input, Text, makeStyles, useTheme } from "@rneui/themed"
 import React, { useEffect, useState } from "react"
-import { ActivityIndicator, Alert, View } from "react-native"
+import { ActivityIndicator, Alert, Linking, View } from "react-native"
 import InAppBrowser from "react-native-inappbrowser-reborn"
 
 gql`
@@ -57,6 +58,16 @@ export const FullOnboardingFlowScreen: React.FC = () => {
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
 
+  useEffect(() => {
+    InAppBrowser.warmup()
+  }, [])
+
+  const {
+    appConfig: {
+      galoyInstance: { kycUrl },
+    },
+  } = useAppConfig()
+
   const confirmNames = async () => {
     Alert.alert(
       LL.FullOnboarding.confirmNameTitle(),
@@ -89,20 +100,19 @@ export const FullOnboardingFlowScreen: React.FC = () => {
 
       const tokenWeb = res.data?.onboardingFlowStart?.tokenWeb
 
-      const result = await InAppBrowser.open(
-        `http://localhost:3000/webflow?token=${tokenWeb}`,
-      )
+      const page = `${kycUrl}/webflow?token=${tokenWeb}&workflow_run_id=${workflowRunId}`
 
-      console.log(result)
-
-      Alert.alert(LL.common.success(), LL.FullOnboarding.success(), [
-        {
-          text: LL.common.ok(),
-          onPress: () => {
-            navigation.goBack()
-          },
-        },
-      ])
+      if (await InAppBrowser.isAvailable()) {
+        await InAppBrowser.open(page, {
+          dismissButtonStyle: "done",
+          enableDefaultShare: false,
+          hasBackButton: false,
+          showInRecents: false,
+        })
+        navigation.goBack()
+      } else {
+        Linking.openURL(page)
+      }
     } catch (err) {
       console.error(err, "error")
       let message = ""
@@ -131,7 +141,7 @@ export const FullOnboardingFlowScreen: React.FC = () => {
     } finally {
       setLoadingOnfido(false)
     }
-  }, [LL, firstName, lastName, navigation, onboardingFlowStart])
+  }, [LL, firstName, lastName, navigation, onboardingFlowStart, kycUrl])
 
   useEffect(() => {
     if (onboardingStatus === OnboardingStatus.AwaitingInput) {
@@ -185,28 +195,30 @@ export const FullOnboardingFlowScreen: React.FC = () => {
       keyboardOffset="navigationHeader"
       style={styles.screenStyle}
     >
-      <Text type="h2" style={styles.textStyle}>
-        {LL.FullOnboarding.requirements()}
-      </Text>
-      <>
-        <Input
-          placeholder={LL.FullOnboarding.firstName()}
-          value={firstName}
-          onChangeText={(text) => setFirstName(text)}
-        />
-        <Input
-          placeholder={LL.FullOnboarding.lastName()}
-          value={lastName}
-          onChangeText={(text) => setLastName(text)}
-        />
-      </>
-      <View style={styles.buttonContainer}>
-        <GaloyPrimaryButton
-          onPress={confirmNames}
-          title={LL.common.next()}
-          disabled={!firstName || !lastName}
-          loading={loadingOnfido}
-        />
+      <View style={styles.innerView}>
+        <Text type="h2" style={styles.textStyle}>
+          {LL.FullOnboarding.requirements()}
+        </Text>
+        <>
+          <Input
+            placeholder={LL.FullOnboarding.firstName()}
+            value={firstName}
+            onChangeText={(text) => setFirstName(text)}
+          />
+          <Input
+            placeholder={LL.FullOnboarding.lastName()}
+            value={lastName}
+            onChangeText={(text) => setLastName(text)}
+          />
+        </>
+        <View style={styles.buttonContainer}>
+          <GaloyPrimaryButton
+            onPress={confirmNames}
+            title={LL.common.next()}
+            disabled={!firstName || !lastName}
+            loading={loadingOnfido}
+          />
+        </View>
       </View>
     </Screen>
   )
@@ -214,8 +226,11 @@ export const FullOnboardingFlowScreen: React.FC = () => {
 
 const useStyles = makeStyles(() => ({
   screenStyle: {
-    padding: 20,
     flexGrow: 1,
+  },
+
+  innerView: {
+    padding: 20,
   },
 
   textStyle: {

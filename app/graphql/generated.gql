@@ -461,8 +461,7 @@ mutation onChainUsdPaymentSendAsBtcDenominated($input: OnChainUsdPaymentSendAsBt
 mutation onboardingFlowStart($input: OnboardingFlowStartInput!) {
   onboardingFlowStart(input: $input) {
     workflowRunId
-    tokenAndroid
-    tokenIos
+    tokenWeb
     __typename
   }
 }

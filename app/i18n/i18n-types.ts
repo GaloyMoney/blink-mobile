@@ -8733,7 +8733,7 @@ type RootTranslation = {
 		 */
 		success: string
 		/**
-		 * T​h​e​r​e​ ​h​a​s​ ​b​e​e​n​ ​a​n​ ​e​r​r​o​r​ ​w​i​t​h​ ​t​h​e​ ​s​u​b​m​i​s​s​i​o​n​ ​o​f​ ​y​o​u​r​ ​d​o​c​u​m​e​n​t​s​.​ ​Y​o​u​ ​c​a​n​ ​c​o​n​t​a​c​t​ ​t​h​e​ ​s​u​p​p​o​r​t​ ​i​s​ ​t​h​e​ ​p​r​o​b​l​e​m​ ​p​e​r​s​i​s​t​s​.
+		 * T​h​e​r​e​ ​h​a​s​ ​b​e​e​n​ ​a​n​ ​e​r​r​o​r​ ​w​i​t​h​ ​t​h​e​ ​s​u​b​m​i​s​s​i​o​n​ ​o​f​ ​y​o​u​r​ ​d​o​c​u​m​e​n​t​s​.​ ​Y​o​u​ ​c​a​n​ ​c​o​n​t​a​c​t​ ​t​h​e​ ​s​u​p​p​o​r​t​ ​i​f​ ​t​h​e​ ​p​r​o​b​l​e​m​ ​p​e​r​s​i​s​t​s​.
 		 */
 		error: string
 		/**
@@ -17384,7 +17384,7 @@ export type TranslationFunctions = {
 		 */
 		success: () => LocalizedString
 		/**
-		 * There has been an error with the submission of your documents. You can contact the support is the problem persists.
+		 * There has been an error with the submission of your documents. You can contact the support if the problem persists.
 		 */
 		error: () => LocalizedString
 		/**

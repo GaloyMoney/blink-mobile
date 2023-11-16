@@ -1308,6 +1308,7 @@ export type OnboardingFlowStartResult = {
   readonly __typename: 'OnboardingFlowStartResult';
   readonly tokenAndroid: Scalars['String']['output'];
   readonly tokenIos: Scalars['String']['output'];
+  readonly tokenWeb: Scalars['String']['output'];
   readonly workflowRunId: Scalars['String']['output'];
 };
 
@@ -2302,7 +2303,7 @@ export type OnboardingFlowStartMutationVariables = Exact<{
 }>;
 
 
-export type OnboardingFlowStartMutation = { readonly __typename: 'Mutation', readonly onboardingFlowStart: { readonly __typename: 'OnboardingFlowStartResult', readonly workflowRunId: string, readonly tokenAndroid: string, readonly tokenIos: string } };
+export type OnboardingFlowStartMutation = { readonly __typename: 'Mutation', readonly onboardingFlowStart: { readonly __typename: 'OnboardingFlowStartResult', readonly workflowRunId: string, readonly tokenWeb: string } };
 
 export type FullOnboardingScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3985,8 +3986,7 @@ export const OnboardingFlowStartDocument = gql`
     mutation onboardingFlowStart($input: OnboardingFlowStartInput!) {
   onboardingFlowStart(input: $input) {
     workflowRunId
-    tokenAndroid
-    tokenIos
+    tokenWeb
   }
 }
     `;
@@ -7994,6 +7994,7 @@ export type OnChainUsdTxFeeResolvers<ContextType = any, ParentType extends Resol
 export type OnboardingFlowStartResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['OnboardingFlowStartResult'] = ResolversParentTypes['OnboardingFlowStartResult']> = {
   tokenAndroid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   tokenIos?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  tokenWeb?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   workflowRunId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
