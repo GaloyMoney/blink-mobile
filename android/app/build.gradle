@@ -100,8 +100,8 @@ android {
         applicationId "com.galoyapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 617
-        versionName "2.2.160"
+        versionCode 623
+        versionName "2.2.166"
     }
     splits {
         abi {
