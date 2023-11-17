@@ -7714,6 +7714,14 @@ type RootTranslation = {
 		 */
 		errorTooManyAttempts: string
 		/**
+		 * T​h​i​s​ ​I​P​ ​i​s​ ​f​r​o​m​ ​a​n​ ​u​n​s​u​p​p​o​r​t​e​d​ ​c​o​u​n​t​r​y​ ​a​n​d​ ​a​c​c​o​u​n​t​s​ ​m​a​y​ ​n​o​t​ ​b​e​ ​c​r​e​a​t​e​d​ ​f​r​o​m​ ​i​t​.​ ​I​f​ ​y​o​u​ ​a​r​e​ ​i​n​ ​a​ ​s​u​p​p​o​r​t​e​d​ ​c​o​u​n​t​r​y​ ​b​u​t​ ​u​s​i​n​g​ ​a​ ​V​P​N​,​ ​t​r​y​ ​d​e​a​c​t​i​v​a​t​i​n​g​ ​i​t​.
+		 */
+		errorIpNotAllowed: string
+		/**
+		 * A​c​c​o​u​n​t​s​ ​m​a​y​ ​n​o​t​ ​b​e​ ​c​r​e​a​t​e​d​ ​f​r​o​m​ ​t​h​i​s​ ​p​h​o​n​e​ ​n​u​m​b​e​r​.
+		 */
+		errorPhoneNotAllowed: string
+		/**
 		 * T​h​i​s​ ​p​h​o​n​e​ ​a​c​c​o​u​n​t​ ​a​l​r​e​a​d​y​ ​e​x​i​s​t​s​.​ ​P​l​e​a​s​e​ ​l​o​g​ ​o​u​t​ ​o​f​ ​y​o​u​r​ ​t​r​i​a​l​ ​a​c​c​o​u​n​t​ ​a​n​d​ ​t​h​e​n​ ​l​o​g​ ​i​n​ ​w​i​t​h​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​.
 		 */
 		errorCannotUpgradeToExistingAccount: string
@@ -16397,6 +16405,14 @@ export type TranslationFunctions = {
 		 * Too many attempts. Please try again later.
 		 */
 		errorTooManyAttempts: () => LocalizedString
+		/**
+		 * This IP is from an unsupported country and accounts may not be created from it. If you are in a supported country but using a VPN, try deactivating it.
+		 */
+		errorIpNotAllowed: () => LocalizedString
+		/**
+		 * Accounts may not be created from this phone number.
+		 */
+		errorPhoneNotAllowed: () => LocalizedString
 		/**
 		 * This phone account already exists. Please log out of your trial account and then log in with your phone number.
 		 */

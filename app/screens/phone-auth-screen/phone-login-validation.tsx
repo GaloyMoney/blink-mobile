@@ -71,18 +71,44 @@ const ValidatePhoneCodeErrors = {
   InvalidCode: "InvalidCode",
   TooManyAttempts: "TooManyAttempts",
   CannotUpgradeToExistingAccount: "CannotUpgradeToExistingAccount",
+  IpNotAllowed: "IpNotAllowed",
+  PhoneNotAllowed: "PhoneNotAllowed",
   UnknownError: "UnknownError",
 } as const
 
 const mapGqlErrorsToValidatePhoneCodeErrors = (
-  errors: readonly { code?: string | null | undefined }[],
-): ValidatePhoneCodeErrorsType | undefined => {
+  errors: readonly {
+    code?: string | null | undefined
+    message: string
+  }[],
+):
+  | {
+      type: ValidatePhoneCodeErrorsType
+      msg?: string
+    }
+  | undefined => {
   if (errors.some((error) => error.code === "PHONE_CODE_ERROR")) {
-    return ValidatePhoneCodeErrors.InvalidCode
+    return {
+      type: ValidatePhoneCodeErrors.InvalidCode,
+    }
   }
 
   if (errors.some((error) => error.code === "TOO_MANY_REQUEST")) {
-    return ValidatePhoneCodeErrors.TooManyAttempts
+    return {
+      type: ValidatePhoneCodeErrors.TooManyAttempts,
+    }
+  }
+
+  if (errors.some((error) => error.code === "PHONE_NOT_ALLOWED_TO_ONBOARD_ERROR")) {
+    return {
+      type: ValidatePhoneCodeErrors.PhoneNotAllowed,
+    }
+  }
+
+  if (errors.some((error) => error.code === "IP_NOT_ALLOWED_TO_ONBOARD_ERROR")) {
+    return {
+      type: ValidatePhoneCodeErrors.IpNotAllowed,
+    }
   }
 
   if (
@@ -92,30 +118,42 @@ const mapGqlErrorsToValidatePhoneCodeErrors = (
         error.code === "PHONE_ACCOUNT_ALREADY_EXISTS_NEED_TO_SWEEP_FUNDS_ERROR",
     )
   ) {
-    return ValidatePhoneCodeErrors.CannotUpgradeToExistingAccount
+    return {
+      type: ValidatePhoneCodeErrors.CannotUpgradeToExistingAccount,
+    }
   }
 
   if (errors.length > 0) {
-    return ValidatePhoneCodeErrors.UnknownError
+    return {
+      type: ValidatePhoneCodeErrors.UnknownError,
+      msg: errors[0].message,
+    }
   }
 
   return undefined
 }
 
 const mapValidatePhoneCodeErrorsToMessage = (
-  error: ValidatePhoneCodeErrorsType,
+  error: {
+    type: ValidatePhoneCodeErrorsType
+    msg?: string
+  },
   LL: TranslationFunctions,
 ): string => {
-  switch (error) {
+  switch (error.type) {
     case ValidatePhoneCodeErrors.InvalidCode:
       return LL.PhoneLoginValidationScreen.errorLoggingIn()
     case ValidatePhoneCodeErrors.TooManyAttempts:
       return LL.PhoneLoginValidationScreen.errorTooManyAttempts()
     case ValidatePhoneCodeErrors.CannotUpgradeToExistingAccount:
       return LL.PhoneLoginValidationScreen.errorCannotUpgradeToExistingAccount()
+    case ValidatePhoneCodeErrors.IpNotAllowed:
+      return LL.PhoneLoginValidationScreen.errorIpNotAllowed()
+    case ValidatePhoneCodeErrors.PhoneNotAllowed:
+      return LL.PhoneLoginValidationScreen.errorPhoneNotAllowed()
     case ValidatePhoneCodeErrors.UnknownError:
     default:
-      return LL.errors.generic()
+      return LL.errors.generic() + (error.msg ? ` Error Message: ${error.msg}` : "")
   }
 }
 
@@ -134,7 +172,13 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
   const [status, setStatus] = useState<ValidatePhoneCodeStatusType>(
     ValidatePhoneCodeStatus.WaitingForCode,
   )
-  const [error, setError] = useState<ValidatePhoneCodeErrorsType | undefined>()
+  const [error, setError] = useState<
+    | {
+        type: ValidatePhoneCodeErrorsType
+        msg?: string
+      }
+    | undefined
+  >()
 
   const { saveToken } = useAppConfig()
 
@@ -166,7 +210,9 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
       }
 
       try {
-        let errors: readonly { code?: string | null | undefined }[] | undefined
+        let errors:
+          | readonly { code?: string | null | undefined; message: string }[]
+          | undefined
 
         setStatus(ValidatePhoneCodeStatus.LoadingAuthResult)
         if (isUpgradeFlow) {
@@ -213,13 +259,14 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
           errors = data?.userLogin?.errors
         }
 
-        const error =
-          mapGqlErrorsToValidatePhoneCodeErrors(errors || []) ||
-          ValidatePhoneCodeErrors.UnknownError
+        const error = mapGqlErrorsToValidatePhoneCodeErrors(errors || []) || {
+          type: ValidatePhoneCodeErrors.UnknownError,
+        }
 
         logValidateAuthCodeFailure({
-          error,
+          error: error.type,
         })
+
         setError(error)
         _setCode("")
         setStatus(ValidatePhoneCodeStatus.ReadyToRegenerate)
@@ -228,7 +275,9 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
           crashlytics().recordError(err)
           console.debug({ err })
         }
-        setError(ValidatePhoneCodeErrors.UnknownError)
+        setError({
+          type: ValidatePhoneCodeErrors.UnknownError,
+        })
         _setCode("")
         setStatus(ValidatePhoneCodeStatus.ReadyToRegenerate)
       }
@@ -279,7 +328,8 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
               <GaloyErrorBox errorMessage={errorMessage} />
             </View>
           )}
-          {error === ValidatePhoneCodeErrors.CannotUpgradeToExistingAccount ? null : (
+          {error?.type ===
+          ValidatePhoneCodeErrors.CannotUpgradeToExistingAccount ? null : (
             <View style={styles.marginBottom}>
               <GaloyInfo>
                 {LL.PhoneLoginValidationScreen.sendViaOtherChannel({

@@ -2495,6 +2495,8 @@ const en: BaseTranslation = {
   PhoneLoginValidationScreen: {
     errorLoggingIn: "Error logging in. Did you use the right code?",
     errorTooManyAttempts: "Too many attempts. Please try again later.",
+    errorIpNotAllowed: "This IP is from an unsupported country and accounts may not be created from it. If you are in a supported country but using a VPN, try deactivating it.",
+    errorPhoneNotAllowed: "Accounts may not be created from this phone number.",
     errorCannotUpgradeToExistingAccount:
       "This phone account already exists. Please log out of your trial account and then log in with your phone number.",
     header:
