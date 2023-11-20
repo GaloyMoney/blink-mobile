@@ -2487,6 +2487,7 @@ const en: BaseTranslation = {
     errorInvalidPhoneNumber:
       "Invalid phone number. Are you sure you entered the right number?",
     errorUnsupportedCountry: "We are unable to support customers in your country.",
+    infoArgentina: "Argentinian phone numbers require adding a 9 to the beginning of the number.",
     placeholder: "Phone Number",
     verify: "Click to Verify",
     sms: "Send via SMS",

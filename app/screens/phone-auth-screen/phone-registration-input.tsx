@@ -24,6 +24,7 @@ import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-but
 import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { PhoneCodeChannelType } from "@app/graphql/generated"
 import { TouchableOpacity } from "react-native-gesture-handler"
+import { GaloyInfo } from "@app/components/atomic/galoy-info"
 
 const DEFAULT_COUNTRY_CODE = "SV"
 const PLACEHOLDER_PHONE_NUMBER = "123-456-7890"
@@ -133,6 +134,11 @@ export const PhoneRegistrationInitiateScreen: React.FC = () => {
       break
   }
 
+  let info: string | undefined = undefined
+  if (phoneInputInfo?.countryCode && phoneInputInfo.countryCode === "AR") {
+    info = LL.PhoneLoginInitiateScreen.infoArgentina()
+  }
+
   return (
     <Screen
       preset="scroll"
@@ -187,6 +193,11 @@ export const PhoneRegistrationInitiateScreen: React.FC = () => {
             autoFocus={true}
           />
         </View>
+        {info && (
+          <View style={styles.infoContainer}>
+            <GaloyInfo>{info}</GaloyInfo>
+          </View>
+        )}
         {errorMessage && (
           <View style={styles.errorContainer}>
             <GaloyErrorBox errorMessage={errorMessage} />
@@ -257,6 +268,9 @@ const useStyles = makeStyles(({ colors }) => ({
     borderRadius: 8,
   },
   errorContainer: {
+    marginBottom: 20,
+  },
+  infoContainer: {
     marginBottom: 20,
   },
   whatsAppButton: {
