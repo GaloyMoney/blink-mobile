@@ -2026,7 +2026,8 @@
         "scan": "Escanear",
         "updateAvailable": "Hay una actualización disponible.\nToque para actualizar ahora",
         "useLightning": "Usamos la red Lightning.",
-        "myAccounts": "Mis Cuentas"
+        "myAccounts": "Mis Cuentas",
+        "walletCountNotTwo": "El recuento de billeteras no es 2. Utilice el panel para ver todas las billeteras y fondos de esta cuenta."
     },
     "PinScreen": {
         "attemptsRemaining": "PIN incorrecto. Quedan {attemptsRemaining} intentos.",
@@ -2055,6 +2056,7 @@
         "title": "Inicio"
     },
     "ReceiveScreen": {
+        "scanNfc": "Escanear NFC",
         "enterAmountFirst": "Por favor ingresa una cantidad primero",
         "activateNotifications": "¿Quieres activar notificaciones para que te avisen cuando haya llegado el pago?",
         "copyClipboard": "La factura se ha copiado al portapapeles",
@@ -2121,6 +2123,9 @@
         "noQrCode": "No pudimos encontrar un código QR en la imagen",
         "title": "Escanear QR",
         "permissionCamera": "Necesitamos permiso para usar su cámara.",
+        "noCamera": "Cámara no encontrada",
+        "openSettings": "Abrir configuración",
+        "unableToOpenSettings": "No es posible abrir la configuración",
         "invalidContentLnurl": "Encontramos lo siguiente:\n\n{found: string}\n\n actualmente no es compatible",
         "imageLibraryPermissionsNotGranted": "No tenemos permisos para acceder a la biblioteca de imágenes. Verifica en la configuración de la aplicación para tu plataforma."
     },
@@ -2129,7 +2134,7 @@
         "biometricTitle": "Biométrica",
         "biometryNotAvailable": "El sensor biométrico no está disponible.",
         "biometryNotEnrolled": "Registre al menos un sensor biométrico para utilizar la autenticación basada en datos biométricos.",
-        "hideBalanceDescription": "Ocultar su saldo de forma predeterminada para no mostrarlo si alguien está viendo su pantalla.",
+        "hideBalanceDescription": "Oculta tu saldo en la pantalla de inicio cuando se inicia la aplicación, para que no lo reveles a nadie que mire tu pantalla.\n\nAún puedes ver tu saldo tocando el monto principal en el encabezado de tu pantalla de inicio.",
         "hideBalanceTitle": "Ocultar Balance",
         "pinDescription": "El PIN se utiliza como método de autenticación de respaldo para la autenticación biométrica.",
         "pinTitle": "Código PIN",
