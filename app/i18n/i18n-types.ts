@@ -7688,6 +7688,10 @@ type RootTranslation = {
 		 */
 		errorUnsupportedCountry: string
 		/**
+		 * A​r​g​e​n​t​i​n​i​a​n​ ​p​h​o​n​e​ ​n​u​m​b​e​r​s​ ​r​e​q​u​i​r​e​ ​a​d​d​i​n​g​ ​a​ ​9​ ​t​o​ ​t​h​e​ ​b​e​g​i​n​n​i​n​g​ ​o​f​ ​t​h​e​ ​n​u​m​b​e​r​.
+		 */
+		infoArgentina: string
+		/**
 		 * P​h​o​n​e​ ​N​u​m​b​e​r
 		 */
 		placeholder: string
@@ -16379,6 +16383,10 @@ export type TranslationFunctions = {
 		 * We are unable to support customers in your country.
 		 */
 		errorUnsupportedCountry: () => LocalizedString
+		/**
+		 * Argentinian phone numbers require adding a 9 to the beginning of the number.
+		 */
+		infoArgentina: () => LocalizedString
 		/**
 		 * Phone Number
 		 */
