@@ -37,7 +37,7 @@ export const PhoneRegistrationInitiateScreen: React.FC = () => {
   } = useTheme()
 
   const {
-    submitPhoneNumber,
+    userSubmitPhoneNumber,
     status,
     setPhoneNumber,
     isSmsSupported,
@@ -93,7 +93,7 @@ export const PhoneRegistrationInitiateScreen: React.FC = () => {
             status === RequestPhoneCodeStatus.RequestingCode &&
             phoneCodeChannel === PhoneCodeChannelType.Sms
           }
-          onPress={() => submitPhoneNumber(PhoneCodeChannelType.Sms)}
+          onPress={() => userSubmitPhoneNumber(PhoneCodeChannelType.Sms)}
         />
       )
       SecondaryButton = (
@@ -104,7 +104,7 @@ export const PhoneRegistrationInitiateScreen: React.FC = () => {
             status === RequestPhoneCodeStatus.RequestingCode &&
             phoneCodeChannel === PhoneCodeChannelType.Whatsapp
           }
-          onPress={() => submitPhoneNumber(PhoneCodeChannelType.Whatsapp)}
+          onPress={() => userSubmitPhoneNumber(PhoneCodeChannelType.Whatsapp)}
         />
       )
       break
@@ -116,7 +116,7 @@ export const PhoneRegistrationInitiateScreen: React.FC = () => {
             status === RequestPhoneCodeStatus.RequestingCode &&
             phoneCodeChannel === PhoneCodeChannelType.Sms
           }
-          onPress={() => submitPhoneNumber(PhoneCodeChannelType.Sms)}
+          onPress={() => userSubmitPhoneNumber(PhoneCodeChannelType.Sms)}
         />
       )
       break
@@ -128,7 +128,7 @@ export const PhoneRegistrationInitiateScreen: React.FC = () => {
             status === RequestPhoneCodeStatus.RequestingCode &&
             phoneCodeChannel === PhoneCodeChannelType.Whatsapp
           }
-          onPress={() => submitPhoneNumber(PhoneCodeChannelType.Whatsapp)}
+          onPress={() => userSubmitPhoneNumber(PhoneCodeChannelType.Whatsapp)}
         />
       )
       break

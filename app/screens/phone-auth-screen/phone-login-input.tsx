@@ -130,7 +130,7 @@ export const PhoneLoginInitiateScreen: React.FC<PhoneLoginInitiateScreenProps> =
   } = useTheme()
 
   const {
-    submitPhoneNumber,
+    userSubmitPhoneNumber,
     captchaLoading,
     status,
     setPhoneNumber,
@@ -208,7 +208,7 @@ export const PhoneLoginInitiateScreen: React.FC<PhoneLoginInitiateScreenProps> =
         <GaloyPrimaryButton
           title={LL.PhoneLoginInitiateScreen.sms()}
           loading={captchaLoading && phoneCodeChannel === PhoneCodeChannelType.Sms}
-          onPress={() => submitPhoneNumber(PhoneCodeChannelType.Sms)}
+          onPress={() => userSubmitPhoneNumber(PhoneCodeChannelType.Sms)}
           disabled={isDisabledCountryAndCreateAccount}
         />
       )
@@ -217,7 +217,7 @@ export const PhoneLoginInitiateScreen: React.FC<PhoneLoginInitiateScreenProps> =
           title={LL.PhoneLoginInitiateScreen.whatsapp()}
           containerStyle={styles.whatsAppButton}
           loading={captchaLoading && phoneCodeChannel === PhoneCodeChannelType.Whatsapp}
-          onPress={() => submitPhoneNumber(PhoneCodeChannelType.Whatsapp)}
+          onPress={() => userSubmitPhoneNumber(PhoneCodeChannelType.Whatsapp)}
           disabled={isDisabledCountryAndCreateAccount}
         />
       )
@@ -227,7 +227,7 @@ export const PhoneLoginInitiateScreen: React.FC<PhoneLoginInitiateScreenProps> =
         <GaloyPrimaryButton
           title={LL.PhoneLoginInitiateScreen.sms()}
           loading={captchaLoading && phoneCodeChannel === PhoneCodeChannelType.Sms}
-          onPress={() => submitPhoneNumber(PhoneCodeChannelType.Sms)}
+          onPress={() => userSubmitPhoneNumber(PhoneCodeChannelType.Sms)}
           disabled={isDisabledCountryAndCreateAccount}
         />
       )
@@ -237,7 +237,7 @@ export const PhoneLoginInitiateScreen: React.FC<PhoneLoginInitiateScreenProps> =
         <GaloyPrimaryButton
           title={LL.PhoneLoginInitiateScreen.whatsapp()}
           loading={captchaLoading && phoneCodeChannel === PhoneCodeChannelType.Whatsapp}
-          onPress={() => submitPhoneNumber(PhoneCodeChannelType.Whatsapp)}
+          onPress={() => userSubmitPhoneNumber(PhoneCodeChannelType.Whatsapp)}
           disabled={isDisabledCountryAndCreateAccount}
         />
       )
