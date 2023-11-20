@@ -45,7 +45,7 @@ type PhoneInputInfo = {
 }
 
 export type UseRequestPhoneCodeReturn = {
-  submitPhoneNumber: (phoneCodeChannel: PhoneCodeChannelType) => void
+  userSubmitPhoneNumber: (phoneCodeChannel: PhoneCodeChannelType) => void
   setStatus: (status: RequestPhoneCodeStatus) => void
   status: RequestPhoneCodeStatus
   phoneInputInfo?: PhoneInputInfo
@@ -166,7 +166,7 @@ export const useRequestPhoneCodeRegistration = (): UseRequestPhoneCodeReturn => 
     setStatus(RequestPhoneCodeStatus.InputtingPhoneNumber)
   }
 
-  const submitPhoneNumber = async (phoneCodeChannel: PhoneCodeChannelType) => {
+  const userSubmitPhoneNumber = async (phoneCodeChannel: PhoneCodeChannelType) => {
     if (
       status === RequestPhoneCodeStatus.LoadingCountryCode ||
       status === RequestPhoneCodeStatus.RequestingCode
@@ -244,7 +244,7 @@ export const useRequestPhoneCodeRegistration = (): UseRequestPhoneCodeReturn => 
     phoneInputInfo,
     validatedPhoneNumber,
     error,
-    submitPhoneNumber,
+    userSubmitPhoneNumber,
     phoneCodeChannel,
     isWhatsAppSupported,
     isSmsSupported,
