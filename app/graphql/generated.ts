@@ -222,12 +222,14 @@ export type ApiKey = {
   readonly id: Scalars['ID']['output'];
   readonly lastUsedAt?: Maybe<Scalars['Timestamp']['output']>;
   readonly name: Scalars['String']['output'];
+  readonly readOnly: Scalars['Boolean']['output'];
   readonly revoked: Scalars['Boolean']['output'];
 };
 
 export type ApiKeyCreateInput = {
   readonly expireInDays?: InputMaybe<Scalars['Int']['input']>;
   readonly name: Scalars['String']['input'];
+  readonly readOnly?: Scalars['Boolean']['input'];
 };
 
 export type ApiKeyCreatePayload = {
@@ -7510,6 +7512,7 @@ export type ApiKeyResolvers<ContextType = any, ParentType extends ResolversParen
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   lastUsedAt?: Resolver<Maybe<ResolversTypes['Timestamp']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  readOnly?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   revoked?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
