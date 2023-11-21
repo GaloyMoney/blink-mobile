@@ -2389,6 +2389,7 @@
         "errorRequestingCode": "Algo ha ido mal al solicitar el código telefónico, por favor inténtalo de nuevo más tarde.",
         "errorInvalidPhoneNumber": "Número de teléfono no válido. ¿Seguro que has introducido el número correcto?",
         "errorUnsupportedCountry": "No podemos atender a clientes de tu país.",
+        "infoArgentina": "Los números de teléfono argentinos requieren agregar un 9 al comienzo de tu número.",
         "placeholder": "Número de teléfono",
         "verify": "Pulsa para verificar",
         "sms": "Envia por SMS",
@@ -2397,6 +2398,8 @@
     "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Error al inciar sesión. ¿Usó el código correcto?",
         "errorTooManyAttempts": "Demasiados intentos. Por favor, inténtelo de nuevo más tarde.",
+        "errorIpNotAllowed": "Esta IP es de un país no admitido y no se pueden crear cuentas a partir de ella. Si te encuentras en un país admitido pero utiliza una VPN, intenta desactivarla.",
+        "errorPhoneNotAllowed": "No se pueden crear cuentas desde este número de teléfono.",
         "errorCannotUpgradeToExistingAccount": "Esta cuenta de teléfono ya existe. Cierre la sesión de tu cuenta de prueba y luego inicia sesión con tu número de teléfono.",
         "header": "Para confirmar tu número de teléfono, ingresa el código que te acabamos de enviar por {channel: string} en {phoneNumber: string}",
         "placeholder": "Código de 6 dígitos",
