@@ -386,7 +386,12 @@ export const HomeScreen: React.FC = () => {
               onPress={() => onMenuClick("transactionHistory")}
               activeOpacity={0.6}
             >
-              <Text type="p1" bold {...testProps(recentTransactionsData.title)}>
+              <Text
+                type="p1"
+                style={{ color: colors.primary }}
+                bold
+                {...testProps(recentTransactionsData.title)}
+              >
                 {recentTransactionsData?.title}
               </Text>
             </TouchableOpacity>
