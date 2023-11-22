@@ -7546,7 +7546,7 @@ type RootTranslation = {
 		 */
 		noTransaction: string
 		/**
-		 * T​r​a​n​s​a​c​t​i​o​n​s
+		 * A​l​l​ ​t​r​a​n​s​a​c​t​i​o​n​s
 		 */
 		title: string
 		/**
@@ -16244,7 +16244,7 @@ export type TranslationFunctions = {
 		 */
 		noTransaction: () => LocalizedString
 		/**
-		 * Transactions
+		 * All transactions
 		 */
 		title: () => LocalizedString
 		/**
