@@ -11,6 +11,7 @@ const route = {
   key: "PhoneLoginValidationScreen",
   name: "phoneLoginValidate",
   params: {
+    type: "CreateAccount", 
     phone: "+50365055543",
     channel: "SMS",
   },
