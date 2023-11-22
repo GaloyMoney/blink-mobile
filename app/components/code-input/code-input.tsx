@@ -67,7 +67,9 @@ export const CodeInput: React.FC<Props> = ({
 
   const [code, _setCode] = useState("")
 
-  const setCode = (code: string) => {
+  const setCode = (codeInput: string) => {
+    const code = codeInput.trim()
+
     if (code.length > 6) {
       return
     }
