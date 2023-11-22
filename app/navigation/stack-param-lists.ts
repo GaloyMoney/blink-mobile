@@ -104,9 +104,13 @@ export type PeopleStackParamList = {
 export type PhoneValidationStackParamList = {
   Primary: undefined
   phoneLoginInitiate: {
-    type?: PhoneLoginInitiateType
+    type: PhoneLoginInitiateType
   }
-  phoneLoginValidate: { phone: string; channel: PhoneCodeChannelType }
+  phoneLoginValidate: {
+    phone: string
+    channel: PhoneCodeChannelType
+    type: PhoneLoginInitiateType
+  }
   authentication: {
     screenPurpose: AuthenticationScreenPurpose
   }

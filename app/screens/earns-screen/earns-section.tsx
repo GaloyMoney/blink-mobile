@@ -22,6 +22,7 @@ import {
   getQuizQuestionsContent,
 } from "./earns-utils"
 import { makeStyles, useTheme } from "@rneui/themed"
+import { PhoneLoginInitiateType } from "../phone-auth-screen"
 
 const { width: screenWidth } = Dimensions.get("window")
 
@@ -218,7 +219,7 @@ export const EarnSection = ({ route }: Props) => {
           onPress: () =>
             navigation.navigate("phoneFlow", {
               screen: "phoneLoginInitiate",
-              params: {},
+              params: { type: PhoneLoginInitiateType.CreateAccount },
             }),
         },
       ])
