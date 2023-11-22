@@ -479,21 +479,17 @@ export const PhoneLoginNavigator = () => {
     <StackPhoneValidation.Navigator>
       <StackPhoneValidation.Screen
         name="phoneLoginInitiate"
-        options={(props) => {
-          return {
-            title: getTitle(props.route.params.type),
-          }
-        }}
+        options={(props) => ({
+          title: getTitle(props.route.params.type),
+        })}
         component={PhoneLoginInitiateScreen}
       />
       <StackPhoneValidation.Screen
         name="phoneLoginValidate"
         component={PhoneLoginValidationScreen}
-        options={(props) => {
-          return {
-            title: getTitle(props.route.params.type),
-          }
-        }}
+        options={(props) => ({
+          title: getTitle(props.route.params.type),
+        })}
       />
     </StackPhoneValidation.Navigator>
   )
