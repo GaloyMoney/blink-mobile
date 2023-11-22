@@ -148,8 +148,10 @@ export const PhoneLoginInitiateScreen: React.FC<PhoneLoginInitiateScreenProps> =
 
   const { LL } = useI18nContext()
 
+  const screenType = route.params.type;
+
   const isDisabledCountryAndCreateAccount =
-    route.params.type === PhoneLoginInitiateType.CreateAccount &&
+    screenType=== PhoneLoginInitiateType.CreateAccount &&
     phoneInputInfo?.countryCode &&
     DisableCountriesForAccountCreation.includes(phoneInputInfo.countryCode)
 
@@ -157,6 +159,7 @@ export const PhoneLoginInitiateScreen: React.FC<PhoneLoginInitiateScreenProps> =
     if (status === RequestPhoneCodeStatus.SuccessRequestingCode) {
       setStatus(RequestPhoneCodeStatus.InputtingPhoneNumber)
       navigation.navigate("phoneLoginValidate", {
+        type: screenType,
         phone: validatedPhoneNumber || "",
         channel: phoneCodeChannel,
       })

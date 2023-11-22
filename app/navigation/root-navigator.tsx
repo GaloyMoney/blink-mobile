@@ -43,6 +43,7 @@ import { AllContactsScreen } from "@app/screens/people-screen/contacts/all-conta
 import { PeopleTabIcon } from "@app/screens/people-screen/tab-icon"
 import {
   PhoneLoginInitiateScreen,
+  PhoneLoginInitiateType,
   PhoneLoginValidationScreen,
 } from "@app/screens/phone-auth-screen"
 import { PhoneRegistrationInitiateScreen } from "@app/screens/phone-auth-screen/phone-registration-input"
@@ -288,9 +289,7 @@ export const RootStack = () => {
       <RootNavigator.Screen
         name="phoneFlow"
         component={PhoneLoginNavigator}
-        options={{
-          title: LL.PhoneLoginInitiateScreen.title(),
-        }}
+        options={{ headerShown: false }}
       />
       <RootNavigator.Screen
         name="phoneRegistrationInitiate"
@@ -469,21 +468,31 @@ const StackPhoneValidation = createStackNavigator<PhoneValidationStackParamList>
 
 export const PhoneLoginNavigator = () => {
   const { LL } = useI18nContext()
+
+  function getTitle(type: PhoneLoginInitiateType) {
+    return type === PhoneLoginInitiateType.CreateAccount
+      ? LL.PhoneLoginInitiateScreen.title()
+      : LL.common.phoneNumber()
+  }
+
   return (
     <StackPhoneValidation.Navigator>
       <StackPhoneValidation.Screen
         name="phoneLoginInitiate"
-        options={{
-          headerShown: false,
-          title: LL.common.phoneNumber(),
+        options={(props) => {
+          return {
+            title: getTitle(props.route.params.type),
+          }
         }}
         component={PhoneLoginInitiateScreen}
       />
       <StackPhoneValidation.Screen
         name="phoneLoginValidate"
         component={PhoneLoginValidationScreen}
-        options={{
-          headerShown: false,
+        options={(props) => {
+          return {
+            title: getTitle(props.route.params.type),
+          }
         }}
       />
     </StackPhoneValidation.Navigator>
