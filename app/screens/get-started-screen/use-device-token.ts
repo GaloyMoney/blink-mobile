@@ -27,28 +27,18 @@ export const getAppCheckToken = async (): Promise<string | undefined> => {
   }
 }
 
-const useAppCheckToken = ({
-  skip = false,
-}: {
-  skip: boolean
-}): [string | undefined, boolean] => {
+const useAppCheckToken = ({ skip = false }: { skip?: boolean }): string | undefined => {
   const [token, setToken] = useState<string | undefined>(undefined)
-  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    if (skip) {
-      return
-    }
-
+    if (skip) return
     ;(async () => {
-      setLoading(true)
       const result = await getAppCheckToken()
       setToken(result)
-      setLoading(false)
     })()
   }, [skip])
 
-  return [token, loading]
+  return token
 }
 
 export default useAppCheckToken

@@ -20,7 +20,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { ScrollView } from "react-native-gesture-handler"
-import { getAppCheckToken } from "../get-started-screen/use-device-token"
+import useAppCheckToken from "../get-started-screen/use-device-token"
 
 gql`
   query debugScreen {
@@ -114,13 +114,7 @@ export const DeveloperScreen: React.FC = () => {
     }
   }, [newGaloyInstance, currentGaloyInstance, token])
 
-  const [appChecktoken, setAppCheckToken] = React.useState<string | undefined>()
-
-  React.useEffect(() => {
-    ;(async () => {
-      setAppCheckToken(await getAppCheckToken())
-    })()
-  }, [])
+  const appCheckToken = useAppCheckToken({})
 
   const openInAppBrowser = async () => {
     try {
@@ -412,7 +406,7 @@ export const DeveloperScreen: React.FC = () => {
                 />
               </>
             )}
-            <Text selectable>{appChecktoken}</Text>
+            <Text selectable>{appCheckToken}</Text>
           </View>
         </View>
       </ScrollView>

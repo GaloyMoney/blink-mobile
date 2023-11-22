@@ -1,17 +1,17 @@
-import { useAppConfig, useGeetestCaptcha } from "@app/hooks"
-import { useEffect, useMemo, useState } from "react"
-import parsePhoneNumber, {
-  AsYouType,
-  CountryCode,
-  getCountryCallingCode,
-} from "libphonenumber-js/mobile"
-import { logRequestAuthCode } from "@app/utils/analytics"
 import { gql } from "@apollo/client"
 import {
   PhoneCodeChannelType,
   useCaptchaRequestAuthCodeMutation,
   useSupportedCountriesQuery,
 } from "@app/graphql/generated"
+import { useAppConfig, useGeetestCaptcha } from "@app/hooks"
+import { logRequestAuthCode } from "@app/utils/analytics"
+import parsePhoneNumber, {
+  AsYouType,
+  CountryCode,
+  getCountryCallingCode,
+} from "libphonenumber-js/mobile"
+import { useEffect, useMemo, useState } from "react"
 
 export const RequestPhoneCodeStatus = {
   LoadingCountryCode: "LoadingCountryCode",
@@ -31,7 +31,7 @@ export const ErrorType = {
 } as const
 
 import axios, { isAxiosError } from "axios"
-import { getAppCheckToken } from "../get-started-screen/use-device-token"
+import useAppCheckToken from "../get-started-screen/use-device-token"
 
 type ErrorType = (typeof ErrorType)[keyof typeof ErrorType]
 
@@ -112,7 +112,7 @@ export const useRequestPhoneCodeLogin = (): UseRequestPhoneCodeReturn => {
 
   const { data, loading: loadingSupportedCountries } = useSupportedCountriesQuery()
 
-  const [appCheckToken, setAppCheckToken] = useState<string | undefined>()
+  const appCheckToken = useAppCheckToken({})
 
   const {
     geetestError,
@@ -170,13 +170,6 @@ export const useRequestPhoneCodeLogin = (): UseRequestPhoneCodeReturn => {
     }
 
     getCountryCodeFromIP()
-  }, [])
-
-  // requesting appcheck token
-  useEffect(() => {
-    ;(async () => {
-      setAppCheckToken(await getAppCheckToken())
-    })()
   }, [])
 
   // when phone number is submitted and either captcha is requested, or appcheck is used

@@ -45,7 +45,7 @@ export const GetStartedScreen: React.FC = () => {
 
   const { deviceAccountEnabled } = useFeatureFlags()
 
-  const [appCheckToken] = useAppCheckToken({ skip: !deviceAccountEnabled })
+  const appCheckToken = useAppCheckToken({ skip: !deviceAccountEnabled })
 
   const handleCreateAccount = () => {
     logGetStartedAction({
