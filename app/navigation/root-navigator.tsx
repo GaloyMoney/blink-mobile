@@ -468,6 +468,10 @@ const StackPhoneValidation = createStackNavigator<PhoneValidationStackParamList>
 
 export const PhoneLoginNavigator = () => {
   const { LL } = useI18nContext()
+  const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
 
   function getTitle(type: PhoneLoginInitiateType) {
     return type === PhoneLoginInitiateType.CreateAccount
@@ -476,7 +480,16 @@ export const PhoneLoginNavigator = () => {
   }
 
   return (
-    <StackPhoneValidation.Navigator>
+    <StackPhoneValidation.Navigator
+      screenOptions={{
+        gestureEnabled: true,
+        headerBackTitle: LL.common.back(),
+        headerStyle: styles.headerStyle,
+        headerTitleStyle: styles.title,
+        headerBackTitleStyle: styles.title,
+        headerTintColor: colors.black,
+      }}
+    >
       <StackPhoneValidation.Screen
         name="phoneLoginInitiate"
         options={(props) => ({
