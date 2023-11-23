@@ -6473,9 +6473,9 @@ type RootTranslation = {
 	}
 	ReceiveScreen: {
 		/**
-		 * S​c​a​n​ ​N​F​C
+		 * N​F​C
 		 */
-		scanNfc: string
+		nfc: string
 		/**
 		 * P​l​e​a​s​e​ ​e​n​t​e​r​ ​a​n​ ​a​m​o​u​n​t​ ​f​i​r​s​t
 		 */
@@ -15211,9 +15211,9 @@ export type TranslationFunctions = {
 	}
 	ReceiveScreen: {
 		/**
-		 * Scan NFC
+		 * NFC
 		 */
-		scanNfc: () => LocalizedString
+		nfc: () => LocalizedString
 		/**
 		 * Please enter an amount first
 		 */
