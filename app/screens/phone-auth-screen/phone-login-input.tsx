@@ -164,7 +164,7 @@ export const PhoneLoginInitiateScreen: React.FC<PhoneLoginInitiateScreenProps> =
         channel: phoneCodeChannel,
       })
     }
-  }, [status, phoneCodeChannel, validatedPhoneNumber, navigation, setStatus])
+  }, [status, phoneCodeChannel, validatedPhoneNumber, navigation, setStatus, screenType])
 
   if (status === RequestPhoneCodeStatus.LoadingCountryCode || loadingSupportedCountries) {
     return (
