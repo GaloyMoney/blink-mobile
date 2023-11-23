@@ -2345,7 +2345,7 @@
     },
     "TransactionScreen": {
         "noTransaction": "No se han realizado transacciones",
-        "title": "Transacciones",
+        "title": "Todas las Transacciones",
         "recentTransactions": "Transacciones recientes",
         "transactionHistoryTitle": "Historial"
     },
