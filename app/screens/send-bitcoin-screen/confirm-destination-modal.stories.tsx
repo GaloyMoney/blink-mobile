@@ -6,6 +6,8 @@ import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import { ConfirmDestinationModal } from "./confirm-destination-modal"
 import mocks from "../../graphql/mocks"
+import { DestinationState } from "./send-bitcoin-reducer"
+
 import { createIntraLedgerDestination } from "@app/screens/send-bitcoin-screen/payment-destination"
 
 export default {
@@ -38,7 +40,7 @@ intraLedgerDestination.createPaymentDetail
 const params = {
   destinationState: {
     unparsedDestination: "user@blink.sv",
-    destinationState: "requires-confirmation",
+    destinationState: DestinationState.RequiresUsernameConfirmation,
     destination: {
       valid: true,
       validDestination: {
@@ -50,7 +52,7 @@ const params = {
       destinationDirection: "Send",
       createPaymentDetail: intraLedgerDestination.createPaymentDetail,
     },
-    confirmationType: {
+    confirmationUsernameType: {
       type: "new-username",
       username: "destination-username",
     },

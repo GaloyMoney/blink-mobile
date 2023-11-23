@@ -4,13 +4,13 @@ export const DestinationState = {
   Entering: "entering",
   Validating: "validating",
   Valid: "valid",
-  RequiresConfirmation: "requires-confirmation",
+  RequiresUsernameConfirmation: "requires-destination-confirmation",
   Invalid: "invalid",
 } as const
 
 export type DestinationState = (typeof DestinationState)[keyof typeof DestinationState]
 
-export type ConfirmationType = {
+export type ConfirmationDestinationType = {
   type: "new-username"
   username: string
 }
@@ -26,13 +26,13 @@ export type SendBitcoinDestinationState =
       unparsedDestination: string
       destinationState: typeof DestinationState.Valid
       destination: Destination
-      confirmationType?: ConfirmationType
+      confirmationUsernameType?: ConfirmationDestinationType
     }
   | {
       unparsedDestination: string
-      destinationState: typeof DestinationState.RequiresConfirmation
+      destinationState: typeof DestinationState.RequiresUsernameConfirmation
       destination: Destination
-      confirmationType: ConfirmationType
+      confirmationUsernameType: ConfirmationDestinationType
     }
   | {
       unparsedDestination: string
@@ -45,7 +45,7 @@ export const SendBitcoinActions = {
   SetValidating: "set-validating",
   SetValid: "set-valid",
   SetInvalid: "set-invalid",
-  SetRequiresConfirmation: "set-requires-confirmation",
+  SetRequiresUsernameConfirmation: "set-requires-destination-confirmation",
   SetConfirmed: "set-confirmed",
 } as const
 
@@ -78,9 +78,9 @@ export type SendBitcoinDestinationAction =
       }
     }
   | {
-      type: typeof SendBitcoinActions.SetRequiresConfirmation
+      type: typeof SendBitcoinActions.SetRequiresUsernameConfirmation
       payload: {
-        confirmationType: ConfirmationType
+        confirmationUsernameType: ConfirmationDestinationType
         unparsedDestination: string
         validDestination: Destination
       }
@@ -127,23 +127,23 @@ export const sendBitcoinDestinationReducer = (
         }
       }
       throw new Error("Invalid state transition")
-    case SendBitcoinActions.SetRequiresConfirmation:
+    case SendBitcoinActions.SetRequiresUsernameConfirmation:
       if (state.destinationState === DestinationState.Validating) {
         return {
           unparsedDestination: state.unparsedDestination,
-          destinationState: DestinationState.RequiresConfirmation,
+          destinationState: DestinationState.RequiresUsernameConfirmation,
           destination: action.payload.validDestination,
-          confirmationType: action.payload.confirmationType,
+          confirmationUsernameType: action.payload.confirmationUsernameType,
         }
       }
       throw new Error("Invalid state transition")
     case SendBitcoinActions.SetConfirmed:
-      if (state.destinationState === DestinationState.RequiresConfirmation) {
+      if (state.destinationState === DestinationState.RequiresUsernameConfirmation) {
         return {
           unparsedDestination: state.unparsedDestination,
           destinationState: DestinationState.Valid,
           destination: state.destination,
-          confirmationType: state.confirmationType,
+          confirmationUsernameType: state.confirmationUsernameType,
         }
       }
       throw new Error("Invalid state transition")

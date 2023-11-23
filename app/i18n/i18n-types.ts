@@ -6941,7 +6941,7 @@ type RootTranslation = {
 		 * @param {string} lnAddress
 		 */
 		newBankAddressUsername: RequiredParams<'bankName' | 'lnAddress'>
-		confirmModal: {
+		confirmUsernameModal: {
 			/**
 			 * Y​o​u​'​v​e​ ​n​e​v​e​r​ ​s​e​n​t​ ​m​o​n​e​y​ ​t​o​ ​t​h​i​s​ ​a​d​d​r​e​s​s
 			 */
@@ -7082,6 +7082,16 @@ type RootTranslation = {
 		 * T​h​e​ ​l​n​u​r​l​ ​s​e​r​v​e​r​ ​r​e​s​p​o​n​d​e​d​ ​w​i​t​h​ ​a​n​ ​i​n​v​o​i​c​e​ ​w​i​t​h​ ​a​n​ ​i​n​c​o​r​r​e​c​t​ ​d​e​s​c​r​i​p​t​i​o​n​ ​h​a​s​h​.
 		 */
 		lnurlInvoiceIncorrectDescription: string
+		confirmFeesModal: {
+			/**
+			 * F​e​e​s​ ​a​r​e​ ​h​i​g​h​!
+			 */
+			title: string
+			/**
+			 * I​'​m​ ​1​0​0​%​ ​s​u​r​e
+			 */
+			confirmButton: string
+		}
 	}
 	SettingsScreen: {
 		/**
@@ -15654,7 +15664,7 @@ export type TranslationFunctions = {
 		 * {lnAddress} exists as a {bankName} address, but you've never sent money to it.
 		 */
 		newBankAddressUsername: (arg: { bankName: string, lnAddress: string }) => LocalizedString
-		confirmModal: {
+		confirmUsernameModal: {
 			/**
 			 * You've never sent money to this address
 			 */
@@ -15788,6 +15798,16 @@ export type TranslationFunctions = {
 		 * The lnurl server responded with an invoice with an incorrect description hash.
 		 */
 		lnurlInvoiceIncorrectDescription: () => LocalizedString
+		confirmFeesModal: {
+			/**
+			 * Fees are high!
+			 */
+			title: () => LocalizedString
+			/**
+			 * I'm 100% sure
+			 */
+			confirmButton: () => LocalizedString
+		}
 	}
 	SettingsScreen: {
 		/**

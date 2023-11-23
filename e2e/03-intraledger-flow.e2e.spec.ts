@@ -37,10 +37,12 @@ describe("Validate Username Flow", () => {
     // Some kind of bug with the component
     const selectorValue =
       process.env.E2E_DEVICE === "ios"
-        ? `${LL.SendBitcoinDestinationScreen.confirmModal.checkBox({
+        ? `${LL.SendBitcoinDestinationScreen.confirmUsernameModal.checkBox({
             lnAddress,
-          })} ${LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress })}`
-        : LL.SendBitcoinDestinationScreen.confirmModal.checkBox({ lnAddress })
+          })} ${LL.SendBitcoinDestinationScreen.confirmUsernameModal.checkBox({
+            lnAddress,
+          })}`
+        : LL.SendBitcoinDestinationScreen.confirmUsernameModal.checkBox({ lnAddress })
     const checkBoxButton = await $(selector(selectorValue, "Other"))
     await checkBoxButton.waitForEnabled({ timeout })
     await checkBoxButton.click()
@@ -48,7 +50,9 @@ describe("Validate Username Flow", () => {
     const { isContactAvailable } = await checkContact(username)
     expect(isContactAvailable).toBe(false)
 
-    await clickButton(LL.SendBitcoinDestinationScreen.confirmModal.confirmButton())
+    await clickButton(
+      LL.SendBitcoinDestinationScreen.confirmUsernameModal.confirmButton(),
+    )
     await waitTillTextDisplayed(LL.SendBitcoinScreen.amount())
     await clickBackButton()
     await waitTillTextDisplayed(LL.SendBitcoinScreen.destination())

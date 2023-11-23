@@ -106,11 +106,11 @@ const destinationStateToInformation = (
 
   if (
     sendBitcoinReducerState.destinationState === "valid" &&
-    sendBitcoinReducerState.confirmationType
+    sendBitcoinReducerState.confirmationUsernameType
   ) {
     return {
       warning: translate.SendBitcoinDestinationScreen.newBankAddressUsername({
-        lnAddress: toLnAddress(sendBitcoinReducerState.confirmationType.username),
+        lnAddress: toLnAddress(sendBitcoinReducerState.confirmationUsernameType.username),
         bankName,
       }),
     }
