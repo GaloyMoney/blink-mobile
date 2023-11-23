@@ -7084,9 +7084,15 @@ type RootTranslation = {
 		lnurlInvoiceIncorrectDescription: string
 		confirmFeesModal: {
 			/**
-			 * F​e​e​s​ ​a​r​e​ ​h​i​g​h​!
+			 * H​i​g​h​ ​f​e​e​ ​a​l​e​r​t​!
 			 */
 			title: string
+			/**
+			 * Y​o​u​r​ ​f​e​e​ ​i​s​ ​m​o​r​e​ ​t​h​a​n​ ​5​0​%​ ​b​i​g​g​e​r​ ​t​h​a​n​ ​t​h​e​ ​a​m​o​u​n​t​ ​s​e​n​t​.​ ​A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​p​r​o​c​e​e​d​?​
+		​
+		​T​o​ ​r​e​d​u​c​e​ ​f​e​e​s​,​ ​a​s​k​ ​t​h​e​ ​r​e​c​e​i​v​e​r​ ​t​o​ ​a​c​c​e​p​t​ ​t​r​a​n​s​a​c​t​i​o​n​ ​v​i​a​ ​L​i​g​h​t​n​i​n​g
+			 */
+			content: string
 			/**
 			 * I​'​m​ ​1​0​0​%​ ​s​u​r​e
 			 */
@@ -15800,9 +15806,15 @@ export type TranslationFunctions = {
 		lnurlInvoiceIncorrectDescription: () => LocalizedString
 		confirmFeesModal: {
 			/**
-			 * Fees are high!
+			 * High fee alert!
 			 */
 			title: () => LocalizedString
+			/**
+			 * Your fee is more than 50% bigger than the amount sent. Are you sure you want to proceed?
+	
+		To reduce fees, ask the receiver to accept transaction via Lightning
+			 */
+			content: () => LocalizedString
 			/**
 			 * I'm 100% sure
 			 */
