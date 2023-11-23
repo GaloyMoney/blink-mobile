@@ -44,7 +44,7 @@ const ReceiveScreen = () => {
             style={styles.nfcIcon}
             onPress={() => setDisplayReceiveNfc(true)}
           >
-            <Text type="p2">{LL.ReceiveScreen.scanNfc()}</Text>
+            <Text type="p2">{LL.ReceiveScreen.nfc()}</Text>
             <CustomIcon name="nfc" color={colors.black} />
           </TouchableOpacity>
         ),
