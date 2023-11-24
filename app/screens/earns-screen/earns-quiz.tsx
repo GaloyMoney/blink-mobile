@@ -2,7 +2,13 @@
 import { Button } from "@rneui/base"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { Text, TouchableOpacity, View, TouchableWithoutFeedback } from "react-native"
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  TouchableWithoutFeedback,
+  Pressable,
+} from "react-native"
 import Modal from "react-native-modal"
 import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -26,8 +32,10 @@ import { makeStyles, useTheme } from "@rneui/themed"
 import { ScrollView } from "react-native-gesture-handler"
 
 const useStyles = makeStyles(({ colors }) => ({
+  answersViewInner: {
+    rowGap: 20
+  },
   answersView: {
-    rowGap: 20,
     padding: 20,
   },
   scrollViewStyle: {
@@ -276,8 +284,8 @@ export const EarnQuiz = ({ route }: Props) => {
   let j: ZeroTo2 = 0
   permutation.forEach((i) => {
     answersShuffled.push(
-      <View style={styles.buttonRowWithFeedback}>
-        <TouchableOpacity key={i} onPress={() => addRecordedAnswer(i)}>
+      <View key={i} style={styles.buttonRowWithFeedback}>
+        <TouchableOpacity onPress={() => addRecordedAnswer(i)}>
           <View style={styles.buttonRow}>
             <View style={buttonStyleHelper(i)}>
               <Text style={styles.quizButtonTitleStyle}>{mappingLetter[j]}</Text>
@@ -325,8 +333,10 @@ export const EarnQuiz = ({ route }: Props) => {
             style={styles.scrollViewStyle}
             contentContainerStyle={styles.answersView}
           >
-            <Text style={styles.title}>{question ?? title}</Text>
-            {answersShuffled}
+            <Pressable style={styles.answersViewInner}>
+              <Text style={styles.title}>{question ?? title}</Text>
+              {answersShuffled}
+            </Pressable>
           </ScrollView>
           <View>
             {recordedAnswer.indexOf(0) === -1 ? null : (
