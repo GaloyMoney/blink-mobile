@@ -21,6 +21,7 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { ScrollView } from "react-native-gesture-handler"
 import useAppCheckToken from "../get-started-screen/use-device-token"
+import DeviceInfo from "react-native-device-info"
 
 gql`
   query debugScreen {
@@ -269,6 +270,7 @@ export const DeveloperScreen: React.FC = () => {
             }
           />
           <View>
+            <Text style={styles.textHeader}>{DeviceInfo.getReadableVersion()}</Text>
             <Text style={styles.textHeader}>Account info</Text>
             <Text>AccountId: </Text>
             <Text selectable>{accountId}</Text>
