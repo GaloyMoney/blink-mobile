@@ -33,7 +33,7 @@ import { ScrollView } from "react-native-gesture-handler"
 
 const useStyles = makeStyles(({ colors }) => ({
   answersViewInner: {
-    rowGap: 20
+    rowGap: 20,
   },
   answersView: {
     padding: 20,
