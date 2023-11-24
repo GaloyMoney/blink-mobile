@@ -19,3 +19,10 @@
 
 -keep class com.swmansion.reanimated.** { *; }
 -keep class com.facebook.react.turbomodule.** { *; }
+
+# inapp browser
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+  @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
