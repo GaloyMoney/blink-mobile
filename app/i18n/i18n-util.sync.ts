@@ -9,6 +9,7 @@ import af from './af'
 import ar from './ar'
 import ca from './ca'
 import cs from './cs'
+import da from './da'
 import de from './de'
 import el from './el'
 import en from './en'
@@ -33,6 +34,7 @@ const localeTranslations = {
 	ar,
 	ca,
 	cs,
+	da,
 	de,
 	el,
 	en,

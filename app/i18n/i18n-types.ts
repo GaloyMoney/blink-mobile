@@ -10,6 +10,7 @@ export type Locales =
 	| 'ar'
 	| 'ca'
 	| 'cs'
+	| 'da'
 	| 'de'
 	| 'el'
 	| 'en'
