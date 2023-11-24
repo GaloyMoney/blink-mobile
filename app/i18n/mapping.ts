@@ -6,6 +6,7 @@ import "@formatjs/intl-relativetimeformat/locale-data/af"
 import "@formatjs/intl-relativetimeformat/locale-data/ar"
 import "@formatjs/intl-relativetimeformat/locale-data/ca"
 import "@formatjs/intl-relativetimeformat/locale-data/cs"
+import "@formatjs/intl-relativetimeformat/locale-data/da"
 import "@formatjs/intl-relativetimeformat/locale-data/de"
 import "@formatjs/intl-relativetimeformat/locale-data/en"
 import "@formatjs/intl-relativetimeformat/locale-data/el"
@@ -32,6 +33,7 @@ export const LocaleToTranslateLanguageSelector = {
   ar: "العربية",
   ca: "Catalan",
   cs: "Česky",
+  da: "Dansk",
   de: "Deutsch",
   en: "English",
   el: "Ελληνικά",
