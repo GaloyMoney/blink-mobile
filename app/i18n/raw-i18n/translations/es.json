@@ -2134,7 +2134,7 @@
         "biometricTitle": "Biométrica",
         "biometryNotAvailable": "El sensor biométrico no está disponible.",
         "biometryNotEnrolled": "Registre al menos un sensor biométrico para utilizar la autenticación basada en datos biométricos.",
-        "hideBalanceDescription": "Oculta tu saldo en la pantalla de inicio cuando se inicia la aplicación, para que no lo reveles a nadie que mire tu pantalla.\n\nAún puedes ver tu saldo tocando el monto principal en el encabezado de tu pantalla de inicio.",
+        "hideBalanceDescription": "Ocultar el saldo de forma predeterminada para no mostrarlo si alguien está\nviendo tu pantalla.\n\nAún puedes ver tu saldo tocando el monto principal en el encabezado de tu pantalla de inicio.",
         "hideBalanceTitle": "Ocultar Balance",
         "pinDescription": "El PIN se utiliza como método de autenticación de respaldo para la autenticación biométrica.",
         "pinTitle": "Código PIN",
