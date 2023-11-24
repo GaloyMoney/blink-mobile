@@ -2302,7 +2302,7 @@
     },
     "DefaultWalletScreen": {
         "title": "Cuenta predeterminada ",
-        "info": "Elige qué cuenta establecer como predeterminada para recibir y enviar. Puede ajustar la cuenta de envío y recepción para pagos individuales en la app móvil. Los pagos recibidos a través de la caja o de su dirección Lightning siempre irán a la cuenta predeterminada.\n\nPara evitar la volatilidad de Bitcoin, elige Stablesats. Esto te permite mantener una cantidad estable de dinero sin dejar de poder enviar y recibir pagos.\n\nPuedes cambiar esta configuración en cualquier momento, y no afectará a tu saldo actual."
+        "info": "Elige qué cuenta establecer como predeterminada para recibir y enviar. Puedes ajustar la cuenta de envío y recepción para pagos individuales en la app móvil. Los pagos recibidos a través de la caja o de su dirección Lightning siempre irán a la cuenta predeterminada.\n\nPara evitar la volatilidad de Bitcoin, elige Stablesats. Esto te permite mantener una cantidad estable de dinero sin dejar de poder enviar y recibir pagos.\n\nPuedes cambiar esta configuración en cualquier momento, y no afectará a tu saldo actual."
     },
     "ThemeScreen": {
         "title": "Tema",
