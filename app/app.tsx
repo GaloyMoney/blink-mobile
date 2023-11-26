@@ -4,6 +4,7 @@
 
 // language related import
 import "intl-pluralrules"
+import "./i18n/mapping"
 
 import "react-native-reanimated"
 
