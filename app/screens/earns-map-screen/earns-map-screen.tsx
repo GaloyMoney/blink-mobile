@@ -62,7 +62,7 @@ const ProgressBar = ({ progress }: ProgressProps) => {
   } = useTheme()
 
   const styles = useStyles()
-  const balanceWidth = `${progress * 100}%`
+  const balanceWidth = Number(`${progress * 100}%`)
 
   return (
     <View style={styles.progressContainer}>
