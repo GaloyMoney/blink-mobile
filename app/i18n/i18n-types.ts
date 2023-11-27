@@ -8725,6 +8725,24 @@ type RootTranslation = {
 			 */
 			details: string
 		}
+		decemberChallenge: {
+			/**
+			 * D​e​c​e​m​b​e​r​ ​C​h​a​l​l​e​n​g​e​!
+			 */
+			title: string
+			/**
+			 * +​1​0​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​a​t​ ​$​1​0​0​!
+			 */
+			description: string
+			/**
+			 * G​r​o​w​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​1​0​ ​p​e​o​p​l​e​ ​i​n​ ​D​e​c​e​m​b​e​r​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​a​t​ ​$​1​0​0​!​
+		​
+		​T​o​ ​p​a​r​t​i​c​i​p​a​t​e​,​ ​s​h​a​r​e​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​o​n​ ​s​o​c​i​a​l​ ​o​n​c​e​ ​y​o​u​'​v​e​ ​r​e​a​c​h​e​d​ ​1​0​ ​f​o​r​ ​t​h​e​ ​m​o​n​t​h​ ​a​n​d​ ​t​a​g​ ​#​b​l​i​n​k​c​i​r​c​l​e​s​.​
+		​
+		​O​n​ ​J​a​n​u​a​r​y​ ​1​,​ ​t​h​r​e​e​ ​p​e​o​p​l​e​ ​w​i​l​l​ ​b​e​ ​c​h​o​s​e​n​ ​a​t​ ​r​a​n​d​o​m​ ​t​o​ ​r​e​c​e​i​v​e​ ​$​1​0​0​!
+			 */
+			details: string
+		}
 	}
 	FullOnboarding: {
 		/**
@@ -17405,6 +17423,24 @@ export type TranslationFunctions = {
 		To claim your sats, simply share your Circles on social any time during November with the tag `#blinkcircles`.
 	
 		Your sats will be paid out on December 1, 2023.
+			 */
+			details: () => LocalizedString
+		}
+		decemberChallenge: {
+			/**
+			 * December Challenge!
+			 */
+			title: () => LocalizedString
+			/**
+			 * +10 inner circle for a chance at $100!
+			 */
+			description: () => LocalizedString
+			/**
+			 * Grow your inner circle by 10 people in December for a chance at $100!
+	
+		To participate, share your circles on social once you've reached 10 for the month and tag #blinkcircles.
+	
+		On January 1, three people will be chosen at random to receive $100!
 			 */
 			details: () => LocalizedString
 		}

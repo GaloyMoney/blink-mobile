@@ -17,6 +17,7 @@ import { Screen } from "../../../components/screen"
 import { IntroducingCirclesModal } from "@app/components/introducing-circles-modal"
 import { NovemberChallengeCard } from "@app/components/november-challenge"
 import { ScrollView } from "react-native-gesture-handler"
+import { DecemberChallengeCard } from "@app/components/december-challenge"
 
 gql`
   query Circles {
@@ -154,6 +155,7 @@ export const CirclesDashboardScreen: React.FC = () => {
         )}
         <OctoberChallengeCard />
         <NovemberChallengeCard />
+        <DecemberChallengeCard />
         {isLonely ? <InviteFriendsCard /> : <ShareCircles />}
       </ScrollView>
     </Screen>
