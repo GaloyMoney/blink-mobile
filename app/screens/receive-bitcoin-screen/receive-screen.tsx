@@ -20,6 +20,7 @@ import { SetLightningAddressModal } from "@app/components/set-lightning-address-
 import { GaloyCurrencyBubble } from "@app/components/atomic/galoy-currency-bubble"
 import { ModalNfc } from "@app/components/modal-nfc"
 import { CustomIcon } from "@app/components/custom-icon"
+import nfcManager from "react-native-nfc-manager"
 
 const ReceiveScreen = () => {
   const {
@@ -37,21 +38,27 @@ const ReceiveScreen = () => {
   const [displayReceiveNfc, setDisplayReceiveNfc] = useState(false)
 
   useEffect(() => {
-    if (request?.type === "Lightning" && request?.state === "Created")
-      navigation.setOptions({
-        headerRight: () => (
-          <TouchableOpacity
-            style={styles.nfcIcon}
-            onPress={() => setDisplayReceiveNfc(true)}
-          >
-            <Text type="p2">{LL.ReceiveScreen.nfc()}</Text>
-            <CustomIcon name="nfc" color={colors.black} />
-          </TouchableOpacity>
-        ),
-      })
-    else {
-      navigation.setOptions({ headerRight: () => <></> })
-    }
+    ;(async () => {
+      if (
+        request?.type === "Lightning" &&
+        request?.state === "Created" &&
+        (await nfcManager.isSupported())
+      )
+        navigation.setOptions({
+          headerRight: () => (
+            <TouchableOpacity
+              style={styles.nfcIcon}
+              onPress={() => setDisplayReceiveNfc(true)}
+            >
+              <Text type="p2">{LL.ReceiveScreen.nfc()}</Text>
+              <CustomIcon name="nfc" color={colors.black} />
+            </TouchableOpacity>
+          ),
+        })
+      else {
+        navigation.setOptions({ headerRight: () => <></> })
+      }
+    })()
   }, [
     LL.ReceiveScreen,
     colors.black,
