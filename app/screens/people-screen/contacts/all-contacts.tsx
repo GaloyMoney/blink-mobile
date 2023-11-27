@@ -172,7 +172,7 @@ export const AllContactsScreen: React.FC = () => {
             containerStyle={styles.itemContainer}
             onPress={() => navigation.navigate("contactDetail", { contact: item })}
           >
-            <Icon name={"ios-person-outline"} size={24} color={colors.primary} />
+            <Icon name={"person-outline"} size={24} color={colors.primary} />
             <ListItem.Content>
               <ListItem.Title style={styles.itemText}>{item.alias}</ListItem.Title>
             </ListItem.Content>

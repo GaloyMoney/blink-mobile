@@ -27,7 +27,7 @@ export const CloseCross: React.FC<Props> = ({ onPress, color }) => {
 
   return (
     <View style={styles.iconContainer}>
-      <Icon name="ios-close" style={styles.icon} onPress={onPress} color={color} />
+      <Icon name="close" style={styles.icon} onPress={onPress} color={color} />
     </View>
   )
 }

@@ -84,7 +84,7 @@ const ContactModal: React.FC<Props> = ({
     {
       id: SupportChannels.WhatsApp,
       name: LL.support.whatsapp(),
-      icon: <Icon name={"ios-logo-whatsapp"} type="ionicon" color={colors.black} />,
+      icon: <Icon name={"logo-whatsapp"} type="ionicon" color={colors.black} />,
       action: () => {
         openWhatsAppAction(messageBody)
         toggleModal()

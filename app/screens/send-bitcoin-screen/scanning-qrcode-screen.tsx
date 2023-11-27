@@ -282,7 +282,7 @@ export const ScanningQRCodeScreen: React.FC = () => {
             <Svg viewBox="0 0 100 100">
               <Circle cx={50} cy={50} r={50} fill={colors._white} opacity={0.5} />
             </Svg>
-            <Icon name="ios-close" size={64} style={styles.iconClose} />
+            <Icon name="close" size={64} style={styles.iconClose} />
           </View>
         </Pressable>
         <View style={styles.openGallery}>
@@ -297,7 +297,7 @@ export const ScanningQRCodeScreen: React.FC = () => {
           <Pressable onPress={handleInvoicePaste}>
             {/* we could Paste from "FontAwesome" but as svg*/}
             <Icon
-              name="ios-clipboard-outline"
+              name="clipboard-outline"
               size={64}
               color={colors._lightGrey}
               style={styles.iconClipboard}
