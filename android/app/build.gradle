@@ -7,7 +7,7 @@ apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.grad
 
 // https://github.com/react-native-community/discussions-and-proposals/issues/602
 import com.android.build.OutputFile
-def enableSeparateBuildPerCPUArchitecture = false
+def enableSeparateBuildPerCPUArchitecture = true
 def reactNativeArchitectures() {
   def value = project.getProperties().get("reactNativeArchitectures")
   return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
@@ -97,7 +97,7 @@ android {
         abi {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
-            universalApk false  // If true, also generate a universal APK
+            universalApk true
             include (*reactNativeArchitectures())
         }
     }
