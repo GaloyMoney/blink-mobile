@@ -129,7 +129,7 @@ type UseStylesProps = {
 const useStyles = makeStyles(({ colors }, props: UseStylesProps) => ({
   container: {
     backgroundColor: colors.white,
-    maxHeight: "80%",
+    maxHeight: "95%",
     minHeight: props.minHeight || "auto",
     borderRadius: 16,
     padding: 20,

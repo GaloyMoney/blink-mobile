@@ -2239,7 +2239,7 @@ const en: BaseTranslation = {
     unknownOnchain: "We can't parse this Bitcoin address. Please try again.",
     newBankAddressUsername:
       "{lnAddress: string} exists as a {bankName: string} address, but you've never sent money to it.",
-    confirmModal: {
+    confirmUsernameModal: {
       title: "You've never sent money to this address",
       body1: "Please make sure the recipient gave you a {bankName: string} address,",
       bold2bold: "not a username from another wallet.",
@@ -2280,6 +2280,11 @@ const en: BaseTranslation = {
       "The lnurl server responded with an invoice with an incorrect amount.",
     lnurlInvoiceIncorrectDescription:
       "The lnurl server responded with an invoice with an incorrect description hash.",
+    confirmFeesModal: {
+      title: "High fee alert!",
+      content: "Your fee is more than 50% bigger than the amount sent. Are you sure you want to proceed?\n\nTo reduce fees, ask the receiver to accept transaction via Lightning",
+      confirmButton: "I'm 100% sure",
+    },
   },
   SettingsScreen: {
     activated: "Activated",

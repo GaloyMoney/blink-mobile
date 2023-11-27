@@ -6942,7 +6942,7 @@ type RootTranslation = {
 		 * @param {string} lnAddress
 		 */
 		newBankAddressUsername: RequiredParams<'bankName' | 'lnAddress'>
-		confirmModal: {
+		confirmUsernameModal: {
 			/**
 			 * Y​o​u​'​v​e​ ​n​e​v​e​r​ ​s​e​n​t​ ​m​o​n​e​y​ ​t​o​ ​t​h​i​s​ ​a​d​d​r​e​s​s
 			 */
@@ -7083,6 +7083,22 @@ type RootTranslation = {
 		 * T​h​e​ ​l​n​u​r​l​ ​s​e​r​v​e​r​ ​r​e​s​p​o​n​d​e​d​ ​w​i​t​h​ ​a​n​ ​i​n​v​o​i​c​e​ ​w​i​t​h​ ​a​n​ ​i​n​c​o​r​r​e​c​t​ ​d​e​s​c​r​i​p​t​i​o​n​ ​h​a​s​h​.
 		 */
 		lnurlInvoiceIncorrectDescription: string
+		confirmFeesModal: {
+			/**
+			 * H​i​g​h​ ​f​e​e​ ​a​l​e​r​t​!
+			 */
+			title: string
+			/**
+			 * Y​o​u​r​ ​f​e​e​ ​i​s​ ​m​o​r​e​ ​t​h​a​n​ ​5​0​%​ ​b​i​g​g​e​r​ ​t​h​a​n​ ​t​h​e​ ​a​m​o​u​n​t​ ​s​e​n​t​.​ ​A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​p​r​o​c​e​e​d​?​
+		​
+		​T​o​ ​r​e​d​u​c​e​ ​f​e​e​s​,​ ​a​s​k​ ​t​h​e​ ​r​e​c​e​i​v​e​r​ ​t​o​ ​a​c​c​e​p​t​ ​t​r​a​n​s​a​c​t​i​o​n​ ​v​i​a​ ​L​i​g​h​t​n​i​n​g
+			 */
+			content: string
+			/**
+			 * I​'​m​ ​1​0​0​%​ ​s​u​r​e
+			 */
+			confirmButton: string
+		}
 	}
 	SettingsScreen: {
 		/**
@@ -15655,7 +15671,7 @@ export type TranslationFunctions = {
 		 * {lnAddress} exists as a {bankName} address, but you've never sent money to it.
 		 */
 		newBankAddressUsername: (arg: { bankName: string, lnAddress: string }) => LocalizedString
-		confirmModal: {
+		confirmUsernameModal: {
 			/**
 			 * You've never sent money to this address
 			 */
@@ -15789,6 +15805,22 @@ export type TranslationFunctions = {
 		 * The lnurl server responded with an invoice with an incorrect description hash.
 		 */
 		lnurlInvoiceIncorrectDescription: () => LocalizedString
+		confirmFeesModal: {
+			/**
+			 * High fee alert!
+			 */
+			title: () => LocalizedString
+			/**
+			 * Your fee is more than 50% bigger than the amount sent. Are you sure you want to proceed?
+	
+		To reduce fees, ask the receiver to accept transaction via Lightning
+			 */
+			content: () => LocalizedString
+			/**
+			 * I'm 100% sure
+			 */
+			confirmButton: () => LocalizedString
+		}
 	}
 	SettingsScreen: {
 		/**

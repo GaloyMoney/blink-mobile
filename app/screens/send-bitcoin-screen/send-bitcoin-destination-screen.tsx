@@ -122,7 +122,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
       }
 
       dispatchDestinationStateAction({
-        type: "set-validating",
+        type: SendBitcoinActions.SetValidating,
         payload: {
           unparsedDestination: rawInput,
         },
@@ -169,11 +169,11 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
             .includes(destination.validDestination.handle.toLowerCase())
         ) {
           dispatchDestinationStateAction({
-            type: SendBitcoinActions.SetRequiresConfirmation,
+            type: SendBitcoinActions.SetRequiresUsernameConfirmation,
             payload: {
               validDestination: destination,
               unparsedDestination: rawInput,
-              confirmationType: {
+              confirmationUsernameType: {
                 type: "new-username",
                 username: destination.validDestination.handle,
               },
@@ -204,7 +204,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   const handleChangeText = useCallback(
     (newDestination: string) => {
       dispatchDestinationStateAction({
-        type: "set-unparsed-destination",
+        type: SendBitcoinActions.SetUnparsedDestination,
         payload: { unparsedDestination: newDestination },
       })
       setGoToNextScreenWhenValid(false)
@@ -279,13 +279,13 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
       inputContainerStyle = styles.errorInputContainer
       break
     case "valid":
-      if (!destinationState.confirmationType) {
+      if (!destinationState.confirmationUsernameType) {
         inputContainerStyle = styles.validInputContainer
         break
       }
       inputContainerStyle = styles.warningInputContainer
       break
-    case "requires-confirmation":
+    case "requires-destination-confirmation":
       inputContainerStyle = styles.warningInputContainer
   }
 
@@ -334,7 +334,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
               try {
                 const clipboard = await Clipboard.getString()
                 dispatchDestinationStateAction({
-                  type: "set-unparsed-destination",
+                  type: SendBitcoinActions.SetUnparsedDestination,
                   payload: {
                     unparsedDestination: clipboard,
                   },
