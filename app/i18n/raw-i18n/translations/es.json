@@ -2016,7 +2016,7 @@
         "locationPermissionNeutral": "Pregúntarme más tarde",
         "locationPermissionPositive": "OK",
         "locationPermissionTitle": "Ubícate en el mapa",
-        "payBusiness": "pagar a este negocio",
+        "payBusiness": "Pagar a este negocio",
         "title": "Mapa"
     },
     "HomeScreen": {
@@ -2056,7 +2056,7 @@
         "title": "Inicio"
     },
     "ReceiveScreen": {
-        "scanNfc": "Escanear NFC",
+        "nfc": "NFC",
         "enterAmountFirst": "Por favor ingresa una cantidad primero",
         "activateNotifications": "¿Quieres activar notificaciones para que te avisen cuando haya llegado el pago?",
         "copyClipboard": "La factura se ha copiado al portapapeles",
@@ -2172,7 +2172,7 @@
         "unknownLightning": "No podemos verificar esta dirección Lightning. Por favor, inténtelo de nuevo con una dirección diferente.",
         "unknownOnchain": "No podemos verificar esta dirección Bitcoin. Por favor, inténtelo de nuevo con una dirección diferente.",
         "newBankAddressUsername": "{lnAddress} existe como dirección de {bankName}, pero nunca has enviado dinero a esta dirección.",
-        "confirmModal": {
+        "confirmUsernameModal": {
             "title": "Nunca has enviado dinero a esta dirección.",
             "body1": "Asegúrese que el destinatario le dio una dirección de {bankName: string},",
             "bold2bold": "no un nombre de usuario de otra billetera.",
@@ -2206,7 +2206,12 @@
         "title": "Enviar Bitcoin",
         "failedToFetchLnurlInvoice": "Error al obtener la factura de lnurl",
         "lnurlInvoiceIncorrectAmount": "El servidor lnurl ha enviado una factura con un importe incorrecto.",
-        "lnurlInvoiceIncorrectDescription": "El servidor lnurl ha enviado una factura con una descripción hash incorrecta."
+        "lnurlInvoiceIncorrectDescription": "El servidor lnurl ha enviado una factura con una descripción hash incorrecta.",
+        "confirmFeesModal": {
+            "title": "Alerta de tarifa alta!",
+            "content": "Tu tarifa es un 50% más grande que la cantidad enviada. ¿Estás seguro de que quieres continuar?\n\nPara reducir la tarifa, pide al receptor que acepte la transacción a través de Lightning.",
+            "confirmButton": "Estoy 100% seguro"
+        }
     },
     "SettingsScreen": {
         "activated": "Activada",
