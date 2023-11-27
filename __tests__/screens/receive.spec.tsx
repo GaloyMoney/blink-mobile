@@ -9,8 +9,8 @@ jest.mock("react-native-nfc-manager", () => {
     NfcManager: {
       start: jest.fn(),
       stop: jest.fn(),
-      isSupported: jest.fn(),
     },
+    isSupported: jest.fn(),
   }
 })
 
