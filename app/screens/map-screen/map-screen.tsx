@@ -3,8 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
-import { PermissionsAndroid, Text, View } from "react-native"
-import { Button } from "@rneui/base"
+import { PermissionsAndroid, View } from "react-native"
 import MapView, {
   Callout,
   CalloutSubview,
@@ -20,8 +19,10 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { useBusinessMapMarkersQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { makeStyles, useTheme } from "@rneui/themed"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { PhoneLoginInitiateType } from "../phone-auth-screen"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import MapStyles from "./map-styles.json"
 
 const useStyles = makeStyles(({ colors }) => ({
   android: { marginTop: 18 },
@@ -38,7 +39,7 @@ const useStyles = makeStyles(({ colors }) => ({
     width: "100%",
   },
 
-  title: { color: colors._darkGrey, fontSize: 18 },
+  title: { color: colors._darkGrey },
 }))
 
 type Props = {
@@ -62,7 +63,7 @@ gql`
 
 export const MapScreen: React.FC<Props> = ({ navigation }) => {
   const {
-    theme: { colors },
+    theme: { colors, mode: themeMode },
   } = useTheme()
   const styles = useStyles()
   const isAuthed = useIsAuthed()
@@ -141,26 +142,25 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
           key={item.username}
           pinColor={colors._orange}
         >
-          <Callout
-            // alphaHitTest
-            // tooltip
-            onPress={() => (Boolean(item.username) && !isIos ? onPress() : null)}
-          >
+          <Callout onPress={() => (Boolean(item.username) && !isIos ? onPress() : null)}>
             <View style={styles.customView}>
-              <Text style={styles.title}>{item.mapInfo.title}</Text>
-              {Boolean(item.username) && !isIos && (
-                <Button
-                  containerStyle={styles.android}
-                  title={LL.MapScreen.payBusiness()}
-                />
-              )}
-              {isIos && (
-                <CalloutSubview onPress={() => (item.username ? onPress() : null)}>
-                  {Boolean(item.username) && (
-                    <Button style={styles.ios} title={LL.MapScreen.payBusiness()} />
-                  )}
-                </CalloutSubview>
-              )}
+              <Text type="h1" style={styles.title}>
+                {item.mapInfo.title}
+              </Text>
+              {Boolean(item.username) &&
+                (isIos ? (
+                  <CalloutSubview onPress={() => onPress()}>
+                    <GaloyPrimaryButton
+                      style={styles.ios}
+                      title={LL.MapScreen.payBusiness()}
+                    />
+                  </CalloutSubview>
+                ) : (
+                  <GaloyPrimaryButton
+                    containerStyle={styles.android}
+                    title={LL.MapScreen.payBusiness()}
+                  />
+                ))}
             </View>
           </Callout>
         </Marker>,
@@ -179,6 +179,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
           latitudeDelta: 0.02,
           longitudeDelta: 0.02,
         }}
+        customMapStyle={themeMode === "dark" ? MapStyles.dark : MapStyles.light}
       >
         {markers}
       </MapView>

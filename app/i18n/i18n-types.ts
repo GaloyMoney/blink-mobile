@@ -6342,7 +6342,7 @@ type RootTranslation = {
 		 */
 		locationPermissionTitle: string
 		/**
-		 * p​a​y​ ​t​h​i​s​ ​b​u​s​i​n​e​s​s
+		 * P​a​y​ ​t​h​i​s​ ​b​u​s​i​n​e​s​s
 		 */
 		payBusiness: string
 		/**
@@ -15097,7 +15097,7 @@ export type TranslationFunctions = {
 		 */
 		locationPermissionTitle: () => LocalizedString
 		/**
-		 * pay this business
+		 * Pay this business
 		 */
 		payBusiness: () => LocalizedString
 		/**
