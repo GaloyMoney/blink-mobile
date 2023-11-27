@@ -311,7 +311,7 @@ export const HomeScreen: React.FC = () => {
         </TouchableWithoutFeedback>
       </View>
       <View style={styles.viewModal}>
-        <Icon name="ios-remove" size={64} color={colors.grey3} style={styles.icon} />
+        <Icon name="remove" size={64} color={colors.grey3} style={styles.icon} />
         <Text type="h1">{LL.common.needWallet()}</Text>
         <View style={styles.openWalletContainer}>
           <GaloyPrimaryButton

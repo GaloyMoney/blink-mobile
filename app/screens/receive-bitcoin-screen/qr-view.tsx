@@ -29,7 +29,7 @@ const configByType = {
     copyToClipboardLabel: "ReceiveScreen.copyClipboard",
     shareButtonLabel: "common.shareLightning",
     ecl: "L" as const,
-    icon: "ios-flash",
+    icon: "flash",
   },
   [Invoice.OnChain]: {
     copyToClipboardLabel: "ReceiveScreen.copyClipboardBitcoin",

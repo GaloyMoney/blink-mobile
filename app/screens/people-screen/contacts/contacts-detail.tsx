@@ -80,7 +80,7 @@ export const ContactsDetailScreenJSX: React.FC<ContactDetailScreenProps> = ({
       <View style={styles.aliasView}>
         <Icon
           {...testProps("contact-detail-icon")}
-          name="ios-person-outline"
+          name="person-outline"
           size={86}
           color={colors.black}
         />

@@ -205,13 +205,13 @@ export const ModalNfc: React.FC<{
       <Pressable style={styles.flex} onPress={dismiss}></Pressable>
       <SafeAreaView style={styles.modalForeground}>
         <View style={styles.iconContainer}>
-          <Icon name="ios-remove" size={72} color={colors.grey3} style={styles.icon} />
+          <Icon name="remove" size={72} color={colors.grey3} style={styles.icon} />
         </View>
         <Text type="h1" bold style={styles.message}>
           {LL.SettingsScreen.nfcScanNow()}
         </Text>
         <View style={styles.scanIconContainer}>
-          <Icon name="ios-scan" size={140} color={colors.grey1} />
+          <Icon name="scan" size={140} color={colors.grey1} />
         </View>
         <View style={styles.buttonContainer}>
           <GaloySecondaryButton title={LL.common.cancel()} onPress={dismiss} />
