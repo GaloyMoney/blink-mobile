@@ -1,5 +1,10 @@
-require_relative '../node_modules/react-native/scripts/react_native_pods'
-require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+# Resolve react_native_pods.rb with node to allow for hoisting
+require Pod::Executable.execute_command('node', ['-p',
+  'require.resolve(
+    "react-native/scripts/react_native_pods.rb",
+    {paths: [process.argv[1]]},
+  )', __dir__]).strip
+
 use_modular_headers!
 
 platform :ios, min_ios_version_supported
@@ -31,8 +36,6 @@ target 'GaloyApp' do
   use_react_native!(
     :path => config[:reactNativePath],
     # Hermes is now enabled by default. Disable by setting this flag to false.
-    # Upcoming versions of React Native may rely on get_default_flags(), but
-    # we make it explicit here to aid in the React Native upgrade process.
     :hermes_enabled => flags[:hermes_enabled],
     :fabric_enabled => flags[:fabric_enabled],
     # Enables Flipper.
@@ -54,7 +57,24 @@ target 'GaloyApp' do
         end
       end
     end
-    react_native_post_install(installer)
+
+    # from https://github.com/software-mansion/react-native-reanimated/issues/4522
+    installer.generated_projects.each do |project|
+      project.targets.each do |target|
+        target.build_configurations.each do |config|
+          if target.name === "RNReanimated"
+            config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++17'
+          end
+        end
+      end
+    end
+
+    # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
+    react_native_post_install(
+      installer,
+      config[:reactNativePath],
+      :mac_catalyst_enabled => false
+    )
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
     
     installer.pods_project.build_configurations.each do |config|

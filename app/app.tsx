@@ -4,6 +4,7 @@
 
 // language related import
 import "intl-pluralrules"
+import "./i18n/mapping"
 
 import "react-native-reanimated"
 
@@ -29,6 +30,7 @@ import { ThemeSyncGraphql } from "./utils/theme-sync"
 import { NetworkErrorComponent } from "./graphql/network-error-component"
 import { FeatureFlagContextProvider } from "./config/feature-flags-context"
 import "./utils/logs"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
 
 // FIXME should we only load the currently used local?
 // this would help to make the app load faster
@@ -42,26 +44,29 @@ loadAllLocales()
  * This is the root component of our app.
  */
 export const App = () => (
-  <PersistentStateProvider>
-    <TypesafeI18n locale={detectDefaultLocale()}>
-      <ThemeProvider theme={theme}>
-        <GaloyClient>
-          <FeatureFlagContextProvider>
-            <ErrorBoundary FallbackComponent={ErrorScreen}>
-              <NavigationContainerWrapper>
-                <RootSiblingParent>
-                  <AppStateWrapper />
-                  <NotificationComponent />
-                  <RootStack />
-                  <GaloyToast />
-                  <NetworkErrorComponent />
-                </RootSiblingParent>
-              </NavigationContainerWrapper>
-            </ErrorBoundary>
-            <ThemeSyncGraphql />
-          </FeatureFlagContextProvider>
-        </GaloyClient>
-      </ThemeProvider>
-    </TypesafeI18n>
-  </PersistentStateProvider>
+  /* eslint-disable-next-line react-native/no-inline-styles */
+  <GestureHandlerRootView style={{ flex: 1 }}>
+    <PersistentStateProvider>
+      <TypesafeI18n locale={detectDefaultLocale()}>
+        <ThemeProvider theme={theme}>
+          <GaloyClient>
+            <FeatureFlagContextProvider>
+              <ErrorBoundary FallbackComponent={ErrorScreen}>
+                <NavigationContainerWrapper>
+                  <RootSiblingParent>
+                    <AppStateWrapper />
+                    <NotificationComponent />
+                    <RootStack />
+                    <GaloyToast />
+                    <NetworkErrorComponent />
+                  </RootSiblingParent>
+                </NavigationContainerWrapper>
+              </ErrorBoundary>
+              <ThemeSyncGraphql />
+            </FeatureFlagContextProvider>
+          </GaloyClient>
+        </ThemeProvider>
+      </TypesafeI18n>
+    </PersistentStateProvider>
+  </GestureHandlerRootView>
 )

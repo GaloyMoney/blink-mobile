@@ -1,36 +1,31 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/**
- * Metro configuration for React Native
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { getDefaultConfig, mergeConfig } = require("@react-native/metro-config")
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require("path")
-const { getDefaultConfig } = require("metro-config")
 
-module.exports = (async () => {
-  const {
-    resolver: { sourceExts, assetExts },
-  } = await getDefaultConfig()
-  return {
-    transformer: {
-      getTransformOptions: async () => ({
-        transform: {
-          experimentalImportSupport: false,
-          inlineRequires: false,
-        },
-      }),
-      babelTransformerPath: require.resolve("react-native-svg-transformer"),
+const defaultConfig = getDefaultConfig(__dirname)
+const { assetExts, sourceExts } = defaultConfig.resolver
+
+/**
+ * Metro configuration
+ * https://facebook.github.io/metro/docs/configuration
+ *
+ * @type {import('metro-config').MetroConfig}
+ */
+const config = {
+  transformer: {
+    babelTransformerPath: require.resolve("react-native-svg-transformer"),
+  },
+  resolver: {
+    assetExts: assetExts.filter((ext) => ext !== "svg"),
+    sourceExts: [...sourceExts, "svg", "cjs", "json"],
+
+    // unclear those 2 below are needed
+    extraNodeModules: {
+      stream: path.resolve(__dirname, "node_modules/readable-stream"),
+      zlib: path.resolve(__dirname, "node_modules/browserify-zlib"),
     },
-    projectRoot: path.resolve(__dirname),
-    resolver: {
-      assetExts: assetExts.filter((ext) => ext !== "svg"),
-      sourceExts: [...sourceExts, "svg", "cjs", "json"],
-      extraNodeModules: {
-        stream: path.resolve(__dirname, "node_modules/readable-stream"),
-        zlib: path.resolve(__dirname, "node_modules/browserify-zlib"),
-      },
-    },
-  }
-})()
+  },
+}
+
+module.exports = mergeConfig(defaultConfig, config)
