@@ -1902,7 +1902,7 @@
   dependencies:
     tslib "^2.4.0"
 
-"@formatjs/intl-locale@^3.4.0":
+"@formatjs/intl-locale@^3.4.3":
   version "3.4.3"
   resolved "https://registry.npmjs.org/@formatjs/intl-locale/-/intl-locale-3.4.3.tgz#fdd2a3978b03aa76965abbca86526bb1d02973b6"
   integrity sha512-g/35yMikkkRmLYmqE4W74gvZyKa768oC9OmUFzfLmH3CVYF3v2kvAZI0WsxWLbxYj8TT7wBDeLIL3aIlRw4Osw==
@@ -1919,7 +1919,7 @@
   dependencies:
     tslib "^2.4.0"
 
-"@formatjs/intl-relativetimeformat@^11.2.7":
+"@formatjs/intl-relativetimeformat@^11.2.10":
   version "11.2.10"
   resolved "https://registry.npmjs.org/@formatjs/intl-relativetimeformat/-/intl-relativetimeformat-11.2.10.tgz#6269b51229f4ee69d08984d8ab25b52237210c9f"
   integrity sha512-v6RFxcab7lJm11VnUACs/p0OSo3EHrrPlHo0HwA5jOcTgTjlxdfun+riqMK+h2KAY+7AjgsqNN76wc0cB83xOw==
@@ -19620,10 +19620,10 @@ react-native-toast-message@^2.1.5:
   resolved "https://registry.npmjs.org/react-native-toast-message/-/react-native-toast-message-2.1.7.tgz#480ead6ea23e884f50ba467c818337d6830341e5"
   integrity sha512-5zX3T5buVpg4bn9KZYVZ2VUQiLQZ1FHSM2AFQHVpgeKMYb+Gq+jt7wjhfPqhuMkJElQr7XNrnRw/rBCdD+7Q9w==
 
-react-native-vector-icons@^9.1.0:
-  version "9.2.0"
-  resolved "https://registry.npmjs.org/react-native-vector-icons/-/react-native-vector-icons-9.2.0.tgz#3c0c82e95defd274d56363cbe8fead8d53167ebd"
-  integrity sha512-wKYLaFuQST/chH3AJRjmOLoLy3JEs1JR6zMNgTaemFpNoXs0ztRnTxcxFD9xhX7cJe1/zoN5BpQYe7kL0m5yyA==
+react-native-vector-icons@^10.0.2:
+  version "10.0.2"
+  resolved "https://registry.npmjs.org/react-native-vector-icons/-/react-native-vector-icons-10.0.2.tgz#44724e0787fb13899efce3510698d1ff69aceefb"
+  integrity sha512-ZwhUkJhIMkGL3cW7IT4sEEHu2AOzerqsRQ73UzXsB+ecBpVK5bRmp0XswiQleZKZalZfs/WIfWLXLfTQHcQo6A==
   dependencies:
     prop-types "^15.7.2"
     yargs "^16.1.1"
