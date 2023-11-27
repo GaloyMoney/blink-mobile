@@ -2061,7 +2061,7 @@ const en: BaseTranslation = {
     locationPermissionNeutral: "Ask Me Later",
     locationPermissionPositive: "OK",
     locationPermissionTitle: "Locate yourself on the map",
-    payBusiness: "pay this business",
+    payBusiness: "Pay this business",
     title: "Map",
   },
   HomeScreen: {
