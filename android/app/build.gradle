@@ -88,8 +88,8 @@ android {
         applicationId "com.galoyapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 623
-        versionName "2.2.166"
+        versionCode 638
+        versionName "2.2.182"
     }
 
     // https://github.com/react-native-community/discussions-and-proposals/issues/602
