@@ -117,6 +117,26 @@ export const numberPadReducer = (
         return state
       }
 
+      // pasted
+      if (action.payload.key.length > 1) {
+        // here the whole numberPadNumber will be formatted and replaced
+        // unlike the several sections below which append to the value(s)
+        const num = Number(action.payload.key)
+        // format to float if number has decimal - otherwise integer
+        let formatted: string =
+          num % 1 != 0 ? num.toFixed(numberOfDecimalsAllowed) : num.toString()
+        const splitByDecimal = formatted.split(".")
+
+        return {
+          ...state,
+          numberPadNumber: {
+            majorAmount: splitByDecimal[0],
+            hasDecimal: splitByDecimal.length > 1,
+            minorAmount: splitByDecimal[1] ?? "",
+          },
+        }
+      }
+
       if (hasDecimal && minorAmount.length < numberOfDecimalsAllowed) {
         return {
           ...state,
