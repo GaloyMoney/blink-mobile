@@ -145,11 +145,13 @@ const useStyles = makeStyles(({ colors }) => ({
 
   text: {
     fontSize: 24,
+    color: colors._black,
   },
 
   answerChoiceText: {
     fontSize: 20,
     flex: 1,
+    color: colors._black,
   },
 
   textContainer: {
@@ -167,6 +169,7 @@ const useStyles = makeStyles(({ colors }) => ({
     fontSize: 32,
     fontWeight: "bold",
     paddingBottom: 12,
+    color: colors._black,
   },
 
   titleStyle: {
