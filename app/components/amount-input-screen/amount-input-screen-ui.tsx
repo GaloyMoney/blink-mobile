@@ -59,7 +59,7 @@ export const AmountInputScreenUI: React.FC<AmountInputScreenUIProps> = ({
               showSoftInputOnFocus={false}
               onChangeText={(e) => {
                 // remove commas for ease of calculation later on
-                let val = e.replaceAll(",", "")
+                const val = e.replaceAll(",", "")
                 // todo adjust for currencies that use commas instead of decimals
 
                 // test for string input that can be either numerical or float

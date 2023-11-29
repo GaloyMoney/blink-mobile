@@ -123,8 +123,8 @@ export const numberPadReducer = (
         // unlike the several sections below which append to the value(s)
         const num = Number(action.payload.key)
         // format to float if number has decimal - otherwise integer
-        let formatted: string =
-          num % 1 != 0 ? num.toFixed(numberOfDecimalsAllowed) : num.toString()
+        const formatted: string =
+          num % 1 === 0 ? num.toString() : num.toFixed(numberOfDecimalsAllowed)
         const splitByDecimal = formatted.split(".")
 
         return {
