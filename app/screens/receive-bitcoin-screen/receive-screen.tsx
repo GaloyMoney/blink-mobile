@@ -233,9 +233,9 @@ const ReceiveScreen = () => {
             {
               id: Invoice.Lightning,
               text: "Lightning",
-              icon: "md-flash",
+              icon: "flash",
             },
-            { id: Invoice.PayCode, text: "Paycode", icon: "md-at" },
+            { id: Invoice.PayCode, text: "Paycode", icon: "at" },
             {
               id: Invoice.OnChain,
               text: "Onchain",
