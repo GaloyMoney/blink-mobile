@@ -98,7 +98,7 @@
     "react-native-countdown-circle-timer": "^3.2.1",
     "react-native-country-picker-modal": "^2.0.0",
     "react-native-currency-input": "^1.1.1",
-    "react-native-device-info": "^10.11.0",
+    "react-native-device-info": "^10.12.0",
     "react-native-error-boundary": "^1.2.3",
     "react-native-fingerprint-scanner": "git+https://github.com/hieuvp/react-native-fingerprint-scanner.git#9cecc0db326471c571553ea85f7c016fee2f803d",
     "react-native-gesture-handler": "^2.14.0",
