@@ -88,6 +88,7 @@
     "libphonenumber-js": "^1.10.30",
     "lnurl-pay": "^2.3.0",
     "lodash.merge": "^4.6.2",
+    "lottie-react-native": "^6.4.1",
     "node-libs-react-native": "^1.2.1",
     "react": "18.2.0",
     "react-content-loader": "^6.2.0",
