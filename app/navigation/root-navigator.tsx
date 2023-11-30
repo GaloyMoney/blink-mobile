@@ -82,6 +82,7 @@ import {
 } from "./stack-param-lists"
 import { NotificationSettingsScreen } from "@app/screens/settings-screen/notifications-screen"
 import { FullOnboardingFlowScreen } from "@app/screens/full-onboarding-flow"
+import { LottieAnimationScreen } from "@app/screens/developer-screen/lottie-animation-screen"
 
 const RootNavigator = createStackNavigator<RootStackParamList>()
 
@@ -276,6 +277,14 @@ export const RootStack = () => {
         component={DeveloperScreen}
         options={{
           gestureEnabled: false,
+        }}
+      />
+      <RootNavigator.Screen
+        name="lottieAnimationScreen"
+        component={LottieAnimationScreen}
+        options={{
+          headerShown: false,
+          gestureEnabled: true,
         }}
       />
       <RootNavigator.Screen

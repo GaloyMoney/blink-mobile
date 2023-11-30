@@ -17,6 +17,7 @@ export type RootStackParamList = {
     appCheckToken: string
   }
   developerScreen: undefined
+  lottieAnimationScreen: undefined
   authenticationCheck: undefined
   authentication: {
     screenPurpose: AuthenticationScreenPurpose

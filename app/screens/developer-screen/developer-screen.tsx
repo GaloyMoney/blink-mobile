@@ -195,6 +195,10 @@ export const DeveloperScreen: React.FC = () => {
     saveToken(newToken || "")
   }
 
+  const openLottieAnimation = () => {
+    navigate("lottieAnimationScreen")
+  }
+
   return (
     <Screen>
       <ScrollView>
@@ -216,6 +220,11 @@ export const DeveloperScreen: React.FC = () => {
                 addDeviceToken(client)
               }
             }}
+          />
+          <Button
+            title="Lottie Animation"
+            containerStyle={styles.button}
+            onPress={openLottieAnimation}
           />
           <Button
             title={`Beta features: ${beta}`}
