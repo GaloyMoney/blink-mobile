@@ -16,15 +16,35 @@ rnfbProvider.configure({
 
 appCheck().initializeAppCheck({ provider: rnfbProvider, isTokenAutoRefreshEnabled: true })
 
+let isFetchingToken = false
+let promisesToResolveOnToken: ((value: string | undefined) => void)[] = []
+
 export const getAppCheckToken = async (): Promise<string | undefined> => {
+  // If we're already fetching the token, wait for it to be fetched
+  if (isFetchingToken) {
+    return new Promise((resolve) => {
+      promisesToResolveOnToken.push(resolve)
+    })
+  }
+
+  isFetchingToken = true
+
+  let token: string | undefined = undefined
   try {
     const result = await appCheck().getToken()
-    const token = result.token
-    return token
+    token = result.token
   } catch (err) {
     console.log("getDeviceToken error", err)
-    return undefined
   }
+
+  // Resolve all promises that were waiting for the token
+  while (promisesToResolveOnToken.length > 0) {
+    const resolve = promisesToResolveOnToken.pop()
+    resolve && resolve(token)
+  }
+
+  isFetchingToken = false
+  return token
 }
 
 const useAppCheckToken = ({ skip = false }: { skip?: boolean }): string | undefined => {
@@ -38,7 +58,7 @@ const useAppCheckToken = ({ skip = false }: { skip?: boolean }): string | undefi
     })()
   }, [skip])
 
-  return token
+  return undefined
 }
 
 export default useAppCheckToken
