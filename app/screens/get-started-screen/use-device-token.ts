@@ -16,49 +16,25 @@ rnfbProvider.configure({
 
 appCheck().initializeAppCheck({ provider: rnfbProvider, isTokenAutoRefreshEnabled: true })
 
-let isFetchingToken = false
-let promisesToResolveOnToken: ((value: string | undefined) => void)[] = []
-
-export const getAppCheckToken = async (): Promise<string | undefined> => {
-  // If we're already fetching the token, wait for it to be fetched
-  if (isFetchingToken) {
-    return new Promise((resolve) => {
-      promisesToResolveOnToken.push(resolve)
-    })
-  }
-
-  isFetchingToken = true
-
-  let token: string | undefined = undefined
-  try {
-    const result = await appCheck().getToken()
-    token = result.token
-  } catch (err) {
-    console.log("getDeviceToken error", err)
-  }
-
-  // Resolve all promises that were waiting for the token
-  while (promisesToResolveOnToken.length > 0) {
-    const resolve = promisesToResolveOnToken.pop()
-    resolve && resolve(token)
-  }
-
-  isFetchingToken = false
-  return token
-}
-
 const useAppCheckToken = ({ skip = false }: { skip?: boolean }): string | undefined => {
-  const [token, setToken] = useState<string | undefined>(undefined)
+  const [appCheckToken, setAppCheckToken] = useState<string | undefined>(undefined)
+  const [hasInitialized, setHasInitialized] = useState(false)
 
   useEffect(() => {
-    if (skip) return
     ;(async () => {
-      const result = await getAppCheckToken()
-      setToken(result)
+      if (skip) return
+      if (hasInitialized) return
+      try {
+        setHasInitialized(true)
+        const result = await appCheck().getToken()
+        setAppCheckToken(result.token)
+      } catch (err) {
+        console.log("getDeviceToken error", err)
+      }
     })()
-  }, [skip])
+  }, [skip, setHasInitialized, hasInitialized])
 
-  return undefined
+  return appCheckToken
 }
 
 export default useAppCheckToken

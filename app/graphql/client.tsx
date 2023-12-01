@@ -38,8 +38,8 @@ import { MessagingContainer } from "./messaging"
 import { SCHEMA_VERSION_KEY } from "@app/config"
 import { NetworkError } from "@apollo/client/errors"
 import { LevelContainer } from "./level-component"
-import { getAppCheckToken } from "@app/screens/get-started-screen/use-device-token"
 import { HideAmountContainer } from "./hide-amount-component"
+import useAppCheckToken from "@app/screens/get-started-screen/use-device-token"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",
@@ -86,6 +86,8 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
     isAuthed: boolean
   }>()
 
+  const appCheckToken = useAppCheckToken({})
+
   useEffect(() => {
     ;(async () => {
       const token = appConfig.token
@@ -97,7 +99,6 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
       )
 
       const appCheckLink = setContext(async (_, { headers }) => {
-        const appCheckToken = await getAppCheckToken()
         return appCheckToken
           ? {
               headers: {
@@ -112,7 +113,6 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
 
       const wsLinkConnectionParams = async () => {
         const authHeaders = token ? { Authorization: getAuthorizationHeader(token) } : {}
-        const appCheckToken = await getAppCheckToken()
         const appCheckHeaders = appCheckToken ? { Appcheck: appCheckToken } : {}
 
         return {
@@ -308,7 +308,7 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
 
       return () => client.cache.reset()
     })()
-  }, [appConfig.token, appConfig.galoyInstance, clearNetworkError])
+  }, [appConfig.token, appConfig.galoyInstance, clearNetworkError, appCheckToken])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
