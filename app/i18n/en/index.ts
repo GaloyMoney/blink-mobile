@@ -2278,8 +2278,6 @@ const en: BaseTranslation = {
     failedToFetchLnurlInvoice: "Failed to fetch lnurl invoice",
     lnurlInvoiceIncorrectAmount:
       "The lnurl server responded with an invoice with an incorrect amount.",
-    lnurlInvoiceIncorrectDescription:
-      "The lnurl server responded with an invoice with an incorrect description hash.",
     confirmFeesModal: {
       title: "High fee alert!",
       content: "Your fee is more than 50% bigger than the amount sent. Are you sure you want to proceed?\n\nTo reduce fees, ask the receiver to accept transaction via Lightning",
