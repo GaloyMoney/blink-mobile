@@ -2206,7 +2206,6 @@
         "title": "Enviar Bitcoin",
         "failedToFetchLnurlInvoice": "Error al obtener la factura de lnurl",
         "lnurlInvoiceIncorrectAmount": "El servidor lnurl ha enviado una factura con un importe incorrecto.",
-        "lnurlInvoiceIncorrectDescription": "El servidor lnurl ha enviado una factura con una descripción hash incorrecta.",
         "confirmFeesModal": {
             "title": "Alerta de tarifa alta!",
             "content": "Tu tarifa es un 50% más grande que la cantidad enviada. ¿Estás seguro de que quieres continuar?\n\nPara reducir la tarifa, pide al receptor que acepte la transacción a través de Lightning.",
