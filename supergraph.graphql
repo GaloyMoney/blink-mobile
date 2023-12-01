@@ -180,6 +180,7 @@ type ApiKey
   expired: Boolean!
   lastUsedAt: Timestamp
   expiresAt: Timestamp!
+  readOnly: Boolean!
 }
 
 input ApiKeyCreateInput
@@ -187,6 +188,7 @@ input ApiKeyCreateInput
 {
   name: String!
   expireInDays: Int
+  readOnly: Boolean! = false
 }
 
 type ApiKeyCreatePayload
@@ -623,11 +625,12 @@ input IntraLedgerPaymentSendInput
 type IntraLedgerUpdate
   @join__type(graph: GALOY)
 {
-  amount: SatAmount!
-  displayCurrencyPerSat: Float!
+  amount: SatAmount! @deprecated(reason: "Deprecated in favor of transaction")
+  displayCurrencyPerSat: Float! @deprecated(reason: "Deprecated in favor of transaction")
+  transaction: Transaction!
   txNotificationType: TxNotificationType!
   usdPerSat: Float! @deprecated(reason: "updated over displayCurrencyPerSat")
-  walletId: WalletId!
+  walletId: WalletId! @deprecated(reason: "Deprecated in favor of transaction")
 }
 
 input IntraLedgerUsdPaymentSendInput
@@ -938,9 +941,10 @@ scalar LnPaymentSecret
 type LnUpdate
   @join__type(graph: GALOY)
 {
-  paymentHash: PaymentHash!
+  paymentHash: PaymentHash! @deprecated(reason: "Deprecated in favor of transaction")
   status: InvoicePaymentStatus!
-  walletId: WalletId!
+  transaction: Transaction!
+  walletId: WalletId! @deprecated(reason: "Deprecated in favor of transaction")
 }
 
 input LnUsdInvoiceBtcDenominatedCreateOnBehalfOfRecipientInput
@@ -1291,12 +1295,13 @@ scalar OnChainTxHash
 type OnChainUpdate
   @join__type(graph: GALOY)
 {
-  amount: SatAmount!
-  displayCurrencyPerSat: Float!
-  txHash: OnChainTxHash!
+  amount: SatAmount! @deprecated(reason: "Deprecated in favor of transaction")
+  displayCurrencyPerSat: Float! @deprecated(reason: "Deprecated in favor of transaction")
+  transaction: Transaction!
+  txHash: OnChainTxHash! @deprecated(reason: "Deprecated in favor of transaction")
   txNotificationType: TxNotificationType!
   usdPerSat: Float! @deprecated(reason: "updated over displayCurrencyPerSat")
-  walletId: WalletId!
+  walletId: WalletId! @deprecated(reason: "Deprecated in favor of transaction")
 }
 
 input OnChainUsdPaymentSendAsBtcDenominatedInput
@@ -1372,6 +1377,7 @@ type PaymentSendPayload
 {
   errors: [Error!]!
   status: PaymentSendResult
+  transaction: Transaction
 }
 
 enum PaymentSendResult
@@ -1752,7 +1758,7 @@ enum TxNotificationType
 {
   IntraLedgerPayment @join__enumValue(graph: GALOY)
   IntraLedgerReceipt @join__enumValue(graph: GALOY)
-  LnInvoicePaid @join__enumValue(graph: GALOY)
+  LigtningReceipt @join__enumValue(graph: GALOY)
   OnchainPayment @join__enumValue(graph: GALOY)
   OnchainReceipt @join__enumValue(graph: GALOY)
   OnchainReceiptPending @join__enumValue(graph: GALOY)
