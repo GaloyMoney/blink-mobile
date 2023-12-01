@@ -7079,10 +7079,6 @@ type RootTranslation = {
 		 * T​h​e​ ​l​n​u​r​l​ ​s​e​r​v​e​r​ ​r​e​s​p​o​n​d​e​d​ ​w​i​t​h​ ​a​n​ ​i​n​v​o​i​c​e​ ​w​i​t​h​ ​a​n​ ​i​n​c​o​r​r​e​c​t​ ​a​m​o​u​n​t​.
 		 */
 		lnurlInvoiceIncorrectAmount: string
-		/**
-		 * T​h​e​ ​l​n​u​r​l​ ​s​e​r​v​e​r​ ​r​e​s​p​o​n​d​e​d​ ​w​i​t​h​ ​a​n​ ​i​n​v​o​i​c​e​ ​w​i​t​h​ ​a​n​ ​i​n​c​o​r​r​e​c​t​ ​d​e​s​c​r​i​p​t​i​o​n​ ​h​a​s​h​.
-		 */
-		lnurlInvoiceIncorrectDescription: string
 		confirmFeesModal: {
 			/**
 			 * H​i​g​h​ ​f​e​e​ ​a​l​e​r​t​!
@@ -15819,10 +15815,6 @@ export type TranslationFunctions = {
 		 * The lnurl server responded with an invoice with an incorrect amount.
 		 */
 		lnurlInvoiceIncorrectAmount: () => LocalizedString
-		/**
-		 * The lnurl server responded with an invoice with an incorrect description hash.
-		 */
-		lnurlInvoiceIncorrectDescription: () => LocalizedString
 		confirmFeesModal: {
 			/**
 			 * High fee alert!

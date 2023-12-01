@@ -360,15 +360,6 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             return
           }
 
-          const decodedDescriptionHash = decodedInvoice.tags.find(
-            (tag) => tag.tagName === "purpose_commit_hash",
-          )?.data
-
-          if (paymentDetail.lnurlParams.metadataHash !== decodedDescriptionHash) {
-            setAsyncErrorMessage(LL.SendBitcoinScreen.lnurlInvoiceIncorrectDescription())
-            return
-          }
-
           paymentDetailForConfirmation = paymentDetail.setInvoice({
             paymentRequest: invoice,
             paymentRequestAmount: btcAmount,
