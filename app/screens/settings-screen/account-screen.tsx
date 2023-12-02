@@ -186,6 +186,7 @@ export const AccountScreen = () => {
 
   const dataBeta = useBetaQuery()
   const beta = dataBeta.data?.beta ?? false
+  beta
 
   const deletePhonePrompt = async () => {
     Alert.alert(
@@ -523,7 +524,6 @@ export const AccountScreen = () => {
       chevronColor: totpEnabled ? colors.red : undefined,
       chevronSize: totpEnabled ? 28 : undefined,
       styleDivider: true,
-      hidden: !beta,
     },
   ]
 
