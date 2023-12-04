@@ -78,8 +78,8 @@ export const numberPadReducer = (
   switch (action.action) {
     case NumberPadReducerActionType.SetAmount:
       return action.payload
-    case NumberPadReducerActionType.HandlePaste:
-      const num: number = Number(action.payload.keys)
+    case NumberPadReducerActionType.HandlePaste: {
+      const num = Number(action.payload.keys)
       const formatted: string =
         num % 1 === 0 ? num.toString() : num.toFixed(numberOfDecimalsAllowed)
       const splitByDecimal = formatted.split(".")
@@ -92,6 +92,7 @@ export const numberPadReducer = (
           minorAmount: splitByDecimal[1] ?? "",
         },
       }
+    }
     case NumberPadReducerActionType.HandleKeyPress:
       if (action.payload.key === Key.Backspace) {
         if (minorAmount.length > 0) {
