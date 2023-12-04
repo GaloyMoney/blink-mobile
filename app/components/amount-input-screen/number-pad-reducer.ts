@@ -16,6 +16,7 @@ export const NumberPadReducerActionType = {
   SetAmount: "SetAmount",
   HandleKeyPress: "HandleKeyPress",
   ClearAmount: "ClearAmount",
+  HandlePaste: "HandlePaste",
 } as const
 
 export type NumberPadReducerAction =
@@ -36,6 +37,12 @@ export type NumberPadReducerAction =
   | {
       action: typeof NumberPadReducerActionType.ClearAmount
     }
+  | {
+      action: typeof NumberPadReducerActionType.HandlePaste
+      payload: {
+        keys: Keys
+      }
+    }
 
 export const Key = {
   Backspace: "⌫",
@@ -54,6 +61,8 @@ export const Key = {
 
 export type Key = (typeof Key)[keyof typeof Key]
 
+export type Keys = `${number | ""}${"." | ""}${number | ""}`
+
 export type NumberPadReducerActionType =
   (typeof NumberPadReducerActionType)[keyof typeof NumberPadReducerActionType]
 
@@ -69,6 +78,20 @@ export const numberPadReducer = (
   switch (action.action) {
     case NumberPadReducerActionType.SetAmount:
       return action.payload
+    case NumberPadReducerActionType.HandlePaste:
+      const num: number = Number(action.payload.keys)
+      const formatted: string =
+        num % 1 === 0 ? num.toString() : num.toFixed(numberOfDecimalsAllowed)
+      const splitByDecimal = formatted.split(".")
+
+      return {
+        ...state,
+        numberPadNumber: {
+          majorAmount: splitByDecimal[0],
+          hasDecimal: splitByDecimal.length > 1,
+          minorAmount: splitByDecimal[1] ?? "",
+        },
+      }
     case NumberPadReducerActionType.HandleKeyPress:
       if (action.payload.key === Key.Backspace) {
         if (minorAmount.length > 0) {
@@ -115,26 +138,6 @@ export const numberPadReducer = (
           }
         }
         return state
-      }
-
-      // pasted
-      if (action.payload.key.length > 1) {
-        // here the whole numberPadNumber will be formatted and replaced
-        // unlike the several sections below which append to the value(s)
-        const num = Number(action.payload.key)
-        // format to float if number has decimal - otherwise integer
-        const formatted: string =
-          num % 1 === 0 ? num.toString() : num.toFixed(numberOfDecimalsAllowed)
-        const splitByDecimal = formatted.split(".")
-
-        return {
-          ...state,
-          numberPadNumber: {
-            majorAmount: splitByDecimal[0],
-            hasDecimal: splitByDecimal.length > 1,
-            minorAmount: splitByDecimal[1] ?? "",
-          },
-        }
       }
 
       if (hasDecimal && minorAmount.length < numberOfDecimalsAllowed) {
