@@ -64,23 +64,23 @@
   dependencies:
     node-fetch "^2.6.1"
 
-"@aws-crypto/sha256-js@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/@aws-crypto/sha256-js/-/sha256-js-4.0.0.tgz#7feaad4d62cfaf6636a108763d0df0b01574ef0e"
-  integrity sha512-MHGJyjE7TX9aaqXj7zk2ppnFUOhaDs5sP+HtNS0evOxn72c+5njUmyJmpGd7TfyoDznZlHMmdo/xGUdu2NIjNQ==
+"@aws-crypto/sha256-js@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.npmjs.org/@aws-crypto/sha256-js/-/sha256-js-5.2.0.tgz#c4fdb773fdbed9a664fc1a95724e206cf3860042"
+  integrity sha512-FFQQyu7edu4ufvIZ+OadFpHHOt+eSTBaYaki44c+akjg7qZg9oOQeLlk77F6tSYqjDAFClrHJk9tMf0HdVyOvA==
   dependencies:
-    "@aws-crypto/util" "^4.0.0"
+    "@aws-crypto/util" "^5.2.0"
     "@aws-sdk/types" "^3.222.0"
-    tslib "^1.11.1"
+    tslib "^2.6.2"
 
-"@aws-crypto/util@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/@aws-crypto/util/-/util-4.0.0.tgz#958d244eea457af65755e242673872f9d04a7a6f"
-  integrity sha512-2EnmPy2gsFZ6m8bwUQN4jq+IyXV3quHAcwPOS6ZA3k+geujiqI8aRokO2kFJe+idJ/P3v4qWI186rVMo0+zLDQ==
+"@aws-crypto/util@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.npmjs.org/@aws-crypto/util/-/util-5.2.0.tgz#71284c9cffe7927ddadac793c14f14886d3876da"
+  integrity sha512-4RkU9EsI6ZpBve5fseQlGNUWKMa1RLPQ1dnjnQoe07ldfIzcsGb5hC5W0Dm7u423KWzawlrpbjXBrXCEv9zazQ==
   dependencies:
     "@aws-sdk/types" "^3.222.0"
-    "@aws-sdk/util-utf8-browser" "^3.0.0"
-    tslib "^1.11.1"
+    "@smithy/util-utf8" "^2.0.0"
+    tslib "^2.6.2"
 
 "@aws-sdk/types@^3.222.0":
   version "3.451.0"
@@ -89,13 +89,6 @@
   dependencies:
     "@smithy/types" "^2.5.0"
     tslib "^2.5.0"
-
-"@aws-sdk/util-utf8-browser@^3.0.0":
-  version "3.259.0"
-  resolved "https://registry.npmjs.org/@aws-sdk/util-utf8-browser/-/util-utf8-browser-3.259.0.tgz#3275a6f5eb334f96ca76635b961d3c50259fd9ff"
-  integrity sha512-UvFa/vR+e19XookZF8RzFZBrw2EUkQWxiBW0yYQAhvk3C+QVGl0H3ouca8LDBlBfQKXwmW3huo/59H8rwb1wJw==
-  dependencies:
-    tslib "^2.3.1"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.16.0", "@babel/code-frame@^7.21.4", "@babel/code-frame@^7.22.13", "@babel/code-frame@^7.23.4", "@babel/code-frame@^7.5.5", "@babel/code-frame@^7.8.3":
   version "7.23.4"
@@ -1928,10 +1921,10 @@
     "@formatjs/intl-localematcher" "0.5.2"
     tslib "^2.4.0"
 
-"@galoymoney/client@^0.2.6":
-  version "0.2.6"
-  resolved "https://registry.npmjs.org/@galoymoney/client/-/client-0.2.6.tgz#c90416755d8bf55f0e8bc11694de3ac7f8dc8f99"
-  integrity sha512-HCYMB39EO1/2RJ6Dz9ZJkRDCKd5b3IyaajfR2db4i4hQZ6i4z1nuEFT/04ERu27Mlrxrb0qjHfYmAPTRR20xdg==
+"@galoymoney/client@^0.2.7":
+  version "0.2.7"
+  resolved "https://registry.npmjs.org/@galoymoney/client/-/client-0.2.7.tgz#eaf985365b014aa6ddfb5061db5ff43d6d9ae2a7"
+  integrity sha512-eQfuYzY9hBKgKQOysZmKQo5th27ZPdCSSPuZCyKlPRlwaqyrtcWsAAOtVZs1EPbY3rwQvMUrTSk5ljEBkAwFsw==
 
 "@galoymoney/react-native-geetest-module@^0.1.3":
   version "0.1.5"
@@ -4365,11 +4358,34 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@smithy/is-array-buffer@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/@smithy/is-array-buffer/-/is-array-buffer-2.0.0.tgz#8fa9b8040651e7ba0b2f6106e636a91354ff7d34"
+  integrity sha512-z3PjFjMyZNI98JFRJi/U0nGoLWMSJlDjAW4QUX2WNZLas5C0CmVV6LJ01JI0k90l7FvpmixjWxPFmENSClQ7ug==
+  dependencies:
+    tslib "^2.5.0"
+
 "@smithy/types@^2.5.0":
   version "2.6.0"
   resolved "https://registry.npmjs.org/@smithy/types/-/types-2.6.0.tgz#a09c40b512e2df213229a20a43d0d9cfcf55ca3e"
   integrity sha512-PgqxJq2IcdMF9iAasxcqZqqoOXBHufEfmbEUdN1pmJrJltT42b0Sc8UiYSWWzKkciIp9/mZDpzYi4qYG1qqg6g==
   dependencies:
+    tslib "^2.5.0"
+
+"@smithy/util-buffer-from@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/@smithy/util-buffer-from/-/util-buffer-from-2.0.0.tgz#7eb75d72288b6b3001bc5f75b48b711513091deb"
+  integrity sha512-/YNnLoHsR+4W4Vf2wL5lGv0ksg8Bmk3GEGxn2vEQt52AQaPSCuaO5PM5VM7lP1K9qHRKHwrPGktqVoAHKWHxzw==
+  dependencies:
+    "@smithy/is-array-buffer" "^2.0.0"
+    tslib "^2.5.0"
+
+"@smithy/util-utf8@^2.0.0":
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/@smithy/util-utf8/-/util-utf8-2.0.2.tgz#626b3e173ad137208e27ed329d6bea70f4a1a7f7"
+  integrity sha512-qOiVORSPm6Ce4/Yu6hbSgNHABLP2VMv8QOC3tTDNHHlWY19pPyc++fBTbZPtx6egPXi4HQxKDnMxVxpbtX2GoA==
+  dependencies:
+    "@smithy/util-buffer-from" "^2.0.0"
     tslib "^2.5.0"
 
 "@storybook/addon-actions@6.5.16":
@@ -7470,7 +7486,7 @@ assert@^1.1.1, assert@^1.4.1:
     object.assign "^4.1.4"
     util "^0.10.4"
 
-assert@^2.0.0:
+assert@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/assert/-/assert-2.1.0.tgz#6d92a238d05dc02e7427c881fb8be81c8448b2dd"
   integrity sha512-eLHpSK/Y4nhMJ07gDaAzoX/XAKS8PSaojml3M0DM4JpV1LAi5JOJ/p6H/XWrl8L+DzVEvVCW1z3vWAaB9oTsQw==
@@ -7597,7 +7613,7 @@ axios@^0.21.1, axios@^0.21.4:
   dependencies:
     follow-redirects "^1.14.0"
 
-axios@^1.4.0, axios@^1.6.2:
+axios@^1.5.1, axios@^1.6.2:
   version "1.6.2"
   resolved "https://registry.npmjs.org/axios/-/axios-1.6.2.tgz#de67d42c755b571d3e698df1b6504cde9b0ee9f2"
   integrity sha512-7i24Ri4pmDRfJTR7LDBhsOTtcm+9kjX5WiY1X3wIisx6G9So3pfMkEiU7emUBe46oceVImccTEM3k6C5dbVW8A==
@@ -15693,15 +15709,15 @@ listr@^0.14.3:
     p-map "^2.0.0"
     rxjs "^6.3.3"
 
-lnurl-pay@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.npmjs.org/lnurl-pay/-/lnurl-pay-2.3.0.tgz#97a24b0498634ab45ca6ef8924b4ff3285c381da"
-  integrity sha512-6bEwpueNFoh1X+jVwh422mFy9LMFIoMvVXO9INAsskAmcgUI5BWbOM6oYN6uudVT8jA5f0YL/BreqGddYy3Smg==
+lnurl-pay@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/lnurl-pay/-/lnurl-pay-3.0.1.tgz#1d9800a9e01ef95835ff486d09d9425cfca6257e"
+  integrity sha512-sN5UJdEAgFRlrQkLM2++u+BlXyAuzQ0GpiK4RuWe2xIxPDQxO8lImbAg4M+LTTdTY78romFZHsx8gcmg7h092w==
   dependencies:
-    "@aws-crypto/sha256-js" "^4.0.0"
+    "@aws-crypto/sha256-js" "^5.2.0"
     aes-js "^3.1.2"
-    assert "^2.0.0"
-    axios "^1.4.0"
+    assert "^2.1.0"
+    axios "^1.5.1"
     base64-js "^1.5.1"
     bech32 "^2.0.0"
     bolt11 "^1.4.1"
@@ -15711,7 +15727,7 @@ lnurl-pay@^2.3.0:
     is-url "^1.2.4"
     stream-browserify "^3.0.0"
     stream-http "^3.2.0"
-    tslib "^2.5.2"
+    tslib "^2.6.2"
 
 load-bmfont@^1.4.1:
   version "1.4.1"
@@ -22432,12 +22448,12 @@ tslib@2.5.0:
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.5.0.tgz#42bfed86f5787aeb41d031866c8f402429e0fddf"
   integrity sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==
 
-tslib@^1.11.1, tslib@^1.8.1, tslib@^1.9.0:
+tslib@^1.8.1, tslib@^1.9.0:
   version "1.14.1"
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.0.0, tslib@^2.0.1, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.3.1, tslib@^2.4.0, tslib@^2.5.0, tslib@^2.5.2, tslib@^2.6.1, tslib@^2.6.2:
+tslib@^2.0.0, tslib@^2.0.1, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.3.1, tslib@^2.4.0, tslib@^2.5.0, tslib@^2.6.1, tslib@^2.6.2:
   version "2.6.2"
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.6.2.tgz#703ac29425e7b37cd6fd456e92404d46d1f3e4ae"
   integrity sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==
