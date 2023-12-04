@@ -7,17 +7,15 @@ import {
 } from "@app/screens/send-bitcoin-screen/payment-destination"
 import { DestinationDirection } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
 import { ZeroBtcMoneyAmount } from "@app/types/amounts"
-import { PaymentType, fetchLnurlPaymentParams } from "@galoymoney/client"
+import { PaymentType } from "@galoymoney/client"
 import { LNURLPayParams, LNURLResponse, LNURLWithdrawParams, getParams } from "js-lnurl"
 import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 import { defaultPaymentDetailParams } from "./helpers"
+import { requestPayServiceParams } from "lnurl-pay"
 
-jest.mock("@galoymoney/client", () => {
-  const actualModule = jest.requireActual("@galoymoney/client")
-
+jest.mock("lnurl-pay", () => {
   return {
-    ...actualModule,
-    fetchLnurlPaymentParams: jest.fn(),
+    requestPayServiceParams: jest.fn(),
   }
 })
 
@@ -26,14 +24,15 @@ jest.mock("js-lnurl", () => {
     getParams: jest.fn(),
   }
 })
+
 jest.mock("@app/screens/send-bitcoin-screen/payment-details", () => {
   return {
     createLnurlPaymentDetails: jest.fn(),
   }
 })
 
-const mockFetchLnurlPaymentParams = fetchLnurlPaymentParams as jest.MockedFunction<
-  typeof fetchLnurlPaymentParams
+const mockRequestPayServiceParams = requestPayServiceParams as jest.MockedFunction<
+  typeof requestPayServiceParams
 >
 const mockGetParams = getParams as jest.MockedFunction<typeof getParams>
 const mockCreateLnurlPaymentDetail = createLnurlPaymentDetails as jest.MockedFunction<
@@ -61,7 +60,7 @@ describe("resolve lnurl destination", () => {
       const lnurlPayParams = createMock<LnUrlPayServiceResponse>({
         identifier: lnurlPaymentDestinationParams.parsedLnurlDestination.lnurl,
       })
-      mockFetchLnurlPaymentParams.mockResolvedValue(lnurlPayParams)
+      mockRequestPayServiceParams.mockResolvedValue(lnurlPayParams)
       mockGetParams.mockResolvedValue(createMock<LNURLResponse>())
 
       const destination = await resolveLnurlDestination(lnurlPaymentDestinationParams)
@@ -96,7 +95,7 @@ describe("resolve lnurl destination", () => {
       const lnurlPayParams = createMock<LnUrlPayServiceResponse>({
         identifier: lnurlPaymentDestinationParams.parsedLnurlDestination.lnurl,
       })
-      mockFetchLnurlPaymentParams.mockResolvedValue(lnurlPayParams)
+      mockRequestPayServiceParams.mockResolvedValue(lnurlPayParams)
       mockGetParams.mockResolvedValue(createMock<LNURLPayParams>())
 
       const destination = await resolveLnurlDestination(lnurlPaymentDestinationParams)
@@ -128,7 +127,7 @@ describe("resolve lnurl destination", () => {
     }
 
     it("creates lnurl withdraw destination", async () => {
-      mockFetchLnurlPaymentParams.mockImplementation(throwError)
+      mockRequestPayServiceParams.mockImplementation(throwError)
       const mockLnurlWithdrawParams = createMock<LNURLWithdrawParams>()
       mockGetParams.mockResolvedValue(mockLnurlWithdrawParams)
 
