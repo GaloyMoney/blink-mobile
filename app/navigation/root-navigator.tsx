@@ -37,7 +37,6 @@ import {
   EmailRegistrationInitiateScreen,
   EmailRegistrationValidateScreen,
 } from "@app/screens/email-registration-screen"
-import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
 import { CirclesDashboardScreen } from "@app/screens/people-screen/circles/circles-dashboard-screen"
 import { AllContactsScreen } from "@app/screens/people-screen/contacts/all-contacts"
 import { PeopleTabIcon } from "@app/screens/people-screen/tab-icon"
@@ -233,13 +232,6 @@ export const RootStack = () => {
         component={SettingsScreen}
         options={() => ({
           title: LL.SettingsScreen.title(),
-        })}
-      />
-      <RootNavigator.Screen
-        name="addressScreen"
-        component={GaloyAddressScreen}
-        options={() => ({
-          title: "",
         })}
       />
       <RootNavigator.Screen

@@ -19,7 +19,8 @@ export const WebViewScreen: React.FC<Props> = ({ route }) => {
   const styles = useStyles()
 
   const { navigate } = useNavigation<StackNavigationProp<RootStackParamList, "Primary">>()
-  const { url, initialTitle } = route.params
+  const { url, initialTitle, injectedJavaScript, overrideBackToNavigationBack } =
+    route.params
   const { LL } = useI18nContext()
 
   const webview = React.useRef<WebView | null>(null)
@@ -29,13 +30,13 @@ export const WebViewScreen: React.FC<Props> = ({ route }) => {
   const [canGoBack, setCanGoBack] = React.useState<boolean>(false)
 
   const handleBackPress = React.useCallback(() => {
-    if (webview.current && canGoBack) {
+    if (!overrideBackToNavigationBack && webview.current && canGoBack) {
       webview.current.goBack()
       return
     }
 
     navigation.goBack()
-  }, [canGoBack, navigation])
+  }, [canGoBack, navigation, overrideBackToNavigationBack])
 
   React.useEffect(() => {
     if (!initialTitle) return
@@ -111,6 +112,7 @@ export const WebViewScreen: React.FC<Props> = ({ route }) => {
           // },
         })}
         style={styles.full}
+        injectedJavaScript={injectedJavaScript}
       />
     </Screen>
   )

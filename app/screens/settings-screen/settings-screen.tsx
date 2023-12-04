@@ -225,12 +225,19 @@ export const SettingsScreen: React.FC = () => {
       greyed: !isAtLeastLevelZero,
     },
     {
-      category: LL.SettingsScreen.addressScreen(),
-      icon: "custom-receive-bitcoin",
+      category: LL.SettingsScreen.pointOfSale(),
+      icon: "calculator",
       id: "address",
-      action: () => navigation.navigate("addressScreen"),
-      enabled: isAtLeastLevelZero && Boolean(lightningAddress),
-      greyed: !isAtLeastLevelZero || !lightningAddress,
+      action: () =>
+        navigation.navigate("webView", {
+          url: `https://pay.blink.sv/${data?.me?.username}`,
+          initialTitle: LL.SettingsScreen.pointOfSale(),
+          injectedJavaScript: "document.querySelector('nav').style.display = 'none';",
+          overrideBackToNavigationBack: true,
+        }),
+      enabled:
+        isAtLeastLevelZero && Boolean(lightningAddress) && Boolean(data?.me?.username),
+      greyed: !isAtLeastLevelZero || !lightningAddress || !data?.me?.username,
     },
     {
       category: LL.common.language(),

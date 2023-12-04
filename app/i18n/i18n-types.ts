@@ -7102,9 +7102,9 @@ type RootTranslation = {
 		 */
 		activated: string
 		/**
-		 * W​a​y​s​ ​t​o​ ​g​e​t​ ​p​a​i​d
+		 * P​o​i​n​t​ ​o​f​ ​S​a​l​e
 		 */
-		addressScreen: string
+		pointOfSale: string
 		/**
 		 * T​a​p​ ​t​o​ ​s​e​t​ ​u​s​e​r​n​a​m​e
 		 */
@@ -15838,9 +15838,9 @@ export type TranslationFunctions = {
 		 */
 		activated: () => LocalizedString
 		/**
-		 * Ways to get paid
+		 * Point of Sale
 		 */
-		addressScreen: () => LocalizedString
+		pointOfSale: () => LocalizedString
 		/**
 		 * Tap to set username
 		 */

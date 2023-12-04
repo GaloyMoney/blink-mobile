@@ -90,7 +90,12 @@ export type RootStackParamList = {
   totpRegistrationInitiate: undefined
   totpRegistrationValidate: { totpRegistrationId: string }
   totpLoginValidate: { authToken: string }
-  webView: { url: string; initialTitle?: string }
+  webView: {
+    url: string
+    initialTitle?: string
+    injectedJavaScript?: string
+    overrideBackToNavigationBack?: boolean
+  }
   fullOnboardingFlow: undefined
 }
 

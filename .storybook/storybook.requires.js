@@ -6,7 +6,7 @@ import {
   addParameters,
   addArgsEnhancer,
   clearDecorators,
-} from "@storybook/react-native";
+} from "@storybook/react-native"
 
 global.STORIES = [
   {
@@ -16,18 +16,18 @@ global.STORIES = [
     importPathMatcher:
       "^\\.[\\\\/](?:app(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.stories\\.(?:ts|tsx)?)$",
   },
-];
+]
 
-import "@storybook/addon-ondevice-notes/register";
-import "@storybook/addon-ondevice-controls/register";
-import "@storybook/addon-ondevice-knobs/register";
-import "@storybook/addon-ondevice-backgrounds/register";
-import "@storybook/addon-ondevice-actions/register";
+import "@storybook/addon-ondevice-notes/register"
+import "@storybook/addon-ondevice-controls/register"
+import "@storybook/addon-ondevice-knobs/register"
+import "@storybook/addon-ondevice-backgrounds/register"
+import "@storybook/addon-ondevice-actions/register"
 
-import { argsEnhancers } from "@storybook/addon-actions/dist/modern/preset/addArgs";
+import { argsEnhancers } from "@storybook/addon-actions/dist/modern/preset/addArgs"
 
 try {
-  argsEnhancers.forEach((enhancer) => addArgsEnhancer(enhancer));
+  argsEnhancers.forEach((enhancer) => addArgsEnhancer(enhancer))
 } catch {}
 
 const getStories = () => {
@@ -75,7 +75,6 @@ const getStories = () => {
     "./app/screens/email-registration-screen/email-registration-validate.stories.tsx": require("../app/screens/email-registration-screen/email-registration-validate.stories.tsx"),
     "./app/screens/error-screen/error-screen.stories.tsx": require("../app/screens/error-screen/error-screen.stories.tsx"),
     "./app/screens/full-onboarding-flow/full-onboarding-flow.stories.tsx": require("../app/screens/full-onboarding-flow/full-onboarding-flow.stories.tsx"),
-    "./app/screens/galoy-address-screen/address-screen.stories.tsx": require("../app/screens/galoy-address-screen/address-screen.stories.tsx"),
     "./app/screens/get-started-screen/device-account-fail-modal.stories.tsx": require("../app/screens/get-started-screen/device-account-fail-modal.stories.tsx"),
     "./app/screens/get-started-screen/get-started-screen.stories.tsx": require("../app/screens/get-started-screen/get-started-screen.stories.tsx"),
     "./app/screens/home-screen/home-screen.stories.tsx": require("../app/screens/home-screen/home-screen.stories.tsx"),
@@ -100,7 +99,7 @@ const getStories = () => {
     "./app/screens/settings-screen/settings-screen.stories.tsx": require("../app/screens/settings-screen/settings-screen.stories.tsx"),
     "./app/screens/settings-screen/theme-screen.stories.tsx": require("../app/screens/settings-screen/theme-screen.stories.tsx"),
     "./app/screens/transaction-detail-screen/transaction-detail-screen.stories.tsx": require("../app/screens/transaction-detail-screen/transaction-detail-screen.stories.tsx"),
-  };
-};
+  }
+}
 
-configure(getStories, module, false);
+configure(getStories, module, false)

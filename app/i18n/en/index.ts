@@ -2286,7 +2286,7 @@ const en: BaseTranslation = {
   },
   SettingsScreen: {
     activated: "Activated",
-    addressScreen: "Ways to get paid",
+    pointOfSale: "Point of Sale",
     tapUserName: "Tap to set username",
     notifications: "Notifications",
     title: "Settings",
