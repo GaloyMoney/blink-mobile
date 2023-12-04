@@ -101,7 +101,7 @@ export const ScanningQRCodeScreen: React.FC = () => {
     }
   }, [hasPermission, requestPermission])
 
-  const decodeInvoice = React.useMemo(() => {
+  const processInvoice = React.useMemo(() => {
     return async (data: string | undefined) => {
       if (pending || !wallets || !bitcoinNetwork || !data) {
         return
@@ -184,7 +184,7 @@ export const ScanningQRCodeScreen: React.FC = () => {
   const codeScanner = useCodeScanner({
     codeTypes: ["qr", "ean-13"],
     onCodeScanned: (codes) => {
-      codes.forEach((code) => decodeInvoice(code.value))
+      codes.forEach((code) => processInvoice(code.value))
       console.log(`Scanned ${codes.length} codes!`)
     },
   })
@@ -192,7 +192,7 @@ export const ScanningQRCodeScreen: React.FC = () => {
   const handleInvoicePaste = async () => {
     try {
       const data = await Clipboard.getString()
-      decodeInvoice(data)
+      processInvoice(data)
     } catch (err: unknown) {
       if (err instanceof Error) {
         crashlytics().recordError(err)
@@ -214,7 +214,7 @@ export const ScanningQRCodeScreen: React.FC = () => {
       if (result.assets && result.assets.length > 0 && result.assets[0].uri) {
         const qrCodeValues = await RNQRGenerator.detect({ uri: result.assets[0].uri })
         if (qrCodeValues && qrCodeValues.values.length > 0) {
-          decodeInvoice(qrCodeValues.values[0])
+          processInvoice(qrCodeValues.values[0])
         } else {
           Alert.alert(LL.ScanningQRCodeScreen.noQrCode())
         }
