@@ -566,11 +566,15 @@ export type IntraLedgerPaymentSendInput = {
 
 export type IntraLedgerUpdate = {
   readonly __typename: 'IntraLedgerUpdate';
+  /** @deprecated Deprecated in favor of transaction */
   readonly amount: Scalars['SatAmount']['output'];
+  /** @deprecated Deprecated in favor of transaction */
   readonly displayCurrencyPerSat: Scalars['Float']['output'];
+  readonly transaction: Transaction;
   readonly txNotificationType: TxNotificationType;
   /** @deprecated updated over displayCurrencyPerSat */
   readonly usdPerSat: Scalars['Float']['output'];
+  /** @deprecated Deprecated in favor of transaction */
   readonly walletId: Scalars['WalletId']['output'];
 };
 
@@ -767,8 +771,11 @@ export type LnNoAmountUsdInvoicePaymentInput = {
 
 export type LnUpdate = {
   readonly __typename: 'LnUpdate';
+  /** @deprecated Deprecated in favor of transaction */
   readonly paymentHash: Scalars['PaymentHash']['output'];
   readonly status: InvoicePaymentStatus;
+  readonly transaction: Transaction;
+  /** @deprecated Deprecated in favor of transaction */
   readonly walletId: Scalars['WalletId']['output'];
 };
 
@@ -1271,12 +1278,17 @@ export type OnChainTxFee = {
 
 export type OnChainUpdate = {
   readonly __typename: 'OnChainUpdate';
+  /** @deprecated Deprecated in favor of transaction */
   readonly amount: Scalars['SatAmount']['output'];
+  /** @deprecated Deprecated in favor of transaction */
   readonly displayCurrencyPerSat: Scalars['Float']['output'];
+  readonly transaction: Transaction;
+  /** @deprecated Deprecated in favor of transaction */
   readonly txHash: Scalars['OnChainTxHash']['output'];
   readonly txNotificationType: TxNotificationType;
   /** @deprecated updated over displayCurrencyPerSat */
   readonly usdPerSat: Scalars['Float']['output'];
+  /** @deprecated Deprecated in favor of transaction */
   readonly walletId: Scalars['WalletId']['output'];
 };
 
@@ -1353,6 +1365,7 @@ export type PaymentSendPayload = {
   readonly __typename: 'PaymentSendPayload';
   readonly errors: ReadonlyArray<Error>;
   readonly status?: Maybe<PaymentSendResult>;
+  readonly transaction?: Maybe<Transaction>;
 };
 
 export const PaymentSendResult = {
@@ -7750,6 +7763,7 @@ export type InitiationViaOnChainResolvers<ContextType = any, ParentType extends 
 export type IntraLedgerUpdateResolvers<ContextType = any, ParentType extends ResolversParentTypes['IntraLedgerUpdate'] = ResolversParentTypes['IntraLedgerUpdate']> = {
   amount?: Resolver<ResolversTypes['SatAmount'], ParentType, ContextType>;
   displayCurrencyPerSat?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  transaction?: Resolver<ResolversTypes['Transaction'], ParentType, ContextType>;
   txNotificationType?: Resolver<ResolversTypes['TxNotificationType'], ParentType, ContextType>;
   usdPerSat?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   walletId?: Resolver<ResolversTypes['WalletId'], ParentType, ContextType>;
@@ -7850,6 +7864,7 @@ export interface LnPaymentSecretScalarConfig extends GraphQLScalarTypeConfig<Res
 export type LnUpdateResolvers<ContextType = any, ParentType extends ResolversParentTypes['LnUpdate'] = ResolversParentTypes['LnUpdate']> = {
   paymentHash?: Resolver<ResolversTypes['PaymentHash'], ParentType, ContextType>;
   status?: Resolver<ResolversTypes['InvoicePaymentStatus'], ParentType, ContextType>;
+  transaction?: Resolver<ResolversTypes['Transaction'], ParentType, ContextType>;
   walletId?: Resolver<ResolversTypes['WalletId'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -7982,6 +7997,7 @@ export interface OnChainTxHashScalarConfig extends GraphQLScalarTypeConfig<Resol
 export type OnChainUpdateResolvers<ContextType = any, ParentType extends ResolversParentTypes['OnChainUpdate'] = ResolversParentTypes['OnChainUpdate']> = {
   amount?: Resolver<ResolversTypes['SatAmount'], ParentType, ContextType>;
   displayCurrencyPerSat?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  transaction?: Resolver<ResolversTypes['Transaction'], ParentType, ContextType>;
   txHash?: Resolver<ResolversTypes['OnChainTxHash'], ParentType, ContextType>;
   txNotificationType?: Resolver<ResolversTypes['TxNotificationType'], ParentType, ContextType>;
   usdPerSat?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
@@ -8028,6 +8044,7 @@ export interface PaymentHashScalarConfig extends GraphQLScalarTypeConfig<Resolve
 export type PaymentSendPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['PaymentSendPayload'] = ResolversParentTypes['PaymentSendPayload']> = {
   errors?: Resolver<ReadonlyArray<ResolversTypes['Error']>, ParentType, ContextType>;
   status?: Resolver<Maybe<ResolversTypes['PaymentSendResult']>, ParentType, ContextType>;
+  transaction?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
