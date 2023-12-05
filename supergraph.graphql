@@ -600,6 +600,9 @@ type InitiationViaLn
   @join__type(graph: GALOY)
 {
   paymentHash: PaymentHash!
+
+  """Bolt11 invoice"""
+  paymentRequest: LnPaymentRequest!
 }
 
 type InitiationViaOnChain
@@ -1638,6 +1641,7 @@ type SettlementViaLn
 type SettlementViaOnChain
   @join__type(graph: GALOY)
 {
+  arrivalInMempoolEstimatedAt: Timestamp
   transactionHash: OnChainTxHash
   vout: Int
 }

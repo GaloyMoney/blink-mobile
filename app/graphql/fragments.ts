@@ -29,6 +29,7 @@ export default gql`
       }
       ... on InitiationViaLn {
         paymentHash
+        paymentRequest
       }
       ... on InitiationViaOnChain {
         address
