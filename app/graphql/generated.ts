@@ -1629,6 +1629,7 @@ export type SettlementViaLn = {
 
 export type SettlementViaOnChain = {
   readonly __typename: 'SettlementViaOnChain';
+  readonly arrivalInMempoolEstimatedAt?: Maybe<Scalars['Timestamp']['output']>;
   readonly transactionHash?: Maybe<Scalars['OnChainTxHash']['output']>;
   readonly vout?: Maybe<Scalars['Int']['output']>;
 };
@@ -8204,6 +8205,7 @@ export type SettlementViaLnResolvers<ContextType = any, ParentType extends Resol
 };
 
 export type SettlementViaOnChainResolvers<ContextType = any, ParentType extends ResolversParentTypes['SettlementViaOnChain'] = ResolversParentTypes['SettlementViaOnChain']> = {
+  arrivalInMempoolEstimatedAt?: Resolver<Maybe<ResolversTypes['Timestamp']>, ParentType, ContextType>;
   transactionHash?: Resolver<Maybe<ResolversTypes['OnChainTxHash']>, ParentType, ContextType>;
   vout?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
