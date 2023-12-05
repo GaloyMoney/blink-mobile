@@ -26,6 +26,7 @@ fragment Transaction on Transaction {
     }
     ... on InitiationViaLn {
       paymentHash
+      paymentRequest
       __typename
     }
     ... on InitiationViaOnChain {

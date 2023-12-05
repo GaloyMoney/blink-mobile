@@ -278,28 +278,37 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
           />
         )}
         <Row entry={LL.common.type()} value={typeDisplay(settlementVia)} />
-        {settlementVia?.__typename === "SettlementViaLn" &&
-          initiationVia?.__typename === "InitiationViaLn" && (
+        {initiationVia?.__typename === "InitiationViaLn" &&
+          initiationVia?.paymentHash && (
             <Row entry="Hash" value={initiationVia?.paymentHash} />
           )}
-        {settlementVia?.__typename === "SettlementViaLn" &&
-          initiationVia?.__typename === "InitiationViaLn" && (
-            <Row entry="Preimage" value={settlementVia?.preImage} />
+        {initiationVia?.__typename === "InitiationViaLn" &&
+          initiationVia?.paymentRequest && (
+            <Row
+              entry={LL.common.paymentRequest()}
+              value={initiationVia?.paymentRequest}
+            />
           )}
+        {settlementVia?.__typename === "SettlementViaLn" && settlementVia?.preImage && (
+          <Row
+            entry={LL.common.preimageProofOfPayment()}
+            value={settlementVia?.preImage}
+          />
+        )}
         {onChainTxBroadcasted && (
           <TouchableWithoutFeedback
             onPress={() => viewInExplorer(settlementVia.transactionHash || "")}
           >
             <View>
               <Row
-                entry="Hash"
+                entry="Transaction Hash"
                 value={settlementVia.transactionHash || ""}
                 __typename={settlementVia.__typename}
               />
             </View>
           </TouchableWithoutFeedback>
         )}
-        {id && <Row entry="id" value={id} />}
+        {id && <Row entry="Blink Internal Id" value={id} />}
       </ScrollView>
     </Screen>
   )

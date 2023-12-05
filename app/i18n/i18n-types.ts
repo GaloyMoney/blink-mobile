@@ -8097,6 +8097,10 @@ type RootTranslation = {
 		 */
 		openWallet: string
 		/**
+		 * P​a​y​m​e​n​t​ ​R​e​q​u​e​s​t
+		 */
+		paymentRequest: string
+		/**
 		 * P​h​o​n​e
 		 */
 		phone: string
@@ -8104,6 +8108,10 @@ type RootTranslation = {
 		 * P​h​o​n​e​ ​N​u​m​b​e​r
 		 */
 		phoneNumber: string
+		/**
+		 * P​r​e​i​m​a​g​e​ ​/​ ​P​r​o​o​f​ ​o​f​ ​P​a​y​m​e​n​t
+		 */
+		preimageProofOfPayment: string
 		/**
 		 * R​a​t​e
 		 */
@@ -16813,6 +16821,10 @@ export type TranslationFunctions = {
 		 */
 		openWallet: () => LocalizedString
 		/**
+		 * Payment Request
+		 */
+		paymentRequest: () => LocalizedString
+		/**
 		 * Phone
 		 */
 		phone: () => LocalizedString
@@ -16820,6 +16832,10 @@ export type TranslationFunctions = {
 		 * Phone Number
 		 */
 		phoneNumber: () => LocalizedString
+		/**
+		 * Preimage / Proof of Payment
+		 */
+		preimageProofOfPayment: () => LocalizedString
 		/**
 		 * Rate
 		 */
