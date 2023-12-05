@@ -66,8 +66,8 @@ const CustomModal: React.FC<CustomModalProps> = ({
   return (
     <Modal
       isVisible={isVisible}
-      backdropOpacity={0.7}
-      backdropColor={colors.grey3}
+      backdropOpacity={0.8}
+      backdropColor={colors.white}
       backdropTransitionOutTiming={0}
       avoidKeyboard={true}
     >
@@ -128,7 +128,7 @@ type UseStylesProps = {
 
 const useStyles = makeStyles(({ colors }, props: UseStylesProps) => ({
   container: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.grey5,
     maxHeight: "95%",
     minHeight: props.minHeight || "auto",
     borderRadius: 16,

@@ -18,7 +18,8 @@ type Props = {
 export const WebViewScreen: React.FC<Props> = ({ route }) => {
   const styles = useStyles()
 
-  const { navigate } = useNavigation<StackNavigationProp<RootStackParamList, "Primary">>()
+  const { navigate, goBack } =
+    useNavigation<StackNavigationProp<RootStackParamList, "Primary">>()
   const { url, initialTitle, injectedJavaScript, overrideBackToNavigationBack } =
     route.params
   const { LL } = useI18nContext()
@@ -72,6 +73,12 @@ export const WebViewScreen: React.FC<Props> = ({ route }) => {
           }
         }}
         onNavigationStateChange={handleWebViewNavigationStateChange}
+        onError={(e) => {
+          if (e.nativeEvent.description === "net::ERR_INTERNET_DISCONNECTED") {
+            Alert.alert("We need internet for Point of Sale to work")
+            goBack()
+          }
+        }}
         onMessage={onMessageHandler(webview as React.MutableRefObject<WebView>, {
           enable: async () => {
             /* Your implementation goes here */
