@@ -45,6 +45,7 @@ export default gql`
       }
       ... on SettlementViaOnChain {
         transactionHash
+        arrivalInMempoolEstimatedAt
       }
     }
   }
