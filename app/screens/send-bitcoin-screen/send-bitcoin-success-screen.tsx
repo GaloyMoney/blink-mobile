@@ -108,7 +108,8 @@ const SendBitcoinSuccessScreen: React.FC<Props> = ({ route }) => {
         {mempoolEstimate && (
           <SuccessTextAnimation>
             <Text {...testProps("Success Text")} style={styles.successText}>
-              Onchain Payment will be sent by{"\n"}
+              {LL.SendBitcoinScreen.willBeSentToMempoolBy()}
+              {"\n"}
               {mempoolEstimate.toString()}
             </Text>
           </SuccessTextAnimation>

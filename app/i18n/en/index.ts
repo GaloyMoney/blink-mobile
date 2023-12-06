@@ -2253,6 +2253,7 @@ const en: BaseTranslation = {
     clipboardError: "Error getting value from clipboard",
   },
   SendBitcoinScreen: {
+    willBeSentToMempoolBy: "Transaction will be submitted to mempool by",
     amount: "Amount",
     amountExceed: "Amount exceeds your balance of {balance: string}",
     amountExceedsLimit: "Amount exceeds your remaining daily limit of {limit: string}",
