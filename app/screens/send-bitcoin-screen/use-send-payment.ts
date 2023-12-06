@@ -12,7 +12,7 @@ import {
   useOnChainUsdPaymentSendMutation,
 } from "@app/graphql/generated"
 import { useMemo, useState } from "react"
-import { SendPaymentMutation } from "./payment-details/index.types"
+import { PaymentSendExtraInfo, SendPaymentMutation } from "./payment-details/index.types"
 import { gql } from "@apollo/client"
 import { getErrorMessages } from "@app/graphql/utils"
 import { v4 as uuidv4 } from "uuid"
@@ -23,6 +23,7 @@ type UseSendPaymentResult = {
     | (() => Promise<{
         status: PaymentSendResult | null | undefined
         errorsMessage?: string
+        extraInfo?: PaymentSendExtraInfo
       }>)
     | undefined
     | null
@@ -77,6 +78,13 @@ gql`
 
   mutation onChainPaymentSend($input: OnChainPaymentSendInput!) {
     onChainPaymentSend(input: $input) {
+      transaction {
+        settlementVia {
+          ... on SettlementViaOnChain {
+            arrivalInMempoolEstimatedAt
+          }
+        }
+      }
       errors {
         message
       }
@@ -180,7 +188,7 @@ export const useSendPayment = (
     return sendPaymentMutation && !hasAttemptedSend
       ? async () => {
           setHasAttemptedSend(true)
-          const { status, errors } = await sendPaymentMutation({
+          const { status, errors, extraInfo } = await sendPaymentMutation({
             intraLedgerPaymentSend,
             intraLedgerUsdPaymentSend,
             lnInvoicePaymentSend,
@@ -198,7 +206,7 @@ export const useSendPayment = (
           if (status === PaymentSendResult.Failure) {
             setHasAttemptedSend(false)
           }
-          return { status, errorsMessage }
+          return { status, errorsMessage, extraInfo }
         }
       : undefined
   }, [

@@ -129,12 +129,14 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           paymentType: paymentDetail.paymentType,
           sendingWallet: sendingWalletDescriptor.currency,
         })
-        const { status, errorsMessage } = await sendPayment()
+        const { status, errorsMessage, extraInfo } = await sendPayment()
         logPaymentResult({
           paymentType: paymentDetail.paymentType,
           paymentStatus: status,
           sendingWallet: sendingWalletDescriptor.currency,
         })
+
+        console.log({ extraInfo })
 
         if (status === "SUCCESS" || status === "PENDING") {
           navigation.dispatch((state) => {

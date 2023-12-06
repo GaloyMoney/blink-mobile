@@ -81,7 +81,12 @@ export type SendPaymentMutation = (
 ) => Promise<{
   status: PaymentSendResult | null | undefined
   errors?: readonly GraphQlApplicationError[]
+  extraInfo?: PaymentSendExtraInfo
 }>
+
+export type PaymentSendExtraInfo = {
+  arrivalAtMempoolEstimate?: number
+}
 
 export type SetAmount<T extends WalletCurrency> = (
   unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency>,
