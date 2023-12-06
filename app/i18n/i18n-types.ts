@@ -7514,6 +7514,11 @@ type RootTranslation = {
 		 * n​o​w
 		 */
 		now: string
+		/**
+		 * {​t​y​p​e​}​ ​h​a​s​ ​b​e​e​n​ ​c​o​p​i​e​d​ ​t​o​ ​c​l​i​p​b​o​a​r​d
+		 * @param {string} type
+		 */
+		hasBeenCopiedToClipboard: RequiredParams<'type'>
 	}
 	TransactionLimitsScreen: {
 		/**
@@ -16255,6 +16260,10 @@ export type TranslationFunctions = {
 		 * now
 		 */
 		now: () => LocalizedString
+		/**
+		 * {type} has been copied to clipboard
+		 */
+		hasBeenCopiedToClipboard: (arg: { type: string }) => LocalizedString
 	}
 	TransactionLimitsScreen: {
 		/**

@@ -2426,6 +2426,7 @@ const en: BaseTranslation = {
     txNotBroadcast:
       "Your transaction is queued. It should appear in the mempool {countdown: string}.",
     now: "now",
+    hasBeenCopiedToClipboard: "{type: string} has been copied to clipboard",
   },
   TransactionLimitsScreen: {
     receive: "Receive",
