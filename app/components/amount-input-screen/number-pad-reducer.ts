@@ -40,7 +40,7 @@ export type NumberPadReducerAction =
   | {
       action: typeof NumberPadReducerActionType.HandlePaste
       payload: {
-        keys: Keys
+        keys: number
       }
     }
 
@@ -61,8 +61,6 @@ export const Key = {
 
 export type Key = (typeof Key)[keyof typeof Key]
 
-export type Keys = `${number | ""}${"." | ""}${number | ""}`
-
 export type NumberPadReducerActionType =
   (typeof NumberPadReducerActionType)[keyof typeof NumberPadReducerActionType]
 
@@ -79,7 +77,7 @@ export const numberPadReducer = (
     case NumberPadReducerActionType.SetAmount:
       return action.payload
     case NumberPadReducerActionType.HandlePaste: {
-      const num = Number(action.payload.keys)
+      const num = action.payload.keys
       const formatted: string =
         num % 1 === 0 ? num.toString() : num.toFixed(numberOfDecimalsAllowed)
       const splitByDecimal = formatted.split(".")

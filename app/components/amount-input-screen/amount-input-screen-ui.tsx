@@ -6,7 +6,7 @@ import { GaloyIconButton } from "../atomic/galoy-icon-button"
 import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
 import { GaloyErrorBox } from "../atomic/galoy-error-box"
 import { CurrencyKeyboard } from "../currency-keyboard"
-import { Key, Keys } from "./number-pad-reducer"
+import { Key } from "./number-pad-reducer"
 
 export type AmountInputScreenUIProps = {
   primaryCurrencySymbol?: string
@@ -18,7 +18,7 @@ export type AmountInputScreenUIProps = {
   errorMessage?: string
   setAmountDisabled?: boolean
   onKeyPress: (key: Key) => void
-  onPaste: (key: Keys) => void
+  onPaste: (keys: number) => void
   onToggleCurrency?: () => void
   onClearAmount: () => void
   onSetAmountPress?: () => void
@@ -67,7 +67,7 @@ export const AmountInputScreenUI: React.FC<AmountInputScreenUIProps> = ({
                 // test for string input that can be either numerical or float
                 if (/^\d*\.?\d*$/.test(val)) {
                   const num = Number(val)
-                  onPaste(`${num}`)
+                  onPaste(num)
                 }
               }}
               containerStyle={styles.primaryNumberContainer}

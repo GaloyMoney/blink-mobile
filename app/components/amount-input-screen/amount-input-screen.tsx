@@ -14,7 +14,6 @@ import { useCallback, useEffect, useReducer } from "react"
 import { AmountInputScreenUI } from "./amount-input-screen-ui"
 import {
   Key,
-  Keys,
   NumberPadNumber,
   numberPadReducer,
   NumberPadReducerActionType,
@@ -171,7 +170,7 @@ export const AmountInputScreen: React.FC<AmountInputScreenProps> = ({
     })
   }
 
-  const onPaste = (keys: Keys) => {
+  const onPaste = (keys: number) => {
     dispatchNumberPadAction({
       action: NumberPadReducerActionType.HandlePaste,
       payload: {
