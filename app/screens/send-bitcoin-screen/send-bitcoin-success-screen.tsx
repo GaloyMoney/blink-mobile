@@ -8,7 +8,7 @@ import {
 } from "@app/components/success-animation"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { useNavigation } from "@react-navigation/native"
+import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { makeStyles, Text } from "@rneui/themed"
 import { View, Alert } from "react-native"
@@ -20,7 +20,12 @@ import { SuggestionModal } from "./suggestion-modal"
 import { logAppFeedback } from "@app/utils/analytics"
 import InAppReview from "react-native-in-app-review"
 
-const SendBitcoinSuccessScreen = () => {
+type Props = {
+  route: RouteProp<RootStackParamList, "sendBitcoinSuccess">
+}
+
+const SendBitcoinSuccessScreen: React.FC<Props> = ({ route }) => {
+  const extraInfo = route.params.extraInfo
   const styles = useStyles()
   const [showSuggestionModal, setShowSuggestionModal] = React.useState(false)
   const navigation =
@@ -84,6 +89,11 @@ const SendBitcoinSuccessScreen = () => {
     }
   }, [client, feedbackModalShown, LL, showSuggestionModal, navigation, requestFeedback])
 
+  let mempoolEstimate: Date | null = null
+  if (extraInfo?.arrivalAtMempoolEstimate) {
+    mempoolEstimate = new Date(extraInfo.arrivalAtMempoolEstimate)
+  }
+
   return (
     <Screen preset="scroll" style={styles.contentContainer}>
       <View style={styles.Container}>
@@ -95,6 +105,14 @@ const SendBitcoinSuccessScreen = () => {
             {LL.SendBitcoinScreen.success()}
           </Text>
         </SuccessTextAnimation>
+        {mempoolEstimate && (
+          <SuccessTextAnimation>
+            <Text {...testProps("Success Text")} style={styles.successText}>
+              Onchain Payment will be sent by{"\n"}
+              {mempoolEstimate.toString()}
+            </Text>
+          </SuccessTextAnimation>
+        )}
       </View>
       <SuggestionModal
         navigation={navigation}

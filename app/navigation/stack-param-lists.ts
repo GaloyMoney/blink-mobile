@@ -2,7 +2,10 @@ import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/type
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
 import { PhoneCodeChannelType, WalletCurrency } from "@app/graphql/generated"
 import { EarnSectionType } from "@app/screens/earns-screen/sections"
-import { PaymentDetail } from "@app/screens/send-bitcoin-screen/payment-details/index.types"
+import {
+  PaymentDetail,
+  PaymentSendExtraInfo,
+} from "@app/screens/send-bitcoin-screen/payment-details/index.types"
 import {
   PaymentDestination,
   ReceiveDestination,
@@ -48,7 +51,7 @@ export type RootStackParamList = {
     moneyAmount: MoneyAmount<WalletOrDisplayCurrency>
   }
   conversionSuccess: undefined
-  sendBitcoinSuccess: undefined
+  sendBitcoinSuccess: { extraInfo?: PaymentSendExtraInfo }
   language: undefined
   currency: undefined
   security: {
