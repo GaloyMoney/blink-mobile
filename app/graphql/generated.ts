@@ -218,7 +218,7 @@ export type ApiKey = {
   readonly __typename: 'ApiKey';
   readonly createdAt: Scalars['Timestamp']['output'];
   readonly expired: Scalars['Boolean']['output'];
-  readonly expiresAt: Scalars['Timestamp']['output'];
+  readonly expiresAt?: Maybe<Scalars['Timestamp']['output']>;
   readonly id: Scalars['ID']['output'];
   readonly lastUsedAt?: Maybe<Scalars['Timestamp']['output']>;
   readonly name: Scalars['String']['output'];
@@ -7525,7 +7525,7 @@ export type AccountUpdateNotificationSettingsPayloadResolvers<ContextType = any,
 export type ApiKeyResolvers<ContextType = any, ParentType extends ResolversParentTypes['ApiKey'] = ResolversParentTypes['ApiKey']> = {
   createdAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
   expired?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  expiresAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  expiresAt?: Resolver<Maybe<ResolversTypes['Timestamp']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   lastUsedAt?: Resolver<Maybe<ResolversTypes['Timestamp']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
