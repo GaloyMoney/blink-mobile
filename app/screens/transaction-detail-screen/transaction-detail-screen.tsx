@@ -107,6 +107,9 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
   const viewInExplorer = (hash: string): Promise<Linking> =>
     Linking.openURL(galoyInstance.blockExplorer + hash)
 
+  const viewInLightningDecoder = (invoice: string): Promise<Linking> =>
+    Linking.openURL("https://lightningdecoder.com/" + invoice)
+
   const { data: tx } = useFragment<TransactionFragment>({
     fragment: TransactionFragmentDoc,
     fragmentName: "Transaction",
@@ -360,6 +363,20 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
               entry={LL.common.paymentRequest()}
               value={initiationVia?.paymentRequest}
               icons={[
+                <View key="icon-1">
+                  <TouchableWithoutFeedback
+                    onPress={() =>
+                      viewInLightningDecoder(initiationVia?.paymentRequest || "")
+                    }
+                  >
+                    <Icon
+                      name="open-outline"
+                      size={22}
+                      color={colors.primary}
+                      style={styles.icon}
+                    />
+                  </TouchableWithoutFeedback>
+                </View>,
                 <View key="icon-0">
                   <TouchableWithoutFeedback
                     onPress={() =>
