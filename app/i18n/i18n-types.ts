@@ -7506,9 +7506,14 @@ type RootTranslation = {
 		 */
 		sendingAccount: string
 		/**
-		 * Y​o​u​r​ ​t​r​a​n​s​a​c​t​i​o​n​ ​i​s​ ​c​u​r​r​e​n​t​l​y​ ​p​e​n​d​i​n​g​ ​a​n​d​ ​w​i​l​l​ ​b​e​ ​b​r​o​a​d​c​a​s​t​e​d​ ​t​o​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​n​e​t​w​o​r​k​ ​i​n​ ​a​ ​m​o​m​e​n​t​.
+		 * Y​o​u​r​ ​t​r​a​n​s​a​c​t​i​o​n​ ​i​s​ ​q​u​e​u​e​d​.​ ​I​t​ ​s​h​o​u​l​d​ ​a​p​p​e​a​r​ ​i​n​ ​t​h​e​ ​m​e​m​p​o​o​l​ ​{​c​o​u​n​t​d​o​w​n​}​.
+		 * @param {string} countdown
 		 */
-		txNotBroadcast: string
+		txNotBroadcast: RequiredParams<'countdown'>
+		/**
+		 * n​o​w
+		 */
+		now: string
 	}
 	TransactionLimitsScreen: {
 		/**
@@ -16243,9 +16248,13 @@ export type TranslationFunctions = {
 		 */
 		sendingAccount: () => LocalizedString
 		/**
-		 * Your transaction is currently pending and will be broadcasted to the Bitcoin network in a moment.
+		 * Your transaction is queued. It should appear in the mempool {countdown}.
 		 */
-		txNotBroadcast: () => LocalizedString
+		txNotBroadcast: (arg: { countdown: string }) => LocalizedString
+		/**
+		 * now
+		 */
+		now: () => LocalizedString
 	}
 	TransactionLimitsScreen: {
 		/**

@@ -2424,7 +2424,8 @@ const en: BaseTranslation = {
     receivingAccount: "Receiving Account",
     sendingAccount: "Sending Account",
     txNotBroadcast:
-      "Your transaction is currently pending and will be broadcasted to the Bitcoin network in a moment.",
+      "Your transaction is queued. It should appear in the mempool {countdown: string}.",
+    now: "now",
   },
   TransactionLimitsScreen: {
     receive: "Receive",

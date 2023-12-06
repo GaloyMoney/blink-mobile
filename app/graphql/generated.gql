@@ -47,6 +47,7 @@ fragment Transaction on Transaction {
     }
     ... on SettlementViaOnChain {
       transactionHash
+      arrivalInMempoolEstimatedAt
       __typename
     }
     __typename
