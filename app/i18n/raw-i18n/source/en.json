@@ -2335,7 +2335,8 @@
         "receivingAccount": "Receiving Account",
         "sendingAccount": "Sending Account",
         "txNotBroadcast": "Your transaction is queued. It should appear in the mempool {countdown: string}.",
-        "now": "now"
+        "now": "now",
+        "hasBeenCopiedToClipboard": "{type: string} has been copied to clipboard"
     },
     "TransactionLimitsScreen": {
         "receive": "Receive",
