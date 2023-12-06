@@ -6986,7 +6986,7 @@ type RootTranslation = {
 	}
 	SendBitcoinScreen: {
 		/**
-		 * T​r​a​n​s​a​c​t​i​o​n​ ​w​i​l​l​ ​b​e​ ​s​u​b​m​i​t​t​e​d​ ​t​o​ ​m​e​m​p​o​o​l​ ​b​y
+		 * T​r​a​n​s​a​c​t​i​o​n​ ​s​h​o​u​l​d​ ​b​e​ ​s​u​b​m​i​t​t​e​d​ ​t​o​ ​m​e​m​p​o​o​l
 		 */
 		willBeSentToMempoolBy: string
 		/**
@@ -15741,7 +15741,7 @@ export type TranslationFunctions = {
 	}
 	SendBitcoinScreen: {
 		/**
-		 * Transaction will be submitted to mempool by
+		 * Transaction should be submitted to mempool
 		 */
 		willBeSentToMempoolBy: () => LocalizedString
 		/**

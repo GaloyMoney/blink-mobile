@@ -19,6 +19,7 @@ import { setFeedbackModalShown } from "@app/graphql/client-only-query"
 import { SuggestionModal } from "./suggestion-modal"
 import { logAppFeedback } from "@app/utils/analytics"
 import InAppReview from "react-native-in-app-review"
+import { formatTimeToMempool } from "../transaction-detail-screen/format-time"
 
 type Props = {
   route: RouteProp<RootStackParamList, "sendBitcoinSuccess">
@@ -34,7 +35,7 @@ const SendBitcoinSuccessScreen: React.FC<Props> = ({ route }) => {
   const client = useApolloClient()
   const feedbackShownData = useFeedbackModalShownQuery()
   const feedbackModalShown = feedbackShownData?.data?.feedbackModalShown
-  const { LL } = useI18nContext()
+  const { LL, locale } = useI18nContext()
 
   const dismiss = () => {
     logAppFeedback({
@@ -89,11 +90,6 @@ const SendBitcoinSuccessScreen: React.FC<Props> = ({ route }) => {
     }
   }, [client, feedbackModalShown, LL, showSuggestionModal, navigation, requestFeedback])
 
-  let mempoolEstimate: Date | null = null
-  if (extraInfo?.arrivalAtMempoolEstimate) {
-    mempoolEstimate = new Date(extraInfo.arrivalAtMempoolEstimate)
-  }
-
   return (
     <Screen preset="scroll" style={styles.contentContainer}>
       <View style={styles.Container}>
@@ -105,12 +101,12 @@ const SendBitcoinSuccessScreen: React.FC<Props> = ({ route }) => {
             {LL.SendBitcoinScreen.success()}
           </Text>
         </SuccessTextAnimation>
-        {mempoolEstimate && (
+        {extraInfo?.arrivalAtMempoolEstimate && (
           <SuccessTextAnimation>
             <Text {...testProps("Success Text")} style={styles.successText}>
               {LL.SendBitcoinScreen.willBeSentToMempoolBy()}
               {"\n"}
-              {mempoolEstimate.toString()}
+              {formatTimeToMempool(extraInfo.arrivalAtMempoolEstimate, LL, locale)}
             </Text>
           </SuccessTextAnimation>
         )}
