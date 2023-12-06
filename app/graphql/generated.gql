@@ -418,6 +418,16 @@ mutation onChainAddressCurrent($input: OnChainAddressCurrentInput!) {
 
 mutation onChainPaymentSend($input: OnChainPaymentSendInput!) {
   onChainPaymentSend(input: $input) {
+    transaction {
+      settlementVia {
+        ... on SettlementViaOnChain {
+          arrivalInMempoolEstimatedAt
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
     errors {
       message
       __typename

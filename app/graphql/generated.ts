@@ -2603,7 +2603,7 @@ export type OnChainPaymentSendMutationVariables = Exact<{
 }>;
 
 
-export type OnChainPaymentSendMutation = { readonly __typename: 'Mutation', readonly onChainPaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
+export type OnChainPaymentSendMutation = { readonly __typename: 'Mutation', readonly onChainPaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly transaction?: { readonly __typename: 'Transaction', readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger' } | { readonly __typename: 'SettlementViaLn' } | { readonly __typename: 'SettlementViaOnChain', readonly arrivalInMempoolEstimatedAt?: number | null } } | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
 export type OnChainPaymentSendAllMutationVariables = Exact<{
   input: OnChainPaymentSendAllInput;
@@ -5766,6 +5766,13 @@ export type LnNoAmountUsdInvoicePaymentSendMutationOptions = Apollo.BaseMutation
 export const OnChainPaymentSendDocument = gql`
     mutation onChainPaymentSend($input: OnChainPaymentSendInput!) {
   onChainPaymentSend(input: $input) {
+    transaction {
+      settlementVia {
+        ... on SettlementViaOnChain {
+          arrivalInMempoolEstimatedAt
+        }
+      }
+    }
     errors {
       message
     }
