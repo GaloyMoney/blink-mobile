@@ -136,11 +136,12 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           sendingWallet: sendingWalletDescriptor.currency,
         })
 
-        console.log({ extraInfo })
-
         if (status === "SUCCESS" || status === "PENDING") {
           navigation.dispatch((state) => {
-            const routes = [{ name: "Primary" }, { name: "sendBitcoinSuccess" }]
+            const routes = [
+              { name: "Primary" },
+              { name: "sendBitcoinSuccess", params: { extraInfo } },
+            ]
             return CommonActions.reset({
               ...state,
               routes,
