@@ -65,7 +65,7 @@ export const AmountInputScreenUI: React.FC<AmountInputScreenUIProps> = ({
                 // TODO adjust for currencies that use commas instead of decimals
 
                 // test for string input that can be either numerical or float
-                if (/^\d*\.?\d*$/.test(val)) {
+                if (/^\d*\.?\d*$/.test(val.trim())) {
                   const num = Number(val)
                   onPaste(num)
                 }
