@@ -6,6 +6,9 @@
 import "intl-pluralrules"
 import "./i18n/mapping"
 
+// for URL; need a polyfill on react native
+import "react-native-url-polyfill/auto"
+
 import "react-native-reanimated"
 
 import "@react-native-firebase/crashlytics"

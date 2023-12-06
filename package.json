@@ -125,6 +125,7 @@
     "react-native-share": "^9.4.1",
     "react-native-svg": "^14.0.0",
     "react-native-toast-message": "^2.1.5",
+    "react-native-url-polyfill": "^2.0.0",
     "react-native-vector-icons": "^10.0.2",
     "react-native-view-shot": "^3.7.0",
     "react-native-vision-camera": "3.6.4",
