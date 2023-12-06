@@ -145,7 +145,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
               "SettlementViaOnChain" &&
             data.onChainPaymentSend.transaction.settlementVia.arrivalInMempoolEstimatedAt
               ? data.onChainPaymentSend.transaction.settlementVia
-                  .arrivalInMempoolEstimatedAt
+                  .arrivalInMempoolEstimatedAt * 1000 // for JS Date
               : undefined,
         },
       }

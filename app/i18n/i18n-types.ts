@@ -6986,6 +6986,10 @@ type RootTranslation = {
 	}
 	SendBitcoinScreen: {
 		/**
+		 * T​r​a​n​s​a​c​t​i​o​n​ ​w​i​l​l​ ​b​e​ ​s​u​b​m​i​t​t​e​d​ ​t​o​ ​m​e​m​p​o​o​l​ ​b​y
+		 */
+		willBeSentToMempoolBy: string
+		/**
 		 * A​m​o​u​n​t
 		 */
 		amount: string
@@ -15736,6 +15740,10 @@ export type TranslationFunctions = {
 		clipboardError: () => LocalizedString
 	}
 	SendBitcoinScreen: {
+		/**
+		 * Transaction will be submitted to mempool by
+		 */
+		willBeSentToMempoolBy: () => LocalizedString
 		/**
 		 * Amount
 		 */
