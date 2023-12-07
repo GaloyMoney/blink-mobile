@@ -3,12 +3,14 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
-import { PermissionsAndroid, View } from "react-native"
+import { ActivityIndicator, PermissionsAndroid, View } from "react-native"
+import Geolocation from '@react-native-community/geolocation';
 import MapView, {
   Callout,
   CalloutSubview,
   MapMarkerProps,
   Marker,
+  Region,
 } from "react-native-maps"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
@@ -26,7 +28,11 @@ import MapStyles from "./map-styles.json"
 
 const useStyles = makeStyles(({ colors }) => ({
   android: { marginTop: 18 },
-
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   customView: {
     alignItems: "center",
     margin: 12,
@@ -41,6 +47,13 @@ const useStyles = makeStyles(({ colors }) => ({
 
   title: { color: colors._darkGrey },
 }))
+
+const EL_ZONTE_COORDS = {
+  latitude: 13.496743,
+  longitude: -89.439462,
+  latitudeDelta: 0.02,
+  longitudeDelta: 0.02,
+}
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "Primary">
@@ -68,6 +81,8 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   const styles = useStyles()
   const isAuthed = useIsAuthed()
 
+  const [isLoadingLocation, setIsLoadingLocation] = React.useState(true)
+  const [userLocation, setUserLocation] = React.useState<Region>()
   const [isRefreshed, setIsRefreshed] = React.useState(false)
   const { data, error, refetch } = useBusinessMapMarkersQuery({
     notifyOnNetworkStatusChange: true,
@@ -75,18 +90,39 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   })
   const { LL } = useI18nContext()
 
+  
   useFocusEffect(() => {
     if (!isRefreshed) {
       setIsRefreshed(true)
       refetch()
     }
   })
-
+  
   if (error) {
     toastShow({ message: error.message, LL })
   }
-
+  
   const maps = data?.businessMapMarkers ?? []
+  
+  // TODO should always get updated user's location on navigating to the map screen (not only when permissions are asked for)
+  const getUserRegion = (callback: (region?: Region) => void) => {
+    try {
+      Geolocation.getCurrentPosition((data: GeolocationPosition) => {
+        if (data) {
+          const region: Region = {
+            latitude: data.coords.latitude,
+            longitude: data.coords.longitude,
+            latitudeDelta: 0.02, // TODO figure out what these values should be
+            longitudeDelta: 0.02, // TODO figure out what these values should be
+          }
+          callback(region);
+        }
+      })
+    } catch (e) {
+      console.debug("Error getting user location", e);
+      callback(undefined)
+    } 
+  }
 
   const requestLocationPermission = useCallback(() => {
     const asyncRequestLocationPermission = async () => {
@@ -111,6 +147,13 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
           crashlytics().recordError(err)
         }
         console.debug(err)
+      } finally {
+        getUserRegion(region => {
+          if(region){
+            setUserLocation(region);
+          }
+          setIsLoadingLocation(false)
+        })
       }
     }
     asyncRequestLocationPermission()
@@ -120,6 +163,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
 
   useFocusEffect(requestLocationPermission)
 
+  // TODO this should be memoized for performance improvements. Use reduce() inside a useMemo() with some dependency array values
   const markers: ReturnType<React.FC<MapMarkerProps>>[] = []
   maps.forEach((item) => {
     if (item) {
@@ -170,19 +214,20 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <Screen>
-      <MapView
-        style={styles.map}
-        showsUserLocation={true}
-        initialRegion={{
-          latitude: 13.496743,
-          longitude: -89.439462,
-          latitudeDelta: 0.02,
-          longitudeDelta: 0.02,
-        }}
-        customMapStyle={themeMode === "dark" ? MapStyles.dark : MapStyles.light}
-      >
-        {markers}
-      </MapView>
+      {isLoadingLocation ? (
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator size="large" color={colors.prim}/>
+        </View>
+      ) : (
+        <MapView
+          style={styles.map}
+          showsUserLocation={true}
+          initialRegion={userLocation ?? EL_ZONTE_COORDS}
+          customMapStyle={themeMode === "dark" ? MapStyles.dark : MapStyles.light}
+        >
+          {markers}
+        </MapView>
+      )}
     </Screen>
   )
 }

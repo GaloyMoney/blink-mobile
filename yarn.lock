@@ -4090,6 +4090,11 @@
   dependencies:
     invariant "^2.2.4"
 
+"@react-native-community/geolocation@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/geolocation/-/geolocation-3.1.0.tgz#573881e9536d55cc2af74762183fa7ba575b2553"
+  integrity sha512-Aj76wMeCLz9kczpe7W2IXxSRNj+hRR7sqyfXq9ZaJIWNH23jeJfzMpovclg+e1uM8Vr8jCYEcZyD4rKub6Vc/Q==
+
 "@react-native-community/slider@^4.4.2":
   version "4.4.3"
   resolved "https://registry.npmjs.org/@react-native-community/slider/-/slider-4.4.3.tgz#9b9dc639b88f5bfda72bd72a9dff55cbf9f777ed"
