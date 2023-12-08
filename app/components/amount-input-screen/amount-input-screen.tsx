@@ -170,6 +170,15 @@ export const AmountInputScreen: React.FC<AmountInputScreenProps> = ({
     })
   }
 
+  const onPaste = (keys: number) => {
+    dispatchNumberPadAction({
+      action: NumberPadReducerActionType.HandlePaste,
+      payload: {
+        keys,
+      },
+    })
+  }
+
   const onClear = () => {
     dispatchNumberPadAction({
       action: NumberPadReducerActionType.ClearAmount,
@@ -253,6 +262,7 @@ export const AmountInputScreen: React.FC<AmountInputScreenProps> = ({
       secondaryCurrencySymbol={secondaryCurrencyInfo?.symbol}
       errorMessage={errorMessage}
       onKeyPress={onKeyPress}
+      onPaste={onPaste}
       onClearAmount={onClear}
       onToggleCurrency={onToggleCurrency}
       setAmountDisabled={Boolean(errorMessage)}
