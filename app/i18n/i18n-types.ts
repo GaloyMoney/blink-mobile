@@ -6861,9 +6861,23 @@ type RootTranslation = {
 		 */
 		maxFeeSelected: string
 		/**
-		 * F​a​i​l​e​d​ ​t​o​ ​c​a​l​c​u​l​a​t​e​ ​f​e​e
+		 * U​n​a​b​l​e​ ​t​o​ ​c​a​l​c​u​l​a​t​e​ ​f​e​e
 		 */
 		feeError: string
+		/**
+		 * T​h​i​s​ ​i​n​v​o​i​c​e​ ​h​a​s​ ​a​l​r​e​a​d​y​ ​b​e​e​n​ ​p​a​i​d
+		 */
+		invoiceAlreadyPaid: string
+		/**
+		 * S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g
+		 */
+		somethingWentWrong: string
+		/**
+		 * P​a​y​m​e​n​t​ ​a​l​r​e​a​d​y​ ​a​t​t​e​m​p​t​e​d​.​
+	​
+	​I​f​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​s​e​n​d​ ​t​h​i​s​ ​p​a​y​m​e​n​t​ ​a​g​a​i​n​,​ ​s​t​a​r​t​ ​f​r​o​m​ ​s​c​r​a​t​c​h​.
+		 */
+		paymentAlreadyAttempted: string
 	}
 	SendBitcoinDestinationScreen: {
 		/**
@@ -15636,9 +15650,23 @@ export type TranslationFunctions = {
 		 */
 		maxFeeSelected: () => LocalizedString
 		/**
-		 * Failed to calculate fee
+		 * Unable to calculate fee
 		 */
 		feeError: () => LocalizedString
+		/**
+		 * This invoice has already been paid
+		 */
+		invoiceAlreadyPaid: () => LocalizedString
+		/**
+		 * Something went wrong
+		 */
+		somethingWentWrong: () => LocalizedString
+		/**
+		 * Payment already attempted.
+
+	If you want to send this payment again, start from scratch.
+		 */
+		paymentAlreadyAttempted: () => LocalizedString
 	}
 	SendBitcoinDestinationScreen: {
 		/**

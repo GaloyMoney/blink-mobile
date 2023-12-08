@@ -115,7 +115,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
       walletAmount: fee.amount,
     })
   } else {
-    feeDisplayText = "Unable to calculate fee"
+    feeDisplayText = LL.SendBitcoinConfirmationScreen.feeError()
   }
 
   const handleSendPayment = useMemo(() => {
@@ -155,25 +155,35 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
         }
 
         if (status === "ALREADY_PAID") {
-          setPaymentError("Invoice is already paid")
+          setPaymentError(LL.SendBitcoinConfirmationScreen.invoiceAlreadyPaid())
           ReactNativeHapticFeedback.trigger("notificationError", {
             ignoreAndroidSystemSettings: true,
           })
           return
         }
 
-        setPaymentError(errorsMessage || "Something went wrong")
+        setPaymentError(
+          errorsMessage || LL.SendBitcoinConfirmationScreen.somethingWentWrong(),
+        )
         ReactNativeHapticFeedback.trigger("notificationError", {
           ignoreAndroidSystemSettings: true,
         })
       } catch (err) {
         if (err instanceof Error) {
           crashlytics().recordError(err)
+
+          const indempotencyErrorPattern = /409: Conflict/i
+          if (indempotencyErrorPattern.test(err.message)) {
+            setPaymentError(LL.SendBitcoinConfirmationScreen.paymentAlreadyAttempted())
+            return
+          }
+
           setPaymentError(err.message || err.toString())
         }
       }
     }
   }, [
+    LL,
     navigation,
     paymentDetail.paymentType,
     sendPayment,
