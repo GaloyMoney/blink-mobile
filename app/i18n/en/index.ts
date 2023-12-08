@@ -2209,7 +2209,10 @@ const en: BaseTranslation = {
     totalExceed: "Total exceeds your balance of {balance: string}",
     maxFeeSelected:
       "This is the maximum fee you will be charged for this transaction.  It may end up being less once the payment has been made.",
-    feeError: "Failed to calculate fee",
+    feeError: "Unable to calculate fee",
+    invoiceAlreadyPaid: "This invoice has already been paid",
+    somethingWentWrong: "Something went wrong",
+    paymentAlreadyAttempted: "Payment already attempted.\n\nIf you want to send this payment again, start from scratch.",
   },
   SendBitcoinDestinationScreen: {
     usernameNowAddress:
@@ -2426,7 +2429,7 @@ const en: BaseTranslation = {
     sendingAccount: "Sending Account",
     txNotBroadcast:
       "Your transaction is queued. It should appear in the mempool {countdown: string}.",
-    now: "now",
+    momentarily: "momentarily",
     hasBeenCopiedToClipboard: "{type: string} has been copied to clipboard",
   },
   TransactionLimitsScreen: {

@@ -16,6 +16,7 @@ export const NumberPadReducerActionType = {
   SetAmount: "SetAmount",
   HandleKeyPress: "HandleKeyPress",
   ClearAmount: "ClearAmount",
+  HandlePaste: "HandlePaste",
 } as const
 
 export type NumberPadReducerAction =
@@ -35,6 +36,12 @@ export type NumberPadReducerAction =
     }
   | {
       action: typeof NumberPadReducerActionType.ClearAmount
+    }
+  | {
+      action: typeof NumberPadReducerActionType.HandlePaste
+      payload: {
+        keys: number
+      }
     }
 
 export const Key = {
@@ -69,6 +76,21 @@ export const numberPadReducer = (
   switch (action.action) {
     case NumberPadReducerActionType.SetAmount:
       return action.payload
+    case NumberPadReducerActionType.HandlePaste: {
+      const num = action.payload.keys
+      const formatted: string =
+        num % 1 === 0 ? num.toString() : num.toFixed(numberOfDecimalsAllowed)
+      const splitByDecimal = formatted.split(".")
+
+      return {
+        ...state,
+        numberPadNumber: {
+          majorAmount: splitByDecimal[0],
+          hasDecimal: splitByDecimal.length > 1,
+          minorAmount: splitByDecimal[1] ?? "",
+        },
+      }
+    }
     case NumberPadReducerActionType.HandleKeyPress:
       if (action.payload.key === Key.Backspace) {
         if (minorAmount.length > 0) {

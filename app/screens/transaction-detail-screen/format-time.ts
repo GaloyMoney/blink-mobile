@@ -21,5 +21,5 @@ export const formatTimeToMempool = (
   } else if (seconds > 0) {
     return rtf.format(seconds, "second")
   }
-  return LL.TransactionDetailScreen.now()
+  return LL.TransactionDetailScreen.momentarily()
 }

@@ -49,6 +49,6 @@ describe("formatTimeToMempool", () => {
 
   it("format time when is negative", () => {
     const outputTime = formatTimeToMempool(1701819669, LL, "en")
-    expect(outputTime).toStrictEqual(LL.TransactionDetailScreen.now())
+    expect(outputTime).toStrictEqual(LL.TransactionDetailScreen.momentarily())
   })
 })
