@@ -119,7 +119,11 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     },
   })
 
-  const [refetch, { loading }] = useTransactionListForDefaultAccountLazyQuery()
+  const [refetch, { loading }] = useTransactionListForDefaultAccountLazyQuery({
+    // FIXME: it doesn't auto refresh
+    fetchPolicy: "network-only",
+  })
+  const [timer, setTimer] = React.useState<number>(0)
 
   const { LL, locale } = useI18nContext()
   const { formatCurrency } = useDisplayCurrency()
@@ -128,6 +132,31 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     tx,
     bankName: galoyInstance.name,
   })
+
+  React.useEffect(() => {
+    let intervalId: NodeJS.Timeout
+
+    const onChainTxNotBroadcasted =
+      tx?.settlementVia?.__typename === "SettlementViaOnChain" &&
+      tx?.settlementVia?.transactionHash === null
+
+    if (onChainTxNotBroadcasted) {
+      intervalId = setInterval(() => {
+        console.log("abc", timer % 10 === 0, timer)
+        // refetch to backend every 10 seconds
+        timer % 10 === 0 && refetch()
+
+        // refresh screen every second
+        setTimer((timer) => timer + 1)
+      }, 1000)
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId)
+      }
+    }
+  }, [tx, refetch, timer])
 
   // FIXME doesn't work with storybook
   // TODO: translation

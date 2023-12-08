@@ -2426,7 +2426,7 @@ const en: BaseTranslation = {
     sendingAccount: "Sending Account",
     txNotBroadcast:
       "Your transaction is queued. It should appear in the mempool {countdown: string}.",
-    now: "now",
+    momentarily: "momentarily",
     hasBeenCopiedToClipboard: "{type: string} has been copied to clipboard",
   },
   TransactionLimitsScreen: {

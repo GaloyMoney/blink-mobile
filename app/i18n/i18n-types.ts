@@ -7515,9 +7515,9 @@ type RootTranslation = {
 		 */
 		txNotBroadcast: RequiredParams<'countdown'>
 		/**
-		 * n​o​w
+		 * m​o​m​e​n​t​a​r​i​l​y
 		 */
-		now: string
+		momentarily: string
 		/**
 		 * {​t​y​p​e​}​ ​h​a​s​ ​b​e​e​n​ ​c​o​p​i​e​d​ ​t​o​ ​c​l​i​p​b​o​a​r​d
 		 * @param {string} type
@@ -16265,9 +16265,9 @@ export type TranslationFunctions = {
 		 */
 		txNotBroadcast: (arg: { countdown: string }) => LocalizedString
 		/**
-		 * now
+		 * momentarily
 		 */
-		now: () => LocalizedString
+		momentarily: () => LocalizedString
 		/**
 		 * {type} has been copied to clipboard
 		 */
