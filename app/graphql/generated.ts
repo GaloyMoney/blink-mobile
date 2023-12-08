@@ -2732,6 +2732,16 @@ export type AccountLnAddressQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AccountLnAddressQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null } | null };
 
+export type DefaultWalletQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DefaultWalletQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly defaultWalletId: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
+
+export type AccountPosQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AccountPosQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null } | null };
+
 export type TotpRegistrationScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6782,6 +6792,81 @@ export function useAccountLnAddressLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type AccountLnAddressQueryHookResult = ReturnType<typeof useAccountLnAddressQuery>;
 export type AccountLnAddressLazyQueryHookResult = ReturnType<typeof useAccountLnAddressLazyQuery>;
 export type AccountLnAddressQueryResult = Apollo.QueryResult<AccountLnAddressQuery, AccountLnAddressQueryVariables>;
+export const DefaultWalletDocument = gql`
+    query DefaultWallet {
+  me {
+    defaultAccount {
+      defaultWalletId
+      wallets {
+        id
+        balance
+        walletCurrency
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useDefaultWalletQuery__
+ *
+ * To run a query within a React component, call `useDefaultWalletQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDefaultWalletQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDefaultWalletQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useDefaultWalletQuery(baseOptions?: Apollo.QueryHookOptions<DefaultWalletQuery, DefaultWalletQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DefaultWalletQuery, DefaultWalletQueryVariables>(DefaultWalletDocument, options);
+      }
+export function useDefaultWalletLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DefaultWalletQuery, DefaultWalletQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DefaultWalletQuery, DefaultWalletQueryVariables>(DefaultWalletDocument, options);
+        }
+export type DefaultWalletQueryHookResult = ReturnType<typeof useDefaultWalletQuery>;
+export type DefaultWalletLazyQueryHookResult = ReturnType<typeof useDefaultWalletLazyQuery>;
+export type DefaultWalletQueryResult = Apollo.QueryResult<DefaultWalletQuery, DefaultWalletQueryVariables>;
+export const AccountPosDocument = gql`
+    query AccountPOS {
+  me {
+    username
+  }
+}
+    `;
+
+/**
+ * __useAccountPosQuery__
+ *
+ * To run a query within a React component, call `useAccountPosQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAccountPosQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAccountPosQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAccountPosQuery(baseOptions?: Apollo.QueryHookOptions<AccountPosQuery, AccountPosQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AccountPosQuery, AccountPosQueryVariables>(AccountPosDocument, options);
+      }
+export function useAccountPosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AccountPosQuery, AccountPosQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AccountPosQuery, AccountPosQueryVariables>(AccountPosDocument, options);
+        }
+export type AccountPosQueryHookResult = ReturnType<typeof useAccountPosQuery>;
+export type AccountPosLazyQueryHookResult = ReturnType<typeof useAccountPosLazyQuery>;
+export type AccountPosQueryResult = Apollo.QueryResult<AccountPosQuery, AccountPosQueryVariables>;
 export const TotpRegistrationScreenDocument = gql`
     query totpRegistrationScreen {
   me {

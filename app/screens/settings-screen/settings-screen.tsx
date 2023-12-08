@@ -10,6 +10,8 @@ import { Screen } from "@app/components/screen"
 import { AccountBanner } from "./settings/account-banner"
 import { AccountLevelSetting } from "./settings/account-level"
 import { AccountLNAddress } from "./settings/account-ln-address"
+import { AccountPOS } from "./settings/pos"
+import { DefaultWallet } from "./settings/account-default-wallet"
 
 export const SettingsScreen: React.FC = () => {
   const styles = useStyles()
@@ -19,9 +21,11 @@ export const SettingsScreen: React.FC = () => {
   const items = {
     account: [
       <AccountLevelSetting key="acc-level" />,
-      <AccountLNAddress key="ln-addr" />,
+      <AccountLNAddress key="blink-addr" />,
+      <AccountPOS key="pos" />,
+      <DefaultWallet key="default-wallet" />,
     ],
-    general: [],
+    preferences: [],
     securityAndPrivacy: [],
     advanced: [],
     community: [],
@@ -34,7 +38,7 @@ export const SettingsScreen: React.FC = () => {
         {isAtLeastLevelZero && (
           <SettingsGroup name={LL.common.account()} items={items.account} />
         )}
-        <SettingsGroup name={LL.common.general()} items={items.general} />
+        <SettingsGroup name={LL.common.preferences()} items={items.preferences} />
         <SettingsGroup
           name={LL.common.securityAndPrivacy()}
           items={items.securityAndPrivacy}

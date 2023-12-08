@@ -5,18 +5,24 @@ import { makeStyles, Icon, Text, Skeleton } from "@rneui/themed"
 type Props = {
   title: string
   subtitle?: string
+  subtitleShorter?: boolean
   leftIcon: string
   rightIcon?: string
+  extraComponentBesideTitle?: React.ReactElement
   action: () => void
+  rightIconAction?: () => void
   loading?: boolean
 }
 
 export const SettingsRow: React.FC<Props> = ({
   title,
   subtitle,
+  subtitleShorter,
   leftIcon,
   rightIcon,
   action,
+  rightIconAction = () => {},
+  extraComponentBesideTitle = <></>,
   loading,
 }) => {
   const [hovering, setHovering] = useState(false)
@@ -34,11 +40,22 @@ export const SettingsRow: React.FC<Props> = ({
         <View style={styles.container}>
           <Icon name={leftIcon} type="ionicon" />
           <View>
-            <Text type="p2">{title}</Text>
-            {subtitle && <Text type="p3">{subtitle}</Text>}
+            <Text type="p2">
+              {title}
+              {extraComponentBesideTitle}
+            </Text>
+            {subtitle && (
+              <Text type={subtitleShorter ? "p4" : "p3"} ellipsizeMode="tail">
+                {subtitle}
+              </Text>
+            )}
           </View>
         </View>
-        <Icon name={rightIcon ? rightIcon : "chevron-forward"} type="ionicon" />
+        <Icon
+          onPress={rightIconAction}
+          name={rightIcon ? rightIcon : "chevron-forward"}
+          type="ionicon"
+        />
       </View>
     </TouchableWithoutFeedback>
   )
@@ -52,6 +69,7 @@ const useStyles = makeStyles(({ colors }, { hovering }: { hovering: boolean }) =
     justifyContent: "space-between",
     columnGap: 16,
     paddingHorizontal: 8,
+    paddingRight: 12,
     paddingVertical: 6,
     backgroundColor: hovering ? colors.grey4 : undefined,
     height: 64,

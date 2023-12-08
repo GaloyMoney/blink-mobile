@@ -7116,6 +7116,14 @@ type RootTranslation = {
 	}
 	SettingsScreen: {
 		/**
+		 * P​o​i​n​t​ ​o​f​ ​S​a​l​e
+		 */
+		pos: string
+		/**
+		 * Y​o​u​r​ ​p​o​i​n​t​ ​o​f​ ​s​a​l​e​ ​l​i​n​k​ ​h​a​s​ ​b​e​e​n​ ​c​o​p​i​e​d
+		 */
+		posCopied: string
+		/**
 		 * Y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​A​d​d​r​e​s​s
 		 * @param {string} bankName
 		 */
@@ -7932,9 +7940,9 @@ type RootTranslation = {
 	}
 	common: {
 		/**
-		 * G​e​n​e​r​a​l
+		 * P​r​e​f​e​r​e​n​c​e​s
 		 */
-		general: string
+		preferences: string
 		/**
 		 * S​e​c​u​r​i​t​y​ ​a​n​d​ ​P​r​i​v​a​c​y
 		 */
@@ -15921,6 +15929,14 @@ export type TranslationFunctions = {
 	}
 	SettingsScreen: {
 		/**
+		 * Point of Sale
+		 */
+		pos: () => LocalizedString
+		/**
+		 * Your point of sale link has been copied
+		 */
+		posCopied: () => LocalizedString
+		/**
 		 * Your {bankName} Address
 		 */
 		yourAddress: (arg: { bankName: string }) => LocalizedString
@@ -16714,9 +16730,9 @@ export type TranslationFunctions = {
 	}
 	common: {
 		/**
-		 * General
+		 * Preferences
 		 */
-		general: () => LocalizedString
+		preferences: () => LocalizedString
 		/**
 		 * Security and Privacy
 		 */

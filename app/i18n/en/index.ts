@@ -2289,6 +2289,8 @@ const en: BaseTranslation = {
     },
   },
   SettingsScreen: {
+    pos: "Point of Sale",
+    posCopied: "Your point of sale link has been copied",
     yourAddress: "Your {bankName: string} Address",
     setYourAddress: "Set Your {bankName: string} Address",
     activated: "Activated",
@@ -2562,7 +2564,7 @@ const en: BaseTranslation = {
     success: "Email {email: string} confirmed successfully",
   },
   common: {
-    general: "General",
+    preferences: "Preferences",
     securityAndPrivacy: "Security and Privacy",
     advanced: "Advanced",
     community: "Community",

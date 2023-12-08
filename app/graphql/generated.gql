@@ -744,6 +744,13 @@ query AccountLNAddress {
   }
 }
 
+query AccountPOS {
+  me {
+    username
+    __typename
+  }
+}
+
 query AccountSettingsBanner {
   me {
     username
@@ -784,6 +791,22 @@ query ContactsCard {
       username
       alias
       transactionsCount
+      __typename
+    }
+    __typename
+  }
+}
+
+query DefaultWallet {
+  me {
+    defaultAccount {
+      defaultWalletId
+      wallets {
+        id
+        balance
+        walletCurrency
+        __typename
+      }
       __typename
     }
     __typename

@@ -44,6 +44,7 @@ export const AccountLNAddress: React.FC = () => {
             : LL.SettingsScreen.setYourAddress({ bankName })
         }
         subtitle={hasUsername ? lnAddress : undefined}
+        subtitleShorter={(data?.me?.username || "").length > 22}
         leftIcon="at-outline"
         rightIcon={hasUsername ? "copy-outline" : undefined}
         action={() => {
