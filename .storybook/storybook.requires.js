@@ -6,7 +6,7 @@ import {
   addParameters,
   addArgsEnhancer,
   clearDecorators,
-} from "@storybook/react-native";
+} from "@storybook/react-native"
 
 global.STORIES = [
   {
@@ -16,18 +16,18 @@ global.STORIES = [
     importPathMatcher:
       "^\\.[\\\\/](?:app(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.stories\\.(?:ts|tsx)?)$",
   },
-];
+]
 
-import "@storybook/addon-ondevice-notes/register";
-import "@storybook/addon-ondevice-controls/register";
-import "@storybook/addon-ondevice-knobs/register";
-import "@storybook/addon-ondevice-backgrounds/register";
-import "@storybook/addon-ondevice-actions/register";
+import "@storybook/addon-ondevice-notes/register"
+import "@storybook/addon-ondevice-controls/register"
+import "@storybook/addon-ondevice-knobs/register"
+import "@storybook/addon-ondevice-backgrounds/register"
+import "@storybook/addon-ondevice-actions/register"
 
-import { argsEnhancers } from "@storybook/addon-actions/dist/modern/preset/addArgs";
+import { argsEnhancers } from "@storybook/addon-actions/dist/modern/preset/addArgs"
 
 try {
-  argsEnhancers.forEach((enhancer) => addArgsEnhancer(enhancer));
+  argsEnhancers.forEach((enhancer) => addArgsEnhancer(enhancer))
 } catch {}
 
 const getStories = () => {
@@ -93,14 +93,14 @@ const getStories = () => {
     "./app/screens/send-bitcoin-screen/send-bitcoin-details-screen.stories.tsx": require("../app/screens/send-bitcoin-screen/send-bitcoin-details-screen.stories.tsx"),
     "./app/screens/send-bitcoin-screen/send-bitcoin-success-screen.stories.tsx": require("../app/screens/send-bitcoin-screen/send-bitcoin-success-screen.stories.tsx"),
     "./app/screens/send-bitcoin-screen/suggestion-modal.stories.tsx": require("../app/screens/send-bitcoin-screen/suggestion-modal.stories.tsx"),
-    "./app/screens/settings-screen/account-screen.stories.tsx": require("../app/screens/settings-screen/account-screen.stories.tsx"),
-    "./app/screens/settings-screen/default-wallet.stories.tsx": require("../app/screens/settings-screen/default-wallet.stories.tsx"),
-    "./app/screens/settings-screen/display-currency-screen.stories.tsx": require("../app/screens/settings-screen/display-currency-screen.stories.tsx"),
-    "./app/screens/settings-screen/language-screen.stories.tsx": require("../app/screens/settings-screen/language-screen.stories.tsx"),
-    "./app/screens/settings-screen/settings-screen.stories.tsx": require("../app/screens/settings-screen/settings-screen.stories.tsx"),
-    "./app/screens/settings-screen/theme-screen.stories.tsx": require("../app/screens/settings-screen/theme-screen.stories.tsx"),
+    "./app/screens/settings-screen-original/account-screen.stories.tsx": require("../app/screens/settings-screen-original/account-screen.stories.tsx"),
+    "./app/screens/settings-screen-original/default-wallet.stories.tsx": require("../app/screens/settings-screen-original/default-wallet.stories.tsx"),
+    "./app/screens/settings-screen-original/display-currency-screen.stories.tsx": require("../app/screens/settings-screen-original/display-currency-screen.stories.tsx"),
+    "./app/screens/settings-screen-original/language-screen.stories.tsx": require("../app/screens/settings-screen-original/language-screen.stories.tsx"),
+    "./app/screens/settings-screen-original/settings-screen.stories.tsx": require("../app/screens/settings-screen-original/settings-screen.stories.tsx"),
+    "./app/screens/settings-screen-original/theme-screen.stories.tsx": require("../app/screens/settings-screen-original/theme-screen.stories.tsx"),
     "./app/screens/transaction-detail-screen/transaction-detail-screen.stories.tsx": require("../app/screens/transaction-detail-screen/transaction-detail-screen.stories.tsx"),
-  };
-};
+  }
+}
 
-configure(getStories, module, false);
+configure(getStories, module, false)

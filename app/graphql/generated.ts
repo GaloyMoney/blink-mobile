@@ -2722,6 +2722,16 @@ export type AccountLimitsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AccountLimitsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly limits: { readonly __typename: 'AccountLimits', readonly withdrawal: ReadonlyArray<{ readonly __typename: 'OneDayAccountLimit', readonly totalLimit: number, readonly remainingLimit?: number | null, readonly interval?: number | null }>, readonly internalSend: ReadonlyArray<{ readonly __typename: 'OneDayAccountLimit', readonly totalLimit: number, readonly remainingLimit?: number | null, readonly interval?: number | null }>, readonly convert: ReadonlyArray<{ readonly __typename: 'OneDayAccountLimit', readonly totalLimit: number, readonly remainingLimit?: number | null, readonly interval?: number | null }> } } } | null };
 
+export type AccountSettingsBannerQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AccountSettingsBannerQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null } | null };
+
+export type AccountLnAddressQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AccountLnAddressQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null } | null };
+
 export type TotpRegistrationScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6704,6 +6714,74 @@ export function useAccountLimitsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type AccountLimitsQueryHookResult = ReturnType<typeof useAccountLimitsQuery>;
 export type AccountLimitsLazyQueryHookResult = ReturnType<typeof useAccountLimitsLazyQuery>;
 export type AccountLimitsQueryResult = Apollo.QueryResult<AccountLimitsQuery, AccountLimitsQueryVariables>;
+export const AccountSettingsBannerDocument = gql`
+    query AccountSettingsBanner {
+  me {
+    username
+  }
+}
+    `;
+
+/**
+ * __useAccountSettingsBannerQuery__
+ *
+ * To run a query within a React component, call `useAccountSettingsBannerQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAccountSettingsBannerQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAccountSettingsBannerQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAccountSettingsBannerQuery(baseOptions?: Apollo.QueryHookOptions<AccountSettingsBannerQuery, AccountSettingsBannerQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AccountSettingsBannerQuery, AccountSettingsBannerQueryVariables>(AccountSettingsBannerDocument, options);
+      }
+export function useAccountSettingsBannerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AccountSettingsBannerQuery, AccountSettingsBannerQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AccountSettingsBannerQuery, AccountSettingsBannerQueryVariables>(AccountSettingsBannerDocument, options);
+        }
+export type AccountSettingsBannerQueryHookResult = ReturnType<typeof useAccountSettingsBannerQuery>;
+export type AccountSettingsBannerLazyQueryHookResult = ReturnType<typeof useAccountSettingsBannerLazyQuery>;
+export type AccountSettingsBannerQueryResult = Apollo.QueryResult<AccountSettingsBannerQuery, AccountSettingsBannerQueryVariables>;
+export const AccountLnAddressDocument = gql`
+    query AccountLNAddress {
+  me {
+    username
+  }
+}
+    `;
+
+/**
+ * __useAccountLnAddressQuery__
+ *
+ * To run a query within a React component, call `useAccountLnAddressQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAccountLnAddressQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAccountLnAddressQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAccountLnAddressQuery(baseOptions?: Apollo.QueryHookOptions<AccountLnAddressQuery, AccountLnAddressQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AccountLnAddressQuery, AccountLnAddressQueryVariables>(AccountLnAddressDocument, options);
+      }
+export function useAccountLnAddressLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AccountLnAddressQuery, AccountLnAddressQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AccountLnAddressQuery, AccountLnAddressQueryVariables>(AccountLnAddressDocument, options);
+        }
+export type AccountLnAddressQueryHookResult = ReturnType<typeof useAccountLnAddressQuery>;
+export type AccountLnAddressLazyQueryHookResult = ReturnType<typeof useAccountLnAddressLazyQuery>;
+export type AccountLnAddressQueryResult = Apollo.QueryResult<AccountLnAddressQuery, AccountLnAddressQueryVariables>;
 export const TotpRegistrationScreenDocument = gql`
     query totpRegistrationScreen {
   me {

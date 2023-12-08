@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useShowWarningSecureAccount } from "@app/screens/settings-screen/show-warning-secure-account"
+import { useShowWarningSecureAccount } from "@app/screens/settings-screen-original/show-warning-secure-account"
 import { renderHook } from "@testing-library/react-hooks"
 import {
   CurrencyListDocument,

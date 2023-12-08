@@ -1,7 +1,7 @@
 import {
   getMatchingCurrencies,
   wordMatchesCurrency,
-} from "../../app/screens/settings-screen/display-currency-screen"
+} from "../../app/screens/settings-screen-original/display-currency-screen"
 
 const currency = {
   flag: "🇹🇹",

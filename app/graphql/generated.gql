@@ -737,6 +737,20 @@ mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
   }
 }
 
+query AccountLNAddress {
+  me {
+    username
+    __typename
+  }
+}
+
+query AccountSettingsBanner {
+  me {
+    username
+    __typename
+  }
+}
+
 query Circles {
   me {
     username

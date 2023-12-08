@@ -2289,6 +2289,8 @@ const en: BaseTranslation = {
     },
   },
   SettingsScreen: {
+    yourAddress: "Your {bankName: string} Address",
+    setYourAddress: "Set Your {bankName: string} Address",
     activated: "Activated",
     addressScreen: "Ways to get paid",
     tapUserName: "Tap to set username",
@@ -2331,6 +2333,7 @@ const en: BaseTranslation = {
     }
   },
   AccountScreen: {
+    level: "Level {level: string}",
     accountLevel: "Account Level",
     upgrade: "Upgrade your account",
     logOutAndDeleteLocalData: "Log out and clear all local data",
@@ -2559,6 +2562,10 @@ const en: BaseTranslation = {
     success: "Email {email: string} confirmed successfully",
   },
   common: {
+    general: "General",
+    securityAndPrivacy: "Security and Privacy",
+    advanced: "Advanced",
+    community: "Community",
     account: "Account",
     transactionLimits: "Transaction Limits",
     activateWallet: "Activate Wallet",

@@ -7116,6 +7116,16 @@ type RootTranslation = {
 	}
 	SettingsScreen: {
 		/**
+		 * Y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​A​d​d​r​e​s​s
+		 * @param {string} bankName
+		 */
+		yourAddress: RequiredParams<'bankName'>
+		/**
+		 * S​e​t​ ​Y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​A​d​d​r​e​s​s
+		 * @param {string} bankName
+		 */
+		setYourAddress: RequiredParams<'bankName'>
+		/**
 		 * A​c​t​i​v​a​t​e​d
 		 */
 		activated: string
@@ -7242,6 +7252,11 @@ type RootTranslation = {
 		}
 	}
 	AccountScreen: {
+		/**
+		 * L​e​v​e​l​ ​{​l​e​v​e​l​}
+		 * @param {string} level
+		 */
+		level: RequiredParams<'level'>
 		/**
 		 * A​c​c​o​u​n​t​ ​L​e​v​e​l
 		 */
@@ -7916,6 +7931,22 @@ type RootTranslation = {
 		success: RequiredParams<'email'>
 	}
 	common: {
+		/**
+		 * G​e​n​e​r​a​l
+		 */
+		general: string
+		/**
+		 * S​e​c​u​r​i​t​y​ ​a​n​d​ ​P​r​i​v​a​c​y
+		 */
+		securityAndPrivacy: string
+		/**
+		 * A​d​v​a​n​c​e​d
+		 */
+		advanced: string
+		/**
+		 * C​o​m​m​u​n​i​t​y
+		 */
+		community: string
 		/**
 		 * A​c​c​o​u​n​t
 		 */
@@ -15890,6 +15921,14 @@ export type TranslationFunctions = {
 	}
 	SettingsScreen: {
 		/**
+		 * Your {bankName} Address
+		 */
+		yourAddress: (arg: { bankName: string }) => LocalizedString
+		/**
+		 * Set Your {bankName} Address
+		 */
+		setYourAddress: (arg: { bankName: string }) => LocalizedString
+		/**
 		 * Activated
 		 */
 		activated: () => LocalizedString
@@ -16015,6 +16054,10 @@ export type TranslationFunctions = {
 		}
 	}
 	AccountScreen: {
+		/**
+		 * Level {level}
+		 */
+		level: (arg: { level: string }) => LocalizedString
 		/**
 		 * Account Level
 		 */
@@ -16670,6 +16713,22 @@ export type TranslationFunctions = {
 		success: (arg: { email: string }) => LocalizedString
 	}
 	common: {
+		/**
+		 * General
+		 */
+		general: () => LocalizedString
+		/**
+		 * Security and Privacy
+		 */
+		securityAndPrivacy: () => LocalizedString
+		/**
+		 * Advanced
+		 */
+		advanced: () => LocalizedString
+		/**
+		 * Community
+		 */
+		community: () => LocalizedString
 		/**
 		 * Account
 		 */
