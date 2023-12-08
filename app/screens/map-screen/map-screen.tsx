@@ -104,7 +104,6 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   
   const maps = data?.businessMapMarkers ?? []
   
-  // TODO should always get updated user's location on navigating to the map screen (not only when permissions are asked for)
   const getUserRegion = (callback: (region?: Region) => void) => {
     try {
       Geolocation.getCurrentPosition((data: GeolocationPosition) => {
@@ -112,8 +111,8 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
           const region: Region = {
             latitude: data.coords.latitude,
             longitude: data.coords.longitude,
-            latitudeDelta: 0.02, // TODO figure out what these values should be
-            longitudeDelta: 0.02, // TODO figure out what these values should be
+            latitudeDelta: 0.02, 
+            longitudeDelta: 0.02, 
           }
           callback(region);
         }
@@ -138,23 +137,22 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
           },
         )
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.debug("You can use the location")
+          getUserRegion(region => {
+            if(region){
+              setUserLocation(region);
+            }
+            setIsLoadingLocation(false)
+          })
         } else {
           console.debug("Location permission denied")
+          setIsLoadingLocation(false)
         }
       } catch (err: unknown) {
         if (err instanceof Error) {
           crashlytics().recordError(err)
         }
         console.debug(err)
-      } finally {
-        getUserRegion(region => {
-          if(region){
-            setUserLocation(region);
-          }
-          setIsLoadingLocation(false)
-        })
-      }
+      } 
     }
     asyncRequestLocationPermission()
     // disable eslint because we don't want to re-run this function when the language changes
@@ -216,7 +214,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     <Screen>
       {isLoadingLocation ? (
         <View style={styles.loaderContainer}>
-          <ActivityIndicator size="large" color={colors.prim}/>
+          <ActivityIndicator size="large" color={colors.primary}/>
         </View>
       ) : (
         <MapView
