@@ -1,5 +1,5 @@
 import * as React from "react"
-import { WalletCurrency } from "@app/graphql/generated"
+import { WalletCurrency, useSwapDefaultUnitOfAccountQuery } from "@app/graphql/generated"
 import { CurrencyInfo, useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { ConvertMoneyAmount } from "@app/screens/send-bitcoin-screen/payment-details"
@@ -19,6 +19,8 @@ import {
   NumberPadReducerActionType,
   NumberPadReducerState,
 } from "./number-pad-reducer"
+import { setSwapDefaultUnitOfAccount } from "@app/graphql/client-only-query"
+import { useApolloClient } from "@apollo/client"
 
 export type AmountInputScreenProps = {
   goBack: () => void
@@ -198,11 +200,32 @@ export const AmountInputScreen: React.FC<AmountInputScreenProps> = ({
     [currencyInfo],
   )
 
-  const onToggleCurrency =
-    secondaryNewAmount &&
-    (() => {
+  const client = useApolloClient()
+  const swapDefaultUnitOfAccount =
+    useSwapDefaultUnitOfAccountQuery().data?.swapDefaultUnitOfAccount
+  const [needSwapCurrencyInit, setNeedSwapCurrencyInit] = React.useState(
+    swapDefaultUnitOfAccount,
+  )
+
+  const onToggleCurrency = React.useCallback(() => {
+    if (secondaryNewAmount) {
+      setSwapDefaultUnitOfAccount(client, !swapDefaultUnitOfAccount)
       setNumberPadAmount(secondaryNewAmount)
-    })
+    }
+  }, [secondaryNewAmount, setNumberPadAmount, client, swapDefaultUnitOfAccount])
+
+  useEffect(() => {
+    if (needSwapCurrencyInit && secondaryNewAmount) {
+      setNeedSwapCurrencyInit(false)
+      setNumberPadAmount(secondaryNewAmount)
+    }
+  }, [
+    swapDefaultUnitOfAccount,
+    onToggleCurrency,
+    secondaryNewAmount,
+    needSwapCurrencyInit,
+    setNumberPadAmount,
+  ])
 
   useEffect(() => {
     if (initialAmount) {

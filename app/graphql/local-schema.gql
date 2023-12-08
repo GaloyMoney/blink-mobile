@@ -20,6 +20,7 @@ extend type Query {
   hasPromptedSetDefaultAccount: Boolean!
   introducingCirclesModalShown: Boolean!
   innerCircleValue: Int!
+  swapDefaultUnitOfAccount: Boolean!
 }
 
 extend type Account {

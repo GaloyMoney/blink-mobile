@@ -1496,6 +1496,7 @@ export type Query = {
   readonly quizQuestions?: Maybe<ReadonlyArray<Maybe<QuizQuestion>>>;
   /** Returns 1 Sat and 1 Usd Cent price for the given currency */
   readonly realtimePrice: RealtimePrice;
+  readonly swapDefaultUnitOfAccount: Scalars['Boolean']['output'];
   /** @deprecated will be migrated to AccountDefaultWalletId */
   readonly userDefaultWalletId: Scalars['WalletId']['output'];
   readonly usernameAvailable?: Maybe<Scalars['Boolean']['output']>;
@@ -2238,6 +2239,11 @@ export type InnerCircleValueQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type InnerCircleValueQuery = { readonly __typename: 'Query', readonly innerCircleValue: number };
+
+export type SwapDefaultUnitOfAccountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SwapDefaultUnitOfAccountQuery = { readonly __typename: 'Query', readonly swapDefaultUnitOfAccount: boolean };
 
 export type TransactionFragment = { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string, readonly paymentRequest: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly preImage?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash?: string | null, readonly arrivalInMempoolEstimatedAt?: number | null } };
 
@@ -3498,6 +3504,38 @@ export function useInnerCircleValueLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type InnerCircleValueQueryHookResult = ReturnType<typeof useInnerCircleValueQuery>;
 export type InnerCircleValueLazyQueryHookResult = ReturnType<typeof useInnerCircleValueLazyQuery>;
 export type InnerCircleValueQueryResult = Apollo.QueryResult<InnerCircleValueQuery, InnerCircleValueQueryVariables>;
+export const SwapDefaultUnitOfAccountDocument = gql`
+    query swapDefaultUnitOfAccount {
+  swapDefaultUnitOfAccount @client
+}
+    `;
+
+/**
+ * __useSwapDefaultUnitOfAccountQuery__
+ *
+ * To run a query within a React component, call `useSwapDefaultUnitOfAccountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSwapDefaultUnitOfAccountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSwapDefaultUnitOfAccountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSwapDefaultUnitOfAccountQuery(baseOptions?: Apollo.QueryHookOptions<SwapDefaultUnitOfAccountQuery, SwapDefaultUnitOfAccountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SwapDefaultUnitOfAccountQuery, SwapDefaultUnitOfAccountQueryVariables>(SwapDefaultUnitOfAccountDocument, options);
+      }
+export function useSwapDefaultUnitOfAccountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SwapDefaultUnitOfAccountQuery, SwapDefaultUnitOfAccountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SwapDefaultUnitOfAccountQuery, SwapDefaultUnitOfAccountQueryVariables>(SwapDefaultUnitOfAccountDocument, options);
+        }
+export type SwapDefaultUnitOfAccountQueryHookResult = ReturnType<typeof useSwapDefaultUnitOfAccountQuery>;
+export type SwapDefaultUnitOfAccountLazyQueryHookResult = ReturnType<typeof useSwapDefaultUnitOfAccountLazyQuery>;
+export type SwapDefaultUnitOfAccountQueryResult = Apollo.QueryResult<SwapDefaultUnitOfAccountQuery, SwapDefaultUnitOfAccountQueryVariables>;
 export const NetworkDocument = gql`
     query network {
   globals {
@@ -8143,6 +8181,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   price?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   quizQuestions?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['QuizQuestion']>>>, ParentType, ContextType>;
   realtimePrice?: Resolver<ResolversTypes['RealtimePrice'], ParentType, ContextType, RequireFields<QueryRealtimePriceArgs, 'currency'>>;
+  swapDefaultUnitOfAccount?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   userDefaultWalletId?: Resolver<ResolversTypes['WalletId'], ParentType, ContextType, RequireFields<QueryUserDefaultWalletIdArgs, 'username'>>;
   usernameAvailable?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<QueryUsernameAvailableArgs, 'username'>>;
   welcomeLeaderboard?: Resolver<ResolversTypes['Leaderboard'], ParentType, ContextType, RequireFields<QueryWelcomeLeaderboardArgs, 'input'>>;

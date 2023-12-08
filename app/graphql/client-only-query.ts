@@ -15,6 +15,8 @@ import {
   InnerCircleValueQuery,
   IntroducingCirclesModalShownDocument,
   IntroducingCirclesModalShownQuery,
+  SwapDefaultUnitOfAccountDocument,
+  SwapDefaultUnitOfAccountQuery,
 } from "./generated"
 
 export default gql`
@@ -48,6 +50,10 @@ export default gql`
 
   query innerCircleValue {
     innerCircleValue @client
+  }
+
+  query swapDefaultUnitOfAccount {
+    swapDefaultUnitOfAccount @client
   }
 `
 
@@ -171,5 +177,22 @@ export const setInnerCircleCachedValue = (
     })
   } catch {
     console.warn("unable to update InnerCircleValueDocument")
+  }
+}
+
+export const setSwapDefaultUnitOfAccount = (
+  client: ApolloClient<unknown>,
+  swapDefaultUnitOfAccount: boolean,
+) => {
+  try {
+    client.writeQuery<SwapDefaultUnitOfAccountQuery>({
+      query: SwapDefaultUnitOfAccountDocument,
+      data: {
+        __typename: "Query",
+        swapDefaultUnitOfAccount,
+      },
+    })
+  } catch {
+    console.warn("unable to update SwapDefaultUnitOfAccountDocument")
   }
 }
