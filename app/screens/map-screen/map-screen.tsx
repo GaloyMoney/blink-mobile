@@ -4,7 +4,7 @@ import * as React from "react"
 import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import { ActivityIndicator, PermissionsAndroid, View } from "react-native"
-import Geolocation from '@react-native-community/geolocation';
+import Geolocation from "@react-native-community/geolocation"
 import MapView, {
   Callout,
   CalloutSubview,
@@ -30,8 +30,8 @@ const useStyles = makeStyles(({ colors }) => ({
   android: { marginTop: 18 },
   loaderContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
   customView: {
     alignItems: "center",
@@ -90,20 +90,19 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   })
   const { LL } = useI18nContext()
 
-  
   useFocusEffect(() => {
     if (!isRefreshed) {
       setIsRefreshed(true)
       refetch()
     }
   })
-  
+
   if (error) {
     toastShow({ message: error.message, LL })
   }
-  
+
   const maps = data?.businessMapMarkers ?? []
-  
+
   const getUserRegion = (callback: (region?: Region) => void) => {
     try {
       Geolocation.getCurrentPosition((data: GeolocationPosition) => {
@@ -111,16 +110,16 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
           const region: Region = {
             latitude: data.coords.latitude,
             longitude: data.coords.longitude,
-            latitudeDelta: 0.02, 
-            longitudeDelta: 0.02, 
+            latitudeDelta: 0.02,
+            longitudeDelta: 0.02,
           }
-          callback(region);
+          callback(region)
         }
       })
     } catch (e) {
-      console.debug("Error getting user location", e);
+      console.debug("Error getting user location", e)
       callback(undefined)
-    } 
+    }
   }
 
   const requestLocationPermission = useCallback(() => {
@@ -137,9 +136,9 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
           },
         )
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          getUserRegion(region => {
-            if(region){
-              setUserLocation(region);
+          getUserRegion((region) => {
+            if (region) {
+              setUserLocation(region)
             }
             setIsLoadingLocation(false)
           })
@@ -152,7 +151,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
           crashlytics().recordError(err)
         }
         console.debug(err)
-      } 
+      }
     }
     asyncRequestLocationPermission()
     // disable eslint because we don't want to re-run this function when the language changes
@@ -214,7 +213,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     <Screen>
       {isLoadingLocation ? (
         <View style={styles.loaderContainer}>
-          <ActivityIndicator size="large" color={colors.primary}/>
+          <ActivityIndicator size="large" color={colors.primary} />
         </View>
       ) : (
         <MapView
