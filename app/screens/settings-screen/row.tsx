@@ -9,8 +9,8 @@ type Props = {
   leftIcon: string
   rightIcon?: string
   extraComponentBesideTitle?: React.ReactElement
-  action: () => void
-  rightIconAction?: () => void
+  action: () => void | Promise<void>
+  rightIconAction?: () => void | Promise<void>
   loading?: boolean
 }
 

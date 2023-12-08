@@ -797,6 +797,13 @@ query ContactsCard {
   }
 }
 
+query DefaultLanguage {
+  me {
+    language
+    __typename
+  }
+}
+
 query DefaultWallet {
   me {
     defaultAccount {

@@ -2727,20 +2727,25 @@ export type AccountSettingsBannerQueryVariables = Exact<{ [key: string]: never; 
 
 export type AccountSettingsBannerQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null } | null };
 
-export type AccountLnAddressQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AccountLnAddressQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null } | null };
-
 export type DefaultWalletQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type DefaultWalletQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly defaultWalletId: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
 
+export type AccountLnAddressQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AccountLnAddressQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null } | null };
+
 export type AccountPosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AccountPosQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null } | null };
+
+export type DefaultLanguageQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DefaultLanguageQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly language: string } | null };
 
 export type TotpRegistrationScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6758,40 +6763,6 @@ export function useAccountSettingsBannerLazyQuery(baseOptions?: Apollo.LazyQuery
 export type AccountSettingsBannerQueryHookResult = ReturnType<typeof useAccountSettingsBannerQuery>;
 export type AccountSettingsBannerLazyQueryHookResult = ReturnType<typeof useAccountSettingsBannerLazyQuery>;
 export type AccountSettingsBannerQueryResult = Apollo.QueryResult<AccountSettingsBannerQuery, AccountSettingsBannerQueryVariables>;
-export const AccountLnAddressDocument = gql`
-    query AccountLNAddress {
-  me {
-    username
-  }
-}
-    `;
-
-/**
- * __useAccountLnAddressQuery__
- *
- * To run a query within a React component, call `useAccountLnAddressQuery` and pass it any options that fit your needs.
- * When your component renders, `useAccountLnAddressQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAccountLnAddressQuery({
- *   variables: {
- *   },
- * });
- */
-export function useAccountLnAddressQuery(baseOptions?: Apollo.QueryHookOptions<AccountLnAddressQuery, AccountLnAddressQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AccountLnAddressQuery, AccountLnAddressQueryVariables>(AccountLnAddressDocument, options);
-      }
-export function useAccountLnAddressLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AccountLnAddressQuery, AccountLnAddressQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AccountLnAddressQuery, AccountLnAddressQueryVariables>(AccountLnAddressDocument, options);
-        }
-export type AccountLnAddressQueryHookResult = ReturnType<typeof useAccountLnAddressQuery>;
-export type AccountLnAddressLazyQueryHookResult = ReturnType<typeof useAccountLnAddressLazyQuery>;
-export type AccountLnAddressQueryResult = Apollo.QueryResult<AccountLnAddressQuery, AccountLnAddressQueryVariables>;
 export const DefaultWalletDocument = gql`
     query DefaultWallet {
   me {
@@ -6833,6 +6804,40 @@ export function useDefaultWalletLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type DefaultWalletQueryHookResult = ReturnType<typeof useDefaultWalletQuery>;
 export type DefaultWalletLazyQueryHookResult = ReturnType<typeof useDefaultWalletLazyQuery>;
 export type DefaultWalletQueryResult = Apollo.QueryResult<DefaultWalletQuery, DefaultWalletQueryVariables>;
+export const AccountLnAddressDocument = gql`
+    query AccountLNAddress {
+  me {
+    username
+  }
+}
+    `;
+
+/**
+ * __useAccountLnAddressQuery__
+ *
+ * To run a query within a React component, call `useAccountLnAddressQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAccountLnAddressQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAccountLnAddressQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAccountLnAddressQuery(baseOptions?: Apollo.QueryHookOptions<AccountLnAddressQuery, AccountLnAddressQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AccountLnAddressQuery, AccountLnAddressQueryVariables>(AccountLnAddressDocument, options);
+      }
+export function useAccountLnAddressLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AccountLnAddressQuery, AccountLnAddressQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AccountLnAddressQuery, AccountLnAddressQueryVariables>(AccountLnAddressDocument, options);
+        }
+export type AccountLnAddressQueryHookResult = ReturnType<typeof useAccountLnAddressQuery>;
+export type AccountLnAddressLazyQueryHookResult = ReturnType<typeof useAccountLnAddressLazyQuery>;
+export type AccountLnAddressQueryResult = Apollo.QueryResult<AccountLnAddressQuery, AccountLnAddressQueryVariables>;
 export const AccountPosDocument = gql`
     query AccountPOS {
   me {
@@ -6867,6 +6872,40 @@ export function useAccountPosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type AccountPosQueryHookResult = ReturnType<typeof useAccountPosQuery>;
 export type AccountPosLazyQueryHookResult = ReturnType<typeof useAccountPosLazyQuery>;
 export type AccountPosQueryResult = Apollo.QueryResult<AccountPosQuery, AccountPosQueryVariables>;
+export const DefaultLanguageDocument = gql`
+    query DefaultLanguage {
+  me {
+    language
+  }
+}
+    `;
+
+/**
+ * __useDefaultLanguageQuery__
+ *
+ * To run a query within a React component, call `useDefaultLanguageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDefaultLanguageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDefaultLanguageQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useDefaultLanguageQuery(baseOptions?: Apollo.QueryHookOptions<DefaultLanguageQuery, DefaultLanguageQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DefaultLanguageQuery, DefaultLanguageQueryVariables>(DefaultLanguageDocument, options);
+      }
+export function useDefaultLanguageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DefaultLanguageQuery, DefaultLanguageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DefaultLanguageQuery, DefaultLanguageQueryVariables>(DefaultLanguageDocument, options);
+        }
+export type DefaultLanguageQueryHookResult = ReturnType<typeof useDefaultLanguageQuery>;
+export type DefaultLanguageLazyQueryHookResult = ReturnType<typeof useDefaultLanguageLazyQuery>;
+export type DefaultLanguageQueryResult = Apollo.QueryResult<DefaultLanguageQuery, DefaultLanguageQueryVariables>;
 export const TotpRegistrationScreenDocument = gql`
     query totpRegistrationScreen {
   me {

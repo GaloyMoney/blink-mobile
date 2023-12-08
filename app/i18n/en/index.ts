@@ -2289,6 +2289,7 @@ const en: BaseTranslation = {
     },
   },
   SettingsScreen: {
+    setByOs: "Set by OS",
     pos: "Point of Sale",
     posCopied: "Your point of sale link has been copied",
     yourAddress: "Your {bankName: string} Address",
@@ -2411,6 +2412,8 @@ const en: BaseTranslation = {
     system: "Use System setting",
     light: "Use Light Mode",
     dark: "Use Dark Mode",
+    setToDark: "Dark Mode",
+    setToLight: "Light Mode",
   },
   Languages: {
     DEFAULT: "Default (OS)",
@@ -2564,6 +2567,7 @@ const en: BaseTranslation = {
     success: "Email {email: string} confirmed successfully",
   },
   common: {
+    notifications: "Notifications",
     preferences: "Preferences",
     securityAndPrivacy: "Security and Privacy",
     advanced: "Advanced",

@@ -7116,6 +7116,10 @@ type RootTranslation = {
 	}
 	SettingsScreen: {
 		/**
+		 * S​e​t​ ​b​y​ ​O​S
+		 */
+		setByOs: string
+		/**
 		 * P​o​i​n​t​ ​o​f​ ​S​a​l​e
 		 */
 		pos: string
@@ -7494,6 +7498,14 @@ type RootTranslation = {
 		 * U​s​e​ ​D​a​r​k​ ​M​o​d​e
 		 */
 		dark: string
+		/**
+		 * D​a​r​k​ ​M​o​d​e
+		 */
+		setToDark: string
+		/**
+		 * L​i​g​h​t​ ​M​o​d​e
+		 */
+		setToLight: string
 	}
 	Languages: {
 		/**
@@ -7939,6 +7951,10 @@ type RootTranslation = {
 		success: RequiredParams<'email'>
 	}
 	common: {
+		/**
+		 * N​o​t​i​f​i​c​a​t​i​o​n​s
+		 */
+		notifications: string
 		/**
 		 * P​r​e​f​e​r​e​n​c​e​s
 		 */
@@ -15929,6 +15945,10 @@ export type TranslationFunctions = {
 	}
 	SettingsScreen: {
 		/**
+		 * Set by OS
+		 */
+		setByOs: () => LocalizedString
+		/**
 		 * Point of Sale
 		 */
 		pos: () => LocalizedString
@@ -16297,6 +16317,14 @@ export type TranslationFunctions = {
 		 * Use Dark Mode
 		 */
 		dark: () => LocalizedString
+		/**
+		 * Dark Mode
+		 */
+		setToDark: () => LocalizedString
+		/**
+		 * Light Mode
+		 */
+		setToLight: () => LocalizedString
 	}
 	Languages: {
 		/**
@@ -16729,6 +16757,10 @@ export type TranslationFunctions = {
 		success: (arg: { email: string }) => LocalizedString
 	}
 	common: {
+		/**
+		 * Notifications
+		 */
+		notifications: () => LocalizedString
 		/**
 		 * Preferences
 		 */

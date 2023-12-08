@@ -10,8 +10,13 @@ import { Screen } from "@app/components/screen"
 import { AccountBanner } from "./settings/account-banner"
 import { AccountLevelSetting } from "./settings/account-level"
 import { AccountLNAddress } from "./settings/account-ln-address"
-import { AccountPOS } from "./settings/pos"
+import { AccountPOS } from "./settings/account-pos"
 import { DefaultWallet } from "./settings/account-default-wallet"
+import { LanguageSetting } from "./settings/preferences-language"
+import { CurrencySetting } from "./settings/preferences-currency"
+import { ThemeSetting } from "./settings/preferences-theme"
+import { SecuritySetting } from "./settings/sp-security"
+import { NotificationSetting } from "./settings/sp-notifications"
 
 export const SettingsScreen: React.FC = () => {
   const styles = useStyles()
@@ -25,8 +30,15 @@ export const SettingsScreen: React.FC = () => {
       <AccountPOS key="pos" />,
       <DefaultWallet key="default-wallet" />,
     ],
-    preferences: [],
-    securityAndPrivacy: [],
+    preferences: [
+      <LanguageSetting key="language" />,
+      <CurrencySetting key="currency" />,
+      <ThemeSetting key="theme" />,
+    ],
+    securityAndPrivacy: [
+      <SecuritySetting key="security" />,
+      <NotificationSetting key="notifications" />,
+    ],
     advanced: [],
     community: [],
   }
@@ -36,14 +48,16 @@ export const SettingsScreen: React.FC = () => {
       <ScrollView contentContainerStyle={styles.outer}>
         <AccountBanner />
         {isAtLeastLevelZero && (
-          <SettingsGroup name={LL.common.account()} items={items.account} />
+          <>
+            <SettingsGroup name={LL.common.account()} items={items.account} />
+            <SettingsGroup name={LL.common.preferences()} items={items.preferences} />
+            <SettingsGroup
+              name={LL.common.securityAndPrivacy()}
+              items={items.securityAndPrivacy}
+            />
+            <SettingsGroup name={LL.common.advanced()} items={items.advanced} />
+          </>
         )}
-        <SettingsGroup name={LL.common.preferences()} items={items.preferences} />
-        <SettingsGroup
-          name={LL.common.securityAndPrivacy()}
-          items={items.securityAndPrivacy}
-        />
-        <SettingsGroup name={LL.common.advanced()} items={items.advanced} />
         <SettingsGroup name={LL.common.community()} items={items.community} />
       </ScrollView>
     </Screen>
