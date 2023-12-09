@@ -408,7 +408,7 @@ const usestyles = makeStyles(({ colors }) => ({
     borderWidth: 1,
   },
   validInputContainer: {
-    borderColor: colors.green,
+    borderColor: colors._green,
     borderWidth: 1,
   },
   warningInputContainer: {

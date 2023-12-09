@@ -10,6 +10,7 @@ const light = {
   _blue: "#3050C4",
   _orange: "#FF7e1c",
   _sky: "#C3CCFF",
+  _green: "#00A700",
 
   // adjusted
   white: "#FFFFFF",
@@ -35,8 +36,6 @@ const light = {
   backdropWhite: "rgba(0, 0, 0, 0.06)",
   backdropWhiter: "rgba(0, 0, 0, 0.12)",
 
-  green: "#00A700",
-
   // not adjusted
   error: "#DC2626",
   error9: "#FEE2E2",
@@ -59,6 +58,7 @@ const dark = {
   _blue: "#3050C4",
   _orange: "#FF7e1c",
   _sky: "#C3CCFF",
+  _green: "#00A700",
 
   // adjusted
   white: "#000000",
@@ -83,8 +83,6 @@ const dark = {
 
   backdropWhite: "rgba(255, 255, 255, 0.06)",
   backdropWhiter: "rgba(255, 255, 255, 0.12)",
-
-  green: "#00A700",
 
   // not adjusted
   error: "#DC2626",
