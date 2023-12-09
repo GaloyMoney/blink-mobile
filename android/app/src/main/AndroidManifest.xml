@@ -52,7 +52,6 @@
             <category android:name="android.intent.category.DEFAULT"/>
             <category android:name="android.intent.category.BROWSABLE"/>
             <data android:scheme="https" android:host="pay.bbw.sv"/>
-            <data android:scheme="https" android:host="ln.bitcoinbeach.com"/>
             <data android:scheme="https" android:host="pay.mainnet.galoy.io"/>
             <data android:scheme="https" android:host="pay.blink.sv"/>
         </intent-filter>
