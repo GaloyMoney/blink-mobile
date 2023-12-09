@@ -6,6 +6,7 @@
  */
 
 import { View } from "react-native"
+import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { Text, makeStyles, useTheme, Skeleton } from "@rneui/themed"
 
 import { gql } from "@apollo/client"
@@ -15,6 +16,10 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { AccountLevel, useLevel } from "@app/graphql/level-context"
 
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 
 gql`
   query AccountSettingsBanner {
@@ -28,21 +33,35 @@ export const AccountBanner = () => {
   const styles = useStyles()
   const { LL } = useI18nContext()
 
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+
   const { currentLevel } = useLevel()
-  const { data, loading } = useAccountSettingsBannerQuery()
+  const isUserLoggedIn = currentLevel !== AccountLevel.NonAuth
+
+  const { data, loading } = useAccountSettingsBannerQuery({
+    skip: !isUserLoggedIn,
+  })
   const usernameTitle = data?.me?.username || LL.common.account()
 
   if (loading) return <Skeleton style={styles.outer} animation="pulse" />
 
   return (
-    <View style={styles.outer}>
-      <AccountIcon />
-      <Text type="p2">
-        {currentLevel === AccountLevel.NonAuth
-          ? LL.SettingsScreen.logInOrCreateAccount()
-          : usernameTitle}
-      </Text>
-    </View>
+    <TouchableWithoutFeedback
+      onPress={() =>
+        !isUserLoggedIn &&
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "getStarted" }],
+        })
+      }
+    >
+      <View style={styles.outer}>
+        <AccountIcon />
+        <Text type="p2">
+          {isUserLoggedIn ? usernameTitle : LL.SettingsScreen.logInOrCreateAccount()}
+        </Text>
+      </View>
+    </TouchableWithoutFeedback>
   )
 }
 

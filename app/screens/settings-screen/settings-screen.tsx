@@ -17,6 +17,10 @@ import { CurrencySetting } from "./settings/preferences-currency"
 import { ThemeSetting } from "./settings/preferences-theme"
 import { SecuritySetting } from "./settings/sp-security"
 import { NotificationSetting } from "./settings/sp-notifications"
+import { ExportCsvSetting } from "./settings/advanced-export-csv"
+import { VersionComponent } from "@app/components/version"
+import { NeedHelpSetting } from "./settings/community-need-help"
+import { JoinCommunitySetting } from "./settings/community-join"
 
 export const SettingsScreen: React.FC = () => {
   const styles = useStyles()
@@ -24,23 +28,11 @@ export const SettingsScreen: React.FC = () => {
   const { isAtLeastLevelZero } = useLevel()
 
   const items = {
-    account: [
-      <AccountLevelSetting key="acc-level" />,
-      <AccountLNAddress key="blink-addr" />,
-      <AccountPOS key="pos" />,
-      <DefaultWallet key="default-wallet" />,
-    ],
-    preferences: [
-      <LanguageSetting key="language" />,
-      <CurrencySetting key="currency" />,
-      <ThemeSetting key="theme" />,
-    ],
-    securityAndPrivacy: [
-      <SecuritySetting key="security" />,
-      <NotificationSetting key="notifications" />,
-    ],
-    advanced: [],
-    community: [],
+    account: [AccountLevelSetting, AccountLNAddress, AccountPOS, DefaultWallet],
+    preferences: [LanguageSetting, CurrencySetting, ThemeSetting],
+    securityAndPrivacy: [SecuritySetting, NotificationSetting],
+    advanced: [ExportCsvSetting],
+    community: [NeedHelpSetting, JoinCommunitySetting],
   }
 
   return (
@@ -59,6 +51,7 @@ export const SettingsScreen: React.FC = () => {
           </>
         )}
         <SettingsGroup name={LL.common.community()} items={items.community} />
+        <VersionComponent />
       </ScrollView>
     </Screen>
   )
@@ -66,7 +59,7 @@ export const SettingsScreen: React.FC = () => {
 
 const SettingsGroup: React.FC<{
   name: string
-  items: React.ReactElement[]
+  items: React.FC[]
 }> = ({ name, items }) => {
   const styles = useStyles()
   const {
@@ -79,13 +72,13 @@ const SettingsGroup: React.FC<{
         {name}
       </Text>
       <View style={styles.groupCard}>
-        {items.map((element, index) => (
-          <>
-            {element}
+        {items.map((Element, index) => (
+          <View key={index}>
+            <Element />
             {index < items.length - 1 && (
               <Divider color={colors.grey4} style={styles.divider} />
             )}
-          </>
+          </View>
         ))}
       </View>
     </View>
@@ -96,12 +89,13 @@ const useStyles = makeStyles(({ colors }) => ({
   outer: {
     marginTop: 4,
     paddingHorizontal: 10,
+    paddingBottom: 20,
     display: "flex",
     flexDirection: "column",
     rowGap: 12,
   },
   groupCard: {
-    marginTop: 4,
+    marginTop: 5,
     backgroundColor: colors.grey5,
     borderRadius: 12,
     overflow: "hidden",

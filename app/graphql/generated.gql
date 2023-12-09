@@ -820,6 +820,33 @@ query DefaultWallet {
   }
 }
 
+query ExportCsvSetting($walletIds: [WalletId!]!) {
+  me {
+    id
+    defaultAccount {
+      id
+      csvTransactions(walletIds: $walletIds)
+      __typename
+    }
+    __typename
+  }
+}
+
+query ExportCsvSettingWallets {
+  me {
+    defaultAccount {
+      wallets {
+        id
+        balance
+        walletCurrency
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
 query accountDefaultWallet($username: Username!) {
   accountDefaultWallet(username: $username) {
     id

@@ -2742,6 +2742,18 @@ export type AccountPosQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AccountPosQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null } | null };
 
+export type ExportCsvSettingWalletsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ExportCsvSettingWalletsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
+
+export type ExportCsvSettingQueryVariables = Exact<{
+  walletIds: ReadonlyArray<Scalars['WalletId']['input']> | Scalars['WalletId']['input'];
+}>;
+
+
+export type ExportCsvSettingQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly csvTransactions: string } } | null };
+
 export type DefaultLanguageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6872,6 +6884,85 @@ export function useAccountPosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type AccountPosQueryHookResult = ReturnType<typeof useAccountPosQuery>;
 export type AccountPosLazyQueryHookResult = ReturnType<typeof useAccountPosLazyQuery>;
 export type AccountPosQueryResult = Apollo.QueryResult<AccountPosQuery, AccountPosQueryVariables>;
+export const ExportCsvSettingWalletsDocument = gql`
+    query ExportCsvSettingWallets {
+  me {
+    defaultAccount {
+      wallets {
+        id
+        balance
+        walletCurrency
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useExportCsvSettingWalletsQuery__
+ *
+ * To run a query within a React component, call `useExportCsvSettingWalletsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useExportCsvSettingWalletsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useExportCsvSettingWalletsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useExportCsvSettingWalletsQuery(baseOptions?: Apollo.QueryHookOptions<ExportCsvSettingWalletsQuery, ExportCsvSettingWalletsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ExportCsvSettingWalletsQuery, ExportCsvSettingWalletsQueryVariables>(ExportCsvSettingWalletsDocument, options);
+      }
+export function useExportCsvSettingWalletsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ExportCsvSettingWalletsQuery, ExportCsvSettingWalletsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ExportCsvSettingWalletsQuery, ExportCsvSettingWalletsQueryVariables>(ExportCsvSettingWalletsDocument, options);
+        }
+export type ExportCsvSettingWalletsQueryHookResult = ReturnType<typeof useExportCsvSettingWalletsQuery>;
+export type ExportCsvSettingWalletsLazyQueryHookResult = ReturnType<typeof useExportCsvSettingWalletsLazyQuery>;
+export type ExportCsvSettingWalletsQueryResult = Apollo.QueryResult<ExportCsvSettingWalletsQuery, ExportCsvSettingWalletsQueryVariables>;
+export const ExportCsvSettingDocument = gql`
+    query ExportCsvSetting($walletIds: [WalletId!]!) {
+  me {
+    id
+    defaultAccount {
+      id
+      csvTransactions(walletIds: $walletIds)
+    }
+  }
+}
+    `;
+
+/**
+ * __useExportCsvSettingQuery__
+ *
+ * To run a query within a React component, call `useExportCsvSettingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useExportCsvSettingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useExportCsvSettingQuery({
+ *   variables: {
+ *      walletIds: // value for 'walletIds'
+ *   },
+ * });
+ */
+export function useExportCsvSettingQuery(baseOptions: Apollo.QueryHookOptions<ExportCsvSettingQuery, ExportCsvSettingQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ExportCsvSettingQuery, ExportCsvSettingQueryVariables>(ExportCsvSettingDocument, options);
+      }
+export function useExportCsvSettingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ExportCsvSettingQuery, ExportCsvSettingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ExportCsvSettingQuery, ExportCsvSettingQueryVariables>(ExportCsvSettingDocument, options);
+        }
+export type ExportCsvSettingQueryHookResult = ReturnType<typeof useExportCsvSettingQuery>;
+export type ExportCsvSettingLazyQueryHookResult = ReturnType<typeof useExportCsvSettingLazyQuery>;
+export type ExportCsvSettingQueryResult = Apollo.QueryResult<ExportCsvSettingQuery, ExportCsvSettingQueryVariables>;
 export const DefaultLanguageDocument = gql`
     query DefaultLanguage {
   me {
