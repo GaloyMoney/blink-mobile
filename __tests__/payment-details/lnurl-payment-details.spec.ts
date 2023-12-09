@@ -1,5 +1,4 @@
 import { LnUrlPayServiceResponse, Satoshis } from "lnurl-pay/dist/types/types"
-import { createMock } from "ts-auto-mock"
 
 import { WalletCurrency } from "@app/graphql/generated"
 import * as PaymentDetails from "@app/screens/send-bitcoin-screen/payment-details/lightning"
@@ -16,12 +15,29 @@ import {
   usdSendingWalletDescriptor,
 } from "./helpers"
 
+const mockLnUrlPayServiceResponse = (
+  min: Satoshis,
+  max: Satoshis,
+): LnUrlPayServiceResponse => ({
+  callback: "mockCallbackUrl",
+  fixed: false,
+  min,
+  max,
+  domain: "mockDomain",
+  metadata: [["mockMetadata"]],
+  metadataHash: "mockMetadataHash",
+  identifier: "mockIdentifier",
+  description: "mockDescription",
+  image: "mockImageUrl",
+  commentAllowed: 0,
+  rawData: {
+    mockKey: "mockValue",
+  },
+})
+
 const defaultParamsWithoutInvoice = {
   lnurl: "testlnurl",
-  lnurlParams: createMock<LnUrlPayServiceResponse>({
-    min: 1 as Satoshis,
-    max: 1000 as Satoshis,
-  }),
+  lnurlParams: mockLnUrlPayServiceResponse(1 as Satoshis, 1000 as Satoshis),
   convertMoneyAmount: convertMoneyAmountMock,
   sendingWalletDescriptor: btcSendingWalletDescriptor,
   unitOfAccountAmount: testAmount,
@@ -35,10 +51,7 @@ const defaultParamsWithInvoice = {
 
 const defaultParamsWithEqualMinMaxAmount = {
   ...defaultParamsWithoutInvoice,
-  lnurlParams: createMock<LnUrlPayServiceResponse>({
-    min: 100 as Satoshis,
-    max: 100 as Satoshis,
-  }),
+  lnurlParams: mockLnUrlPayServiceResponse(100 as Satoshis, 100 as Satoshis),
 }
 
 const spy = jest.spyOn(PaymentDetails, "createLnurlPaymentDetails")
