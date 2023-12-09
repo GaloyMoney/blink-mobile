@@ -2336,6 +2336,10 @@ const en: BaseTranslation = {
     }
   },
   AccountScreen: {
+    phoneDeletedSuccessfully: "Phone deleted successfully",
+    phoneNumber: "Phone Number",
+    tapToAddPhoneNumber: "Tap to add phone number",
+    loginMethods: "Login Methods",
     level: "Level {level: string}",
     accountLevel: "Account Level",
     upgrade: "Upgrade your account",
@@ -2352,6 +2356,11 @@ const en: BaseTranslation = {
     btcBalanceWarning: "You have a bitcoin balance of {balance: string}.",
     secureYourAccount: "Register to secure your account",
     tapToAdd: "Tap to add",
+    tapToAddEmail: "Tap to add email",
+    unverifiedEmai: "Email (Unverified)",
+    email: "Email",
+    emailDeletedSuccessfully: "Email deleted successfully",
+    unverifiedEmailAdvice: "Unverified emails can't be used to login. You should re-verify your email address.",
     deleteEmailPromptTitle: "Delete email",
     deleteEmailPromptContent:
       "Are you sure you want to delete your email address? you will only be able to log back in with your phone number.",
@@ -2377,6 +2386,7 @@ const en: BaseTranslation = {
       "Are you sure you want to delete your two-factor authentication?",
     copiedAccountId: "Copied your account ID to clipboard",
     yourAccountId: "Your Account ID",
+    accountId: "Account ID",
     copy: "Copy"
   },
   TotpRegistrationInitiateScreen: {
@@ -2573,6 +2583,8 @@ const en: BaseTranslation = {
     advanced: "Advanced",
     community: "Community",
     account: "Account",
+    trialAccount: "Trial Account",
+    blinkUser: "Blink User",
     transactionLimits: "Transaction Limits",
     activateWallet: "Activate Wallet",
     amountRequired: "Amount is required",

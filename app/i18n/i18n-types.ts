@@ -7265,6 +7265,22 @@ type RootTranslation = {
 	}
 	AccountScreen: {
 		/**
+		 * P​h​o​n​e​ ​d​e​l​e​t​e​d​ ​s​u​c​c​e​s​s​f​u​l​l​y
+		 */
+		phoneDeletedSuccessfully: string
+		/**
+		 * P​h​o​n​e​ ​N​u​m​b​e​r
+		 */
+		phoneNumber: string
+		/**
+		 * T​a​p​ ​t​o​ ​a​d​d​ ​p​h​o​n​e​ ​n​u​m​b​e​r
+		 */
+		tapToAddPhoneNumber: string
+		/**
+		 * L​o​g​i​n​ ​M​e​t​h​o​d​s
+		 */
+		loginMethods: string
+		/**
 		 * L​e​v​e​l​ ​{​l​e​v​e​l​}
 		 * @param {string} level
 		 */
@@ -7326,6 +7342,26 @@ type RootTranslation = {
 		 * T​a​p​ ​t​o​ ​a​d​d
 		 */
 		tapToAdd: string
+		/**
+		 * T​a​p​ ​t​o​ ​a​d​d​ ​e​m​a​i​l
+		 */
+		tapToAddEmail: string
+		/**
+		 * E​m​a​i​l​ ​(​U​n​v​e​r​i​f​i​e​d​)
+		 */
+		unverifiedEmai: string
+		/**
+		 * E​m​a​i​l
+		 */
+		email: string
+		/**
+		 * E​m​a​i​l​ ​d​e​l​e​t​e​d​ ​s​u​c​c​e​s​s​f​u​l​l​y
+		 */
+		emailDeletedSuccessfully: string
+		/**
+		 * U​n​v​e​r​i​f​i​e​d​ ​e​m​a​i​l​s​ ​c​a​n​'​t​ ​b​e​ ​u​s​e​d​ ​t​o​ ​l​o​g​i​n​.​ ​Y​o​u​ ​s​h​o​u​l​d​ ​r​e​-​v​e​r​i​f​y​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​.
+		 */
+		unverifiedEmailAdvice: string
 		/**
 		 * D​e​l​e​t​e​ ​e​m​a​i​l
 		 */
@@ -7410,6 +7446,10 @@ type RootTranslation = {
 		 * Y​o​u​r​ ​A​c​c​o​u​n​t​ ​I​D
 		 */
 		yourAccountId: string
+		/**
+		 * A​c​c​o​u​n​t​ ​I​D
+		 */
+		accountId: string
 		/**
 		 * C​o​p​y
 		 */
@@ -7975,6 +8015,14 @@ type RootTranslation = {
 		 * A​c​c​o​u​n​t
 		 */
 		account: string
+		/**
+		 * T​r​i​a​l​ ​A​c​c​o​u​n​t
+		 */
+		trialAccount: string
+		/**
+		 * B​l​i​n​k​ ​U​s​e​r
+		 */
+		blinkUser: string
 		/**
 		 * T​r​a​n​s​a​c​t​i​o​n​ ​L​i​m​i​t​s
 		 */
@@ -16091,6 +16139,22 @@ export type TranslationFunctions = {
 	}
 	AccountScreen: {
 		/**
+		 * Phone deleted successfully
+		 */
+		phoneDeletedSuccessfully: () => LocalizedString
+		/**
+		 * Phone Number
+		 */
+		phoneNumber: () => LocalizedString
+		/**
+		 * Tap to add phone number
+		 */
+		tapToAddPhoneNumber: () => LocalizedString
+		/**
+		 * Login Methods
+		 */
+		loginMethods: () => LocalizedString
+		/**
 		 * Level {level}
 		 */
 		level: (arg: { level: string }) => LocalizedString
@@ -16145,6 +16209,26 @@ export type TranslationFunctions = {
 		 * Tap to add
 		 */
 		tapToAdd: () => LocalizedString
+		/**
+		 * Tap to add email
+		 */
+		tapToAddEmail: () => LocalizedString
+		/**
+		 * Email (Unverified)
+		 */
+		unverifiedEmai: () => LocalizedString
+		/**
+		 * Email
+		 */
+		email: () => LocalizedString
+		/**
+		 * Email deleted successfully
+		 */
+		emailDeletedSuccessfully: () => LocalizedString
+		/**
+		 * Unverified emails can't be used to login. You should re-verify your email address.
+		 */
+		unverifiedEmailAdvice: () => LocalizedString
 		/**
 		 * Delete email
 		 */
@@ -16229,6 +16313,10 @@ export type TranslationFunctions = {
 		 * Your Account ID
 		 */
 		yourAccountId: () => LocalizedString
+		/**
+		 * Account ID
+		 */
+		accountId: () => LocalizedString
 		/**
 		 * Copy
 		 */
@@ -16781,6 +16869,14 @@ export type TranslationFunctions = {
 		 * Account
 		 */
 		account: () => LocalizedString
+		/**
+		 * Trial Account
+		 */
+		trialAccount: () => LocalizedString
+		/**
+		 * Blink User
+		 */
+		blinkUser: () => LocalizedString
 		/**
 		 * Transaction Limits
 		 */

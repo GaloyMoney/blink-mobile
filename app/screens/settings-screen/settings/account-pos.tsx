@@ -34,12 +34,7 @@ export const AccountPOS: React.FC = () => {
     <SettingsRow
       loading={loading}
       title={LL.SettingsScreen.pos()}
-      extraComponentBesideTitle={
-        <>
-          {" "}
-          <GaloyIcon name="link" size={20} />
-        </>
-      }
+      extraComponentBesideTitle={<GaloyIcon name="link" size={20} />}
       subtitle={pos}
       subtitleShorter={data.me.username.length > 22}
       leftIcon="calculator"

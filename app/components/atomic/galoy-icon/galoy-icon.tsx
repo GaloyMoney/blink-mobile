@@ -35,6 +35,7 @@ import Pencil from "@app/assets/icons-redesign/pencil.svg"
 import QrCode from "@app/assets/icons-redesign/qr-code.svg"
 import Question from "@app/assets/icons-redesign/question.svg"
 import Receive from "@app/assets/icons-redesign/receive.svg"
+import Refresh from "@app/assets/icons/refresh.svg"
 import Send from "@app/assets/icons-redesign/send.svg"
 import Settings from "@app/assets/icons-redesign/settings.svg"
 import Share from "@app/assets/icons-redesign/share.svg"
@@ -100,6 +101,7 @@ export const icons = {
   "payment-success": PaymentSuccess,
   "payment-pending": PaymentPending,
   "payment-error": PaymentError,
+  "refresh": Refresh,
 } as const
 
 export type IconNamesType = keyof typeof icons

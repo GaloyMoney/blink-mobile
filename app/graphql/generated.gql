@@ -820,6 +820,18 @@ query DefaultWallet {
   }
 }
 
+query EmailSetting {
+  me {
+    phone
+    email {
+      address
+      verified
+      __typename
+    }
+    __typename
+  }
+}
+
 query ExportCsvSetting($walletIds: [WalletId!]!) {
   me {
     id
@@ -841,6 +853,18 @@ query ExportCsvSettingWallets {
         walletCurrency
         __typename
       }
+      __typename
+    }
+    __typename
+  }
+}
+
+query PhoneSetting {
+  me {
+    phone
+    email {
+      address
+      verified
       __typename
     }
     __typename

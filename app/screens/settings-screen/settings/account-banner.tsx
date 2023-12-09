@@ -41,7 +41,7 @@ export const AccountBanner = () => {
   const { data, loading } = useAccountSettingsBannerQuery({
     skip: !isUserLoggedIn,
   })
-  const usernameTitle = data?.me?.username || LL.common.account()
+  const usernameTitle = data?.me?.username || LL.common.blinkUser()
 
   if (loading) return <Skeleton style={styles.outer} animation="pulse" />
 
@@ -56,7 +56,7 @@ export const AccountBanner = () => {
       }
     >
       <View style={styles.outer}>
-        <AccountIcon />
+        <AccountIcon size={30} />
         <Text type="p2">
           {isUserLoggedIn ? usernameTitle : LL.SettingsScreen.logInOrCreateAccount()}
         </Text>
@@ -65,11 +65,11 @@ export const AccountBanner = () => {
   )
 }
 
-const AccountIcon = () => {
+export const AccountIcon: React.FC<{ size: number }> = ({ size }) => {
   const {
     theme: { colors },
   } = useTheme()
-  return <GaloyIcon name="user" size={30} backgroundColor={colors.grey4} />
+  return <GaloyIcon name="user" size={size} backgroundColor={colors.grey4} />
 }
 
 const useStyles = makeStyles(() => ({

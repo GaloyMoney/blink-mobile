@@ -1,0 +1,44 @@
+import { View } from "react-native"
+import { makeStyles, useTheme, Text, Divider } from "@rneui/themed"
+
+export const SettingsGroup: React.FC<{
+  name?: string
+  items: React.FC[]
+}> = ({ name, items }) => {
+  const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
+
+  return (
+    <View>
+      {name && (
+        <Text type="p2" bold>
+          {name}
+        </Text>
+      )}
+      <View style={styles.groupCard}>
+        {items.map((Element, index) => (
+          <View key={index}>
+            <Element />
+            {index < items.length - 1 && (
+              <Divider color={colors.grey4} style={styles.divider} />
+            )}
+          </View>
+        ))}
+      </View>
+    </View>
+  )
+}
+
+const useStyles = makeStyles(({ colors }) => ({
+  groupCard: {
+    marginTop: 5,
+    backgroundColor: colors.grey5,
+    borderRadius: 12,
+    overflow: "hidden",
+  },
+  divider: {
+    marginHorizontal: 10,
+  },
+}))

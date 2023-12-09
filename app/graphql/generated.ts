@@ -2722,6 +2722,16 @@ export type AccountLimitsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AccountLimitsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly limits: { readonly __typename: 'AccountLimits', readonly withdrawal: ReadonlyArray<{ readonly __typename: 'OneDayAccountLimit', readonly totalLimit: number, readonly remainingLimit?: number | null, readonly interval?: number | null }>, readonly internalSend: ReadonlyArray<{ readonly __typename: 'OneDayAccountLimit', readonly totalLimit: number, readonly remainingLimit?: number | null, readonly interval?: number | null }>, readonly convert: ReadonlyArray<{ readonly __typename: 'OneDayAccountLimit', readonly totalLimit: number, readonly remainingLimit?: number | null, readonly interval?: number | null }> } } } | null };
 
+export type EmailSettingQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type EmailSettingQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null };
+
+export type PhoneSettingQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PhoneSettingQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null };
+
 export type AccountSettingsBannerQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6741,6 +6751,82 @@ export function useAccountLimitsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type AccountLimitsQueryHookResult = ReturnType<typeof useAccountLimitsQuery>;
 export type AccountLimitsLazyQueryHookResult = ReturnType<typeof useAccountLimitsLazyQuery>;
 export type AccountLimitsQueryResult = Apollo.QueryResult<AccountLimitsQuery, AccountLimitsQueryVariables>;
+export const EmailSettingDocument = gql`
+    query EmailSetting {
+  me {
+    phone
+    email {
+      address
+      verified
+    }
+  }
+}
+    `;
+
+/**
+ * __useEmailSettingQuery__
+ *
+ * To run a query within a React component, call `useEmailSettingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEmailSettingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEmailSettingQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useEmailSettingQuery(baseOptions?: Apollo.QueryHookOptions<EmailSettingQuery, EmailSettingQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<EmailSettingQuery, EmailSettingQueryVariables>(EmailSettingDocument, options);
+      }
+export function useEmailSettingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EmailSettingQuery, EmailSettingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<EmailSettingQuery, EmailSettingQueryVariables>(EmailSettingDocument, options);
+        }
+export type EmailSettingQueryHookResult = ReturnType<typeof useEmailSettingQuery>;
+export type EmailSettingLazyQueryHookResult = ReturnType<typeof useEmailSettingLazyQuery>;
+export type EmailSettingQueryResult = Apollo.QueryResult<EmailSettingQuery, EmailSettingQueryVariables>;
+export const PhoneSettingDocument = gql`
+    query PhoneSetting {
+  me {
+    phone
+    email {
+      address
+      verified
+    }
+  }
+}
+    `;
+
+/**
+ * __usePhoneSettingQuery__
+ *
+ * To run a query within a React component, call `usePhoneSettingQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePhoneSettingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePhoneSettingQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePhoneSettingQuery(baseOptions?: Apollo.QueryHookOptions<PhoneSettingQuery, PhoneSettingQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PhoneSettingQuery, PhoneSettingQueryVariables>(PhoneSettingDocument, options);
+      }
+export function usePhoneSettingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PhoneSettingQuery, PhoneSettingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PhoneSettingQuery, PhoneSettingQueryVariables>(PhoneSettingDocument, options);
+        }
+export type PhoneSettingQueryHookResult = ReturnType<typeof usePhoneSettingQuery>;
+export type PhoneSettingLazyQueryHookResult = ReturnType<typeof usePhoneSettingLazyQuery>;
+export type PhoneSettingQueryResult = Apollo.QueryResult<PhoneSettingQuery, PhoneSettingQueryVariables>;
 export const AccountSettingsBannerDocument = gql`
     query AccountSettingsBanner {
   me {

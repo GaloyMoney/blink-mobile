@@ -7,12 +7,13 @@ type Props = {
   subtitle?: string
   subtitleShorter?: boolean
   leftIcon: string
-  rightIcon?: string | null
+  rightIcon?: string | null | React.ReactElement
   extraComponentBesideTitle?: React.ReactElement
-  action: () => void | Promise<void>
+  action: (() => void | Promise<void>) | null
   rightIconAction?: () => void | Promise<void>
   loading?: boolean
   spinner?: boolean
+  shorter?: boolean
 }
 
 export const SettingsRow: React.FC<Props> = ({
@@ -20,15 +21,16 @@ export const SettingsRow: React.FC<Props> = ({
   subtitle,
   subtitleShorter,
   leftIcon,
-  rightIcon,
+  rightIcon = "",
   action,
-  rightIconAction = () => {},
+  rightIconAction = action,
   extraComponentBesideTitle = <></>,
   loading,
   spinner,
+  shorter,
 }) => {
   const [hovering, setHovering] = useState(false)
-  const styles = useStyles({ hovering })
+  const styles = useStyles({ hovering, shorter })
 
   if (loading) return <Skeleton style={styles.container} animation="pulse" />
   if (spinner)
@@ -38,24 +40,28 @@ export const SettingsRow: React.FC<Props> = ({
       </View>
     )
 
-  const RightIcon = rightIcon !== null && (
-    <Icon name={rightIcon ? rightIcon : "chevron-forward"} type="ionicon" />
-  )
+  const RightIcon =
+    rightIcon !== null &&
+    (typeof rightIcon === "string" ? (
+      <Icon name={rightIcon ? rightIcon : "chevron-forward"} type="ionicon" />
+    ) : (
+      rightIcon
+    ))
 
   return (
     <TouchableWithoutFeedback
-      onPressIn={() => setHovering(true)}
-      onPressOut={() => setHovering(false)}
-      onPress={action}
+      onPressIn={action ? () => setHovering(true) : () => {}}
+      onPressOut={action ? () => setHovering(false) : () => {}}
+      onPress={action ? action : undefined}
     >
       <View style={[styles.container, styles.spacing]}>
         <View style={[styles.container, styles.spacing]}>
           <Icon name={leftIcon} type="ionicon" />
           <View>
-            <Text type="p2">
-              {title}
-              {extraComponentBesideTitle}
-            </Text>
+            <View style={styles.sidetoside}>
+              <Text type="p2">{title}</Text>
+              <Text>{extraComponentBesideTitle}</Text>
+            </View>
             {subtitle && (
               <Text type={subtitleShorter ? "p4" : "p3"} ellipsizeMode="tail">
                 {subtitle}
@@ -63,39 +69,43 @@ export const SettingsRow: React.FC<Props> = ({
             )}
           </View>
         </View>
-        {rightIconAction ? (
-          <TouchableWithoutFeedback onPress={rightIconAction}>
-            <View style={styles.rightActionTouchArea}>{RightIcon}</View>
-          </TouchableWithoutFeedback>
-        ) : (
-          RightIcon
-        )}
+        <TouchableWithoutFeedback onPress={rightIconAction ? rightIconAction : undefined}>
+          <View style={styles.rightActionTouchArea}>{RightIcon}</View>
+        </TouchableWithoutFeedback>
       </View>
     </TouchableWithoutFeedback>
   )
 }
 
-const useStyles = makeStyles(({ colors }, { hovering }: { hovering: boolean }) => ({
-  container: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    columnGap: 16,
-    backgroundColor: hovering ? colors.grey4 : undefined,
-    height: 64,
-  },
-  spacing: {
-    paddingHorizontal: 8,
-    paddingRight: 12,
-    paddingVertical: 6,
-  },
-  center: {
-    justifyContent: "space-around",
-  },
-  rightActionTouchArea: {
-    padding: 12,
-    marginRight: -12,
-    position: "relative",
-  },
-}))
+const useStyles = makeStyles(
+  ({ colors }, { hovering, shorter }: { hovering: boolean; shorter?: boolean }) => ({
+    container: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      columnGap: 16,
+      backgroundColor: hovering ? colors.grey4 : undefined,
+      height: shorter ? 56 : 64,
+    },
+    spacing: {
+      paddingHorizontal: 8,
+      paddingRight: 12,
+      paddingVertical: 6,
+    },
+    center: {
+      justifyContent: "space-around",
+    },
+    rightActionTouchArea: {
+      padding: 12,
+      marginRight: -12,
+      position: "relative",
+    },
+    sidetoside: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      columnGap: 5,
+    },
+  }),
+)

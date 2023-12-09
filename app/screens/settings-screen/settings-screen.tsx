@@ -1,12 +1,13 @@
-import { View } from "react-native"
-import { Divider, makeStyles, Text, useTheme } from "@rneui/themed"
+import { makeStyles } from "@rneui/themed"
 import { ScrollView } from "react-native-gesture-handler"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useLevel } from "@app/graphql/level-context"
 
 import { Screen } from "@app/components/screen"
+import { VersionComponent } from "@app/components/version"
 
+import { SettingsGroup } from "./group"
 import { AccountBanner } from "./settings/account-banner"
 import { AccountLevelSetting } from "./settings/account-level"
 import { AccountLNAddress } from "./settings/account-ln-address"
@@ -18,7 +19,6 @@ import { ThemeSetting } from "./settings/preferences-theme"
 import { SecuritySetting } from "./settings/sp-security"
 import { NotificationSetting } from "./settings/sp-notifications"
 import { ExportCsvSetting } from "./settings/advanced-export-csv"
-import { VersionComponent } from "@app/components/version"
 import { NeedHelpSetting } from "./settings/community-need-help"
 import { JoinCommunitySetting } from "./settings/community-join"
 
@@ -57,35 +57,7 @@ export const SettingsScreen: React.FC = () => {
   )
 }
 
-const SettingsGroup: React.FC<{
-  name: string
-  items: React.FC[]
-}> = ({ name, items }) => {
-  const styles = useStyles()
-  const {
-    theme: { colors },
-  } = useTheme()
-
-  return (
-    <View>
-      <Text type="p2" bold>
-        {name}
-      </Text>
-      <View style={styles.groupCard}>
-        {items.map((Element, index) => (
-          <View key={index}>
-            <Element />
-            {index < items.length - 1 && (
-              <Divider color={colors.grey4} style={styles.divider} />
-            )}
-          </View>
-        ))}
-      </View>
-    </View>
-  )
-}
-
-const useStyles = makeStyles(({ colors }) => ({
+const useStyles = makeStyles(() => ({
   outer: {
     marginTop: 4,
     paddingHorizontal: 10,
@@ -93,14 +65,5 @@ const useStyles = makeStyles(({ colors }) => ({
     display: "flex",
     flexDirection: "column",
     rowGap: 12,
-  },
-  groupCard: {
-    marginTop: 5,
-    backgroundColor: colors.grey5,
-    borderRadius: 12,
-    overflow: "hidden",
-  },
-  divider: {
-    marginHorizontal: 10,
   },
 }))
