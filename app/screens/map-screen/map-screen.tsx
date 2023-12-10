@@ -26,6 +26,13 @@ import { PhoneLoginInitiateType } from "../phone-auth-screen"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import MapStyles from "./map-styles.json"
 
+Geolocation.setRNConfiguration({
+  skipPermissionRequests: true, // done manually instead with PermissionsAndroid and iOS does it automatically
+  authorizationLevel: "auto",
+  enableBackgroundLocationUpdates: false,
+  locationProvider: "auto",
+})
+
 const useStyles = makeStyles(({ colors }) => ({
   android: { marginTop: 18 },
   loaderContainer: {

@@ -34,7 +34,6 @@ import { NetworkErrorComponent } from "./graphql/network-error-component"
 import { FeatureFlagContextProvider } from "./config/feature-flags-context"
 import "./utils/logs"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
-import Geolocation from "@react-native-community/geolocation"
 
 // FIXME should we only load the currently used local?
 // this would help to make the app load faster
@@ -43,14 +42,6 @@ import Geolocation from "@react-native-community/geolocation"
 //
 // alternatively, could try loadAllLocalesAsync()
 loadAllLocales()
-
-// set config here so it can be established app-wide instead of duplicating
-Geolocation.setRNConfiguration({
-  skipPermissionRequests: true, // done manually instead with PermissionsAndroid and iOS does it automatically
-  authorizationLevel: "auto",
-  enableBackgroundLocationUpdates: false,
-  locationProvider: "auto",
-})
 
 /**
  * This is the root component of our app.
