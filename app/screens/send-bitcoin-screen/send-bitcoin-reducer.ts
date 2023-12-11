@@ -111,7 +111,6 @@ export const sendBitcoinDestinationReducer = (
               invalidDestination: action.payload.invalidDestination,
             }
       }
-      console.log("Where we're we at? ", state.destinationState);
       throw new Error("Invalid state transition")
     case SendBitcoinActions.SetRequiresUsernameConfirmation:
       if (state.destinationState === DestinationState.Validating) {
