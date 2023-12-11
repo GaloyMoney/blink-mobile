@@ -66,19 +66,32 @@ gql`
   }
 `
 
-type Wallets = readonly ({
-  readonly __typename: "BTCWallet";
-  readonly id: string;
-} | {
-  readonly __typename: "UsdWallet";
-  readonly id: string;
-})[] | undefined
+type Wallets =
+  | readonly (
+      | {
+          readonly __typename: "BTCWallet"
+          readonly id: string
+        }
+      | {
+          readonly __typename: "UsdWallet"
+          readonly id: string
+        }
+    )[]
+  | undefined
 
-type Contacts = readonly {
-  readonly __typename: "UserContact";
-  readonly id: string;
-  readonly username: string;
-}[] | undefined
+type Contacts =
+  | readonly {
+      readonly __typename: "UserContact"
+      readonly id: string
+      readonly username: string
+    }[]
+  | undefined
+
+type NetworkWalletsContacts = {
+  _bitcoinNetwork: Network | undefined
+  _wallets: Wallets
+  _contacts: Contacts
+}
 
 export const defaultDestinationState: SendBitcoinDestinationState = {
   unparsedDestination: "",
@@ -121,7 +134,10 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     () => data?.me?.defaultAccount.wallets,
     [data?.me?.defaultAccount.wallets],
   )
-  const bitcoinNetwork: Network | undefined = useMemo(() => data?.globals?.network, [data?.globals?.network])
+  const bitcoinNetwork: Network | undefined = useMemo(
+    () => data?.globals?.network,
+    [data?.globals?.network],
+  )
   const contacts: Contacts = useMemo(() => data?.me?.contacts ?? [], [data?.me?.contacts])
 
   const { LL } = useI18nContext()
@@ -129,7 +145,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     fetchPolicy: "no-cache",
   })
 
-  const willInitiateValidation = () => {
+  const willInitiateValidation = React.useCallback(() => {
     if (!bitcoinNetwork || !wallets || !contacts) {
       return false
     }
@@ -139,81 +155,80 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
       payload: {},
     })
     return true
-  }
+  }, [bitcoinNetwork, wallets, contacts])
 
-  const validateDestination = async (
-    rawInput: string,
-    _bitcoinNetwork?: Network,
-    _wallets?: Wallets,
-    _contacts?: Contacts,
-  ) => {
-    // extra check to ensure nothing has changed since initiating validation
-    if (!_bitcoinNetwork || !_wallets || !_contacts) {
-      return
-    }
-
-    const destination = await parseDestination({
-      rawInput,
-      myWalletIds: _wallets.map((wallet) => wallet.id),
-      bitcoinNetwork: _bitcoinNetwork,
-      lnurlDomains: LNURL_DOMAINS,
-      accountDefaultWalletQuery,
-    })
-    logParseDestinationResult(destination)
-
-    if (destination.valid === false) {
-      if (destination.invalidReason === InvalidDestinationReason.SelfPayment) {
-        dispatchDestinationStateAction({
-          type: SendBitcoinActions.SetUnparsedDestination,
-          payload: {
-            unparsedDestination: rawInput,
-          },
-        })
-        navigation.navigate("conversionDetails")
+  const validateDestination = React.useCallback(
+    async (rawInput: string, obj: NetworkWalletsContacts) => {
+      // extra check to ensure nothing has changed since initiating validation
+      const { _bitcoinNetwork, _wallets, _contacts } = obj
+      if (!_bitcoinNetwork || !_wallets || !_contacts) {
         return
       }
 
+      const destination = await parseDestination({
+        rawInput,
+        myWalletIds: _wallets.map((wallet) => wallet.id),
+        bitcoinNetwork: _bitcoinNetwork,
+        lnurlDomains: LNURL_DOMAINS,
+        accountDefaultWalletQuery,
+      })
+      logParseDestinationResult(destination)
+
+      if (destination.valid === false) {
+        if (destination.invalidReason === InvalidDestinationReason.SelfPayment) {
+          dispatchDestinationStateAction({
+            type: SendBitcoinActions.SetUnparsedDestination,
+            payload: {
+              unparsedDestination: rawInput,
+            },
+          })
+          navigation.navigate("conversionDetails")
+          return
+        }
+
+        dispatchDestinationStateAction({
+          type: SendBitcoinActions.SetInvalid,
+          payload: {
+            invalidDestination: destination,
+            unparsedDestination: rawInput,
+          },
+        })
+        return
+      }
+
+      if (
+        destination.destinationDirection === DestinationDirection.Send &&
+        destination.validDestination.paymentType === PaymentType.Intraledger
+      ) {
+        if (
+          !_contacts
+            .map((contact) => contact.username.toLowerCase())
+            .includes(destination.validDestination.handle.toLowerCase())
+        ) {
+          dispatchDestinationStateAction({
+            type: SendBitcoinActions.SetRequiresUsernameConfirmation,
+            payload: {
+              validDestination: destination,
+              unparsedDestination: rawInput,
+              confirmationUsernameType: {
+                type: "new-username",
+                username: destination.validDestination.handle,
+              },
+            },
+          })
+          return
+        }
+      }
       dispatchDestinationStateAction({
-        type: SendBitcoinActions.SetInvalid,
+        type: SendBitcoinActions.SetValid,
         payload: {
-          invalidDestination: destination,
+          validDestination: destination,
           unparsedDestination: rawInput,
         },
       })
-      return
-    }
-
-    if (
-      destination.destinationDirection === DestinationDirection.Send &&
-      destination.validDestination.paymentType === PaymentType.Intraledger
-    ) {
-      if (
-        !_contacts
-          .map((contact) => contact.username.toLowerCase())
-          .includes(destination.validDestination.handle.toLowerCase())
-      ) {
-        dispatchDestinationStateAction({
-          type: SendBitcoinActions.SetRequiresUsernameConfirmation,
-          payload: {
-            validDestination: destination,
-            unparsedDestination: rawInput,
-            confirmationUsernameType: {
-              type: "new-username",
-              username: destination.validDestination.handle,
-            },
-          },
-        })
-        return
-      }
-    }
-    dispatchDestinationStateAction({
-      type: SendBitcoinActions.SetValid,
-      payload: {
-        validDestination: destination,
-        unparsedDestination: rawInput,
-      },
-    })
-  }
+    },
+    [navigation, accountDefaultWalletQuery],
+  )
 
   const handleChangeText = useCallback(
     (newDestination: string) => {
@@ -256,12 +271,37 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     }
   }, [destinationState, goToNextScreenWhenValid, navigation, setGoToNextScreenWhenValid])
 
-  const initiateGoToNextScreen = async () => {
+  // setTimeout here allows for the main JS thread to update the UI before the long validateDestination call
+  const waitAndValidateDestination = React.useCallback(
+    (input: string) => {
+      function returnValidateDestinationFunc(input: string, obj: NetworkWalletsContacts) {
+        return async function _validateDestination() {
+          await validateDestination(input, obj)
+        }
+      }
+
+      setTimeout(
+        returnValidateDestinationFunc(input, {
+          _bitcoinNetwork: bitcoinNetwork,
+          _wallets: wallets,
+          _contacts: contacts,
+        }),
+        0,
+      )
+    },
+    [bitcoinNetwork, wallets, contacts, validateDestination],
+  )
+
+  const initiateGoToNextScreen = React.useCallback(async () => {
     if (willInitiateValidation()) {
       setGoToNextScreenWhenValid(true)
-      await waitAndValidateDestination(destinationState.unparsedDestination)
+      waitAndValidateDestination(destinationState.unparsedDestination)
     }
-  }
+  }, [
+    willInitiateValidation,
+    waitAndValidateDestination,
+    destinationState.unparsedDestination,
+  ])
 
   useEffect(() => {
     if (route.params?.payment) {
@@ -273,7 +313,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     if (route.params?.autoValidate) {
       initiateGoToNextScreen()
     }
-  }, [route.params?.autoValidate])
+  }, [route.params?.autoValidate, initiateGoToNextScreen])
 
   useEffect(() => {
     // If we scan a QR code encoded with a payment url for a specific user e.g. https://{domain}/{username}
@@ -282,23 +322,6 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
       handleChangeText(route.params?.username)
     }
   }, [route.params?.username, handleChangeText])
-
-  // setTimeout here allows for the main JS thread to update the UI before the long validateDestination call
-  const waitAndValidateDestination = async (input: string) => {
-    setTimeout(
-      (function (
-        input: string,
-        _bitcoinNetwork?: Network,
-        _wallets?: Wallets,
-        _contacts?: Contacts,
-      ) {
-        return async function () {
-          await validateDestination(input, _bitcoinNetwork, _wallets, _contacts)
-        }
-      })(input, bitcoinNetwork, wallets, contacts),
-      0,
-    )
-  }
 
   const handlePaste = async () => {
     try {
@@ -316,7 +339,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
         LL,
       })
       if (willInitiateValidation()) {
-        await waitAndValidateDestination(clipboard)
+        waitAndValidateDestination(clipboard)
       }
     } catch (err) {
       if (err instanceof Error) {
@@ -347,7 +370,11 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
       default:
         return {}
     }
-  }, [destinationState.destinationState])
+  }, [
+    destinationState.destinationState,
+    destinationState.confirmationUsernameType,
+    styles,
+  ])
 
   return (
     <Screen
@@ -377,9 +404,8 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
             onChangeText={handleChangeText}
             value={destinationState.unparsedDestination}
             onSubmitEditing={async () =>
-              // setTimeout allows for the main JS thread to update the UI before the long validateDestination call
               willInitiateValidation() &&
-              await waitAndValidateDestination(destinationState.unparsedDestination)
+              waitAndValidateDestination(destinationState.unparsedDestination)
             }
             selectTextOnFocus
             autoCapitalize="none"
