@@ -34,9 +34,6 @@ const useLogout = () => {
         await KeyStoreWrapper.removePinAttempts()
 
         logLogout()
-        if (stateToDefault) {
-          resetState()
-        }
 
         await Promise.race([
           userLogoutMutation({ variables: { input: { deviceToken } } }),
@@ -52,6 +49,10 @@ const useLogout = () => {
         if (err instanceof Error) {
           crashlytics().recordError(err)
           console.debug({ err }, `error logout`)
+        }
+      } finally {
+        if (stateToDefault) {
+          resetState()
         }
       }
     },

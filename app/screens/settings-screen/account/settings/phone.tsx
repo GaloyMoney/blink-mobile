@@ -2,30 +2,20 @@ import { Alert } from "react-native"
 import { makeStyles, useTheme } from "@rneui/themed"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useLevel } from "@app/graphql/level-context"
+import { useLoginMethods } from "../login-methods-hook"
 
 import { SettingsRow } from "../../row"
 import { toastShow } from "@app/utils/toast"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 
 import { gql } from "@apollo/client"
-import { usePhoneSettingQuery, useUserPhoneDeleteMutation } from "@app/graphql/generated"
+import { useUserPhoneDeleteMutation } from "@app/graphql/generated"
 
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 
 gql`
-  query PhoneSetting {
-    me {
-      phone
-      email {
-        address
-        verified
-      }
-    }
-  }
-
   mutation userPhoneDelete {
     userPhoneDelete {
       errors {
@@ -44,8 +34,6 @@ gql`
   }
 `
 
-type PhoneState = "NotFound" | "Set"
-
 export const PhoneSetting: React.FC = () => {
   useStyles()
   const {
@@ -53,23 +41,11 @@ export const PhoneSetting: React.FC = () => {
   } = useTheme()
 
   const { LL } = useI18nContext()
-  const { isAtLeastLevelZero } = useLevel()
   const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>()
 
-  const { data, loading } = usePhoneSettingQuery({
-    fetchPolicy: "cache-and-network",
-    skip: !isAtLeastLevelZero,
-  })
-  const phone = data?.me?.phone
-  const emailVerified =
-    Boolean(data?.me?.email?.address) && Boolean(data?.me?.email?.verified)
+  const { loading, phone, emailVerified, phoneVerified } = useLoginMethods()
 
   const [phoneDeleteMutation, { loading: phDelLoad }] = useUserPhoneDeleteMutation()
-
-  let phoneState: PhoneState = "NotFound"
-  if (phone) {
-    phoneState = "Set"
-  }
 
   const deletePhone = async () => {
     try {
@@ -80,11 +56,7 @@ export const PhoneSetting: React.FC = () => {
         type: "success",
       })
     } catch (err) {
-      let message = ""
-      if (err instanceof Error) {
-        message = err?.message
-      }
-      Alert.alert(LL.common.error(), message)
+      Alert.alert(LL.common.error(), err instanceof Error ? err.message : "")
     }
   }
   const deletePhonePrompt = async () => {
@@ -107,26 +79,26 @@ export const PhoneSetting: React.FC = () => {
     <SettingsRow
       loading={loading}
       title={
-        phoneState === "Set"
+        phoneVerified
           ? LL.AccountScreen.phoneNumber()
           : LL.AccountScreen.tapToAddPhoneNumber()
       }
       subtitle={phone || undefined}
       leftIcon="call-outline"
-      action={
-        phoneState === "NotFound" ? () => navigate("phoneRegistrationInitiate") : null
-      }
+      action={phoneVerified ? null : () => navigate("phoneRegistrationInitiate")}
       spinner={phDelLoad}
       rightIcon={
-        phoneState === "NotFound" ? undefined : emailVerified ? (
-          <GaloyIconButton
-            name="close"
-            size="medium"
-            onPress={deletePhonePrompt}
-            color={colors.black}
-            backgroundColor={colors.red}
-          />
-        ) : null
+        phoneVerified ? (
+          emailVerified ? (
+            <GaloyIconButton
+              name="close"
+              size="medium"
+              onPress={deletePhonePrompt}
+              color={colors.black}
+              backgroundColor={colors.red}
+            />
+          ) : null
+        ) : undefined
       }
     />
   )

@@ -2722,15 +2722,20 @@ export type AccountLimitsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AccountLimitsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly limits: { readonly __typename: 'AccountLimits', readonly withdrawal: ReadonlyArray<{ readonly __typename: 'OneDayAccountLimit', readonly totalLimit: number, readonly remainingLimit?: number | null, readonly interval?: number | null }>, readonly internalSend: ReadonlyArray<{ readonly __typename: 'OneDayAccountLimit', readonly totalLimit: number, readonly remainingLimit?: number | null, readonly interval?: number | null }>, readonly convert: ReadonlyArray<{ readonly __typename: 'OneDayAccountLimit', readonly totalLimit: number, readonly remainingLimit?: number | null, readonly interval?: number | null }> } } } | null };
 
-export type EmailSettingQueryVariables = Exact<{ [key: string]: never; }>;
+export type AccountIdQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EmailSettingQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null };
+export type AccountIdQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string } } | null };
 
-export type PhoneSettingQueryVariables = Exact<{ [key: string]: never; }>;
+export type LoginMethodsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PhoneSettingQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null };
+export type LoginMethodsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null };
+
+export type DeleteSettingQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DeleteSettingQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
 
 export type AccountSettingsBannerQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6751,8 +6756,44 @@ export function useAccountLimitsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type AccountLimitsQueryHookResult = ReturnType<typeof useAccountLimitsQuery>;
 export type AccountLimitsLazyQueryHookResult = ReturnType<typeof useAccountLimitsLazyQuery>;
 export type AccountLimitsQueryResult = Apollo.QueryResult<AccountLimitsQuery, AccountLimitsQueryVariables>;
-export const EmailSettingDocument = gql`
-    query EmailSetting {
+export const AccountIdDocument = gql`
+    query AccountId {
+  me {
+    defaultAccount {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useAccountIdQuery__
+ *
+ * To run a query within a React component, call `useAccountIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAccountIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAccountIdQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAccountIdQuery(baseOptions?: Apollo.QueryHookOptions<AccountIdQuery, AccountIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AccountIdQuery, AccountIdQueryVariables>(AccountIdDocument, options);
+      }
+export function useAccountIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AccountIdQuery, AccountIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AccountIdQuery, AccountIdQueryVariables>(AccountIdDocument, options);
+        }
+export type AccountIdQueryHookResult = ReturnType<typeof useAccountIdQuery>;
+export type AccountIdLazyQueryHookResult = ReturnType<typeof useAccountIdLazyQuery>;
+export type AccountIdQueryResult = Apollo.QueryResult<AccountIdQuery, AccountIdQueryVariables>;
+export const LoginMethodsDocument = gql`
+    query LoginMethods {
   me {
     phone
     email {
@@ -6764,69 +6805,71 @@ export const EmailSettingDocument = gql`
     `;
 
 /**
- * __useEmailSettingQuery__
+ * __useLoginMethodsQuery__
  *
- * To run a query within a React component, call `useEmailSettingQuery` and pass it any options that fit your needs.
- * When your component renders, `useEmailSettingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useLoginMethodsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLoginMethodsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useEmailSettingQuery({
+ * const { data, loading, error } = useLoginMethodsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useEmailSettingQuery(baseOptions?: Apollo.QueryHookOptions<EmailSettingQuery, EmailSettingQueryVariables>) {
+export function useLoginMethodsQuery(baseOptions?: Apollo.QueryHookOptions<LoginMethodsQuery, LoginMethodsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<EmailSettingQuery, EmailSettingQueryVariables>(EmailSettingDocument, options);
+        return Apollo.useQuery<LoginMethodsQuery, LoginMethodsQueryVariables>(LoginMethodsDocument, options);
       }
-export function useEmailSettingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EmailSettingQuery, EmailSettingQueryVariables>) {
+export function useLoginMethodsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LoginMethodsQuery, LoginMethodsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<EmailSettingQuery, EmailSettingQueryVariables>(EmailSettingDocument, options);
+          return Apollo.useLazyQuery<LoginMethodsQuery, LoginMethodsQueryVariables>(LoginMethodsDocument, options);
         }
-export type EmailSettingQueryHookResult = ReturnType<typeof useEmailSettingQuery>;
-export type EmailSettingLazyQueryHookResult = ReturnType<typeof useEmailSettingLazyQuery>;
-export type EmailSettingQueryResult = Apollo.QueryResult<EmailSettingQuery, EmailSettingQueryVariables>;
-export const PhoneSettingDocument = gql`
-    query PhoneSetting {
+export type LoginMethodsQueryHookResult = ReturnType<typeof useLoginMethodsQuery>;
+export type LoginMethodsLazyQueryHookResult = ReturnType<typeof useLoginMethodsLazyQuery>;
+export type LoginMethodsQueryResult = Apollo.QueryResult<LoginMethodsQuery, LoginMethodsQueryVariables>;
+export const DeleteSettingDocument = gql`
+    query DeleteSetting {
   me {
-    phone
-    email {
-      address
-      verified
+    defaultAccount {
+      wallets {
+        id
+        balance
+        walletCurrency
+      }
     }
   }
 }
     `;
 
 /**
- * __usePhoneSettingQuery__
+ * __useDeleteSettingQuery__
  *
- * To run a query within a React component, call `usePhoneSettingQuery` and pass it any options that fit your needs.
- * When your component renders, `usePhoneSettingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useDeleteSettingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDeleteSettingQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = usePhoneSettingQuery({
+ * const { data, loading, error } = useDeleteSettingQuery({
  *   variables: {
  *   },
  * });
  */
-export function usePhoneSettingQuery(baseOptions?: Apollo.QueryHookOptions<PhoneSettingQuery, PhoneSettingQueryVariables>) {
+export function useDeleteSettingQuery(baseOptions?: Apollo.QueryHookOptions<DeleteSettingQuery, DeleteSettingQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<PhoneSettingQuery, PhoneSettingQueryVariables>(PhoneSettingDocument, options);
+        return Apollo.useQuery<DeleteSettingQuery, DeleteSettingQueryVariables>(DeleteSettingDocument, options);
       }
-export function usePhoneSettingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PhoneSettingQuery, PhoneSettingQueryVariables>) {
+export function useDeleteSettingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DeleteSettingQuery, DeleteSettingQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<PhoneSettingQuery, PhoneSettingQueryVariables>(PhoneSettingDocument, options);
+          return Apollo.useLazyQuery<DeleteSettingQuery, DeleteSettingQueryVariables>(DeleteSettingDocument, options);
         }
-export type PhoneSettingQueryHookResult = ReturnType<typeof usePhoneSettingQuery>;
-export type PhoneSettingLazyQueryHookResult = ReturnType<typeof usePhoneSettingLazyQuery>;
-export type PhoneSettingQueryResult = Apollo.QueryResult<PhoneSettingQuery, PhoneSettingQueryVariables>;
+export type DeleteSettingQueryHookResult = ReturnType<typeof useDeleteSettingQuery>;
+export type DeleteSettingLazyQueryHookResult = ReturnType<typeof useDeleteSettingLazyQuery>;
+export type DeleteSettingQueryResult = Apollo.QueryResult<DeleteSettingQuery, DeleteSettingQueryVariables>;
 export const AccountSettingsBannerDocument = gql`
     query AccountSettingsBanner {
   me {

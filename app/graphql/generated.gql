@@ -737,6 +737,16 @@ mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
   }
 }
 
+query AccountId {
+  me {
+    defaultAccount {
+      id
+      __typename
+    }
+    __typename
+  }
+}
+
 query AccountLNAddress {
   me {
     username
@@ -820,12 +830,15 @@ query DefaultWallet {
   }
 }
 
-query EmailSetting {
+query DeleteSetting {
   me {
-    phone
-    email {
-      address
-      verified
+    defaultAccount {
+      wallets {
+        id
+        balance
+        walletCurrency
+        __typename
+      }
       __typename
     }
     __typename
@@ -859,7 +872,7 @@ query ExportCsvSettingWallets {
   }
 }
 
-query PhoneSetting {
+query LoginMethods {
   me {
     phone
     email {

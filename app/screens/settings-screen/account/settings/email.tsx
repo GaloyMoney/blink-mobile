@@ -3,8 +3,8 @@ import { makeStyles, useTheme } from "@rneui/themed"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
-import { useLevel } from "@app/graphql/level-context"
 
+import { useLoginMethods } from "../login-methods-hook"
 import { SettingsRow } from "../../row"
 import { toastShow } from "@app/utils/toast"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
@@ -12,7 +12,6 @@ import { ModalTooltip } from "@app/components/modal-tooltip/modal-tooltip"
 
 import { gql } from "@apollo/client"
 import {
-  useEmailSettingQuery,
   useUserEmailDeleteMutation,
   useUserEmailRegistrationInitiateMutation,
 } from "@app/graphql/generated"
@@ -22,16 +21,6 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 
 gql`
-  query EmailSetting {
-    me {
-      phone
-      email {
-        address
-        verified
-      }
-    }
-  }
-
   mutation userEmailDelete {
     userEmailDelete {
       errors {
@@ -66,17 +55,16 @@ gql`
   }
 `
 
-type EmailState = "NotFound" | "Unverified" | "Verified"
-
-const title = (state: EmailState, LL: TranslationFunctions): string => {
-  switch (state) {
-    case "NotFound":
-      return LL.AccountScreen.tapToAddEmail()
-    case "Unverified":
-      return LL.AccountScreen.unverifiedEmai()
-    case "Verified":
-      return LL.AccountScreen.email()
+const title = (
+  email: string | undefined,
+  emailVerified: boolean,
+  LL: TranslationFunctions,
+): string => {
+  if (email) {
+    if (emailVerified) return LL.AccountScreen.email()
+    return LL.AccountScreen.unverifiedEmai()
   }
+  return LL.AccountScreen.tapToAddEmail()
 }
 
 export const EmailSetting: React.FC = () => {
@@ -86,23 +74,9 @@ export const EmailSetting: React.FC = () => {
   } = useTheme()
 
   const { LL } = useI18nContext()
-  const { isAtLeastLevelZero } = useLevel()
   const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>()
 
-  const { data, loading } = useEmailSettingQuery({
-    fetchPolicy: "cache-and-network",
-    skip: !isAtLeastLevelZero,
-  })
-  const email = data?.me?.email?.address
-
-  let emailState: EmailState = "NotFound"
-  if (email) {
-    emailState = email && data?.me?.email?.verified ? "Verified" : "Unverified"
-  } else {
-    emailState = "NotFound"
-  }
-
-  const phoneAndEmailVerified = emailState === "Verified" && Boolean(data?.me?.phone)
+  const { loading, email, emailVerified, bothEmailAndPhoneVerified } = useLoginMethods()
 
   const [emailDeleteMutation, { loading: emDelLoading }] = useUserEmailDeleteMutation()
   const [setEmailMutation, { loading: emRegLoading }] =
@@ -117,11 +91,7 @@ export const EmailSetting: React.FC = () => {
         LL,
       })
     } catch (err) {
-      let message = ""
-      if (err instanceof Error) {
-        message = err?.message
-      }
-      Alert.alert(LL.common.error(), message)
+      Alert.alert(LL.common.error(), err instanceof Error ? err.message : "")
     }
   }
 
@@ -170,8 +140,6 @@ export const EmailSetting: React.FC = () => {
       }
     } catch (err) {
       console.error(err, "error in setEmailMutation")
-    } finally {
-      // setLoading(false)
     }
   }
 
@@ -194,11 +162,11 @@ export const EmailSetting: React.FC = () => {
     <SettingsRow
       loading={loading}
       spinner={emDelLoading || emRegLoading}
-      title={title(emailState, LL)}
-      subtitle={emailState === "NotFound" ? undefined : email?.toString()}
+      title={title(email, emailVerified, LL)}
+      subtitle={emailVerified ? email?.toString() : undefined}
       leftIcon="mail-outline"
       extraComponentBesideTitle={
-        emailState === "Unverified" ? (
+        email && !emailVerified ? (
           <ModalTooltip
             size={20}
             type="info"
@@ -206,13 +174,11 @@ export const EmailSetting: React.FC = () => {
           />
         ) : undefined
       }
-      action={
-        emailState === "NotFound" ? () => navigate("emailRegistrationInitiate") : null
-      }
+      action={email ? null : () => navigate("emailRegistrationInitiate")}
       rightIcon={
-        emailState === "NotFound" ? undefined : (
+        email ? (
           <View style={styles.sidetoside}>
-            {emailState === "Unverified" && (
+            {!emailVerified && (
               <GaloyIconButton
                 name="refresh"
                 size="medium"
@@ -220,7 +186,7 @@ export const EmailSetting: React.FC = () => {
                 color={colors.black}
               />
             )}
-            {phoneAndEmailVerified && (
+            {bothEmailAndPhoneVerified && (
               <GaloyIconButton
                 name="close"
                 size="medium"
@@ -230,7 +196,7 @@ export const EmailSetting: React.FC = () => {
               />
             )}
           </View>
-        )
+        ) : undefined
       }
     />
   )

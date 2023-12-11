@@ -7265,6 +7265,10 @@ type RootTranslation = {
 	}
 	AccountScreen: {
 		/**
+		 * D​a​n​g​e​r​ ​Z​o​n​e
+		 */
+		dangerZone: string
+		/**
 		 * P​h​o​n​e​ ​d​e​l​e​t​e​d​ ​s​u​c​c​e​s​s​f​u​l​l​y
 		 */
 		phoneDeletedSuccessfully: string
@@ -16138,6 +16142,10 @@ export type TranslationFunctions = {
 		}
 	}
 	AccountScreen: {
+		/**
+		 * Danger Zone
+		 */
+		dangerZone: () => LocalizedString
 		/**
 		 * Phone deleted successfully
 		 */

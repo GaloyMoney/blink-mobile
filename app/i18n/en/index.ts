@@ -2336,6 +2336,7 @@ const en: BaseTranslation = {
     }
   },
   AccountScreen: {
+    dangerZone: "Danger Zone",
     phoneDeletedSuccessfully: "Phone deleted successfully",
     phoneNumber: "Phone Number",
     tapToAddPhoneNumber: "Tap to add phone number",

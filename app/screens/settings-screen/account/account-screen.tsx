@@ -2,7 +2,9 @@ import { makeStyles } from "@rneui/themed"
 import { ScrollView } from "react-native-gesture-handler"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useLevel } from "@app/graphql/level-context"
 
+import { AccountDeleteContextProvider } from "./account-delete-context"
 import { Screen } from "@app/components/screen"
 import { AccountHeader } from "./header"
 import { AccountId } from "./id"
@@ -11,10 +13,13 @@ import { SettingsGroup } from "../group"
 import { EmailSetting } from "./settings/email"
 import { PhoneSetting } from "./settings/phone"
 import { TxLimits } from "./settings/tx-limits"
+import { DangerZoneSettings } from "./settings/danger-zone"
 
 export const AccountScreen: React.FC = () => {
   const styles = useStyles()
   const { LL } = useI18nContext()
+
+  const { isAtLeastLevelOne } = useLevel()
 
   const items = {
     authenticationMethods: [EmailSetting, PhoneSetting],
@@ -22,17 +27,22 @@ export const AccountScreen: React.FC = () => {
   }
 
   return (
-    <Screen keyboardShouldPersistTaps="handled">
-      <ScrollView contentContainerStyle={styles.outer}>
-        <AccountHeader />
-        <AccountId />
-        <SettingsGroup
-          name={LL.AccountScreen.loginMethods()}
-          items={items.authenticationMethods}
-        />
-        <SettingsGroup items={items.misc} />
-      </ScrollView>
-    </Screen>
+    <AccountDeleteContextProvider>
+      <Screen keyboardShouldPersistTaps="handled">
+        <ScrollView contentContainerStyle={styles.outer}>
+          <AccountHeader />
+          <AccountId />
+          {isAtLeastLevelOne && (
+            <SettingsGroup
+              name={LL.AccountScreen.loginMethods()}
+              items={items.authenticationMethods}
+            />
+          )}
+          <SettingsGroup items={items.misc} />
+          <DangerZoneSettings />
+        </ScrollView>
+      </Screen>
+    </AccountDeleteContextProvider>
   )
 }
 
