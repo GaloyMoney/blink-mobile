@@ -30,7 +30,7 @@ export const GaloyCurrencyBubble = ({
       name="dollar"
       size={iconSize}
       color={colors._white}
-      backgroundColor={highlighted ? colors.green : colors.grey3}
+      backgroundColor={highlighted ? colors._green : colors.grey3}
     />
   )
 }

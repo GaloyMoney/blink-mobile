@@ -40,7 +40,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   valueRemaining: {
     fontWeight: "bold",
-    color: colors.green,
+    color: colors._green,
     maxWidth: "50%",
   },
   valueTotal: {
