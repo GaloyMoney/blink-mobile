@@ -410,6 +410,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
             selectTextOnFocus
             autoCapitalize="none"
             autoCorrect={false}
+            selection={{ start: 0, end: destinationState.unparsedDestination.length }}
           />
           <TouchableOpacity onPress={() => navigation.navigate("scanningQRCode")}>
             <View style={styles.iconContainer}>
