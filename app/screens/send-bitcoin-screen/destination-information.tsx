@@ -35,7 +35,7 @@ const destinationStateToInformation = (
   }
 
   if (sendBitcoinReducerState.destinationState === DestinationState.Invalid) {
-    switch (sendBitcoinReducerState.invalidDestination.invalidReason) {
+    switch (sendBitcoinReducerState?.invalidDestination?.invalidReason) {
       case InvalidDestinationReason.InvoiceExpired:
         return {
           error: translate.SendBitcoinDestinationScreen.expiredInvoice(),
@@ -53,7 +53,7 @@ const destinationStateToInformation = (
           error: translate.SendBitcoinDestinationScreen.usernameDoesNotExist({
             lnAddress: toLnAddress(
               (
-                sendBitcoinReducerState.invalidDestination
+                sendBitcoinReducerState?.invalidDestination
                   .invalidPaymentDestination as IntraledgerPaymentDestination
               ).handle,
             ),
