@@ -6,7 +6,6 @@
 	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:ln.bitcoinbeach.com</string>
 		<string>applinks:pay.bbw.sv</string>
 		<string>applinks:pay.mainnet.galoy.io</string>
 		<string>applinks:pay.blink.sv</string>

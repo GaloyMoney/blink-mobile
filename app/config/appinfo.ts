@@ -5,7 +5,6 @@ export const APP_STORE_LINK =
 export const PLAY_STORE_LINK =
   "https://play.google.com/store/apps/details?id=com.galoyapp"
 export const PREFIX_LINKING = [
-  "https://ln.bitcoinbeach.com",
   "https://pay.mainnet.galoy.io",
   "https://pay.bbw.sv",
   "https://pay.blink.sv",
@@ -13,12 +12,7 @@ export const PREFIX_LINKING = [
 ]
 
 // FIXME this should come from globals.lightningAddressDomainAliases
-export const LNURL_DOMAINS = [
-  "ln.bitcoinbeach.com",
-  "pay.bbw.sv",
-  "blink.sv",
-  "pay.blink.sv",
-]
+export const LNURL_DOMAINS = ["pay.bbw.sv", "blink.sv", "pay.blink.sv"]
 
 export const getInviteLink = (_username: string | null | undefined) => {
   const username = _username ? `/${_username}` : ""

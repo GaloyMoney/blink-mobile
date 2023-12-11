@@ -47,16 +47,6 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>ln.bitcoinbeach.com</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>ln.bitcoinbeach.com</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
 			<string>pay.bbw.sv</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
