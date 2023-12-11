@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useReducer } from "react"
-import { TextInput, TouchableWithoutFeedback, View } from "react-native"
+import { TextInput, TouchableOpacity, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "@app/components/screen"
 import { gql } from "@apollo/client"
@@ -117,10 +117,6 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     }
 
     return async (rawInput: string) => {
-      if (destinationState.destinationState !== "entering") {
-        return
-      }
-
       dispatchDestinationStateAction({
         type: SendBitcoinActions.SetValidating,
         payload: {
@@ -269,25 +265,24 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     }
   }, [route.params?.username, handleChangeText])
 
-  let inputContainerStyle
-  switch (destinationState.destinationState) {
-    case "entering":
-    case "validating":
-      inputContainerStyle = styles.enteringInputContainer
-      break
-    case "invalid":
-      inputContainerStyle = styles.errorInputContainer
-      break
-    case "valid":
-      if (!destinationState.confirmationUsernameType) {
-        inputContainerStyle = styles.validInputContainer
-        break
-      }
-      inputContainerStyle = styles.warningInputContainer
-      break
-    case "requires-destination-confirmation":
-      inputContainerStyle = styles.warningInputContainer
-  }
+  const inputContainerStyle = React.useMemo(() => {
+    switch (destinationState.destinationState) {
+      case "validating":
+        return styles.enteringInputContainer
+      case "invalid":
+        return styles.errorInputContainer
+      case "requires-destination-confirmation":
+        return styles.warningInputContainer
+      case "valid":
+        if (!destinationState.confirmationUsernameType) {
+          return styles.validInputContainer
+        }
+        return styles.warningInputContainer
+      default:
+        return
+    }
+  }, [destinationState.destinationState])
+
 
   return (
     <Screen
@@ -324,22 +319,30 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
             autoCapitalize="none"
             autoCorrect={false}
           />
-          <TouchableWithoutFeedback onPress={() => navigation.navigate("scanningQRCode")}>
+          <TouchableOpacity onPress={() => navigation.navigate("scanningQRCode")}>
             <View style={styles.iconContainer}>
               <ScanIcon fill={colors.primary} />
             </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={async () => {
               try {
+                console.log("Pressed")
                 const clipboard = await Clipboard.getString()
+                console.log("Got string")
                 dispatchDestinationStateAction({
                   type: SendBitcoinActions.SetUnparsedDestination,
                   payload: {
                     unparsedDestination: clipboard,
                   },
                 })
-                validateDestination && (await validateDestination(clipboard))
+                validateDestination && (await validateDestination(clipboard)) 
+                toastShow({
+                  type: "success",
+                  message: (translations) =>
+                    translations.SendBitcoinDestinationScreen.pastedClipboardSuccess(),
+                  LL,
+                })
               } catch (err) {
                 if (err instanceof Error) {
                   crashlytics().recordError(err)
@@ -357,7 +360,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
               {/* we could Paste from "FontAwesome" but as svg*/}
               <Icon name="clipboard-outline" color={colors.primary} size={22} />
             </View>
-          </TouchableWithoutFeedback>
+          </TouchableOpacity>
         </View>
         <DestinationInformation destinationState={destinationState} />
         <View style={styles.buttonContainer}>
@@ -401,19 +404,18 @@ const usestyles = makeStyles(({ colors }) => ({
     alignItems: "center",
     height: 60,
     marginBottom: 10,
+    borderWidth: 1,
+    borderColor: "transparent",
   },
   enteringInputContainer: {},
   errorInputContainer: {
     borderColor: colors.error,
-    borderWidth: 1,
   },
   validInputContainer: {
     borderColor: colors.green,
-    borderWidth: 1,
   },
   warningInputContainer: {
     borderColor: colors.warning,
-    borderWidth: 1,
   },
   buttonContainer: {
     flex: 1,

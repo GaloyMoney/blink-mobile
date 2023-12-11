@@ -2254,6 +2254,7 @@ const en: BaseTranslation = {
       confirmButton: "I'm 100% sure",
     },
     clipboardError: "Error getting value from clipboard",
+    pastedClipboardSuccess: "Pasted from clipboard"
   },
   SendBitcoinScreen: {
     willBeSentToMempoolBy: "Transaction should be submitted to mempool",

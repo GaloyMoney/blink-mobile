@@ -6997,6 +6997,10 @@ type RootTranslation = {
 		 * E​r​r​o​r​ ​g​e​t​t​i​n​g​ ​v​a​l​u​e​ ​f​r​o​m​ ​c​l​i​p​b​o​a​r​d
 		 */
 		clipboardError: string
+		/**
+		 * P​a​s​t​e​d​ ​f​r​o​m​ ​c​l​i​p​b​o​a​r​d
+		 */
+		pastedClipboardSuccess: string
 	}
 	SendBitcoinScreen: {
 		/**
@@ -15771,6 +15775,10 @@ export type TranslationFunctions = {
 		 * Error getting value from clipboard
 		 */
 		clipboardError: () => LocalizedString
+		/**
+		 * Pasted from clipboard
+		 */
+		pastedClipboardSuccess: () => LocalizedString
 	}
 	SendBitcoinScreen: {
 		/**
