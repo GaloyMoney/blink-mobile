@@ -8,7 +8,6 @@ import {
   useAccountDefaultWalletLazyQuery,
   useRealtimePriceQuery,
   useSendBitcoinDestinationQuery,
-  useContactsQuery,
 } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -66,18 +65,6 @@ gql`
       id
     }
   }
-
-  query contacts {
-    me {
-      id
-      contacts {
-        id
-        username
-        alias
-        transactionsCount
-      }
-    }
-  }
 `
 
 export const defaultDestinationState: SendBitcoinDestinationState = {
@@ -105,7 +92,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   )
   const [goToNextScreenWhenValid, setGoToNextScreenWhenValid] = React.useState(false)
 
-  const { data } = useSendBitcoinDestinationQuery({
+  const { loading, data } = useSendBitcoinDestinationQuery({
     fetchPolicy: "cache-and-network",
     returnPartialData: true,
     skip: !isAuthed,
@@ -126,29 +113,16 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     fetchPolicy: "no-cache",
   })
 
-  const {
-    loading,
-    data: contactsData,
-    error,
-  } = useContactsQuery({
-    skip: !isAuthed,
-    fetchPolicy: "cache-and-network",
-  })
-
-  if (error) {
-    toastShow({ message: error.message, LL })
-  }
-
   const [matchingContacts, setMatchingContacts] = useState<Contact[]>([])
   const allContacts: Contact[] = useMemo(() => {
-    const contactsCopy = contactsData?.me?.contacts.slice() ?? []
+    const contactsCopy = contacts.slice() ?? []
     const compareUsernames = (a: Contact, b: Contact) => {
       return a.username.toLocaleLowerCase().localeCompare(b.username.toLocaleLowerCase())
     }
     contactsCopy.sort(compareUsernames)
 
     return contactsCopy
-  }, [contactsData])
+  }, [contacts])
 
   const [selectedId, setSelectedId] = useState("")
 
@@ -174,8 +148,8 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
       .toLowerCase()
       .includes(searchWord.toLowerCase())
 
-    if (contact.alias) {
-      contactPrettyNameMatchesSearchWord = contact.alias
+    if (contact.username) {
+      contactPrettyNameMatchesSearchWord = contact.username
         .toLowerCase()
         .includes(searchWord.toLowerCase())
     } else {
@@ -511,7 +485,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
             >
               <Icon name={"person-outline"} size={24} color={colors.primary} />
               <ListItem.Content>
-                <ListItem.Title style={styles.itemText}>{item.alias}</ListItem.Title>
+                <ListItem.Title style={styles.itemText}>{item.username}</ListItem.Title>
               </ListItem.Content>
             </ListItem>
           )}
