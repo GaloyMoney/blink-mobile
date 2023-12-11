@@ -2,6 +2,8 @@ import { PropsWithChildren, createContext, useContext, useState } from "react"
 import { ActivityIndicator, View } from "react-native"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 
+import { useI18nContext } from "@app/i18n/i18n-react"
+
 type AccountDeleteContextType = {
   setAccountIsBeingDeleted: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -17,13 +19,16 @@ export const AccountDeleteContextProvider: React.FC<PropsWithChildren> = ({
   const {
     theme: { colors },
   } = useTheme()
+
+  const { LL } = useI18nContext()
+
   const [accountIsBeingDeleted, setAccountIsBeingDeleted] = useState(false)
 
   const Loading = (
     <View style={styles.center}>
       <ActivityIndicator />
       <Text type="p2" color={colors.grey2}>
-        Your account is being deleted, please wait...
+        {LL.AccountScreen.accountBeingDeleted()}
       </Text>
     </View>
   )

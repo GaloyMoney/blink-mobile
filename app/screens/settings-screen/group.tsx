@@ -10,6 +10,8 @@ export const SettingsGroup: React.FC<{
     theme: { colors },
   } = useTheme()
 
+  const filteredItems = items.filter((x) => x({}) !== null)
+
   return (
     <View>
       {name && (
@@ -18,10 +20,10 @@ export const SettingsGroup: React.FC<{
         </Text>
       )}
       <View style={styles.groupCard}>
-        {items.map((Element, index) => (
+        {filteredItems.map((Element, index) => (
           <View key={index}>
             <Element />
-            {index < items.length - 1 && (
+            {index < filteredItems.length - 1 && (
               <Divider color={colors.grey4} style={styles.divider} />
             )}
           </View>

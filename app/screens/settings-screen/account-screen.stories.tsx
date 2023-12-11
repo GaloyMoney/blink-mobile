@@ -4,7 +4,7 @@ import { Meta } from "@storybook/react"
 import { createCache } from "../../graphql/cache"
 import { AccountScreenDocument } from "../../graphql/generated"
 import mocks from "../../graphql/mocks"
-import { AccountScreen } from "./account-screen"
+import { AccountScreen } from "../settings-screen/account/account-screen"
 import { MockedProvider } from "@apollo/client/testing"
 import { AccountLevel, LevelContextProvider } from "../../graphql/level-context"
 
@@ -101,6 +101,7 @@ export const Unauthed = () => (
     value={{
       isAtLeastLevelZero: false,
       isAtLeastLevelOne: false,
+      isAtLeastLevelTwo: true,
       currentLevel: AccountLevel.NonAuth,
     }}
   >
@@ -115,6 +116,7 @@ export const AuthedEmailNotSet = () => (
     value={{
       isAtLeastLevelZero: true,
       isAtLeastLevelOne: true,
+      isAtLeastLevelTwo: true,
       currentLevel: AccountLevel.One,
     }}
   >
@@ -129,6 +131,7 @@ export const AuthedEmailSet = () => (
     value={{
       isAtLeastLevelZero: true,
       isAtLeastLevelOne: true,
+      isAtLeastLevelTwo: true,
       currentLevel: AccountLevel.One,
     }}
   >

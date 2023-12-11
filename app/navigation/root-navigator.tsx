@@ -56,10 +56,10 @@ import SendBitcoinDestinationScreen from "@app/screens/send-bitcoin-screen/send-
 import SendBitcoinDetailsScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-details-screen"
 import SendBitcoinSuccessScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-success-screen"
 import { AccountScreen } from "@app/screens/settings-screen/account"
-import { DefaultWalletScreen } from "@app/screens/settings-screen-original/default-wallet"
-import { DisplayCurrencyScreen } from "@app/screens/settings-screen-original/display-currency-screen"
-import { ThemeScreen } from "@app/screens/settings-screen-original/theme-screen"
-import { TransactionLimitsScreen } from "@app/screens/settings-screen-original/transaction-limits-screen"
+import { DefaultWalletScreen } from "@app/screens/settings-screen/default-wallet"
+import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
+import { ThemeScreen } from "@app/screens/settings-screen/theme-screen"
+import { TransactionLimitsScreen } from "@app/screens/settings-screen/transaction-limits-screen"
 import {
   TotpLoginValidateScreen,
   TotpRegistrationInitiateScreen,
@@ -70,8 +70,8 @@ import { testProps } from "@app/utils/testProps"
 import { makeStyles, useTheme } from "@rneui/themed"
 import { ScanningQRCodeScreen } from "../screens/send-bitcoin-screen"
 import { SettingsScreen } from "../screens/settings-screen"
-import { LanguageScreen } from "../screens/settings-screen-original/language-screen"
-import { SecurityScreen } from "../screens/settings-screen-original/security-screen"
+import { LanguageScreen } from "../screens/settings-screen/language-screen"
+import { SecurityScreen } from "../screens/settings-screen/security-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionHistoryScreen } from "../screens/transaction-history/transaction-history-screen"
 import {
@@ -80,7 +80,7 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
-import { NotificationSettingsScreen } from "@app/screens/settings-screen-original/notifications-screen"
+import { NotificationSettingsScreen } from "@app/screens/settings-screen/notifications-screen"
 import { FullOnboardingFlowScreen } from "@app/screens/full-onboarding-flow"
 
 const RootNavigator = createStackNavigator<RootStackParamList>()

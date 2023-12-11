@@ -22,7 +22,7 @@ gql`
 export const AccountLNAddress: React.FC = () => {
   const { appConfig } = useAppConfig()
   const hostName = appConfig.galoyInstance.lnAddressHostname
-  const bankName = appConfig.galoyInstance.name
+  const bankName = "Lightning"
 
   const [isModalShown, setModalShown] = useState(false)
   const toggleModalVisibility = () => setModalShown((x) => !x)

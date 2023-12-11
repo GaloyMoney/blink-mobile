@@ -1530,27 +1530,6 @@ query setDefaultWalletScreen {
   }
 }
 
-query settingsScreen {
-  me {
-    id
-    phone
-    username
-    language
-    defaultAccount {
-      id
-      defaultWalletId
-      wallets {
-        id
-        balance
-        walletCurrency
-        __typename
-      }
-      __typename
-    }
-    __typename
-  }
-}
-
 query supportedCountries {
   globals {
     supportedCountries {
@@ -1596,18 +1575,6 @@ query transactionListForDefaultAccount($first: Int, $after: String, $last: Int, 
         ...TransactionList
         __typename
       }
-      __typename
-    }
-    __typename
-  }
-}
-
-query walletCSVTransactions($walletIds: [WalletId!]!) {
-  me {
-    id
-    defaultAccount {
-      id
-      csvTransactions(walletIds: $walletIds)
       __typename
     }
     __typename

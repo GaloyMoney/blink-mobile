@@ -138,9 +138,10 @@ export const SetLightningAddressModalUI = ({
 }: SetLightningAddressModalUIProps) => {
   const {
     appConfig: {
-      galoyInstance: { lnAddressHostname, name: bankName },
+      galoyInstance: { lnAddressHostname },
     },
   } = useAppConfig()
+  const bankName = "Lightning"
   const {
     theme: { colors },
   } = useTheme()

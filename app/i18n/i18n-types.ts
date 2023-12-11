@@ -7265,6 +7265,18 @@ type RootTranslation = {
 	}
 	AccountScreen: {
 		/**
+		 * Y​o​u​r​ ​a​c​c​o​u​n​t​ ​h​a​s​ ​f​u​n​d​s​ ​m​o​r​e​ ​t​h​a​n​ ​$​5
+		 */
+		fundsMoreThan5Dollars: string
+		/**
+		 * T​h​e​ ​a​c​c​o​u​n​t​ ​y​o​u​'​r​e​ ​u​s​i​n​g​ ​h​a​s​ ​r​e​d​u​c​e​d​ ​t​r​a​n​s​a​c​t​i​o​n​ ​l​i​m​i​t​s​ ​a​n​d​ ​i​n​ ​c​a​s​e​ ​y​o​u​ ​l​o​s​e​ ​y​o​u​r​ ​p​h​o​n​e​ ​o​r​ ​u​n​i​n​s​t​a​l​l​ ​t​h​e​ ​a​p​p​,​ ​y​o​u​ ​w​i​l​l​ ​l​o​s​e​ ​a​c​c​e​s​s​ ​t​o​ ​y​o​u​r​ ​f​u​n​d​s​.​ ​U​p​g​r​a​d​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t​ ​b​y​ ​r​e​g​i​s​t​e​r​i​n​g​ ​i​t​ ​w​i​t​h​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​.
+		 */
+		itsATrialAccount: string
+		/**
+		 * Y​o​u​r​ ​a​c​c​o​u​n​t​ ​i​s​ ​b​e​i​n​g​ ​d​e​l​e​t​e​d​,​ ​p​l​e​a​s​e​ ​w​a​i​t​.​.​.
+		 */
+		accountBeingDeleted: string
+		/**
 		 * D​a​n​g​e​r​ ​Z​o​n​e
 		 */
 		dangerZone: string
@@ -16142,6 +16154,18 @@ export type TranslationFunctions = {
 		}
 	}
 	AccountScreen: {
+		/**
+		 * Your account has funds more than $5
+		 */
+		fundsMoreThan5Dollars: () => LocalizedString
+		/**
+		 * The account you're using has reduced transaction limits and in case you lose your phone or uninstall the app, you will lose access to your funds. Upgrade your account by registering it with your phone number.
+		 */
+		itsATrialAccount: () => LocalizedString
+		/**
+		 * Your account is being deleted, please wait...
+		 */
+		accountBeingDeleted: () => LocalizedString
 		/**
 		 * Danger Zone
 		 */

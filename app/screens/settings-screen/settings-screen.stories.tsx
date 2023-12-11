@@ -1,6 +1,6 @@
 import * as React from "react"
 import { StoryScreen } from "../../../.storybook/views"
-import { SettingsScreen } from "./settings-screen"
+import { SettingsScreen } from "../settings-screen/settings-screen"
 import { Meta } from "@storybook/react"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import { createCache } from "../../graphql/cache"

@@ -2336,6 +2336,9 @@ const en: BaseTranslation = {
     }
   },
   AccountScreen: {
+    fundsMoreThan5Dollars: "Your account has funds more than $5",
+    itsATrialAccount: "The account you're using has reduced transaction limits and in case you lose your phone or uninstall the app, you will lose access to your funds. Upgrade your account by registering it with your phone number.",
+    accountBeingDeleted: "Your account is being deleted, please wait...",
     dangerZone: "Danger Zone",
     phoneDeletedSuccessfully: "Phone deleted successfully",
     phoneNumber: "Phone Number",

@@ -8,7 +8,6 @@ import { useLoginMethods } from "../login-methods-hook"
 import { SettingsRow } from "../../row"
 import { toastShow } from "@app/utils/toast"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
-import { ModalTooltip } from "@app/components/modal-tooltip/modal-tooltip"
 
 import { gql } from "@apollo/client"
 import {
@@ -163,17 +162,8 @@ export const EmailSetting: React.FC = () => {
       loading={loading}
       spinner={emDelLoading || emRegLoading}
       title={title(email, emailVerified, LL)}
-      subtitle={emailVerified ? email?.toString() : undefined}
+      subtitle={emailVerified ? email?.toString() : email}
       leftIcon="mail-outline"
-      extraComponentBesideTitle={
-        email && !emailVerified ? (
-          <ModalTooltip
-            size={20}
-            type="info"
-            text={LL.AccountScreen.unverifiedEmailAdvice()}
-          />
-        ) : undefined
-      }
       action={email ? null : () => navigate("emailRegistrationInitiate")}
       rightIcon={
         email ? (
@@ -192,7 +182,7 @@ export const EmailSetting: React.FC = () => {
                 size="medium"
                 onPress={deleteEmailPrompt}
                 color={colors.black}
-                backgroundColor={colors.red}
+                backgroundColor={colors.error9}
               />
             )}
           </View>

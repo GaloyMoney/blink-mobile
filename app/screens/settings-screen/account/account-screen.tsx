@@ -14,6 +14,8 @@ import { EmailSetting } from "./settings/email"
 import { PhoneSetting } from "./settings/phone"
 import { TxLimits } from "./settings/tx-limits"
 import { DangerZoneSettings } from "./settings/danger-zone"
+import { UpgradeTrialAcccount } from "./settings/upgrade-trial-account"
+import { UpgradeAcccountLevelOne } from "./settings/upgrade"
 
 export const AccountScreen: React.FC = () => {
   const styles = useStyles()
@@ -23,7 +25,7 @@ export const AccountScreen: React.FC = () => {
 
   const items = {
     authenticationMethods: [EmailSetting, PhoneSetting],
-    misc: [TxLimits],
+    misc: [TxLimits, UpgradeAcccountLevelOne],
   }
 
   return (
@@ -32,6 +34,7 @@ export const AccountScreen: React.FC = () => {
         <ScrollView contentContainerStyle={styles.outer}>
           <AccountHeader />
           <AccountId />
+          <UpgradeTrialAcccount />
           {isAtLeastLevelOne && (
             <SettingsGroup
               name={LL.AccountScreen.loginMethods()}

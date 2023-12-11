@@ -95,7 +95,7 @@ export const PhoneSetting: React.FC = () => {
               size="medium"
               onPress={deletePhonePrompt}
               color={colors.black}
-              backgroundColor={colors.red}
+              backgroundColor={colors.error9}
             />
           ) : null
         ) : undefined
