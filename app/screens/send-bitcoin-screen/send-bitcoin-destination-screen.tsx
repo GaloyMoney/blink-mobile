@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useReducer } from "react"
-import { TextInput, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, TextInput, TouchableOpacity, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "@app/components/screen"
 import { gql } from "@apollo/client"
 import ScanIcon from "@app/assets/icons/scan.svg"
 import {
+  Network,
   useAccountDefaultWalletLazyQuery,
   useRealtimePriceQuery,
   useSendBitcoinDestinationQuery,
@@ -65,6 +66,20 @@ gql`
   }
 `
 
+type Wallets = readonly ({
+  readonly __typename: "BTCWallet";
+  readonly id: string;
+} | {
+  readonly __typename: "UsdWallet";
+  readonly id: string;
+})[] | undefined
+
+type Contacts = readonly {
+  readonly __typename: "UserContact";
+  readonly id: string;
+  readonly username: string;
+}[] | undefined
+
 export const defaultDestinationState: SendBitcoinDestinationState = {
   unparsedDestination: "",
   destinationState: DestinationState.Entering,
@@ -102,100 +117,103 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     skip: !isAuthed,
   })
 
-  const wallets = data?.me?.defaultAccount.wallets
-  const bitcoinNetwork = data?.globals?.network
-  const contacts = useMemo(() => data?.me?.contacts ?? [], [data?.me?.contacts])
+  const wallets: Wallets = useMemo(
+    () => data?.me?.defaultAccount.wallets,
+    [data?.me?.defaultAccount.wallets],
+  )
+  const bitcoinNetwork: Network | undefined = useMemo(() => data?.globals?.network, [data?.globals?.network])
+  const contacts: Contacts = useMemo(() => data?.me?.contacts ?? [], [data?.me?.contacts])
 
   const { LL } = useI18nContext()
   const [accountDefaultWalletQuery] = useAccountDefaultWalletLazyQuery({
     fetchPolicy: "no-cache",
   })
 
-  const validateDestination = useMemo(() => {
+  const willInitiateValidation = () => {
     if (!bitcoinNetwork || !wallets || !contacts) {
-      return null
+      return false
     }
 
-    return async (rawInput: string) => {
+    dispatchDestinationStateAction({
+      type: SendBitcoinActions.SetValidating,
+      payload: {},
+    })
+    return true
+  }
+
+  const validateDestination = async (
+    rawInput: string,
+    _bitcoinNetwork?: Network,
+    _wallets?: Wallets,
+    _contacts?: Contacts,
+  ) => {
+    // extra check to ensure nothing has changed since initiating validation
+    if (!_bitcoinNetwork || !_wallets || !_contacts) {
+      return
+    }
+
+    const destination = await parseDestination({
+      rawInput,
+      myWalletIds: _wallets.map((wallet) => wallet.id),
+      bitcoinNetwork: _bitcoinNetwork,
+      lnurlDomains: LNURL_DOMAINS,
+      accountDefaultWalletQuery,
+    })
+    logParseDestinationResult(destination)
+
+    if (destination.valid === false) {
+      if (destination.invalidReason === InvalidDestinationReason.SelfPayment) {
+        dispatchDestinationStateAction({
+          type: SendBitcoinActions.SetUnparsedDestination,
+          payload: {
+            unparsedDestination: rawInput,
+          },
+        })
+        navigation.navigate("conversionDetails")
+        return
+      }
+
       dispatchDestinationStateAction({
-        type: SendBitcoinActions.SetValidating,
+        type: SendBitcoinActions.SetInvalid,
         payload: {
+          invalidDestination: destination,
           unparsedDestination: rawInput,
         },
       })
+      return
+    }
 
-      const destination = await parseDestination({
-        rawInput,
-        myWalletIds: wallets.map((wallet) => wallet.id),
-        bitcoinNetwork,
-        lnurlDomains: LNURL_DOMAINS,
-        accountDefaultWalletQuery,
-      })
-      logParseDestinationResult(destination)
-
-      if (destination.valid === false) {
-        if (destination.invalidReason === InvalidDestinationReason.SelfPayment) {
-          dispatchDestinationStateAction({
-            type: SendBitcoinActions.SetUnparsedDestination,
-            payload: {
-              unparsedDestination: rawInput,
-            },
-          })
-          navigation.navigate("conversionDetails")
-          return
-        }
-
+    if (
+      destination.destinationDirection === DestinationDirection.Send &&
+      destination.validDestination.paymentType === PaymentType.Intraledger
+    ) {
+      if (
+        !_contacts
+          .map((contact) => contact.username.toLowerCase())
+          .includes(destination.validDestination.handle.toLowerCase())
+      ) {
         dispatchDestinationStateAction({
-          type: SendBitcoinActions.SetInvalid,
+          type: SendBitcoinActions.SetRequiresUsernameConfirmation,
           payload: {
-            invalidDestination: destination,
+            validDestination: destination,
             unparsedDestination: rawInput,
+            confirmationUsernameType: {
+              type: "new-username",
+              username: destination.validDestination.handle,
+            },
           },
         })
         return
       }
-
-      if (
-        destination.destinationDirection === DestinationDirection.Send &&
-        destination.validDestination.paymentType === PaymentType.Intraledger
-      ) {
-        if (
-          !contacts
-            .map((contact) => contact.username.toLowerCase())
-            .includes(destination.validDestination.handle.toLowerCase())
-        ) {
-          dispatchDestinationStateAction({
-            type: SendBitcoinActions.SetRequiresUsernameConfirmation,
-            payload: {
-              validDestination: destination,
-              unparsedDestination: rawInput,
-              confirmationUsernameType: {
-                type: "new-username",
-                username: destination.validDestination.handle,
-              },
-            },
-          })
-          return
-        }
-      }
-
-      dispatchDestinationStateAction({
-        type: SendBitcoinActions.SetValid,
-        payload: {
-          validDestination: destination,
-          unparsedDestination: rawInput,
-        },
-      })
     }
-  }, [
-    bitcoinNetwork,
-    wallets,
-    contacts,
-    destinationState.destinationState,
-    accountDefaultWalletQuery,
-    dispatchDestinationStateAction,
-    navigation,
-  ])
+    dispatchDestinationStateAction({
+      type: SendBitcoinActions.SetValid,
+      payload: {
+        validDestination: destination,
+        unparsedDestination: rawInput,
+      },
+    })
+  }
 
   const handleChangeText = useCallback(
     (newDestination: string) => {
@@ -216,7 +234,9 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
       return
     }
 
-    if (destinationState.destination.destinationDirection === DestinationDirection.Send) {
+    if (
+      destinationState?.destination?.destinationDirection === DestinationDirection.Send
+    ) {
       // go to send bitcoin details screen
       setGoToNextScreenWhenValid(false)
       navigation.navigate("sendBitcoinDetails", {
@@ -226,7 +246,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     }
 
     if (
-      destinationState.destination.destinationDirection === DestinationDirection.Receive
+      destinationState?.destination?.destinationDirection === DestinationDirection.Receive
     ) {
       // go to redeem bitcoin screen
       setGoToNextScreenWhenValid(false)
@@ -236,14 +256,12 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     }
   }, [destinationState, goToNextScreenWhenValid, navigation, setGoToNextScreenWhenValid])
 
-  const initiateGoToNextScreen = useMemo(() => {
-    return async () => {
-      if (validateDestination) {
-        await validateDestination(destinationState.unparsedDestination)
-        setGoToNextScreenWhenValid(true)
-      }
+  const initiateGoToNextScreen = async () => {
+    if (willInitiateValidation()) {
+      setGoToNextScreenWhenValid(true)
+      await waitAndValidateDestination(destinationState.unparsedDestination)
     }
-  }, [validateDestination, destinationState.unparsedDestination])
+  }
 
   useEffect(() => {
     if (route.params?.payment) {
@@ -253,9 +271,9 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
 
   useEffect(() => {
     if (route.params?.autoValidate) {
-      initiateGoToNextScreen && initiateGoToNextScreen()
+      initiateGoToNextScreen()
     }
-  }, [route.params?.autoValidate, initiateGoToNextScreen])
+  }, [route.params?.autoValidate])
 
   useEffect(() => {
     // If we scan a QR code encoded with a payment url for a specific user e.g. https://{domain}/{username}
@@ -265,24 +283,71 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     }
   }, [route.params?.username, handleChangeText])
 
+  // setTimeout here allows for the main JS thread to update the UI before the long validateDestination call
+  const waitAndValidateDestination = async (input: string) => {
+    setTimeout(
+      (function (
+        input: string,
+        _bitcoinNetwork?: Network,
+        _wallets?: Wallets,
+        _contacts?: Contacts,
+      ) {
+        return async function () {
+          await validateDestination(input, _bitcoinNetwork, _wallets, _contacts)
+        }
+      })(input, bitcoinNetwork, wallets, contacts),
+      0,
+    )
+  }
+
+  const handlePaste = async () => {
+    try {
+      const clipboard = await Clipboard.getString()
+      dispatchDestinationStateAction({
+        type: SendBitcoinActions.SetUnparsedPastedDestination,
+        payload: {
+          unparsedDestination: clipboard,
+        },
+      })
+      toastShow({
+        type: "success",
+        message: (translations) =>
+          translations.SendBitcoinDestinationScreen.pastedClipboardSuccess(),
+        LL,
+      })
+      if (willInitiateValidation()) {
+        await waitAndValidateDestination(clipboard)
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        crashlytics().recordError(err)
+      }
+      toastShow({
+        type: "error",
+        message: (translations) =>
+          translations.SendBitcoinDestinationScreen.clipboardError(),
+        LL,
+      })
+    }
+  }
+
   const inputContainerStyle = React.useMemo(() => {
     switch (destinationState.destinationState) {
-      case "validating":
+      case DestinationState.Validating:
         return styles.enteringInputContainer
-      case "invalid":
+      case DestinationState.Invalid:
         return styles.errorInputContainer
-      case "requires-destination-confirmation":
+      case DestinationState.RequiresUsernameConfirmation:
         return styles.warningInputContainer
-      case "valid":
+      case DestinationState.Valid:
         if (!destinationState.confirmationUsernameType) {
           return styles.validInputContainer
         }
         return styles.warningInputContainer
       default:
-        return
+        return {}
     }
   }, [destinationState.destinationState])
-
 
   return (
     <Screen
@@ -311,9 +376,10 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
             placeholderTextColor={colors.grey2}
             onChangeText={handleChangeText}
             value={destinationState.unparsedDestination}
-            onSubmitEditing={() =>
-              validateDestination &&
-              validateDestination(destinationState.unparsedDestination)
+            onSubmitEditing={async () =>
+              // setTimeout allows for the main JS thread to update the UI before the long validateDestination call
+              willInitiateValidation() &&
+              await waitAndValidateDestination(destinationState.unparsedDestination)
             }
             selectTextOnFocus
             autoCapitalize="none"
@@ -324,41 +390,13 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
               <ScanIcon fill={colors.primary} />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={async () => {
-              try {
-                console.log("Pressed")
-                const clipboard = await Clipboard.getString()
-                console.log("Got string")
-                dispatchDestinationStateAction({
-                  type: SendBitcoinActions.SetUnparsedDestination,
-                  payload: {
-                    unparsedDestination: clipboard,
-                  },
-                })
-                validateDestination && (await validateDestination(clipboard)) 
-                toastShow({
-                  type: "success",
-                  message: (translations) =>
-                    translations.SendBitcoinDestinationScreen.pastedClipboardSuccess(),
-                  LL,
-                })
-              } catch (err) {
-                if (err instanceof Error) {
-                  crashlytics().recordError(err)
-                }
-                toastShow({
-                  type: "error",
-                  message: (translations) =>
-                    translations.SendBitcoinDestinationScreen.clipboardError(),
-                  LL,
-                })
-              }
-            }}
-          >
+          <TouchableOpacity onPress={handlePaste}>
             <View style={styles.iconContainer}>
-              {/* we could Paste from "FontAwesome" but as svg*/}
-              <Icon name="clipboard-outline" color={colors.primary} size={22} />
+              {destinationState.destinationState === DestinationState.Validating ? (
+                <ActivityIndicator size="small" color={colors.primary} />
+              ) : (
+                <Icon name="clipboard-outline" color={colors.primary} size={22} />
+              )}
             </View>
           </TouchableOpacity>
         </View>
@@ -370,13 +408,12 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
                 ? LL.common.next()
                 : LL.SendBitcoinScreen.destinationIsRequired()
             }
-            loading={destinationState.destinationState === "validating"}
+            loading={destinationState.destinationState === DestinationState.Validating}
             disabled={
-              destinationState.destinationState === "invalid" ||
-              !destinationState.unparsedDestination ||
-              !initiateGoToNextScreen
+              destinationState.destinationState === DestinationState.Invalid ||
+              !destinationState.unparsedDestination
             }
-            onPress={initiateGoToNextScreen || undefined}
+            onPress={initiateGoToNextScreen}
           />
         </View>
       </View>

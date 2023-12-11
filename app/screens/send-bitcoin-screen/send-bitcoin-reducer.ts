@@ -1,84 +1,67 @@
 import { Destination, InvalidDestination } from "./payment-destination/index.types"
 
-export const DestinationState = {
-  Entering: "entering",
-  Validating: "validating",
-  Valid: "valid",
-  RequiresUsernameConfirmation: "requires-destination-confirmation",
-  Invalid: "invalid",
-} as const
-
-export type DestinationState = (typeof DestinationState)[keyof typeof DestinationState]
+export enum DestinationState {
+  Entering = "entering",
+  Pasting = "pasting",
+  Validating = "validating",
+  Valid = "valid",
+  RequiresUsernameConfirmation = "requires-destination-confirmation",
+  Invalid = "invalid",
+}
 
 export type ConfirmationDestinationType = {
   type: "new-username"
   username: string
 }
 
-export type SendBitcoinDestinationState =
-  | {
-      unparsedDestination: string
-      destinationState:
-        | typeof DestinationState.Entering
-        | typeof DestinationState.Validating
-    }
-  | {
-      unparsedDestination: string
-      destinationState: typeof DestinationState.Valid
-      destination: Destination
-      confirmationUsernameType?: ConfirmationDestinationType
-    }
-  | {
-      unparsedDestination: string
-      destinationState: typeof DestinationState.RequiresUsernameConfirmation
-      destination: Destination
-      confirmationUsernameType: ConfirmationDestinationType
-    }
-  | {
-      unparsedDestination: string
-      destinationState: typeof DestinationState.Invalid
-      invalidDestination: InvalidDestination
-    }
+export type SendBitcoinDestinationState = {
+  unparsedDestination: string
+  destinationState: DestinationState
+  confirmationUsernameType?: ConfirmationDestinationType
+  validDestination?: Destination
+  invalidDestination?: InvalidDestination
+  destination?: Destination
+}
 
-export const SendBitcoinActions = {
-  SetUnparsedDestination: "set-unparsed-destination",
-  SetValidating: "set-validating",
-  SetValid: "set-valid",
-  SetInvalid: "set-invalid",
-  SetRequiresUsernameConfirmation: "set-requires-destination-confirmation",
-  SetConfirmed: "set-confirmed",
-} as const
-
-export type SendBitcoinActions =
-  (typeof SendBitcoinActions)[keyof typeof SendBitcoinActions]
+export enum SendBitcoinActions {
+  SetUnparsedDestination = "set-unparsed-destination",
+  SetUnparsedPastedDestination = "set-unparsed-pasted-destination",
+  SetValidating = "set-validating",
+  SetValid = "set-valid",
+  SetInvalid = "set-invalid",
+  SetRequiresUsernameConfirmation = "set-requires-destination-confirmation",
+  SetConfirmed = "set-confirmed",
+}
 
 export type SendBitcoinDestinationAction =
   | {
-      type: typeof SendBitcoinActions.SetUnparsedDestination
+      type: SendBitcoinActions.SetUnparsedDestination
       payload: { unparsedDestination: string }
     }
   | {
-      type: typeof SendBitcoinActions.SetValidating
-      payload: {
-        unparsedDestination: string
-      }
+      type: SendBitcoinActions.SetUnparsedPastedDestination
+      payload: { unparsedDestination: string }
     }
   | {
-      type: typeof SendBitcoinActions.SetValid
+      type: SendBitcoinActions.SetValidating
+      payload: {}
+    }
+  | {
+      type: SendBitcoinActions.SetValid
       payload: {
         validDestination: Destination
         unparsedDestination: string
       }
     }
   | {
-      type: typeof SendBitcoinActions.SetInvalid
+      type: SendBitcoinActions.SetInvalid
       payload: {
         invalidDestination: InvalidDestination
         unparsedDestination: string
       }
     }
   | {
-      type: typeof SendBitcoinActions.SetRequiresUsernameConfirmation
+      type: SendBitcoinActions.SetRequiresUsernameConfirmation
       payload: {
         confirmationUsernameType: ConfirmationDestinationType
         unparsedDestination: string
@@ -86,7 +69,7 @@ export type SendBitcoinDestinationAction =
       }
     }
   | {
-      type: typeof SendBitcoinActions.SetConfirmed
+      type: SendBitcoinActions.SetConfirmed
       payload: { unparsedDestination: string }
     }
 
@@ -94,14 +77,12 @@ export const sendBitcoinDestinationReducer = (
   state: SendBitcoinDestinationState,
   action: SendBitcoinDestinationAction,
 ): SendBitcoinDestinationState => {
-  if (
-    action.type !== SendBitcoinActions.SetUnparsedDestination &&
-    state.unparsedDestination !== action.payload.unparsedDestination
-  ) {
-    return state
-  }
-
   switch (action.type) {
+    case SendBitcoinActions.SetUnparsedPastedDestination:
+      return {
+        unparsedDestination: action.payload.unparsedDestination,
+        destinationState: DestinationState.Pasting,
+      }
     case SendBitcoinActions.SetUnparsedDestination:
       return {
         unparsedDestination: action.payload.unparsedDestination,
@@ -109,43 +90,53 @@ export const sendBitcoinDestinationReducer = (
       }
     case SendBitcoinActions.SetValidating:
       return {
-        unparsedDestination: state.unparsedDestination,
+        ...state,
         destinationState: DestinationState.Validating,
       }
     case SendBitcoinActions.SetValid:
-      return {
-        unparsedDestination: state.unparsedDestination,
-        destinationState: DestinationState.Valid,
-        destination: action.payload.validDestination,
-      }
+      return state.unparsedDestination !== action.payload?.unparsedDestination
+        ? state
+        : {
+            unparsedDestination: state.unparsedDestination,
+            destinationState: DestinationState.Valid,
+            destination: action.payload.validDestination,
+          }
     case SendBitcoinActions.SetInvalid:
       if (state.destinationState === DestinationState.Validating) {
-        return {
-          unparsedDestination: state.unparsedDestination,
-          destinationState: DestinationState.Invalid,
-          invalidDestination: action.payload.invalidDestination,
-        }
+        return state.unparsedDestination !== action.payload?.unparsedDestination
+          ? state
+          : {
+              unparsedDestination: state.unparsedDestination,
+              destinationState: DestinationState.Invalid,
+              invalidDestination: action.payload.invalidDestination,
+            }
       }
+      console.log("Where we're we at? ", state.destinationState);
       throw new Error("Invalid state transition")
     case SendBitcoinActions.SetRequiresUsernameConfirmation:
       if (state.destinationState === DestinationState.Validating) {
-        return {
-          unparsedDestination: state.unparsedDestination,
-          destinationState: DestinationState.RequiresUsernameConfirmation,
-          destination: action.payload.validDestination,
-          confirmationUsernameType: action.payload.confirmationUsernameType,
-        }
+        return state.unparsedDestination !== action.payload?.unparsedDestination
+          ? state
+          : {
+              unparsedDestination: state.unparsedDestination,
+              destinationState: DestinationState.RequiresUsernameConfirmation,
+              destination: action.payload.validDestination,
+              confirmationUsernameType: action.payload.confirmationUsernameType,
+            }
       }
       throw new Error("Invalid state transition")
     case SendBitcoinActions.SetConfirmed:
       if (state.destinationState === DestinationState.RequiresUsernameConfirmation) {
-        return {
-          unparsedDestination: state.unparsedDestination,
-          destinationState: DestinationState.Valid,
-          destination: state.destination,
-          confirmationUsernameType: state.confirmationUsernameType,
-        }
+        return state.unparsedDestination !== action.payload?.unparsedDestination
+          ? state
+          : {
+              unparsedDestination: state.unparsedDestination,
+              destinationState: DestinationState.Valid,
+              destination: state.destination,
+              confirmationUsernameType: state.confirmationUsernameType,
+            }
       }
       throw new Error("Invalid state transition")
+    default: return state;
   }
 }
