@@ -449,7 +449,7 @@ const usestyles = makeStyles(({ colors }) => ({
     borderColor: colors.error,
   },
   validInputContainer: {
-    borderColor: colors.green,
+    borderColor: colors._green,
   },
   warningInputContainer: {
     borderColor: colors.warning,

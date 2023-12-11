@@ -66,7 +66,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   correctAnswerText: {
-    color: colors.green,
+    color: colors._green,
     flex: 1,
     fontSize: 16,
   },
@@ -121,7 +121,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   quizCorrectButtonStyle: {
-    backgroundColor: colors.green,
+    backgroundColor: colors._green,
     height: 50,
     width: 50,
     borderRadius: 50,
