@@ -30,6 +30,7 @@ import { PhoneCodeChannelType } from "@app/graphql/generated"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { testProps } from "@app/utils/testProps"
 import { GaloyInfo } from "@app/components/atomic/galoy-info"
+import { useAppConfig } from "@app/hooks"
 
 const DEFAULT_COUNTRY_CODE = "SV"
 const PLACEHOLDER_PHONE_NUMBER = "123-456-7890"
@@ -118,6 +119,8 @@ type PhoneLoginInitiateScreenProps = {
 export const PhoneLoginInitiateScreen: React.FC<PhoneLoginInitiateScreenProps> = ({
   route,
 }) => {
+  const { appConfig } = useAppConfig()
+
   const styles = useStyles()
 
   const navigation =
@@ -165,6 +168,14 @@ export const PhoneLoginInitiateScreen: React.FC<PhoneLoginInitiateScreenProps> =
       })
     }
   }, [status, phoneCodeChannel, validatedPhoneNumber, navigation, setStatus, screenType])
+
+  useEffect(() => {
+    if (!appConfig || appConfig.galoyInstance.id !== "Local") {
+      return
+    }
+
+    setTimeout(() => setPhoneNumber("66667777"), 0)
+  }, [appConfig, setPhoneNumber])
 
   if (status === RequestPhoneCodeStatus.LoadingCountryCode || loadingSupportedCountries) {
     return (
