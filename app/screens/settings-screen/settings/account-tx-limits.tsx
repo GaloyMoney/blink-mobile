@@ -1,4 +1,4 @@
-import { SettingsRow } from "../../row"
+import { SettingsRow } from "../row"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
 

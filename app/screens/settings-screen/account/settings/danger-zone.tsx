@@ -11,7 +11,8 @@ export const DangerZoneSettings: React.FC = () => {
   const { LL } = useI18nContext()
   const styles = useStyles()
 
-  const { currentLevel, isAtLeastLevelOne } = useLevel()
+  const { currentLevel, isAtLeastLevelOne, isAtLeastLevelZero } = useLevel()
+  if (!isAtLeastLevelZero) return <></>
 
   return (
     <View style={styles.verticalSpacing}>

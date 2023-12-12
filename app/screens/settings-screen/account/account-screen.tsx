@@ -12,7 +12,6 @@ import { SettingsGroup } from "../group"
 
 import { EmailSetting } from "./settings/email"
 import { PhoneSetting } from "./settings/phone"
-import { TxLimits } from "./settings/tx-limits"
 import { DangerZoneSettings } from "./settings/danger-zone"
 import { UpgradeTrialAcccount } from "./settings/upgrade-trial-account"
 import { UpgradeAcccountLevelOne } from "./settings/upgrade"
@@ -25,7 +24,7 @@ export const AccountScreen: React.FC = () => {
 
   const items = {
     authenticationMethods: [EmailSetting, PhoneSetting],
-    misc: [TxLimits, UpgradeAcccountLevelOne],
+    misc: [UpgradeAcccountLevelOne],
   }
 
   return (
@@ -52,7 +51,7 @@ export const AccountScreen: React.FC = () => {
 const useStyles = makeStyles(() => ({
   outer: {
     marginTop: 4,
-    paddingHorizontal: 10,
+    paddingHorizontal: 12,
     paddingBottom: 20,
     display: "flex",
     flexDirection: "column",

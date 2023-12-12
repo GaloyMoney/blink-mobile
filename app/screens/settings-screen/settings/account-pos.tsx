@@ -40,7 +40,7 @@ export const AccountPOS: React.FC = () => {
       leftIcon="calculator"
       rightIcon="copy-outline"
       rightIconAction={() => {
-        Clipboard.setString(posUrl)
+        Clipboard.setString(pos)
         toastShow({
           type: "success",
           message: (translations) => translations.SettingsScreen.posCopied(),

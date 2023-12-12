@@ -2,7 +2,6 @@ import { makeStyles } from "@rneui/themed"
 import { ScrollView } from "react-native-gesture-handler"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useLevel } from "@app/graphql/level-context"
 
 import { Screen } from "@app/components/screen"
 import { VersionComponent } from "@app/components/version"
@@ -21,16 +20,22 @@ import { NotificationSetting } from "./settings/sp-notifications"
 import { ExportCsvSetting } from "./settings/advanced-export-csv"
 import { NeedHelpSetting } from "./settings/community-need-help"
 import { JoinCommunitySetting } from "./settings/community-join"
+import { TxLimits } from "./settings/account-tx-limits"
 
 export const SettingsScreen: React.FC = () => {
   const styles = useStyles()
   const { LL } = useI18nContext()
-  const { isAtLeastLevelZero } = useLevel()
 
   const items = {
-    account: [AccountLevelSetting, AccountLNAddress, AccountPOS, DefaultWallet],
-    preferences: [LanguageSetting, CurrencySetting, ThemeSetting],
-    securityAndPrivacy: [SecuritySetting, NotificationSetting],
+    account: [AccountLevelSetting, TxLimits, AccountLNAddress, AccountPOS],
+    preferences: [
+      NotificationSetting,
+      DefaultWallet,
+      LanguageSetting,
+      CurrencySetting,
+      ThemeSetting,
+    ],
+    securityAndPrivacy: [SecuritySetting],
     advanced: [ExportCsvSetting],
     community: [NeedHelpSetting, JoinCommunitySetting],
   }
@@ -39,17 +44,13 @@ export const SettingsScreen: React.FC = () => {
     <Screen keyboardShouldPersistTaps="handled">
       <ScrollView contentContainerStyle={styles.outer}>
         <AccountBanner />
-        {isAtLeastLevelZero && (
-          <>
-            <SettingsGroup name={LL.common.account()} items={items.account} />
-            <SettingsGroup name={LL.common.preferences()} items={items.preferences} />
-            <SettingsGroup
-              name={LL.common.securityAndPrivacy()}
-              items={items.securityAndPrivacy}
-            />
-            <SettingsGroup name={LL.common.advanced()} items={items.advanced} />
-          </>
-        )}
+        <SettingsGroup name={LL.common.account()} items={items.account} />
+        <SettingsGroup name={LL.common.preferences()} items={items.preferences} />
+        <SettingsGroup
+          name={LL.common.securityAndPrivacy()}
+          items={items.securityAndPrivacy}
+        />
+        <SettingsGroup name={LL.common.advanced()} items={items.advanced} />
         <SettingsGroup name={LL.common.community()} items={items.community} />
         <VersionComponent />
       </ScrollView>
@@ -60,10 +61,10 @@ export const SettingsScreen: React.FC = () => {
 const useStyles = makeStyles(() => ({
   outer: {
     marginTop: 4,
-    paddingHorizontal: 10,
+    paddingHorizontal: 12,
     paddingBottom: 20,
     display: "flex",
     flexDirection: "column",
-    rowGap: 12,
+    rowGap: 18,
   },
 }))

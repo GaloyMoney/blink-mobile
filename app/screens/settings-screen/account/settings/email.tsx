@@ -1,5 +1,5 @@
 import { Alert, View } from "react-native"
-import { makeStyles, useTheme } from "@rneui/themed"
+import { makeStyles } from "@rneui/themed"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
@@ -68,9 +68,6 @@ const title = (
 
 export const EmailSetting: React.FC = () => {
   const styles = useStyles()
-  const {
-    theme: { colors },
-  } = useTheme()
 
   const { LL } = useI18nContext()
   const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>()
@@ -173,17 +170,10 @@ export const EmailSetting: React.FC = () => {
                 name="refresh"
                 size="medium"
                 onPress={reVerifyEmailPrompt}
-                color={colors.black}
               />
             )}
-            {bothEmailAndPhoneVerified && (
-              <GaloyIconButton
-                name="close"
-                size="medium"
-                onPress={deleteEmailPrompt}
-                color={colors.black}
-                backgroundColor={colors.error9}
-              />
+            {(bothEmailAndPhoneVerified || (email && !emailVerified)) && (
+              <GaloyIconButton name="close" size="medium" onPress={deleteEmailPrompt} />
             )}
           </View>
         ) : undefined

@@ -1,5 +1,4 @@
 import { Alert } from "react-native"
-import { makeStyles, useTheme } from "@rneui/themed"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useLoginMethods } from "../login-methods-hook"
@@ -35,11 +34,6 @@ gql`
 `
 
 export const PhoneSetting: React.FC = () => {
-  useStyles()
-  const {
-    theme: { colors },
-  } = useTheme()
-
   const { LL } = useI18nContext()
   const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>()
 
@@ -90,18 +84,10 @@ export const PhoneSetting: React.FC = () => {
       rightIcon={
         phoneVerified ? (
           emailVerified ? (
-            <GaloyIconButton
-              name="close"
-              size="medium"
-              onPress={deletePhonePrompt}
-              color={colors.black}
-              backgroundColor={colors.error9}
-            />
+            <GaloyIconButton name="close" size="medium" onPress={deletePhonePrompt} />
           ) : null
         ) : undefined
       }
     />
   )
 }
-
-const useStyles = makeStyles(() => ({}))
