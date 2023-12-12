@@ -180,7 +180,7 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
     | undefined
   >()
 
-  const { saveToken } = useAppConfig()
+  const { saveToken, appConfig } = useAppConfig()
 
   const { LL } = useI18nContext()
 
@@ -294,17 +294,20 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
     ],
   )
 
-  const setCode = (code: string) => {
-    if (code.length > 6) {
-      return
-    }
+  const setCode = useCallback(
+    (code: string) => {
+      if (code.length > 6) {
+        return
+      }
 
-    setError(undefined)
-    _setCode(code)
-    if (code.length === 6) {
-      send(code)
-    }
-  }
+      setError(undefined)
+      _setCode(code)
+      if (code.length === 6) {
+        send(code)
+      }
+    },
+    [send],
+  )
 
   useEffect(() => {
     const timerId = setTimeout(() => {
@@ -316,6 +319,14 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
     }, 1000)
     return () => clearTimeout(timerId)
   }, [secondsRemaining, status])
+
+  useEffect(() => {
+    if (!appConfig) {
+      return
+    }
+
+    appConfig.galoyInstance.id === "Local" && setCode("000000")
+  }, [appConfig, setCode])
 
   const errorMessage = error && mapValidatePhoneCodeErrorsToMessage(error, LL)
   let extraInfoContent = undefined
