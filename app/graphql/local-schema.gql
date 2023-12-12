@@ -25,11 +25,9 @@ extend type Query {
 extend type Account {
   usdWallet: UsdWallet
   btcWallet: BTCWallet
-  defaultWallet: Wallet
 }
 
 extend type ConsumerAccount {
   usdWallet: UsdWallet
   btcWallet: BTCWallet
-  defaultWallet: Wallet
 }

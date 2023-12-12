@@ -89,7 +89,8 @@ export type Account = {
   readonly btcWallet?: Maybe<BtcWallet>;
   readonly callbackEndpoints: ReadonlyArray<CallbackEndpoint>;
   readonly csvTransactions: Scalars['String']['output'];
-  readonly defaultWallet?: Maybe<Wallet>;
+  readonly defaultWallet: PublicWallet;
+  /** @deprecated Shifting property to 'defaultWallet.id' */
   readonly defaultWalletId: Scalars['WalletId']['output'];
   readonly displayCurrency: Scalars['DisplayCurrency']['output'];
   readonly id: Scalars['ID']['output'];
@@ -389,7 +390,7 @@ export type ConsumerAccount = Account & {
   readonly callbackEndpoints: ReadonlyArray<CallbackEndpoint>;
   /** return CSV stream, base64 encoded, of the list of transactions in the wallet */
   readonly csvTransactions: Scalars['String']['output'];
-  readonly defaultWallet?: Maybe<Wallet>;
+  readonly defaultWallet: PublicWallet;
   readonly defaultWalletId: Scalars['WalletId']['output'];
   readonly displayCurrency: Scalars['DisplayCurrency']['output'];
   readonly id: Scalars['ID']['output'];
@@ -1456,7 +1457,9 @@ export type PricePoint = {
 /** A public view of a generic wallet which stores value in one of our supported currencies. */
 export type PublicWallet = {
   readonly __typename: 'PublicWallet';
+  readonly currency: WalletCurrency;
   readonly id: Scalars['ID']['output'];
+  /** @deprecated Shifting property to 'currency' */
   readonly walletCurrency: WalletCurrency;
 };
 
@@ -7448,7 +7451,7 @@ export type AccountResolvers<ContextType = any, ParentType extends ResolversPare
   btcWallet?: Resolver<Maybe<ResolversTypes['BTCWallet']>, ParentType, ContextType>;
   callbackEndpoints?: Resolver<ReadonlyArray<ResolversTypes['CallbackEndpoint']>, ParentType, ContextType>;
   csvTransactions?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<AccountCsvTransactionsArgs, 'walletIds'>>;
-  defaultWallet?: Resolver<Maybe<ResolversTypes['Wallet']>, ParentType, ContextType>;
+  defaultWallet?: Resolver<ResolversTypes['PublicWallet'], ParentType, ContextType>;
   defaultWalletId?: Resolver<ResolversTypes['WalletId'], ParentType, ContextType>;
   displayCurrency?: Resolver<ResolversTypes['DisplayCurrency'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -7599,7 +7602,7 @@ export type ConsumerAccountResolvers<ContextType = any, ParentType extends Resol
   btcWallet?: Resolver<Maybe<ResolversTypes['BTCWallet']>, ParentType, ContextType>;
   callbackEndpoints?: Resolver<ReadonlyArray<ResolversTypes['CallbackEndpoint']>, ParentType, ContextType>;
   csvTransactions?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<ConsumerAccountCsvTransactionsArgs, 'walletIds'>>;
-  defaultWallet?: Resolver<Maybe<ResolversTypes['Wallet']>, ParentType, ContextType>;
+  defaultWallet?: Resolver<ResolversTypes['PublicWallet'], ParentType, ContextType>;
   defaultWalletId?: Resolver<ResolversTypes['WalletId'], ParentType, ContextType>;
   displayCurrency?: Resolver<ResolversTypes['DisplayCurrency'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -8087,6 +8090,7 @@ export type PricePointResolvers<ContextType = any, ParentType extends ResolversP
 };
 
 export type PublicWalletResolvers<ContextType = any, ParentType extends ResolversParentTypes['PublicWallet'] = ResolversParentTypes['PublicWallet']> = {
+  currency?: Resolver<ResolversTypes['WalletCurrency'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   walletCurrency?: Resolver<ResolversTypes['WalletCurrency'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
