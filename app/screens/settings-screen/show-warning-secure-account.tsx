@@ -35,7 +35,7 @@ export const useShowWarningSecureAccount = () => {
   const isAuthed = useIsAuthed()
 
   const { data } = useWarningSecureAccountQuery({
-    fetchPolicy: "cache-only",
+    fetchPolicy: "cache-first",
     skip: !isAuthed,
   })
 
