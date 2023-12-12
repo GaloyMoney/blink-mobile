@@ -108,7 +108,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     Linking.openURL(galoyInstance.blockExplorer + hash)
 
   const viewInLightningDecoder = (invoice: string): Promise<Linking> =>
-    Linking.openURL("https://lightningdecoder.com/" + invoice)
+    Linking.openURL("https://dev.blink.sv/decode?invoice=" + invoice)
 
   const { data: tx } = useFragment<TransactionFragment>({
     fragment: TransactionFragmentDoc,
