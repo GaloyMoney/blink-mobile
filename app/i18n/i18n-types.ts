@@ -7410,7 +7410,7 @@ type RootTranslation = {
 		/**
 		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​ ​h​a​s​ ​b​e​e​n​ ​e​n​a​b​l​e​d​.​ ​Y​o​u​ ​w​i​l​l​ ​n​o​w​ ​o​n​l​y​ ​b​e​ ​a​b​l​e​ ​t​o​ ​l​o​g​ ​b​a​c​k​ ​i​n​ ​w​i​t​h​ ​y​o​u​r​ ​p​h​o​n​e​ ​o​r​ ​e​m​a​i​l​ ​A​N​D​ ​y​o​u​r​ ​t​w​o​ ​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​.​
 	​
-	​O​n​l​y​ ​f​u​l​l​ ​K​Y​C​ ​a​c​c​o​u​n​t​s​ ​m​a​y​ ​b​e​ ​r​e​c​o​v​e​r​e​d​ ​i​n​ ​t​h​e​ ​c​a​s​e​ ​a​ ​u​s​e​r​ ​h​a​s​ ​l​o​s​t​ ​a​c​c​e​s​s​ ​t​o​ ​t​h​e​i​r​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​.
+	​O​n​l​y​ ​l​e​v​e​l​ ​2​ ​a​c​c​o​u​n​t​s​ ​m​a​y​ ​b​e​ ​r​e​c​o​v​e​r​e​d​ ​i​n​ ​t​h​e​ ​c​a​s​e​ ​a​ ​u​s​e​r​ ​h​a​s​ ​l​o​s​t​ ​a​c​c​e​s​s​ ​t​o​ ​t​h​e​i​r​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​.
 		 */
 		success: string
 	}
@@ -16175,7 +16175,7 @@ export type TranslationFunctions = {
 		/**
 		 * Two-factor authentication has been enabled. You will now only be able to log back in with your phone or email AND your two factor authentication.
 
-	Only full KYC accounts may be recovered in the case a user has lost access to their two-factor authentication.
+	Only level 2 accounts may be recovered in the case a user has lost access to their two-factor authentication.
 		 */
 		success: () => LocalizedString
 	}

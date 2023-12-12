@@ -2383,7 +2383,7 @@ const en: BaseTranslation = {
     enter6digitCode:
       "Enter the 6-digit code from your authenticator app to validate your two-factor authentication.",
     success:
-      "Two-factor authentication has been enabled. You will now only be able to log back in with your phone or email AND your two factor authentication.\n\nOnly full KYC accounts may be recovered in the case a user has lost access to their two-factor authentication.",
+      "Two-factor authentication has been enabled. You will now only be able to log back in with your phone or email AND your two factor authentication.\n\nOnly level 2 accounts may be recovered in the case a user has lost access to their two-factor authentication.",
   },
   TotpLoginValidateScreen: {
     title: "Two-factor authentication",
