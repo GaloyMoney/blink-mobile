@@ -1,6 +1,9 @@
 import { gql } from "@apollo/client"
 import { CodeInput } from "@app/components/code-input"
-import { useUserTotpRegistrationValidateMutation } from "@app/graphql/generated"
+import {
+  TotpSettingDocument,
+  useUserTotpRegistrationValidateMutation,
+} from "@app/graphql/generated"
 import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -35,7 +38,9 @@ export const TotpRegistrationValidateScreen: React.FC<Props> = ({ route }) => {
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "totpRegistrationValidate">>()
 
-  const [totpRegistrationValidate] = useUserTotpRegistrationValidateMutation()
+  const [totpRegistrationValidate] = useUserTotpRegistrationValidateMutation({
+    refetchQueries: [TotpSettingDocument],
+  })
 
   const [errorMessage, setErrorMessage] = useState<string>("")
 
@@ -67,7 +72,14 @@ export const TotpRegistrationValidateScreen: React.FC<Props> = ({ route }) => {
             {
               text: LL.common.ok(),
               onPress: () => {
-                navigation.navigate("accountScreen")
+                navigation.reset({
+                  routes: [
+                    {
+                      name: "Primary",
+                    },
+                    { name: "accountScreen" },
+                  ],
+                })
               },
             },
           ])

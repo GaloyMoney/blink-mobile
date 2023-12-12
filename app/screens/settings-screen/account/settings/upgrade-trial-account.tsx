@@ -11,7 +11,7 @@ import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 import { useShowWarningSecureAccount } from "../show-warning-secure-account-hook"
 
-export const UpgradeTrialAcccount: React.FC = () => {
+export const UpgradeTrialAccount: React.FC = () => {
   const styles = useStyles()
   const { currentLevel } = useLevel()
   const { LL } = useI18nContext()

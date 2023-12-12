@@ -19,6 +19,8 @@ import { PinScreenPurpose } from "../../utils/enum"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import { toastShow } from "../../utils/toast"
 import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
+import { TotpSetting } from "./totp"
+import { SettingsGroup } from "./group"
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -142,6 +144,7 @@ export const SecurityScreen: React.FC<Props> = ({ route, navigation }) => {
 
   return (
     <Screen style={styles.container} preset="scroll">
+      <SettingsGroup items={[TotpSetting]} />
       <View style={styles.settingContainer}>
         <View style={styles.textContainer}>
           <Text type="h1">{LL.SecurityScreen.biometricTitle()}</Text>

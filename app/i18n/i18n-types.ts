@@ -7269,7 +7269,7 @@ type RootTranslation = {
 		 */
 		fundsMoreThan5Dollars: string
 		/**
-		 * T​h​e​ ​a​c​c​o​u​n​t​ ​y​o​u​'​r​e​ ​u​s​i​n​g​ ​h​a​s​ ​r​e​d​u​c​e​d​ ​t​r​a​n​s​a​c​t​i​o​n​ ​l​i​m​i​t​s​ ​a​n​d​ ​i​n​ ​c​a​s​e​ ​y​o​u​ ​l​o​s​e​ ​y​o​u​r​ ​p​h​o​n​e​ ​o​r​ ​u​n​i​n​s​t​a​l​l​ ​t​h​e​ ​a​p​p​,​ ​y​o​u​ ​w​i​l​l​ ​l​o​s​e​ ​a​c​c​e​s​s​ ​t​o​ ​y​o​u​r​ ​f​u​n​d​s​.​ ​U​p​g​r​a​d​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t​ ​b​y​ ​r​e​g​i​s​t​e​r​i​n​g​ ​i​t​ ​w​i​t​h​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​.
+		 * T​r​i​a​l​ ​a​c​c​o​u​n​t​s​ ​h​a​v​e​ ​r​e​d​u​c​e​d​ ​t​r​a​n​s​a​c​t​i​o​n​ ​l​i​m​i​t​s​ ​a​n​d​ ​n​o​ ​r​e​c​o​v​e​r​y​ ​m​e​t​h​o​d​.​ ​I​f​ ​y​o​u​ ​l​o​s​e​ ​y​o​u​r​ ​p​h​o​n​e​ ​o​r​ ​u​n​i​n​s​t​a​l​l​ ​t​h​e​ ​a​p​p​ ​b​e​f​o​r​e​ ​y​o​u​ ​u​p​g​r​a​d​e​,​ ​y​o​u​r​ ​f​u​n​d​s​ ​w​i​l​l​ ​b​e​ ​u​n​r​e​c​o​v​e​r​a​b​l​e​.
 		 */
 		itsATrialAccount: string
 		/**
@@ -7365,7 +7365,7 @@ type RootTranslation = {
 		/**
 		 * E​m​a​i​l​ ​(​U​n​v​e​r​i​f​i​e​d​)
 		 */
-		unverifiedEmai: string
+		unverifiedEmail: string
 		/**
 		 * E​m​a​i​l
 		 */
@@ -8007,6 +8007,10 @@ type RootTranslation = {
 		success: RequiredParams<'email'>
 	}
 	common: {
+		/**
+		 * E​n​a​b​l​e​d
+		 */
+		enabled: string
 		/**
 		 * N​o​t​i​f​i​c​a​t​i​o​n​s
 		 */
@@ -16159,7 +16163,7 @@ export type TranslationFunctions = {
 		 */
 		fundsMoreThan5Dollars: () => LocalizedString
 		/**
-		 * The account you're using has reduced transaction limits and in case you lose your phone or uninstall the app, you will lose access to your funds. Upgrade your account by registering it with your phone number.
+		 * Trial accounts have reduced transaction limits and no recovery method. If you lose your phone or uninstall the app before you upgrade, your funds will be unrecoverable.
 		 */
 		itsATrialAccount: () => LocalizedString
 		/**
@@ -16248,7 +16252,7 @@ export type TranslationFunctions = {
 		/**
 		 * Email (Unverified)
 		 */
-		unverifiedEmai: () => LocalizedString
+		unverifiedEmail: () => LocalizedString
 		/**
 		 * Email
 		 */
@@ -16877,6 +16881,10 @@ export type TranslationFunctions = {
 		success: (arg: { email: string }) => LocalizedString
 	}
 	common: {
+		/**
+		 * Enabled
+		 */
+		enabled: () => LocalizedString
 		/**
 		 * Notifications
 		 */

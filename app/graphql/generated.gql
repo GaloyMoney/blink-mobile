@@ -884,6 +884,13 @@ query LoginMethods {
   }
 }
 
+query TotpSetting {
+  me {
+    totpEnabled
+    __typename
+  }
+}
+
 query accountDefaultWallet($username: Username!) {
   accountDefaultWallet(username: $username) {
     id
@@ -915,31 +922,6 @@ query accountLimits {
           interval
           __typename
         }
-        __typename
-      }
-      __typename
-    }
-    __typename
-  }
-}
-
-query accountScreen {
-  me {
-    id
-    phone
-    totpEnabled
-    email {
-      address
-      verified
-      __typename
-    }
-    defaultAccount {
-      id
-      level
-      wallets {
-        id
-        balance
-        walletCurrency
         __typename
       }
       __typename

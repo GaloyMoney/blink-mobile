@@ -2,7 +2,6 @@ import React from "react"
 import { Platform, View, TouchableOpacity, ActivityIndicator } from "react-native"
 import Modal from "react-native-modal"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
-import { GaloyIcon } from "../atomic/galoy-icon"
 import { GaloyCurrencyBubble } from "../atomic/galoy-currency-bubble"
 import {
   WalletCurrency,
@@ -18,6 +17,7 @@ import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { ScrollView } from "react-native-gesture-handler"
+import { GaloyIconButton } from "../atomic/galoy-icon-button"
 
 gql`
   query setDefaultAccountModal {
@@ -146,15 +146,21 @@ export const SetDefaultAccountModalUI: React.FC<SetDefaultAccountModalUIProps> =
   return (
     <Modal
       isVisible={isVisible}
-      backdropOpacity={0.7}
-      backdropColor={colors.grey3}
+      backdropOpacity={0.8}
+      backdropColor={colors.white}
       backdropTransitionOutTiming={0}
       avoidKeyboard={true}
+      onBackdropPress={toggleModal}
+      onBackButtonPress={toggleModal}
     >
       <View style={styles.container}>
-        <TouchableOpacity style={styles.closeIcon} onPress={toggleModal}>
-          <GaloyIcon name="close" size={30} color={colors.grey0} />
-        </TouchableOpacity>
+        <GaloyIconButton
+          style={styles.closeIcon}
+          name="close"
+          size="medium"
+          color={colors.grey0}
+          onPress={toggleModal}
+        />
         <ScrollView
           style={styles.modalCard}
           persistentScrollbar={true}
@@ -224,7 +230,7 @@ const useStyles = makeStyles(({ colors }) => ({
     flexDirection: "column",
   },
   container: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.grey5,
     maxHeight: "80%",
     minHeight: "auto",
     borderRadius: 16,

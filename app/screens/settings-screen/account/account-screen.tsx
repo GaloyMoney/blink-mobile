@@ -13,8 +13,9 @@ import { SettingsGroup } from "../group"
 import { EmailSetting } from "./settings/email"
 import { PhoneSetting } from "./settings/phone"
 import { DangerZoneSettings } from "./settings/danger-zone"
-import { UpgradeTrialAcccount } from "./settings/upgrade-trial-account"
-import { UpgradeAcccountLevelOne } from "./settings/upgrade"
+import { UpgradeTrialAccount } from "./settings/upgrade-trial-account"
+import { UpgradeAccountLevelOne } from "./settings/upgrade"
+import { TotpSetting } from "../totp"
 
 export const AccountScreen: React.FC = () => {
   const styles = useStyles()
@@ -24,7 +25,7 @@ export const AccountScreen: React.FC = () => {
 
   const items = {
     authenticationMethods: [EmailSetting, PhoneSetting],
-    misc: [UpgradeAcccountLevelOne],
+    misc: [TotpSetting, UpgradeAccountLevelOne],
   }
 
   return (
@@ -33,7 +34,7 @@ export const AccountScreen: React.FC = () => {
         <ScrollView contentContainerStyle={styles.outer}>
           <AccountHeader />
           <AccountId />
-          <UpgradeTrialAcccount />
+          <UpgradeTrialAccount />
           {isAtLeastLevelOne && (
             <SettingsGroup
               name={LL.AccountScreen.loginMethods()}

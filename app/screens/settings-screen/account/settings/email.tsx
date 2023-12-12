@@ -61,7 +61,7 @@ const title = (
 ): string => {
   if (email) {
     if (emailVerified) return LL.AccountScreen.email()
-    return LL.AccountScreen.unverifiedEmai()
+    return LL.AccountScreen.unverifiedEmail()
   }
   return LL.AccountScreen.tapToAddEmail()
 }

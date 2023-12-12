@@ -2611,10 +2611,20 @@ export type OnChainUsdPaymentSendAsBtcDenominatedMutationVariables = Exact<{
 
 export type OnChainUsdPaymentSendAsBtcDenominatedMutation = { readonly __typename: 'Mutation', readonly onChainUsdPaymentSendAsBtcDenominated: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
-export type AccountScreenQueryVariables = Exact<{ [key: string]: never; }>;
+export type AccountIdQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AccountScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly totpEnabled: boolean, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly level: AccountLevel, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
+export type AccountIdQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string } } | null };
+
+export type LoginMethodsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LoginMethodsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null };
+
+export type DeleteSettingQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DeleteSettingQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
 
 export type AccountDeleteMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -2630,26 +2640,6 @@ export type UserPhoneDeleteMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type UserPhoneDeleteMutation = { readonly __typename: 'Mutation', readonly userPhoneDelete: { readonly __typename: 'UserPhoneDeletePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly totpEnabled: boolean, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
-
-export type UserTotpDeleteMutationVariables = Exact<{ [key: string]: never; }>;
-
-
-export type UserTotpDeleteMutation = { readonly __typename: 'Mutation', readonly userTotpDelete: { readonly __typename: 'UserTotpDeletePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly totpEnabled: boolean, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
-
-export type AccountIdQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AccountIdQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string } } | null };
-
-export type LoginMethodsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type LoginMethodsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null };
-
-export type DeleteSettingQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type DeleteSettingQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly id: string, readonly balance: number, readonly walletCurrency: WalletCurrency }> } } | null };
 
 export type WarningSecureAccountQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2756,6 +2746,16 @@ export type DefaultLanguageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type DefaultLanguageQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly language: string } | null };
+
+export type TotpSettingQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TotpSettingQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly totpEnabled: boolean } | null };
+
+export type UserTotpDeleteMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserTotpDeleteMutation = { readonly __typename: 'Mutation', readonly userTotpDelete: { readonly __typename: 'UserTotpDeletePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly totpEnabled: boolean, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
 
 export type AccountLimitsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5935,19 +5935,84 @@ export function useOnChainUsdPaymentSendAsBtcDenominatedMutation(baseOptions?: A
 export type OnChainUsdPaymentSendAsBtcDenominatedMutationHookResult = ReturnType<typeof useOnChainUsdPaymentSendAsBtcDenominatedMutation>;
 export type OnChainUsdPaymentSendAsBtcDenominatedMutationResult = Apollo.MutationResult<OnChainUsdPaymentSendAsBtcDenominatedMutation>;
 export type OnChainUsdPaymentSendAsBtcDenominatedMutationOptions = Apollo.BaseMutationOptions<OnChainUsdPaymentSendAsBtcDenominatedMutation, OnChainUsdPaymentSendAsBtcDenominatedMutationVariables>;
-export const AccountScreenDocument = gql`
-    query accountScreen {
+export const AccountIdDocument = gql`
+    query AccountId {
   me {
-    id
+    defaultAccount {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useAccountIdQuery__
+ *
+ * To run a query within a React component, call `useAccountIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAccountIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAccountIdQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAccountIdQuery(baseOptions?: Apollo.QueryHookOptions<AccountIdQuery, AccountIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AccountIdQuery, AccountIdQueryVariables>(AccountIdDocument, options);
+      }
+export function useAccountIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AccountIdQuery, AccountIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AccountIdQuery, AccountIdQueryVariables>(AccountIdDocument, options);
+        }
+export type AccountIdQueryHookResult = ReturnType<typeof useAccountIdQuery>;
+export type AccountIdLazyQueryHookResult = ReturnType<typeof useAccountIdLazyQuery>;
+export type AccountIdQueryResult = Apollo.QueryResult<AccountIdQuery, AccountIdQueryVariables>;
+export const LoginMethodsDocument = gql`
+    query LoginMethods {
+  me {
     phone
-    totpEnabled
     email {
       address
       verified
     }
+  }
+}
+    `;
+
+/**
+ * __useLoginMethodsQuery__
+ *
+ * To run a query within a React component, call `useLoginMethodsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLoginMethodsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLoginMethodsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLoginMethodsQuery(baseOptions?: Apollo.QueryHookOptions<LoginMethodsQuery, LoginMethodsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<LoginMethodsQuery, LoginMethodsQueryVariables>(LoginMethodsDocument, options);
+      }
+export function useLoginMethodsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LoginMethodsQuery, LoginMethodsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<LoginMethodsQuery, LoginMethodsQueryVariables>(LoginMethodsDocument, options);
+        }
+export type LoginMethodsQueryHookResult = ReturnType<typeof useLoginMethodsQuery>;
+export type LoginMethodsLazyQueryHookResult = ReturnType<typeof useLoginMethodsLazyQuery>;
+export type LoginMethodsQueryResult = Apollo.QueryResult<LoginMethodsQuery, LoginMethodsQueryVariables>;
+export const DeleteSettingDocument = gql`
+    query DeleteSetting {
+  me {
     defaultAccount {
-      id
-      level
       wallets {
         id
         balance
@@ -5959,31 +6024,31 @@ export const AccountScreenDocument = gql`
     `;
 
 /**
- * __useAccountScreenQuery__
+ * __useDeleteSettingQuery__
  *
- * To run a query within a React component, call `useAccountScreenQuery` and pass it any options that fit your needs.
- * When your component renders, `useAccountScreenQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useDeleteSettingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDeleteSettingQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useAccountScreenQuery({
+ * const { data, loading, error } = useDeleteSettingQuery({
  *   variables: {
  *   },
  * });
  */
-export function useAccountScreenQuery(baseOptions?: Apollo.QueryHookOptions<AccountScreenQuery, AccountScreenQueryVariables>) {
+export function useDeleteSettingQuery(baseOptions?: Apollo.QueryHookOptions<DeleteSettingQuery, DeleteSettingQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AccountScreenQuery, AccountScreenQueryVariables>(AccountScreenDocument, options);
+        return Apollo.useQuery<DeleteSettingQuery, DeleteSettingQueryVariables>(DeleteSettingDocument, options);
       }
-export function useAccountScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AccountScreenQuery, AccountScreenQueryVariables>) {
+export function useDeleteSettingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DeleteSettingQuery, DeleteSettingQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AccountScreenQuery, AccountScreenQueryVariables>(AccountScreenDocument, options);
+          return Apollo.useLazyQuery<DeleteSettingQuery, DeleteSettingQueryVariables>(DeleteSettingDocument, options);
         }
-export type AccountScreenQueryHookResult = ReturnType<typeof useAccountScreenQuery>;
-export type AccountScreenLazyQueryHookResult = ReturnType<typeof useAccountScreenLazyQuery>;
-export type AccountScreenQueryResult = Apollo.QueryResult<AccountScreenQuery, AccountScreenQueryVariables>;
+export type DeleteSettingQueryHookResult = ReturnType<typeof useDeleteSettingQuery>;
+export type DeleteSettingLazyQueryHookResult = ReturnType<typeof useDeleteSettingLazyQuery>;
+export type DeleteSettingQueryResult = Apollo.QueryResult<DeleteSettingQuery, DeleteSettingQueryVariables>;
 export const AccountDeleteDocument = gql`
     mutation accountDelete {
   accountDelete {
@@ -6105,163 +6170,6 @@ export function useUserPhoneDeleteMutation(baseOptions?: Apollo.MutationHookOpti
 export type UserPhoneDeleteMutationHookResult = ReturnType<typeof useUserPhoneDeleteMutation>;
 export type UserPhoneDeleteMutationResult = Apollo.MutationResult<UserPhoneDeleteMutation>;
 export type UserPhoneDeleteMutationOptions = Apollo.BaseMutationOptions<UserPhoneDeleteMutation, UserPhoneDeleteMutationVariables>;
-export const UserTotpDeleteDocument = gql`
-    mutation userTotpDelete {
-  userTotpDelete {
-    errors {
-      message
-    }
-    me {
-      id
-      phone
-      totpEnabled
-      email {
-        address
-        verified
-      }
-    }
-  }
-}
-    `;
-export type UserTotpDeleteMutationFn = Apollo.MutationFunction<UserTotpDeleteMutation, UserTotpDeleteMutationVariables>;
-
-/**
- * __useUserTotpDeleteMutation__
- *
- * To run a mutation, you first call `useUserTotpDeleteMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUserTotpDeleteMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [userTotpDeleteMutation, { data, loading, error }] = useUserTotpDeleteMutation({
- *   variables: {
- *   },
- * });
- */
-export function useUserTotpDeleteMutation(baseOptions?: Apollo.MutationHookOptions<UserTotpDeleteMutation, UserTotpDeleteMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UserTotpDeleteMutation, UserTotpDeleteMutationVariables>(UserTotpDeleteDocument, options);
-      }
-export type UserTotpDeleteMutationHookResult = ReturnType<typeof useUserTotpDeleteMutation>;
-export type UserTotpDeleteMutationResult = Apollo.MutationResult<UserTotpDeleteMutation>;
-export type UserTotpDeleteMutationOptions = Apollo.BaseMutationOptions<UserTotpDeleteMutation, UserTotpDeleteMutationVariables>;
-export const AccountIdDocument = gql`
-    query AccountId {
-  me {
-    defaultAccount {
-      id
-    }
-  }
-}
-    `;
-
-/**
- * __useAccountIdQuery__
- *
- * To run a query within a React component, call `useAccountIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useAccountIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAccountIdQuery({
- *   variables: {
- *   },
- * });
- */
-export function useAccountIdQuery(baseOptions?: Apollo.QueryHookOptions<AccountIdQuery, AccountIdQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AccountIdQuery, AccountIdQueryVariables>(AccountIdDocument, options);
-      }
-export function useAccountIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AccountIdQuery, AccountIdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AccountIdQuery, AccountIdQueryVariables>(AccountIdDocument, options);
-        }
-export type AccountIdQueryHookResult = ReturnType<typeof useAccountIdQuery>;
-export type AccountIdLazyQueryHookResult = ReturnType<typeof useAccountIdLazyQuery>;
-export type AccountIdQueryResult = Apollo.QueryResult<AccountIdQuery, AccountIdQueryVariables>;
-export const LoginMethodsDocument = gql`
-    query LoginMethods {
-  me {
-    phone
-    email {
-      address
-      verified
-    }
-  }
-}
-    `;
-
-/**
- * __useLoginMethodsQuery__
- *
- * To run a query within a React component, call `useLoginMethodsQuery` and pass it any options that fit your needs.
- * When your component renders, `useLoginMethodsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useLoginMethodsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useLoginMethodsQuery(baseOptions?: Apollo.QueryHookOptions<LoginMethodsQuery, LoginMethodsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<LoginMethodsQuery, LoginMethodsQueryVariables>(LoginMethodsDocument, options);
-      }
-export function useLoginMethodsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LoginMethodsQuery, LoginMethodsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<LoginMethodsQuery, LoginMethodsQueryVariables>(LoginMethodsDocument, options);
-        }
-export type LoginMethodsQueryHookResult = ReturnType<typeof useLoginMethodsQuery>;
-export type LoginMethodsLazyQueryHookResult = ReturnType<typeof useLoginMethodsLazyQuery>;
-export type LoginMethodsQueryResult = Apollo.QueryResult<LoginMethodsQuery, LoginMethodsQueryVariables>;
-export const DeleteSettingDocument = gql`
-    query DeleteSetting {
-  me {
-    defaultAccount {
-      wallets {
-        id
-        balance
-        walletCurrency
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useDeleteSettingQuery__
- *
- * To run a query within a React component, call `useDeleteSettingQuery` and pass it any options that fit your needs.
- * When your component renders, `useDeleteSettingQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useDeleteSettingQuery({
- *   variables: {
- *   },
- * });
- */
-export function useDeleteSettingQuery(baseOptions?: Apollo.QueryHookOptions<DeleteSettingQuery, DeleteSettingQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<DeleteSettingQuery, DeleteSettingQueryVariables>(DeleteSettingDocument, options);
-      }
-export function useDeleteSettingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DeleteSettingQuery, DeleteSettingQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<DeleteSettingQuery, DeleteSettingQueryVariables>(DeleteSettingDocument, options);
-        }
-export type DeleteSettingQueryHookResult = ReturnType<typeof useDeleteSettingQuery>;
-export type DeleteSettingLazyQueryHookResult = ReturnType<typeof useDeleteSettingLazyQuery>;
-export type DeleteSettingQueryResult = Apollo.QueryResult<DeleteSettingQuery, DeleteSettingQueryVariables>;
 export const WarningSecureAccountDocument = gql`
     query warningSecureAccount {
   me {
@@ -6975,6 +6883,83 @@ export function useDefaultLanguageLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type DefaultLanguageQueryHookResult = ReturnType<typeof useDefaultLanguageQuery>;
 export type DefaultLanguageLazyQueryHookResult = ReturnType<typeof useDefaultLanguageLazyQuery>;
 export type DefaultLanguageQueryResult = Apollo.QueryResult<DefaultLanguageQuery, DefaultLanguageQueryVariables>;
+export const TotpSettingDocument = gql`
+    query TotpSetting {
+  me {
+    totpEnabled
+  }
+}
+    `;
+
+/**
+ * __useTotpSettingQuery__
+ *
+ * To run a query within a React component, call `useTotpSettingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTotpSettingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTotpSettingQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useTotpSettingQuery(baseOptions?: Apollo.QueryHookOptions<TotpSettingQuery, TotpSettingQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TotpSettingQuery, TotpSettingQueryVariables>(TotpSettingDocument, options);
+      }
+export function useTotpSettingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TotpSettingQuery, TotpSettingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TotpSettingQuery, TotpSettingQueryVariables>(TotpSettingDocument, options);
+        }
+export type TotpSettingQueryHookResult = ReturnType<typeof useTotpSettingQuery>;
+export type TotpSettingLazyQueryHookResult = ReturnType<typeof useTotpSettingLazyQuery>;
+export type TotpSettingQueryResult = Apollo.QueryResult<TotpSettingQuery, TotpSettingQueryVariables>;
+export const UserTotpDeleteDocument = gql`
+    mutation userTotpDelete {
+  userTotpDelete {
+    errors {
+      message
+    }
+    me {
+      id
+      phone
+      totpEnabled
+      email {
+        address
+        verified
+      }
+    }
+  }
+}
+    `;
+export type UserTotpDeleteMutationFn = Apollo.MutationFunction<UserTotpDeleteMutation, UserTotpDeleteMutationVariables>;
+
+/**
+ * __useUserTotpDeleteMutation__
+ *
+ * To run a mutation, you first call `useUserTotpDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserTotpDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userTotpDeleteMutation, { data, loading, error }] = useUserTotpDeleteMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserTotpDeleteMutation(baseOptions?: Apollo.MutationHookOptions<UserTotpDeleteMutation, UserTotpDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserTotpDeleteMutation, UserTotpDeleteMutationVariables>(UserTotpDeleteDocument, options);
+      }
+export type UserTotpDeleteMutationHookResult = ReturnType<typeof useUserTotpDeleteMutation>;
+export type UserTotpDeleteMutationResult = Apollo.MutationResult<UserTotpDeleteMutation>;
+export type UserTotpDeleteMutationOptions = Apollo.BaseMutationOptions<UserTotpDeleteMutation, UserTotpDeleteMutationVariables>;
 export const AccountLimitsDocument = gql`
     query accountLimits {
   me {

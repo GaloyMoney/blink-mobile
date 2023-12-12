@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 
-export const UpgradeAcccountLevelOne: React.FC = () => {
+export const UpgradeAccountLevelOne: React.FC = () => {
   const { currentLevel } = useLevel()
   const { LL } = useI18nContext()
 

@@ -2337,7 +2337,7 @@ const en: BaseTranslation = {
   },
   AccountScreen: {
     fundsMoreThan5Dollars: "Your account has funds more than $5",
-    itsATrialAccount: "The account you're using has reduced transaction limits and in case you lose your phone or uninstall the app, you will lose access to your funds. Upgrade your account by registering it with your phone number.",
+    itsATrialAccount: "Trial accounts have reduced transaction limits and no recovery method. If you lose your phone or uninstall the app before you upgrade, your funds will be unrecoverable.",
     accountBeingDeleted: "Your account is being deleted, please wait...",
     dangerZone: "Danger Zone",
     phoneDeletedSuccessfully: "Phone deleted successfully",
@@ -2361,7 +2361,7 @@ const en: BaseTranslation = {
     secureYourAccount: "Register to secure your account",
     tapToAdd: "Tap to add",
     tapToAddEmail: "Tap to add email",
-    unverifiedEmai: "Email (Unverified)",
+    unverifiedEmail: "Email (Unverified)",
     email: "Email",
     emailDeletedSuccessfully: "Email deleted successfully",
     unverifiedEmailAdvice: "Unverified emails can't be used to login. You should re-verify your email address.",
@@ -2581,6 +2581,7 @@ const en: BaseTranslation = {
     success: "Email {email: string} confirmed successfully",
   },
   common: {
+    enabled: "Enabled",
     notifications: "Notifications",
     preferences: "Preferences",
     securityAndPrivacy: "Security and Privacy",

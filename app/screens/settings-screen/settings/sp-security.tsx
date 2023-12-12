@@ -24,7 +24,7 @@ export const SecuritySetting: React.FC = () => {
   return (
     <SettingsRow
       title={LL.common.security()}
-      leftIcon="lock-closed-outline"
+      leftIcon="shield-half-outline"
       action={securityAction}
     />
   )
