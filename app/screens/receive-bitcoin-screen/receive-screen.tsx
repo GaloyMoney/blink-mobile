@@ -294,7 +294,7 @@ const useStyles = makeStyles(({ colors }) => ({
     marginTop: 12,
   },
   usdActive: {
-    backgroundColor: colors.green,
+    backgroundColor: colors._green,
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",

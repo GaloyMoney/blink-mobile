@@ -3,7 +3,6 @@ import "@rneui/themed"
 declare module "@rneui/themed" {
   export interface Colors {
     red: string
-    green: string
     transparent: string
 
     // _ are meant to be static across light and dark
@@ -20,6 +19,7 @@ declare module "@rneui/themed" {
     _blue: string
     _orange: string
     _sky: string
+    _green: string
 
     primary3: string
     primary4: string

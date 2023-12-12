@@ -101,7 +101,7 @@ export const PriceHistory = () => {
     (currentPriceData.base / 10 ** currentPriceData.offset) *
     multiple(currentPriceData.currencyUnit)
   const delta = currentPriceData.base / startPriceData.base - 1
-  const color = delta > 0 ? { color: colors.green } : { color: colors.red }
+  const color = delta > 0 ? { color: colors._green } : { color: colors.red }
 
   // get min and max prices for domain
   prices.forEach((p) => {

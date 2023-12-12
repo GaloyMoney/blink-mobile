@@ -654,8 +654,8 @@ mutation userPhoneRegistrationValidate($input: UserPhoneRegistrationValidateInpu
   }
 }
 
-mutation userTotpDelete($input: UserTotpDeleteInput!) {
-  userTotpDelete(input: $input) {
+mutation userTotpDelete {
+  userTotpDelete {
     errors {
       message
       __typename
@@ -675,8 +675,8 @@ mutation userTotpDelete($input: UserTotpDeleteInput!) {
   }
 }
 
-mutation userTotpRegistrationInitiate($input: UserTotpRegistrationInitiateInput!) {
-  userTotpRegistrationInitiate(input: $input) {
+mutation userTotpRegistrationInitiate {
+  userTotpRegistrationInitiate {
     errors {
       message
       __typename

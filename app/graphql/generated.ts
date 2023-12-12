@@ -1189,16 +1189,6 @@ export type MutationUserPhoneRegistrationValidateArgs = {
 };
 
 
-export type MutationUserTotpDeleteArgs = {
-  input: UserTotpDeleteInput;
-};
-
-
-export type MutationUserTotpRegistrationInitiateArgs = {
-  input: UserTotpRegistrationInitiateInput;
-};
-
-
 export type MutationUserTotpRegistrationValidateArgs = {
   input: UserTotpRegistrationValidateInput;
 };
@@ -1971,18 +1961,10 @@ export type UserQuizQuestion = {
   readonly question: QuizQuestion;
 };
 
-export type UserTotpDeleteInput = {
-  readonly authToken: Scalars['AuthToken']['input'];
-};
-
 export type UserTotpDeletePayload = {
   readonly __typename: 'UserTotpDeletePayload';
   readonly errors: ReadonlyArray<Error>;
   readonly me?: Maybe<User>;
-};
-
-export type UserTotpRegistrationInitiateInput = {
-  readonly authToken: Scalars['AuthToken']['input'];
 };
 
 export type UserTotpRegistrationInitiatePayload = {
@@ -1993,7 +1975,7 @@ export type UserTotpRegistrationInitiatePayload = {
 };
 
 export type UserTotpRegistrationValidateInput = {
-  readonly authToken: Scalars['AuthToken']['input'];
+  readonly authToken?: InputMaybe<Scalars['AuthToken']['input']>;
   readonly totpCode: Scalars['TotpCode']['input'];
   readonly totpRegistrationId: Scalars['TotpRegistrationId']['input'];
 };
@@ -2646,9 +2628,7 @@ export type UserPhoneDeleteMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type UserPhoneDeleteMutation = { readonly __typename: 'Mutation', readonly userPhoneDelete: { readonly __typename: 'UserPhoneDeletePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly totpEnabled: boolean, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
 
-export type UserTotpDeleteMutationVariables = Exact<{
-  input: UserTotpDeleteInput;
-}>;
+export type UserTotpDeleteMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type UserTotpDeleteMutation = { readonly __typename: 'Mutation', readonly userTotpDelete: { readonly __typename: 'UserTotpDeletePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly totpEnabled: boolean, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
@@ -2744,9 +2724,7 @@ export type TotpRegistrationScreenQueryVariables = Exact<{ [key: string]: never;
 
 export type TotpRegistrationScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null } | null };
 
-export type UserTotpRegistrationInitiateMutationVariables = Exact<{
-  input: UserTotpRegistrationInitiateInput;
-}>;
+export type UserTotpRegistrationInitiateMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type UserTotpRegistrationInitiateMutation = { readonly __typename: 'Mutation', readonly userTotpRegistrationInitiate: { readonly __typename: 'UserTotpRegistrationInitiatePayload', readonly totpRegistrationId?: string | null, readonly totpSecret?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
@@ -6085,8 +6063,8 @@ export type UserPhoneDeleteMutationHookResult = ReturnType<typeof useUserPhoneDe
 export type UserPhoneDeleteMutationResult = Apollo.MutationResult<UserPhoneDeleteMutation>;
 export type UserPhoneDeleteMutationOptions = Apollo.BaseMutationOptions<UserPhoneDeleteMutation, UserPhoneDeleteMutationVariables>;
 export const UserTotpDeleteDocument = gql`
-    mutation userTotpDelete($input: UserTotpDeleteInput!) {
-  userTotpDelete(input: $input) {
+    mutation userTotpDelete {
+  userTotpDelete {
     errors {
       message
     }
@@ -6117,7 +6095,6 @@ export type UserTotpDeleteMutationFn = Apollo.MutationFunction<UserTotpDeleteMut
  * @example
  * const [userTotpDeleteMutation, { data, loading, error }] = useUserTotpDeleteMutation({
  *   variables: {
- *      input: // value for 'input'
  *   },
  * });
  */
@@ -6759,8 +6736,8 @@ export type TotpRegistrationScreenQueryHookResult = ReturnType<typeof useTotpReg
 export type TotpRegistrationScreenLazyQueryHookResult = ReturnType<typeof useTotpRegistrationScreenLazyQuery>;
 export type TotpRegistrationScreenQueryResult = Apollo.QueryResult<TotpRegistrationScreenQuery, TotpRegistrationScreenQueryVariables>;
 export const UserTotpRegistrationInitiateDocument = gql`
-    mutation userTotpRegistrationInitiate($input: UserTotpRegistrationInitiateInput!) {
-  userTotpRegistrationInitiate(input: $input) {
+    mutation userTotpRegistrationInitiate {
+  userTotpRegistrationInitiate {
     errors {
       message
     }
@@ -6784,7 +6761,6 @@ export type UserTotpRegistrationInitiateMutationFn = Apollo.MutationFunction<Use
  * @example
  * const [userTotpRegistrationInitiateMutation, { data, loading, error }] = useUserTotpRegistrationInitiateMutation({
  *   variables: {
- *      input: // value for 'input'
  *   },
  * });
  */
@@ -7243,9 +7219,7 @@ export type ResolversTypes = {
   UserPhoneRegistrationValidateInput: UserPhoneRegistrationValidateInput;
   UserPhoneRegistrationValidatePayload: ResolverTypeWrapper<UserPhoneRegistrationValidatePayload>;
   UserQuizQuestion: ResolverTypeWrapper<UserQuizQuestion>;
-  UserTotpDeleteInput: UserTotpDeleteInput;
   UserTotpDeletePayload: ResolverTypeWrapper<UserTotpDeletePayload>;
-  UserTotpRegistrationInitiateInput: UserTotpRegistrationInitiateInput;
   UserTotpRegistrationInitiatePayload: ResolverTypeWrapper<UserTotpRegistrationInitiatePayload>;
   UserTotpRegistrationValidateInput: UserTotpRegistrationValidateInput;
   UserTotpRegistrationValidatePayload: ResolverTypeWrapper<UserTotpRegistrationValidatePayload>;
@@ -7446,9 +7420,7 @@ export type ResolversParentTypes = {
   UserPhoneRegistrationValidateInput: UserPhoneRegistrationValidateInput;
   UserPhoneRegistrationValidatePayload: UserPhoneRegistrationValidatePayload;
   UserQuizQuestion: UserQuizQuestion;
-  UserTotpDeleteInput: UserTotpDeleteInput;
   UserTotpDeletePayload: UserTotpDeletePayload;
-  UserTotpRegistrationInitiateInput: UserTotpRegistrationInitiateInput;
   UserTotpRegistrationInitiatePayload: UserTotpRegistrationInitiatePayload;
   UserTotpRegistrationValidateInput: UserTotpRegistrationValidateInput;
   UserTotpRegistrationValidatePayload: UserTotpRegistrationValidatePayload;
@@ -7959,8 +7931,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   userPhoneDelete?: Resolver<ResolversTypes['UserPhoneDeletePayload'], ParentType, ContextType>;
   userPhoneRegistrationInitiate?: Resolver<ResolversTypes['SuccessPayload'], ParentType, ContextType, RequireFields<MutationUserPhoneRegistrationInitiateArgs, 'input'>>;
   userPhoneRegistrationValidate?: Resolver<ResolversTypes['UserPhoneRegistrationValidatePayload'], ParentType, ContextType, RequireFields<MutationUserPhoneRegistrationValidateArgs, 'input'>>;
-  userTotpDelete?: Resolver<ResolversTypes['UserTotpDeletePayload'], ParentType, ContextType, RequireFields<MutationUserTotpDeleteArgs, 'input'>>;
-  userTotpRegistrationInitiate?: Resolver<ResolversTypes['UserTotpRegistrationInitiatePayload'], ParentType, ContextType, RequireFields<MutationUserTotpRegistrationInitiateArgs, 'input'>>;
+  userTotpDelete?: Resolver<ResolversTypes['UserTotpDeletePayload'], ParentType, ContextType>;
+  userTotpRegistrationInitiate?: Resolver<ResolversTypes['UserTotpRegistrationInitiatePayload'], ParentType, ContextType>;
   userTotpRegistrationValidate?: Resolver<ResolversTypes['UserTotpRegistrationValidatePayload'], ParentType, ContextType, RequireFields<MutationUserTotpRegistrationValidateArgs, 'input'>>;
   userUpdateLanguage?: Resolver<ResolversTypes['UserUpdateLanguagePayload'], ParentType, ContextType, RequireFields<MutationUserUpdateLanguageArgs, 'input'>>;
   userUpdateUsername?: Resolver<ResolversTypes['UserUpdateUsernamePayload'], ParentType, ContextType, RequireFields<MutationUserUpdateUsernameArgs, 'input'>>;

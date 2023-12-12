@@ -398,7 +398,7 @@ const useStyles = makeStyles(({ colors }) => ({
   walletSelectorTypeLabelUsd: {
     height: 30,
     width: 50,
-    backgroundColor: colors.green,
+    backgroundColor: colors._green,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
