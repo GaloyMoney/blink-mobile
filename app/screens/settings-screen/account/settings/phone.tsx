@@ -39,7 +39,7 @@ export const PhoneSetting: React.FC = () => {
 
   const { loading, phone, emailVerified, phoneVerified } = useLoginMethods()
 
-  const [phoneDeleteMutation, { loading: phDelLoad }] = useUserPhoneDeleteMutation()
+  const [phoneDeleteMutation, { loading: phoneDeleteLoading }] = useUserPhoneDeleteMutation()
 
   const deletePhone = async () => {
     try {
