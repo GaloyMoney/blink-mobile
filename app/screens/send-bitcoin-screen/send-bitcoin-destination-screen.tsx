@@ -136,7 +136,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
       const destination = await parseDestination({
         rawInput,
         myWalletIds: wallets.map((wallet) => wallet.id),
-        bitcoinNetwork: bitcoinNetwork,
+        bitcoinNetwork,
         lnurlDomains: LNURL_DOMAINS,
         accountDefaultWalletQuery,
       })
@@ -195,7 +195,14 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
         },
       })
     },
-    [navigation, accountDefaultWalletQuery],
+    [
+      navigation,
+      accountDefaultWalletQuery,
+      dispatchDestinationStateAction,
+      bitcoinNetwork,
+      wallets,
+      contacts,
+    ],
   )
 
   const handleChangeText = useCallback(
