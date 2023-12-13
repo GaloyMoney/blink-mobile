@@ -1,16 +1,10 @@
 import { TranslationFunctions } from "@app/i18n/i18n-types"
 
 export const formatTimeToMempool = (
-  arrivalTimestamp: number,
+  timeDiff: number,
   LL: TranslationFunctions,
   userLocale: string,
 ) => {
-  const arrivalTime = new Date(arrivalTimestamp * 1000) // Convert to milliseconds
-  const currentTime = new Date()
-
-  let timeDiff = Number(arrivalTime) - Number(currentTime)
-  timeDiff = Math.max(timeDiff, 0)
-
   const rtf = new Intl.RelativeTimeFormat(userLocale, { numeric: "auto" })
 
   const minutes = Math.floor(timeDiff / 60000)
@@ -22,4 +16,14 @@ export const formatTimeToMempool = (
     return rtf.format(seconds, "second")
   }
   return LL.TransactionDetailScreen.momentarily()
+}
+
+export const timeToMempool = (arrivalTimestamp: number) => {
+  const arrivalTime = new Date(arrivalTimestamp * 1000)
+  const currentTime = new Date()
+
+  let timeDiff = Number(arrivalTime) - Number(currentTime)
+  timeDiff = Math.max(timeDiff, 0)
+
+  return timeDiff
 }

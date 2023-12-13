@@ -1,4 +1,7 @@
-import { formatTimeToMempool } from "@app/screens/transaction-detail-screen/format-time"
+import {
+  formatTimeToMempool,
+  timeToMempool,
+} from "@app/screens/transaction-detail-screen/format-time"
 import { parseTimer } from "../app/utils/timer"
 import { loadLocale } from "@app/i18n/i18n-util.sync"
 import { i18nObject } from "@app/i18n/i18n-util"
@@ -32,23 +35,28 @@ describe("formatTimeToMempool", () => {
   loadLocale("en")
   const LL = i18nObject("en")
 
+  it("format time when is more than 5 minutes", () => {
+    const outputTime = formatTimeToMempool(timeToMempool(1701819969), LL, "en")
+    expect(outputTime).toStrictEqual("in 5 minutes")
+  })
+
   it("format time when is more than 1 minute", () => {
-    const outputTime = formatTimeToMempool(1701819734, LL, "en")
+    const outputTime = formatTimeToMempool(timeToMempool(1701819734), LL, "en")
     expect(outputTime).toStrictEqual("in 1 minute")
   })
 
   it("format time when is less than 1 minute", () => {
-    const outputTime = formatTimeToMempool(1701819709, LL, "en")
+    const outputTime = formatTimeToMempool(timeToMempool(1701819709), LL, "en")
     expect(outputTime).toStrictEqual("in 40 seconds")
   })
 
   it("format time when is less than 10 second", () => {
-    const outputTime = formatTimeToMempool(1701819678, LL, "en")
+    const outputTime = formatTimeToMempool(timeToMempool(1701819678), LL, "en")
     expect(outputTime).toStrictEqual("in 9 seconds")
   })
 
   it("format time when is negative", () => {
-    const outputTime = formatTimeToMempool(1701819669, LL, "en")
+    const outputTime = formatTimeToMempool(timeToMempool(1701819669), LL, "en")
     expect(outputTime).toStrictEqual(LL.TransactionDetailScreen.momentarily())
   })
 })
