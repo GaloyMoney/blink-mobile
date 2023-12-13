@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useReducer } from "react"
-import { ActivityIndicator, TextInput, TouchableOpacity, View } from "react-native"
+import { TextInput, TouchableOpacity, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "@app/components/screen"
 import { gql } from "@apollo/client"
 import ScanIcon from "@app/assets/icons/scan.svg"
 import {
-  Network,
   useAccountDefaultWalletLazyQuery,
   useRealtimePriceQuery,
   useSendBitcoinDestinationQuery,
@@ -66,33 +65,6 @@ gql`
   }
 `
 
-type Wallets =
-  | readonly (
-      | {
-          readonly __typename: "BTCWallet"
-          readonly id: string
-        }
-      | {
-          readonly __typename: "UsdWallet"
-          readonly id: string
-        }
-    )[]
-  | undefined
-
-type Contacts =
-  | readonly {
-      readonly __typename: "UserContact"
-      readonly id: string
-      readonly username: string
-    }[]
-  | undefined
-
-type NetworkWalletsContacts = {
-  _bitcoinNetwork: Network | undefined
-  _wallets: Wallets
-  _contacts: Contacts
-}
-
 export const defaultDestinationState: SendBitcoinDestinationState = {
   unparsedDestination: "",
   destinationState: DestinationState.Entering,
@@ -130,15 +102,12 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     skip: !isAuthed,
   })
 
-  const wallets: Wallets = useMemo(
+  const wallets = useMemo(
     () => data?.me?.defaultAccount.wallets,
     [data?.me?.defaultAccount.wallets],
   )
-  const bitcoinNetwork: Network | undefined = useMemo(
-    () => data?.globals?.network,
-    [data?.globals?.network],
-  )
-  const contacts: Contacts = useMemo(() => data?.me?.contacts ?? [], [data?.me?.contacts])
+  const bitcoinNetwork = useMemo(() => data?.globals?.network, [data?.globals?.network])
+  const contacts = useMemo(() => data?.me?.contacts ?? [], [data?.me?.contacts])
 
   const { LL } = useI18nContext()
   const [accountDefaultWalletQuery] = useAccountDefaultWalletLazyQuery({
@@ -158,17 +127,16 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   }, [bitcoinNetwork, wallets, contacts])
 
   const validateDestination = React.useCallback(
-    async (rawInput: string, obj: NetworkWalletsContacts) => {
-      // extra check to ensure nothing has changed since initiating validation
-      const { _bitcoinNetwork, _wallets, _contacts } = obj
-      if (!_bitcoinNetwork || !_wallets || !_contacts) {
+    async (rawInput: string) => {
+      // extra check for typescript even though these were checked in willInitiateValidation
+      if (!bitcoinNetwork || !wallets || !contacts) {
         return
       }
 
       const destination = await parseDestination({
         rawInput,
-        myWalletIds: _wallets.map((wallet) => wallet.id),
-        bitcoinNetwork: _bitcoinNetwork,
+        myWalletIds: wallets.map((wallet) => wallet.id),
+        bitcoinNetwork: bitcoinNetwork,
         lnurlDomains: LNURL_DOMAINS,
         accountDefaultWalletQuery,
       })
@@ -201,7 +169,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
         destination.validDestination.paymentType === PaymentType.Intraledger
       ) {
         if (
-          !_contacts
+          !contacts
             .map((contact) => contact.username.toLowerCase())
             .includes(destination.validDestination.handle.toLowerCase())
         ) {
@@ -274,22 +242,9 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   // setTimeout here allows for the main JS thread to update the UI before the long validateDestination call
   const waitAndValidateDestination = React.useCallback(
     (input: string) => {
-      function returnValidateDestinationFunc(input: string, obj: NetworkWalletsContacts) {
-        return async function _validateDestination() {
-          await validateDestination(input, obj)
-        }
-      }
-
-      setTimeout(
-        returnValidateDestinationFunc(input, {
-          _bitcoinNetwork: bitcoinNetwork,
-          _wallets: wallets,
-          _contacts: contacts,
-        }),
-        0,
-      )
+      setTimeout(() => validateDestination(input), 0)
     },
-    [bitcoinNetwork, wallets, contacts, validateDestination],
+    [validateDestination],
   )
 
   const initiateGoToNextScreen = React.useCallback(async () => {
@@ -397,8 +352,8 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
 
         <View style={[styles.fieldBackground, inputContainerStyle]}>
           <TextInput
-            {...testProps(LL.SendBitcoinScreen.placeholder())}
             style={styles.input}
+            {...testProps(LL.SendBitcoinScreen.placeholder())}
             placeholder={LL.SendBitcoinScreen.placeholder()}
             placeholderTextColor={colors.grey2}
             onChangeText={handleChangeText}
@@ -410,7 +365,6 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
             selectTextOnFocus
             autoCapitalize="none"
             autoCorrect={false}
-            selection={{ start: 0, end: destinationState?.unparsedDestination?.length }}
           />
           <TouchableOpacity onPress={() => navigation.navigate("scanningQRCode")}>
             <View style={styles.iconContainer}>
@@ -419,11 +373,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
           </TouchableOpacity>
           <TouchableOpacity onPress={handlePaste}>
             <View style={styles.iconContainer}>
-              {destinationState.destinationState === DestinationState.Validating ? (
-                <ActivityIndicator size="small" color={colors.primary} />
-              ) : (
-                <Icon name="clipboard-outline" color={colors.primary} size={22} />
-              )}
+              <Icon name="clipboard-outline" color={colors.primary} size={22} />
             </View>
           </TouchableOpacity>
         </View>
