@@ -138,10 +138,9 @@ export const SetLightningAddressModalUI = ({
 }: SetLightningAddressModalUIProps) => {
   const {
     appConfig: {
-      galoyInstance: { lnAddressHostname },
+      galoyInstance: { lnAddressHostname, name: bankName },
     },
   } = useAppConfig()
-  const bankName = "Lightning"
   const {
     theme: { colors },
   } = useTheme()
@@ -174,11 +173,11 @@ export const SetLightningAddressModalUI = ({
 
   return (
     <CustomModal
-      title={LL.SetAddressModal.title({ bankName })}
+      title={LL.SetAddressModal.setLightningAdrress()}
       minHeight={380}
       toggleModal={toggleModal}
       isVisible={isVisible}
-      primaryButtonTitle={LL.SetAddressModal.title({ bankName })}
+      primaryButtonTitle={LL.SetAddressModal.setLightningAdrress()}
       primaryButtonLoading={loading}
       primaryButtonOnPress={setLightningAddress}
       primaryButtonDisabled={!lnAddress}

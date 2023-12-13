@@ -7,6 +7,7 @@ const en: BaseTranslation = {
     title: "Receive payment by using:",
     buttonTitle: "Set your address",
     yourAddress: "Your {bankName: string} address",
+    yourLightningAddress: "Your Lightning address",
     notAbleToChange:
       "You won't be able to change your {bankName: string} address after it's set.",
     addressNotAvailable: "This {bankName: string} address is already taken.",
@@ -15,6 +16,7 @@ const en: BaseTranslation = {
     yourCashRegister: "Your Lightning Cash Register",
     yourPaycode: "Your Paycode",
     copiedAddressToClipboard: "Copied {bankName: string} address to clipboard",
+    copiedLightningAddressToClipboard: "Copied Lightning address to clipboard",
     copiedPaycodeToClipboard: "Copied Paycode to clipboard",
     copiedCashRegisterLinkToClipboard: "Copied Cash Register Link to clipboard",
     howToUseIt: "How to use it?",
@@ -2294,6 +2296,7 @@ const en: BaseTranslation = {
     posCopied: "Your point of sale link has been copied",
     yourAddress: "Your {bankName: string} Address",
     setYourAddress: "Set Your {bankName: string} Address",
+    setYourLightningAddress: "Set Your Lightning Address",
     activated: "Activated",
     addressScreen: "Ways to get paid",
     tapUserName: "Tap to set username",
@@ -2487,6 +2490,7 @@ const en: BaseTranslation = {
   },
   SetAddressModal: {
     title: "Set {bankName: string} address",
+    setLightningAdrress: "Set Lightning address",
     Errors: {
       tooShort: "Address must be at least 3 characters long",
       tooLong: "Address must be at most 50 characters long",

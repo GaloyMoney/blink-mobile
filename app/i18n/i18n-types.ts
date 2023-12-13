@@ -50,6 +50,10 @@ type RootTranslation = {
 		 */
 		yourAddress: RequiredParams<'bankName'>
 		/**
+		 * Y​o​u​r​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s
+		 */
+		yourLightningAddress: string
+		/**
 		 * Y​o​u​ ​w​o​n​'​t​ ​b​e​ ​a​b​l​e​ ​t​o​ ​c​h​a​n​g​e​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​ ​a​f​t​e​r​ ​i​t​'​s​ ​s​e​t​.
 		 * @param {string} bankName
 		 */
@@ -80,6 +84,10 @@ type RootTranslation = {
 		 * @param {string} bankName
 		 */
 		copiedAddressToClipboard: RequiredParams<'bankName'>
+		/**
+		 * C​o​p​i​e​d​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s​ ​t​o​ ​c​l​i​p​b​o​a​r​d
+		 */
+		copiedLightningAddressToClipboard: string
 		/**
 		 * C​o​p​i​e​d​ ​P​a​y​c​o​d​e​ ​t​o​ ​c​l​i​p​b​o​a​r​d
 		 */
@@ -7138,6 +7146,10 @@ type RootTranslation = {
 		 */
 		setYourAddress: RequiredParams<'bankName'>
 		/**
+		 * S​e​t​ ​Y​o​u​r​ ​L​i​g​h​t​n​i​n​g​ ​A​d​d​r​e​s​s
+		 */
+		setYourLightningAddress: string
+		/**
 		 * A​c​t​i​v​a​t​e​d
 		 */
 		activated: string
@@ -7265,11 +7277,11 @@ type RootTranslation = {
 	}
 	AccountScreen: {
 		/**
-		 * Y​o​u​r​ ​a​c​c​o​u​n​t​ ​h​a​s​ ​f​u​n​d​s​ ​m​o​r​e​ ​t​h​a​n​ ​$​5
+		 * Y​o​u​r​ ​a​c​c​o​u​n​t​ ​h​a​s​ ​m​o​r​e​ ​t​h​a​n​ ​$​5
 		 */
 		fundsMoreThan5Dollars: string
 		/**
-		 * T​r​i​a​l​ ​a​c​c​o​u​n​t​s​ ​h​a​v​e​ ​r​e​d​u​c​e​d​ ​t​r​a​n​s​a​c​t​i​o​n​ ​l​i​m​i​t​s​ ​a​n​d​ ​n​o​ ​r​e​c​o​v​e​r​y​ ​m​e​t​h​o​d​.​ ​I​f​ ​y​o​u​ ​l​o​s​e​ ​y​o​u​r​ ​p​h​o​n​e​ ​o​r​ ​u​n​i​n​s​t​a​l​l​ ​t​h​e​ ​a​p​p​ ​b​e​f​o​r​e​ ​y​o​u​ ​u​p​g​r​a​d​e​,​ ​y​o​u​r​ ​f​u​n​d​s​ ​w​i​l​l​ ​b​e​ ​u​n​r​e​c​o​v​e​r​a​b​l​e​.
+		 * T​r​i​a​l​ ​a​c​c​o​u​n​t​s​ ​h​a​v​e​ ​r​e​d​u​c​e​d​ ​t​r​a​n​s​a​c​t​i​o​n​ ​l​i​m​i​t​s​ ​a​n​d​ ​n​o​ ​r​e​c​o​v​e​r​y​ ​m​e​t​h​o​d​.​ ​I​f​ ​y​o​u​ ​l​o​s​e​ ​y​o​u​r​ ​p​h​o​n​e​ ​o​r​ ​u​n​i​n​s​t​a​l​l​ ​t​h​e​ ​a​p​p​,​ ​y​o​u​r​ ​f​u​n​d​s​ ​w​i​l​l​ ​b​e​ ​u​n​r​e​c​o​v​e​r​a​b​l​e​.
 		 */
 		itsATrialAccount: string
 		/**
@@ -7738,6 +7750,10 @@ type RootTranslation = {
 		 * @param {string} bankName
 		 */
 		title: RequiredParams<'bankName'>
+		/**
+		 * S​e​t​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s
+		 */
+		setLightningAdrress: string
 		Errors: {
 			/**
 			 * A​d​d​r​e​s​s​ ​m​u​s​t​ ​b​e​ ​a​t​ ​l​e​a​s​t​ ​3​ ​c​h​a​r​a​c​t​e​r​s​ ​l​o​n​g
@@ -8988,6 +9004,10 @@ export type TranslationFunctions = {
 		 */
 		yourAddress: (arg: { bankName: string }) => LocalizedString
 		/**
+		 * Your Lightning address
+		 */
+		yourLightningAddress: () => LocalizedString
+		/**
 		 * You won't be able to change your {bankName} address after it's set.
 		 */
 		notAbleToChange: (arg: { bankName: string }) => LocalizedString
@@ -9015,6 +9035,10 @@ export type TranslationFunctions = {
 		 * Copied {bankName} address to clipboard
 		 */
 		copiedAddressToClipboard: (arg: { bankName: string }) => LocalizedString
+		/**
+		 * Copied Lightning address to clipboard
+		 */
+		copiedLightningAddressToClipboard: () => LocalizedString
 		/**
 		 * Copied Paycode to clipboard
 		 */
@@ -16033,6 +16057,10 @@ export type TranslationFunctions = {
 		 */
 		setYourAddress: (arg: { bankName: string }) => LocalizedString
 		/**
+		 * Set Your Lightning Address
+		 */
+		setYourLightningAddress: () => LocalizedString
+		/**
 		 * Activated
 		 */
 		activated: () => LocalizedString
@@ -16159,11 +16187,11 @@ export type TranslationFunctions = {
 	}
 	AccountScreen: {
 		/**
-		 * Your account has funds more than $5
+		 * Your account has more than $5
 		 */
 		fundsMoreThan5Dollars: () => LocalizedString
 		/**
-		 * Trial accounts have reduced transaction limits and no recovery method. If you lose your phone or uninstall the app before you upgrade, your funds will be unrecoverable.
+		 * Trial accounts have reduced transaction limits and no recovery method. If you lose your phone or uninstall the app, your funds will be unrecoverable.
 		 */
 		itsATrialAccount: () => LocalizedString
 		/**
@@ -16621,6 +16649,10 @@ export type TranslationFunctions = {
 		 * Set {bankName} address
 		 */
 		title: (arg: { bankName: string }) => LocalizedString
+		/**
+		 * Set Lightning address
+		 */
+		setLightningAdrress: () => LocalizedString
 		Errors: {
 			/**
 			 * Address must be at least 3 characters long

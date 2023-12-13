@@ -39,8 +39,8 @@ export const AccountLNAddress: React.FC = () => {
         loading={loading}
         title={
           hasUsername
-            ? LL.SettingsScreen.yourAddress({ bankName })
-            : LL.SettingsScreen.setYourAddress({ bankName })
+            ? LL.GaloyAddressScreen.yourLightningAddress()
+            : LL.SettingsScreen.setYourLightningAddress()
         }
         subtitle={hasUsername ? lnAddress : undefined}
         subtitleShorter={(data?.me?.username || "").length > 22}
@@ -52,7 +52,7 @@ export const AccountLNAddress: React.FC = () => {
             toastShow({
               type: "success",
               message: (translations) =>
-                translations.GaloyAddressScreen.copiedAddressToClipboard({ bankName }),
+                translations.GaloyAddressScreen.copiedLightningAddressToClipboard(),
               LL,
             })
           } else {

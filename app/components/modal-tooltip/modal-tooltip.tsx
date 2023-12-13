@@ -56,7 +56,6 @@ export const ModalTooltip: React.FC<ModalTooltipProps> = ({
   }
   const modalTitle = title || defaultTitle
 
-
   return (
     <>
       <Icon

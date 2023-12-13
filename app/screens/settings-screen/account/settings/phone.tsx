@@ -39,7 +39,8 @@ export const PhoneSetting: React.FC = () => {
 
   const { loading, phone, emailVerified, phoneVerified } = useLoginMethods()
 
-  const [phoneDeleteMutation, { loading: phoneDeleteLoading }] = useUserPhoneDeleteMutation()
+  const [phoneDeleteMutation, { loading: phoneDeleteLoading }] =
+    useUserPhoneDeleteMutation()
 
   const deletePhone = async () => {
     try {
@@ -80,7 +81,7 @@ export const PhoneSetting: React.FC = () => {
       subtitle={phone || undefined}
       leftIcon="call-outline"
       action={phoneVerified ? null : () => navigate("phoneRegistrationInitiate")}
-      spinner={phDelLoad}
+      spinner={phoneDeleteLoading}
       rightIcon={
         phoneVerified ? (
           emailVerified ? (
