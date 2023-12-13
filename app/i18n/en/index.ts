@@ -2336,7 +2336,7 @@ const en: BaseTranslation = {
     }
   },
   AccountScreen: {
-    fundsMoreThan5Dollars: "Your account has funds more than $5",
+    fundsMoreThan5Dollars: "Your account has more than $5",
     itsATrialAccount: "Trial accounts have reduced transaction limits and no recovery method. If you lose your phone or uninstall the app before you upgrade, your funds will be unrecoverable.",
     accountBeingDeleted: "Your account is being deleted, please wait...",
     dangerZone: "Danger Zone",
