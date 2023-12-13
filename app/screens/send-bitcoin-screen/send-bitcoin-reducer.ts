@@ -1,13 +1,15 @@
 import { Destination, InvalidDestination } from "./payment-destination/index.types"
 
-export enum DestinationState {
-  Entering = "entering",
-  Pasting = "pasting",
-  Validating = "validating",
-  Valid = "valid",
-  RequiresUsernameConfirmation = "requires-destination-confirmation",
-  Invalid = "invalid",
-}
+const DestinationState = {
+  Entering: "entering",
+  Pasting: "pasting",
+  Validating: "validating",
+  Valid: "valid",
+  RequiresUsernameConfirmation: "requires-destination-confirmation",
+  Invalid: "invalid",
+} as const
+
+export type DestinationState = (typeof DestinationState)[keyof typeof DestinationState]
 
 export type ConfirmationDestinationType = {
   type: "new-username"
@@ -23,45 +25,48 @@ export type SendBitcoinDestinationState = {
   destination?: Destination
 }
 
-export enum SendBitcoinActions {
-  SetUnparsedDestination = "set-unparsed-destination",
-  SetUnparsedPastedDestination = "set-unparsed-pasted-destination",
-  SetValidating = "set-validating",
-  SetValid = "set-valid",
-  SetInvalid = "set-invalid",
-  SetRequiresUsernameConfirmation = "set-requires-destination-confirmation",
-  SetConfirmed = "set-confirmed",
-}
+const SendBitcoinActions = {
+  SetUnparsedDestination: "set-unparsed-destination",
+  SetUnparsedPastedDestination: "set-unparsed-pasted-destination",
+  SetValidating: "set-validating",
+  SetValid: "set-valid",
+  SetInvalid: "set-invalid",
+  SetRequiresUsernameConfirmation: "set-requires-destination-confirmation",
+  SetConfirmed: "set-confirmed",
+} as const
+
+export type SendBitcoinActions =
+  (typeof SendBitcoinActions)[keyof typeof SendBitcoinActions]
 
 export type SendBitcoinDestinationAction =
   | {
-      type: SendBitcoinActions.SetUnparsedDestination
+      type: typeof SendBitcoinActions.SetUnparsedDestination
       payload: { unparsedDestination: string }
     }
   | {
-      type: SendBitcoinActions.SetUnparsedPastedDestination
+      type: typeof SendBitcoinActions.SetUnparsedPastedDestination
       payload: { unparsedDestination: string }
     }
   | {
-      type: SendBitcoinActions.SetValidating
+      type: typeof SendBitcoinActions.SetValidating
       payload: Record<string, never>
     }
   | {
-      type: SendBitcoinActions.SetValid
+      type: typeof SendBitcoinActions.SetValid
       payload: {
         validDestination: Destination
         unparsedDestination: string
       }
     }
   | {
-      type: SendBitcoinActions.SetInvalid
+      type: typeof SendBitcoinActions.SetInvalid
       payload: {
         invalidDestination: InvalidDestination
         unparsedDestination: string
       }
     }
   | {
-      type: SendBitcoinActions.SetRequiresUsernameConfirmation
+      type: typeof SendBitcoinActions.SetRequiresUsernameConfirmation
       payload: {
         confirmationUsernameType: ConfirmationDestinationType
         unparsedDestination: string
@@ -69,7 +74,7 @@ export type SendBitcoinDestinationAction =
       }
     }
   | {
-      type: SendBitcoinActions.SetConfirmed
+      type: typeof SendBitcoinActions.SetConfirmed
       payload: { unparsedDestination: string }
     }
 
