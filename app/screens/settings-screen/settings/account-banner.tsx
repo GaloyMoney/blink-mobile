@@ -9,9 +9,6 @@ import { View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { Text, makeStyles, useTheme, Skeleton } from "@rneui/themed"
 
-import { gql } from "@apollo/client"
-import { useAccountSettingsBannerQuery } from "@app/graphql/generated"
-
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { AccountLevel, useLevel } from "@app/graphql/level-context"
 
@@ -20,14 +17,7 @@ import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-
-gql`
-  query AccountSettingsBanner {
-    me {
-      username
-    }
-  }
-`
+import { useSettingsContext } from "../settings-context"
 
 export const AccountBanner = () => {
   const styles = useStyles()
@@ -38,9 +28,8 @@ export const AccountBanner = () => {
   const { currentLevel } = useLevel()
   const isUserLoggedIn = currentLevel !== AccountLevel.NonAuth
 
-  const { data, loading } = useAccountSettingsBannerQuery({
-    skip: !isUserLoggedIn,
-  })
+  const { data, loading } = useSettingsContext()
+
   const usernameTitle = data?.me?.username || LL.common.blinkUser()
 
   if (loading) return <Skeleton style={styles.outer} animation="pulse" />

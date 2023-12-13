@@ -2,16 +2,16 @@ import { View } from "react-native"
 import { Text, makeStyles } from "@rneui/themed"
 import { AccountIcon } from "../settings/account-banner"
 
-import { useAccountSettingsBannerQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useLevel } from "@app/graphql/level-context"
+import { useSettingsContext } from "../settings-context"
 
 export const AccountHeader: React.FC = () => {
   const styles = useStyles()
   const { currentLevel: level } = useLevel()
   const { LL } = useI18nContext()
 
-  const { data } = useAccountSettingsBannerQuery()
+  const { data } = useSettingsContext()
   const username = data?.me?.username ? `@${data?.me?.username}` : LL.common.blinkUser()
 
   return (

@@ -6,10 +6,13 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { Screen } from "@app/components/screen"
 import { VersionComponent } from "@app/components/version"
 
+import { gql } from "@apollo/client"
+import { SettingsContextProvider } from "./settings-context"
+
 import { SettingsGroup } from "./group"
 import { AccountBanner } from "./settings/account-banner"
 import { AccountLevelSetting } from "./settings/account-level"
-import { AccountLNAddress } from "./settings/account-ln-address"
+import { AccountLNAddress } from "./settings/AccountLNAddress"
 import { AccountPOS } from "./settings/account-pos"
 import { DefaultWallet } from "./settings/account-default-wallet"
 import { LanguageSetting } from "./settings/preferences-language"
@@ -21,6 +24,34 @@ import { ExportCsvSetting } from "./settings/advanced-export-csv"
 import { NeedHelpSetting } from "./settings/community-need-help"
 import { JoinCommunitySetting } from "./settings/community-join"
 import { TxLimits } from "./settings/account-tx-limits"
+
+// All queries in settings have to be set here so that the server is not hit with
+// multiple requests for each query
+gql`
+  query SettingsScreen {
+    me {
+      username
+      language
+      defaultAccount {
+        id
+        defaultWalletId
+        wallets {
+          id
+          balance
+          walletCurrency
+        }
+      }
+
+      # Authentication Stuff needed for account screen
+      totpEnabled
+      phone
+      email {
+        address
+        verified
+      }
+    }
+  }
+`
 
 export const SettingsScreen: React.FC = () => {
   const styles = useStyles()
@@ -41,20 +72,22 @@ export const SettingsScreen: React.FC = () => {
   }
 
   return (
-    <Screen keyboardShouldPersistTaps="handled">
-      <ScrollView contentContainerStyle={styles.outer}>
-        <AccountBanner />
-        <SettingsGroup name={LL.common.account()} items={items.account} />
-        <SettingsGroup name={LL.common.preferences()} items={items.preferences} />
-        <SettingsGroup
-          name={LL.common.securityAndPrivacy()}
-          items={items.securityAndPrivacy}
-        />
-        <SettingsGroup name={LL.common.advanced()} items={items.advanced} />
-        <SettingsGroup name={LL.common.community()} items={items.community} />
-        <VersionComponent />
-      </ScrollView>
-    </Screen>
+    <SettingsContextProvider>
+      <Screen keyboardShouldPersistTaps="handled">
+        <ScrollView contentContainerStyle={styles.outer}>
+          <AccountBanner />
+          <SettingsGroup name={LL.common.account()} items={items.account} />
+          <SettingsGroup name={LL.common.preferences()} items={items.preferences} />
+          <SettingsGroup
+            name={LL.common.securityAndPrivacy()}
+            items={items.securityAndPrivacy}
+          />
+          <SettingsGroup name={LL.common.advanced()} items={items.advanced} />
+          <SettingsGroup name={LL.common.community()} items={items.community} />
+          <VersionComponent />
+        </ScrollView>
+      </Screen>
+    </SettingsContextProvider>
   )
 }
 

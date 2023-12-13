@@ -1,6 +1,7 @@
 import { useState } from "react"
-import { ActivityIndicator, TouchableWithoutFeedback, View } from "react-native"
+import { ActivityIndicator, Pressable, View } from "react-native"
 import { makeStyles, Icon, Text, Skeleton } from "@rneui/themed"
+import { testProps } from "@app/utils/testProps"
 
 type Props = {
   title: string
@@ -49,10 +50,11 @@ export const SettingsRow: React.FC<Props> = ({
     ))
 
   return (
-    <TouchableWithoutFeedback
+    <Pressable
       onPressIn={action ? () => setHovering(true) : () => {}}
       onPressOut={action ? () => setHovering(false) : () => {}}
       onPress={action ? action : undefined}
+      {...testProps(title)}
     >
       <View style={[styles.container, styles.spacing]}>
         <View style={[styles.container, styles.spacing]}>
@@ -69,11 +71,14 @@ export const SettingsRow: React.FC<Props> = ({
             )}
           </View>
         </View>
-        <TouchableWithoutFeedback onPress={rightIconAction ? rightIconAction : undefined}>
+        <Pressable
+          onPress={rightIconAction ? rightIconAction : undefined}
+          {...testProps(title + "-right")}
+        >
           <View style={styles.rightActionTouchArea}>{RightIcon}</View>
-        </TouchableWithoutFeedback>
+        </Pressable>
       </View>
-    </TouchableWithoutFeedback>
+    </Pressable>
   )
 }
 

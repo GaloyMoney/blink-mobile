@@ -1,24 +1,7 @@
-import { gql } from "@apollo/client"
-import { useLoginMethodsQuery } from "@app/graphql/generated"
-import { useLevel } from "@app/graphql/level-context"
-
-gql`
-  query LoginMethods {
-    me {
-      phone
-      email {
-        address
-        verified
-      }
-    }
-  }
-`
+import { useSettingsContext } from "../settings-context"
 
 export const useLoginMethods = () => {
-  const { isAtLeastLevelZero } = useLevel()
-  const { data, loading } = useLoginMethodsQuery({
-    skip: !isAtLeastLevelZero,
-  })
+  const { data, loading } = useSettingsContext()
 
   const email = data?.me?.email?.address || undefined
   const emailVerified = Boolean(email && data?.me?.email?.verified)

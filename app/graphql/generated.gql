@@ -737,37 +737,6 @@ mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
   }
 }
 
-query AccountId {
-  me {
-    defaultAccount {
-      id
-      __typename
-    }
-    __typename
-  }
-}
-
-query AccountLNAddress {
-  me {
-    username
-    __typename
-  }
-}
-
-query AccountPOS {
-  me {
-    username
-    __typename
-  }
-}
-
-query AccountSettingsBanner {
-  me {
-    username
-    __typename
-  }
-}
-
 query Circles {
   me {
     username
@@ -807,44 +776,6 @@ query ContactsCard {
   }
 }
 
-query DefaultLanguage {
-  me {
-    language
-    __typename
-  }
-}
-
-query DefaultWallet {
-  me {
-    defaultAccount {
-      defaultWalletId
-      wallets {
-        id
-        balance
-        walletCurrency
-        __typename
-      }
-      __typename
-    }
-    __typename
-  }
-}
-
-query DeleteSetting {
-  me {
-    defaultAccount {
-      wallets {
-        id
-        balance
-        walletCurrency
-        __typename
-      }
-      __typename
-    }
-    __typename
-  }
-}
-
 query ExportCsvSetting($walletIds: [WalletId!]!) {
   me {
     id
@@ -857,9 +788,13 @@ query ExportCsvSetting($walletIds: [WalletId!]!) {
   }
 }
 
-query ExportCsvSettingWallets {
+query SettingsScreen {
   me {
+    username
+    language
     defaultAccount {
+      id
+      defaultWalletId
       wallets {
         id
         balance
@@ -868,25 +803,13 @@ query ExportCsvSettingWallets {
       }
       __typename
     }
-    __typename
-  }
-}
-
-query LoginMethods {
-  me {
+    totpEnabled
     phone
     email {
       address
       verified
       __typename
     }
-    __typename
-  }
-}
-
-query TotpSetting {
-  me {
-    totpEnabled
     __typename
   }
 }

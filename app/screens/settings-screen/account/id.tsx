@@ -2,27 +2,15 @@ import { useCallback } from "react"
 import { View } from "react-native"
 import { Skeleton, Text, makeStyles } from "@rneui/themed"
 
-import { gql } from "@apollo/client"
-import { useAccountIdQuery } from "@app/graphql/generated"
-
 import { useI18nContext } from "@app/i18n/i18n-react"
 
+import { useSettingsContext } from "../settings-context"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { toastShow } from "@app/utils/toast"
 
-gql`
-  query AccountId {
-    me {
-      defaultAccount {
-        id
-      }
-    }
-  }
-`
-
 export const AccountId: React.FC = () => {
-  const { data, loading } = useAccountIdQuery()
+  const { data, loading } = useSettingsContext()
   const { LL } = useI18nContext()
 
   const styles = useStyles()

@@ -12,7 +12,7 @@ import useLogout from "@app/hooks/use-logout"
 import { useAccountDeleteContext } from "../account-delete-context"
 
 import { gql } from "@apollo/client"
-import { useAccountDeleteMutation, useDeleteSettingQuery } from "@app/graphql/generated"
+import { useAccountDeleteMutation } from "@app/graphql/generated"
 
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -24,20 +24,9 @@ import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
+import { useSettingsContext } from "../../settings-context"
 
 gql`
-  query DeleteSetting {
-    me {
-      defaultAccount {
-        wallets {
-          id
-          balance
-          walletCurrency
-        }
-      }
-    }
-  }
-
   mutation accountDelete {
     accountDelete {
       errors {
@@ -71,7 +60,7 @@ export const Delete = () => {
 
   const [deleteAccount] = useAccountDeleteMutation({ fetchPolicy: "no-cache" })
 
-  const { data, loading } = useDeleteSettingQuery()
+  const { data, loading } = useSettingsContext()
   const { formatMoneyAmount } = useDisplayCurrency()
 
   const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)

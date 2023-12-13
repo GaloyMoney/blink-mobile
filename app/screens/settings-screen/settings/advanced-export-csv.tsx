@@ -5,28 +5,14 @@ import { SettingsRow } from "../row"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
 import { gql } from "@apollo/client"
-import {
-  useExportCsvSettingLazyQuery,
-  useExportCsvSettingWalletsQuery,
-} from "@app/graphql/generated"
+import { useExportCsvSettingLazyQuery } from "@app/graphql/generated"
+import { useSettingsContext } from "../settings-context"
 
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 import crashlytics from "@react-native-firebase/crashlytics"
 
 gql`
-  query ExportCsvSettingWallets {
-    me {
-      defaultAccount {
-        wallets {
-          id
-          balance
-          walletCurrency
-        }
-      }
-    }
-  }
-
   query ExportCsvSetting($walletIds: [WalletId!]!) {
     me {
       id
@@ -41,7 +27,7 @@ gql`
 export const ExportCsvSetting: React.FC = () => {
   const { LL } = useI18nContext()
 
-  const { data, loading } = useExportCsvSettingWalletsQuery()
+  const { data, loading } = useSettingsContext()
 
   const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
   const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)

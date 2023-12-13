@@ -1,3 +1,6 @@
+import { Alert } from "react-native"
+import { useState } from "react"
+
 import { SettingsRow } from "./row"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 
@@ -8,17 +11,10 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 
 import { gql } from "@apollo/client"
-import { useTotpSettingQuery, useUserTotpDeleteMutation } from "@app/graphql/generated"
-import { Alert } from "react-native"
-import { useState } from "react"
+import { useUserTotpDeleteMutation } from "@app/graphql/generated"
+import { useSettingsContext } from "./settings-context"
 
 gql`
-  query TotpSetting {
-    me {
-      totpEnabled
-    }
-  }
-
   mutation userTotpDelete {
     userTotpDelete {
       errors {
@@ -43,7 +39,7 @@ export const TotpSetting: React.FC = () => {
 
   const [spinner, setSpinner] = useState(false)
 
-  const { data, loading, refetch: refetchTotpSettings } = useTotpSettingQuery()
+  const { data, loading, refetch: refetchTotpSettings } = useSettingsContext()
   const [totpDeleteMutation] = useUserTotpDeleteMutation()
 
   const totpEnabled = Boolean(data?.me?.totpEnabled)

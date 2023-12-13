@@ -1,5 +1,6 @@
 import { View } from "react-native"
 import { makeStyles, useTheme, Text, Divider } from "@rneui/themed"
+import { testProps } from "@app/utils/testProps"
 
 export const SettingsGroup: React.FC<{
   name?: string
@@ -15,7 +16,7 @@ export const SettingsGroup: React.FC<{
   return (
     <View>
       {name && (
-        <Text type="p2" bold>
+        <Text {...testProps(name + "-group")} type="p2" bold>
           {name}
         </Text>
       )}

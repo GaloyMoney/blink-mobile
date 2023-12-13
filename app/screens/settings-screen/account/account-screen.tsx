@@ -5,6 +5,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { useLevel } from "@app/graphql/level-context"
 
 import { AccountDeleteContextProvider } from "./account-delete-context"
+import { SettingsContextProvider } from "../settings-context"
 import { Screen } from "@app/components/screen"
 import { AccountHeader } from "./header"
 import { AccountId } from "./id"
@@ -29,23 +30,25 @@ export const AccountScreen: React.FC = () => {
   }
 
   return (
-    <AccountDeleteContextProvider>
-      <Screen keyboardShouldPersistTaps="handled">
-        <ScrollView contentContainerStyle={styles.outer}>
-          <AccountHeader />
-          <AccountId />
-          <UpgradeTrialAccount />
-          {isAtLeastLevelOne && (
-            <SettingsGroup
-              name={LL.AccountScreen.loginMethods()}
-              items={items.authenticationMethods}
-            />
-          )}
-          <SettingsGroup items={items.misc} />
-          <DangerZoneSettings />
-        </ScrollView>
-      </Screen>
-    </AccountDeleteContextProvider>
+    <SettingsContextProvider>
+      <AccountDeleteContextProvider>
+        <Screen keyboardShouldPersistTaps="handled">
+          <ScrollView contentContainerStyle={styles.outer}>
+            <AccountHeader />
+            <AccountId />
+            <UpgradeTrialAccount />
+            {isAtLeastLevelOne && (
+              <SettingsGroup
+                name={LL.AccountScreen.loginMethods()}
+                items={items.authenticationMethods}
+              />
+            )}
+            <SettingsGroup items={items.misc} />
+            <DangerZoneSettings />
+          </ScrollView>
+        </Screen>
+      </AccountDeleteContextProvider>
+    </SettingsContextProvider>
   )
 }
 

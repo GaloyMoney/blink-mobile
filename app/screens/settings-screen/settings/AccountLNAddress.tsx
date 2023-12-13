@@ -1,12 +1,9 @@
 import { useState } from "react"
 import Clipboard from "@react-native-clipboard/clipboard"
-
 import { SettingsRow } from "../row"
 import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
-
 import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
-
 import { toastShow } from "@app/utils/toast"
 import { useSettingsContext } from "../settings-context"
 

@@ -4,7 +4,6 @@ import { loadLocale } from "../../app/i18n/i18n-util.sync"
 import { timeout } from "./config"
 import {
   clickButton,
-  clickOnText,
   clickPressable,
   selector,
   waitTillPressableDisplayed,
@@ -33,7 +32,7 @@ export const waitTillSettingDisplayed = async (text: string) => {
 }
 
 export const clickOnSetting = async (title: string) => {
-  await clickOnText(title)
+  await clickPressable(title)
 }
 
 export const Tab = {

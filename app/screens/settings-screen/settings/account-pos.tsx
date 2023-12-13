@@ -1,3 +1,4 @@
+import { Linking } from "react-native"
 import Clipboard from "@react-native-clipboard/clipboard"
 
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
@@ -6,18 +7,8 @@ import { SettingsRow } from "../row"
 import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
-import { gql } from "@apollo/client"
-import { useAccountPosQuery } from "@app/graphql/generated"
 import { toastShow } from "@app/utils/toast"
-import { Linking } from "react-native"
-
-gql`
-  query AccountPOS {
-    me {
-      username
-    }
-  }
-`
+import { useSettingsContext } from "../settings-context"
 
 export const AccountPOS: React.FC = () => {
   const { appConfig } = useAppConfig()
@@ -25,7 +16,7 @@ export const AccountPOS: React.FC = () => {
 
   const { LL } = useI18nContext()
 
-  const { data, loading } = useAccountPosQuery()
+  const { data, loading } = useSettingsContext()
   if (!data?.me?.username) return <></>
 
   const pos = `${posUrl}/${data.me.username}`
