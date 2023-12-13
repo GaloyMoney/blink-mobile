@@ -15,6 +15,12 @@ const { assetExts, sourceExts } = defaultConfig.resolver
 const config = {
   transformer: {
     babelTransformerPath: require.resolve("react-native-svg-transformer"),
+    getTransformOptions: async () => ({
+      transform: {
+        experimentalImportSupport: false,
+        inlineRequires: false,
+      },
+    }),
   },
   resolver: {
     assetExts: assetExts.filter((ext) => ext !== "svg"),
@@ -25,6 +31,8 @@ const config = {
       stream: path.resolve(__dirname, "node_modules/readable-stream"),
       zlib: path.resolve(__dirname, "node_modules/browserify-zlib"),
     },
+
+    resolverMainFields: ["sbmodern", "react-native", "browser", "main"],
   },
 }
 
