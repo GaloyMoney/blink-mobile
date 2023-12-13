@@ -40,7 +40,7 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
   if (destinationState.destinationState !== DestinationState.RequiresUsernameConfirmation)
     return null
 
-  const lnAddress = destinationState.confirmationUsernameType.username + "@" + lnDomain
+  const lnAddress = destinationState?.confirmationUsernameType?.username + "@" + lnDomain
 
   const goBack = () => {
     dispatchDestinationStateAction({
