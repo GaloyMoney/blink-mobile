@@ -260,10 +260,6 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     />
   )
 
-  console.log("timeDiff", timeDiff)
-  console.log("countdown", countdown)
-  console.log("onChainTxNotBroadcasted", onChainTxNotBroadcasted)
-
   const copyToClipboard = ({ content, type }: { content: string; type: string }) => {
     Clipboard.setString(content)
     toastShow({
