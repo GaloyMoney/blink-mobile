@@ -1,6 +1,6 @@
 import { Destination, InvalidDestination } from "./payment-destination/index.types"
 
-const DestinationState = {
+export const DestinationState = {
   Entering: "entering",
   Pasting: "pasting",
   Validating: "validating",
@@ -25,7 +25,7 @@ export type SendBitcoinDestinationState = {
   destination?: Destination
 }
 
-const SendBitcoinActions = {
+export const SendBitcoinActions = {
   SetUnparsedDestination: "set-unparsed-destination",
   SetUnparsedPastedDestination: "set-unparsed-pasted-destination",
   SetValidating: "set-validating",
