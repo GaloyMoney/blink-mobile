@@ -37,14 +37,14 @@ const SendBitcoinSuccessScreen: React.FC<Props> = ({ route }) => {
   const feedbackModalShown = feedbackShownData?.data?.feedbackModalShown
   const { LL, locale } = useI18nContext()
 
-  const dismiss = () => {
+  const iDontEnjoyTheApp = () => {
     logAppFeedback({
       isEnjoingApp: false,
     })
     setShowSuggestionModal(true)
   }
 
-  const rateUs = () => {
+  const iEnjoyTheApp = () => {
     logAppFeedback({
       isEnjoingApp: true,
     })
@@ -52,25 +52,27 @@ const SendBitcoinSuccessScreen: React.FC<Props> = ({ route }) => {
   }
 
   const requestFeedback = useCallback(() => {
-    Alert.alert(
-      "",
-      LL.support.enjoyingApp(),
-      [
+    if (InAppReview.isAvailable()) {
+      Alert.alert(
+        "",
+        LL.support.enjoyingApp(),
+        [
+          {
+            text: LL.common.No(),
+            onPress: () => iDontEnjoyTheApp(),
+          },
+          {
+            text: LL.common.yes(),
+            onPress: () => iEnjoyTheApp(),
+          },
+        ],
         {
-          text: LL.common.No(),
-          onPress: () => dismiss(),
+          cancelable: true,
+          onDismiss: () => {},
         },
-        {
-          text: LL.common.yes(),
-          onPress: () => rateUs(),
-        },
-      ],
-      {
-        cancelable: true,
-        onDismiss: () => dismiss(),
-      },
-    )
-    setFeedbackModalShown(client, true)
+      )
+      setFeedbackModalShown(client, true)
+    }
   }, [LL, client])
 
   const FEEDBACK_DELAY = 3000
