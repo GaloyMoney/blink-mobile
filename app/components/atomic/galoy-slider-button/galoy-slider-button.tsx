@@ -1,102 +1,175 @@
-import React, { useState } from "react"
-import { View, Text } from "react-native"
-
-import { makeStyles } from "@rneui/themed"
-
+import React, { useEffect } from "react"
+import { ActivityIndicator, Dimensions, Image, StyleSheet, View } from "react-native"
+import { PanGestureHandler } from "react-native-gesture-handler"
+import Animated, {
+  Extrapolate,
+  Extrapolation,
+  FadeIn,
+  FadeOut,
+  interpolate,
+  runOnJS,
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated"
 import { GaloyIcon } from "../galoy-icon"
-import RNSliderIconButton from "react-native-slider-icon-button"
-import { testProps } from "../../../utils/testProps"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 
-type GaloySliderComponentProps = {
-  disabled?: boolean
-  loading?: boolean
-  showSlidingTextIcon?: boolean
-  callback?: () => void
+const BUTTON_WIDTH = Dimensions.get("screen").width - 40
+const SWIPE_RANGE = BUTTON_WIDTH - 50
+
+type SwipeButtonPropsType = {
+  onSwipe: () => void
   initialText: string
-  slidingText?: string
-  completedText?: string
-  initialColor?: string
-  finalColor?: string
-  buttonSize: number
-  borderRadius?: number
-  iconColor?: string
+  loadingText: string
+  isLoading?: boolean
+  disabled?: boolean
 }
 
-export const GaloySliderButton: React.FunctionComponent<GaloySliderComponentProps> = (
-  props,
-) => {
-  const styles = useStyles(props)
+const GaloySliderButton = ({
+  onSwipe,
+  initialText,
+  loadingText,
+  isLoading = false,
+  disabled = false,
+}: SwipeButtonPropsType) => {
   const {
-    disabled,
-    loading,
-    initialText,
-    completedText,
-    slidingText,
-    callback,
-    initialColor,
-    finalColor,
-    buttonSize,
-    borderRadius,
-    iconColor,
-  } = props
+    theme: { colors },
+  } = useTheme()
+  const styles = useStyles()
 
-  const [sliderText, setSliderText] = useState(initialText)
+  const X = useSharedValue(0)
 
-  const onSlidingComplete = () => {
-    if (disabled) {
-      return
+  useEffect(() => {
+    if (!isLoading) {
+      X.value = withSpring(0)
     }
-    if (callback) {
-      callback()
-      if (loading) {
-        setSliderText(slidingText || "")
+  }, [isLoading])
+
+  const animatedGestureHandler = useAnimatedGestureHandler({
+    onActive: (e) => {
+      const newValue = e.translationX
+
+      if (newValue >= 0 && newValue <= SWIPE_RANGE) {
+        X.value = newValue
       }
-    }
+    },
+    onEnd: () => {
+      if (X.value < SWIPE_RANGE - 20) {
+        X.value = withSpring(0)
+      } else {
+        runOnJS(onSwipe)()
+      }
+    },
+  })
+
+  const AnimatedStyles = {
+    swipeButton: useAnimatedStyle(() => {
+      return {
+        transform: [
+          {
+            translateX: interpolate(
+              X.value,
+              [20, BUTTON_WIDTH],
+              [0, BUTTON_WIDTH],
+              Extrapolation.CLAMP,
+            ),
+          },
+        ],
+      }
+    }),
+    swipeText: useAnimatedStyle(() => {
+      return {
+        opacity: interpolate(X.value, [0, BUTTON_WIDTH / 4], [1, 0], Extrapolate.CLAMP),
+        transform: [
+          {
+            translateX: interpolate(
+              X.value,
+              [20, SWIPE_RANGE],
+              [0, BUTTON_WIDTH / 3],
+              Extrapolate.CLAMP,
+            ),
+          },
+        ],
+      }
+    }),
   }
 
-  React.useEffect(() => {
-    if (!loading && completedText) {
-      setSliderText(completedText)
-    }
-  }, [loading, completedText])
-
-  React.useEffect(() => {
-    if (disabled) {
-      setSliderText(initialText)
-    }
-  }, [initialText, disabled])
-
   return (
-    <View {...testProps(sliderText)}>
-      <RNSliderIconButton
-        loading={loading}
-        disabled={disabled}
-        buttonSize={buttonSize}
-        initialColor={initialColor}
-        finalColor={finalColor}
-        borderRadius={borderRadius}
-        textStyle={styles.sliderTextStyle}
-        onVerified={onSlidingComplete}
-        iconColor={iconColor}
-        icon={
-          <View>
-            <GaloyIcon size={30} name="arrow-right" />
-          </View>
-        }
-      >
-        <Text style={styles.sliderTextStyle}>{sliderText}</Text>
-      </RNSliderIconButton>
+    <View style={styles.swipeButtonContainer}>
+      {!isLoading && (
+        <PanGestureHandler
+          enabled={!isLoading || disabled}
+          onGestureEvent={animatedGestureHandler}
+        >
+          <Animated.View
+            style={[styles.swipeButton, AnimatedStyles.swipeButton]}
+            exiting={FadeOut.duration(400)}
+          >
+            <GaloyIcon size={30} name="arrow-right" color="white" />
+          </Animated.View>
+        </PanGestureHandler>
+      )}
+      <Animated.Text style={[styles.swipeText, AnimatedStyles.swipeText]}>
+        {initialText}
+      </Animated.Text>
+      {isLoading && (
+        <Animated.View entering={FadeIn.duration(400)} style={styles.loadingContainer}>
+          <Text style={styles.swipeText}>{loadingText}</Text>
+          <ActivityIndicator size="small" color={colors.primary} />
+        </Animated.View>
+      )}
     </View>
   )
 }
 
 const useStyles = makeStyles(({ colors }) => ({
-  sliderTextStyle: {
-    color: colors.white,
-    fontWeight: "600",
-    textAlign: "center",
-    width: "100%",
-    fontSize: 20,
-    lineHeight: 24,
+  swipeButtonContainer: {
+    height: 60,
+    backgroundColor: colors.grey5,
+    borderRadius: 30,
+    borderColor: colors.grey4,
+    borderWidth: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    width: BUTTON_WIDTH,
+    position: "relative",
+  },
+  swipeButton: {
+    position: "absolute",
+    left: 0,
+    height: 60,
+    width: 60,
+    borderRadius: 30,
+    zIndex: 3,
+    backgroundColor: colors.primary,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  swipeButtonDisabled: {
+    backgroundColor: "#E4E9EE",
+  },
+  swipeText: {
+    alignSelf: "center",
+    fontSize: 14,
+    fontWeight: "400",
+    zIndex: 2,
+    color: colors.grey2,
+  },
+  loadingContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    columnGap: 10,
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: 0,
   },
 }))
+
+export default GaloySliderButton

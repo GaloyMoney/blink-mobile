@@ -6882,6 +6882,10 @@ type RootTranslation = {
 		 * S​l​i​d​e​ ​t​o​ ​C​o​n​f​i​r​m
 		 */
 		slideToConfirm: string
+		/**
+		 * C​o​n​f​i​r​m​i​n​g​.​.​.
+		 */
+		slideConfirming: string
 	}
 	SendBitcoinDestinationScreen: {
 		/**
@@ -15681,6 +15685,10 @@ export type TranslationFunctions = {
 		 * Slide to Confirm
 		 */
 		slideToConfirm: () => LocalizedString
+		/**
+		 * Confirming...
+		 */
+		slideConfirming: () => LocalizedString
 	}
 	SendBitcoinDestinationScreen: {
 		/**

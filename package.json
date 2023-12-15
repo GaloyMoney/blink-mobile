@@ -123,7 +123,7 @@
     "react-native-screens": "^3.25.0",
     "react-native-secure-key-store": "^2.0.9",
     "react-native-securerandom": "^1.0.1",
-    "react-native-slider-icon-button": "^0.1.16",
+    "react-native-share": "^10.0.2",
     "react-native-svg": "^13.9.0",
     "react-native-toast-message": "^2.1.5",
     "react-native-url-polyfill": "^2.0.0",
