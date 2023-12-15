@@ -35,6 +35,7 @@ import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { useHideAmount } from "@app/graphql/hide-amount-context"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import Clipboard from "@react-native-clipboard/clipboard"
+import { toastShow } from "@app/utils/toast"
 
 gql`
   query sendBitcoinConfirmationScreen {
@@ -239,6 +240,15 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     }
   }
 
+  const copyToClipboard = () => {
+    Clipboard.setString(destination)
+    toastShow({
+      type: "success",
+      message: LL.SendBitcoinConfirmationScreen.copiedDestination(),
+      LL,
+    })
+  }
+
   const errorMessage = paymentError || invalidAmountErrorMessage
 
   const displayAmount = convertMoneyAmount(settlementAmount, DisplayCurrency)
@@ -254,7 +264,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
             />
             <TouchableOpacity
               style={styles.iconContainer}
-              onPress={() => Clipboard.setString(paymentDetail.destination)}
+              onPress={copyToClipboard}
               hitSlop={30}
             >
               <GaloyIcon name={"copy-paste"} size={18} color={colors.primary} />

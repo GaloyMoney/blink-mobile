@@ -45,6 +45,7 @@ import { PaymentDestinationDisplay } from "@app/components/payment-destination-d
 import { useHideAmount } from "@app/graphql/hide-amount-context"
 import { ConfirmFeesModal } from "./confirm-fees-modal"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+import { toastShow } from "@app/utils/toast"
 
 gql`
   query sendBitcoinDetailsScreen {
@@ -249,6 +250,15 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     setIsModalVisible(!isModalVisible)
   }
 
+  const copyToClipboard = () => {
+    Clipboard.setString(paymentDetail.destination)
+    toastShow({
+      type: "success",
+      message: LL.SendBitcoinScreen.copiedDestination(),
+      LL,
+    })
+  }
+
   const chooseWallet = (wallet: Pick<Wallet, "id" | "walletCurrency">) => {
     let updatedPaymentDetail = paymentDetail.setSendingWalletDescriptor({
       id: wallet.id,
@@ -443,7 +453,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             </View>
             <TouchableOpacity
               style={styles.iconContainer}
-              onPress={() => Clipboard.setString(paymentDetail.destination)}
+              onPress={copyToClipboard}
               hitSlop={30}
             >
               <GaloyIcon name={"copy-paste"} size={18} color={colors.primary} />
