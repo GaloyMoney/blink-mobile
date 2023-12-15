@@ -22,6 +22,7 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { ScrollView } from "react-native-gesture-handler"
 import useAppCheckToken from "../get-started-screen/use-device-token"
 import DeviceInfo from "react-native-device-info"
+import InAppReview from "react-native-in-app-review"
 
 gql`
   query debugScreen {
@@ -62,6 +63,10 @@ export const DeveloperScreen: React.FC = () => {
   }, [accountId])
 
   const [newToken, setNewToken] = React.useState(token)
+  const [hasFlowFinishedSuccessfully, setHasFlowFinishedSuccessfully] = React.useState<
+    undefined | boolean
+  >(undefined)
+
   const currentGaloyInstance = appConfig.galoyInstance
 
   const [newGraphqlUri, setNewGraphqlUri] = React.useState(
@@ -267,6 +272,16 @@ export const DeveloperScreen: React.FC = () => {
               navigate("webView", {
                 url: urlWebView,
               })
+            }
+          />
+          <Text>InAppReview available: {String(InAppReview.isAvailable())}</Text>
+          <Text>result InAppReview: {String(hasFlowFinishedSuccessfully)}</Text>
+          <Button
+            title="Rate us"
+            containerStyle={styles.button}
+            {...testProps("Rate us")}
+            onPress={() =>
+              InAppReview.RequestInAppReview().then(setHasFlowFinishedSuccessfully)
             }
           />
           <View>
