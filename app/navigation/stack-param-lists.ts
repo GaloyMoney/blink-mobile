@@ -2,10 +2,7 @@ import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/type
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
 import { PhoneCodeChannelType, WalletCurrency } from "@app/graphql/generated"
 import { EarnSectionType } from "@app/screens/earns-screen/sections"
-import {
-  PaymentDetail,
-  PaymentSendExtraInfo,
-} from "@app/screens/send-bitcoin-screen/payment-details/index.types"
+import { PaymentDetail } from "@app/screens/send-bitcoin-screen/payment-details/index.types"
 import {
   PaymentDestination,
   ReceiveDestination,
@@ -13,6 +10,7 @@ import {
 import { WalletDescriptor } from "@app/types/wallets"
 import { PhoneLoginInitiateType } from "@app/screens/phone-auth-screen"
 import { NavigatorScreenParams } from "@react-navigation/native"
+import { PaymentSendCompletedStatus } from "@app/screens/send-bitcoin-screen/use-send-payment"
 
 export type RootStackParamList = {
   getStarted: undefined
@@ -51,7 +49,10 @@ export type RootStackParamList = {
     moneyAmount: MoneyAmount<WalletOrDisplayCurrency>
   }
   conversionSuccess: undefined
-  sendBitcoinSuccess: { extraInfo?: PaymentSendExtraInfo }
+  sendBitcoinCompleted: {
+    arrivalAtMempoolEstimate?: number
+    status: PaymentSendCompletedStatus
+  }
   language: undefined
   currency: undefined
   security: {

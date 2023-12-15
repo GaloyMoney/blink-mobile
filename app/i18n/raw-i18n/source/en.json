@@ -2217,7 +2217,8 @@
             "content": "Your fee is more than 50% bigger than the amount sent. Are you sure you want to proceed?\n\nTo reduce fees, ask the receiver to accept transaction via Lightning",
             "confirmButton": "I'm 100% sure"
         },
-        "copiedDestination": "Copied destination to clipboard"
+        "copiedDestination": "Copied destination to clipboard",
+        "pendingPayment": "The payment has been sent, but hasn't confirmed yet.\n\nIt's possible the payment will not confirm, in which case the funds will be returned to your account."
     },
     "SettingsScreen": {
         "activated": "Activated",
