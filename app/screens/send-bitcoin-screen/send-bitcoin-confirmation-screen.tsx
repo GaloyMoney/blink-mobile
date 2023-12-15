@@ -23,7 +23,7 @@ import { logPaymentAttempt, logPaymentResult } from "@app/utils/analytics"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { CommonActions, RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { makeStyles, Text, useTheme } from "@rneui/themed"
+import { makeStyles, Text } from "@rneui/themed"
 import React, { useState } from "react"
 import { ActivityIndicator, View } from "react-native"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
@@ -53,9 +53,6 @@ gql`
 type Props = { route: RouteProp<RootStackParamList, "sendBitcoinConfirmation"> }
 
 const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
-  const {
-    theme: { colors },
-  } = useTheme()
   const styles = useStyles()
 
   const navigation =

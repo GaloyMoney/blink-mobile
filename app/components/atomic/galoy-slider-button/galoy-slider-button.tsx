@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { ActivityIndicator, Dimensions, Image, StyleSheet, View } from "react-native"
+import { ActivityIndicator, Dimensions, View } from "react-native"
 import { PanGestureHandler } from "react-native-gesture-handler"
 import Animated, {
   Extrapolate,
@@ -45,6 +45,7 @@ const GaloySliderButton = ({
     if (!isLoading) {
       X.value = withSpring(0)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading])
 
   const animatedGestureHandler = useAnimatedGestureHandler({
