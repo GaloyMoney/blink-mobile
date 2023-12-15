@@ -6878,6 +6878,10 @@ type RootTranslation = {
 	​I​f​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​s​e​n​d​ ​t​h​i​s​ ​p​a​y​m​e​n​t​ ​a​g​a​i​n​,​ ​s​t​a​r​t​ ​f​r​o​m​ ​s​c​r​a​t​c​h​.
 		 */
 		paymentAlreadyAttempted: string
+		/**
+		 * S​l​i​d​e​ ​t​o​ ​C​o​n​f​i​r​m
+		 */
+		slideToConfirm: string
 	}
 	SendBitcoinDestinationScreen: {
 		/**
@@ -15673,6 +15677,10 @@ export type TranslationFunctions = {
 	If you want to send this payment again, start from scratch.
 		 */
 		paymentAlreadyAttempted: () => LocalizedString
+		/**
+		 * Slide to Confirm
+		 */
+		slideToConfirm: () => LocalizedString
 	}
 	SendBitcoinDestinationScreen: {
 		/**

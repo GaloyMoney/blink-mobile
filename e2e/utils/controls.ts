@@ -183,3 +183,25 @@ export const clickOnText = async (text: string) => {
   await textElement.waitForEnabled({ timeout })
   await textElement.click()
 }
+
+export const swipeButton = async (title: string) => {
+  const sliderButton = await $(selector(title, "Other"))
+  await sliderButton.waitForDisplayed({ timeout })
+
+  const location = await sliderButton.getLocation()
+  const size = await sliderButton.getSize()
+
+  const thumbWidthPercentage = 0.1
+
+  const thumbWidth = size.width * thumbWidthPercentage
+  const startX = location.x + thumbWidth
+  const startY = location.y + size.height / 2
+
+  const endX = location.x + size.width
+  await driver.touchAction([
+    { action: "press", x: startX, y: startY },
+    { action: "wait", ms: 1500 },
+    { action: "moveTo", x: endX, y: startY },
+    "release",
+  ])
+}
