@@ -23,9 +23,9 @@ import { logPaymentAttempt, logPaymentResult } from "@app/utils/analytics"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { CommonActions, RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { makeStyles, Text } from "@rneui/themed"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
 import React, { useMemo, useState } from "react"
-import { ActivityIndicator, View } from "react-native"
+import { ActivityIndicator, TouchableOpacity, View } from "react-native"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { testProps } from "../../utils/testProps"
 import useFee from "./use-fee"
@@ -33,6 +33,8 @@ import { useSendPayment } from "./use-send-payment"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { useHideAmount } from "@app/graphql/hide-amount-context"
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+import Clipboard from "@react-native-clipboard/clipboard"
 
 gql`
   query sendBitcoinConfirmationScreen {
@@ -53,6 +55,9 @@ gql`
 type Props = { route: RouteProp<RootStackParamList, "sendBitcoinConfirmation"> }
 
 const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles()
 
   const navigation =
@@ -247,6 +252,13 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
               destination={destination}
               paymentType={paymentType}
             />
+            <TouchableOpacity
+              style={styles.iconContainer}
+              onPress={() => Clipboard.setString(paymentDetail.destination)}
+              hitSlop={30}
+            >
+              <GaloyIcon name={"copy-paste"} size={18} color={colors.primary} />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.fieldContainer}>
@@ -455,5 +467,10 @@ const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
     padding: 20,
     flexGrow: 1,
+  },
+  iconContainer: {
+    justifyContent: "center",
+    alignItems: "flex-start",
+    paddingLeft: 20,
   },
 }))

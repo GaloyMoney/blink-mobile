@@ -444,6 +444,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             <TouchableOpacity
               style={styles.iconContainer}
               onPress={() => Clipboard.setString(paymentDetail.destination)}
+              hitSlop={30}
             >
               <GaloyIcon name={"copy-paste"} size={18} color={colors.primary} />
             </TouchableOpacity>
