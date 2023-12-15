@@ -101,11 +101,15 @@ const GaloySliderButton = ({
     <View style={styles.swipeButtonContainer}>
       {!isLoading && (
         <PanGestureHandler
-          enabled={!isLoading || disabled}
+          enabled={!isLoading || !disabled}
           onGestureEvent={animatedGestureHandler}
         >
           <Animated.View
-            style={[styles.swipeButton, AnimatedStyles.swipeButton]}
+            style={[
+              styles.swipeButton,
+              AnimatedStyles.swipeButton,
+              { backgroundColor: disabled ? colors.disabled : colors.primary },
+            ]}
             exiting={FadeOut.duration(400)}
           >
             <GaloyIcon size={30} name="arrow-right" color="white" />
@@ -145,7 +149,6 @@ const useStyles = makeStyles(({ colors }) => ({
     width: 60,
     borderRadius: 30,
     zIndex: 3,
-    backgroundColor: colors.primary,
     alignItems: "center",
     justifyContent: "center",
   },
