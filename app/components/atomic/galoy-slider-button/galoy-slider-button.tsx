@@ -79,7 +79,7 @@ const GaloySliderButton = ({
           },
         ],
       }
-    }),
+    }, [X]),
     swipeText: useAnimatedStyle(() => {
       return {
         opacity: interpolate(X.value, [0, BUTTON_WIDTH / 4], [1, 0], Extrapolate.CLAMP),
@@ -94,7 +94,7 @@ const GaloySliderButton = ({
           },
         ],
       }
-    }),
+    }, [X]),
   }
 
   return (
