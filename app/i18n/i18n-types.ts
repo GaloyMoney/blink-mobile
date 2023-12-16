@@ -6878,6 +6878,10 @@ type RootTranslation = {
 	​I​f​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​s​e​n​d​ ​t​h​i​s​ ​p​a​y​m​e​n​t​ ​a​g​a​i​n​,​ ​s​t​a​r​t​ ​f​r​o​m​ ​s​c​r​a​t​c​h​.
 		 */
 		paymentAlreadyAttempted: string
+		/**
+		 * C​o​p​i​e​d​ ​d​e​s​t​i​n​a​t​i​o​n​ ​t​o​ ​c​l​i​p​b​o​a​r​d
+		 */
+		copiedDestination: string
 	}
 	SendBitcoinDestinationScreen: {
 		/**
@@ -7117,6 +7121,10 @@ type RootTranslation = {
 			 */
 			confirmButton: string
 		}
+		/**
+		 * C​o​p​i​e​d​ ​d​e​s​t​i​n​a​t​i​o​n​ ​t​o​ ​c​l​i​p​b​o​a​r​d
+		 */
+		copiedDestination: string
 	}
 	SettingsScreen: {
 		/**
@@ -15673,6 +15681,10 @@ export type TranslationFunctions = {
 	If you want to send this payment again, start from scratch.
 		 */
 		paymentAlreadyAttempted: () => LocalizedString
+		/**
+		 * Copied destination to clipboard
+		 */
+		copiedDestination: () => LocalizedString
 	}
 	SendBitcoinDestinationScreen: {
 		/**
@@ -15895,6 +15907,10 @@ export type TranslationFunctions = {
 			 */
 			confirmButton: () => LocalizedString
 		}
+		/**
+		 * Copied destination to clipboard
+		 */
+		copiedDestination: () => LocalizedString
 	}
 	SettingsScreen: {
 		/**
