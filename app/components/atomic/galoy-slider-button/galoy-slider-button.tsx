@@ -57,7 +57,7 @@ const GaloySliderButton = ({
       }
     },
     onEnd: () => {
-      if (X.value < SWIPE_RANGE - 20) {
+      if (X.value < SWIPE_RANGE * 0.6) {
         X.value = withSpring(0)
       } else {
         runOnJS(onSwipe)()
