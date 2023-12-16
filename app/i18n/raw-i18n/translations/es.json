@@ -2156,7 +2156,8 @@
         "feeError": "No se puede calcular la tarifa",
         "invoiceAlreadyPaid": "Esta factura ya ha sido pagada.",
         "somethingWentWrong": "Algo salió mal",
-        "paymentAlreadyAttempted": "El pago ya se intentó.\n\nSi deseas enviar este pago nuevamente, comienza desde el principio del proceso."
+        "paymentAlreadyAttempted": "El pago ya se intentó.\n\nSi deseas enviar este pago nuevamente, comienza desde el principio del proceso.",
+        "copiedDestination": "Destino copiado al portapapeles"
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "Los nombres de usuario de {bankName} ahora son direcciones de {bankName}.",
@@ -2215,7 +2216,8 @@
             "title": "Alerta de tarifa alta!",
             "content": "Tu tarifa es un 50% más grande que la cantidad enviada. ¿Estás seguro de que quieres continuar?\n\nPara reducir la tarifa, pide al receptor que acepte la transacción a través de Lightning.",
             "confirmButton": "Estoy 100% seguro"
-        }
+        },
+        "copiedDestination": "Destino copiado al portapapeles"
     },
     "SettingsScreen": {
         "activated": "Activada",
