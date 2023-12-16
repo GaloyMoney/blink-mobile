@@ -17,8 +17,8 @@ export const Default = () => {
       <UseCase text="Default">
         <GaloySliderButton
           isLoading={loading}
-          initialText="default"
-          loadingText="..."
+          initialText="Slide to confirm"
+          loadingText="Confirming..."
           onSwipe={() => setLoading(true)}
         />
       </UseCase>
@@ -29,14 +29,6 @@ export const Default = () => {
           initialText="Disabled"
           loadingText="..."
           onSwipe={() => setLoading2(true)}
-        />
-      </UseCase>
-      <UseCase text="loading slider">
-        <GaloySliderButton
-          isLoading={loading3}
-          initialText=""
-          loadingText="..."
-          onSwipe={() => setLoading3(true)}
         />
       </UseCase>
     </Story>
