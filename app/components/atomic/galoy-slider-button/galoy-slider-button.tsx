@@ -101,7 +101,7 @@ const GaloySliderButton = ({
     <View style={styles.swipeButtonContainer}>
       {!isLoading && (
         <PanGestureHandler
-          enabled={!isLoading || !disabled}
+          enabled={!isLoading && !disabled}
           onGestureEvent={animatedGestureHandler}
         >
           <Animated.View
@@ -116,9 +116,11 @@ const GaloySliderButton = ({
           </Animated.View>
         </PanGestureHandler>
       )}
-      <Animated.Text style={[styles.swipeText, AnimatedStyles.swipeText]}>
-        {initialText}
-      </Animated.Text>
+      {!disabled &&
+        <Animated.Text style={[styles.swipeText, AnimatedStyles.swipeText]}>
+          {initialText}
+        </Animated.Text>
+      }
       {isLoading && (
         <Animated.View entering={FadeIn.duration(400)} style={styles.loadingContainer}>
           <Text style={styles.swipeText}>{loadingText}</Text>
