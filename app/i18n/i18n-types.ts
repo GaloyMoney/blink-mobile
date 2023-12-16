@@ -6886,6 +6886,10 @@ type RootTranslation = {
 		 * C​o​n​f​i​r​m​i​n​g​.​.​.
 		 */
 		slideConfirming: string
+		/**
+		 * C​o​p​i​e​d​ ​d​e​s​t​i​n​a​t​i​o​n​ ​t​o​ ​c​l​i​p​b​o​a​r​d
+		 */
+		copiedDestination: string
 	}
 	SendBitcoinDestinationScreen: {
 		/**
@@ -7125,6 +7129,10 @@ type RootTranslation = {
 			 */
 			confirmButton: string
 		}
+		/**
+		 * C​o​p​i​e​d​ ​d​e​s​t​i​n​a​t​i​o​n​ ​t​o​ ​c​l​i​p​b​o​a​r​d
+		 */
+		copiedDestination: string
 	}
 	SettingsScreen: {
 		/**
@@ -15689,6 +15697,10 @@ export type TranslationFunctions = {
 		 * Confirming...
 		 */
 		slideConfirming: () => LocalizedString
+		/**
+		 * Copied destination to clipboard
+		 */
+		copiedDestination: () => LocalizedString
 	}
 	SendBitcoinDestinationScreen: {
 		/**
@@ -15911,6 +15923,10 @@ export type TranslationFunctions = {
 			 */
 			confirmButton: () => LocalizedString
 		}
+		/**
+		 * Copied destination to clipboard
+		 */
+		copiedDestination: () => LocalizedString
 	}
 	SettingsScreen: {
 		/**

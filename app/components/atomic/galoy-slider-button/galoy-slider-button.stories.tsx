@@ -10,7 +10,6 @@ export default {
 export const Default = () => {
   const [loading, setLoading] = React.useState(false)
   const [loading2, setLoading2] = React.useState(false)
-  const [loading3, setLoading3] = React.useState(false)
 
   return (
     <Story>

@@ -2214,7 +2214,8 @@ const en: BaseTranslation = {
     somethingWentWrong: "Something went wrong",
     paymentAlreadyAttempted: "Payment already attempted.\n\nIf you want to send this payment again, start from scratch.",
     slideToConfirm: "Slide to Confirm",
-    slideConfirming: "Confirming..."
+    slideConfirming: "Confirming...",
+    copiedDestination: "Copied destination to clipboard"
   },
   SendBitcoinDestinationScreen: {
     usernameNowAddress:
@@ -2290,6 +2291,7 @@ const en: BaseTranslation = {
       content: "Your fee is more than 50% bigger than the amount sent. Are you sure you want to proceed?\n\nTo reduce fees, ask the receiver to accept transaction via Lightning",
       confirmButton: "I'm 100% sure",
     },
+    copiedDestination: "Copied destination to clipboard"
   },
   SettingsScreen: {
     activated: "Activated",

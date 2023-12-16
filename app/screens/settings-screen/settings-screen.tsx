@@ -331,7 +331,7 @@ export const SettingsScreen: React.FC = () => {
       action: rateUs,
       enabled: true,
       greyed: false,
-      hidden: !isIos, // FIXME: remove when android is working
+      hidden: !InAppReview.isAvailable(),
     },
   ]
 

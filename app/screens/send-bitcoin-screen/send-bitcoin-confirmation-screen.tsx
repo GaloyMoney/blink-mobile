@@ -23,9 +23,9 @@ import { logPaymentAttempt, logPaymentResult } from "@app/utils/analytics"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { CommonActions, RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { makeStyles, Text } from "@rneui/themed"
 import React, { useState } from "react"
-import { ActivityIndicator, View } from "react-native"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
+import { ActivityIndicator, TouchableOpacity, View } from "react-native"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { testProps } from "../../utils/testProps"
 import useFee from "./use-fee"
@@ -33,6 +33,9 @@ import { useSendPayment } from "./use-send-payment"
 import { useHideAmount } from "@app/graphql/hide-amount-context"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import GaloySliderButton from "@app/components/atomic/galoy-slider-button/galoy-slider-button"
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+import Clipboard from "@react-native-clipboard/clipboard"
+import { toastShow } from "@app/utils/toast"
 
 gql`
   query sendBitcoinConfirmationScreen {
@@ -53,6 +56,9 @@ gql`
 type Props = { route: RouteProp<RootStackParamList, "sendBitcoinConfirmation"> }
 
 const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
+  const {
+    theme: { colors },
+  } = useTheme()
   const styles = useStyles()
 
   const navigation =
@@ -234,6 +240,15 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     }
   }
 
+  const copyToClipboard = () => {
+    Clipboard.setString(destination)
+    toastShow({
+      type: "success",
+      message: LL.SendBitcoinConfirmationScreen.copiedDestination(),
+      LL,
+    })
+  }
+
   const errorMessage = paymentError || invalidAmountErrorMessage
 
   const displayAmount = convertMoneyAmount(settlementAmount, DisplayCurrency)
@@ -247,6 +262,13 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
               destination={destination}
               paymentType={paymentType}
             />
+            <TouchableOpacity
+              style={styles.iconContainer}
+              onPress={copyToClipboard}
+              hitSlop={30}
+            >
+              <GaloyIcon name={"copy-paste"} size={18} color={colors.primary} />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.fieldContainer}>
@@ -456,5 +478,10 @@ const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
     padding: 20,
     flexGrow: 1,
+  },
+  iconContainer: {
+    justifyContent: "center",
+    alignItems: "flex-start",
+    paddingLeft: 20,
   },
 }))
