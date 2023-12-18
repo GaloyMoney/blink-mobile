@@ -22,6 +22,7 @@ import { DecemberChallengeCard } from "@app/components/december-challenge"
 gql`
   query Circles {
     me {
+      id
       username
       defaultAccount {
         id

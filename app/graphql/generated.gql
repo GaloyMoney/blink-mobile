@@ -694,6 +694,7 @@ mutation userTotpRegistrationValidate($input: UserTotpRegistrationValidateInput!
       __typename
     }
     me {
+      id
       totpEnabled
       phone
       email {
@@ -739,6 +740,7 @@ mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
 
 query Circles {
   me {
+    id
     username
     defaultAccount {
       id
@@ -1070,6 +1072,7 @@ query introducingCirclesModalShown {
 
 query invite {
   me {
+    id
     username
     __typename
   }
@@ -1456,6 +1459,7 @@ query supportedCountries {
 
 query totpRegistrationScreen {
   me {
+    id
     username
     __typename
   }

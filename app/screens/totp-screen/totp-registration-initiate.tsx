@@ -31,6 +31,7 @@ const generateOtpAuthURI = (
 gql`
   query totpRegistrationScreen {
     me {
+      id
       username
     }
   }
