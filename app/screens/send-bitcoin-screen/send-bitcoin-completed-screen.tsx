@@ -4,13 +4,13 @@ import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { Screen } from "@app/components/screen"
 import {
   SuccessIconAnimation,
-  SuccessTextAnimation,
+  CompletedTextAnimation,
 } from "@app/components/success-animation"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { makeStyles, Text } from "@rneui/themed"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { View, Alert } from "react-native"
 import { testProps } from "../../utils/testProps"
 import { useApolloClient } from "@apollo/client"
@@ -19,18 +19,32 @@ import { setFeedbackModalShown } from "@app/graphql/client-only-query"
 import { SuggestionModal } from "./suggestion-modal"
 import { logAppFeedback } from "@app/utils/analytics"
 import InAppReview from "react-native-in-app-review"
-import { formatTimeToMempool } from "../transaction-detail-screen/format-time"
+import {
+  formatTimeToMempool,
+  timeToMempool,
+} from "../transaction-detail-screen/format-time"
+import { PaymentSendCompletedStatus } from "./use-send-payment"
 
 type Props = {
-  route: RouteProp<RootStackParamList, "sendBitcoinSuccess">
+  route: RouteProp<RootStackParamList, "sendBitcoinCompleted">
 }
 
-const SendBitcoinSuccessScreen: React.FC<Props> = ({ route }) => {
-  const extraInfo = route.params.extraInfo
+// TODO: proper type from the backend so we don't need this processing in the front end
+// ie: it should return QUEUED for an onchain send payment
+type StatusProcessed = "SUCCESS" | "PENDING" | "QUEUED"
+
+const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
+  const { arrivalAtMempoolEstimate, status: statusRaw } = route.params
   const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
+
+  const status = processStatus({ arrivalAtMempoolEstimate, status: statusRaw })
+
   const [showSuggestionModal, setShowSuggestionModal] = React.useState(false)
   const navigation =
-    useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinSuccess">>()
+    useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinCompleted">>()
 
   const client = useApolloClient()
   const feedbackShownData = useFeedbackModalShownQuery()
@@ -92,26 +106,43 @@ const SendBitcoinSuccessScreen: React.FC<Props> = ({ route }) => {
     }
   }, [client, feedbackModalShown, LL, showSuggestionModal, navigation, requestFeedback])
 
+  const MainIcon = () => {
+    switch (status) {
+      case "SUCCESS":
+        return <GaloyIcon name={"payment-success"} size={128} />
+      case "QUEUED":
+        return <GaloyIcon name={"payment-pending"} size={128} />
+      case "PENDING":
+        return <GaloyIcon name={"warning"} color={colors._orange} size={128} />
+    }
+  }
+
+  const SuccessText = () => {
+    switch (status) {
+      case "SUCCESS":
+        return LL.SendBitcoinScreen.success()
+      case "QUEUED":
+        return LL.TransactionDetailScreen.txNotBroadcast({
+          countdown: formatTimeToMempool(
+            timeToMempool(arrivalAtMempoolEstimate as number),
+            LL,
+            locale,
+          ),
+        })
+      case "PENDING":
+        return LL.SendBitcoinScreen.pendingPayment()
+    }
+  }
+
   return (
     <Screen preset="scroll" style={styles.contentContainer}>
       <View style={styles.Container}>
-        <SuccessIconAnimation>
-          <GaloyIcon name={"payment-success"} size={128} />
-        </SuccessIconAnimation>
-        <SuccessTextAnimation>
-          <Text {...testProps("Success Text")} style={styles.successText}>
-            {LL.SendBitcoinScreen.success()}
+        <SuccessIconAnimation>{MainIcon()}</SuccessIconAnimation>
+        <CompletedTextAnimation>
+          <Text {...testProps("Success Text")} style={styles.completedText} type="h2">
+            {SuccessText()}
           </Text>
-        </SuccessTextAnimation>
-        {extraInfo?.arrivalAtMempoolEstimate && (
-          <SuccessTextAnimation>
-            <Text {...testProps("Success Text")} style={styles.successText}>
-              {LL.SendBitcoinScreen.willBeSentToMempoolBy()}
-              {"\n"}
-              {formatTimeToMempool(extraInfo.arrivalAtMempoolEstimate, LL, locale)}
-            </Text>
-          </SuccessTextAnimation>
-        )}
+        </CompletedTextAnimation>
       </View>
       <SuggestionModal
         navigation={navigation}
@@ -122,14 +153,31 @@ const SendBitcoinSuccessScreen: React.FC<Props> = ({ route }) => {
   )
 }
 
+const processStatus = ({
+  status,
+  arrivalAtMempoolEstimate,
+}: {
+  status: PaymentSendCompletedStatus
+  arrivalAtMempoolEstimate: number | undefined
+}): StatusProcessed => {
+  if (status === "SUCCESS") {
+    return "SUCCESS"
+  }
+
+  if (arrivalAtMempoolEstimate) {
+    return "QUEUED"
+  }
+  return "PENDING"
+}
+
 const useStyles = makeStyles(({ colors }) => ({
   contentContainer: {
     flexGrow: 1,
   },
-  successText: {
-    fontSize: 18,
+  completedText: {
     textAlign: "center",
     marginTop: 20,
+    marginHorizontal: 28,
   },
   Container: {
     flex: 1,
@@ -144,4 +192,4 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 }))
 
-export default SendBitcoinSuccessScreen
+export default SendBitcoinCompletedScreen

@@ -17,6 +17,8 @@ import { gql } from "@apollo/client"
 import { getErrorMessages } from "@app/graphql/utils"
 import { v4 as uuidv4 } from "uuid"
 
+export type PaymentSendCompletedStatus = "SUCCESS" | "PENDING"
+
 type UseSendPaymentResult = {
   loading: boolean
   sendPayment:

@@ -21,7 +21,7 @@ RNBootSplash.hide({ fade: true })
 const StorybookUI = getStorybookUI({
   enableWebsockets: true, // for @storybook/react-native-server
   onDeviceUI: true,
-  initialSelection: { kind: "Full onboarding screen", name: "Default" },
+  initialSelection: { kind: "Send Bitcoin Completed Screen", name: "Pending" },
   shouldPersistSelection: false,
 })
 

@@ -146,7 +146,13 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           navigation.dispatch((state) => {
             const routes = [
               { name: "Primary" },
-              { name: "sendBitcoinSuccess", params: { extraInfo } },
+              {
+                name: "sendBitcoinCompleted",
+                params: {
+                  arrivalAtMempoolEstimate: extraInfo?.arrivalAtMempoolEstimate,
+                  status,
+                },
+              },
             ]
             return CommonActions.reset({
               ...state,
