@@ -17,6 +17,7 @@ import { PressableCard } from "@app/components/pressable-card"
 gql`
   query invite {
     me {
+      id
       username
     }
   }

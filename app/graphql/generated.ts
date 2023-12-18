@@ -393,9 +393,11 @@ export type ConsumerAccount = Account & {
   readonly defaultWallet: PublicWallet;
   readonly defaultWalletId: Scalars['WalletId']['output'];
   readonly displayCurrency: Scalars['DisplayCurrency']['output'];
+  readonly firstName?: Maybe<Scalars['String']['output']>;
   readonly id: Scalars['ID']['output'];
   /** A list of all invoices associated with walletIds optionally passed. */
   readonly invoices?: Maybe<InvoiceConnection>;
+  readonly lastName?: Maybe<Scalars['String']['output']>;
   readonly level: AccountLevel;
   readonly limits: AccountLimits;
   readonly notificationSettings: NotificationSettings;
@@ -2143,7 +2145,7 @@ export type BalanceHeaderQuery = { readonly __typename: 'Query', readonly me?: {
 export type InviteQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type InviteQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null } | null };
+export type InviteQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly username?: string | null } | null };
 
 export type BtcPriceListQueryVariables = Exact<{
   range: PriceGraphRange;
@@ -2336,7 +2338,7 @@ export type BusinessMapMarkersQuery = { readonly __typename: 'Query', readonly b
 export type CirclesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CirclesQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly welcomeProfile?: { readonly __typename: 'WelcomeProfile', readonly allTimePoints: number, readonly allTimeRank: number, readonly innerCircleAllTimeCount: number, readonly innerCircleThisMonthCount: number, readonly outerCircleAllTimeCount: number, readonly outerCircleThisMonthCount: number, readonly thisMonthPoints: number, readonly thisMonthRank: number } | null } } | null };
+export type CirclesQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly username?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly welcomeProfile?: { readonly __typename: 'WelcomeProfile', readonly allTimePoints: number, readonly allTimeRank: number, readonly innerCircleAllTimeCount: number, readonly innerCircleThisMonthCount: number, readonly outerCircleAllTimeCount: number, readonly outerCircleThisMonthCount: number, readonly thisMonthPoints: number, readonly thisMonthRank: number } | null } } | null };
 
 export type ContactsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2725,7 +2727,7 @@ export type AccountLimitsQuery = { readonly __typename: 'Query', readonly me?: {
 export type TotpRegistrationScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TotpRegistrationScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null } | null };
+export type TotpRegistrationScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly username?: string | null } | null };
 
 export type UserTotpRegistrationInitiateMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -2737,7 +2739,7 @@ export type UserTotpRegistrationValidateMutationVariables = Exact<{
 }>;
 
 
-export type UserTotpRegistrationValidateMutation = { readonly __typename: 'Mutation', readonly userTotpRegistrationValidate: { readonly __typename: 'UserTotpRegistrationValidatePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly totpEnabled: boolean, readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
+export type UserTotpRegistrationValidateMutation = { readonly __typename: 'Mutation', readonly userTotpRegistrationValidate: { readonly __typename: 'UserTotpRegistrationValidatePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly totpEnabled: boolean, readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
 
 export type TransactionListForDefaultAccountQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -2906,6 +2908,7 @@ export type BalanceHeaderQueryResult = Apollo.QueryResult<BalanceHeaderQuery, Ba
 export const InviteDocument = gql`
     query invite {
   me {
+    id
     username
   }
 }
@@ -4235,6 +4238,7 @@ export type BusinessMapMarkersQueryResult = Apollo.QueryResult<BusinessMapMarker
 export const CirclesDocument = gql`
     query Circles {
   me {
+    id
     username
     defaultAccount {
       id
@@ -6707,6 +6711,7 @@ export type AccountLimitsQueryResult = Apollo.QueryResult<AccountLimitsQuery, Ac
 export const TotpRegistrationScreenDocument = gql`
     query totpRegistrationScreen {
   me {
+    id
     username
   }
 }
@@ -6781,6 +6786,7 @@ export const UserTotpRegistrationValidateDocument = gql`
       message
     }
     me {
+      id
       totpEnabled
       phone
       email {
@@ -7605,8 +7611,10 @@ export type ConsumerAccountResolvers<ContextType = any, ParentType extends Resol
   defaultWallet?: Resolver<ResolversTypes['PublicWallet'], ParentType, ContextType>;
   defaultWalletId?: Resolver<ResolversTypes['WalletId'], ParentType, ContextType>;
   displayCurrency?: Resolver<ResolversTypes['DisplayCurrency'], ParentType, ContextType>;
+  firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   invoices?: Resolver<Maybe<ResolversTypes['InvoiceConnection']>, ParentType, ContextType, Partial<ConsumerAccountInvoicesArgs>>;
+  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   level?: Resolver<ResolversTypes['AccountLevel'], ParentType, ContextType>;
   limits?: Resolver<ResolversTypes['AccountLimits'], ParentType, ContextType>;
   notificationSettings?: Resolver<ResolversTypes['NotificationSettings'], ParentType, ContextType>;
