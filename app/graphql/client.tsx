@@ -187,13 +187,13 @@ const GaloyClient: React.FC<PropsWithChildren> = ({ children }) => {
 
       const retry401ErrorLink = new RetryLink({
         attempts: {
-          max: 3,
+          max: 2,
           retryIf: (error) => {
             return error && error.statusCode === 401
           },
         },
         delay: {
-          initial: 20000, // Initial delay in milliseconds (20 seconds)
+          initial: 5000, // Initial delay in milliseconds (20 seconds)
           max: Infinity,
           jitter: false,
         },
