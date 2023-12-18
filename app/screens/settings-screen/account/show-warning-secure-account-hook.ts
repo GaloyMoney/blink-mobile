@@ -39,7 +39,7 @@ export const useShowWarningSecureAccount = () => {
     skip: !isAuthed,
   })
 
-  if (data?.me?.defaultAccount.level !== "ZERO") return false
+  if (data?.me?.defaultAccount?.level !== "ZERO") return false
 
   const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
   const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)

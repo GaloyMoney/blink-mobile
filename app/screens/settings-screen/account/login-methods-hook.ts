@@ -17,7 +17,6 @@ gql`
 export const useLoginMethods = () => {
   const { isAtLeastLevelZero } = useLevel()
   const { data, loading } = useLoginMethodsQuery({
-    fetchPolicy: "cache-and-network",
     skip: !isAtLeastLevelZero,
   })
 

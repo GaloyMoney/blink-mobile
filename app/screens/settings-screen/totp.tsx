@@ -43,13 +43,7 @@ export const TotpSetting: React.FC = () => {
 
   const [spinner, setSpinner] = useState(false)
 
-  const {
-    data,
-    loading,
-    refetch: refetchTotpSettings,
-  } = useTotpSettingQuery({
-    fetchPolicy: "no-cache",
-  })
+  const { data, loading, refetch: refetchTotpSettings } = useTotpSettingQuery()
   const [totpDeleteMutation] = useUserTotpDeleteMutation()
 
   const totpEnabled = Boolean(data?.me?.totpEnabled)

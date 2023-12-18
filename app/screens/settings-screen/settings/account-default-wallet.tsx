@@ -9,6 +9,7 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { gql } from "@apollo/client"
 import { getBtcWallet } from "@app/graphql/wallets-utils"
 import { useDefaultWalletQuery } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 gql`
   query DefaultWallet {
@@ -27,9 +28,14 @@ gql`
 
 export const DefaultWallet: React.FC = () => {
   const { LL } = useI18nContext()
+  const isAuthed = useIsAuthed()
   const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>()
 
-  const { data, loading } = useDefaultWalletQuery()
+  const { data, loading } = useDefaultWalletQuery({
+    fetchPolicy: "cache-first",
+    skip: !isAuthed,
+  })
+
   const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
 
   const btcWalletId = btcWallet?.id
