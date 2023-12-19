@@ -5,11 +5,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback, useEffect, useState } from "react"
 import { ActivityIndicator, View } from "react-native"
-import {
-  PhoneCodeChannelType,
-  useUserLoginMutation,
-  useUserLoginUpgradeMutation,
-} from "@app/graphql/generated"
+import { PhoneCodeChannelType, useUserLoginUpgradeMutation } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { Text, makeStyles, useTheme, Input } from "@rneui/themed"
@@ -29,19 +25,9 @@ import {
 import { PhoneCodeChannelToFriendlyName } from "./request-phone-code-login"
 import { AccountLevel, useLevel } from "@app/graphql/level-context"
 import { testProps } from "@app/utils/testProps"
+import axios, { isAxiosError } from "axios"
 
 gql`
-  mutation userLogin($input: UserLoginInput!) {
-    userLogin(input: $input) {
-      errors {
-        message
-        code
-      }
-      authToken
-      totpRequired
-    }
-  }
-
   mutation userLoginUpgrade($input: UserLoginUpgradeInput!) {
     userLoginUpgrade(input: $input) {
       errors {
@@ -184,10 +170,6 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
 
   const { LL } = useI18nContext()
 
-  const [userLoginMutation] = useUserLoginMutation({
-    fetchPolicy: "no-cache",
-  })
-
   const [userLoginUpgradeMutation] = useUserLoginUpgradeMutation({
     fetchPolicy: "no-cache",
   })
@@ -195,6 +177,12 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
   const { currentLevel } = useLevel()
 
   const isUpgradeFlow = currentLevel === AccountLevel.Zero
+
+  const {
+    appConfig: {
+      galoyInstance: { authUrl },
+    },
+  } = useAppConfig()
 
   const [code, _setCode] = useState("")
   const [secondsRemaining, setSecondsRemaining] = useState<number>(30)
@@ -209,13 +197,9 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
         return
       }
 
-      try {
-        let errors:
-          | readonly { code?: string | null | undefined; message: string }[]
-          | undefined
-
-        setStatus(ValidatePhoneCodeStatus.LoadingAuthResult)
-        if (isUpgradeFlow) {
+      setStatus(ValidatePhoneCodeStatus.LoadingAuthResult)
+      if (isUpgradeFlow) {
+        try {
           logUpgradeLoginAttempt()
           const { data } = await userLoginUpgradeMutation({
             variables: { input: { phone, code } },
@@ -234,57 +218,92 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
             return
           }
 
-          errors = data?.userLoginUpgrade?.errors
-        } else {
-          const { data } = await userLoginMutation({
-            variables: { input: { phone, code } },
-          })
+          const errors = data?.userLoginUpgrade?.errors
 
-          const authToken = data?.userLogin?.authToken
-          const totpRequired = data?.userLogin?.totpRequired
-
-          if (authToken) {
-            if (totpRequired) {
-              navigation.navigate("totpLoginValidate", {
-                authToken,
-              })
-              return
-            }
-            analytics().logLogin({ method: "phone" })
-            saveToken(authToken)
-            navigation.replace("Primary")
-            return
+          const error = mapGqlErrorsToValidatePhoneCodeErrors(errors || []) || {
+            type: ValidatePhoneCodeErrors.UnknownError,
           }
 
-          errors = data?.userLogin?.errors
+          logValidateAuthCodeFailure({
+            error: error.type,
+          })
+
+          setError(error)
+          _setCode("")
+          setStatus(ValidatePhoneCodeStatus.ReadyToRegenerate)
+        } catch (err) {
+          if (err instanceof Error) {
+            crashlytics().recordError(err)
+            console.debug({ err })
+          }
+          setError({
+            type: ValidatePhoneCodeErrors.UnknownError,
+          })
+          _setCode("")
+          setStatus(ValidatePhoneCodeStatus.ReadyToRegenerate)
+        }
+      } else {
+        const url = `${authUrl}/auth/phone/login`
+
+        let totpRequired: boolean | undefined
+        let authToken: string | undefined
+
+        try {
+          const response = await axios.post(url, {
+            phone,
+            code,
+          })
+
+          const success = response.status === 200
+          if (success) {
+            analytics().logLogin({
+              method: "login-phone",
+            })
+
+            authToken = response.data.authToken
+            totpRequired = response.data.totpRequired
+          }
+        } catch (err) {
+          console.error(err, "error /auth/phone/login")
+          if (isAxiosError(err)) {
+            console.log(err.message) // Gives you the basic error message
+            console.log(err.response?.data) // Gives you the response payload from the server
+            console.log(err.response?.status) // Gives you the HTTP status code
+            console.log(err.response?.headers) // Gives you the response headers
+
+            // If the request was made but no response was received
+            if (!err.response) {
+              console.log(err.request)
+            }
+
+            if (err.response?.data?.error) {
+              setError(err.response?.data?.error)
+              _setCode("")
+              setStatus(ValidatePhoneCodeStatus.ReadyToRegenerate)
+            } else {
+              setError({ type: ValidatePhoneCodeErrors.UnknownError, msg: err.message })
+            }
+          }
+
+          return
         }
 
-        const error = mapGqlErrorsToValidatePhoneCodeErrors(errors || []) || {
-          type: ValidatePhoneCodeErrors.UnknownError,
+        if (authToken) {
+          if (totpRequired) {
+            navigation.navigate("totpLoginValidate", {
+              authToken,
+            })
+            return
+          }
+          analytics().logLogin({ method: "phone" })
+          saveToken(authToken)
+          navigation.replace("Primary")
         }
-
-        logValidateAuthCodeFailure({
-          error: error.type,
-        })
-
-        setError(error)
-        _setCode("")
-        setStatus(ValidatePhoneCodeStatus.ReadyToRegenerate)
-      } catch (err) {
-        if (err instanceof Error) {
-          crashlytics().recordError(err)
-          console.debug({ err })
-        }
-        setError({
-          type: ValidatePhoneCodeErrors.UnknownError,
-        })
-        _setCode("")
-        setStatus(ValidatePhoneCodeStatus.ReadyToRegenerate)
       }
     },
     [
       status,
-      userLoginMutation,
+      authUrl,
       userLoginUpgradeMutation,
       phone,
       saveToken,
