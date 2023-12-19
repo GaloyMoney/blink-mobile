@@ -3,7 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
-import { ActivityIndicator, PermissionsAndroid, View } from "react-native"
+import { ActivityIndicator, PermissionsAndroid, Platform, View } from "react-native"
 import Geolocation from "@react-native-community/geolocation"
 import MapView, {
   Callout,
@@ -17,7 +17,6 @@ import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { isIos } from "../../utils/helper"
 import { toastShow } from "../../utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import crashlytics from "@react-native-firebase/crashlytics"
 import { useBusinessMapMarkersQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
@@ -25,13 +24,6 @@ import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { PhoneLoginInitiateType } from "../phone-auth-screen"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import MapStyles from "./map-styles.json"
-
-Geolocation.setRNConfiguration({
-  skipPermissionRequests: true, // done manually instead with PermissionsAndroid and iOS does it automatically
-  authorizationLevel: "auto",
-  enableBackgroundLocationUpdates: false,
-  locationProvider: "auto",
-})
 
 const useStyles = makeStyles(({ colors }) => ({
   android: { marginTop: 18 },
@@ -64,6 +56,14 @@ const EL_ZONTE_COORDS = {
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "Primary">
+}
+
+type GeolocationPermissionNegativeError = {
+  code: number;
+  message: string;
+  PERMISSION_DENIED: number;
+  POSITION_UNAVAILABLE: number;
+  TIMEOUT: number;
 }
 
 gql`
@@ -122,50 +122,32 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
           }
           callback(region)
         }
-      })
+      }, (e) => {
+        callback(undefined)
+      }, {timeout: 5000})
     } catch (e) {
-      console.debug("Error getting user location", e)
       callback(undefined)
     }
   }
 
   const requestLocationPermission = useCallback(() => {
-    const asyncRequestLocationPermission = async () => {
-      try {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          {
-            title: LL.MapScreen.locationPermissionTitle(),
-            message: LL.MapScreen.locationPermissionMessage(),
-            buttonNeutral: LL.MapScreen.locationPermissionNeutral(),
-            buttonNegative: LL.MapScreen.locationPermissionNegative(),
-            buttonPositive: LL.MapScreen.locationPermissionPositive(),
-          },
-        )
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          getUserRegion((region) => {
-            if (region) {
-              setUserLocation(region)
-            }
-            setIsLoadingLocation(false)
-          })
-        } else {
-          console.debug("Location permission denied")
-          setIsLoadingLocation(false)
+    const permittedResponse = () => {
+      getUserRegion((region) => {
+        if (region) {
+          setUserLocation(region)
         }
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          crashlytics().recordError(err)
-        }
-        console.debug(err)
-      }
+        setIsLoadingLocation(false)
+      })
     }
-    asyncRequestLocationPermission()
-    // disable eslint because we don't want to re-run this function when the language changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    const negativeResponse = (error: GeolocationPermissionNegativeError) => {
+      console.debug("Permission location denied: ", error);
+    }
+
+    Geolocation.requestAuthorization(permittedResponse, negativeResponse)
   }, [])
 
-  useFocusEffect(requestLocationPermission)
+  useFocusEffect(requestLocationPermission);
 
   // TODO this should be memoized for performance improvements. Use reduce() inside a useMemo() with some dependency array values
   const markers: ReturnType<React.FC<MapMarkerProps>>[] = []
