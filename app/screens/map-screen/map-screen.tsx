@@ -3,7 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
-import { ActivityIndicator, PermissionsAndroid, Platform, View } from "react-native"
+import { ActivityIndicator, View } from "react-native"
 import Geolocation from "@react-native-community/geolocation"
 import MapView, {
   Callout,
@@ -59,11 +59,11 @@ type Props = {
 }
 
 type GeolocationPermissionNegativeError = {
-  code: number;
-  message: string;
-  PERMISSION_DENIED: number;
-  POSITION_UNAVAILABLE: number;
-  TIMEOUT: number;
+  code: number
+  message: string
+  PERMISSION_DENIED: number
+  POSITION_UNAVAILABLE: number
+  TIMEOUT: number
 }
 
 gql`
@@ -112,19 +112,23 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
 
   const getUserRegion = (callback: (region?: Region) => void) => {
     try {
-      Geolocation.getCurrentPosition((data: GeolocationPosition) => {
-        if (data) {
-          const region: Region = {
-            latitude: data.coords.latitude,
-            longitude: data.coords.longitude,
-            latitudeDelta: 0.02,
-            longitudeDelta: 0.02,
+      Geolocation.getCurrentPosition(
+        (data: GeolocationPosition) => {
+          if (data) {
+            const region: Region = {
+              latitude: data.coords.latitude,
+              longitude: data.coords.longitude,
+              latitudeDelta: 0.02,
+              longitudeDelta: 0.02,
+            }
+            callback(region)
           }
-          callback(region)
-        }
-      }, (e) => {
-        callback(undefined)
-      }, {timeout: 5000})
+        },
+        () => {
+          callback(undefined)
+        },
+        { timeout: 5000 },
+      )
     } catch (e) {
       callback(undefined)
     }
@@ -141,13 +145,13 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     }
 
     const negativeResponse = (error: GeolocationPermissionNegativeError) => {
-      console.debug("Permission location denied: ", error);
+      console.debug("Permission location denied: ", error)
     }
 
     Geolocation.requestAuthorization(permittedResponse, negativeResponse)
   }, [])
 
-  useFocusEffect(requestLocationPermission);
+  useFocusEffect(requestLocationPermission)
 
   // TODO this should be memoized for performance improvements. Use reduce() inside a useMemo() with some dependency array values
   const markers: ReturnType<React.FC<MapMarkerProps>>[] = []
