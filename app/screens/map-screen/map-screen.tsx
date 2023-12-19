@@ -3,7 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
-import { ActivityIndicator, View } from "react-native"
+import { ActivityIndicator, Dimensions, View } from "react-native"
 import Geolocation from "@react-native-community/geolocation"
 import MapView, {
   Callout,
@@ -24,6 +24,11 @@ import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { PhoneLoginInitiateType } from "../phone-auth-screen"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import MapStyles from "./map-styles.json"
+import { loadJson, loadString, saveString } from "@app/utils/storage"
+
+import countryCodes from "../../../utils/countryInfo.json"
+import axios from "axios"
+import { STORAGE_COUNTRY_CODE } from "../phone-auth-screen/request-phone-code-login"
 
 const EL_ZONTE_COORDS = {
   latitude: 13.496743,
@@ -31,6 +36,11 @@ const EL_ZONTE_COORDS = {
   latitudeDelta: 0.02,
   longitudeDelta: 0.02,
 }
+
+// essentially calculates zoom for location being set based on country
+const { height, width } = Dimensions.get("window")
+const LATITUDE_DELTA = 15 // <-- decrease for more zoom
+const LONGITUDE_DELTA = LATITUDE_DELTA * (width / height)
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "Primary">
@@ -112,18 +122,58 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     }
   }
 
+  const getRegionFromIp = async () => {
+    let countryCode: string | null
+    try {
+      const response = await axios.get("https://ipapi.co/json/", {
+        timeout: 5000,
+      })
+      countryCode = response?.data?.country_code
+      if (countryCode) {
+        await saveString(STORAGE_COUNTRY_CODE, countryCode)
+      } else {
+        console.warn("no data or country_code in response")
+      }
+      // can throw a 429 for device's rate-limiting. resort to cached value
+    } catch (e) {
+      countryCode = await loadString(STORAGE_COUNTRY_CODE)
+    }
+
+    if (countryCode) {
+      // JSON 'hashmap' with every countrys' code listed with their lat and lng
+      const countryCodesToCoords: { data: Record<string, { lat: number; lng: number }> } =
+        JSON.parse(JSON.stringify(countryCodes))
+      const countryCoords: { lat: number; lng: number } =
+        countryCodesToCoords.data[countryCode]
+      if (countryCoords) {
+        const region: Region = {
+          latitude: countryCoords.lat,
+          longitude: countryCoords.lng,
+          latitudeDelta: LATITUDE_DELTA,
+          longitudeDelta: LONGITUDE_DELTA,
+        }
+        setUserLocation(region)
+      }
+    }
+
+    setIsLoadingLocation(false)
+  }
+
   const requestLocationPermission = useCallback(() => {
     const permittedResponse = () => {
-      getUserRegion((region) => {
+      getUserRegion(async (region) => {
         if (region) {
           setUserLocation(region)
+          setIsLoadingLocation(false)
+        } else {
+          getRegionFromIp()
         }
-        setIsLoadingLocation(false)
       })
     }
 
     const negativeResponse = (error: GeolocationPermissionNegativeError) => {
       console.debug("Permission location denied: ", error)
+      getRegionFromIp()
     }
 
     Geolocation.requestAuthorization(permittedResponse, negativeResponse)
@@ -132,6 +182,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   useFocusEffect(requestLocationPermission)
 
   // TODO this should be memoized for performance improvements. Use reduce() inside a useMemo() with some dependency array values
+  // and/or a generator function that yields markers asynchronously???
   const markers: ReturnType<React.FC<MapMarkerProps>>[] = []
   maps.forEach((item) => {
     if (item) {
