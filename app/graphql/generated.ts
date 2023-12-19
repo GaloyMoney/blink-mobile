@@ -89,7 +89,8 @@ export type Account = {
   readonly btcWallet?: Maybe<BtcWallet>;
   readonly callbackEndpoints: ReadonlyArray<CallbackEndpoint>;
   readonly csvTransactions: Scalars['String']['output'];
-  readonly defaultWallet?: Maybe<Wallet>;
+  readonly defaultWallet: PublicWallet;
+  /** @deprecated Shifting property to 'defaultWallet.id' */
   readonly defaultWalletId: Scalars['WalletId']['output'];
   readonly displayCurrency: Scalars['DisplayCurrency']['output'];
   readonly id: Scalars['ID']['output'];
@@ -389,12 +390,14 @@ export type ConsumerAccount = Account & {
   readonly callbackEndpoints: ReadonlyArray<CallbackEndpoint>;
   /** return CSV stream, base64 encoded, of the list of transactions in the wallet */
   readonly csvTransactions: Scalars['String']['output'];
-  readonly defaultWallet?: Maybe<Wallet>;
+  readonly defaultWallet: PublicWallet;
   readonly defaultWalletId: Scalars['WalletId']['output'];
   readonly displayCurrency: Scalars['DisplayCurrency']['output'];
+  readonly firstName?: Maybe<Scalars['String']['output']>;
   readonly id: Scalars['ID']['output'];
   /** A list of all invoices associated with walletIds optionally passed. */
   readonly invoices?: Maybe<InvoiceConnection>;
+  readonly lastName?: Maybe<Scalars['String']['output']>;
   readonly level: AccountLevel;
   readonly limits: AccountLimits;
   readonly notificationSettings: NotificationSettings;
@@ -1189,16 +1192,6 @@ export type MutationUserPhoneRegistrationValidateArgs = {
 };
 
 
-export type MutationUserTotpDeleteArgs = {
-  input: UserTotpDeleteInput;
-};
-
-
-export type MutationUserTotpRegistrationInitiateArgs = {
-  input: UserTotpRegistrationInitiateInput;
-};
-
-
 export type MutationUserTotpRegistrationValidateArgs = {
   input: UserTotpRegistrationValidateInput;
 };
@@ -1466,7 +1459,9 @@ export type PricePoint = {
 /** A public view of a generic wallet which stores value in one of our supported currencies. */
 export type PublicWallet = {
   readonly __typename: 'PublicWallet';
+  readonly currency: WalletCurrency;
   readonly id: Scalars['ID']['output'];
+  /** @deprecated Shifting property to 'currency' */
   readonly walletCurrency: WalletCurrency;
 };
 
@@ -1971,18 +1966,10 @@ export type UserQuizQuestion = {
   readonly question: QuizQuestion;
 };
 
-export type UserTotpDeleteInput = {
-  readonly authToken: Scalars['AuthToken']['input'];
-};
-
 export type UserTotpDeletePayload = {
   readonly __typename: 'UserTotpDeletePayload';
   readonly errors: ReadonlyArray<Error>;
   readonly me?: Maybe<User>;
-};
-
-export type UserTotpRegistrationInitiateInput = {
-  readonly authToken: Scalars['AuthToken']['input'];
 };
 
 export type UserTotpRegistrationInitiatePayload = {
@@ -1993,7 +1980,7 @@ export type UserTotpRegistrationInitiatePayload = {
 };
 
 export type UserTotpRegistrationValidateInput = {
-  readonly authToken: Scalars['AuthToken']['input'];
+  readonly authToken?: InputMaybe<Scalars['AuthToken']['input']>;
   readonly totpCode: Scalars['TotpCode']['input'];
   readonly totpRegistrationId: Scalars['TotpRegistrationId']['input'];
 };
@@ -2158,7 +2145,7 @@ export type BalanceHeaderQuery = { readonly __typename: 'Query', readonly me?: {
 export type InviteQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type InviteQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null } | null };
+export type InviteQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly username?: string | null } | null };
 
 export type BtcPriceListQueryVariables = Exact<{
   range: PriceGraphRange;
@@ -2351,7 +2338,7 @@ export type BusinessMapMarkersQuery = { readonly __typename: 'Query', readonly b
 export type CirclesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CirclesQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly welcomeProfile?: { readonly __typename: 'WelcomeProfile', readonly allTimePoints: number, readonly allTimeRank: number, readonly innerCircleAllTimeCount: number, readonly innerCircleThisMonthCount: number, readonly outerCircleAllTimeCount: number, readonly outerCircleThisMonthCount: number, readonly thisMonthPoints: number, readonly thisMonthRank: number } | null } } | null };
+export type CirclesQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly username?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly welcomeProfile?: { readonly __typename: 'WelcomeProfile', readonly allTimePoints: number, readonly allTimeRank: number, readonly innerCircleAllTimeCount: number, readonly innerCircleThisMonthCount: number, readonly outerCircleAllTimeCount: number, readonly outerCircleThisMonthCount: number, readonly thisMonthPoints: number, readonly thisMonthRank: number } | null } } | null };
 
 export type ContactsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2646,9 +2633,7 @@ export type UserPhoneDeleteMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type UserPhoneDeleteMutation = { readonly __typename: 'Mutation', readonly userPhoneDelete: { readonly __typename: 'UserPhoneDeletePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly totpEnabled: boolean, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
 
-export type UserTotpDeleteMutationVariables = Exact<{
-  input: UserTotpDeleteInput;
-}>;
+export type UserTotpDeleteMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type UserTotpDeleteMutation = { readonly __typename: 'Mutation', readonly userTotpDelete: { readonly __typename: 'UserTotpDeletePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly totpEnabled: boolean, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
@@ -2742,11 +2727,9 @@ export type AccountLimitsQuery = { readonly __typename: 'Query', readonly me?: {
 export type TotpRegistrationScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TotpRegistrationScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null } | null };
+export type TotpRegistrationScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly username?: string | null } | null };
 
-export type UserTotpRegistrationInitiateMutationVariables = Exact<{
-  input: UserTotpRegistrationInitiateInput;
-}>;
+export type UserTotpRegistrationInitiateMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type UserTotpRegistrationInitiateMutation = { readonly __typename: 'Mutation', readonly userTotpRegistrationInitiate: { readonly __typename: 'UserTotpRegistrationInitiatePayload', readonly totpRegistrationId?: string | null, readonly totpSecret?: string | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
@@ -2756,7 +2739,7 @@ export type UserTotpRegistrationValidateMutationVariables = Exact<{
 }>;
 
 
-export type UserTotpRegistrationValidateMutation = { readonly __typename: 'Mutation', readonly userTotpRegistrationValidate: { readonly __typename: 'UserTotpRegistrationValidatePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly totpEnabled: boolean, readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
+export type UserTotpRegistrationValidateMutation = { readonly __typename: 'Mutation', readonly userTotpRegistrationValidate: { readonly __typename: 'UserTotpRegistrationValidatePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly totpEnabled: boolean, readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
 
 export type TransactionListForDefaultAccountQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -2925,6 +2908,7 @@ export type BalanceHeaderQueryResult = Apollo.QueryResult<BalanceHeaderQuery, Ba
 export const InviteDocument = gql`
     query invite {
   me {
+    id
     username
   }
 }
@@ -4254,6 +4238,7 @@ export type BusinessMapMarkersQueryResult = Apollo.QueryResult<BusinessMapMarker
 export const CirclesDocument = gql`
     query Circles {
   me {
+    id
     username
     defaultAccount {
       id
@@ -6085,8 +6070,8 @@ export type UserPhoneDeleteMutationHookResult = ReturnType<typeof useUserPhoneDe
 export type UserPhoneDeleteMutationResult = Apollo.MutationResult<UserPhoneDeleteMutation>;
 export type UserPhoneDeleteMutationOptions = Apollo.BaseMutationOptions<UserPhoneDeleteMutation, UserPhoneDeleteMutationVariables>;
 export const UserTotpDeleteDocument = gql`
-    mutation userTotpDelete($input: UserTotpDeleteInput!) {
-  userTotpDelete(input: $input) {
+    mutation userTotpDelete {
+  userTotpDelete {
     errors {
       message
     }
@@ -6117,7 +6102,6 @@ export type UserTotpDeleteMutationFn = Apollo.MutationFunction<UserTotpDeleteMut
  * @example
  * const [userTotpDeleteMutation, { data, loading, error }] = useUserTotpDeleteMutation({
  *   variables: {
- *      input: // value for 'input'
  *   },
  * });
  */
@@ -6727,6 +6711,7 @@ export type AccountLimitsQueryResult = Apollo.QueryResult<AccountLimitsQuery, Ac
 export const TotpRegistrationScreenDocument = gql`
     query totpRegistrationScreen {
   me {
+    id
     username
   }
 }
@@ -6759,8 +6744,8 @@ export type TotpRegistrationScreenQueryHookResult = ReturnType<typeof useTotpReg
 export type TotpRegistrationScreenLazyQueryHookResult = ReturnType<typeof useTotpRegistrationScreenLazyQuery>;
 export type TotpRegistrationScreenQueryResult = Apollo.QueryResult<TotpRegistrationScreenQuery, TotpRegistrationScreenQueryVariables>;
 export const UserTotpRegistrationInitiateDocument = gql`
-    mutation userTotpRegistrationInitiate($input: UserTotpRegistrationInitiateInput!) {
-  userTotpRegistrationInitiate(input: $input) {
+    mutation userTotpRegistrationInitiate {
+  userTotpRegistrationInitiate {
     errors {
       message
     }
@@ -6784,7 +6769,6 @@ export type UserTotpRegistrationInitiateMutationFn = Apollo.MutationFunction<Use
  * @example
  * const [userTotpRegistrationInitiateMutation, { data, loading, error }] = useUserTotpRegistrationInitiateMutation({
  *   variables: {
- *      input: // value for 'input'
  *   },
  * });
  */
@@ -6802,6 +6786,7 @@ export const UserTotpRegistrationValidateDocument = gql`
       message
     }
     me {
+      id
       totpEnabled
       phone
       email {
@@ -7243,9 +7228,7 @@ export type ResolversTypes = {
   UserPhoneRegistrationValidateInput: UserPhoneRegistrationValidateInput;
   UserPhoneRegistrationValidatePayload: ResolverTypeWrapper<UserPhoneRegistrationValidatePayload>;
   UserQuizQuestion: ResolverTypeWrapper<UserQuizQuestion>;
-  UserTotpDeleteInput: UserTotpDeleteInput;
   UserTotpDeletePayload: ResolverTypeWrapper<UserTotpDeletePayload>;
-  UserTotpRegistrationInitiateInput: UserTotpRegistrationInitiateInput;
   UserTotpRegistrationInitiatePayload: ResolverTypeWrapper<UserTotpRegistrationInitiatePayload>;
   UserTotpRegistrationValidateInput: UserTotpRegistrationValidateInput;
   UserTotpRegistrationValidatePayload: ResolverTypeWrapper<UserTotpRegistrationValidatePayload>;
@@ -7446,9 +7429,7 @@ export type ResolversParentTypes = {
   UserPhoneRegistrationValidateInput: UserPhoneRegistrationValidateInput;
   UserPhoneRegistrationValidatePayload: UserPhoneRegistrationValidatePayload;
   UserQuizQuestion: UserQuizQuestion;
-  UserTotpDeleteInput: UserTotpDeleteInput;
   UserTotpDeletePayload: UserTotpDeletePayload;
-  UserTotpRegistrationInitiateInput: UserTotpRegistrationInitiateInput;
   UserTotpRegistrationInitiatePayload: UserTotpRegistrationInitiatePayload;
   UserTotpRegistrationValidateInput: UserTotpRegistrationValidateInput;
   UserTotpRegistrationValidatePayload: UserTotpRegistrationValidatePayload;
@@ -7476,7 +7457,7 @@ export type AccountResolvers<ContextType = any, ParentType extends ResolversPare
   btcWallet?: Resolver<Maybe<ResolversTypes['BTCWallet']>, ParentType, ContextType>;
   callbackEndpoints?: Resolver<ReadonlyArray<ResolversTypes['CallbackEndpoint']>, ParentType, ContextType>;
   csvTransactions?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<AccountCsvTransactionsArgs, 'walletIds'>>;
-  defaultWallet?: Resolver<Maybe<ResolversTypes['Wallet']>, ParentType, ContextType>;
+  defaultWallet?: Resolver<ResolversTypes['PublicWallet'], ParentType, ContextType>;
   defaultWalletId?: Resolver<ResolversTypes['WalletId'], ParentType, ContextType>;
   displayCurrency?: Resolver<ResolversTypes['DisplayCurrency'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -7627,11 +7608,13 @@ export type ConsumerAccountResolvers<ContextType = any, ParentType extends Resol
   btcWallet?: Resolver<Maybe<ResolversTypes['BTCWallet']>, ParentType, ContextType>;
   callbackEndpoints?: Resolver<ReadonlyArray<ResolversTypes['CallbackEndpoint']>, ParentType, ContextType>;
   csvTransactions?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<ConsumerAccountCsvTransactionsArgs, 'walletIds'>>;
-  defaultWallet?: Resolver<Maybe<ResolversTypes['Wallet']>, ParentType, ContextType>;
+  defaultWallet?: Resolver<ResolversTypes['PublicWallet'], ParentType, ContextType>;
   defaultWalletId?: Resolver<ResolversTypes['WalletId'], ParentType, ContextType>;
   displayCurrency?: Resolver<ResolversTypes['DisplayCurrency'], ParentType, ContextType>;
+  firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   invoices?: Resolver<Maybe<ResolversTypes['InvoiceConnection']>, ParentType, ContextType, Partial<ConsumerAccountInvoicesArgs>>;
+  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   level?: Resolver<ResolversTypes['AccountLevel'], ParentType, ContextType>;
   limits?: Resolver<ResolversTypes['AccountLimits'], ParentType, ContextType>;
   notificationSettings?: Resolver<ResolversTypes['NotificationSettings'], ParentType, ContextType>;
@@ -7959,8 +7942,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   userPhoneDelete?: Resolver<ResolversTypes['UserPhoneDeletePayload'], ParentType, ContextType>;
   userPhoneRegistrationInitiate?: Resolver<ResolversTypes['SuccessPayload'], ParentType, ContextType, RequireFields<MutationUserPhoneRegistrationInitiateArgs, 'input'>>;
   userPhoneRegistrationValidate?: Resolver<ResolversTypes['UserPhoneRegistrationValidatePayload'], ParentType, ContextType, RequireFields<MutationUserPhoneRegistrationValidateArgs, 'input'>>;
-  userTotpDelete?: Resolver<ResolversTypes['UserTotpDeletePayload'], ParentType, ContextType, RequireFields<MutationUserTotpDeleteArgs, 'input'>>;
-  userTotpRegistrationInitiate?: Resolver<ResolversTypes['UserTotpRegistrationInitiatePayload'], ParentType, ContextType, RequireFields<MutationUserTotpRegistrationInitiateArgs, 'input'>>;
+  userTotpDelete?: Resolver<ResolversTypes['UserTotpDeletePayload'], ParentType, ContextType>;
+  userTotpRegistrationInitiate?: Resolver<ResolversTypes['UserTotpRegistrationInitiatePayload'], ParentType, ContextType>;
   userTotpRegistrationValidate?: Resolver<ResolversTypes['UserTotpRegistrationValidatePayload'], ParentType, ContextType, RequireFields<MutationUserTotpRegistrationValidateArgs, 'input'>>;
   userUpdateLanguage?: Resolver<ResolversTypes['UserUpdateLanguagePayload'], ParentType, ContextType, RequireFields<MutationUserUpdateLanguageArgs, 'input'>>;
   userUpdateUsername?: Resolver<ResolversTypes['UserUpdateUsernamePayload'], ParentType, ContextType, RequireFields<MutationUserUpdateUsernameArgs, 'input'>>;
@@ -8115,6 +8098,7 @@ export type PricePointResolvers<ContextType = any, ParentType extends ResolversP
 };
 
 export type PublicWalletResolvers<ContextType = any, ParentType extends ResolversParentTypes['PublicWallet'] = ResolversParentTypes['PublicWallet']> = {
+  currency?: Resolver<ResolversTypes['WalletCurrency'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   walletCurrency?: Resolver<ResolversTypes['WalletCurrency'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

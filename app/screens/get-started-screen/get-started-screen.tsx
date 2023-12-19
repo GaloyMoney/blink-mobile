@@ -16,6 +16,8 @@ import { logGetStartedAction } from "@app/utils/analytics"
 import { useNavigation } from "@react-navigation/native"
 import { testProps } from "@app/utils/testProps"
 import { PhoneLoginInitiateType } from "../phone-auth-screen"
+import { useAppConfig } from "@app/hooks"
+import theme from "@app/rne-theme/theme"
 
 export const GetStartedScreen: React.FC = () => {
   const navigation =
@@ -95,8 +97,24 @@ export const GetStartedScreen: React.FC = () => {
     navigation.navigate("emailLoginInitiate")
   }
 
+  const {
+    appConfig: {
+      galoyInstance: { id },
+    },
+  } = useAppConfig()
+
+  const NonProdInstanceHint =
+    id === "Main" ? null : (
+      <View style={styles.textInstance}>
+        <Text type={"h2"} color={theme.darkColors?._orange}>
+          {id}
+        </Text>
+      </View>
+    )
+
   return (
     <Screen>
+      {NonProdInstanceHint}
       <Pressable
         onPress={() => setSecretMenuCounter(secretMenuCounter + 1)}
         style={styles.logoContainer}
@@ -168,6 +186,15 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     flexDirection: "row",
   },
+
+  textInstance: {
+    justifyContent: "center",
+    flexDirection: "row",
+    textAlign: "center",
+    marginTop: 24,
+    marginBottom: -24,
+  },
+
   buttonText: {
     textDecorationLine: "underline",
   },

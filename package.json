@@ -3,9 +3,10 @@
   "version": "1.0.1",
   "private": true,
   "scripts": {
-    "start": "react-native start",
+    "start": "yarn watchman:del && react-native start",
     "ios": "react-native run-ios",
     "android": "react-native run-android",
+    "watchman:del": "if which watchman >/dev/null; then watchman watch-del $(pwd) >/dev/null; fi",
     "tsc:check": "tsc -p .",
     "eslint:check": "eslint . --ext .js,.ts,.tsx",
     "eslint:fix": "eslint . --ext .js,.ts,.tsx --fix",
@@ -54,7 +55,7 @@
     "splash": "yarn react-native generate-bootsplash --background-color \"#000\" --logo-width 300 app/assets/logo/app-logo-dark.svg"
   },
   "dependencies": {
-    "@apollo/client": "^3.8.7",
+    "@apollo/client": "3.9.0-alpha.5",
     "@bitcoinerlab/secp256k1": "^1.0.5",
     "@formatjs/intl-getcanonicallocales": "^2.3.0",
     "@formatjs/intl-locale": "^3.4.3",
@@ -129,7 +130,7 @@
     "react-native-url-polyfill": "^2.0.0",
     "react-native-vector-icons": "^10.0.2",
     "react-native-view-shot": "^3.7.0",
-    "react-native-vision-camera": "^3.6.14",
+    "react-native-vision-camera": "3.6.4",
     "react-native-walkthrough-tooltip": "^1.4.0",
     "react-native-webln": "^0.1.11",
     "react-native-webview": "^13.6.0",
@@ -186,6 +187,7 @@
     "@types/jest": "^29.5.10",
     "@types/lodash.merge": "^4.6.7",
     "@types/react": "^18.2.6",
+    "@types/react-dom": "^18.2.17",
     "@types/react-native-share": "^3.3.3",
     "@types/react-native-vector-icons": "^6.4.18",
     "@types/react-test-renderer": "^18.0.0",

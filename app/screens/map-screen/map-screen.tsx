@@ -25,28 +25,6 @@ import { PhoneLoginInitiateType } from "../phone-auth-screen"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import MapStyles from "./map-styles.json"
 
-const useStyles = makeStyles(({ colors }) => ({
-  android: { marginTop: 18 },
-  loaderContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  customView: {
-    alignItems: "center",
-    margin: 12,
-  },
-
-  ios: { paddingTop: 12 },
-
-  map: {
-    height: "100%",
-    width: "100%",
-  },
-
-  title: { color: colors._darkGrey },
-}))
-
 const EL_ZONTE_COORDS = {
   latitude: 13.496743,
   longitude: -89.439462,
@@ -221,3 +199,26 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     </Screen>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  android: { marginTop: 18 },
+
+  loaderContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  customView: {
+    alignItems: "center",
+    margin: 12,
+  },
+
+  ios: { paddingTop: 12 },
+
+  map: {
+    height: "100%",
+    width: "100%",
+  },
+
+  title: { color: colors._darkGrey },
+}))

@@ -2153,7 +2153,11 @@
         "totalLabel": "Total:",
         "totalExceed": "El total excede su saldo de {balance: string}",
         "maxFeeSelected": "Tarifa máxima que se cobrará por esta transacción. Podría ser menor una vez se realice el pago.",
-        "feeError": "Error al calcular la tarifa"
+        "feeError": "No se puede calcular la tarifa",
+        "invoiceAlreadyPaid": "Esta factura ya ha sido pagada.",
+        "somethingWentWrong": "Algo salió mal",
+        "paymentAlreadyAttempted": "El pago ya se intentó.\n\nSi deseas enviar este pago nuevamente, comienza desde el principio del proceso.",
+        "copiedDestination": "Destino copiado al portapapeles"
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "Los nombres de usuario de {bankName} ahora son direcciones de {bankName}.",
@@ -2181,9 +2185,11 @@
             "checkBox": "{lnAddress} si es la dirección correcta.",
             "confirmButton": "Estoy 100% seguro"
         },
-        "clipboardError": "Error al obtener el valor del portapapeles"
+        "clipboardError": "Error al obtener el valor del portapapeles",
+        "pastedClipboardSuccess": "Pegado desde el portapapeles"
     },
     "SendBitcoinScreen": {
+        "willBeSentToMempoolBy": "La transacción debe enviarse a la Mempool.",
         "amount": "Cantidad",
         "amountExceed": "La cantidad excede su saldo de {balance}",
         "amountExceedsLimit": "El importe supera tu límite diario restante de {limit: cadena}",
@@ -2210,7 +2216,8 @@
             "title": "Alerta de tarifa alta!",
             "content": "Tu tarifa es un 50% más grande que la cantidad enviada. ¿Estás seguro de que quieres continuar?\n\nPara reducir la tarifa, pide al receptor que acepte la transacción a través de Lightning.",
             "confirmButton": "Estoy 100% seguro"
-        }
+        },
+        "copiedDestination": "Destino copiado al portapapeles"
     },
     "SettingsScreen": {
         "activated": "Activada",
@@ -2294,7 +2301,7 @@
     "TotpRegistrationValidateScreen": {
         "title": "Autenticación de dos factores",
         "enter6digitCode": "Ingrese el código de 6 dígitos de su aplicación de autenticación para validar la autenticación de dos factores.",
-        "success": "Se ha habilitado la autenticación de dos factores. Ahora solo podrá volver a iniciar sesión con su teléfono o correo electrónico Y su autenticación de dos factores.\n\nSolo se pueden recuperar cuentas con KYC completo en caso de que un usuario haya perdido el acceso a su autenticación de dos factores."
+        "success": "Se ha habilitado la autenticación de dos factores. Ahora solo podrás volver a iniciar sesión con tu teléfono o correo electrónico Y tu autenticación de dos factores.\n\nLos dispositivos de esta cuenta que no hayan iniciado sesión con 2FA deberán volver a iniciar sesión.\n\nEl servicio de atención al cliente solo puede recuperar las cuentas de nivel 2 en caso de pérdida del acceso 2FA."
     },
     "TotpLoginValidateScreen": {
         "title": "Autenticación de dos factores",
@@ -2333,7 +2340,9 @@
         "spent": "Gastaste",
         "receivingAccount": "Cuenta receptora",
         "sendingAccount": "Cuenta de envio",
-        "txNotBroadcast": "Su transacción está actualmente pendiente y se transmitirá a la red Bitcoin en un momento."
+        "txNotBroadcast": "Tu transacción está en cola. Debería aparecer en la Mempool en {countdown: string}.",
+        "momentarily": "momentáneamente",
+        "hasBeenCopiedToClipboard": "{type: string}  se ha copiado al portapapeles"
     },
     "TransactionLimitsScreen": {
         "receive": "Recibir",
@@ -2501,8 +2510,10 @@
         "ok": "OK",
         "or": "o",
         "openWallet": "Abrir billetera",
+        "paymentRequest": "Solicitud de Pago",
         "phone": "Teléfono",
         "phoneNumber": "Número de teléfono",
+        "preimageProofOfPayment": "Preimagen / Comprobante de Pago",
         "rate": "Tasa",
         "reauth": "Su sesión ha expirado. Inicie sesión de nuevo.",
         "restart": "Reiniciar",

@@ -38,6 +38,7 @@ type Props = {
 gql`
   query invite {
     me {
+      id
       username
     }
   }

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Linking, RefreshControl, TouchableWithoutFeedback, View } from "react-native"
+import { Linking, TouchableWithoutFeedback, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import Clipboard from "@react-native-clipboard/clipboard"
 
@@ -31,7 +31,7 @@ import { GaloyInfo } from "@app/components/atomic/galoy-info"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { DeepPartialObject } from "@app/components/transaction-item/index.types"
 import { ScrollView } from "react-native-gesture-handler"
-import { formatTimeToMempool } from "./format-time"
+import { formatTimeToMempool, timeToMempool } from "./format-time"
 import { toastShow } from "@app/utils/toast"
 
 const Row = ({
@@ -108,7 +108,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     Linking.openURL(galoyInstance.blockExplorer + hash)
 
   const viewInLightningDecoder = (invoice: string): Promise<Linking> =>
-    Linking.openURL("https://lightningdecoder.com/" + invoice)
+    Linking.openURL("https://dev.blink.sv/decode?invoice=" + invoice)
 
   const { data: tx } = useFragment<TransactionFragment>({
     fragment: TransactionFragmentDoc,
@@ -119,8 +119,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     },
   })
 
-  const [refetch, { loading }] = useTransactionListForDefaultAccountLazyQuery({
-    // FIXME: it doesn't auto refresh
+  const [refetch] = useTransactionListForDefaultAccountLazyQuery({
     fetchPolicy: "network-only",
   })
   const [timer, setTimer] = React.useState<number>(0)
@@ -133,6 +132,29 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     bankName: galoyInstance.name,
   })
 
+  const onChainTxBroadcasted =
+    tx.settlementVia?.__typename === "SettlementViaOnChain" &&
+    tx.settlementVia.transactionHash !== null
+
+  const onChainTxNotBroadcasted =
+    tx.settlementVia?.__typename === "SettlementViaOnChain" &&
+    tx.settlementVia.transactionHash === null
+
+  const arrivalInMempoolEstimatedAt =
+    onChainTxNotBroadcasted &&
+    tx.settlementVia?.__typename === "SettlementViaOnChain" &&
+    tx.settlementVia.arrivalInMempoolEstimatedAt
+
+  const timeDiff =
+    typeof arrivalInMempoolEstimatedAt === "number"
+      ? timeToMempool(arrivalInMempoolEstimatedAt)
+      : NaN
+
+  const countdown =
+    typeof arrivalInMempoolEstimatedAt === "number"
+      ? formatTimeToMempool(timeDiff, LL, locale)
+      : ""
+
   React.useEffect(() => {
     let intervalId: NodeJS.Timeout
 
@@ -142,11 +164,12 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
 
     if (onChainTxNotBroadcasted) {
       intervalId = setInterval(() => {
-        console.log("abc", timer % 10 === 0, timer)
-        // refetch to backend every 10 seconds
-        timer % 10 === 0 && refetch()
+        if (timer % 30 === 0) {
+          refetch()
+        } else if (timeDiff <= 0 || Number.isNaN(timeDiff)) {
+          refetch()
+        }
 
-        // refresh screen every second
         setTimer((timer) => timer + 1)
       }, 1000)
     }
@@ -156,7 +179,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
         clearInterval(intervalId)
       }
     }
-  }, [tx, refetch, timer])
+  }, [tx, refetch, timer, timeDiff])
 
   // FIXME doesn't work with storybook
   // TODO: translation
@@ -216,13 +239,6 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
     }),
   })
 
-  const onChainTxBroadcasted =
-    settlementVia?.__typename === "SettlementViaOnChain" &&
-    settlementVia.transactionHash !== null
-  const onChainTxNotBroadcasted =
-    settlementVia?.__typename === "SettlementViaOnChain" &&
-    settlementVia.transactionHash === null
-
   // only show a secondary amount if it is in a different currency than the primary amount
   const formattedSecondaryFeeAmount =
     tx.settlementDisplayCurrency === tx.settlementCurrency
@@ -243,16 +259,6 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
       txDisplayCurrency={settlementDisplayCurrency}
     />
   )
-
-  const arrivalInMempoolEstimatedAt =
-    onChainTxNotBroadcasted &&
-    settlementVia?.__typename === "SettlementViaOnChain" &&
-    settlementVia.arrivalInMempoolEstimatedAt
-
-  const countdown =
-    typeof arrivalInMempoolEstimatedAt === "number"
-      ? formatTimeToMempool(arrivalInMempoolEstimatedAt, LL, locale)
-      : ""
 
   const copyToClipboard = ({ content, type }: { content: string; type: string }) => {
     Clipboard.setString(content)
@@ -293,24 +299,63 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
         </View>
       </View>
 
-      <ScrollView
-        contentContainerStyle={styles.transactionDetailView}
-        refreshControl={
-          onChainTxNotBroadcasted ? (
-            <RefreshControl
-              refreshing={loading}
-              onRefresh={refetch}
-              colors={[colors.primary]} // Android refresh indicator colors
-              tintColor={colors.primary} // iOS refresh indicator color
-            />
-          ) : undefined
-        }
-      >
+      <ScrollView contentContainerStyle={styles.transactionDetailView}>
         {onChainTxNotBroadcasted && (
           <View style={styles.txNotBroadcast}>
             <GaloyInfo>
               {LL.TransactionDetailScreen.txNotBroadcast({ countdown })}
             </GaloyInfo>
+          </View>
+        )}
+        {onChainTxBroadcasted && (
+          <View>
+            <Row
+              entry="Transaction Hash"
+              value={
+                ("transactionHash" in settlementVia && settlementVia?.transactionHash) ||
+                ""
+              }
+              icons={[
+                <View key="icon-1">
+                  <TouchableWithoutFeedback
+                    onPress={() =>
+                      viewInExplorer(
+                        ("transactionHash" in settlementVia &&
+                          settlementVia?.transactionHash) ||
+                          "",
+                      )
+                    }
+                  >
+                    <Icon
+                      name="open-outline"
+                      size={22}
+                      color={colors.primary}
+                      style={styles.icon}
+                    />
+                  </TouchableWithoutFeedback>
+                </View>,
+                <View key="icon-0">
+                  <TouchableWithoutFeedback
+                    onPress={() =>
+                      copyToClipboard({
+                        content:
+                          ("transactionHash" in settlementVia &&
+                            settlementVia?.transactionHash) ||
+                          "",
+                        type: "Transaction Hash",
+                      })
+                    }
+                  >
+                    <Icon
+                      name="copy-outline"
+                      size={22}
+                      color={colors.primary}
+                      style={styles.icon}
+                    />
+                  </TouchableWithoutFeedback>
+                </View>,
+              ]}
+            />
           </View>
         )}
         <Row
@@ -321,6 +366,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
           }
           content={Wallet}
         />
+
         <Row
           entry={LL.common.date()}
           value={<TransactionDate createdAt={createdAt} status={status} />}
@@ -426,45 +472,6 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
               ]}
             />
           )}
-        {onChainTxBroadcasted && (
-          <View>
-            <Row
-              entry="Transaction Hash"
-              value={settlementVia.transactionHash || ""}
-              icons={[
-                <View key="icon-1">
-                  <TouchableWithoutFeedback
-                    onPress={() => viewInExplorer(settlementVia.transactionHash || "")}
-                  >
-                    <Icon
-                      name="open-outline"
-                      size={22}
-                      color={colors.primary}
-                      style={styles.icon}
-                    />
-                  </TouchableWithoutFeedback>
-                </View>,
-                <View key="icon-0">
-                  <TouchableWithoutFeedback
-                    onPress={() =>
-                      copyToClipboard({
-                        content: settlementVia.transactionHash || "",
-                        type: "Transaction Hash",
-                      })
-                    }
-                  >
-                    <Icon
-                      name="copy-outline"
-                      size={22}
-                      color={colors.primary}
-                      style={styles.icon}
-                    />
-                  </TouchableWithoutFeedback>
-                </View>,
-              ]}
-            />
-          </View>
-        )}
         {id && (
           <Row
             entry="Blink Internal Id"

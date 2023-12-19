@@ -27,7 +27,6 @@ const useLogout = () => {
     async (stateToDefault = true): Promise<void> => {
       try {
         const deviceToken = await messaging().getToken()
-        await userLogoutMutation({ variables: { input: { deviceToken } } })
 
         await AsyncStorage.multiRemove([SCHEMA_VERSION_KEY])
         await KeyStoreWrapper.removeIsBiometricsEnabled()
@@ -38,6 +37,17 @@ const useLogout = () => {
         if (stateToDefault) {
           resetState()
         }
+
+        await Promise.race([
+          userLogoutMutation({ variables: { input: { deviceToken } } }),
+          // Create a promise that rejects after 2 seconds
+          // this is handy for the case where the server is down, or in dev mode
+          new Promise((_, reject) => {
+            setTimeout(() => {
+              reject(new Error("Logout mutation timeout"))
+            }, 2000)
+          }),
+        ])
       } catch (err: unknown) {
         if (err instanceof Error) {
           crashlytics().recordError(err)

@@ -14,13 +14,14 @@ import TypesafeI18n from "@app/i18n/i18n-react"
 import "./storybook.requires"
 import { detectDefaultLocale } from "../app/utils/locale-detector"
 import RNBootSplash from "react-native-bootsplash"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
 
 RNBootSplash.hide({ fade: true })
 
 const StorybookUI = getStorybookUI({
   enableWebsockets: true, // for @storybook/react-native-server
   onDeviceUI: true,
-  initialSelection: { kind: "Full onboarding screen", name: "Default" },
+  initialSelection: { kind: "Send Bitcoin Completed Screen", name: "Pending" },
   shouldPersistSelection: false,
 })
 
@@ -35,22 +36,24 @@ const I18nWrapper: React.FC<React.PropsWithChildren> = ({ children }) => (
 )
 
 export const StorybookUIRoot: React.FC = () => (
-  <I18nWrapper>
-    <ThemeWrapper>
-      <>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Home"
-              options={{
-                headerShown: false,
-                animationEnabled: false,
-              }}
-              component={StorybookUI}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </>
-    </ThemeWrapper>
-  </I18nWrapper>
+  <GestureHandlerRootView style={{ flex: 1 }}>
+    <I18nWrapper>
+      <ThemeWrapper>
+        <>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen
+                name="Home"
+                options={{
+                  headerShown: false,
+                  animationEnabled: false,
+                }}
+                component={StorybookUI}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </>
+      </ThemeWrapper>
+    </I18nWrapper>
+  </GestureHandlerRootView>
 )

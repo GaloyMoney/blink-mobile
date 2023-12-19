@@ -6,10 +6,10 @@ import {
   RealtimePriceDocument,
   WarningSecureAccountDocument,
 } from "@app/graphql/generated"
-import { ApolloClient, ApolloProvider } from "@apollo/client"
 import { IsAuthedContextProvider } from "@app/graphql/is-authed-context"
 import { PropsWithChildren } from "react"
-import { createCache } from "@app/graphql/cache"
+import { MockedProvider } from "@apollo/client/testing"
+import { act } from "react-test-renderer"
 
 // FIXME: the mockPrice doesn't work as expect.
 // it's ok because we have more than $5 in the dollar wallet
@@ -190,21 +190,9 @@ export const wrapWithCache =
 
     (mocks) =>
     ({ children }: PropsWithChildren) => {
-      const client = new ApolloClient({
-        cache: createCache(),
-      })
-
-      // @ts-ignore-next-line no-implicit-any error
-      mocks.forEach((mock) => {
-        client.writeQuery({
-          query: mock.request.query,
-          data: mock.result.data,
-        })
-      })
-
       return (
         <IsAuthedContextProvider value={true}>
-          <ApolloProvider client={client}>{children}</ApolloProvider>
+          <MockedProvider mocks={mocks}>{children}</MockedProvider>
         </IsAuthedContextProvider>
       )
     }
@@ -219,22 +207,41 @@ describe("useShowWarningSecureAccount", () => {
       wrapper: wrapWithCache(mockLevelZeroLowBalance),
     })
 
+    await act(
+      () =>
+        new Promise((resolve) => {
+          setTimeout(resolve, 10)
+        }),
+    )
     expect(result.current).toBe(false)
   })
 
   it("return true with level 0 and more than $5 balance", async () => {
-    const { result } = renderHook(useShowWarningSecureAccount, {
+    const { result, unmount } = renderHook(useShowWarningSecureAccount, {
       wrapper: wrapWithCache(mockLevelZeroHighBalance),
     })
 
+    await act(
+      () =>
+        new Promise((resolve) => {
+          setTimeout(resolve, 10)
+        }),
+    )
     expect(result.current).toBe(true)
+    unmount()
   })
 
-  it("return true with level 1 and more than $5 balance", async () => {
+  it("return false with level 1 and more than $5 balance", async () => {
     const { result } = renderHook(useShowWarningSecureAccount, {
       wrapper: wrapWithCache(mockLevelOneHighBalance),
     })
 
+    await act(
+      () =>
+        new Promise((resolve) => {
+          setTimeout(resolve, 10)
+        }),
+    )
     expect(result.current).toBe(false)
   })
 })

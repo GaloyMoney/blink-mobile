@@ -159,7 +159,7 @@ const useStyles = makeStyles(
       },
       circleSubtitle: {
         textAlign: "left",
-        backgroundColor: subtitleGreen ? colors.green : colors.black,
+        backgroundColor: subtitleGreen ? colors._green : colors.black,
         borderRadius: 10,
         paddingHorizontal: 10,
         alignSelf: "flex-start",

@@ -2213,6 +2213,7 @@ const en: BaseTranslation = {
     invoiceAlreadyPaid: "This invoice has already been paid",
     somethingWentWrong: "Something went wrong",
     paymentAlreadyAttempted: "Payment already attempted.\n\nIf you want to send this payment again, start from scratch.",
+    copiedDestination: "Copied destination to clipboard"
   },
   SendBitcoinDestinationScreen: {
     usernameNowAddress:
@@ -2254,6 +2255,7 @@ const en: BaseTranslation = {
       confirmButton: "I'm 100% sure",
     },
     clipboardError: "Error getting value from clipboard",
+    pastedClipboardSuccess: "Pasted from clipboard"
   },
   SendBitcoinScreen: {
     willBeSentToMempoolBy: "Transaction should be submitted to mempool",
@@ -2287,6 +2289,8 @@ const en: BaseTranslation = {
       content: "Your fee is more than 50% bigger than the amount sent. Are you sure you want to proceed?\n\nTo reduce fees, ask the receiver to accept transaction via Lightning",
       confirmButton: "I'm 100% sure",
     },
+    copiedDestination: "Copied destination to clipboard",
+    pendingPayment: "The payment has been sent, but hasn't confirmed yet.\n\nIt's possible the payment will not confirm, in which case the funds will be returned to your account.",
   },
   SettingsScreen: {
     activated: "Activated",
@@ -2383,7 +2387,7 @@ const en: BaseTranslation = {
     enter6digitCode:
       "Enter the 6-digit code from your authenticator app to validate your two-factor authentication.",
     success:
-      "Two-factor authentication has been enabled. You will now only be able to log back in with your phone or email AND your two factor authentication.\n\nOnly full KYC accounts may be recovered in the case a user has lost access to their two-factor authentication.",
+      "Two-factor authentication has been enabled. You will now only be able to log back in with your phone or email AND your two factor authentication.\n\nDevices on this account which are not logged in with 2FA will need to log back in.\n\nOnly level 2 accounts can be recovered by customer support in the event of lost 2FA access.",
   },
   TotpLoginValidateScreen: {
     title: "Two-factor authentication",

@@ -2,6 +2,7 @@ import { Destination, InvalidDestination } from "./payment-destination/index.typ
 
 export const DestinationState = {
   Entering: "entering",
+  Pasting: "pasting",
   Validating: "validating",
   Valid: "valid",
   RequiresUsernameConfirmation: "requires-destination-confirmation",
@@ -15,33 +16,18 @@ export type ConfirmationDestinationType = {
   username: string
 }
 
-export type SendBitcoinDestinationState =
-  | {
-      unparsedDestination: string
-      destinationState:
-        | typeof DestinationState.Entering
-        | typeof DestinationState.Validating
-    }
-  | {
-      unparsedDestination: string
-      destinationState: typeof DestinationState.Valid
-      destination: Destination
-      confirmationUsernameType?: ConfirmationDestinationType
-    }
-  | {
-      unparsedDestination: string
-      destinationState: typeof DestinationState.RequiresUsernameConfirmation
-      destination: Destination
-      confirmationUsernameType: ConfirmationDestinationType
-    }
-  | {
-      unparsedDestination: string
-      destinationState: typeof DestinationState.Invalid
-      invalidDestination: InvalidDestination
-    }
+export type SendBitcoinDestinationState = {
+  unparsedDestination: string
+  destinationState: DestinationState
+  confirmationUsernameType?: ConfirmationDestinationType
+  validDestination?: Destination
+  invalidDestination?: InvalidDestination
+  destination?: Destination
+}
 
 export const SendBitcoinActions = {
   SetUnparsedDestination: "set-unparsed-destination",
+  SetUnparsedPastedDestination: "set-unparsed-pasted-destination",
   SetValidating: "set-validating",
   SetValid: "set-valid",
   SetInvalid: "set-invalid",
@@ -58,10 +44,12 @@ export type SendBitcoinDestinationAction =
       payload: { unparsedDestination: string }
     }
   | {
+      type: typeof SendBitcoinActions.SetUnparsedPastedDestination
+      payload: { unparsedDestination: string }
+    }
+  | {
       type: typeof SendBitcoinActions.SetValidating
-      payload: {
-        unparsedDestination: string
-      }
+      payload: Record<string, never>
     }
   | {
       type: typeof SendBitcoinActions.SetValid
@@ -94,14 +82,12 @@ export const sendBitcoinDestinationReducer = (
   state: SendBitcoinDestinationState,
   action: SendBitcoinDestinationAction,
 ): SendBitcoinDestinationState => {
-  if (
-    action.type !== SendBitcoinActions.SetUnparsedDestination &&
-    state.unparsedDestination !== action.payload.unparsedDestination
-  ) {
-    return state
-  }
-
   switch (action.type) {
+    case SendBitcoinActions.SetUnparsedPastedDestination:
+      return {
+        unparsedDestination: action.payload.unparsedDestination,
+        destinationState: DestinationState.Pasting,
+      }
     case SendBitcoinActions.SetUnparsedDestination:
       return {
         unparsedDestination: action.payload.unparsedDestination,
@@ -109,43 +95,53 @@ export const sendBitcoinDestinationReducer = (
       }
     case SendBitcoinActions.SetValidating:
       return {
-        unparsedDestination: state.unparsedDestination,
+        ...state,
         destinationState: DestinationState.Validating,
       }
     case SendBitcoinActions.SetValid:
-      return {
-        unparsedDestination: state.unparsedDestination,
-        destinationState: DestinationState.Valid,
-        destination: action.payload.validDestination,
-      }
+      return state.unparsedDestination === action.payload?.unparsedDestination
+        ? {
+            unparsedDestination: state.unparsedDestination,
+            destinationState: DestinationState.Valid,
+            destination: action.payload.validDestination,
+          }
+        : state
     case SendBitcoinActions.SetInvalid:
       if (state.destinationState === DestinationState.Validating) {
-        return {
-          unparsedDestination: state.unparsedDestination,
-          destinationState: DestinationState.Invalid,
-          invalidDestination: action.payload.invalidDestination,
-        }
+        return state.unparsedDestination === action.payload?.unparsedDestination
+          ? {
+              unparsedDestination: state.unparsedDestination,
+              destinationState: DestinationState.Invalid,
+              invalidDestination: action.payload.invalidDestination,
+            }
+          : state
       }
       throw new Error("Invalid state transition")
     case SendBitcoinActions.SetRequiresUsernameConfirmation:
       if (state.destinationState === DestinationState.Validating) {
-        return {
-          unparsedDestination: state.unparsedDestination,
-          destinationState: DestinationState.RequiresUsernameConfirmation,
-          destination: action.payload.validDestination,
-          confirmationUsernameType: action.payload.confirmationUsernameType,
-        }
+        return state.unparsedDestination === action.payload?.unparsedDestination
+          ? {
+              unparsedDestination: state.unparsedDestination,
+              destinationState: DestinationState.RequiresUsernameConfirmation,
+              destination: action.payload.validDestination,
+              confirmationUsernameType: action.payload.confirmationUsernameType,
+            }
+          : state
       }
       throw new Error("Invalid state transition")
     case SendBitcoinActions.SetConfirmed:
       if (state.destinationState === DestinationState.RequiresUsernameConfirmation) {
-        return {
-          unparsedDestination: state.unparsedDestination,
-          destinationState: DestinationState.Valid,
-          destination: state.destination,
-          confirmationUsernameType: state.confirmationUsernameType,
-        }
+        return state.unparsedDestination === action.payload?.unparsedDestination
+          ? {
+              unparsedDestination: state.unparsedDestination,
+              destinationState: DestinationState.Valid,
+              destination: state.destination,
+              confirmationUsernameType: state.confirmationUsernameType,
+            }
+          : state
       }
       throw new Error("Invalid state transition")
+    default:
+      return state
   }
 }

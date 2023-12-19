@@ -6,6 +6,7 @@ import { PropsWithChildren } from "react"
 import * as React from "react"
 import { IsAuthedContextProvider } from "@app/graphql/is-authed-context"
 import { CurrencyListDocument, RealtimePriceDocument } from "@app/graphql/generated"
+import { act } from "react-test-renderer"
 
 const mocksNgn = [
   {
@@ -136,11 +137,16 @@ const wrapWithMocks =
 describe("usePriceConversion", () => {
   describe("testing moneyAmountToMajorUnitOrSats", () => {
     it("with 0 digits", async () => {
-      const { result, waitForNextUpdate } = renderHook(useDisplayCurrency, {
+      const { result } = renderHook(useDisplayCurrency, {
         wrapper: wrapWithMocks(mocksJpy),
       })
 
-      await waitForNextUpdate()
+      await act(
+        () =>
+          new Promise((resolve) => {
+            setTimeout(resolve, 10)
+          }),
+      )
 
       const res = result.current.moneyAmountToMajorUnitOrSats({
         amount: 100,

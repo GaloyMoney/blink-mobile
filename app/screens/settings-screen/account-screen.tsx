@@ -28,7 +28,6 @@ import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-but
 import { useShowWarningSecureAccount } from "./show-warning-secure-account"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { useNavigation } from "@react-navigation/native"
-import { useAppConfig } from "@app/hooks"
 import { AccountId } from "./account-id"
 
 gql`
@@ -96,8 +95,8 @@ gql`
     }
   }
 
-  mutation userTotpDelete($input: UserTotpDeleteInput!) {
-    userTotpDelete(input: $input) {
+  mutation userTotpDelete {
+    userTotpDelete {
       errors {
         message
       }
@@ -121,8 +120,6 @@ export const AccountScreen = () => {
   const { logout } = useLogout()
   const { LL } = useI18nContext()
   const styles = useStyles()
-  const { appConfig } = useAppConfig()
-  const authToken = appConfig.token
 
   const {
     theme: { colors },
@@ -186,6 +183,7 @@ export const AccountScreen = () => {
 
   const dataBeta = useBetaQuery()
   const beta = dataBeta.data?.beta ?? false
+  beta
 
   const deletePhonePrompt = async () => {
     Alert.alert(
@@ -405,7 +403,7 @@ export const AccountScreen = () => {
         {
           text: LL.common.ok(),
           onPress: async () => {
-            const res = await totpDeleteMutation({ variables: { input: { authToken } } })
+            const res = await totpDeleteMutation()
             if (res.data?.userTotpDelete?.me?.totpEnabled === false) {
               Alert.alert(LL.AccountScreen.totpDeactivated())
             } else {
@@ -523,7 +521,6 @@ export const AccountScreen = () => {
       chevronColor: totpEnabled ? colors.red : undefined,
       chevronSize: totpEnabled ? 28 : undefined,
       styleDivider: true,
-      hidden: !beta,
     },
   ]
 

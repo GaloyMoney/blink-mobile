@@ -31,12 +31,13 @@ const generateOtpAuthURI = (
 gql`
   query totpRegistrationScreen {
     me {
+      id
       username
     }
   }
 
-  mutation userTotpRegistrationInitiate($input: UserTotpRegistrationInitiateInput!) {
-    userTotpRegistrationInitiate(input: $input) {
+  mutation userTotpRegistrationInitiate {
+    userTotpRegistrationInitiate {
       errors {
         message
       }
@@ -68,14 +69,13 @@ export const TotpRegistrationInitiateScreen = () => {
   const [totpRegistrationId, setTotpRegistrationId] = useState("")
 
   const { appConfig } = useAppConfig()
-  const authToken = appConfig.token
   const service = appConfig.galoyInstance.name
 
   const otpauth = generateOtpAuthURI(username, service, secret)
 
   useEffect(() => {
     const fn = async () => {
-      const res = await totpRegistrationInitiate({ variables: { input: { authToken } } })
+      const res = await totpRegistrationInitiate()
 
       if (res.data?.userTotpRegistrationInitiate?.totpRegistrationId) {
         setTotpRegistrationId(res.data?.userTotpRegistrationInitiate?.totpRegistrationId)
@@ -94,7 +94,7 @@ export const TotpRegistrationInitiateScreen = () => {
       setIsLoading(false)
     }
     fn()
-  }, [authToken, totpRegistrationInitiate, LL])
+  }, [totpRegistrationInitiate, LL])
 
   return (
     <Screen>

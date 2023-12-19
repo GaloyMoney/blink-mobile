@@ -26,6 +26,7 @@ interface Account
 {
   callbackEndpoints: [CallbackEndpoint!]!
   csvTransactions(walletIds: [WalletId!]!): String!
+  defaultWallet: PublicWallet!
   defaultWalletId: WalletId!
   displayCurrency: DisplayCurrency!
   id: ID!
@@ -379,6 +380,7 @@ type ConsumerAccount implements Account
   return CSV stream, base64 encoded, of the list of transactions in the wallet
   """
   csvTransactions(walletIds: [WalletId!]!): String! @join__field(graph: GALOY)
+  defaultWallet: PublicWallet! @join__field(graph: GALOY)
   defaultWalletId: WalletId! @join__field(graph: GALOY)
   displayCurrency: DisplayCurrency! @join__field(graph: GALOY)
 
@@ -1168,8 +1170,8 @@ type Mutation
   userPhoneDelete: UserPhoneDeletePayload! @join__field(graph: GALOY)
   userPhoneRegistrationInitiate(input: UserPhoneRegistrationInitiateInput!): SuccessPayload! @join__field(graph: GALOY)
   userPhoneRegistrationValidate(input: UserPhoneRegistrationValidateInput!): UserPhoneRegistrationValidatePayload! @join__field(graph: GALOY)
-  userTotpDelete(input: UserTotpDeleteInput!): UserTotpDeletePayload! @join__field(graph: GALOY)
-  userTotpRegistrationInitiate(input: UserTotpRegistrationInitiateInput!): UserTotpRegistrationInitiatePayload! @join__field(graph: GALOY)
+  userTotpDelete: UserTotpDeletePayload! @join__field(graph: GALOY)
+  userTotpRegistrationInitiate: UserTotpRegistrationInitiatePayload! @join__field(graph: GALOY)
   userTotpRegistrationValidate(input: UserTotpRegistrationValidateInput!): UserTotpRegistrationValidatePayload! @join__field(graph: GALOY)
   userUpdateLanguage(input: UserUpdateLanguageInput!): UserUpdateLanguagePayload! @join__field(graph: GALOY)
   userUpdateUsername(input: UserUpdateUsernameInput!): UserUpdateUsernamePayload! @join__field(graph: GALOY) @deprecated(reason: "Username will be moved to @Handle in Accounts. Also SetUsername naming should be used instead of UpdateUsername to reflect the idempotency of Handles")
@@ -1228,7 +1230,6 @@ type OnboardingFlowStartResult
   workflowRunId: String!
   tokenAndroid: String!
   tokenIos: String!
-  tokenWeb: String!
 }
 
 enum OnboardingStatus
@@ -1507,8 +1508,9 @@ A public view of a generic wallet which stores value in one of our supported cur
 type PublicWallet
   @join__type(graph: GALOY)
 {
+  currency: WalletCurrency!
   id: ID!
-  walletCurrency: WalletCurrency!
+  walletCurrency: WalletCurrency! @deprecated(reason: "Shifting property to 'currency'")
 }
 
 type Query
@@ -2032,23 +2034,11 @@ type UserQuizQuestion
   question: QuizQuestion!
 }
 
-input UserTotpDeleteInput
-  @join__type(graph: GALOY)
-{
-  authToken: AuthToken!
-}
-
 type UserTotpDeletePayload
   @join__type(graph: GALOY)
 {
   errors: [Error!]!
   me: User
-}
-
-input UserTotpRegistrationInitiateInput
-  @join__type(graph: GALOY)
-{
-  authToken: AuthToken!
 }
 
 type UserTotpRegistrationInitiatePayload
@@ -2062,7 +2052,7 @@ type UserTotpRegistrationInitiatePayload
 input UserTotpRegistrationValidateInput
   @join__type(graph: GALOY)
 {
-  authToken: AuthToken!
+  authToken: AuthToken
   totpCode: TotpCode!
   totpRegistrationId: TotpRegistrationId!
 }
