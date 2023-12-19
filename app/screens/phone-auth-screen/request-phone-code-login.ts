@@ -32,7 +32,7 @@ export const ErrorType = {
 
 import axios, { isAxiosError } from "axios"
 import useAppCheckToken from "../get-started-screen/use-device-token"
-import { loadString, saveString } from "@app/utils/storage"
+import { getCountryFromIpAddress } from "@app/utils/location"
 
 type ErrorType = (typeof ErrorType)[keyof typeof ErrorType]
 
@@ -45,8 +45,6 @@ type PhoneInputInfo = {
   formattedPhoneNumber: string
   rawPhoneNumber: string
 }
-
-export const STORAGE_COUNTRY_CODE = "country_code"
 
 export type UseRequestPhoneCodeReturn = {
   userSubmitPhoneNumber: (phoneCodeChannel: PhoneCodeChannelType) => void
@@ -151,27 +149,9 @@ export const useRequestPhoneCodeLogin = (): UseRequestPhoneCodeReturn => {
   // setting default country code from IP
   useEffect(() => {
     const getCountryCodeFromIP = async () => {
-      let defaultCountryCode = "SV" as CountryCode
-      try {
-        const response = await axios.get("https://ipapi.co/json/", {
-          timeout: 5000,
-        })
-        const _countryCode = response?.data?.country_code
-        if (_countryCode) {
-          await saveString(STORAGE_COUNTRY_CODE, _countryCode)
-          defaultCountryCode = _countryCode
-        } else {
-          console.warn("no data or country_code in response")
-        }
-        // can throw a 429 for device's rate-limiting. resort to cached value
-      } catch (e) {
-        const _countryCode = await loadString(STORAGE_COUNTRY_CODE)
-        if (_countryCode) {
-          defaultCountryCode = _countryCode as CountryCode
-        }
-      }
+      const countryCode = await getCountryFromIpAddress()
 
-      setCountryCode(defaultCountryCode)
+      setCountryCode(countryCode)
       setStatus(RequestPhoneCodeStatus.InputtingPhoneNumber)
     }
 

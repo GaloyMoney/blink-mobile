@@ -27,12 +27,10 @@ export const ErrorType = {
   UnsupportedCountryError: "UnsupportedCountryError",
 } as const
 
-import axios from "axios"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { loadString, saveString } from "@app/utils/storage"
-import { STORAGE_COUNTRY_CODE } from "./request-phone-code-login"
+import { getCountryFromIpAddress } from "@app/utils/location"
 
 type ErrorType = (typeof ErrorType)[keyof typeof ErrorType]
 
@@ -124,30 +122,10 @@ export const useRequestPhoneCodeRegistration = (): UseRequestPhoneCodeReturn => 
 
   useEffect(() => {
     const getCountryCodeFromIP = async () => {
-      let defaultCountryCode = "SV" as CountryCode
-      try {
-        const response = await axios.get("https://ipapi.co/json/", {
-          timeout: 5000,
-        })
-        const _countryCode = response?.data?.country_code
-        if (_countryCode) {
-          await saveString(STORAGE_COUNTRY_CODE, _countryCode)
-          defaultCountryCode = _countryCode
-        } else {
-          console.warn("no data or country_code in response")
-        }
-        // can throw a 429 for device's rate-limiting. resort to cached value
-      } catch (e) {
-        const _countryCode = await loadString(STORAGE_COUNTRY_CODE)
-        if (_countryCode) {
-          defaultCountryCode = _countryCode as CountryCode
-        }
-      }
-
-      setCountryCode(defaultCountryCode)
+      const countryCode = await getCountryFromIpAddress()
+      setCountryCode(countryCode)
       setStatus(RequestPhoneCodeStatus.InputtingPhoneNumber)
     }
-
 
     getCountryCodeFromIP()
   }, [])

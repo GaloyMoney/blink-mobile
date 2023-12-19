@@ -24,11 +24,10 @@ import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { PhoneLoginInitiateType } from "../phone-auth-screen"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import MapStyles from "./map-styles.json"
-import { loadJson, loadString, saveString } from "@app/utils/storage"
 
 import countryCodes from "../../../utils/countryInfo.json"
-import axios from "axios"
-import { STORAGE_COUNTRY_CODE } from "../phone-auth-screen/request-phone-code-login"
+import { getCountryFromIpAddress } from "@app/utils/location"
+import { CountryCode } from "libphonenumber-js/types.cjs"
 
 const EL_ZONTE_COORDS = {
   latitude: 13.496743,
@@ -123,26 +122,12 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   }
 
   const getRegionFromIp = async () => {
-    let countryCode: string | null
-    try {
-      const response = await axios.get("https://ipapi.co/json/", {
-        timeout: 5000,
-      })
-      countryCode = response?.data?.country_code
-      if (countryCode) {
-        await saveString(STORAGE_COUNTRY_CODE, countryCode)
-      } else {
-        console.warn("no data or country_code in response")
-      }
-      // can throw a 429 for device's rate-limiting. resort to cached value
-    } catch (e) {
-      countryCode = await loadString(STORAGE_COUNTRY_CODE)
-    }
-
+    const countryCode = await getCountryFromIpAddress()
     if (countryCode) {
       // JSON 'hashmap' with every countrys' code listed with their lat and lng
-      const countryCodesToCoords: { data: Record<string, { lat: number; lng: number }> } =
-        JSON.parse(JSON.stringify(countryCodes))
+      const countryCodesToCoords: {
+        data: Record<CountryCode, { lat: number; lng: number }>
+      } = JSON.parse(JSON.stringify(countryCodes))
       const countryCoords: { lat: number; lng: number } =
         countryCodesToCoords.data[countryCode]
       if (countryCoords) {
