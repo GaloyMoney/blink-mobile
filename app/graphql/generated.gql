@@ -1227,14 +1227,6 @@ query priceHistoryScreen {
   }
 }
 
-query quizSats {
-  quizQuestions {
-    id
-    earnAmount
-    __typename
-  }
-}
-
 query realtimePrice {
   me {
     id
