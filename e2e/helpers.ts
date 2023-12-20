@@ -8,12 +8,12 @@ import {
   selector,
   setUserToken,
   timeout,
-  waitTillSettingDisplayed,
+  waitTillTextDisplayed,
 } from "./utils"
 
 export const getAccessTokenFromClipboard = async (LL: TranslationFunctions) => {
   await clickIcon("menu")
-  await waitTillSettingDisplayed(LL.common.account())
+  await waitTillTextDisplayed(LL.common.preferences())
 
   await scrollDown()
 
