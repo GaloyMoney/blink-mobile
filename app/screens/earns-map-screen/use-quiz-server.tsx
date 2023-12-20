@@ -1,15 +1,8 @@
-import { useMyQuizQuestionsQuery, useQuizSatsQuery } from "@app/graphql/generated"
+import { useMyQuizQuestionsQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { gql, WatchQueryFetchPolicy } from "@apollo/client"
 
 gql`
-  query quizSats {
-    quizQuestions {
-      id
-      earnAmount
-    }
-  }
-
   query myQuizQuestions {
     me {
       id
@@ -34,17 +27,10 @@ export const useQuizServer = (
 ) => {
   const isAuthed = useIsAuthed()
 
-  const { data: dataAuth, loading: loadingAuth } = useMyQuizQuestionsQuery({
+  const { data, loading } = useMyQuizQuestionsQuery({
     fetchPolicy,
     skip: !isAuthed,
   })
-
-  const { data: dataUnauth, loading: loadingUnauth } = useQuizSatsQuery({
-    fetchPolicy,
-    skip: isAuthed,
-  })
-
-  const loading = loadingAuth || loadingUnauth
 
   let quizServerData: {
     readonly __typename: "Quiz"
@@ -54,15 +40,40 @@ export const useQuizServer = (
   }[]
 
   if (isAuthed) {
-    quizServerData = dataAuth?.me?.defaultAccount.quiz.slice() ?? []
+    quizServerData = data?.me?.defaultAccount.quiz.slice() ?? []
   } else {
-    quizServerData =
-      dataUnauth?.quizQuestions?.map((quiz) => ({
+    quizServerData = [
+      {
         __typename: "Quiz",
-        id: quiz?.id ?? "id", // type issue, should be non-nullable
-        amount: quiz?.earnAmount ?? 0,
+        id: "whatIsBitcoin",
+        amount: 1,
         completed: false,
-      })) ?? []
+      },
+      {
+        __typename: "Quiz",
+        id: "sat",
+        amount: 1,
+        completed: false,
+      },
+      {
+        __typename: "Quiz",
+        id: "whereBitcoinExist",
+        amount: 1,
+        completed: false,
+      },
+      {
+        __typename: "Quiz",
+        id: "whoControlsBitcoin",
+        amount: 1,
+        completed: false,
+      },
+      {
+        __typename: "Quiz",
+        id: "copyBitcoin",
+        amount: 1,
+        completed: false,
+      },
+    ]
   }
 
   return { loading, quizServerData }
