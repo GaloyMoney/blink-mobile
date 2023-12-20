@@ -13,7 +13,7 @@ import {
 
 export const getAccessTokenFromClipboard = async (LL: TranslationFunctions) => {
   await clickIcon("menu")
-  await waitTillTextDisplayed(LL.common.preferences())
+  await waitTillTextDisplayed(LL.common.preferences() + "-group")
 
   await scrollDown()
 
