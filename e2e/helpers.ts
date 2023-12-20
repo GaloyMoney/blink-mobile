@@ -7,13 +7,19 @@ import {
   scrollDown,
   selector,
   setUserToken,
+  sleep,
   timeout,
   waitTillTextDisplayed,
 } from "./utils"
 
 export const getAccessTokenFromClipboard = async (LL: TranslationFunctions) => {
   await clickIcon("menu")
-  await waitTillTextDisplayed(LL.common.preferences() + "-group")
+
+  if (process.env.E2E_DEVICE === "ios") {
+    await waitTillTextDisplayed(LL.common.preferences() + "-group")
+  } else {
+    await sleep(1000)
+  }
 
   await scrollDown()
 
