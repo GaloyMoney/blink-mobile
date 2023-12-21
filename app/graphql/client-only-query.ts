@@ -4,6 +4,8 @@ import {
   BetaQuery,
   ColorSchemeDocument,
   ColorSchemeQuery,
+  CountryCodeDocument,
+  CountryCodeQuery,
   FeedbackModalShownDocument,
   FeedbackModalShownQuery,
   HasPromptedSetDefaultAccountDocument,
@@ -16,6 +18,7 @@ import {
   IntroducingCirclesModalShownDocument,
   IntroducingCirclesModalShownQuery,
 } from "./generated"
+import { CountryCode } from "libphonenumber-js/mobile"
 
 export default gql`
   query hideBalance {
@@ -32,6 +35,10 @@ export default gql`
 
   query colorScheme {
     colorScheme @client # "system" | "light" | "dark"
+  }
+
+  query countryCode {
+    countryCode @client
   }
 
   query feedbackModalShown {
@@ -112,6 +119,23 @@ export const updateColorScheme = (client: ApolloClient<unknown>, colorScheme: st
     })
   } catch {
     console.warn("impossible to update color scheme")
+  }
+}
+
+export const updateCountryCode = (
+  client: ApolloClient<unknown>,
+  countryCode: CountryCode,
+) => {
+  try {
+    client.writeQuery<CountryCodeQuery>({
+      query: CountryCodeDocument,
+      data: {
+        __typename: "Query",
+        countryCode,
+      },
+    })
+  } catch {
+    console.warn("impossible to update country code")
   }
 }
 

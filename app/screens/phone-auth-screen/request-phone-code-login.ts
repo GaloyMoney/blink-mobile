@@ -32,7 +32,7 @@ export const ErrorType = {
 
 import axios, { isAxiosError } from "axios"
 import useAppCheckToken from "../get-started-screen/use-device-token"
-import { getCountryFromIpAddress } from "@app/utils/location"
+import useDeviceLocation from "@app/hooks/use-device-location"
 
 type ErrorType = (typeof ErrorType)[keyof typeof ErrorType]
 
@@ -112,6 +112,8 @@ export const useRequestPhoneCodeLogin = (): UseRequestPhoneCodeReturn => {
   const [captchaRequestAuthCode] = useCaptchaRequestAuthCodeMutation()
 
   const { data, loading: loadingSupportedCountries } = useSupportedCountriesQuery()
+  const { countryCode: detectedCountryCode, loading: loadingDetectedCountryCode } =
+    useDeviceLocation()
 
   const appCheckToken = useAppCheckToken({})
 
@@ -148,15 +150,11 @@ export const useRequestPhoneCodeLogin = (): UseRequestPhoneCodeReturn => {
 
   // setting default country code from IP
   useEffect(() => {
-    const getCountryCodeFromIP = async () => {
-      const countryCode = await getCountryFromIpAddress()
-
-      setCountryCode(countryCode)
+    if (detectedCountryCode) {
+      setCountryCode(detectedCountryCode)
       setStatus(RequestPhoneCodeStatus.InputtingPhoneNumber)
     }
-
-    getCountryCodeFromIP()
-  }, [])
+  }, [detectedCountryCode])
 
   // when phone number is submitted and either captcha is requested, or appcheck is used
   useEffect(() => {
@@ -338,6 +336,6 @@ export const useRequestPhoneCodeLogin = (): UseRequestPhoneCodeReturn => {
     setCountryCode,
     setPhoneNumber,
     supportedCountries: allSupportedCountries,
-    loadingSupportedCountries,
+    loadingSupportedCountries: loadingSupportedCountries || loadingDetectedCountryCode,
   }
 }

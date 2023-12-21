@@ -26,8 +26,8 @@ import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import MapStyles from "./map-styles.json"
 
 import countryCodes from "../../../utils/countryInfo.json"
-import { getCountryFromIpAddress } from "@app/utils/location"
-import { CountryCode } from "libphonenumber-js/types.cjs"
+import { CountryCode } from "libphonenumber-js/mobile"
+import useDeviceLocation from "@app/hooks/use-device-location"
 
 const EL_ZONTE_COORDS = {
   latitude: 13.496743,
@@ -74,10 +74,12 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   } = useTheme()
   const styles = useStyles()
   const isAuthed = useIsAuthed()
+  const { countryCode, loading } = useDeviceLocation()
 
   const [isLoadingLocation, setIsLoadingLocation] = React.useState(true)
   const [userLocation, setUserLocation] = React.useState<Region>()
   const [isRefreshed, setIsRefreshed] = React.useState(false)
+  const [wasLocationDenied, setLocationDenied] = React.useState(false)
   const { data, error, refetch } = useBusinessMapMarkersQuery({
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "cache-and-network",
@@ -96,6 +98,34 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   }
 
   const maps = data?.businessMapMarkers ?? []
+
+  // if getting location was denied and device's country code has been found (or defaulted)
+  // this is used to finalize the initial location shown on the Map
+  React.useEffect(() => {
+    if (countryCode && wasLocationDenied && !loading) {
+      // El Salvador gets special treatment here and zones in on El Zonte
+      if (countryCode === "SV") {
+        setUserLocation(EL_ZONTE_COORDS)
+      } else {
+        // JSON 'hashmap' with every countrys' code listed with their lat and lng
+        const countryCodesToCoords: {
+          data: Record<CountryCode, { lat: number; lng: number }>
+        } = JSON.parse(JSON.stringify(countryCodes))
+        const countryCoords: { lat: number; lng: number } =
+          countryCodesToCoords.data[countryCode]
+        if (countryCoords) {
+          const region: Region = {
+            latitude: countryCoords.lat,
+            longitude: countryCoords.lng,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
+          }
+          setUserLocation(region)
+        }
+      }
+      setIsLoadingLocation(false)
+    }
+  }, [wasLocationDenied, countryCode, loading, setIsLoadingLocation, setUserLocation])
 
   const getUserRegion = (callback: (region?: Region) => void) => {
     try {
@@ -121,29 +151,6 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     }
   }
 
-  const getRegionFromIp = async () => {
-    const countryCode = await getCountryFromIpAddress()
-    if (countryCode) {
-      // JSON 'hashmap' with every countrys' code listed with their lat and lng
-      const countryCodesToCoords: {
-        data: Record<CountryCode, { lat: number; lng: number }>
-      } = JSON.parse(JSON.stringify(countryCodes))
-      const countryCoords: { lat: number; lng: number } =
-        countryCodesToCoords.data[countryCode]
-      if (countryCoords) {
-        const region: Region = {
-          latitude: countryCoords.lat,
-          longitude: countryCoords.lng,
-          latitudeDelta: LATITUDE_DELTA,
-          longitudeDelta: LONGITUDE_DELTA,
-        }
-        setUserLocation(region)
-      }
-    }
-
-    setIsLoadingLocation(false)
-  }
-
   const requestLocationPermission = useCallback(() => {
     const permittedResponse = () => {
       getUserRegion(async (region) => {
@@ -151,17 +158,19 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
           setUserLocation(region)
           setIsLoadingLocation(false)
         } else {
-          getRegionFromIp()
+          setLocationDenied(true)
         }
       })
     }
 
     const negativeResponse = (error: GeolocationPermissionNegativeError) => {
       console.debug("Permission location denied: ", error)
-      getRegionFromIp()
+      setLocationDenied(true)
     }
 
     Geolocation.requestAuthorization(permittedResponse, negativeResponse)
+    // disable eslint because we only want to ask for permissions once
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useFocusEffect(requestLocationPermission)
@@ -226,7 +235,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
         <MapView
           style={styles.map}
           showsUserLocation={true}
-          initialRegion={userLocation ?? EL_ZONTE_COORDS}
+          initialRegion={userLocation}
           customMapStyle={themeMode === "dark" ? MapStyles.dark : MapStyles.light}
         >
           {markers}

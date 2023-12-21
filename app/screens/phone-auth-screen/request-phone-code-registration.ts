@@ -30,7 +30,7 @@ export const ErrorType = {
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { getCountryFromIpAddress } from "@app/utils/location"
+import useDeviceLocation from "@app/hooks/use-device-location"
 
 type ErrorType = (typeof ErrorType)[keyof typeof ErrorType]
 
@@ -97,6 +97,7 @@ export const useRequestPhoneCodeRegistration = (): UseRequestPhoneCodeReturn => 
     useNavigation<StackNavigationProp<RootStackParamList, "phoneRegistrationInitiate">>()
 
   const { data } = useSupportedCountriesQuery()
+  const { countryCode: detectedCountryCode } = useDeviceLocation()
 
   const { isWhatsAppSupported, isSmsSupported, allSupportedCountries } = useMemo(() => {
     const currentCountry = data?.globals?.supportedCountries.find(
@@ -120,15 +121,13 @@ export const useRequestPhoneCodeRegistration = (): UseRequestPhoneCodeReturn => 
     }
   }, [data?.globals, countryCode])
 
+  // setting default country code from IP
   useEffect(() => {
-    const getCountryCodeFromIP = async () => {
-      const countryCode = await getCountryFromIpAddress()
-      setCountryCode(countryCode)
+    if (detectedCountryCode) {
+      setCountryCode(detectedCountryCode)
       setStatus(RequestPhoneCodeStatus.InputtingPhoneNumber)
     }
-
-    getCountryCodeFromIP()
-  }, [])
+  }, [detectedCountryCode])
 
   const setPhoneNumber = (number: string) => {
     if (status === RequestPhoneCodeStatus.RequestingCode) {

@@ -1504,6 +1504,7 @@ export type Query = {
   readonly btcPriceList?: Maybe<ReadonlyArray<Maybe<PricePoint>>>;
   readonly businessMapMarkers?: Maybe<ReadonlyArray<Maybe<MapMarker>>>;
   readonly colorScheme: Scalars['String']['output'];
+  readonly countryCode?: Maybe<Scalars['String']['output']>;
   readonly currencyList: ReadonlyArray<Currency>;
   readonly feedbackModalShown: Scalars['Boolean']['output'];
   readonly globals?: Maybe<Globals>;
@@ -2217,6 +2218,11 @@ export type ColorSchemeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ColorSchemeQuery = { readonly __typename: 'Query', readonly colorScheme: string };
+
+export type CountryCodeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CountryCodeQuery = { readonly __typename: 'Query', readonly countryCode?: string | null };
 
 export type FeedbackModalShownQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3361,6 +3367,38 @@ export function useColorSchemeLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type ColorSchemeQueryHookResult = ReturnType<typeof useColorSchemeQuery>;
 export type ColorSchemeLazyQueryHookResult = ReturnType<typeof useColorSchemeLazyQuery>;
 export type ColorSchemeQueryResult = Apollo.QueryResult<ColorSchemeQuery, ColorSchemeQueryVariables>;
+export const CountryCodeDocument = gql`
+    query countryCode {
+  countryCode @client
+}
+    `;
+
+/**
+ * __useCountryCodeQuery__
+ *
+ * To run a query within a React component, call `useCountryCodeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCountryCodeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCountryCodeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCountryCodeQuery(baseOptions?: Apollo.QueryHookOptions<CountryCodeQuery, CountryCodeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CountryCodeQuery, CountryCodeQueryVariables>(CountryCodeDocument, options);
+      }
+export function useCountryCodeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CountryCodeQuery, CountryCodeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CountryCodeQuery, CountryCodeQueryVariables>(CountryCodeDocument, options);
+        }
+export type CountryCodeQueryHookResult = ReturnType<typeof useCountryCodeQuery>;
+export type CountryCodeLazyQueryHookResult = ReturnType<typeof useCountryCodeLazyQuery>;
+export type CountryCodeQueryResult = Apollo.QueryResult<CountryCodeQuery, CountryCodeQueryVariables>;
 export const FeedbackModalShownDocument = gql`
     query feedbackModalShown {
   feedbackModalShown @client
@@ -8084,6 +8122,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   btcPriceList?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['PricePoint']>>>, ParentType, ContextType, RequireFields<QueryBtcPriceListArgs, 'range'>>;
   businessMapMarkers?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['MapMarker']>>>, ParentType, ContextType>;
   colorScheme?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  countryCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   currencyList?: Resolver<ReadonlyArray<ResolversTypes['Currency']>, ParentType, ContextType>;
   feedbackModalShown?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   globals?: Resolver<Maybe<ResolversTypes['Globals']>, ParentType, ContextType>;

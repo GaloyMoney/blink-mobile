@@ -947,6 +947,10 @@ query conversionScreen {
   }
 }
 
+query countryCode {
+  countryCode @client
+}
+
 query currencyList {
   currencyList {
     __typename
