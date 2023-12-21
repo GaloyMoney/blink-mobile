@@ -17,13 +17,11 @@ import { PaymentType } from "@galoymoney/client"
 import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { SearchBar } from "@rneui/base"
-import { FlatList } from "react-native-gesture-handler"
 
 import { LNURL_DOMAINS } from "@app/config"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { RouteProp, useNavigation } from "@react-navigation/native"
-import { makeStyles, useTheme, Text, ListItem } from "@rneui/themed"
+import { makeStyles, useTheme, Text } from "@rneui/themed"
 import { testProps } from "../../utils/testProps"
 import { ConfirmDestinationModal } from "./confirm-destination-modal"
 import { DestinationInformation } from "./destination-information"
@@ -92,7 +90,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   )
   const [goToNextScreenWhenValid, setGoToNextScreenWhenValid] = React.useState(false)
 
-  const { loading, data } = useSendBitcoinDestinationQuery({
+  const { data } = useSendBitcoinDestinationQuery({
     fetchPolicy: "cache-and-network",
     returnPartialData: true,
     skip: !isAuthed,
@@ -115,97 +113,6 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   const [accountDefaultWalletQuery] = useAccountDefaultWalletLazyQuery({
     fetchPolicy: "no-cache",
   })
-
-  const [matchingContacts, setMatchingContacts] = useState<Contact[]>([])
-  const allContacts: Contact[] = useMemo(() => {
-    const contactsCopy = contacts.slice() ?? []
-    const compareUsernames = (a: Contact, b: Contact) => {
-      return a.username.toLocaleLowerCase().localeCompare(b.username.toLocaleLowerCase())
-    }
-    contactsCopy.sort(compareUsernames)
-
-    return contactsCopy
-  }, [contacts])
-
-  const [selectedId, setSelectedId] = useState("")
-
-  const handleSelection = (id: string) => {
-    if (selectedId === id) setSelectedId("")
-    else setSelectedId(id)
-  }
-
-  const reset = useCallback(() => {
-    dispatchDestinationStateAction({
-      type: "set-unparsed-destination",
-      payload: { unparsedDestination: "" },
-    })
-    setGoToNextScreenWhenValid(false)
-    setSelectedId("")
-    setMatchingContacts(allContacts)
-  }, [allContacts])
-
-  const wordMatchesContact = (searchWord: string, contact: Contact): boolean => {
-    let contactPrettyNameMatchesSearchWord: boolean
-
-    const contactNameMatchesSearchWord = contact.username
-      .toLowerCase()
-      .includes(searchWord.toLowerCase())
-
-    if (contact.username) {
-      contactPrettyNameMatchesSearchWord = contact.username
-        .toLowerCase()
-        .includes(searchWord.toLowerCase())
-    } else {
-      contactPrettyNameMatchesSearchWord = false
-    }
-
-    return contactNameMatchesSearchWord || contactPrettyNameMatchesSearchWord
-  }
-
-  let ListEmptyContent: React.ReactNode
-
-  if (allContacts.length > 0) {
-    ListEmptyContent = (
-      <View style={styles.emptyListNoMatching}>
-        <Text style={styles.emptyListTitle}>{LL.PeopleScreen.noMatchingContacts()}</Text>
-      </View>
-    )
-  } else if (loading) {
-    ListEmptyContent = (
-      <View style={styles.activityIndicatorContainer}>
-        <ActivityIndicator size="large" color={colors.primary} />
-      </View>
-    )
-  } else {
-    ListEmptyContent = (
-      <View style={styles.emptyListNoContacts}>
-        <Text
-          {...testProps(LL.PeopleScreen.noContactsTitle())}
-          style={styles.emptyListTitle}
-        >
-          {LL.PeopleScreen.noContactsTitle()}
-        </Text>
-        <Text style={styles.emptyListText}>{LL.PeopleScreen.noContactsYet()}</Text>
-      </View>
-    )
-  }
-
-  const updateMatchingContacts = useCallback(
-    (newSearchText: string) => {
-      if (newSearchText.length > 0) {
-        const searchWordArray = newSearchText
-          .split(" ")
-          .filter((text) => text.trim().length > 0)
-        const matchingContacts = allContacts.filter((contact) =>
-          searchWordArray.some((word) => wordMatchesContact(word, contact)),
-        )
-        setMatchingContacts(matchingContacts)
-      } else {
-        setMatchingContacts(allContacts)
-      }
-    },
-    [allContacts],
-  )
 
   const willInitiateValidation = React.useCallback(() => {
     if (!bitcoinNetwork || !wallets || !contacts) {
@@ -308,10 +215,6 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     },
     [dispatchDestinationStateAction, setGoToNextScreenWhenValid],
   )
-
-  useEffect(() => {
-    setMatchingContacts(allContacts)
-  }, [allContacts])
 
   useEffect(() => {
     if (
@@ -437,6 +340,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
 
   return (
     <Screen
+      preset="scroll"
       style={styles.screenStyle}
       keyboardOffset="navigationHeader"
       keyboardShouldPersistTaps="handled"
@@ -458,22 +362,16 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
             style={styles.input}
             {...testProps(LL.SendBitcoinScreen.placeholder())}
             placeholder={LL.SendBitcoinScreen.placeholder()}
+            placeholderTextColor={colors.grey2}
+            onChangeText={handleChangeText}
             value={destinationState.unparsedDestination}
             onSubmitEditing={async () =>
               willInitiateValidation() &&
               waitAndValidateDestination(destinationState.unparsedDestination)
             }
-            platform="default"
-            showLoading={false}
-            containerStyle={styles.searchBarContainer}
-            inputContainerStyle={styles.searchBarInputContainerStyle}
-            inputStyle={styles.searchBarText}
-            searchIcon={<></>}
+            selectTextOnFocus
             autoCapitalize="none"
             autoCorrect={false}
-            clearIcon={
-              <Icon name="close" size={24} onPress={reset} color={styles.icon.color} />
-            }
           />
           <TouchableOpacity onPress={() => navigation.navigate("scanningQRCode")}>
             <View style={styles.iconContainer}>
@@ -487,32 +385,6 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
           </TouchableOpacity>
         </View>
         <DestinationInformation destinationState={destinationState} />
-        <FlatList
-          style={styles.flatList}
-          contentContainerStyle={styles.flatListContainer}
-          data={matchingContacts}
-          extraData={selectedId}
-          ListEmptyComponent={ListEmptyContent}
-          renderItem={({ item }) => (
-            <ListItem
-              key={item.username}
-              style={styles.item}
-              containerStyle={
-                item.id === selectedId ? styles.selectedContainer : styles.itemContainer
-              }
-              onPress={() => {
-                handleSelection(item.id)
-                handleChangeText(item.username)
-              }}
-            >
-              <Icon name={"person-outline"} size={24} color={colors.primary} />
-              <ListItem.Content>
-                <ListItem.Title style={styles.itemText}>{item.username}</ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
-          )}
-          keyExtractor={(item) => item.username}
-        />
         <View style={styles.buttonContainer}>
           <GaloyPrimaryButton
             title={
@@ -567,8 +439,7 @@ const usestyles = makeStyles(({ colors }) => ({
     borderColor: colors.warning,
   },
   buttonContainer: {
-    marginTop: 26,
-    flex: 0,
+    flex: 1,
     justifyContent: "flex-end",
   },
   input: {
@@ -585,65 +456,4 @@ const usestyles = makeStyles(({ colors }) => ({
     justifyContent: "center",
     alignItems: "center",
   },
-  searchBarContainer: {
-    flex: 1,
-    backgroundColor: colors.grey5,
-    borderBottomColor: colors.grey5,
-    borderTopColor: colors.grey5,
-    padding: 0,
-  },
-  searchBarInputContainerStyle: {
-    backgroundColor: colors.grey5,
-  },
-  searchBarText: {
-    color: colors.black,
-    textDecorationLine: "none",
-  },
-  icon: {
-    color: colors.primary,
-  },
-  activityIndicatorContainer: {
-    alignItems: "center",
-    flex: 1,
-    justifyContent: "center",
-  },
-  emptyListNoContacts: {
-    marginHorizontal: 12,
-    marginTop: 32,
-  },
-  emptyListNoMatching: {
-    marginHorizontal: 26,
-    marginTop: 8,
-  },
-  emptyListText: {
-    fontSize: 18,
-    marginTop: 30,
-    textAlign: "center",
-    color: colors.black,
-  },
-  emptyListTitle: {
-    color: colors.warning,
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  flatList: {
-    flex: 1,
-  },
-  flatListContainer: {
-    margin: 0,
-  },
-  item: {
-    marginHorizontal: 32,
-    marginBottom: 16,
-  },
-  itemContainer: {
-    borderRadius: 8,
-    backgroundColor: colors.grey5,
-  },
-  selectedContainer: {
-    borderRadius: 8,
-    backgroundColor: colors.grey3,
-  },
-  itemText: { color: colors.black },
 }))
