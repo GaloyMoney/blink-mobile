@@ -6,6 +6,7 @@ import { useCallback } from "react"
 import { ActivityIndicator, Dimensions, View } from "react-native"
 import Geolocation from "@react-native-community/geolocation"
 import MapView, {
+  BoundingBox,
   Callout,
   CalloutSubview,
   MapMarkerProps,
@@ -14,7 +15,6 @@ import MapView, {
 } from "react-native-maps"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
-import { isIos } from "../../utils/helper"
 import { toastShow } from "../../utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useBusinessMapMarkersQuery } from "@app/graphql/generated"
@@ -28,6 +28,7 @@ import MapStyles from "./map-styles.json"
 import countryCodes from "../../../utils/countryInfo.json"
 import { CountryCode } from "libphonenumber-js/mobile"
 import useDeviceLocation from "@app/hooks/use-device-location"
+import MapMarker from "@app/components/map-marker"
 
 const EL_ZONTE_COORDS = {
   latitude: 13.496743,
@@ -41,8 +42,27 @@ const { height, width } = Dimensions.get("window")
 const LATITUDE_DELTA = 15 // <-- decrease for more zoom
 const LONGITUDE_DELTA = LATITUDE_DELTA * (width / height)
 
+// the size of the box that will encompass viewable markers on the map
+const BOUNDING_BOX_HEIGHT = 5 // 1 latitude = 69 miles
+const BOUNDING_BOX_WIDTH = 6 // 1 longitude = 54.6 miles
+
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "Primary">
+}
+
+// TODO am I doing this stupid? maybe theres a graphQL type declared somewhere else I can use
+export type MarkerData = {
+  readonly __typename: "MapMarker"
+  readonly username?: string | null | undefined
+  readonly mapInfo: {
+    readonly __typename: "MapInfo"
+    readonly title: string
+    readonly coordinates: {
+      readonly __typename: "Coordinates"
+      readonly longitude: number
+      readonly latitude: number
+    }
+  }
 }
 
 type GeolocationPermissionNegativeError = {
@@ -76,9 +96,12 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   const isAuthed = useIsAuthed()
   const { countryCode, loading } = useDeviceLocation()
 
+  const mapViewRef = React.useRef<MapView>(null)
+
   const [isLoadingLocation, setIsLoadingLocation] = React.useState(true)
   const [userLocation, setUserLocation] = React.useState<Region>()
   const [isRefreshed, setIsRefreshed] = React.useState(false)
+  const [markers, setMarkers] = React.useState<React.ReactElement[]>([])
   const [wasLocationDenied, setLocationDenied] = React.useState(false)
   const { data, error, refetch } = useBusinessMapMarkersQuery({
     notifyOnNetworkStatusChange: true,
@@ -96,8 +119,6 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   if (error) {
     toastShow({ message: error.message, LL })
   }
-
-  const maps = data?.businessMapMarkers ?? []
 
   // if getting location was denied and device's country code has been found (or defaulted)
   // this is used to finalize the initial location shown on the Map
@@ -126,6 +147,34 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
       setIsLoadingLocation(false)
     }
   }, [wasLocationDenied, countryCode, loading, setIsLoadingLocation, setUserLocation])
+
+  /*
+    whenever user location is set (will always be set at least with defaults)
+    update the map markers
+  */
+  React.useEffect(() => {
+    if (userLocation) {
+      setViewableMarkers(userLocation)
+    }
+  }, [userLocation])
+
+  const handleMarkerPress = (item: MarkerData) => {
+    if (isAuthed && item?.username) {
+      navigation.navigate("sendBitcoinDestination", { username: item.username })
+    } else {
+      navigation.navigate("phoneFlow", {
+        screen: "phoneLoginInitiate",
+        params: {
+          type: PhoneLoginInitiateType.CreateAccount,
+        },
+      })
+    }
+  }
+
+  const handleRegionChangeComplete = (region: Region) => {
+    console.log("this might call infinitely. watch out and check docs to fix if needed")
+    setViewableMarkers(region)
+  }
 
   const getUserRegion = (callback: (region?: Region) => void) => {
     try {
@@ -175,55 +224,56 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
 
   useFocusEffect(requestLocationPermission)
 
-  // TODO this should be memoized for performance improvements. Use reduce() inside a useMemo() with some dependency array values
-  // and/or a generator function that yields markers asynchronously???
-  const markers: ReturnType<React.FC<MapMarkerProps>>[] = []
-  maps.forEach((item) => {
-    if (item) {
-      const onPress = () => {
-        if (isAuthed && item?.username) {
-          navigation.navigate("sendBitcoinDestination", { username: item.username })
-        } else {
-          navigation.navigate("phoneFlow", {
-            screen: "phoneLoginInitiate",
-            params: {
-              type: PhoneLoginInitiateType.CreateAccount,
-            },
-          })
-        }
+  const calculateBoundingBox = async (region: Region): Promise<BoundingBox> => {
+    let boundingBox: BoundingBox
+    if (mapViewRef.current) {
+      let { northEast, southWest } = await mapViewRef.current?.getMapBoundaries()
+      // TODO adjust to be height BOUNDING_BOX_HEIGHT and width BOUNDING_BOX_WIDTH
+      // and dont forget to account for how some of the values are positive and some negative
+      boundingBox = { northEast, southWest }
+    } else {
+      // this shouldn't happen but technically React refs start out as null so this is here
+      // in case the ref hasn't been set on the MapView yet
+      boundingBox = {
+        northEast: {
+          latitude: region.latitude + Math.round(BOUNDING_BOX_HEIGHT / 2),
+          longitude: region.longitude + Math.round(BOUNDING_BOX_WIDTH / 2),
+        },
+        southWest: {
+          latitude: region.latitude - Math.round(BOUNDING_BOX_HEIGHT / 2),
+          longitude: region.longitude - Math.round(BOUNDING_BOX_WIDTH / 2),
+        },
       }
-
-      markers.push(
-        <Marker
-          coordinate={item.mapInfo.coordinates}
-          key={item.username}
-          pinColor={colors._orange}
-        >
-          <Callout onPress={() => (Boolean(item.username) && !isIos ? onPress() : null)}>
-            <View style={styles.customView}>
-              <Text type="h1" style={styles.title}>
-                {item.mapInfo.title}
-              </Text>
-              {Boolean(item.username) &&
-                (isIos ? (
-                  <CalloutSubview onPress={() => onPress()}>
-                    <GaloyPrimaryButton
-                      style={styles.ios}
-                      title={LL.MapScreen.payBusiness()}
-                    />
-                  </CalloutSubview>
-                ) : (
-                  <GaloyPrimaryButton
-                    containerStyle={styles.android}
-                    title={LL.MapScreen.payBusiness()}
-                  />
-                ))}
-            </View>
-          </Callout>
-        </Marker>,
-      )
     }
-  })
+    return boundingBox
+  }
+
+  const setViewableMarkers = async (region: Region) => {
+    const boundingBox = await calculateBoundingBox(region)
+
+    // TODO iterating through the whole world's markers (currently 650+) is wild
+    // need some sort of cool sorting alogorithm based of lat and lng values to deal with this
+    const markers = (data?.businessMapMarkers ?? []).reduce(
+      (arr: React.ReactElement[], item: MarkerData | null) => {
+        if (item) {
+          const { latitude, longitude } = item.mapInfo.coordinates
+          const isInView: boolean =
+            latitude < boundingBox.northEast.latitude &&
+            latitude > boundingBox.southWest.latitude &&
+            longitude > boundingBox.southWest.longitude &&
+            longitude < boundingBox.northEast.longitude
+          if (isInView) {
+            const marker = <MapMarker onPress={handleMarkerPress} item={item} />
+            arr.push(marker)
+          }
+        }
+
+        return arr
+      },
+      [] as React.ReactElement[],
+    )
+    setMarkers(markers)
+  }
 
   return (
     <Screen>
@@ -233,8 +283,11 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
         </View>
       ) : (
         <MapView
+          ref={mapViewRef}
           style={styles.map}
           showsUserLocation={true}
+          onRegionChangeComplete={handleRegionChangeComplete}
+          loadingEnabled
           initialRegion={userLocation}
           customMapStyle={themeMode === "dark" ? MapStyles.dark : MapStyles.light}
         >
@@ -245,25 +298,14 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   )
 }
 
-const useStyles = makeStyles(({ colors }) => ({
-  android: { marginTop: 18 },
-
+const useStyles = makeStyles(() => ({
   loaderContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
-  customView: {
-    alignItems: "center",
-    margin: 12,
-  },
-
-  ios: { paddingTop: 12 },
-
   map: {
     height: "100%",
     width: "100%",
   },
-
-  title: { color: colors._darkGrey },
 }))
