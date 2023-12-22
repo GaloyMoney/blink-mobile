@@ -82,6 +82,8 @@ export type Scalars = {
   Username: { input: string; output: string; }
   /** Unique identifier of a wallet */
   WalletId: { input: string; output: string; }
+  join__FieldSet: { input: string; output: string; }
+  link__Import: { input: string; output: string; }
   _FieldSet: { input: string; output: string; }
 };
 
@@ -968,6 +970,8 @@ export type Mutation = {
   readonly onChainUsdPaymentSend: PaymentSendPayload;
   readonly onChainUsdPaymentSendAsBtcDenominated: PaymentSendPayload;
   readonly onboardingFlowStart: OnboardingFlowStartResult;
+  readonly quizClaim: QuizClaimPayload;
+  /** @deprecated Use quizClaim instead */
   readonly quizCompleted: QuizCompletedPayload;
   /** @deprecated will be moved to AccountContact */
   readonly userContactUpdateAlias: UserContactUpdateAliasPayload;
@@ -1176,6 +1180,11 @@ export type MutationOnChainUsdPaymentSendAsBtcDenominatedArgs = {
 
 export type MutationOnboardingFlowStartArgs = {
   input: OnboardingFlowStartInput;
+};
+
+
+export type MutationQuizClaimArgs = {
+  input: QuizClaimInput;
 };
 
 
@@ -1593,6 +1602,17 @@ export type Quiz = {
   readonly amount: Scalars['SatAmount']['output'];
   readonly completed: Scalars['Boolean']['output'];
   readonly id: Scalars['ID']['output'];
+  readonly notBefore?: Maybe<Scalars['Timestamp']['output']>;
+};
+
+export type QuizClaimInput = {
+  readonly id: Scalars['ID']['input'];
+};
+
+export type QuizClaimPayload = {
+  readonly __typename: 'QuizClaimPayload';
+  readonly errors: ReadonlyArray<Error>;
+  readonly quizzes?: Maybe<ReadonlyArray<Maybe<Quiz>>>;
 };
 
 export type QuizCompletedInput = {
@@ -2144,6 +2164,21 @@ export const WelcomeRange = {
 } as const;
 
 export type WelcomeRange = typeof WelcomeRange[keyof typeof WelcomeRange];
+export const Join__Graph = {
+  Circles: 'CIRCLES',
+  Galoy: 'GALOY',
+  Kyc: 'KYC'
+} as const;
+
+export type Join__Graph = typeof Join__Graph[keyof typeof Join__Graph];
+export const Link__Purpose = {
+  /** `EXECUTION` features provide metadata necessary for operation execution. */
+  Execution: 'EXECUTION',
+  /** `SECURITY` features provide metadata necessary to securely resolve fields. */
+  Security: 'SECURITY'
+} as const;
+
+export type Link__Purpose = typeof Link__Purpose[keyof typeof Link__Purpose];
 export type MobileUpdateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2287,14 +2322,14 @@ export type DebugScreenQuery = { readonly __typename: 'Query', readonly me?: { r
 export type MyQuizQuestionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyQuizQuestionsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly quiz: ReadonlyArray<{ readonly __typename: 'Quiz', readonly id: string, readonly amount: number, readonly completed: boolean }> } } | null };
+export type MyQuizQuestionsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly quiz: ReadonlyArray<{ readonly __typename: 'Quiz', readonly id: string, readonly amount: number, readonly completed: boolean, readonly notBefore?: number | null }> } } | null };
 
-export type QuizCompletedMutationVariables = Exact<{
-  input: QuizCompletedInput;
+export type QuizClaimMutationVariables = Exact<{
+  input: QuizClaimInput;
 }>;
 
 
-export type QuizCompletedMutation = { readonly __typename: 'Mutation', readonly quizCompleted: { readonly __typename: 'QuizCompletedPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly quiz?: { readonly __typename: 'Quiz', readonly id: string, readonly completed: boolean } | null } };
+export type QuizClaimMutation = { readonly __typename: 'Mutation', readonly quizClaim: { readonly __typename: 'QuizClaimPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly quizzes?: ReadonlyArray<{ readonly __typename: 'Quiz', readonly id: string, readonly amount: number, readonly completed: boolean, readonly notBefore?: number | null } | null> | null } };
 
 export type UserEmailRegistrationInitiateMutationVariables = Exact<{
   input: UserEmailRegistrationInitiateInput;
@@ -3801,6 +3836,7 @@ export const MyQuizQuestionsDocument = gql`
           id
           amount
           completed
+          notBefore
         }
       }
     }
@@ -3834,45 +3870,47 @@ export function useMyQuizQuestionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type MyQuizQuestionsQueryHookResult = ReturnType<typeof useMyQuizQuestionsQuery>;
 export type MyQuizQuestionsLazyQueryHookResult = ReturnType<typeof useMyQuizQuestionsLazyQuery>;
 export type MyQuizQuestionsQueryResult = Apollo.QueryResult<MyQuizQuestionsQuery, MyQuizQuestionsQueryVariables>;
-export const QuizCompletedDocument = gql`
-    mutation quizCompleted($input: QuizCompletedInput!) {
-  quizCompleted(input: $input) {
+export const QuizClaimDocument = gql`
+    mutation quizClaim($input: QuizClaimInput!) {
+  quizClaim(input: $input) {
     errors {
       message
     }
-    quiz {
+    quizzes {
       id
+      amount
       completed
+      notBefore
     }
   }
 }
     `;
-export type QuizCompletedMutationFn = Apollo.MutationFunction<QuizCompletedMutation, QuizCompletedMutationVariables>;
+export type QuizClaimMutationFn = Apollo.MutationFunction<QuizClaimMutation, QuizClaimMutationVariables>;
 
 /**
- * __useQuizCompletedMutation__
+ * __useQuizClaimMutation__
  *
- * To run a mutation, you first call `useQuizCompletedMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useQuizCompletedMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useQuizClaimMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useQuizClaimMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [quizCompletedMutation, { data, loading, error }] = useQuizCompletedMutation({
+ * const [quizClaimMutation, { data, loading, error }] = useQuizClaimMutation({
  *   variables: {
  *      input: // value for 'input'
  *   },
  * });
  */
-export function useQuizCompletedMutation(baseOptions?: Apollo.MutationHookOptions<QuizCompletedMutation, QuizCompletedMutationVariables>) {
+export function useQuizClaimMutation(baseOptions?: Apollo.MutationHookOptions<QuizClaimMutation, QuizClaimMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<QuizCompletedMutation, QuizCompletedMutationVariables>(QuizCompletedDocument, options);
+        return Apollo.useMutation<QuizClaimMutation, QuizClaimMutationVariables>(QuizClaimDocument, options);
       }
-export type QuizCompletedMutationHookResult = ReturnType<typeof useQuizCompletedMutation>;
-export type QuizCompletedMutationResult = Apollo.MutationResult<QuizCompletedMutation>;
-export type QuizCompletedMutationOptions = Apollo.BaseMutationOptions<QuizCompletedMutation, QuizCompletedMutationVariables>;
+export type QuizClaimMutationHookResult = ReturnType<typeof useQuizClaimMutation>;
+export type QuizClaimMutationResult = Apollo.MutationResult<QuizClaimMutation>;
+export type QuizClaimMutationOptions = Apollo.BaseMutationOptions<QuizClaimMutation, QuizClaimMutationVariables>;
 export const UserEmailRegistrationInitiateDocument = gql`
     mutation userEmailRegistrationInitiate($input: UserEmailRegistrationInitiateInput!) {
   userEmailRegistrationInitiate(input: $input) {
@@ -7155,6 +7193,8 @@ export type ResolversTypes = {
   PublicWallet: ResolverTypeWrapper<PublicWallet>;
   Query: ResolverTypeWrapper<{}>;
   Quiz: ResolverTypeWrapper<Quiz>;
+  QuizClaimInput: QuizClaimInput;
+  QuizClaimPayload: ResolverTypeWrapper<QuizClaimPayload>;
   QuizCompletedInput: QuizCompletedInput;
   QuizCompletedPayload: ResolverTypeWrapper<QuizCompletedPayload>;
   RealtimePrice: ResolverTypeWrapper<RealtimePrice>;
@@ -7216,6 +7256,10 @@ export type ResolversTypes = {
   WelcomeLeaderboardInput: WelcomeLeaderboardInput;
   WelcomeProfile: ResolverTypeWrapper<WelcomeProfile>;
   WelcomeRange: WelcomeRange;
+  join__FieldSet: ResolverTypeWrapper<Scalars['join__FieldSet']['output']>;
+  join__Graph: Join__Graph;
+  link__Import: ResolverTypeWrapper<Scalars['link__Import']['output']>;
+  link__Purpose: Link__Purpose;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -7359,6 +7403,8 @@ export type ResolversParentTypes = {
   PublicWallet: PublicWallet;
   Query: {};
   Quiz: Quiz;
+  QuizClaimInput: QuizClaimInput;
+  QuizClaimPayload: QuizClaimPayload;
   QuizCompletedInput: QuizCompletedInput;
   QuizCompletedPayload: QuizCompletedPayload;
   RealtimePrice: RealtimePrice;
@@ -7415,14 +7461,67 @@ export type ResolversParentTypes = {
   WalletId: Scalars['WalletId']['output'];
   WelcomeLeaderboardInput: WelcomeLeaderboardInput;
   WelcomeProfile: WelcomeProfile;
+  join__FieldSet: Scalars['join__FieldSet']['output'];
+  link__Import: Scalars['link__Import']['output'];
 };
 
-export type DeferDirectiveArgs = {
-  if?: Scalars['Boolean']['input'];
-  label?: Maybe<Scalars['String']['input']>;
+export type Join__EnumValueDirectiveArgs = {
+  graph: Join__Graph;
 };
 
-export type DeferDirectiveResolver<Result, Parent, ContextType = any, Args = DeferDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+export type Join__EnumValueDirectiveResolver<Result, Parent, ContextType = any, Args = Join__EnumValueDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type Join__FieldDirectiveArgs = {
+  external?: Maybe<Scalars['Boolean']['input']>;
+  graph?: Maybe<Join__Graph>;
+  override?: Maybe<Scalars['String']['input']>;
+  provides?: Maybe<Scalars['join__FieldSet']['input']>;
+  requires?: Maybe<Scalars['join__FieldSet']['input']>;
+  type?: Maybe<Scalars['String']['input']>;
+  usedOverridden?: Maybe<Scalars['Boolean']['input']>;
+};
+
+export type Join__FieldDirectiveResolver<Result, Parent, ContextType = any, Args = Join__FieldDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type Join__GraphDirectiveArgs = {
+  name: Scalars['String']['input'];
+  url: Scalars['String']['input'];
+};
+
+export type Join__GraphDirectiveResolver<Result, Parent, ContextType = any, Args = Join__GraphDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type Join__ImplementsDirectiveArgs = {
+  graph: Join__Graph;
+  interface: Scalars['String']['input'];
+};
+
+export type Join__ImplementsDirectiveResolver<Result, Parent, ContextType = any, Args = Join__ImplementsDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type Join__TypeDirectiveArgs = {
+  extension?: Scalars['Boolean']['input'];
+  graph: Join__Graph;
+  isInterfaceObject?: Scalars['Boolean']['input'];
+  key?: Maybe<Scalars['join__FieldSet']['input']>;
+  resolvable?: Scalars['Boolean']['input'];
+};
+
+export type Join__TypeDirectiveResolver<Result, Parent, ContextType = any, Args = Join__TypeDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type Join__UnionMemberDirectiveArgs = {
+  graph: Join__Graph;
+  member: Scalars['String']['input'];
+};
+
+export type Join__UnionMemberDirectiveResolver<Result, Parent, ContextType = any, Args = Join__UnionMemberDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type LinkDirectiveArgs = {
+  as?: Maybe<Scalars['String']['input']>;
+  for?: Maybe<Link__Purpose>;
+  import?: Maybe<ReadonlyArray<Maybe<Scalars['link__Import']['input']>>>;
+  url?: Maybe<Scalars['String']['input']>;
+};
+
+export type LinkDirectiveResolver<Result, Parent, ContextType = any, Args = LinkDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type AccountResolvers<ContextType = any, ParentType extends ResolversParentTypes['Account'] = ResolversParentTypes['Account']> = {
   __resolveType: TypeResolveFn<'ConsumerAccount', ParentType, ContextType>;
@@ -7905,6 +8004,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   onChainUsdPaymentSend?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationOnChainUsdPaymentSendArgs, 'input'>>;
   onChainUsdPaymentSendAsBtcDenominated?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationOnChainUsdPaymentSendAsBtcDenominatedArgs, 'input'>>;
   onboardingFlowStart?: Resolver<ResolversTypes['OnboardingFlowStartResult'], ParentType, ContextType, RequireFields<MutationOnboardingFlowStartArgs, 'input'>>;
+  quizClaim?: Resolver<ResolversTypes['QuizClaimPayload'], ParentType, ContextType, RequireFields<MutationQuizClaimArgs, 'input'>>;
   quizCompleted?: Resolver<ResolversTypes['QuizCompletedPayload'], ParentType, ContextType, RequireFields<MutationQuizCompletedArgs, 'input'>>;
   userContactUpdateAlias?: Resolver<ResolversTypes['UserContactUpdateAliasPayload'], ParentType, ContextType, RequireFields<MutationUserContactUpdateAliasArgs, 'input'>>;
   userEmailDelete?: Resolver<ResolversTypes['UserEmailDeletePayload'], ParentType, ContextType>;
@@ -8109,6 +8209,13 @@ export type QuizResolvers<ContextType = any, ParentType extends ResolversParentT
   amount?: Resolver<ResolversTypes['SatAmount'], ParentType, ContextType>;
   completed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  notBefore?: Resolver<Maybe<ResolversTypes['Timestamp']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type QuizClaimPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['QuizClaimPayload'] = ResolversParentTypes['QuizClaimPayload']> = {
+  errors?: Resolver<ReadonlyArray<ResolversTypes['Error']>, ParentType, ContextType>;
+  quizzes?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['Quiz']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -8404,6 +8511,14 @@ export type WelcomeProfileResolvers<ContextType = any, ParentType extends Resolv
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export interface Join__FieldSetScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['join__FieldSet'], any> {
+  name: 'join__FieldSet';
+}
+
+export interface Link__ImportScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['link__Import'], any> {
+  name: 'link__Import';
+}
+
 export type Resolvers<ContextType = any> = {
   Account?: AccountResolvers<ContextType>;
   AccountDeletePayload?: AccountDeletePayloadResolvers<ContextType>;
@@ -8499,6 +8614,7 @@ export type Resolvers<ContextType = any> = {
   PublicWallet?: PublicWalletResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Quiz?: QuizResolvers<ContextType>;
+  QuizClaimPayload?: QuizClaimPayloadResolvers<ContextType>;
   QuizCompletedPayload?: QuizCompletedPayloadResolvers<ContextType>;
   RealtimePrice?: RealtimePriceResolvers<ContextType>;
   RealtimePricePayload?: RealtimePricePayloadResolvers<ContextType>;
@@ -8541,8 +8657,16 @@ export type Resolvers<ContextType = any> = {
   Wallet?: WalletResolvers<ContextType>;
   WalletId?: GraphQLScalarType;
   WelcomeProfile?: WelcomeProfileResolvers<ContextType>;
+  join__FieldSet?: GraphQLScalarType;
+  link__Import?: GraphQLScalarType;
 };
 
 export type DirectiveResolvers<ContextType = any> = {
-  defer?: DeferDirectiveResolver<any, any, ContextType>;
+  join__enumValue?: Join__EnumValueDirectiveResolver<any, any, ContextType>;
+  join__field?: Join__FieldDirectiveResolver<any, any, ContextType>;
+  join__graph?: Join__GraphDirectiveResolver<any, any, ContextType>;
+  join__implements?: Join__ImplementsDirectiveResolver<any, any, ContextType>;
+  join__type?: Join__TypeDirectiveResolver<any, any, ContextType>;
+  join__unionMember?: Join__UnionMemberDirectiveResolver<any, any, ContextType>;
+  link?: LinkDirectiveResolver<any, any, ContextType>;
 };

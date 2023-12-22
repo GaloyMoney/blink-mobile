@@ -14,7 +14,6 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { gql } from "@apollo/client"
-import { useQuizCompletedMutation } from "@app/graphql/generated"
 import { getErrorMessages } from "@app/graphql/utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { toastShow } from "@app/utils/toast"
@@ -30,6 +29,7 @@ import { augmentCardWithGqlData, getQuizQuestionsContent } from "./earns-utils"
 import { useQuizServer } from "../earns-map-screen/use-quiz-server"
 import { makeStyles, useTheme } from "@rneui/themed"
 import { ScrollView } from "react-native-gesture-handler"
+import { useQuizClaimMutation } from "@app/graphql/generated"
 
 const useStyles = makeStyles(({ colors }) => ({
   answersViewInner: {
@@ -191,14 +191,16 @@ type Props = {
 }
 
 gql`
-  mutation quizCompleted($input: QuizCompletedInput!) {
-    quizCompleted(input: $input) {
+  mutation quizClaim($input: QuizClaimInput!) {
+    quizClaim(input: $input) {
       errors {
         message
       }
-      quiz {
+      quizzes {
         id
+        amount
         completed
+        notBefore
       }
     }
   }
@@ -238,7 +240,7 @@ export const EarnQuiz = ({ route }: Props) => {
   const card = augmentCardWithGqlData({ card: cardNoMetadata, quizServerData })
   const { title, text, amount, answers, feedback, question, completed } = card
 
-  const [quizCompleted, { loading: quizCompletedLoading }] = useQuizCompletedMutation()
+  const [quizClaim, { loading: quizClaimLoading }] = useQuizClaimMutation()
   const [quizVisible, setQuizVisible] = useState(false)
   const [recordedAnswer, setRecordedAnswer] = useState<number[]>([])
 
@@ -250,21 +252,21 @@ export const EarnQuiz = ({ route }: Props) => {
 
   useEffect(() => {
     ;(async () => {
-      if (recordedAnswer.indexOf(0) !== -1 && !completed && !quizCompletedLoading) {
-        const { data } = await quizCompleted({
+      if (recordedAnswer.indexOf(0) !== -1 && !completed && !quizClaimLoading) {
+        const { data } = await quizClaim({
           variables: { input: { id } },
         })
 
-        if (data?.quizCompleted?.errors?.length) {
+        if (data?.quizClaim?.errors?.length) {
           // FIXME: message is hidden by the modal
           toastShow({
-            message: getErrorMessages(data.quizCompleted.errors),
+            message: getErrorMessages(data.quizClaim.errors),
             LL,
           })
         }
       }
     })()
-  }, [recordedAnswer, id, quizCompleted, LL, completed, quizCompletedLoading])
+  }, [recordedAnswer, id, quizClaim, LL, completed, quizClaimLoading])
 
   const close = async () => {
     if (quizVisible) {
