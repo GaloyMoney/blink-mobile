@@ -1593,7 +1593,7 @@ type QuizClaimPayload
   @join__type(graph: GALOY)
 {
   errors: [Error!]!
-  quizzes: [Quiz]
+  quizzes: [Quiz!]!
 }
 
 input QuizCompletedInput

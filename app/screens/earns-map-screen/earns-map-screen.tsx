@@ -187,12 +187,12 @@ export const EarnMapScreen: React.FC = () => {
     const styles = useStyles()
 
     const disabled = currSection < position
-    const notYet = currSection === position && !canDoNextSection
+    const nextSectionNotYetAvailable = currSection === position && !canDoNextSection
     const progressSection = disabled ? 0 : currSection > position ? 1 : progress
 
     const onPress = () => {
-      notYet
-        ? Alert.alert("Not yet", "This section will be available tomorrow!")
+      nextSectionNotYetAvailable
+        ? Alert.alert(LL.EarnScreen.notYet(), LL.EarnScreen.availableTomorrow())
         : navigation.navigate("earnsSection", { section })
     }
 
