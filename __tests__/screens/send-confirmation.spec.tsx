@@ -13,8 +13,12 @@ it("SendScreen Confirmation", async () => {
 
   // it seems we need multiple act because the component re-render multiple times
   // probably this could be debug with why-did-you-render
-  await act(async () => {})
-  await act(async () => {})
+  await act(
+    () =>
+      new Promise((resolve) => {
+        setTimeout(resolve, 10)
+      }),
+  )
 
   const { children } = await findByLabelText("Successful Fee")
   expect(children).toEqual(["₦0 ($0.00)"])
