@@ -15,7 +15,7 @@ const iOSValueForAppiumInspector = {
   "appium:bundleId": "io.galoy.bitcoinbeach",
   "appium:automationName": "XCUITest",
   "appium:snapshotMaxDepth": 500,
-  "appium:autoDismissAlerts": true
+  "appium:autoAcceptAlerts": false,
 }
 
 // value to copy to appium inspector
