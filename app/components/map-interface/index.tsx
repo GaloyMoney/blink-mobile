@@ -47,7 +47,6 @@ export default function MapInterface({ data, userLocation, handleMarkerPress }: 
                 key={item.username}
                 pinColor={colors._orange}
                 title={item.mapInfo.title}
-                style={{ alignItems: "center", justifyContent: "center" }}
                 onCalloutPress={() => handleMarkerPress(item)}
               />
             )

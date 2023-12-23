@@ -17,8 +17,7 @@ import { PhoneLoginInitiateType } from "../phone-auth-screen"
 import countryCodes from "../../../utils/countryInfo.json"
 import { CountryCode } from "libphonenumber-js/mobile"
 import useDeviceLocation from "@app/hooks/use-device-location"
-import { MarkerData } from "@app/components/map-interface"
-import MapInterface from "@app/components/map-interface"
+import MapInterface, { MarkerData } from "@app/components/map-interface"
 
 const EL_ZONTE_COORDS = {
   latitude: 13.496743,
