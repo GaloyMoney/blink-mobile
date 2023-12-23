@@ -6,6 +6,7 @@ import ShareIcon from "@app/assets/icons/share.svg"
 import ErrorIcon from "@app/assets/icons/error.svg"
 import MerchantIcon from "@app/assets/icons/merchant.svg"
 import ChevronDownIcon from "@app/assets/icons/chevron-down.svg"
+import MapPinIcon from "@app/assets/icons/map-pin.svg"
 import WebLink from "@app/assets/icons/web-link.svg"
 import NFCIcon from "@app/assets/icons/nfc.svg"
 import { View } from "react-native"
@@ -13,6 +14,9 @@ import { View } from "react-native"
 export const CustomIcon = ({ name, color }: { name: string; color: string }) => {
   if (name === "custom-receive-bitcoin") {
     return <ReceiveBitcoinIcon color={color} />
+  }
+  if (name === "map-pin") {
+    return <MapPinIcon color={color} />
   }
   if (name === "custom-info-icon") {
     return <InfoIcon color={color} />

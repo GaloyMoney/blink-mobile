@@ -1,0 +1,48 @@
+
+<svg
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    xmlns:cc="http://creativecommons.org/ns#"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:ns1="http://sozi.baierouge.fr"
+    id="svg3873"
+    sodipodi:docname="map pin.svg"
+    viewBox="0 0 64 64"
+    version="1.1"
+    inkscape:version="0.48.3.1 r9886"
+  >
+  <g
+      id="layer1"
+      inkscape:label="Layer 1"
+      inkscape:groupmode="layer"
+    >
+    <g
+        id="g3841"
+        transform="matrix(.18403 0 0 .17534 214.35 -157.87)"
+      >
+      <path
+          id="path3047"
+          d="m-995.72 1225.8c-0.2729-0.7794-1.645-6.0275-3.049-11.662-4.441-17.823-12.122-36.988-22.546-56.255-5.9844-11.061-7.0667-12.824-24.551-40-28.252-43.911-33.217-56.241-32.173-79.89 0.9573-21.672 8.2717-37.909 24.149-53.61 13.179-13.032 27.807-20.549 45.601-23.432 44.097-7.1446 86.878 21.883 95.546 64.828 2.0208 10.012 1.5723 27.243-0.95271 36.604-2.77 10.269-13.883 31.045-29.589 55.315-28.348 43.807-39.082 65.687-47.119 96.05-3.1117 11.755-4.3985 14.673-5.3161 12.052z"
+          style="stroke:white;stroke-width:5.7;fill:#FF7e1c"
+          inkscape:connector-curvature="0"
+      />
+      <path
+          id="path3049"
+          sodipodi:rx="31.428572"
+          sodipodi:ry="30"
+          style="stroke-width:0;fill:#804210"
+          sodipodi:type="arc"
+          d="m-962.86 1042.4c0 16.568-14.071 30-31.429 30-17.357 0-31.429-13.432-31.429-30 0-16.569 14.071-30 31.429-30s31.429 13.431 31.429 30z"
+          transform="matrix(1.0955 0 0 1.0955 94.909 -88.07)"
+          sodipodi:cy="1042.3622"
+          sodipodi:cx="-994.28571"
+      />
+    </g
+    >
+  </g
+  >
+</svg>

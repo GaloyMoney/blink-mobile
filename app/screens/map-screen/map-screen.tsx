@@ -3,16 +3,9 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
-import { ActivityIndicator, Dimensions, View } from "react-native"
+import { Dimensions } from "react-native"
 import Geolocation from "@react-native-community/geolocation"
-import MapView, {
-  BoundingBox,
-  Callout,
-  CalloutSubview,
-  MapMarkerProps,
-  Marker,
-  Region,
-} from "react-native-maps"
+import { Region } from "react-native-maps"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { toastShow } from "../../utils/toast"
@@ -20,15 +13,12 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { useBusinessMapMarkersQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { PhoneLoginInitiateType } from "../phone-auth-screen"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import MapStyles from "./map-styles.json"
-
 import countryCodes from "../../../utils/countryInfo.json"
 import { CountryCode } from "libphonenumber-js/mobile"
 import useDeviceLocation from "@app/hooks/use-device-location"
-import MapMarker from "@app/components/map-marker"
+import { MarkerData } from "@app/components/map-interface"
+import MapInterface from "@app/components/map-interface"
 
 const EL_ZONTE_COORDS = {
   latitude: 13.496743,
@@ -43,26 +33,11 @@ const LATITUDE_DELTA = 15 // <-- decrease for more zoom
 const LONGITUDE_DELTA = LATITUDE_DELTA * (width / height)
 
 // the size of the box that will encompass viewable markers on the map
-const BOUNDING_BOX_HEIGHT = 5 // 1 latitude = 69 miles
-const BOUNDING_BOX_WIDTH = 6 // 1 longitude = 54.6 miles
+// const BOUNDING_BOX_HEIGHT = 5 // 1 latitude = 69 miles
+// const BOUNDING_BOX_WIDTH = 6 // 1 longitude = 54.6 miles
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "Primary">
-}
-
-// TODO am I doing this stupid? maybe theres a graphQL type declared somewhere else I can use
-export type MarkerData = {
-  readonly __typename: "MapMarker"
-  readonly username?: string | null | undefined
-  readonly mapInfo: {
-    readonly __typename: "MapInfo"
-    readonly title: string
-    readonly coordinates: {
-      readonly __typename: "Coordinates"
-      readonly longitude: number
-      readonly latitude: number
-    }
-  }
 }
 
 type GeolocationPermissionNegativeError = {
@@ -89,19 +64,12 @@ gql`
 `
 
 export const MapScreen: React.FC<Props> = ({ navigation }) => {
-  const {
-    theme: { colors, mode: themeMode },
-  } = useTheme()
-  const styles = useStyles()
   const isAuthed = useIsAuthed()
   const { countryCode, loading } = useDeviceLocation()
 
-  const mapViewRef = React.useRef<MapView>(null)
-
-  const [isLoadingLocation, setIsLoadingLocation] = React.useState(true)
   const [userLocation, setUserLocation] = React.useState<Region>()
   const [isRefreshed, setIsRefreshed] = React.useState(false)
-  const [markers, setMarkers] = React.useState<React.ReactElement[]>([])
+  // const [boundingBox, setBoundingBox] = React.useState<BoundingBox>()
   const [wasLocationDenied, setLocationDenied] = React.useState(false)
   const { data, error, refetch } = useBusinessMapMarkersQuery({
     notifyOnNetworkStatusChange: true,
@@ -119,6 +87,13 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   if (error) {
     toastShow({ message: error.message, LL })
   }
+
+  // -------- might use this later if it's decided to only load a portion of the map markers at a time ----------- //
+  // React.useEffect(() => {
+  //   if (userLocation) {
+  //     calculateBoundingBox(userLocation)
+  //   }
+  // }, [userLocation])
 
   // if getting location was denied and device's country code has been found (or defaulted)
   // this is used to finalize the initial location shown on the Map
@@ -142,21 +117,13 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
             longitudeDelta: LONGITUDE_DELTA,
           }
           setUserLocation(region)
+          // country code wasn't identified so resort to El Zonte
+        } else {
+          setUserLocation(EL_ZONTE_COORDS)
         }
       }
-      setIsLoadingLocation(false)
     }
-  }, [wasLocationDenied, countryCode, loading, setIsLoadingLocation, setUserLocation])
-
-  /*
-    whenever user location is set (will always be set at least with defaults)
-    update the map markers
-  */
-  React.useEffect(() => {
-    if (userLocation) {
-      setViewableMarkers(userLocation)
-    }
-  }, [userLocation])
+  }, [wasLocationDenied, countryCode, loading, setUserLocation])
 
   const handleMarkerPress = (item: MarkerData) => {
     if (isAuthed && item?.username) {
@@ -169,11 +136,6 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
         },
       })
     }
-  }
-
-  const handleRegionChangeComplete = (region: Region) => {
-    console.log("this might call infinitely. watch out and check docs to fix if needed")
-    setViewableMarkers(region)
   }
 
   const getUserRegion = (callback: (region?: Region) => void) => {
@@ -205,7 +167,6 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
       getUserRegion(async (region) => {
         if (region) {
           setUserLocation(region)
-          setIsLoadingLocation(false)
         } else {
           setLocationDenied(true)
         }
@@ -224,88 +185,39 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
 
   useFocusEffect(requestLocationPermission)
 
-  const calculateBoundingBox = async (region: Region): Promise<BoundingBox> => {
-    let boundingBox: BoundingBox
-    if (mapViewRef.current) {
-      let { northEast, southWest } = await mapViewRef.current?.getMapBoundaries()
-      // TODO adjust to be height BOUNDING_BOX_HEIGHT and width BOUNDING_BOX_WIDTH
-      // and dont forget to account for how some of the values are positive and some negative
-      boundingBox = { northEast, southWest }
-    } else {
-      // this shouldn't happen but technically React refs start out as null so this is here
-      // in case the ref hasn't been set on the MapView yet
-      boundingBox = {
-        northEast: {
-          latitude: region.latitude + Math.round(BOUNDING_BOX_HEIGHT / 2),
-          longitude: region.longitude + Math.round(BOUNDING_BOX_WIDTH / 2),
-        },
-        southWest: {
-          latitude: region.latitude - Math.round(BOUNDING_BOX_HEIGHT / 2),
-          longitude: region.longitude - Math.round(BOUNDING_BOX_WIDTH / 2),
-        },
-      }
-    }
-    return boundingBox
-  }
-
-  const setViewableMarkers = async (region: Region) => {
-    const boundingBox = await calculateBoundingBox(region)
-
-    // TODO iterating through the whole world's markers (currently 650+) is wild
-    // need some sort of cool sorting alogorithm based of lat and lng values to deal with this
-    const markers = (data?.businessMapMarkers ?? []).reduce(
-      (arr: React.ReactElement[], item: MarkerData | null) => {
-        if (item) {
-          const { latitude, longitude } = item.mapInfo.coordinates
-          const isInView: boolean =
-            latitude < boundingBox.northEast.latitude &&
-            latitude > boundingBox.southWest.latitude &&
-            longitude > boundingBox.southWest.longitude &&
-            longitude < boundingBox.northEast.longitude
-          if (isInView) {
-            const marker = <MapMarker onPress={handleMarkerPress} item={item} />
-            arr.push(marker)
-          }
-        }
-
-        return arr
-      },
-      [] as React.ReactElement[],
-    )
-    setMarkers(markers)
-  }
+  // -------- might use this later if it's decided to only load a portion of the map markers at a time ----------- //
+  // const calculateBoundingBox = async (region: Region) => {
+  //   let _boundingBox: BoundingBox
+  //   if (mapViewRef.current) {
+  //     let { northEast, southWest } = await mapViewRef.current?.getMapBoundaries()
+  //     // TODO adjust to be height BOUNDING_BOX_HEIGHT and width BOUNDING_BOX_WIDTH
+  //     // and dont forget to account for how some of the values are positive and some negative
+  //     _boundingBox = { northEast, southWest }
+  //   } else {
+  //     // this shouldn't happen but if mapViewRef.current is null for whatever reason, we have a backup
+  //     _boundingBox = {
+  //       northEast: {
+  //         latitude: region.latitude + Math.round(BOUNDING_BOX_HEIGHT / 2),
+  //         longitude: region.longitude + Math.round(BOUNDING_BOX_WIDTH / 2),
+  //       },
+  //       southWest: {
+  //         latitude: region.latitude - Math.round(BOUNDING_BOX_HEIGHT / 2),
+  //         longitude: region.longitude - Math.round(BOUNDING_BOX_WIDTH / 2),
+  //       },
+  //     }
+  //   }
+  //   setBoundingBox(_boundingBox)
+  // }
 
   return (
     <Screen>
-      {isLoadingLocation ? (
-        <View style={styles.loaderContainer}>
-          <ActivityIndicator size="large" color={colors.primary} />
-        </View>
-      ) : (
-        <MapView
-          ref={mapViewRef}
-          style={styles.map}
-          showsUserLocation={true}
-          onRegionChangeComplete={handleRegionChangeComplete}
-          loadingEnabled
-          initialRegion={userLocation}
-          customMapStyle={themeMode === "dark" ? MapStyles.dark : MapStyles.light}
-        >
-          {markers}
-        </MapView>
+      {userLocation && (
+        <MapInterface
+          data={data}
+          userLocation={userLocation}
+          handleMarkerPress={handleMarkerPress}
+        />
       )}
     </Screen>
   )
 }
-
-const useStyles = makeStyles(() => ({
-  loaderContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  map: {
-    height: "100%",
-    width: "100%",
-  },
-}))
