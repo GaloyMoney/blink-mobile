@@ -77,5 +77,9 @@ export const useQuizServer = (
     ]
   }
 
-  return { loading, quizServerData }
+  const earnedSats = quizServerData
+    .filter((quiz) => quiz.completed)
+    .reduce((acc, { amount }) => acc + amount, 0)
+
+  return { loading, quizServerData, earnedSats }
 }
