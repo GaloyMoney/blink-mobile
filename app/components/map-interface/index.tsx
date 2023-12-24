@@ -7,7 +7,10 @@ import { BusinessMapMarkersQuery } from "@app/graphql/generated"
 type Props = {
   data?: BusinessMapMarkersQuery
   userLocation?: Region
-  handleMarkerPress: (_: MarkerData) => void
+  bottomPadding: number,
+  handleMapPress: () => void,
+  handleMarkerPress: (_: MarkerData) => void,
+  handleCalloutPress: (_: MarkerData) => void
 }
 
 export type MarkerData = {
@@ -24,7 +27,14 @@ export type MarkerData = {
   }
 }
 
-export default function MapInterface({ data, userLocation, handleMarkerPress }: Props) {
+export default function MapInterface({
+  data,
+  userLocation,
+  bottomPadding,
+  handleMapPress,
+  handleMarkerPress,
+  handleCalloutPress,
+}: Props) {
   const {
     theme: { colors, mode: themeMode },
   } = useTheme()
@@ -37,6 +47,8 @@ export default function MapInterface({ data, userLocation, handleMarkerPress }: 
       initialRegion={userLocation}
       loadingEnabled
       customMapStyle={themeMode === "dark" ? MapStyles.dark : MapStyles.light}
+      onPress={handleMapPress}
+      mapPadding={{ bottom: bottomPadding, top: 0, right: 0, left: 0 }}
     >
       {(data?.businessMapMarkers ?? []).reduce(
         (arr: React.ReactElement[], item: MarkerData | null) => {
@@ -47,7 +59,8 @@ export default function MapInterface({ data, userLocation, handleMarkerPress }: 
                 key={item.username}
                 pinColor={colors._orange}
                 title={item.mapInfo.title}
-                onCalloutPress={() => handleMarkerPress(item)}
+                onPress={() => handleMarkerPress(item)}
+                onCalloutPress={() => handleCalloutPress(item)}
               />
             )
             arr.push(marker)
@@ -63,10 +76,8 @@ export default function MapInterface({ data, userLocation, handleMarkerPress }: 
 
 const useStyles = makeStyles(({ colors }) => ({
   map: {
-    height: "100%",
-    width: "100%",
+    flex: 1
   },
-  android: { marginTop: 18 },
 
   customView: {
     alignItems: "center",
@@ -74,8 +85,6 @@ const useStyles = makeStyles(({ colors }) => ({
     height: 30,
     width: "100%",
   },
-
-  ios: { paddingTop: 12 },
 
   title: { color: colors._darkGrey },
 }))

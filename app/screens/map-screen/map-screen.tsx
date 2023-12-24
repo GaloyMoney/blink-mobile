@@ -4,6 +4,7 @@ import * as React from "react"
 import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import { Dimensions } from "react-native"
+import Animated, { useSharedValue, withSpring, withTiming } from "react-native-reanimated"
 import Geolocation from "@react-native-community/geolocation"
 import { Region } from "react-native-maps"
 import { Screen } from "../../components/screen"
@@ -18,6 +19,8 @@ import countryCodes from "../../../utils/countryInfo.json"
 import { CountryCode } from "libphonenumber-js/mobile"
 import useDeviceLocation from "@app/hooks/use-device-location"
 import MapInterface, { MarkerData } from "@app/components/map-interface"
+import { Text, makeStyles } from "@rneui/themed"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 const EL_ZONTE_COORDS = {
   latitude: 13.496743,
@@ -34,6 +37,8 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * (width / height)
 // the size of the box that will encompass viewable markers on the map
 // const BOUNDING_BOX_HEIGHT = 5 // 1 latitude = 69 miles
 // const BOUNDING_BOX_WIDTH = 6 // 1 longitude = 54.6 miles
+
+const PAY_CONTAINER_HEIGHT = 106
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "Primary">
@@ -65,16 +70,21 @@ gql`
 export const MapScreen: React.FC<Props> = ({ navigation }) => {
   const isAuthed = useIsAuthed()
   const { countryCode, loading } = useDeviceLocation()
-
-  const [userLocation, setUserLocation] = React.useState<Region>()
-  const [isRefreshed, setIsRefreshed] = React.useState(false)
-  // const [boundingBox, setBoundingBox] = React.useState<BoundingBox>()
-  const [wasLocationDenied, setLocationDenied] = React.useState(false)
+  const styles = useStyles()
+  const heightAnim = useSharedValue(-PAY_CONTAINER_HEIGHT)
+  const { LL } = useI18nContext()
   const { data, error, refetch } = useBusinessMapMarkersQuery({
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "cache-and-network",
   })
-  const { LL } = useI18nContext()
+
+  const [userLocation, setUserLocation] = React.useState<Region>()
+  const [isRefreshed, setIsRefreshed] = React.useState(false)
+  const [focusedMarker, setFocusedMarker] = React.useState<MarkerData | null>(null)
+  // const [boundingBox, setBoundingBox] = React.useState<BoundingBox>()
+  const [wasLocationDenied, setLocationDenied] = React.useState(false)
+  const [mapBottomPadding, setMapBottomPadding] = React.useState(0)
+
 
   useFocusEffect(() => {
     if (!isRefreshed) {
@@ -102,7 +112,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
       if (countryCode === "SV") {
         setUserLocation(EL_ZONTE_COORDS)
       } else {
-        // JSON 'hashmap' with every countrys' code listed with their lat and lng
+        // JSON 'hashmap' with every country code paired with its lat and lng
         const countryCodesToCoords: {
           data: Record<CountryCode, { lat: number; lng: number }>
         } = JSON.parse(JSON.stringify(countryCodes))
@@ -124,7 +134,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     }
   }, [wasLocationDenied, countryCode, loading, setUserLocation])
 
-  const handleMarkerPress = (item: MarkerData) => {
+  const handleCalloutPress = (item: MarkerData | null) => {
     if (isAuthed && item?.username) {
       navigation.navigate("sendBitcoinDestination", { username: item.username })
     } else {
@@ -135,6 +145,28 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
         },
       })
     }
+  }
+
+  const heightAnimate = (toValue: number, duration: number) => {
+    heightAnim.value = withTiming(toValue)
+  }
+
+  const handleMarkerPress = (item: MarkerData) => {
+    if (!focusedMarker) {
+      heightAnimate(0, 500)
+      setTimeout(() => {
+        setMapBottomPadding(PAY_CONTAINER_HEIGHT)
+      }, 500)
+    }
+    setFocusedMarker(item)
+  }
+
+  const handleMapPress = () => {
+    if (focusedMarker) {
+      setMapBottomPadding(0)
+      heightAnimate(-PAY_CONTAINER_HEIGHT, 300)
+    }
+    setFocusedMarker(null)
   }
 
   const getUserRegion = (callback: (region?: Region) => void) => {
@@ -211,12 +243,56 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <Screen>
       {userLocation && (
-        <MapInterface
-          data={data}
-          userLocation={userLocation}
-          handleMarkerPress={handleMarkerPress}
-        />
+        <>
+          <MapInterface
+            data={data}
+            userLocation={userLocation}
+            handleMapPress={handleMapPress}
+            handleMarkerPress={handleMarkerPress}
+            handleCalloutPress={handleCalloutPress}
+            bottomPadding={mapBottomPadding}
+          />
+          <Animated.View style={[styles.payContainer, { bottom: heightAnim }]}>
+            <Text numberOfLines={1} ellipsizeMode="tail" style={styles.payCompany}>
+              {focusedMarker?.mapInfo?.title}
+            </Text>
+            <GaloyPrimaryButton
+              title={LL.MapScreen.payBusiness()}
+              onPress={() => handleCalloutPress(focusedMarker)}
+            />
+          </Animated.View>
+        </>
       )}
     </Screen>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  payContainer: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: -PAY_CONTAINER_HEIGHT,
+    width: "100%",
+    backgroundColor: "white",
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    padding: 10,
+    borderTopWidth: 1,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderColor: colors.grey4,
+    elevation: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 6,
+  },
+  payCompany: {
+    fontSize: 26,
+    marginBottom: 10,
+  },
+}))
