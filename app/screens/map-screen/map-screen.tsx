@@ -252,7 +252,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
             handleCalloutPress={handleCalloutPress}
             bottomPadding={mapBottomPadding}
           />
-          <Animated.View style={[styles.payContainer, { bottom: heightAnim }]}>
+          <Animated.View style={[styles.payContainer, { bottom: heightAnim as unknown as number }]}>
             <Text numberOfLines={1} ellipsizeMode="tail" style={styles.payCompany}>
               {focusedMarker?.mapInfo?.title}
             </Text>

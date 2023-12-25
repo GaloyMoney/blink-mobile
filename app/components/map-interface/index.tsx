@@ -1,15 +1,16 @@
 import { makeStyles, useTheme } from "@rneui/themed"
-import MapView, { Marker, Region } from "react-native-maps"
+import MapView, { LatLng, MapMarker, Marker, PROVIDER_GOOGLE, Region } from "react-native-maps"
 import MapStyles from "./map-styles.json"
-import React from "react"
+import React, { MutableRefObject, createRef, useEffect, useRef, useState } from "react"
 import { BusinessMapMarkersQuery } from "@app/graphql/generated"
+import { Platform, View } from "react-native"
 
 type Props = {
   data?: BusinessMapMarkersQuery
   userLocation?: Region
-  bottomPadding: number,
-  handleMapPress: () => void,
-  handleMarkerPress: (_: MarkerData) => void,
+  bottomPadding: number
+  handleMapPress: () => void
+  handleMarkerPress: (_: MarkerData) => void
   handleCalloutPress: (_: MarkerData) => void
 }
 
@@ -40,8 +41,23 @@ export default function MapInterface({
   } = useTheme()
   const styles = useStyles()
 
+  const [elementRefs, setElementRefs] = useState<MutableRefObject<unknown>[]>()
+
+  useEffect(() => {
+    if (data?.businessMapMarkers && Platform.OS === "ios") {
+      setElementRefs((data?.businessMapMarkers ?? []).map(() => createRef()))
+    }
+  }, [data?.businessMapMarkers])
+
+  const mapViewRef = useRef<MapView>(null)
+  const pressedMarkerRef = useRef<React.ReactElement<typeof MapMarker>>()
+  const pressedMarkerCoord = useRef<LatLng>()
+
+  if (Platform.OS === "ios" && !elementRefs) return <View />
+
   return (
     <MapView
+      ref={mapViewRef}
       style={styles.map}
       showsUserLocation={true}
       initialRegion={userLocation}
@@ -51,16 +67,46 @@ export default function MapInterface({
       mapPadding={{ bottom: bottomPadding, top: 0, right: 0, left: 0 }}
     >
       {(data?.businessMapMarkers ?? []).reduce(
-        (arr: React.ReactElement[], item: MarkerData | null) => {
+        (arr: React.ReactElement[], item: MarkerData | null, i: number) => {
           if (item?.username) {
+            const thisRef = elementRefs[i]
             const marker = (
               <Marker
+                ref={thisRef}
                 coordinate={item.mapInfo.coordinates}
                 key={item.username}
                 pinColor={colors._orange}
                 title={item.mapInfo.title}
-                onPress={() => handleMarkerPress(item)}
+                onPress={(e) => {
+                  // TODO i think the coords are unique but I'm not positive. Better to access the username or something definitely unique from the marker being pressed
+                  console.log("PRESSING", e.nativeEvent.coordinate)
+                  pressedMarkerRef.current = thisRef
+                  pressedMarkerCoord.current = e.nativeEvent.coordinate
+                  handleMarkerPress(item)
+                }}
                 onCalloutPress={() => handleCalloutPress(item)}
+                onSelect={(e) => {
+                  if (
+                    pressedMarkerCoord.current?.latitude !==
+                      e.nativeEvent.coordinate.latitude ||
+                    pressedMarkerCoord.current?.longitude !==
+                      e.nativeEvent.coordinate.longitude
+                  ) {
+                    console.log("SELECTING WRONG", e.nativeEvent.coordinate)
+
+                    console.log("Saved ref?", pressedMarkerRef.current.current)
+                    pressedMarkerRef.current.current.showCallout()
+                    // const children = mapViewRef.current?.props?.children
+                    // if (children && isArray(children)) {
+                    //   const firstChild = children[0]
+                    //   console.log("Child looks like: ", firstChild)
+                    // }
+                  }
+
+                  handleMarkerPress(item)
+                }}
+                stopPropagation
+                pointerEvents="auto"
               />
             )
             arr.push(marker)
@@ -76,7 +122,7 @@ export default function MapInterface({
 
 const useStyles = makeStyles(({ colors }) => ({
   map: {
-    flex: 1
+    flex: 1,
   },
 
   customView: {
