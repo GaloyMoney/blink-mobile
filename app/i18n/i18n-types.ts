@@ -6879,6 +6879,14 @@ type RootTranslation = {
 		 */
 		paymentAlreadyAttempted: string
 		/**
+		 * S​l​i​d​e​ ​t​o​ ​C​o​n​f​i​r​m
+		 */
+		slideToConfirm: string
+		/**
+		 * C​o​n​f​i​r​m​i​n​g​.​.​.
+		 */
+		slideConfirming: string
+		/**
 		 * C​o​p​i​e​d​ ​d​e​s​t​i​n​a​t​i​o​n​ ​t​o​ ​c​l​i​p​b​o​a​r​d
 		 */
 		copiedDestination: string
@@ -15687,6 +15695,14 @@ export type TranslationFunctions = {
 	If you want to send this payment again, start from scratch.
 		 */
 		paymentAlreadyAttempted: () => LocalizedString
+		/**
+		 * Slide to Confirm
+		 */
+		slideToConfirm: () => LocalizedString
+		/**
+		 * Confirming...
+		 */
+		slideConfirming: () => LocalizedString
 		/**
 		 * Copied destination to clipboard
 		 */

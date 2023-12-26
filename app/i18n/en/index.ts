@@ -2213,6 +2213,8 @@ const en: BaseTranslation = {
     invoiceAlreadyPaid: "This invoice has already been paid",
     somethingWentWrong: "Something went wrong",
     paymentAlreadyAttempted: "Payment already attempted.\n\nIf you want to send this payment again, start from scratch.",
+    slideToConfirm: "Slide to Confirm",
+    slideConfirming: "Confirming...",
     copiedDestination: "Copied destination to clipboard"
   },
   SendBitcoinDestinationScreen: {
