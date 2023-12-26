@@ -1,0 +1,64 @@
+import * as React from "react"
+import { StoryScreen } from "../../../.storybook/views"
+import { Meta } from "@storybook/react"
+import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
+import { MockedProvider } from "@apollo/client/testing"
+import { createCache } from "../../graphql/cache"
+import SendBitcoinCompletedScreen from "./send-bitcoin-completed-screen"
+
+export default {
+  title: "Send Bitcoin Completed Screen",
+  component: SendBitcoinCompletedScreen,
+  decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
+} as Meta<typeof SendBitcoinCompletedScreen>
+
+const successRoute = {
+  key: "sendBitcoinCompleted",
+  name: "sendBitcoinCompleted",
+  params: {
+    status: "SUCCESS",
+    arrivalAtMempoolEstimate: undefined,
+  },
+} as const
+
+export const Success = () => (
+  <MockedProvider mocks={[]} cache={createCache()}>
+    <IsAuthedContextProvider value={true}>
+      <SendBitcoinCompletedScreen route={successRoute} />
+    </IsAuthedContextProvider>
+  </MockedProvider>
+)
+
+const queuedRoute = {
+  key: "sendBitcoinCompleted",
+  name: "sendBitcoinCompleted",
+  params: {
+    status: "PENDING",
+    arrivalAtMempoolEstimate: 10000,
+  },
+} as const
+
+export const Queued = () => (
+  <MockedProvider mocks={[]} cache={createCache()}>
+    <IsAuthedContextProvider value={true}>
+      <SendBitcoinCompletedScreen route={queuedRoute} />
+    </IsAuthedContextProvider>
+  </MockedProvider>
+)
+
+const pendingRoute = {
+  key: "sendBitcoinCompleted",
+  name: "sendBitcoinCompleted",
+  params: {
+    status: "PENDING",
+    arrivalAtMempoolEstimate: undefined,
+  },
+} as const
+
+export const Pending = () => (
+  <MockedProvider mocks={[]} cache={createCache()}>
+    <IsAuthedContextProvider value={true}>
+      <SendBitcoinCompletedScreen route={pendingRoute} />
+    </IsAuthedContextProvider>
+  </MockedProvider>
+)

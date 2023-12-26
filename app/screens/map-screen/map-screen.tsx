@@ -24,24 +24,6 @@ import { PhoneLoginInitiateType } from "../phone-auth-screen"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import MapStyles from "./map-styles.json"
 
-const useStyles = makeStyles(({ colors }) => ({
-  android: { marginTop: 18 },
-
-  customView: {
-    alignItems: "center",
-    margin: 12,
-  },
-
-  ios: { paddingTop: 12 },
-
-  map: {
-    height: "100%",
-    width: "100%",
-  },
-
-  title: { color: colors._darkGrey },
-}))
-
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "Primary">
 }
@@ -186,3 +168,21 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     </Screen>
   )
 }
+
+const useStyles = makeStyles(({ colors }) => ({
+  android: { marginTop: 18 },
+
+  customView: {
+    alignItems: "center",
+    margin: 12,
+  },
+
+  ios: { paddingTop: 12 },
+
+  map: {
+    height: "100%",
+    width: "100%",
+  },
+
+  title: { color: colors._darkGrey },
+}))

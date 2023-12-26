@@ -7133,6 +7133,12 @@ type RootTranslation = {
 		 * C​o​p​i​e​d​ ​d​e​s​t​i​n​a​t​i​o​n​ ​t​o​ ​c​l​i​p​b​o​a​r​d
 		 */
 		copiedDestination: string
+		/**
+		 * T​h​e​ ​p​a​y​m​e​n​t​ ​h​a​s​ ​b​e​e​n​ ​s​e​n​t​,​ ​b​u​t​ ​h​a​s​n​'​t​ ​c​o​n​f​i​r​m​e​d​ ​y​e​t​.​
+	​
+	​I​t​'​s​ ​p​o​s​s​i​b​l​e​ ​t​h​e​ ​p​a​y​m​e​n​t​ ​w​i​l​l​ ​n​o​t​ ​c​o​n​f​i​r​m​,​ ​i​n​ ​w​h​i​c​h​ ​c​a​s​e​ ​t​h​e​ ​f​u​n​d​s​ ​w​i​l​l​ ​b​e​ ​r​e​t​u​r​n​e​d​ ​t​o​ ​y​o​u​r​ ​a​c​c​o​u​n​t​.
+		 */
+		pendingPayment: string
 	}
 	SettingsScreen: {
 		/**
@@ -15927,6 +15933,12 @@ export type TranslationFunctions = {
 		 * Copied destination to clipboard
 		 */
 		copiedDestination: () => LocalizedString
+		/**
+		 * The payment has been sent, but hasn't confirmed yet.
+
+	It's possible the payment will not confirm, in which case the funds will be returned to your account.
+		 */
+		pendingPayment: () => LocalizedString
 	}
 	SettingsScreen: {
 		/**

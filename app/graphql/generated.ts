@@ -393,9 +393,11 @@ export type ConsumerAccount = Account & {
   readonly defaultWallet: PublicWallet;
   readonly defaultWalletId: Scalars['WalletId']['output'];
   readonly displayCurrency: Scalars['DisplayCurrency']['output'];
+  readonly firstName?: Maybe<Scalars['String']['output']>;
   readonly id: Scalars['ID']['output'];
   /** A list of all invoices associated with walletIds optionally passed. */
   readonly invoices?: Maybe<InvoiceConnection>;
+  readonly lastName?: Maybe<Scalars['String']['output']>;
   readonly level: AccountLevel;
   readonly limits: AccountLimits;
   readonly notificationSettings: NotificationSettings;
@@ -642,6 +644,15 @@ export type Leaderboard = {
   readonly range: WelcomeRange;
 };
 
+export type LnAddressPaymentSendInput = {
+  /** Amount in satoshis. */
+  readonly amount: Scalars['SatAmount']['input'];
+  /** Lightning address to send to. */
+  readonly lnAddress: Scalars['String']['input'];
+  /** Wallet ID to send bitcoin from. */
+  readonly walletId: Scalars['WalletId']['input'];
+};
+
 export type LnInvoice = Invoice & {
   readonly __typename: 'LnInvoice';
   readonly createdAt: Scalars['Timestamp']['output'];
@@ -822,6 +833,15 @@ export type LnUsdInvoiceFeeProbeInput = {
   readonly walletId: Scalars['WalletId']['input'];
 };
 
+export type LnurlPaymentSendInput = {
+  /** Amount in satoshis. */
+  readonly amount: Scalars['SatAmount']['input'];
+  /** Lnurl string to send to. */
+  readonly lnurl: Scalars['String']['input'];
+  /** Wallet ID to send bitcoin from. */
+  readonly walletId: Scalars['WalletId']['input'];
+};
+
 export type MapInfo = {
   readonly __typename: 'MapInfo';
   readonly coordinates: Coordinates;
@@ -870,6 +890,8 @@ export type Mutation = {
    * failed, pending, already_paid).
    */
   readonly intraLedgerUsdPaymentSend: PaymentSendPayload;
+  /** Sends a payment to a lightning address. */
+  readonly lnAddressPaymentSend: PaymentSendPayload;
   /**
    * Returns a lightning invoice for an associated wallet.
    * When invoice is paid the value will be credited to a BTC wallet.
@@ -937,6 +959,8 @@ export type Mutation = {
    */
   readonly lnUsdInvoiceCreateOnBehalfOfRecipient: LnInvoicePayload;
   readonly lnUsdInvoiceFeeProbe: SatAmountPayload;
+  /** Sends a payment to a lightning address. */
+  readonly lnurlPaymentSend: PaymentSendPayload;
   readonly onChainAddressCreate: OnChainAddressPayload;
   readonly onChainAddressCurrent: OnChainAddressPayload;
   readonly onChainPaymentSend: PaymentSendPayload;
@@ -1040,6 +1064,11 @@ export type MutationIntraLedgerUsdPaymentSendArgs = {
 };
 
 
+export type MutationLnAddressPaymentSendArgs = {
+  input: LnAddressPaymentSendInput;
+};
+
+
 export type MutationLnInvoiceCreateArgs = {
   input: LnInvoiceCreateInput;
 };
@@ -1107,6 +1136,11 @@ export type MutationLnUsdInvoiceCreateOnBehalfOfRecipientArgs = {
 
 export type MutationLnUsdInvoiceFeeProbeArgs = {
   input: LnUsdInvoiceFeeProbeInput;
+};
+
+
+export type MutationLnurlPaymentSendArgs = {
+  input: LnurlPaymentSendInput;
 };
 
 
@@ -1485,8 +1519,6 @@ export type Query = {
   readonly onChainUsdTxFee: OnChainUsdTxFee;
   readonly onChainUsdTxFeeAsBtcDenominated: OnChainUsdTxFee;
   readonly price?: Maybe<Scalars['String']['output']>;
-  /** @deprecated TODO: remove. we don't need a non authenticated version of this query. the users can only do the query while authenticated */
-  readonly quizQuestions?: Maybe<ReadonlyArray<Maybe<QuizQuestion>>>;
   /** Returns 1 Sat and 1 Usd Cent price for the given currency */
   readonly realtimePrice: RealtimePrice;
   /** @deprecated will be migrated to AccountDefaultWalletId */
@@ -1571,13 +1603,6 @@ export type QuizCompletedPayload = {
   readonly __typename: 'QuizCompletedPayload';
   readonly errors: ReadonlyArray<Error>;
   readonly quiz?: Maybe<Quiz>;
-};
-
-export type QuizQuestion = {
-  readonly __typename: 'QuizQuestion';
-  /** The earn reward in Satoshis for the quiz question */
-  readonly earnAmount: Scalars['SatAmount']['output'];
-  readonly id: Scalars['ID']['output'];
 };
 
 export type RealtimePrice = {
@@ -1841,11 +1866,6 @@ export type User = {
   readonly language: Scalars['Language']['output'];
   /** Phone number with international calling code. */
   readonly phone?: Maybe<Scalars['Phone']['output']>;
-  /**
-   * List the quiz questions the user may have completed.
-   * @deprecated use Quiz from Account instead
-   */
-  readonly quizQuestions: ReadonlyArray<UserQuizQuestion>;
   /** Whether TOTP is enabled for this user. */
   readonly totpEnabled: Scalars['Boolean']['output'];
   /**
@@ -1956,12 +1976,6 @@ export type UserPhoneRegistrationValidatePayload = {
   readonly __typename: 'UserPhoneRegistrationValidatePayload';
   readonly errors: ReadonlyArray<Error>;
   readonly me?: Maybe<User>;
-};
-
-export type UserQuizQuestion = {
-  readonly __typename: 'UserQuizQuestion';
-  readonly completed: Scalars['Boolean']['output'];
-  readonly question: QuizQuestion;
 };
 
 export type UserTotpDeletePayload = {
@@ -2143,7 +2157,7 @@ export type BalanceHeaderQuery = { readonly __typename: 'Query', readonly me?: {
 export type InviteQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type InviteQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null } | null };
+export type InviteQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly username?: string | null } | null };
 
 export type BtcPriceListQueryVariables = Exact<{
   range: PriceGraphRange;
@@ -2270,11 +2284,6 @@ export type DebugScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type DebugScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string } } | null };
 
-export type QuizSatsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type QuizSatsQuery = { readonly __typename: 'Query', readonly quizQuestions?: ReadonlyArray<{ readonly __typename: 'QuizQuestion', readonly id: string, readonly earnAmount: number } | null> | null };
-
 export type MyQuizQuestionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2336,7 +2345,7 @@ export type BusinessMapMarkersQuery = { readonly __typename: 'Query', readonly b
 export type CirclesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CirclesQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly welcomeProfile?: { readonly __typename: 'WelcomeProfile', readonly allTimePoints: number, readonly allTimeRank: number, readonly innerCircleAllTimeCount: number, readonly innerCircleThisMonthCount: number, readonly outerCircleAllTimeCount: number, readonly outerCircleThisMonthCount: number, readonly thisMonthPoints: number, readonly thisMonthRank: number } | null } } | null };
+export type CirclesQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly username?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly welcomeProfile?: { readonly __typename: 'WelcomeProfile', readonly allTimePoints: number, readonly allTimeRank: number, readonly innerCircleAllTimeCount: number, readonly innerCircleThisMonthCount: number, readonly outerCircleAllTimeCount: number, readonly outerCircleThisMonthCount: number, readonly thisMonthPoints: number, readonly thisMonthRank: number } | null } } | null };
 
 export type ContactsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2725,7 +2734,7 @@ export type AccountLimitsQuery = { readonly __typename: 'Query', readonly me?: {
 export type TotpRegistrationScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TotpRegistrationScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null } | null };
+export type TotpRegistrationScreenQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly username?: string | null } | null };
 
 export type UserTotpRegistrationInitiateMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -2737,7 +2746,7 @@ export type UserTotpRegistrationValidateMutationVariables = Exact<{
 }>;
 
 
-export type UserTotpRegistrationValidateMutation = { readonly __typename: 'Mutation', readonly userTotpRegistrationValidate: { readonly __typename: 'UserTotpRegistrationValidatePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly totpEnabled: boolean, readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
+export type UserTotpRegistrationValidateMutation = { readonly __typename: 'Mutation', readonly userTotpRegistrationValidate: { readonly __typename: 'UserTotpRegistrationValidatePayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly me?: { readonly __typename: 'User', readonly id: string, readonly totpEnabled: boolean, readonly phone?: string | null, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null } };
 
 export type TransactionListForDefaultAccountQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -2906,6 +2915,7 @@ export type BalanceHeaderQueryResult = Apollo.QueryResult<BalanceHeaderQuery, Ba
 export const InviteDocument = gql`
     query invite {
   me {
+    id
     username
   }
 }
@@ -3780,41 +3790,6 @@ export function useDebugScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type DebugScreenQueryHookResult = ReturnType<typeof useDebugScreenQuery>;
 export type DebugScreenLazyQueryHookResult = ReturnType<typeof useDebugScreenLazyQuery>;
 export type DebugScreenQueryResult = Apollo.QueryResult<DebugScreenQuery, DebugScreenQueryVariables>;
-export const QuizSatsDocument = gql`
-    query quizSats {
-  quizQuestions {
-    id
-    earnAmount
-  }
-}
-    `;
-
-/**
- * __useQuizSatsQuery__
- *
- * To run a query within a React component, call `useQuizSatsQuery` and pass it any options that fit your needs.
- * When your component renders, `useQuizSatsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useQuizSatsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useQuizSatsQuery(baseOptions?: Apollo.QueryHookOptions<QuizSatsQuery, QuizSatsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<QuizSatsQuery, QuizSatsQueryVariables>(QuizSatsDocument, options);
-      }
-export function useQuizSatsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QuizSatsQuery, QuizSatsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<QuizSatsQuery, QuizSatsQueryVariables>(QuizSatsDocument, options);
-        }
-export type QuizSatsQueryHookResult = ReturnType<typeof useQuizSatsQuery>;
-export type QuizSatsLazyQueryHookResult = ReturnType<typeof useQuizSatsLazyQuery>;
-export type QuizSatsQueryResult = Apollo.QueryResult<QuizSatsQuery, QuizSatsQueryVariables>;
 export const MyQuizQuestionsDocument = gql`
     query myQuizQuestions {
   me {
@@ -4235,6 +4210,7 @@ export type BusinessMapMarkersQueryResult = Apollo.QueryResult<BusinessMapMarker
 export const CirclesDocument = gql`
     query Circles {
   me {
+    id
     username
     defaultAccount {
       id
@@ -6707,6 +6683,7 @@ export type AccountLimitsQueryResult = Apollo.QueryResult<AccountLimitsQuery, Ac
 export const TotpRegistrationScreenDocument = gql`
     query totpRegistrationScreen {
   me {
+    id
     username
   }
 }
@@ -6781,6 +6758,7 @@ export const UserTotpRegistrationValidateDocument = gql`
       message
     }
     me {
+      id
       totpEnabled
       phone
       email {
@@ -7103,6 +7081,7 @@ export type ResolversTypes = {
   Leader: ResolverTypeWrapper<Leader>;
   Leaderboard: ResolverTypeWrapper<Leaderboard>;
   LeaderboardName: ResolverTypeWrapper<Scalars['LeaderboardName']['output']>;
+  LnAddressPaymentSendInput: LnAddressPaymentSendInput;
   LnInvoice: ResolverTypeWrapper<LnInvoice>;
   LnInvoiceCreateInput: LnInvoiceCreateInput;
   LnInvoiceCreateOnBehalfOfRecipientInput: LnInvoiceCreateOnBehalfOfRecipientInput;
@@ -7127,6 +7106,7 @@ export type ResolversTypes = {
   LnUsdInvoiceCreateInput: LnUsdInvoiceCreateInput;
   LnUsdInvoiceCreateOnBehalfOfRecipientInput: LnUsdInvoiceCreateOnBehalfOfRecipientInput;
   LnUsdInvoiceFeeProbeInput: LnUsdInvoiceFeeProbeInput;
+  LnurlPaymentSendInput: LnurlPaymentSendInput;
   MapInfo: ResolverTypeWrapper<MapInfo>;
   MapMarker: ResolverTypeWrapper<MapMarker>;
   Memo: ResolverTypeWrapper<Scalars['Memo']['output']>;
@@ -7177,7 +7157,6 @@ export type ResolversTypes = {
   Quiz: ResolverTypeWrapper<Quiz>;
   QuizCompletedInput: QuizCompletedInput;
   QuizCompletedPayload: ResolverTypeWrapper<QuizCompletedPayload>;
-  QuizQuestion: ResolverTypeWrapper<QuizQuestion>;
   RealtimePrice: ResolverTypeWrapper<RealtimePrice>;
   RealtimePriceInput: RealtimePriceInput;
   RealtimePricePayload: ResolverTypeWrapper<RealtimePricePayload>;
@@ -7221,7 +7200,6 @@ export type ResolversTypes = {
   UserPhoneRegistrationInitiateInput: UserPhoneRegistrationInitiateInput;
   UserPhoneRegistrationValidateInput: UserPhoneRegistrationValidateInput;
   UserPhoneRegistrationValidatePayload: ResolverTypeWrapper<UserPhoneRegistrationValidatePayload>;
-  UserQuizQuestion: ResolverTypeWrapper<UserQuizQuestion>;
   UserTotpDeletePayload: ResolverTypeWrapper<UserTotpDeletePayload>;
   UserTotpRegistrationInitiatePayload: ResolverTypeWrapper<UserTotpRegistrationInitiatePayload>;
   UserTotpRegistrationValidateInput: UserTotpRegistrationValidateInput;
@@ -7314,6 +7292,7 @@ export type ResolversParentTypes = {
   Leader: Leader;
   Leaderboard: Leaderboard;
   LeaderboardName: Scalars['LeaderboardName']['output'];
+  LnAddressPaymentSendInput: LnAddressPaymentSendInput;
   LnInvoice: LnInvoice;
   LnInvoiceCreateInput: LnInvoiceCreateInput;
   LnInvoiceCreateOnBehalfOfRecipientInput: LnInvoiceCreateOnBehalfOfRecipientInput;
@@ -7338,6 +7317,7 @@ export type ResolversParentTypes = {
   LnUsdInvoiceCreateInput: LnUsdInvoiceCreateInput;
   LnUsdInvoiceCreateOnBehalfOfRecipientInput: LnUsdInvoiceCreateOnBehalfOfRecipientInput;
   LnUsdInvoiceFeeProbeInput: LnUsdInvoiceFeeProbeInput;
+  LnurlPaymentSendInput: LnurlPaymentSendInput;
   MapInfo: MapInfo;
   MapMarker: MapMarker;
   Memo: Scalars['Memo']['output'];
@@ -7381,7 +7361,6 @@ export type ResolversParentTypes = {
   Quiz: Quiz;
   QuizCompletedInput: QuizCompletedInput;
   QuizCompletedPayload: QuizCompletedPayload;
-  QuizQuestion: QuizQuestion;
   RealtimePrice: RealtimePrice;
   RealtimePriceInput: RealtimePriceInput;
   RealtimePricePayload: RealtimePricePayload;
@@ -7422,7 +7401,6 @@ export type ResolversParentTypes = {
   UserPhoneRegistrationInitiateInput: UserPhoneRegistrationInitiateInput;
   UserPhoneRegistrationValidateInput: UserPhoneRegistrationValidateInput;
   UserPhoneRegistrationValidatePayload: UserPhoneRegistrationValidatePayload;
-  UserQuizQuestion: UserQuizQuestion;
   UserTotpDeletePayload: UserTotpDeletePayload;
   UserTotpRegistrationInitiatePayload: UserTotpRegistrationInitiatePayload;
   UserTotpRegistrationValidateInput: UserTotpRegistrationValidateInput;
@@ -7605,8 +7583,10 @@ export type ConsumerAccountResolvers<ContextType = any, ParentType extends Resol
   defaultWallet?: Resolver<ResolversTypes['PublicWallet'], ParentType, ContextType>;
   defaultWalletId?: Resolver<ResolversTypes['WalletId'], ParentType, ContextType>;
   displayCurrency?: Resolver<ResolversTypes['DisplayCurrency'], ParentType, ContextType>;
+  firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   invoices?: Resolver<Maybe<ResolversTypes['InvoiceConnection']>, ParentType, ContextType, Partial<ConsumerAccountInvoicesArgs>>;
+  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   level?: Resolver<ResolversTypes['AccountLevel'], ParentType, ContextType>;
   limits?: Resolver<ResolversTypes['AccountLimits'], ParentType, ContextType>;
   notificationSettings?: Resolver<ResolversTypes['NotificationSettings'], ParentType, ContextType>;
@@ -7902,6 +7882,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   feedbackSubmit?: Resolver<ResolversTypes['SuccessPayload'], ParentType, ContextType, RequireFields<MutationFeedbackSubmitArgs, 'input'>>;
   intraLedgerPaymentSend?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationIntraLedgerPaymentSendArgs, 'input'>>;
   intraLedgerUsdPaymentSend?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationIntraLedgerUsdPaymentSendArgs, 'input'>>;
+  lnAddressPaymentSend?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationLnAddressPaymentSendArgs, 'input'>>;
   lnInvoiceCreate?: Resolver<ResolversTypes['LnInvoicePayload'], ParentType, ContextType, RequireFields<MutationLnInvoiceCreateArgs, 'input'>>;
   lnInvoiceCreateOnBehalfOfRecipient?: Resolver<ResolversTypes['LnInvoicePayload'], ParentType, ContextType, RequireFields<MutationLnInvoiceCreateOnBehalfOfRecipientArgs, 'input'>>;
   lnInvoiceFeeProbe?: Resolver<ResolversTypes['SatAmountPayload'], ParentType, ContextType, RequireFields<MutationLnInvoiceFeeProbeArgs, 'input'>>;
@@ -7916,6 +7897,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   lnUsdInvoiceCreate?: Resolver<ResolversTypes['LnInvoicePayload'], ParentType, ContextType, RequireFields<MutationLnUsdInvoiceCreateArgs, 'input'>>;
   lnUsdInvoiceCreateOnBehalfOfRecipient?: Resolver<ResolversTypes['LnInvoicePayload'], ParentType, ContextType, RequireFields<MutationLnUsdInvoiceCreateOnBehalfOfRecipientArgs, 'input'>>;
   lnUsdInvoiceFeeProbe?: Resolver<ResolversTypes['SatAmountPayload'], ParentType, ContextType, RequireFields<MutationLnUsdInvoiceFeeProbeArgs, 'input'>>;
+  lnurlPaymentSend?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationLnurlPaymentSendArgs, 'input'>>;
   onChainAddressCreate?: Resolver<ResolversTypes['OnChainAddressPayload'], ParentType, ContextType, RequireFields<MutationOnChainAddressCreateArgs, 'input'>>;
   onChainAddressCurrent?: Resolver<ResolversTypes['OnChainAddressPayload'], ParentType, ContextType, RequireFields<MutationOnChainAddressCurrentArgs, 'input'>>;
   onChainPaymentSend?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationOnChainPaymentSendArgs, 'input'>>;
@@ -8117,7 +8099,6 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   onChainUsdTxFee?: Resolver<ResolversTypes['OnChainUsdTxFee'], ParentType, ContextType, RequireFields<QueryOnChainUsdTxFeeArgs, 'address' | 'amount' | 'speed' | 'walletId'>>;
   onChainUsdTxFeeAsBtcDenominated?: Resolver<ResolversTypes['OnChainUsdTxFee'], ParentType, ContextType, RequireFields<QueryOnChainUsdTxFeeAsBtcDenominatedArgs, 'address' | 'amount' | 'speed' | 'walletId'>>;
   price?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  quizQuestions?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['QuizQuestion']>>>, ParentType, ContextType>;
   realtimePrice?: Resolver<ResolversTypes['RealtimePrice'], ParentType, ContextType, RequireFields<QueryRealtimePriceArgs, 'currency'>>;
   userDefaultWalletId?: Resolver<ResolversTypes['WalletId'], ParentType, ContextType, RequireFields<QueryUserDefaultWalletIdArgs, 'username'>>;
   usernameAvailable?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<QueryUsernameAvailableArgs, 'username'>>;
@@ -8134,12 +8115,6 @@ export type QuizResolvers<ContextType = any, ParentType extends ResolversParentT
 export type QuizCompletedPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['QuizCompletedPayload'] = ResolversParentTypes['QuizCompletedPayload']> = {
   errors?: Resolver<ReadonlyArray<ResolversTypes['Error']>, ParentType, ContextType>;
   quiz?: Resolver<Maybe<ResolversTypes['Quiz']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type QuizQuestionResolvers<ContextType = any, ParentType extends ResolversParentTypes['QuizQuestion'] = ResolversParentTypes['QuizQuestion']> = {
-  earnAmount?: Resolver<ResolversTypes['SatAmount'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -8305,7 +8280,6 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   language?: Resolver<ResolversTypes['Language'], ParentType, ContextType>;
   phone?: Resolver<Maybe<ResolversTypes['Phone']>, ParentType, ContextType>;
-  quizQuestions?: Resolver<ReadonlyArray<ResolversTypes['UserQuizQuestion']>, ParentType, ContextType>;
   totpEnabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   username?: Resolver<Maybe<ResolversTypes['Username']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -8354,12 +8328,6 @@ export type UserPhoneDeletePayloadResolvers<ContextType = any, ParentType extend
 export type UserPhoneRegistrationValidatePayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserPhoneRegistrationValidatePayload'] = ResolversParentTypes['UserPhoneRegistrationValidatePayload']> = {
   errors?: Resolver<ReadonlyArray<ResolversTypes['Error']>, ParentType, ContextType>;
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type UserQuizQuestionResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserQuizQuestion'] = ResolversParentTypes['UserQuizQuestion']> = {
-  completed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  question?: Resolver<ResolversTypes['QuizQuestion'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -8532,7 +8500,6 @@ export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
   Quiz?: QuizResolvers<ContextType>;
   QuizCompletedPayload?: QuizCompletedPayloadResolvers<ContextType>;
-  QuizQuestion?: QuizQuestionResolvers<ContextType>;
   RealtimePrice?: RealtimePriceResolvers<ContextType>;
   RealtimePricePayload?: RealtimePricePayloadResolvers<ContextType>;
   SafeInt?: GraphQLScalarType;
@@ -8564,7 +8531,6 @@ export type Resolvers<ContextType = any> = {
   UserEmailRegistrationValidatePayload?: UserEmailRegistrationValidatePayloadResolvers<ContextType>;
   UserPhoneDeletePayload?: UserPhoneDeletePayloadResolvers<ContextType>;
   UserPhoneRegistrationValidatePayload?: UserPhoneRegistrationValidatePayloadResolvers<ContextType>;
-  UserQuizQuestion?: UserQuizQuestionResolvers<ContextType>;
   UserTotpDeletePayload?: UserTotpDeletePayloadResolvers<ContextType>;
   UserTotpRegistrationInitiatePayload?: UserTotpRegistrationInitiatePayloadResolvers<ContextType>;
   UserTotpRegistrationValidatePayload?: UserTotpRegistrationValidatePayloadResolvers<ContextType>;

@@ -5,7 +5,7 @@ import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { Screen } from "@app/components/screen"
 import {
   SuccessIconAnimation,
-  SuccessTextAnimation,
+  CompletedTextAnimation,
 } from "@app/components/success-animation"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -46,11 +46,11 @@ export const ConversionSuccessScreen = () => {
         <SuccessIconAnimation>
           <GaloyIcon name={"payment-success"} size={128} />
         </SuccessIconAnimation>
-        <SuccessTextAnimation>
+        <CompletedTextAnimation>
           <Text type="h2" style={styles.successText}>
             {LL.ConversionSuccessScreen.message()}
           </Text>
-        </SuccessTextAnimation>
+        </CompletedTextAnimation>
       </View>
     </Screen>
   )

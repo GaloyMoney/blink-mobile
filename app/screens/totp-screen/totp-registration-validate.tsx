@@ -19,6 +19,7 @@ gql`
         message
       }
       me {
+        id
         totpEnabled
         phone
         email {
