@@ -12,6 +12,9 @@ export const Default = () => (
     <UseCase text="Default">
       <GaloyPrimaryButton title="Happy path" />
     </UseCase>
+    <UseCase text="Loading">
+      <GaloyPrimaryButton loading />
+    </UseCase>
     <UseCase text="Long title">
       <GaloyPrimaryButton title="What happens if the title is really long, like super long" />
     </UseCase>
