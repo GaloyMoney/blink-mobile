@@ -124,12 +124,11 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     feeDisplayText = LL.SendBitcoinConfirmationScreen.feeError()
   }
 
-  const handleSendPayment = React.useCallback(() => {
+  const handleSendPayment = React.useCallback(async () => {
     if (!sendPayment || !sendingWalletDescriptor?.currency) {
       return sendPayment
     }
 
-    return async () => {
       try {
         logPaymentAttempt({
           paymentType: paymentDetail.paymentType,
@@ -193,7 +192,6 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           setPaymentError(err.message || err.toString())
         }
       }
-    }
   }, [
     LL,
     navigation,
