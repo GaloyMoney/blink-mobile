@@ -129,69 +129,69 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
       return sendPayment
     }
 
-      try {
-        logPaymentAttempt({
-          paymentType: paymentDetail.paymentType,
-          sendingWallet: sendingWalletDescriptor.currency,
-        })
-        const { status, errorsMessage, extraInfo } = await sendPayment()
-        logPaymentResult({
-          paymentType: paymentDetail.paymentType,
-          paymentStatus: status,
-          sendingWallet: sendingWalletDescriptor.currency,
-        })
+    try {
+      logPaymentAttempt({
+        paymentType: paymentDetail.paymentType,
+        sendingWallet: sendingWalletDescriptor.currency,
+      })
+      const { status, errorsMessage, extraInfo } = await sendPayment()
+      logPaymentResult({
+        paymentType: paymentDetail.paymentType,
+        paymentStatus: status,
+        sendingWallet: sendingWalletDescriptor.currency,
+      })
 
-        if (status === "SUCCESS" || status === "PENDING") {
-          navigation.dispatch((state) => {
-            const routes = [
-              { name: "Primary" },
-              {
-                name: "sendBitcoinCompleted",
-                params: {
-                  arrivalAtMempoolEstimate: extraInfo?.arrivalAtMempoolEstimate,
-                  status,
-                },
+      if (status === "SUCCESS" || status === "PENDING") {
+        navigation.dispatch((state) => {
+          const routes = [
+            { name: "Primary" },
+            {
+              name: "sendBitcoinCompleted",
+              params: {
+                arrivalAtMempoolEstimate: extraInfo?.arrivalAtMempoolEstimate,
+                status,
               },
-            ]
-            return CommonActions.reset({
-              ...state,
-              routes,
-              index: routes.length - 1,
-            })
+            },
+          ]
+          return CommonActions.reset({
+            ...state,
+            routes,
+            index: routes.length - 1,
           })
-          ReactNativeHapticFeedback.trigger("notificationSuccess", {
-            ignoreAndroidSystemSettings: true,
-          })
-          return
-        }
+        })
+        ReactNativeHapticFeedback.trigger("notificationSuccess", {
+          ignoreAndroidSystemSettings: true,
+        })
+        return
+      }
 
-        if (status === "ALREADY_PAID") {
-          setPaymentError(LL.SendBitcoinConfirmationScreen.invoiceAlreadyPaid())
-          ReactNativeHapticFeedback.trigger("notificationError", {
-            ignoreAndroidSystemSettings: true,
-          })
-          return
-        }
-
-        setPaymentError(
-          errorsMessage || LL.SendBitcoinConfirmationScreen.somethingWentWrong(),
-        )
+      if (status === "ALREADY_PAID") {
+        setPaymentError(LL.SendBitcoinConfirmationScreen.invoiceAlreadyPaid())
         ReactNativeHapticFeedback.trigger("notificationError", {
           ignoreAndroidSystemSettings: true,
         })
-      } catch (err) {
-        if (err instanceof Error) {
-          crashlytics().recordError(err)
-
-          const indempotencyErrorPattern = /409: Conflict/i
-          if (indempotencyErrorPattern.test(err.message)) {
-            setPaymentError(LL.SendBitcoinConfirmationScreen.paymentAlreadyAttempted())
-            return
-          }
-
-          setPaymentError(err.message || err.toString())
-        }
+        return
       }
+
+      setPaymentError(
+        errorsMessage || LL.SendBitcoinConfirmationScreen.somethingWentWrong(),
+      )
+      ReactNativeHapticFeedback.trigger("notificationError", {
+        ignoreAndroidSystemSettings: true,
+      })
+    } catch (err) {
+      if (err instanceof Error) {
+        crashlytics().recordError(err)
+
+        const indempotencyErrorPattern = /409: Conflict/i
+        if (indempotencyErrorPattern.test(err.message)) {
+          setPaymentError(LL.SendBitcoinConfirmationScreen.paymentAlreadyAttempted())
+          return
+        }
+
+        setPaymentError(err.message || err.toString())
+      }
+    }
   }, [
     LL,
     navigation,
