@@ -81,7 +81,8 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   const [userLocation, setUserLocation] = React.useState<Region>()
   const [isRefreshed, setIsRefreshed] = React.useState(false)
   const [focusedMarker, setFocusedMarker] = React.useState<MarkerData | null>(null)
-  // const [boundingBox, setBoundingBox] = React.useState<BoundingBox>()
+  // boundingBox solution for one day when there's thousands of markers and its not reasonable to load them all at once
+  // const [boundingBox, setBoundingBox] = React.useState<BoundingBox>() 
   const [wasLocationDenied, setLocationDenied] = React.useState(false)
   const [mapBottomPadding, setMapBottomPadding] = React.useState(0)
 
@@ -97,7 +98,8 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     toastShow({ message: error.message, LL })
   }
 
-  // -------- might use this later if it's decided to only load a portion of the map markers at a time ----------- //
+  // -------- uncomment if using boundingBox ----------- //
+
   // React.useEffect(() => {
   //   if (userLocation) {
   //     calculateBoundingBox(userLocation)
@@ -216,7 +218,8 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
 
   useFocusEffect(requestLocationPermission)
 
-  // -------- might use this later if it's decided to only load a portion of the map markers at a time ----------- //
+  // -------- uncomment if using boundingBox ----------- //
+
   // const calculateBoundingBox = async (region: Region) => {
   //   let _boundingBox: BoundingBox
   //   if (mapViewRef.current) {
