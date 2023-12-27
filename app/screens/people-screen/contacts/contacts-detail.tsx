@@ -3,7 +3,7 @@ import { View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { gql } from "@apollo/client"
-import { useUserContactUpdateAliasMutation } from "@app/graphql/generated"
+import { UserContact, useUserContactUpdateAliasMutation } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -31,7 +31,7 @@ export const ContactsDetailScreen: React.FC<ContactDetailProps> = ({ route }) =>
 }
 
 type ContactDetailScreenProps = {
-  contact: Contact
+  contact: UserContact
 }
 
 gql`
