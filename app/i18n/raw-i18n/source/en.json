@@ -35,7 +35,8 @@
         "setUpAuthenticationDescription": "Use biometric to authenticate",
         "skip": "Skip",
         "unlock": "Unlock",
-        "usePin": "Use PIN"
+        "usePin": "Use PIN",
+        "confirmLogout": "Are you sure you'd like to logout? This will reset your cache and all local user settings"
     },
     "PeopleScreen": {
         "title": "People",

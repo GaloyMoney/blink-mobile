@@ -37,9 +37,9 @@ export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
   const { setAppUnlocked } = useAuthenticationContext()
   const { LL } = useI18nContext()
 
-  useFocusEffect(() => {
+  React.useEffect(() => {
     attemptAuthentication()
-  })
+  }, [])
 
   const attemptAuthentication = () => {
     let description = "attemptAuthentication. should not be displayed?"
@@ -71,14 +71,26 @@ export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
     // so no action is necessary.
   }
 
-  const logoutAndNavigateToPrimary = async () => {
+  const logoutAndNavigateToLanding = async () => {
     await logout()
-    Alert.alert(LL.common.loggedOut(), "", [
+    Alert.alert(LL.common.logout(), LL.common.loggedOut(), [
       {
         text: LL.common.ok(),
         onPress: () => {
-          navigation.replace("Primary")
+          navigation.replace("getStarted")
         },
+      },
+    ])
+  }
+
+  const confirmLogout = () => {
+    Alert.alert(LL.common.confirm(), LL.AuthenticationScreen.confirmLogout(), [
+      {
+        text: LL.common.cancel(),
+      },
+      {
+        text: LL.common.confirm(),
+        onPress: logoutAndNavigateToLanding,
       },
     ])
   }
@@ -106,7 +118,7 @@ export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
         {PinButtonContent}
         <GaloySecondaryButton
           title={LL.common.logout()}
-          onPress={logoutAndNavigateToPrimary}
+          onPress={confirmLogout}
           containerStyle={styles.buttonContainer}
         />
       </>

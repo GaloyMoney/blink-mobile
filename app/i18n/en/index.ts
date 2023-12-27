@@ -45,6 +45,7 @@ const en: BaseTranslation = {
     skip: "Skip",
     unlock: "Unlock",
     usePin: "Use PIN",
+    confirmLogout: "Are you sure you'd like to logout? This will reset your cache and all local user settings",
   },
   PeopleScreen: {
     title: "People",
