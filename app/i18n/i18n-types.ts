@@ -6263,6 +6263,14 @@ type RootTranslation = {
 		 * R​e​g​i​s​t​e​r​ ​w​i​t​h​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​t​o​ ​r​e​c​e​i​v​e​ ​s​a​t​s
 		 */
 		registerContent: string
+		/**
+		 * N​o​t​ ​y​e​t
+		 */
+		notYet: string
+		/**
+		 * T​h​i​s​ ​s​e​c​t​i​o​n​ ​w​i​l​l​ ​b​e​ ​a​v​a​i​l​a​b​l​e​ ​t​o​m​o​r​r​o​w​!
+		 */
+		availableTomorrow: string
 	}
 	GetStartedScreen: {
 		/**
@@ -15100,6 +15108,14 @@ export type TranslationFunctions = {
 		 * Register with your phone number to receive sats
 		 */
 		registerContent: () => LocalizedString
+		/**
+		 * Not yet
+		 */
+		notYet: () => LocalizedString
+		/**
+		 * This section will be available tomorrow!
+		 */
+		availableTomorrow: () => LocalizedString
 	}
 	GetStartedScreen: {
 		/**

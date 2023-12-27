@@ -1,12 +1,16 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native"
+import { ActivityIndicator, Alert, StyleSheet, Text, View } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import { SvgProps } from "react-native-svg"
 import { MountainHeader } from "../../components/mountain-header"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
-import { getQuizQuestionsContent, sectionCompletedPct } from "../earns-screen"
+import {
+  augmentCardWithGqlData,
+  getCardsFromSection,
+  getQuizQuestionsContent,
+} from "../earns-screen"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
@@ -44,12 +48,12 @@ interface IInBetweenTile {
 }
 
 interface IBoxAdding {
+  section: EarnSectionType
   text: string
   Icon: React.FunctionComponent<SvgProps>
   side: SideType
   position: number
   length: number
-  onPress: () => void
 }
 
 type ProgressProps = {
@@ -81,13 +85,6 @@ type FinishProps = {
   length: number
 }
 
-export type MyQuizQuestions = {
-  readonly __typename: "Quiz"
-  readonly id: string
-  readonly amount: number
-  readonly completed: boolean
-}[]
-
 export const EarnMapScreen: React.FC = () => {
   const {
     theme: { colors },
@@ -102,33 +99,40 @@ export const EarnMapScreen: React.FC = () => {
     index: section,
     text: LL.EarnScreen.earnSections[section].title(),
     icon: BitcoinCircle,
-    onPress: () => navigation.navigate("earnsSection", { section }),
   }))
   const styles = useStyles()
 
   let currSection = 0
   let progress = NaN
 
-  const { loading, quizServerData } = useQuizServer({ fetchPolicy: "network-only" })
+  const { loading, quizServerData, earnedSats } = useQuizServer({
+    fetchPolicy: "network-only",
+  })
+
+  let canDoNextSection: boolean
 
   for (const section of sections) {
-    const sectionCompletion = sectionCompletedPct({
-      quizServerData,
+    const cardsOnSection = getCardsFromSection({
       section,
       quizQuestionsContent,
     })
+    const cards = cardsOnSection.map((card) =>
+      augmentCardWithGqlData({ card, quizServerData }),
+    )
+
+    const sectionCompletion =
+      cards?.filter((item) => item?.completed).length / cards.length ?? 0
 
     if (sectionCompletion === 1) {
       currSection += 1
     } else if (isNaN(progress)) {
       // only do it once for the first uncompleted section
       progress = sectionCompletion
+    } else {
+      const notBefore = cards[cards.length - 1]?.notBefore
+      canDoNextSection = notBefore instanceof Date && new Date() > notBefore
     }
   }
-
-  const earnedSat = quizServerData
-    .filter((quiz) => quiz.completed)
-    .reduce((acc, { amount }) => acc + amount, 0)
 
   const Finish = ({ currSection, length }: FinishProps) => {
     if (currSection !== sectionsData.length) return null
@@ -173,17 +177,24 @@ export const EarnMapScreen: React.FC = () => {
   }
 
   const BoxAdding: React.FC<IBoxAdding> = ({
+    section,
     text,
     Icon,
     side,
     position,
     length,
-    onPress,
   }: IBoxAdding) => {
     const styles = useStyles()
 
     const disabled = currSection < position
+    const nextSectionNotYetAvailable = currSection === position && !canDoNextSection
     const progressSection = disabled ? 0 : currSection > position ? 1 : progress
+
+    const onPress = () => {
+      nextSectionNotYetAvailable
+        ? Alert.alert(LL.EarnScreen.notYet(), LL.EarnScreen.availableTomorrow())
+        : navigation.navigate("earnsSection", { section })
+    }
 
     // rework this to pass props into the style object
     const boxStyle = StyleSheet.create({
@@ -220,12 +231,12 @@ export const EarnMapScreen: React.FC = () => {
     .map((item, index) => (
       <BoxAdding
         key={item.index}
+        section={item.index}
         text={item.text}
         Icon={item.icon}
         side={index % 2 ? "left" : "right"}
         position={index}
         length={sectionsData.length}
-        onPress={item.onPress}
       />
     ))
     .reverse()
@@ -281,7 +292,7 @@ export const EarnMapScreen: React.FC = () => {
           }
         }}
       >
-        <MountainHeader amount={earnedSat.toString()} color={backgroundColor} />
+        <MountainHeader amount={earnedSats.toString()} color={backgroundColor} />
         <View style={styles.mainView}>
           <Finish currSection={currSection} length={sectionsData.length} />
           {SectionsComp}

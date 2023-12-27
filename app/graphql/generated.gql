@@ -478,15 +478,17 @@ mutation onboardingFlowStart($input: OnboardingFlowStartInput!) {
   }
 }
 
-mutation quizCompleted($input: QuizCompletedInput!) {
-  quizCompleted(input: $input) {
+mutation quizClaim($input: QuizClaimInput!) {
+  quizClaim(input: $input) {
     errors {
       message
       __typename
     }
-    quiz {
+    quizzes {
       id
+      amount
       completed
+      notBefore
       __typename
     }
     __typename
@@ -1117,6 +1119,7 @@ query myQuizQuestions {
           id
           amount
           completed
+          notBefore
           __typename
         }
         __typename

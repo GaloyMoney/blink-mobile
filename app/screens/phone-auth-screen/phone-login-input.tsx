@@ -175,7 +175,9 @@ export const PhoneLoginInitiateScreen: React.FC<PhoneLoginInitiateScreenProps> =
     }
 
     setTimeout(() => setPhoneNumber("66667777"), 0)
-  }, [appConfig, setPhoneNumber])
+    // we intentionally do not want to add setPhoneNumber so that we can use other phone if needed
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appConfig])
 
   if (status === RequestPhoneCodeStatus.LoadingCountryCode || loadingSupportedCountries) {
     return (

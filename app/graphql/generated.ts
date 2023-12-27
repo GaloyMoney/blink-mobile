@@ -2305,14 +2305,14 @@ export type DebugScreenQuery = { readonly __typename: 'Query', readonly me?: { r
 export type MyQuizQuestionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyQuizQuestionsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly quiz: ReadonlyArray<{ readonly __typename: 'Quiz', readonly id: string, readonly amount: number, readonly completed: boolean }> } } | null };
+export type MyQuizQuestionsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly quiz: ReadonlyArray<{ readonly __typename: 'Quiz', readonly id: string, readonly amount: number, readonly completed: boolean, readonly notBefore?: number | null }> } } | null };
 
-export type QuizCompletedMutationVariables = Exact<{
-  input: QuizCompletedInput;
+export type QuizClaimMutationVariables = Exact<{
+  input: QuizClaimInput;
 }>;
 
 
-export type QuizCompletedMutation = { readonly __typename: 'Mutation', readonly quizCompleted: { readonly __typename: 'QuizCompletedPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly quiz?: { readonly __typename: 'Quiz', readonly id: string, readonly completed: boolean } | null } };
+export type QuizClaimMutation = { readonly __typename: 'Mutation', readonly quizClaim: { readonly __typename: 'QuizClaimPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly quizzes: ReadonlyArray<{ readonly __typename: 'Quiz', readonly id: string, readonly amount: number, readonly completed: boolean, readonly notBefore?: number | null }> } };
 
 export type UserEmailRegistrationInitiateMutationVariables = Exact<{
   input: UserEmailRegistrationInitiateInput;
@@ -3819,6 +3819,7 @@ export const MyQuizQuestionsDocument = gql`
           id
           amount
           completed
+          notBefore
         }
       }
     }
@@ -3852,45 +3853,47 @@ export function useMyQuizQuestionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type MyQuizQuestionsQueryHookResult = ReturnType<typeof useMyQuizQuestionsQuery>;
 export type MyQuizQuestionsLazyQueryHookResult = ReturnType<typeof useMyQuizQuestionsLazyQuery>;
 export type MyQuizQuestionsQueryResult = Apollo.QueryResult<MyQuizQuestionsQuery, MyQuizQuestionsQueryVariables>;
-export const QuizCompletedDocument = gql`
-    mutation quizCompleted($input: QuizCompletedInput!) {
-  quizCompleted(input: $input) {
+export const QuizClaimDocument = gql`
+    mutation quizClaim($input: QuizClaimInput!) {
+  quizClaim(input: $input) {
     errors {
       message
     }
-    quiz {
+    quizzes {
       id
+      amount
       completed
+      notBefore
     }
   }
 }
     `;
-export type QuizCompletedMutationFn = Apollo.MutationFunction<QuizCompletedMutation, QuizCompletedMutationVariables>;
+export type QuizClaimMutationFn = Apollo.MutationFunction<QuizClaimMutation, QuizClaimMutationVariables>;
 
 /**
- * __useQuizCompletedMutation__
+ * __useQuizClaimMutation__
  *
- * To run a mutation, you first call `useQuizCompletedMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useQuizCompletedMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useQuizClaimMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useQuizClaimMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [quizCompletedMutation, { data, loading, error }] = useQuizCompletedMutation({
+ * const [quizClaimMutation, { data, loading, error }] = useQuizClaimMutation({
  *   variables: {
  *      input: // value for 'input'
  *   },
  * });
  */
-export function useQuizCompletedMutation(baseOptions?: Apollo.MutationHookOptions<QuizCompletedMutation, QuizCompletedMutationVariables>) {
+export function useQuizClaimMutation(baseOptions?: Apollo.MutationHookOptions<QuizClaimMutation, QuizClaimMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<QuizCompletedMutation, QuizCompletedMutationVariables>(QuizCompletedDocument, options);
+        return Apollo.useMutation<QuizClaimMutation, QuizClaimMutationVariables>(QuizClaimDocument, options);
       }
-export type QuizCompletedMutationHookResult = ReturnType<typeof useQuizCompletedMutation>;
-export type QuizCompletedMutationResult = Apollo.MutationResult<QuizCompletedMutation>;
-export type QuizCompletedMutationOptions = Apollo.BaseMutationOptions<QuizCompletedMutation, QuizCompletedMutationVariables>;
+export type QuizClaimMutationHookResult = ReturnType<typeof useQuizClaimMutation>;
+export type QuizClaimMutationResult = Apollo.MutationResult<QuizClaimMutation>;
+export type QuizClaimMutationOptions = Apollo.BaseMutationOptions<QuizClaimMutation, QuizClaimMutationVariables>;
 export const UserEmailRegistrationInitiateDocument = gql`
     mutation userEmailRegistrationInitiate($input: UserEmailRegistrationInitiateInput!) {
   userEmailRegistrationInitiate(input: $input) {
