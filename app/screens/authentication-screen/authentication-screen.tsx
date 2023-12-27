@@ -1,4 +1,4 @@
-import { RouteProp, useFocusEffect, useNavigation } from "@react-navigation/native"
+import { RouteProp, useNavigation } from "@react-navigation/native"
 import * as React from "react"
 import { Alert, View } from "react-native"
 
@@ -37,10 +37,6 @@ export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
   const { setAppUnlocked } = useAuthenticationContext()
   const { LL } = useI18nContext()
 
-  React.useEffect(() => {
-    attemptAuthentication()
-  }, [])
-
   const attemptAuthentication = () => {
     let description = "attemptAuthentication. should not be displayed?"
     if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
@@ -65,6 +61,11 @@ export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
     setAppUnlocked()
     navigation.replace("Primary")
   }
+  
+  React.useEffect(() => {
+    attemptAuthentication()
+  }, [attemptAuthentication])
+
 
   const handleAuthenticationFailure = () => {
     // This is called when a user cancels or taps out of the authentication prompt,
