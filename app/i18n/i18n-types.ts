@@ -172,7 +172,7 @@ type RootTranslation = {
 		 */
 		usePin: string
 		/**
-		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​'​d​ ​l​i​k​e​ ​t​o​ ​l​o​g​o​u​t​?​ ​T​h​i​s​ ​w​i​l​l​ ​r​e​s​e​t​ ​y​o​u​r​ ​c​a​c​h​e​ ​a​n​d​ ​a​l​l​ ​l​o​c​a​l​ ​u​s​e​r​ ​s​e​t​t​i​n​g​s
+		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​'​d​ ​l​i​k​e​ ​t​o​ ​l​o​g​ ​o​u​t​?​ ​T​h​i​s​ ​w​i​l​l​ ​r​e​s​e​t​ ​y​o​u​r​ ​c​a​c​h​e​ ​a​n​d​ ​a​l​l​ ​l​o​c​a​l​ ​u​s​e​r​ ​s​e​t​t​i​n​g​s
 		 */
 		confirmLogout: string
 	}
@@ -9005,7 +9005,7 @@ export type TranslationFunctions = {
 		 */
 		usePin: () => LocalizedString
 		/**
-		 * Are you sure you'd like to logout? This will reset your cache and all local user settings
+		 * Are you sure you'd like to log out? This will reset your cache and all local user settings
 		 */
 		confirmLogout: () => LocalizedString
 	}

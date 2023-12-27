@@ -37,22 +37,7 @@ export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
   const { setAppUnlocked } = useAuthenticationContext()
   const { LL } = useI18nContext()
 
-  const attemptAuthentication = () => {
-    let description = "attemptAuthentication. should not be displayed?"
-    if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
-      description = LL.AuthenticationScreen.authenticationDescription()
-    } else if (screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication) {
-      description = LL.AuthenticationScreen.setUpAuthenticationDescription()
-    }
-    // Presents the OS specific authentication prompt
-    BiometricWrapper.authenticate(
-      description,
-      handleAuthenticationSuccess,
-      handleAuthenticationFailure,
-    )
-  }
-
-  const handleAuthenticationSuccess = async () => {
+  const handleAuthenticationSuccess = React.useCallback(async () => {
     if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
       KeyStoreWrapper.resetPinAttempts()
     } else if (screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication) {
@@ -60,17 +45,24 @@ export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
     }
     setAppUnlocked()
     navigation.replace("Primary")
-  }
-  
+  }, [navigation, screenPurpose, setAppUnlocked])
+
+  const attemptAuthentication = React.useCallback(() => {
+    let description = "attemptAuthentication. should not be displayed?"
+    if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
+      description = LL.AuthenticationScreen.authenticationDescription()
+    } else if (screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication) {
+      description = LL.AuthenticationScreen.setUpAuthenticationDescription()
+    }
+    // Presents the OS specific authentication prompt
+    BiometricWrapper.authenticate(description, handleAuthenticationSuccess, () => {})
+  }, [screenPurpose, handleAuthenticationSuccess, LL.AuthenticationScreen])
+
   React.useEffect(() => {
     attemptAuthentication()
-  }, [attemptAuthentication])
-
-
-  const handleAuthenticationFailure = () => {
-    // This is called when a user cancels or taps out of the authentication prompt,
-    // so no action is necessary.
-  }
+    // only run this on first visit to screen
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const logoutAndNavigateToLanding = async () => {
     await logout()
