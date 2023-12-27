@@ -2471,7 +2471,7 @@ export type SendBitcoinConfirmationScreenQuery = { readonly __typename: 'Query',
 export type SendBitcoinDestinationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SendBitcoinDestinationQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string } | { readonly __typename: 'UsdWallet', readonly id: string }> }, readonly contacts: ReadonlyArray<{ readonly __typename: 'UserContact', readonly id: string, readonly username: string }> } | null };
+export type SendBitcoinDestinationQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string } | { readonly __typename: 'UsdWallet', readonly id: string }> }, readonly contacts: ReadonlyArray<{ readonly __typename: 'UserContact', readonly id: string, readonly username: string, readonly alias?: string | null, readonly transactionsCount: number }> } | null };
 
 export type AccountDefaultWalletQueryVariables = Exact<{
   username: Scalars['Username']['input'];
@@ -5043,6 +5043,8 @@ export const SendBitcoinDestinationDocument = gql`
     contacts {
       id
       username
+      alias
+      transactionsCount
     }
   }
 }

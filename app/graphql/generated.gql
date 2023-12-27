@@ -1313,6 +1313,8 @@ query sendBitcoinDestination {
     contacts {
       id
       username
+      alias
+      transactionsCount
       __typename
     }
     __typename

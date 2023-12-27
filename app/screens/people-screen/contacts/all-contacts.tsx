@@ -13,7 +13,7 @@ import { testProps } from "@app/utils/testProps"
 import { toastShow } from "@app/utils/toast"
 
 import { gql } from "@apollo/client"
-import { useContactsQuery } from "@app/graphql/generated"
+import { UserContact, useContactsQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
@@ -42,7 +42,7 @@ export const AllContactsScreen: React.FC = () => {
 
   const isAuthed = useIsAuthed()
 
-  const [matchingContacts, setMatchingContacts] = useState<Contact[]>([])
+  const [matchingContacts, setMatchingContacts] = useState<UserContact[]>([])
   const [searchText, setSearchText] = useState("")
   const { LL } = useI18nContext()
   const { loading, data, error } = useContactsQuery({
@@ -54,7 +54,7 @@ export const AllContactsScreen: React.FC = () => {
     toastShow({ message: error.message, LL })
   }
 
-  const contacts: Contact[] = useMemo(() => {
+  const contacts: UserContact[] = useMemo(() => {
     return data?.me?.contacts.slice() ?? []
   }, [data])
 
@@ -87,7 +87,7 @@ export const AllContactsScreen: React.FC = () => {
     [contacts],
   )
 
-  const wordMatchesContact = (searchWord: string, contact: Contact): boolean => {
+  const wordMatchesContact = (searchWord: string, contact: UserContact): boolean => {
     let contactPrettyNameMatchesSearchWord: boolean
 
     const contactNameMatchesSearchWord = contact.username

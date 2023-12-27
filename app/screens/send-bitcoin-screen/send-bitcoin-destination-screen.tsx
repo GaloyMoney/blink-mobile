@@ -5,6 +5,7 @@ import { Screen } from "@app/components/screen"
 import { gql } from "@apollo/client"
 import ScanIcon from "@app/assets/icons/scan.svg"
 import {
+  UserContact,
   useAccountDefaultWalletLazyQuery,
   useRealtimePriceQuery,
   useSendBitcoinDestinationQuery,
@@ -56,6 +57,8 @@ gql`
       contacts {
         id
         username
+        alias
+        transactionsCount
       }
     }
   }
@@ -76,7 +79,7 @@ type Props = {
   route: RouteProp<RootStackParamList, "sendBitcoinDestination">
 }
 
-const wordMatchesContact = (searchWord: string, contact: Contact): boolean => {
+const wordMatchesContact = (searchWord: string, contact: UserContact): boolean => {
   let contactPrettyNameMatchesSearchWord: boolean
 
   const contactNameMatchesSearchWord = contact.username
@@ -94,7 +97,7 @@ const wordMatchesContact = (searchWord: string, contact: Contact): boolean => {
   return contactNameMatchesSearchWord || contactPrettyNameMatchesSearchWord
 }
 
-const matchCheck = (newSearchText: string, allContacts: Contact[]): Contact[] => {
+const matchCheck = (newSearchText: string, allContacts: UserContact[]): UserContact[] => {
   if (newSearchText.length > 0) {
     const searchWordArray = newSearchText
       .split(" ")
@@ -148,16 +151,15 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     fetchPolicy: "no-cache",
   })
 
-  const [matchingContacts, setMatchingContacts] = useState<Contact[]>([])
-  const allContacts: Contact[] = useMemo(() => {
-    const contactsCopy = contacts.slice() ?? []
-    const compareUsernames = (a: Contact, b: Contact) => {
-      return a.username.toLocaleLowerCase().localeCompare(b.username.toLocaleLowerCase())
-    }
-    contactsCopy.sort(compareUsernames)
+  const [matchingContacts, setMatchingContacts] = useState<UserContact[]>([])
 
-    return contactsCopy
-  }, [contacts])
+  const allContacts: UserContact[] = useMemo(
+    () =>
+      (contacts.slice() ?? []).sort((a, b) => {
+        return b.transactionsCount - a.transactionsCount
+      }),
+    [contacts],
+  )
 
   const [selectedId, setSelectedId] = useState("")
 
@@ -441,11 +443,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   ])
 
   return (
-    <Screen
-      style={styles.screenStyle}
-      keyboardOffset="navigationHeader"
-      keyboardShouldPersistTaps="handled"
-    >
+    <Screen keyboardOffset="navigationHeader" keyboardShouldPersistTaps="handled">
       <ConfirmDestinationModal
         destinationState={destinationState}
         dispatchDestinationStateAction={dispatchDestinationStateAction}
@@ -544,11 +542,8 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
 export default SendBitcoinDestinationScreen
 
 const usestyles = makeStyles(({ colors }) => ({
-  screenStyle: {
-    padding: 20,
-    flexGrow: 1,
-  },
   sendBitcoinDestinationContainer: {
+    padding: 20,
     flex: 1,
   },
   fieldBackground: {
