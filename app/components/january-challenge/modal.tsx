@@ -20,7 +20,7 @@ type Props = {
   setIsVisible: (isVisible: boolean) => void
 }
 
-export const NovemberChallengeModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
+export const JanuaryChallengeModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
   const { LL } = useI18nContext()
 
   const {
@@ -52,15 +52,15 @@ export const NovemberChallengeModal: React.FC<Props> = ({ isVisible, setIsVisibl
           />
           <GaloyIcon style={styles.top} name="rank" size={40} color={colors.primary} />
           <Text type="h1" bold>
-            {LL.Circles.novemberChallenge.title()}
+            {LL.Circles.januaryChallenge.title()}
           </Text>
           <Text type="p1" style={styles.details}>
-            {LL.Circles.novemberChallenge.details()}
+            {LL.Circles.januaryChallenge.details()}
           </Text>
           {ShareImg}
           <GaloyPrimaryButton onPress={share} title={LL.Circles.shareCircles()} />
           <Text style={styles.reminder} type="p3" color={colors.grey3}>
-            {LL.Circles.octoberChallenge.connectOnSocial()}
+            {LL.Circles.connectOnSocial()}
             <Text
               style={styles.underline}
               color={colors.grey3}
@@ -70,7 +70,7 @@ export const NovemberChallengeModal: React.FC<Props> = ({ isVisible, setIsVisibl
             </Text>
           </Text>
           <Text style={styles.reminder} type="p3">
-            {LL.Circles.octoberChallenge.fullDetails()}
+            {LL.Circles.fullDetails()}
             <Text
               style={styles.underline}
               color={colors.grey3}
