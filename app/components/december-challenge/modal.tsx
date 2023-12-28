@@ -60,7 +60,7 @@ export const DecemberChallengeModal: React.FC<Props> = ({ isVisible, setIsVisibl
           {ShareImg}
           <GaloyPrimaryButton onPress={share} title={LL.Circles.shareCircles()} />
           <Text style={styles.reminder} type="p3" color={colors.grey3}>
-            {LL.Circles.octoberChallenge.connectOnSocial()}
+            {LL.Circles.connectOnSocial()}
             <Text
               style={styles.underline}
               color={colors.grey3}
@@ -70,7 +70,7 @@ export const DecemberChallengeModal: React.FC<Props> = ({ isVisible, setIsVisibl
             </Text>
           </Text>
           <Text style={styles.reminder} type="p3">
-            {LL.Circles.octoberChallenge.fullDetails()}
+            {LL.Circles.fullDetails()}
             <Text
               style={styles.underline}
               color={colors.grey3}

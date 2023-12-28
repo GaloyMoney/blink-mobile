@@ -12,12 +12,11 @@ import LogoDarkMode from "@app/assets/logo/app-logo-dark.svg"
 import LogoLightMode from "@app/assets/logo/blink-logo-light.svg"
 import { useRef, useState } from "react"
 import { InviteFriendsCard } from "./invite-friends-card"
-import { OctoberChallengeCard } from "@app/components/october-challenge"
 import { Screen } from "../../../components/screen"
 import { IntroducingCirclesModal } from "@app/components/introducing-circles-modal"
-import { NovemberChallengeCard } from "@app/components/november-challenge"
 import { ScrollView } from "react-native-gesture-handler"
 import { DecemberChallengeCard } from "@app/components/december-challenge"
+import { JanuaryChallengeCard } from "@app/components/january-challenge"
 
 gql`
   query Circles {
@@ -154,9 +153,8 @@ export const CirclesDashboardScreen: React.FC = () => {
             </Text>
           </View>
         )}
-        <OctoberChallengeCard />
-        <NovemberChallengeCard />
         <DecemberChallengeCard />
+        <JanuaryChallengeCard />
         {isLonely ? <InviteFriendsCard /> : <ShareCircles />}
       </ScrollView>
     </Screen>
