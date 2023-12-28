@@ -1,6 +1,9 @@
 import { gql } from "@apollo/client"
 import { Screen } from "@app/components/screen"
-import { useTransactionListForDefaultAccountQuery } from "@app/graphql/generated"
+import {
+  WalletCurrency,
+  useTransactionListForDefaultAccountQuery,
+} from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { groupTransactionsByDate } from "@app/graphql/transactions"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -15,6 +18,8 @@ import { listPaymentsBreezSDK } from "@app/utils/breez-sdk"
 import { Payment } from "@breeztech/react-native-breez-sdk"
 import { formatPaymentsBreezSDK } from "@app/hooks/useBreezPayments"
 import { BreezTransactionItem } from "@app/components/transaction-item/breez-transaction-item"
+import { usePriceConversion } from "@app/hooks"
+import { toBtcMoneyAmount } from "@app/types/amounts"
 
 gql`
   query transactionListForDefaultAccount(
@@ -49,17 +54,9 @@ export const TransactionHistoryScreen: React.FC = () => {
 
   // Breez SDK transactions
   const [breezTransactions, setBreezTransactions] = React.useState<Payment[]>([])
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [btcInDisplay, setBtcInDisplay] = React.useState(0)
 
-  // React.useEffect(() => {
-  //   fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setBtcInDisplay(data.bitcoin.usd)
-  //     })
-  //     .catch((error) => console.error("Error fetching BTC price:", error))
-  // }, [])
+  const { convertMoneyAmount } = usePriceConversion()
+
   React.useEffect(() => {
     const listPaymentsBreez = async () => {
       // eslint-disable-next-line no-promise-executor-return
@@ -80,8 +77,16 @@ export const TransactionHistoryScreen: React.FC = () => {
   )
 
   const breezSections = React.useMemo(() => {
+    if (!convertMoneyAmount || !breezTransactions) {
+      return []
+    }
     const formattedTxs = breezTransactions?.map((edge) =>
-      formatPaymentsBreezSDK(edge.id, breezTransactions, btcInDisplay),
+      formatPaymentsBreezSDK(
+        edge.id,
+        breezTransactions,
+        convertMoneyAmount(toBtcMoneyAmount(edge.amountMsat / 1000), WalletCurrency.Usd)
+          .amount,
+      ),
     )
 
     const validTxs = formattedTxs?.filter(Boolean) ?? []
@@ -90,6 +95,7 @@ export const TransactionHistoryScreen: React.FC = () => {
       txs: validTxs,
       common: LL.common,
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [breezTransactions, LL])
 
   if (error) {

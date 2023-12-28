@@ -309,7 +309,7 @@ export const EarnQuiz = ({ route }: Props) => {
         <View style={styles.modalBackground}>
           <View style={{ height: 14 }}>
             <Icon
-              name="ios-remove"
+              name="remove"
               size={72}
               color={colors._lightGrey}
               style={{ height: 40, top: -30 }}

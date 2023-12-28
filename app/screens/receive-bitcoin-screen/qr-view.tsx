@@ -23,6 +23,7 @@ import { SuccessIconAnimation } from "@app/components/success-animation"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry"
 
 const configByType = {
   [Invoice.Lightning]: {
@@ -77,6 +78,10 @@ export const QRView: React.FC<Props> = ({
   canUsePayCode,
   toggleIsSetLightningAddressModalVisible,
 }) => {
+  // if (getFullUri) {
+  //   console.log("getFullUri", getFullUri({ uppercase: true }))
+  //   console.log("isPayCode", isPayCode)
+  // }
   const {
     theme: { colors },
   } = useTheme()

@@ -4,21 +4,22 @@ import { TransactionFragment } from "@app/graphql/generated"
 export const formatPaymentsBreezSDK = (
   txid: unknown,
   payments: sdk.Payment[],
-  btcInDisplayRate: number,
+  convertedAmount: number,
 ) => {
-  const rate = btcInDisplayRate / 100000000
   const response: sdk.Payment[] = payments
   const responseTx = response.find((tx) => tx.id === txid)
-  let tx: TransactionFragment | undefined
+  let tx: TransactionFragment = {} as TransactionFragment
   if (responseTx) {
     const amountSat = responseTx.amountMsat / 1000
     // round up to 2 decimal places
-    const moneyAmount = (Math.ceil(amountSat * rate * 100) / 100).toString()
+    const moneyAmount = (convertedAmount / 100).toString()
     const transformedData: TransactionFragment = {
       // Map fields from response to fields of TransactionFragment, e.g.,
       id: responseTx.id,
       direction: responseTx.paymentType === "received" ? "RECEIVE" : "SEND",
-      status: (responseTx.pending ? "PENDING" : "SUCCESS") || "FAILURE",
+      status:
+        (responseTx.status === sdk.PaymentStatus.PENDING ? "PENDING" : "SUCCESS") ||
+        "FAILURE",
       memo: responseTx.description,
       settlementAmount: amountSat,
       settlementCurrency: "BTC",
@@ -28,7 +29,7 @@ export const formatPaymentsBreezSDK = (
         __typename: "SettlementViaLn",
         paymentSecret:
           "details" in responseTx && "paymentPreimage" in responseTx.details
-            ? responseTx.details.paymentPreimage
+            ? (responseTx.details.paymentPreimage as string)
             : undefined,
       },
       createdAt: responseTx.paymentTime,
@@ -45,13 +46,12 @@ export const formatPaymentsBreezSDK = (
         __typename: "InitiationViaLn",
         paymentHash:
           "details" in responseTx && "paymentHash" in responseTx.details
-            ? responseTx.details.paymentHash
+            ? (responseTx.details.paymentHash as string)
             : "",
       },
       __typename: "Transaction",
     }
     tx = transformedData
   }
-
   return tx
 }

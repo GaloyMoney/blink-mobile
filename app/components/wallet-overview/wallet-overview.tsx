@@ -23,17 +23,7 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 // import Breez SDK Wallet
-import useBreezBalance from "@app/hooks/useBreezBalance"
-import { useIsFocused } from "@react-navigation/native"
-import * as sdk from "@breeztech/react-native-breez-sdk"
-
-sdk.addEventListener((type, data) => {
-  if (data) {
-    console.log(`received event ${type} with data: ${JSON.stringify(data)}`)
-  } else {
-    console.log(`received event ${type}`)
-  }
-})
+// import useBreezBalance from "@app/hooks/useBreezBalance"
 
 const Loader = () => {
   const styles = useStyles()

@@ -48,7 +48,7 @@
     },
     "ChatScreen": {
         "noChatsTitle": "No Chats Found",
-        "noChatsYet": "Enter a Flash username or nostr public key to start a chat",
+        "noChatsYet": "Enter a Flash username or \nnostr pubkey to start a chat",
         "noMatchingChats": "No chats matching your search were found.",
         "title": "Chat"
     },
@@ -630,7 +630,6 @@
     },
     "SendBitcoinScreen": {
         "amount": "Amount",
-        "MinOnChainLimit": "Minimum amount for this transaction is US$2.00",
         "amountExceed": "Amount exceeds your balance of {balance: string}",
         "amountExceedsLimit": "Amount exceeds your remaining daily limit of {limit: string}",
         "upgradeAccountToIncreaseLimit": "Upgrade your account to increase your limit",
