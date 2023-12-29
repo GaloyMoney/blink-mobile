@@ -10,7 +10,6 @@ import { useEffect, useRef } from "react"
 import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
 import { isIos } from "@app/utils/helper"
 import { LocalizedString } from "typesafe-i18n"
-import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
 
 type Props = {
   item: MarkerData
@@ -19,11 +18,11 @@ type Props = {
   handleCalloutPress: (item: MarkerData) => void
   isFocused: boolean
   styles: {
-    customView: StyleProp<ViewStyle>,
-    title: StyleProp<TextStyle>,
-    text: StyleProp<TextStyle>,
-    pseudoButton: StyleProp<ViewStyle>,
-    android: StyleProp<ViewStyle>,
+    customView: StyleProp<ViewStyle>
+    title: StyleProp<TextStyle>
+    text: StyleProp<TextStyle>
+    pseudoButton: StyleProp<ViewStyle>
+    android: StyleProp<ViewStyle>
     ios: StyleProp<ViewStyle>
   }
   text: LocalizedString

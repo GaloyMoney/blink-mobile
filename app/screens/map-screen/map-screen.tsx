@@ -31,8 +31,6 @@ const { height, width } = Dimensions.get("window")
 const LATITUDE_DELTA = 15 // <-- decrease for more zoom
 const LONGITUDE_DELTA = LATITUDE_DELTA * (width / height)
 
-const PAY_CONTAINER_HEIGHT = 106
-
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "Primary">
 }
@@ -73,7 +71,6 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   const [isRefreshed, setIsRefreshed] = React.useState(false)
   const [focusedMarker, setFocusedMarker] = React.useState<MarkerData | null>(null)
   const [wasLocationDenied, setLocationDenied] = React.useState(false)
-  const [mapBottomPadding, setMapBottomPadding] = React.useState(0)
 
   useFocusEffect(() => {
     if (!isRefreshed) {
@@ -186,7 +183,6 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
           handleMarkerPress={(item) => setFocusedMarker(item)}
           focusedMarker={focusedMarker}
           handleCalloutPress={handleCalloutPress}
-          bottomPadding={mapBottomPadding}
         />
       )}
     </Screen>

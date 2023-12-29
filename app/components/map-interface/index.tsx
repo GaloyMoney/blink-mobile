@@ -5,12 +5,10 @@ import React, { useRef } from "react"
 import { BusinessMapMarkersQuery } from "@app/graphql/generated"
 import MapMarker from "../map-marker"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { StyleSheet } from "react-native"
 
 type Props = {
   data?: BusinessMapMarkersQuery
   userLocation?: Region
-  bottomPadding: number
   handleMapPress: () => void
   handleMarkerPress: (_: MarkerData) => void
   focusedMarker: MarkerData | null
@@ -34,7 +32,6 @@ export type MarkerData = {
 export default function MapInterface({
   data,
   userLocation,
-  bottomPadding,
   handleMapPress,
   handleMarkerPress,
   focusedMarker,
@@ -57,10 +54,9 @@ export default function MapInterface({
       initialRegion={userLocation}
       customMapStyle={themeMode === "dark" ? MapStyles.dark : MapStyles.light}
       onPress={handleMapPress}
-      mapPadding={{ bottom: bottomPadding, top: 0, right: 0, left: 0 }}
     >
       {(data?.businessMapMarkers ?? []).reduce(
-        (arr: React.ReactElement[], item: MarkerData | null, i: number) => {
+        (arr: React.ReactElement[], item: MarkerData | null) => {
           if (item?.username) {
             arr.push(
               <MapMarker
@@ -88,7 +84,7 @@ const useStyles = makeStyles(({ colors }) => ({
     marginTop: 15,
     backgroundColor: colors._orange,
   },
-  
+
   customView: {
     alignItems: "center",
     margin: 12,
@@ -98,14 +94,14 @@ const useStyles = makeStyles(({ colors }) => ({
     borderWidth: 1,
     borderColor: colors.grey4,
   },
-  
+
   pseudoButton: {
     minHeight: 50,
     backgroundColor: colors.primary3,
     borderRadius: 25,
-    justifyContent: 'center',
+    justifyContent: "center",
     elevation: 4,
-    width: 200
+    width: 200,
   },
 
   ios: { paddingTop: 12 },
@@ -123,6 +119,6 @@ const useStyles = makeStyles(({ colors }) => ({
     fontWeight: "600",
     color: colors.white,
     margin: 8,
-    textAlign: 'center'
+    textAlign: "center",
   },
 }))
