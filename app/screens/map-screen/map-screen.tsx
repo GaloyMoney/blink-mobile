@@ -3,31 +3,28 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
-import { ActivityIndicator, Dimensions, View } from "react-native"
+import { Dimensions } from "react-native"
+import { Region } from "react-native-maps"
 import Geolocation from "@react-native-community/geolocation"
-import MapView, {
-  Callout,
-  CalloutSubview,
-  MapMarkerProps,
-  Marker,
-  Region,
-} from "react-native-maps"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
-import { isIos } from "../../utils/helper"
 import { toastShow } from "../../utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useBusinessMapMarkersQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { PhoneLoginInitiateType } from "../phone-auth-screen"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import MapStyles from "./map-styles.json"
-
 import countryCodes from "../../../utils/countryInfo.json"
 import { CountryCode } from "libphonenumber-js/mobile"
 import useDeviceLocation from "@app/hooks/use-device-location"
+import MapInterface, { MarkerData } from "@app/components/map-interface"
+
+const EL_ZONTE_COORDS = {
+  latitude: 13.496743,
+  longitude: -89.439462,
+  latitudeDelta: 0.02,
+  longitudeDelta: 0.02,
+}
 
 // essentially calculates zoom for location being set based on country
 const { height, width } = Dimensions.get("window")
@@ -62,22 +59,19 @@ gql`
 `
 
 export const MapScreen: React.FC<Props> = ({ navigation }) => {
-  const {
-    theme: { colors, mode: themeMode },
-  } = useTheme()
-  const styles = useStyles()
   const isAuthed = useIsAuthed()
   const { countryCode, loading } = useDeviceLocation()
+  const { LL } = useI18nContext()
 
-  const [isLoadingLocation, setIsLoadingLocation] = React.useState(true)
-  const [userLocation, setUserLocation] = React.useState<Region>()
-  const [isRefreshed, setIsRefreshed] = React.useState(false)
-  const [wasLocationDenied, setLocationDenied] = React.useState(false)
   const { data, error, refetch } = useBusinessMapMarkersQuery({
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "cache-and-network",
   })
-  const { LL } = useI18nContext()
+
+  const [userLocation, setUserLocation] = React.useState<Region>()
+  const [isRefreshed, setIsRefreshed] = React.useState(false)
+  const [focusedMarker, setFocusedMarker] = React.useState<MarkerData | null>(null)
+  const [wasLocationDenied, setLocationDenied] = React.useState(false)
 
   useFocusEffect(() => {
     if (!isRefreshed) {
@@ -90,7 +84,26 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     toastShow({ message: error.message, LL })
   }
 
-  const maps = data?.businessMapMarkers ?? []
+  React.useEffect(() => {
+    const permittedResponse = () => {
+      getUserRegion(async (region) => {
+        if (region) {
+          setUserLocation(region)
+        } else {
+          setLocationDenied(true)
+        }
+      })
+    }
+
+    const negativeResponse = (error: GeolocationPermissionNegativeError) => {
+      console.debug("Permission location denied: ", error)
+      setLocationDenied(true)
+    }
+
+    Geolocation.requestAuthorization(permittedResponse, negativeResponse)
+    // disable eslint because we only want to ask for permissions once
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // if getting location was denied and device's country code has been found (or defaulted)
   // this is used to finalize the initial location shown on the Map
@@ -110,10 +123,25 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
           longitudeDelta: LONGITUDE_DELTA,
         }
         setUserLocation(region)
+      } else {
+        // backup if country code is not recognized
+        setUserLocation(EL_ZONTE_COORDS)
       }
-      setIsLoadingLocation(false)
     }
-  }, [wasLocationDenied, countryCode, loading, setIsLoadingLocation, setUserLocation])
+  }, [wasLocationDenied, countryCode, loading, setUserLocation])
+
+  const handleCalloutPress = (item: MarkerData | null) => {
+    if (isAuthed && item?.username) {
+      navigation.navigate("sendBitcoinDestination", { username: item.username })
+    } else {
+      navigation.navigate("phoneFlow", {
+        screen: "phoneLoginInitiate",
+        params: {
+          type: PhoneLoginInitiateType.CreateAccount,
+        },
+      })
+    }
+  }
 
   const getUserRegion = (callback: (region?: Region) => void) => {
     try {
@@ -139,119 +167,18 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     }
   }
 
-  const requestLocationPermission = useCallback(() => {
-    const permittedResponse = () => {
-      getUserRegion(async (region) => {
-        if (region) {
-          setUserLocation(region)
-          setIsLoadingLocation(false)
-        } else {
-          setLocationDenied(true)
-        }
-      })
-    }
-
-    const negativeResponse = (error: GeolocationPermissionNegativeError) => {
-      console.debug("Permission location denied: ", error)
-      setLocationDenied(true)
-    }
-
-    Geolocation.requestAuthorization(permittedResponse, negativeResponse)
-    // disable eslint because we only want to ask for permissions once
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useFocusEffect(requestLocationPermission)
-
-  // TODO this should be memoized for performance improvements. Use reduce() inside a useMemo() with some dependency array values
-  // and/or a generator function that yields markers asynchronously???
-  const markers: ReturnType<React.FC<MapMarkerProps>>[] = []
-  maps.forEach((item) => {
-    if (item) {
-      const onPress = () => {
-        if (isAuthed && item?.username) {
-          navigation.navigate("sendBitcoinDestination", { username: item.username })
-        } else {
-          navigation.navigate("phoneFlow", {
-            screen: "phoneLoginInitiate",
-            params: {
-              type: PhoneLoginInitiateType.CreateAccount,
-            },
-          })
-        }
-      }
-
-      markers.push(
-        <Marker
-          coordinate={item.mapInfo.coordinates}
-          key={item.username}
-          pinColor={colors._orange}
-        >
-          <Callout onPress={() => (Boolean(item.username) && !isIos ? onPress() : null)}>
-            <View style={styles.customView}>
-              <Text type="h1" style={styles.title}>
-                {item.mapInfo.title}
-              </Text>
-              {Boolean(item.username) &&
-                (isIos ? (
-                  <CalloutSubview onPress={() => onPress()}>
-                    <GaloyPrimaryButton
-                      style={styles.ios}
-                      title={LL.MapScreen.payBusiness()}
-                    />
-                  </CalloutSubview>
-                ) : (
-                  <GaloyPrimaryButton
-                    containerStyle={styles.android}
-                    title={LL.MapScreen.payBusiness()}
-                  />
-                ))}
-            </View>
-          </Callout>
-        </Marker>,
-      )
-    }
-  })
-
   return (
     <Screen>
-      {isLoadingLocation ? (
-        <View style={styles.loaderContainer}>
-          <ActivityIndicator size="large" color={colors.primary} />
-        </View>
-      ) : (
-        <MapView
-          style={styles.map}
-          showsUserLocation={true}
-          initialRegion={userLocation}
-          customMapStyle={themeMode === "dark" ? MapStyles.dark : MapStyles.light}
-        >
-          {markers}
-        </MapView>
+      {userLocation && (
+        <MapInterface
+          data={data}
+          userLocation={userLocation}
+          handleMapPress={() => setFocusedMarker(null)}
+          handleMarkerPress={(item) => setFocusedMarker(item)}
+          focusedMarker={focusedMarker}
+          handleCalloutPress={handleCalloutPress}
+        />
       )}
     </Screen>
   )
 }
-
-const useStyles = makeStyles(({ colors }) => ({
-  android: { marginTop: 18 },
-
-  loaderContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  customView: {
-    alignItems: "center",
-    margin: 12,
-  },
-
-  ios: { paddingTop: 12 },
-
-  map: {
-    height: "100%",
-    width: "100%",
-  },
-
-  title: { color: colors._darkGrey },
-}))
