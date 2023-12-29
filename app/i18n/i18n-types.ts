@@ -7556,6 +7556,10 @@ type RootTranslation = {
 		 */
 		spent: string
 		/**
+		 * S​e​n​d​i​n​g
+		 */
+		sending: string
+		/**
 		 * R​e​c​e​i​v​i​n​g​ ​A​c​c​o​u​n​t
 		 */
 		receivingAccount: string
@@ -16360,6 +16364,10 @@ export type TranslationFunctions = {
 		 * You spent
 		 */
 		spent: () => LocalizedString
+		/**
+		 * Sending
+		 */
+		sending: () => LocalizedString
 		/**
 		 * Receiving Account
 		 */

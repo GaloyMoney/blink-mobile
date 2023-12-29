@@ -2434,6 +2434,7 @@ const en: BaseTranslation = {
     paid: "Paid to/from",
     received: "You received",
     spent: "You spent",
+    sending: "Sending",
     receivingAccount: "Receiving Account",
     sendingAccount: "Sending Account",
     txNotBroadcast:
