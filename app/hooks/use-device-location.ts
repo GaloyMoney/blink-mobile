@@ -7,10 +7,16 @@ import { CountryCode } from "libphonenumber-js/mobile"
 
 const useDeviceLocation = () => {
   const client = useApolloClient()
-  const { data } = useCountryCodeQuery()
+  const { data, error } = useCountryCodeQuery()
 
   const [loading, setLoading] = useState(true)
   const [countryCode, setCountryCode] = useState<CountryCode>("SV")
+
+  useEffect(() => {
+    if (error) {
+      setLoading(false)
+    }
+  }, [error])
 
   useEffect(() => {
     if (data) {
@@ -24,13 +30,11 @@ const useDeviceLocation = () => {
             setCountryCode(_countryCode)
             updateCountryCode(client, _countryCode)
           } else {
-            console.warn("no data or country_code in response")
+            console.warn("no data. default of SV will be used")
           }
           // can throw a 429 for device's rate-limiting. resort to cached value if available
-        } catch (e) {
-          if (data.countryCode) {
-            setCountryCode(data.countryCode as CountryCode)
-          }
+        } catch (err) {
+          setCountryCode(data.countryCode as CountryCode)
         }
         setLoading(false)
       }

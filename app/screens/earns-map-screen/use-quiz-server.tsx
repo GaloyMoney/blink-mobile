@@ -1,4 +1,4 @@
-import { useMyQuizQuestionsQuery } from "@app/graphql/generated"
+import { Quiz, useMyQuizQuestionsQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { gql, WatchQueryFetchPolicy } from "@apollo/client"
 
@@ -13,6 +13,7 @@ gql`
             id
             amount
             completed
+            notBefore
           }
         }
       }
@@ -32,12 +33,7 @@ export const useQuizServer = (
     skip: !isAuthed,
   })
 
-  let quizServerData: {
-    readonly __typename: "Quiz"
-    readonly id: string
-    readonly amount: number
-    readonly completed: boolean
-  }[]
+  let quizServerData: Quiz[]
 
   if (isAuthed) {
     quizServerData = data?.me?.defaultAccount.quiz.slice() ?? []
@@ -48,33 +44,42 @@ export const useQuizServer = (
         id: "whatIsBitcoin",
         amount: 1,
         completed: false,
+        notBefore: undefined,
       },
       {
         __typename: "Quiz",
         id: "sat",
         amount: 1,
         completed: false,
+        notBefore: undefined,
       },
       {
         __typename: "Quiz",
         id: "whereBitcoinExist",
         amount: 1,
         completed: false,
+        notBefore: undefined,
       },
       {
         __typename: "Quiz",
         id: "whoControlsBitcoin",
         amount: 1,
         completed: false,
+        notBefore: undefined,
       },
       {
         __typename: "Quiz",
         id: "copyBitcoin",
         amount: 1,
         completed: false,
+        notBefore: undefined,
       },
     ]
   }
 
-  return { loading, quizServerData }
+  const earnedSats = quizServerData
+    .filter((quiz) => quiz.completed)
+    .reduce((acc, { amount }) => acc + amount, 0)
+
+  return { loading, quizServerData, earnedSats }
 }

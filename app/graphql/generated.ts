@@ -1511,7 +1511,7 @@ export type Query = {
   readonly btcPriceList?: Maybe<ReadonlyArray<Maybe<PricePoint>>>;
   readonly businessMapMarkers?: Maybe<ReadonlyArray<Maybe<MapMarker>>>;
   readonly colorScheme: Scalars['String']['output'];
-  readonly countryCode?: Maybe<Scalars['String']['output']>;
+  readonly countryCode: Scalars['String']['output'];
   readonly currencyList: ReadonlyArray<Currency>;
   readonly feedbackModalShown: Scalars['Boolean']['output'];
   readonly globals?: Maybe<Globals>;
@@ -1713,14 +1713,10 @@ export type SuccessPayload = {
 export type Transaction = {
   readonly __typename: 'Transaction';
   readonly createdAt: Scalars['Timestamp']['output'];
-  readonly date: Scalars['String']['output'];
-  readonly date_format: Scalars['String']['output'];
-  readonly date_nice_print: Scalars['String']['output'];
   readonly direction: TxDirection;
   readonly id: Scalars['ID']['output'];
   /** From which protocol the payment has been initiated. */
   readonly initiationVia: InitiationVia;
-  readonly isReceive: Scalars['Boolean']['output'];
   readonly memo?: Maybe<Scalars['Memo']['output']>;
   /** Amount of the settlement currency sent or received. */
   readonly settlementAmount: Scalars['SignedAmount']['output'];
@@ -1735,7 +1731,6 @@ export type Transaction = {
   /** To which protocol the payment has settled on. */
   readonly settlementVia: SettlementVia;
   readonly status: TxStatus;
-  readonly text: Scalars['String']['output'];
 };
 
 /** A connection to a list of items. */
@@ -2240,7 +2235,7 @@ export type ColorSchemeQuery = { readonly __typename: 'Query', readonly colorSch
 export type CountryCodeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CountryCodeQuery = { readonly __typename: 'Query', readonly countryCode?: string | null };
+export type CountryCodeQuery = { readonly __typename: 'Query', readonly countryCode: string };
 
 export type FeedbackModalShownQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2311,14 +2306,14 @@ export type DebugScreenQuery = { readonly __typename: 'Query', readonly me?: { r
 export type MyQuizQuestionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyQuizQuestionsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly quiz: ReadonlyArray<{ readonly __typename: 'Quiz', readonly id: string, readonly amount: number, readonly completed: boolean }> } } | null };
+export type MyQuizQuestionsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly quiz: ReadonlyArray<{ readonly __typename: 'Quiz', readonly id: string, readonly amount: number, readonly completed: boolean, readonly notBefore?: number | null }> } } | null };
 
-export type QuizCompletedMutationVariables = Exact<{
-  input: QuizCompletedInput;
+export type QuizClaimMutationVariables = Exact<{
+  input: QuizClaimInput;
 }>;
 
 
-export type QuizCompletedMutation = { readonly __typename: 'Mutation', readonly quizCompleted: { readonly __typename: 'QuizCompletedPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly quiz?: { readonly __typename: 'Quiz', readonly id: string, readonly completed: boolean } | null } };
+export type QuizClaimMutation = { readonly __typename: 'Mutation', readonly quizClaim: { readonly __typename: 'QuizClaimPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly quizzes: ReadonlyArray<{ readonly __typename: 'Quiz', readonly id: string, readonly amount: number, readonly completed: boolean, readonly notBefore?: number | null }> } };
 
 export type UserEmailRegistrationInitiateMutationVariables = Exact<{
   input: UserEmailRegistrationInitiateInput;
@@ -2495,7 +2490,7 @@ export type SendBitcoinConfirmationScreenQuery = { readonly __typename: 'Query',
 export type SendBitcoinDestinationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SendBitcoinDestinationQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string } | { readonly __typename: 'UsdWallet', readonly id: string }> }, readonly contacts: ReadonlyArray<{ readonly __typename: 'UserContact', readonly id: string, readonly username: string }> } | null };
+export type SendBitcoinDestinationQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string } | { readonly __typename: 'UsdWallet', readonly id: string }> }, readonly contacts: ReadonlyArray<{ readonly __typename: 'UserContact', readonly id: string, readonly username: string, readonly alias?: string | null, readonly transactionsCount: number }> } | null };
 
 export type AccountDefaultWalletQueryVariables = Exact<{
   username: Scalars['Username']['input'];
@@ -3857,6 +3852,7 @@ export const MyQuizQuestionsDocument = gql`
           id
           amount
           completed
+          notBefore
         }
       }
     }
@@ -3890,45 +3886,47 @@ export function useMyQuizQuestionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type MyQuizQuestionsQueryHookResult = ReturnType<typeof useMyQuizQuestionsQuery>;
 export type MyQuizQuestionsLazyQueryHookResult = ReturnType<typeof useMyQuizQuestionsLazyQuery>;
 export type MyQuizQuestionsQueryResult = Apollo.QueryResult<MyQuizQuestionsQuery, MyQuizQuestionsQueryVariables>;
-export const QuizCompletedDocument = gql`
-    mutation quizCompleted($input: QuizCompletedInput!) {
-  quizCompleted(input: $input) {
+export const QuizClaimDocument = gql`
+    mutation quizClaim($input: QuizClaimInput!) {
+  quizClaim(input: $input) {
     errors {
       message
     }
-    quiz {
+    quizzes {
       id
+      amount
       completed
+      notBefore
     }
   }
 }
     `;
-export type QuizCompletedMutationFn = Apollo.MutationFunction<QuizCompletedMutation, QuizCompletedMutationVariables>;
+export type QuizClaimMutationFn = Apollo.MutationFunction<QuizClaimMutation, QuizClaimMutationVariables>;
 
 /**
- * __useQuizCompletedMutation__
+ * __useQuizClaimMutation__
  *
- * To run a mutation, you first call `useQuizCompletedMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useQuizCompletedMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useQuizClaimMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useQuizClaimMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [quizCompletedMutation, { data, loading, error }] = useQuizCompletedMutation({
+ * const [quizClaimMutation, { data, loading, error }] = useQuizClaimMutation({
  *   variables: {
  *      input: // value for 'input'
  *   },
  * });
  */
-export function useQuizCompletedMutation(baseOptions?: Apollo.MutationHookOptions<QuizCompletedMutation, QuizCompletedMutationVariables>) {
+export function useQuizClaimMutation(baseOptions?: Apollo.MutationHookOptions<QuizClaimMutation, QuizClaimMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<QuizCompletedMutation, QuizCompletedMutationVariables>(QuizCompletedDocument, options);
+        return Apollo.useMutation<QuizClaimMutation, QuizClaimMutationVariables>(QuizClaimDocument, options);
       }
-export type QuizCompletedMutationHookResult = ReturnType<typeof useQuizCompletedMutation>;
-export type QuizCompletedMutationResult = Apollo.MutationResult<QuizCompletedMutation>;
-export type QuizCompletedMutationOptions = Apollo.BaseMutationOptions<QuizCompletedMutation, QuizCompletedMutationVariables>;
+export type QuizClaimMutationHookResult = ReturnType<typeof useQuizClaimMutation>;
+export type QuizClaimMutationResult = Apollo.MutationResult<QuizClaimMutation>;
+export type QuizClaimMutationOptions = Apollo.BaseMutationOptions<QuizClaimMutation, QuizClaimMutationVariables>;
 export const UserEmailRegistrationInitiateDocument = gql`
     mutation userEmailRegistrationInitiate($input: UserEmailRegistrationInitiateInput!) {
   userEmailRegistrationInitiate(input: $input) {
@@ -5099,6 +5097,8 @@ export const SendBitcoinDestinationDocument = gql`
     contacts {
       id
       username
+      alias
+      transactionsCount
     }
   }
 }
@@ -8145,7 +8145,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   btcPriceList?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['PricePoint']>>>, ParentType, ContextType, RequireFields<QueryBtcPriceListArgs, 'range'>>;
   businessMapMarkers?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['MapMarker']>>>, ParentType, ContextType>;
   colorScheme?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  countryCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  countryCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   currencyList?: Resolver<ReadonlyArray<ResolversTypes['Currency']>, ParentType, ContextType>;
   feedbackModalShown?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   globals?: Resolver<Maybe<ResolversTypes['Globals']>, ParentType, ContextType>;
@@ -8282,13 +8282,9 @@ export interface TotpSecretScalarConfig extends GraphQLScalarTypeConfig<Resolver
 
 export type TransactionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Transaction'] = ResolversParentTypes['Transaction']> = {
   createdAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
-  date?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  date_format?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  date_nice_print?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   direction?: Resolver<ResolversTypes['TxDirection'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   initiationVia?: Resolver<ResolversTypes['InitiationVia'], ParentType, ContextType>;
-  isReceive?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   memo?: Resolver<Maybe<ResolversTypes['Memo']>, ParentType, ContextType>;
   settlementAmount?: Resolver<ResolversTypes['SignedAmount'], ParentType, ContextType>;
   settlementCurrency?: Resolver<ResolversTypes['WalletCurrency'], ParentType, ContextType>;
@@ -8299,7 +8295,6 @@ export type TransactionResolvers<ContextType = any, ParentType extends Resolvers
   settlementPrice?: Resolver<ResolversTypes['PriceOfOneSettlementMinorUnitInDisplayMinorUnit'], ParentType, ContextType>;
   settlementVia?: Resolver<ResolversTypes['SettlementVia'], ParentType, ContextType>;
   status?: Resolver<ResolversTypes['TxStatus'], ParentType, ContextType>;
-  text?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

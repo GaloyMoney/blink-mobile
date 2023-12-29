@@ -198,11 +198,11 @@ const ReceiveScreen = () => {
             )}
         </View>
 
-        <TouchableOpacity onPress={request.copyToClipboard}>
-          <View style={styles.extraDetails}>
-            {request.readablePaymentRequest ? (
-              request.type === Invoice.OnChain ? (
-                <View style={styles.btcHighContainer}>
+        <TouchableOpacity style={styles.extraDetails} onPress={request.copyToClipboard}>
+          {request.readablePaymentRequest ? (
+            request.type === Invoice.OnChain ? (
+              <View style={styles.btcHighContainer}>
+                <Text ellipsizeMode="middle" numberOfLines={1}>
                   <Text style={styles.btcHigh}>
                     {request.readablePaymentRequest.slice(0, 6)}
                   </Text>
@@ -215,16 +215,16 @@ const ReceiveScreen = () => {
                   <Text style={styles.btcHigh}>
                     {request.readablePaymentRequest.slice(-6)}
                   </Text>
-                </View>
-              ) : (
-                <Text {...testProps("readable-payment-request")}>
-                  {request.readablePaymentRequest}
                 </Text>
-              )
+              </View>
             ) : (
-              <></>
-            )}
-          </View>
+              <Text {...testProps("readable-payment-request")}>
+                {request.readablePaymentRequest}
+              </Text>
+            )
+          ) : (
+            <></>
+          )}
         </TouchableOpacity>
 
         <ButtonGroup

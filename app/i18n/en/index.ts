@@ -45,6 +45,7 @@ const en: BaseTranslation = {
     skip: "Skip",
     unlock: "Unlock",
     usePin: "Use PIN",
+    confirmLogout: "Are you sure you'd like to log out? This will reset your cache and all local user settings",
   },
   PeopleScreen: {
     title: "People",
@@ -2034,6 +2035,8 @@ const en: BaseTranslation = {
     youEarned: "You Earned",
     registerTitle: "Need to upgrade your account",
     registerContent: "Register with your phone number to receive sats",
+    notYet: "Not yet",
+    availableTomorrow: "This section will be available tomorrow!"
   },
   GetStartedScreen: {
     logInCreateAccount: "Log in / create account",
@@ -2213,6 +2216,8 @@ const en: BaseTranslation = {
     invoiceAlreadyPaid: "This invoice has already been paid",
     somethingWentWrong: "Something went wrong",
     paymentAlreadyAttempted: "Payment already attempted.\n\nIf you want to send this payment again, start from scratch.",
+    slideToConfirm: "Slide to Confirm",
+    slideConfirming: "Confirming...",
     copiedDestination: "Copied destination to clipboard"
   },
   SendBitcoinDestinationScreen: {
@@ -2429,6 +2434,7 @@ const en: BaseTranslation = {
     paid: "Paid to/from",
     received: "You received",
     spent: "You spent",
+    sending: "Sending",
     receivingAccount: "Receiving Account",
     sendingAccount: "Sending Account",
     txNotBroadcast:
@@ -2782,34 +2788,17 @@ const en: BaseTranslation = {
     groupEffort:
       "Bitcoin adoption is a group effort.\nInvite a friend and send them sats to start building your circles.",
     drivingAdoption: "I'm driving Bitcoin adoption using Blink.",
-    septChallenge: {
-      title: "September Challenge!",
-      description:
-        "Inner Circle {innerCircle: number}/21 - Earn $21\nTop 3 - Win tickets to Adopting Bitcoin!",
-      details:
-        "Grow your inner circle by 21 people in September and share on social with #blinkcircles to get $21 to your Stablesats account. Top 3 win tickets to Adopting Bitcoin!",
-      peopleWelcomedSoFar: "people welcomed so far",
-      yourRank: "your rank",
-      reminder:
-        "Reminder: Your inner circle grows when you send a new Blink user their first sats",
-      fullDetails: "Full details at",
-    },
-    octoberChallenge: {
-      title: "October Challenge!",
-      description: "Share your #blinkcircles for a chance to win 1,000,000 sats!",
-      details: "We're giving away 1,000,000 sats!\n\n Share your Circles on social with tag `#blinkcircles` to enter! The winner will be chosen at random on October 31st.\n\n You must have at least one person in your Inner Circle to enter!",
-      connectOnSocial: "Connect on social: ",
-      fullDetails: "Full details at "
-    },
-    novemberChallenge: {
-      title: "November Challenge!",
-      description: "Earn 2,100 sats for every person you welcome to Blink in November!",
-      details: "Earn 2,100 sats for every person you welcome to Blink in November!\n\nTo claim your sats, simply share your Circles on social any time during November with the tag `#blinkcircles`.\n\nYour sats will be paid out on December 1, 2023."
-    },
+    connectOnSocial: "Connect on social: ",
+    fullDetails: "Full details at ",
     decemberChallenge: {
       title: "December Challenge!",
       description: "+10 inner circle for a chance at $100!",
       details: "Grow your inner circle by 10 people in December for a chance at $100!\n\nTo participate, share your circles on social once you've reached 10 for the month and tag #blinkcircles.\n\nOn January 1, three people will be chosen at random to receive $100!"
+    },
+    januaryChallenge: {
+      title: "January Challenge!",
+      description: "+10 outer circle in January for a chance at $100!",
+      details: "Grow your OUTER circle by 10 in January for a chance at $100!\n\nYour outer circle grows when people in your inner circle welcome others, so reach out and remind those you onboarded to share Blink with their friends and family.\n\nShare your circles on social with #blinkcircles to participate."
     },
   },
   FullOnboarding: {

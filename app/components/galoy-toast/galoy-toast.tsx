@@ -19,6 +19,10 @@ const styles = {
     fontSize: 14,
     color: light._black,
   },
+  container: {
+    height: undefined,
+    paddingVertical: 5,
+  },
 }
 
 const toastConfig = {
@@ -26,7 +30,7 @@ const toastConfig = {
     <SuccessToast
       {...props}
       text2NumberOfLines={2}
-      style={{ borderLeftColor: light._green }}
+      style={[{ borderLeftColor: light._green }, styles.container]}
       text1Style={styles.text1StyleSuccess}
       text2Style={styles.text2Style}
     />
@@ -35,7 +39,7 @@ const toastConfig = {
     <ErrorToast
       {...props}
       text2NumberOfLines={2}
-      style={{ borderLeftColor: light.red }}
+      style={[{ borderLeftColor: light.red }, styles.container]}
       text1Style={styles.text1StyleError}
       text2Style={styles.text2Style}
     />

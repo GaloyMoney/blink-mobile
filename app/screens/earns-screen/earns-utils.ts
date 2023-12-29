@@ -2,7 +2,7 @@ import { TranslationFunctions } from "@app/i18n/i18n-types"
 import { LocalizedString } from "typesafe-i18n"
 import { EarnSectionType, earnSections } from "./sections"
 import { QuizQuestion, QuizQuestionContent, QuizSectionContent } from "./earns-section"
-import { MyQuizQuestions } from "../earns-map-screen"
+import { Quiz } from "@app/graphql/generated"
 
 export const getCardsFromSection = ({
   section,
@@ -20,38 +20,15 @@ export const augmentCardWithGqlData = ({
   quizServerData,
 }: {
   card: QuizQuestionContent
-  quizServerData: MyQuizQuestions
+  quizServerData: Quiz[]
 }): QuizQuestion => {
   const myQuiz = quizServerData.find((quiz) => quiz.id === card.id)
+  const notBefore = myQuiz?.notBefore ? new Date(myQuiz.notBefore * 1000) : undefined
   return {
     ...card,
     amount: myQuiz?.amount || 0,
     completed: myQuiz?.completed || false,
-  }
-}
-
-export const sectionCompletedPct = ({
-  quizServerData,
-  section,
-  quizQuestionsContent,
-}: {
-  quizServerData: MyQuizQuestions
-  section: EarnSectionType
-  quizQuestionsContent: QuizSectionContent[]
-}): number => {
-  const cardsOnSection = getCardsFromSection({
-    section,
-    quizQuestionsContent,
-  })
-  const cards = cardsOnSection.map((card) =>
-    augmentCardWithGqlData({ card, quizServerData }),
-  )
-
-  try {
-    return cards?.filter((item) => item?.completed).length / cards.length
-  } catch (err) {
-    console.error(err)
-    return 0
+    notBefore,
   }
 }
 

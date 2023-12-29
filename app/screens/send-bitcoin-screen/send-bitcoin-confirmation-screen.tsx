@@ -23,16 +23,16 @@ import { logPaymentAttempt, logPaymentResult } from "@app/utils/analytics"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { CommonActions, RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
+import React, { useState } from "react"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
-import React, { useMemo, useState } from "react"
 import { ActivityIndicator, TouchableOpacity, View } from "react-native"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { testProps } from "../../utils/testProps"
 import useFee from "./use-fee"
 import { useSendPayment } from "./use-send-payment"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { useHideAmount } from "@app/graphql/hide-amount-context"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+import GaloySliderButton from "@app/components/atomic/galoy-slider-button/galoy-slider-button"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { toastShow } from "@app/utils/toast"
@@ -124,74 +124,72 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     feeDisplayText = LL.SendBitcoinConfirmationScreen.feeError()
   }
 
-  const handleSendPayment = useMemo(() => {
+  const handleSendPayment = React.useCallback(async () => {
     if (!sendPayment || !sendingWalletDescriptor?.currency) {
       return sendPayment
     }
 
-    return async () => {
-      try {
-        logPaymentAttempt({
-          paymentType: paymentDetail.paymentType,
-          sendingWallet: sendingWalletDescriptor.currency,
-        })
-        const { status, errorsMessage, extraInfo } = await sendPayment()
-        logPaymentResult({
-          paymentType: paymentDetail.paymentType,
-          paymentStatus: status,
-          sendingWallet: sendingWalletDescriptor.currency,
-        })
+    try {
+      logPaymentAttempt({
+        paymentType: paymentDetail.paymentType,
+        sendingWallet: sendingWalletDescriptor.currency,
+      })
+      const { status, errorsMessage, extraInfo } = await sendPayment()
+      logPaymentResult({
+        paymentType: paymentDetail.paymentType,
+        paymentStatus: status,
+        sendingWallet: sendingWalletDescriptor.currency,
+      })
 
-        if (status === "SUCCESS" || status === "PENDING") {
-          navigation.dispatch((state) => {
-            const routes = [
-              { name: "Primary" },
-              {
-                name: "sendBitcoinCompleted",
-                params: {
-                  arrivalAtMempoolEstimate: extraInfo?.arrivalAtMempoolEstimate,
-                  status,
-                },
+      if (status === "SUCCESS" || status === "PENDING") {
+        navigation.dispatch((state) => {
+          const routes = [
+            { name: "Primary" },
+            {
+              name: "sendBitcoinCompleted",
+              params: {
+                arrivalAtMempoolEstimate: extraInfo?.arrivalAtMempoolEstimate,
+                status,
               },
-            ]
-            return CommonActions.reset({
-              ...state,
-              routes,
-              index: routes.length - 1,
-            })
+            },
+          ]
+          return CommonActions.reset({
+            ...state,
+            routes,
+            index: routes.length - 1,
           })
-          ReactNativeHapticFeedback.trigger("notificationSuccess", {
-            ignoreAndroidSystemSettings: true,
-          })
-          return
-        }
+        })
+        ReactNativeHapticFeedback.trigger("notificationSuccess", {
+          ignoreAndroidSystemSettings: true,
+        })
+        return
+      }
 
-        if (status === "ALREADY_PAID") {
-          setPaymentError(LL.SendBitcoinConfirmationScreen.invoiceAlreadyPaid())
-          ReactNativeHapticFeedback.trigger("notificationError", {
-            ignoreAndroidSystemSettings: true,
-          })
-          return
-        }
-
-        setPaymentError(
-          errorsMessage || LL.SendBitcoinConfirmationScreen.somethingWentWrong(),
-        )
+      if (status === "ALREADY_PAID") {
+        setPaymentError(LL.SendBitcoinConfirmationScreen.invoiceAlreadyPaid())
         ReactNativeHapticFeedback.trigger("notificationError", {
           ignoreAndroidSystemSettings: true,
         })
-      } catch (err) {
-        if (err instanceof Error) {
-          crashlytics().recordError(err)
+        return
+      }
 
-          const indempotencyErrorPattern = /409: Conflict/i
-          if (indempotencyErrorPattern.test(err.message)) {
-            setPaymentError(LL.SendBitcoinConfirmationScreen.paymentAlreadyAttempted())
-            return
-          }
+      setPaymentError(
+        errorsMessage || LL.SendBitcoinConfirmationScreen.somethingWentWrong(),
+      )
+      ReactNativeHapticFeedback.trigger("notificationError", {
+        ignoreAndroidSystemSettings: true,
+      })
+    } catch (err) {
+      if (err instanceof Error) {
+        crashlytics().recordError(err)
 
-          setPaymentError(err.message || err.toString())
+        const indempotencyErrorPattern = /409: Conflict/i
+        if (indempotencyErrorPattern.test(err.message)) {
+          setPaymentError(LL.SendBitcoinConfirmationScreen.paymentAlreadyAttempted())
+          return
         }
+
+        setPaymentError(err.message || err.toString())
       }
     }
   }, [
@@ -371,11 +369,12 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           </View>
         ) : null}
         <View style={styles.buttonContainer}>
-          <GaloyPrimaryButton
-            loading={sendPaymentLoading}
-            title={LL.SendBitcoinConfirmationScreen.title()}
-            disabled={!handleSendPayment || !validAmount || hasAttemptedSend}
-            onPress={handleSendPayment || undefined}
+          <GaloySliderButton
+            isLoading={sendPaymentLoading}
+            initialText={LL.SendBitcoinConfirmationScreen.slideToConfirm()}
+            loadingText={LL.SendBitcoinConfirmationScreen.slideConfirming()}
+            onSwipe={handleSendPayment}
+            disabled={!validAmount || hasAttemptedSend}
           />
         </View>
       </View>

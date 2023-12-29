@@ -171,6 +171,10 @@ type RootTranslation = {
 		 * U​s​e​ ​P​I​N
 		 */
 		usePin: string
+		/**
+		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​'​d​ ​l​i​k​e​ ​t​o​ ​l​o​g​ ​o​u​t​?​ ​T​h​i​s​ ​w​i​l​l​ ​r​e​s​e​t​ ​y​o​u​r​ ​c​a​c​h​e​ ​a​n​d​ ​a​l​l​ ​l​o​c​a​l​ ​u​s​e​r​ ​s​e​t​t​i​n​g​s
+		 */
+		confirmLogout: string
 	}
 	PeopleScreen: {
 		/**
@@ -6259,6 +6263,14 @@ type RootTranslation = {
 		 * R​e​g​i​s​t​e​r​ ​w​i​t​h​ ​y​o​u​r​ ​p​h​o​n​e​ ​n​u​m​b​e​r​ ​t​o​ ​r​e​c​e​i​v​e​ ​s​a​t​s
 		 */
 		registerContent: string
+		/**
+		 * N​o​t​ ​y​e​t
+		 */
+		notYet: string
+		/**
+		 * T​h​i​s​ ​s​e​c​t​i​o​n​ ​w​i​l​l​ ​b​e​ ​a​v​a​i​l​a​b​l​e​ ​t​o​m​o​r​r​o​w​!
+		 */
+		availableTomorrow: string
 	}
 	GetStartedScreen: {
 		/**
@@ -6878,6 +6890,14 @@ type RootTranslation = {
 	​I​f​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​s​e​n​d​ ​t​h​i​s​ ​p​a​y​m​e​n​t​ ​a​g​a​i​n​,​ ​s​t​a​r​t​ ​f​r​o​m​ ​s​c​r​a​t​c​h​.
 		 */
 		paymentAlreadyAttempted: string
+		/**
+		 * S​l​i​d​e​ ​t​o​ ​C​o​n​f​i​r​m
+		 */
+		slideToConfirm: string
+		/**
+		 * C​o​n​f​i​r​m​i​n​g​.​.​.
+		 */
+		slideConfirming: string
 		/**
 		 * C​o​p​i​e​d​ ​d​e​s​t​i​n​a​t​i​o​n​ ​t​o​ ​c​l​i​p​b​o​a​r​d
 		 */
@@ -7535,6 +7555,10 @@ type RootTranslation = {
 		 * Y​o​u​ ​s​p​e​n​t
 		 */
 		spent: string
+		/**
+		 * S​e​n​d​i​n​g
+		 */
+		sending: string
 		/**
 		 * R​e​c​e​i​v​i​n​g​ ​A​c​c​o​u​n​t
 		 */
@@ -8701,82 +8725,14 @@ type RootTranslation = {
 		 * I​'​m​ ​d​r​i​v​i​n​g​ ​B​i​t​c​o​i​n​ ​a​d​o​p​t​i​o​n​ ​u​s​i​n​g​ ​B​l​i​n​k​.
 		 */
 		drivingAdoption: string
-		septChallenge: {
-			/**
-			 * S​e​p​t​e​m​b​e​r​ ​C​h​a​l​l​e​n​g​e​!
-			 */
-			title: string
-			/**
-			 * I​n​n​e​r​ ​C​i​r​c​l​e​ ​{​i​n​n​e​r​C​i​r​c​l​e​}​/​2​1​ ​-​ ​E​a​r​n​ ​$​2​1​
-		​T​o​p​ ​3​ ​-​ ​W​i​n​ ​t​i​c​k​e​t​s​ ​t​o​ ​A​d​o​p​t​i​n​g​ ​B​i​t​c​o​i​n​!
-			 * @param {number} innerCircle
-			 */
-			description: RequiredParams<'innerCircle'>
-			/**
-			 * G​r​o​w​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​2​1​ ​p​e​o​p​l​e​ ​i​n​ ​S​e​p​t​e​m​b​e​r​ ​a​n​d​ ​s​h​a​r​e​ ​o​n​ ​s​o​c​i​a​l​ ​w​i​t​h​ ​#​b​l​i​n​k​c​i​r​c​l​e​s​ ​t​o​ ​g​e​t​ ​$​2​1​ ​t​o​ ​y​o​u​r​ ​S​t​a​b​l​e​s​a​t​s​ ​a​c​c​o​u​n​t​.​ ​T​o​p​ ​3​ ​w​i​n​ ​t​i​c​k​e​t​s​ ​t​o​ ​A​d​o​p​t​i​n​g​ ​B​i​t​c​o​i​n​!
-			 */
-			details: string
-			/**
-			 * p​e​o​p​l​e​ ​w​e​l​c​o​m​e​d​ ​s​o​ ​f​a​r
-			 */
-			peopleWelcomedSoFar: string
-			/**
-			 * y​o​u​r​ ​r​a​n​k
-			 */
-			yourRank: string
-			/**
-			 * R​e​m​i​n​d​e​r​:​ ​Y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​g​r​o​w​s​ ​w​h​e​n​ ​y​o​u​ ​s​e​n​d​ ​a​ ​n​e​w​ ​B​l​i​n​k​ ​u​s​e​r​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s
-			 */
-			reminder: string
-			/**
-			 * F​u​l​l​ ​d​e​t​a​i​l​s​ ​a​t
-			 */
-			fullDetails: string
-		}
-		octoberChallenge: {
-			/**
-			 * O​c​t​o​b​e​r​ ​C​h​a​l​l​e​n​g​e​!
-			 */
-			title: string
-			/**
-			 * S​h​a​r​e​ ​y​o​u​r​ ​#​b​l​i​n​k​c​i​r​c​l​e​s​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​t​o​ ​w​i​n​ ​1​,​0​0​0​,​0​0​0​ ​s​a​t​s​!
-			 */
-			description: string
-			/**
-			 * W​e​'​r​e​ ​g​i​v​i​n​g​ ​a​w​a​y​ ​1​,​0​0​0​,​0​0​0​ ​s​a​t​s​!​
-		​
-		​ ​S​h​a​r​e​ ​y​o​u​r​ ​C​i​r​c​l​e​s​ ​o​n​ ​s​o​c​i​a​l​ ​w​i​t​h​ ​t​a​g​ ​`​#​b​l​i​n​k​c​i​r​c​l​e​s​`​ ​t​o​ ​e​n​t​e​r​!​ ​T​h​e​ ​w​i​n​n​e​r​ ​w​i​l​l​ ​b​e​ ​c​h​o​s​e​n​ ​a​t​ ​r​a​n​d​o​m​ ​o​n​ ​O​c​t​o​b​e​r​ ​3​1​s​t​.​
-		​
-		​ ​Y​o​u​ ​m​u​s​t​ ​h​a​v​e​ ​a​t​ ​l​e​a​s​t​ ​o​n​e​ ​p​e​r​s​o​n​ ​i​n​ ​y​o​u​r​ ​I​n​n​e​r​ ​C​i​r​c​l​e​ ​t​o​ ​e​n​t​e​r​!
-			 */
-			details: string
-			/**
-			 * C​o​n​n​e​c​t​ ​o​n​ ​s​o​c​i​a​l​:​ 
-			 */
-			connectOnSocial: string
-			/**
-			 * F​u​l​l​ ​d​e​t​a​i​l​s​ ​a​t​ 
-			 */
-			fullDetails: string
-		}
-		novemberChallenge: {
-			/**
-			 * N​o​v​e​m​b​e​r​ ​C​h​a​l​l​e​n​g​e​!
-			 */
-			title: string
-			/**
-			 * E​a​r​n​ ​2​,​1​0​0​ ​s​a​t​s​ ​f​o​r​ ​e​v​e​r​y​ ​p​e​r​s​o​n​ ​y​o​u​ ​w​e​l​c​o​m​e​ ​t​o​ ​B​l​i​n​k​ ​i​n​ ​N​o​v​e​m​b​e​r​!
-			 */
-			description: string
-			/**
-			 * E​a​r​n​ ​2​,​1​0​0​ ​s​a​t​s​ ​f​o​r​ ​e​v​e​r​y​ ​p​e​r​s​o​n​ ​y​o​u​ ​w​e​l​c​o​m​e​ ​t​o​ ​B​l​i​n​k​ ​i​n​ ​N​o​v​e​m​b​e​r​!​
-		​
-		​T​o​ ​c​l​a​i​m​ ​y​o​u​r​ ​s​a​t​s​,​ ​s​i​m​p​l​y​ ​s​h​a​r​e​ ​y​o​u​r​ ​C​i​r​c​l​e​s​ ​o​n​ ​s​o​c​i​a​l​ ​a​n​y​ ​t​i​m​e​ ​d​u​r​i​n​g​ ​N​o​v​e​m​b​e​r​ ​w​i​t​h​ ​t​h​e​ ​t​a​g​ ​`​#​b​l​i​n​k​c​i​r​c​l​e​s​`​.​
-		​
-		​Y​o​u​r​ ​s​a​t​s​ ​w​i​l​l​ ​b​e​ ​p​a​i​d​ ​o​u​t​ ​o​n​ ​D​e​c​e​m​b​e​r​ ​1​,​ ​2​0​2​3​.
-			 */
-			details: string
-		}
+		/**
+		 * C​o​n​n​e​c​t​ ​o​n​ ​s​o​c​i​a​l​:​ 
+		 */
+		connectOnSocial: string
+		/**
+		 * F​u​l​l​ ​d​e​t​a​i​l​s​ ​a​t​ 
+		 */
+		fullDetails: string
 		decemberChallenge: {
 			/**
 			 * D​e​c​e​m​b​e​r​ ​C​h​a​l​l​e​n​g​e​!
@@ -8792,6 +8748,24 @@ type RootTranslation = {
 		​T​o​ ​p​a​r​t​i​c​i​p​a​t​e​,​ ​s​h​a​r​e​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​o​n​ ​s​o​c​i​a​l​ ​o​n​c​e​ ​y​o​u​'​v​e​ ​r​e​a​c​h​e​d​ ​1​0​ ​f​o​r​ ​t​h​e​ ​m​o​n​t​h​ ​a​n​d​ ​t​a​g​ ​#​b​l​i​n​k​c​i​r​c​l​e​s​.​
 		​
 		​O​n​ ​J​a​n​u​a​r​y​ ​1​,​ ​t​h​r​e​e​ ​p​e​o​p​l​e​ ​w​i​l​l​ ​b​e​ ​c​h​o​s​e​n​ ​a​t​ ​r​a​n​d​o​m​ ​t​o​ ​r​e​c​e​i​v​e​ ​$​1​0​0​!
+			 */
+			details: string
+		}
+		januaryChallenge: {
+			/**
+			 * J​a​n​u​a​r​y​ ​C​h​a​l​l​e​n​g​e​!
+			 */
+			title: string
+			/**
+			 * +​1​0​ ​o​u​t​e​r​ ​c​i​r​c​l​e​ ​i​n​ ​J​a​n​u​a​r​y​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​a​t​ ​$​1​0​0​!
+			 */
+			description: string
+			/**
+			 * G​r​o​w​ ​y​o​u​r​ ​O​U​T​E​R​ ​c​i​r​c​l​e​ ​b​y​ ​1​0​ ​i​n​ ​J​a​n​u​a​r​y​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​a​t​ ​$​1​0​0​!​
+		​
+		​Y​o​u​r​ ​o​u​t​e​r​ ​c​i​r​c​l​e​ ​g​r​o​w​s​ ​w​h​e​n​ ​p​e​o​p​l​e​ ​i​n​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​w​e​l​c​o​m​e​ ​o​t​h​e​r​s​,​ ​s​o​ ​r​e​a​c​h​ ​o​u​t​ ​a​n​d​ ​r​e​m​i​n​d​ ​t​h​o​s​e​ ​y​o​u​ ​o​n​b​o​a​r​d​e​d​ ​t​o​ ​s​h​a​r​e​ ​B​l​i​n​k​ ​w​i​t​h​ ​t​h​e​i​r​ ​f​r​i​e​n​d​s​ ​a​n​d​ ​f​a​m​i​l​y​.​
+		​
+		​S​h​a​r​e​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​o​n​ ​s​o​c​i​a​l​ ​w​i​t​h​ ​#​b​l​i​n​k​c​i​r​c​l​e​s​ ​t​o​ ​p​a​r​t​i​c​i​p​a​t​e​.
 			 */
 			details: string
 		}
@@ -9000,6 +8974,10 @@ export type TranslationFunctions = {
 		 * Use PIN
 		 */
 		usePin: () => LocalizedString
+		/**
+		 * Are you sure you'd like to log out? This will reset your cache and all local user settings
+		 */
+		confirmLogout: () => LocalizedString
 	}
 	PeopleScreen: {
 		/**
@@ -15084,6 +15062,14 @@ export type TranslationFunctions = {
 		 * Register with your phone number to receive sats
 		 */
 		registerContent: () => LocalizedString
+		/**
+		 * Not yet
+		 */
+		notYet: () => LocalizedString
+		/**
+		 * This section will be available tomorrow!
+		 */
+		availableTomorrow: () => LocalizedString
 	}
 	GetStartedScreen: {
 		/**
@@ -15687,6 +15673,14 @@ export type TranslationFunctions = {
 	If you want to send this payment again, start from scratch.
 		 */
 		paymentAlreadyAttempted: () => LocalizedString
+		/**
+		 * Slide to Confirm
+		 */
+		slideToConfirm: () => LocalizedString
+		/**
+		 * Confirming...
+		 */
+		slideConfirming: () => LocalizedString
 		/**
 		 * Copied destination to clipboard
 		 */
@@ -16320,6 +16314,10 @@ export type TranslationFunctions = {
 		 * You spent
 		 */
 		spent: () => LocalizedString
+		/**
+		 * Sending
+		 */
+		sending: () => LocalizedString
 		/**
 		 * Receiving Account
 		 */
@@ -17453,81 +17451,14 @@ export type TranslationFunctions = {
 		 * I'm driving Bitcoin adoption using Blink.
 		 */
 		drivingAdoption: () => LocalizedString
-		septChallenge: {
-			/**
-			 * September Challenge!
-			 */
-			title: () => LocalizedString
-			/**
-			 * Inner Circle {innerCircle}/21 - Earn $21
-		Top 3 - Win tickets to Adopting Bitcoin!
-			 */
-			description: (arg: { innerCircle: number }) => LocalizedString
-			/**
-			 * Grow your inner circle by 21 people in September and share on social with #blinkcircles to get $21 to your Stablesats account. Top 3 win tickets to Adopting Bitcoin!
-			 */
-			details: () => LocalizedString
-			/**
-			 * people welcomed so far
-			 */
-			peopleWelcomedSoFar: () => LocalizedString
-			/**
-			 * your rank
-			 */
-			yourRank: () => LocalizedString
-			/**
-			 * Reminder: Your inner circle grows when you send a new Blink user their first sats
-			 */
-			reminder: () => LocalizedString
-			/**
-			 * Full details at
-			 */
-			fullDetails: () => LocalizedString
-		}
-		octoberChallenge: {
-			/**
-			 * October Challenge!
-			 */
-			title: () => LocalizedString
-			/**
-			 * Share your #blinkcircles for a chance to win 1,000,000 sats!
-			 */
-			description: () => LocalizedString
-			/**
-			 * We're giving away 1,000,000 sats!
-	
-		 Share your Circles on social with tag `#blinkcircles` to enter! The winner will be chosen at random on October 31st.
-	
-		 You must have at least one person in your Inner Circle to enter!
-			 */
-			details: () => LocalizedString
-			/**
-			 * Connect on social: 
-			 */
-			connectOnSocial: () => LocalizedString
-			/**
-			 * Full details at 
-			 */
-			fullDetails: () => LocalizedString
-		}
-		novemberChallenge: {
-			/**
-			 * November Challenge!
-			 */
-			title: () => LocalizedString
-			/**
-			 * Earn 2,100 sats for every person you welcome to Blink in November!
-			 */
-			description: () => LocalizedString
-			/**
-			 * Earn 2,100 sats for every person you welcome to Blink in November!
-	
-		To claim your sats, simply share your Circles on social any time during November with the tag `#blinkcircles`.
-	
-		Your sats will be paid out on December 1, 2023.
-			 */
-			details: () => LocalizedString
-		}
+		/**
+		 * Connect on social: 
+		 */
+		connectOnSocial: () => LocalizedString
+		/**
+		 * Full details at 
+		 */
+		fullDetails: () => LocalizedString
 		decemberChallenge: {
 			/**
 			 * December Challenge!
@@ -17543,6 +17474,24 @@ export type TranslationFunctions = {
 		To participate, share your circles on social once you've reached 10 for the month and tag #blinkcircles.
 	
 		On January 1, three people will be chosen at random to receive $100!
+			 */
+			details: () => LocalizedString
+		}
+		januaryChallenge: {
+			/**
+			 * January Challenge!
+			 */
+			title: () => LocalizedString
+			/**
+			 * +10 outer circle in January for a chance at $100!
+			 */
+			description: () => LocalizedString
+			/**
+			 * Grow your OUTER circle by 10 in January for a chance at $100!
+	
+		Your outer circle grows when people in your inner circle welcome others, so reach out and remind those you onboarded to share Blink with their friends and family.
+	
+		Share your circles on social with #blinkcircles to participate.
 			 */
 			details: () => LocalizedString
 		}

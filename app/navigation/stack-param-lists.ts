@@ -1,6 +1,6 @@
 import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
-import { PhoneCodeChannelType, WalletCurrency } from "@app/graphql/generated"
+import { PhoneCodeChannelType, UserContact, WalletCurrency } from "@app/graphql/generated"
 import { EarnSectionType } from "@app/screens/earns-screen/sections"
 import { PaymentDetail } from "@app/screens/send-bitcoin-screen/payment-details/index.types"
 import {
@@ -100,7 +100,7 @@ export type RootStackParamList = {
 
 export type PeopleStackParamList = {
   peopleHome: undefined
-  contactDetail: { contact: Contact }
+  contactDetail: { contact: UserContact }
   circlesDashboard: undefined
   allContacts: undefined
 }

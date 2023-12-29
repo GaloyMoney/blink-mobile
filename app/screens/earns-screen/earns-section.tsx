@@ -35,9 +35,10 @@ export type QuizQuestion = {
   feedback: string[]
   amount: number
   completed: boolean
+  notBefore: Date | undefined
 }
 
-export type QuizQuestionContent = Omit<QuizQuestion, "amount" | "completed">
+export type QuizQuestionContent = Omit<QuizQuestion, "amount" | "completed" | "notBefore">
 
 export type QuizQuestionForSectionScreen = QuizQuestion & {
   enabled: boolean
