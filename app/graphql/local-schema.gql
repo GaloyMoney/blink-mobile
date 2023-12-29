@@ -1,8 +1,3 @@
-extend type Transaction {
-  date: String!
-  isReceive: Boolean!
-  text: String!
-}
 
 extend type Contact {
   prettyName: String!
