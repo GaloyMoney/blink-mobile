@@ -1,8 +1,70 @@
 version: 2.1
 
 orbs:
-  gh: circleci/github-cli@2.0
-  node: circleci/node@5.1.1
+  gh: circleci/github-cli@2.3.0
+  node: circleci/node@5.2.0
+  ruby: zebbra/ruby@0.0.2
+  nix: eld/nix@1.1.1
+  android: circleci/android@2.4.0
+  rn: react-native-community/react-native@7.1.1
+  docker: circleci/docker@2.4.0
+
+commands:
+  install_java:
+    steps:
+      - run:
+          name: Install Java
+          command: |
+            sudo apt-get update && sudo apt-get install -y openjdk-8-jdk
+            sudo update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/bin/java
+            sudo update-alternatives --set javac /usr/lib/jvm/java-8-openjdk-amd64/bin/javac
+            java -version
+  install_yarn_deps:
+    steps:
+      - node/install:
+          install-yarn: true
+          node-version: '18.18.2'
+      - run: yarn global add node-gyp
+      - rn/yarn_install
+  prepare_ruby:
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
+      - run: brew update
+      - ruby/install-bundler
+      - restore_cache:
+          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+      - run: cd ios && bundle config set deployment 'true'
+      - run: cd ios && bundle config set --local path 'vendor/bundle'
+      - run: cd ios && bundle check || bundle install
+      - run: gem install cocoapods
+      - save_cache:
+          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+          paths:
+            - ios/vendor
+  metro_start:
+    steps:
+      - run:
+          command: yarn start
+          background: true
+  nix-with-flake:
+    steps:
+      - nix/install
+      - run:
+          name: Set up Nix environment for Flakes
+          command: |
+            mkdir -p ~/.config/nix
+            echo 'experimental-features = nix-command flakes' > ~/.config/nix/nix.conf
+  local_backend:
+    steps:
+      - run:
+          command: |
+            nix develop -c make tilt-up
+          background: true
+  wait_for_backend_ready:
+    steps:
+      - run: nix develop -c tilt wait --timeout 1h --for=condition=Ready uiresources init-setup
 
 parameters:
   version:
@@ -28,9 +90,9 @@ parameters:
     default: ""
 
 jobs:
-  test_android_in_pr:
+  e2e_build_android:
     docker:
-      - image: cimg/android:2022.12
+       - image: cimg/android:2022.12
     resource_class: xlarge
     environment:
       TERM: dumb
@@ -39,130 +101,68 @@ jobs:
     working_directory: ~/galoy-mobile
     shell: /bin/bash --login -o pipefail
     steps:
-      # if workflow was triggered by API then don't run the test jobs
-      - run: |
-          if [ << pipeline.trigger_source >> = "api" ]; then
-              circleci-agent step halt
-          fi
       - checkout:
           path: ~/galoy-mobile
-
-      - node/install:
-           install-yarn: true
-           node-version: '18.18.2'
-
-      - run: sudo apt-get install gcc g++ make
-      - run: gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-
-      - restore_cache:
-          key: 1-gem-{{ checksum "android/Gemfile.lock" }}
-      - run: cd android && bundle config set deployment 'true'
-      - run: cd android && bundle check || bundle install
-      - save_cache:
-          key: 1-gem-{{ checksum "android/Gemfile.lock" }}
+      - install_java
+      - install_yarn_deps
+      - run: yarn e2e:build android.emu.debug
+      - persist_to_workspace:
+          root: ~/galoy-mobile
           paths:
-            - android/vendor
+            - android/app/build
+  e2e_run_android:
+    environment:
+      TEST_ENV: Local
+    executor:
+      name: android/android-machine
+      resource-class: xlarge
+      tag: 2023.11.1
+    working_directory: ~/galoy-mobile
+    steps:
+      - checkout:
+          path: ~/galoy-mobile
+      - attach_workspace:
+          at: ~/galoy-mobile
+      - install_yarn_deps
+      - nix-with-flake
+      - local_backend
+      - android/create-avd:
+          avd-name: Pixel_API_34_AOSP
+          install: true
+          system-image: system-images;android-34;default;x86_64
+      - android/start-emulator:
+          avd-name: Pixel_API_34_AOSP
+          no-window: true
+          post-emulator-launch-assemble-command: ""
+      - metro_start
+      - wait_for_backend_ready
+      - run: yarn e2e:test android.emu.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --headless
+      - store_artifacts:
+          path: artifacts
 
-      - restore_cache:
-          key: yarn-{{ checksum "yarn.lock" }}
-      - run: yarn install
-      - save_cache:
-          key: yarn-{{ checksum "yarn.lock" }}
-          paths:
-            - node_modules
-      - run: echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
-      - run: yarn android:prepareAssets
-      - run:
-          name: Test Browserstack
-          command: |
-            set -o pipefail
-            cd android && bundle exec fastlane browserstack | tee browserstack_output.log
-            error_code=$?
-            SESSION_ID=$(cat browserstack_output.log | grep sessionId | head -n1 | sed -n "s/^.*'\(.*\)'.*$/\1/ p")
-            echo "Session ID"
-            echo $SESSION_ID
-            echo "Browserstack URL"
-            echo "https://app-automate.browserstack.com/dashboard/v2/builds/$BROWSERSTACK_ANDROID_BUILD/sessions/$SESSION_ID"
-            VIDEO_URL=$(curl -s -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" -X GET "https://api-cloud.browserstack.com/app-automate/sessions/$SESSION_ID.json" | jq -r '.automation_session.video_url')
-            echo "Video URL"
-            echo $VIDEO_URL
-            exit $error_code
-
-  test_ios_in_pr:
+  e2e_ios:
+    environment:
+      GALOY_STAGING_GLOBAL_OTP: 403370
     macos:
       xcode: 14.2.0
     resource_class: macos.x86.medium.gen2
     working_directory: ~/galoy-mobile
-    environment:
-      FL_OUTPUT_DIR: output
     shell: /bin/bash --login -o pipefail
     steps:
-      # if workflow was triggered by API then don't run the test jobs
-      - run: |
-          if [ << pipeline.trigger_source >> = "api" ]; then
-              circleci-agent step halt
-          fi
       - checkout:
           path: ~/galoy-mobile
-
-      - run:
-          name: Check Ruby version
-          command: |
-            rbenv versions
-            echo "Ruby version in .ruby-version:"
-            cat .ruby-version
-            echo "Ruby version in Gemfile:"
-            grep -E "^ruby" Gemfile
-
-      - run:
-          name: Install Bundler 2.2.30
-          command: |
-            gem install bundler:2.2.30
-            echo "export BUNDLE_PATH=$(bundle show --path)" >> $BASH_ENV
-            source $BASH_ENV
-
-      - add_ssh_keys:
-          fingerprints:
-            - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
-      - restore_cache:
-          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
-      - run: cd ios && bundle config set deployment 'true'
-      - run: cd ios && bundle config set --local path 'vendor/bundle'
-      - run: cd ios && bundle check || bundle install
-      - run: gem install cocoapods
-      - save_cache:
-          key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
-          paths:
-            - ios/vendor
-      - restore_cache:
-          key: 1-yarn-{{ checksum "yarn.lock" }}-pod1-{{ checksum "ios/Podfile.lock" }}
-      - run: yarn install
-      - save_cache:
-          key: 1-yarn-{{ checksum "yarn.lock" }}-pod1-{{ checksum "ios/Podfile.lock" }}
-          paths:
-            - node_modules
-            - ios/Pods
-      - run:
-          name: Import Apple Certificates
-          command: |
-            tmpfile=$(mktemp /tmp/wwdr-cert.cer)
-            curl -f -o $tmpfile https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer && security import $tmpfile ~/Library/Keychains/login.keychain-db
-      - run:
-          name: Browserstack Testing
-          command: |
-            set -o pipefail
-            cd ios && bundle exec fastlane browserstack | tee browserstack_output.log
-            error_code=$?
-            SESSION_ID=$(cat browserstack_output.log | grep sessionId | head -n1 | sed -n "s/^.*'\(.*\)'.*$/\1/ p")
-            echo "Session ID"
-            echo $SESSION_ID
-            echo "Browserstack URL"
-            echo "https://app-automate.browserstack.com/dashboard/v2/builds/$BROWSERSTACK_IOS_BUILD/sessions/$SESSION_ID"
-            VIDEO_URL=$(curl -s -u "$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY" -X GET "https://api-cloud.browserstack.com/app-automate/sessions/$SESSION_ID.json" | jq -r '.automation_session.video_url')
-            echo "Video URL"
-            echo $VIDEO_URL
-            exit $error_code
-          no_output_timeout: 15m
+      - run: |
+          brew tap wix/brew
+          brew install applesimutils
+      - prepare_ruby
+      - install_yarn_deps
+      - metro_start
+      - run: yarn e2e:build ios.sim.debug
+      - rn/ios_simulator_start:
+          device: iPhone SE (3rd generation)
+      - run: yarn e2e:test ios.sim.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all
+      - store_artifacts:
+          path: artifacts
 
   build_android:
     docker:
@@ -242,12 +242,7 @@ jobs:
       - checkout:
           path: ~/galoy-mobile
       - run: git checkout << pipeline.parameters.git_ref >>
-      - run:
-          name: Install Bundler 2.2.30
-          command: |
-            gem install bundler:2.2.30
-            echo "export BUNDLE_PATH=$(bundle show --path)" >> $BASH_ENV
-            source $BASH_ENV
+      - ruby/install-bundler
       - add_ssh_keys:
           fingerprints:
             - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
@@ -354,5 +349,8 @@ workflows:
       not:
         equal: [main, << pipeline.git.branch >>]
     jobs:
-      - test_android_in_pr
-      - test_ios_in_pr
+      - e2e_ios
+      - e2e_build_android
+      - e2e_run_android:
+          requires:
+            - e2e_build_android

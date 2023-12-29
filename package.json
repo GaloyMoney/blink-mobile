@@ -26,7 +26,7 @@
     "dev:gengql": "yarn node utils/create-gql.ts",
     "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:4000 tcp:4000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081 && adb reverse tcp:4002 tcp:4002 && adb reverse tcp:4455 tcp:4455",
     "patch": "patch-package",
-    "postinstall": "jetify && yarn patch-package && if which pod >/dev/null; then (cd ios; bundle install; bundle exec pod install); fi",
+    "postinstall": "jetify && yarn patch-package && if [ -z \"$NOPOSTINSTALLPODS\" ]; then if which pod >/dev/null; then (cd ios; bundle install; bundle exec pod install); fi; fi",
     "hack:types-react-native": "rimraf node_modules/@types/react-native/node_modules/@types",
     "prepare": "npm-run-all patch hack:*",
     "client:dev": "yalc add @galoymoney/client",
@@ -52,7 +52,9 @@
     "android:buildDebug": "yarn android:prepareAssets && ./android/gradlew -b ./android/build.gradle assembleDebug -Dorg.gradle.jvmargs='-Xmx4g -XX:MaxPermSize=512m'",
     "ios:prepareAssets": "react-native bundle --entry-file index.js --bundle-output ./ios/main.jsbundle --assets-dest ./ios/ --platform ios --dev false",
     "bundle-visualizer": "yarn run react-native-bundle-visualizer",
-    "splash": "yarn react-native generate-bootsplash --background-color \"#000\" --logo-width 300 app/assets/logo/app-logo-dark.svg"
+    "splash": "yarn react-native generate-bootsplash --background-color \"#000\" --logo-width 300 app/assets/logo/app-logo-dark.svg",
+    "e2e:build": "detox build --configuration",
+    "e2e:test": "detox test --configuration"
   },
   "dependencies": {
     "@apollo/client": "3.9.0-alpha.5",
@@ -186,6 +188,7 @@
     "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/react-native": "^11.5.1",
     "@tsconfig/react-native": "^3.0.0",
+    "@types/detox": "^18.1.0",
     "@types/jest": "^29.5.10",
     "@types/lodash.debounce": "^4.0.9",
     "@types/lodash.merge": "^4.6.7",
@@ -211,6 +214,7 @@
     "browserstack-local": "^1.5.1",
     "cross-fetch": "^3.1.6",
     "csv-parse": "^5.3.5",
+    "detox": "^20.14.7",
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-import": "^2.27.5",

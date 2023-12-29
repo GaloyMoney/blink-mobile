@@ -74,9 +74,8 @@ ios/GoogleService-Info.plist
 yalc.lock
 
 *.log
-
-.env
-.envrc
+.env.local
+.env.tmp.ci
 .dependencies
 ios/assets
 ios/GaloyApp/assets
@@ -87,3 +86,7 @@ android/app/src/main/assets
 
 # testing
 /coverage
+
+artifacts
+
+.direnv
