@@ -1,7 +1,6 @@
 import { useFocusEffect } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import { Dimensions } from "react-native"
 import { Region } from "react-native-maps"
