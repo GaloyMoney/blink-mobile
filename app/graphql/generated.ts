@@ -968,6 +968,8 @@ export type Mutation = {
   readonly onChainUsdPaymentSend: PaymentSendPayload;
   readonly onChainUsdPaymentSendAsBtcDenominated: PaymentSendPayload;
   readonly onboardingFlowStart: OnboardingFlowStartResult;
+  readonly quizClaim: QuizClaimPayload;
+  /** @deprecated Use quizClaim instead */
   readonly quizCompleted: QuizCompletedPayload;
   /** @deprecated will be moved to AccountContact */
   readonly userContactUpdateAlias: UserContactUpdateAliasPayload;
@@ -1176,6 +1178,11 @@ export type MutationOnChainUsdPaymentSendAsBtcDenominatedArgs = {
 
 export type MutationOnboardingFlowStartArgs = {
   input: OnboardingFlowStartInput;
+};
+
+
+export type MutationQuizClaimArgs = {
+  input: QuizClaimInput;
 };
 
 
@@ -1504,7 +1511,7 @@ export type Query = {
   readonly btcPriceList?: Maybe<ReadonlyArray<Maybe<PricePoint>>>;
   readonly businessMapMarkers?: Maybe<ReadonlyArray<Maybe<MapMarker>>>;
   readonly colorScheme: Scalars['String']['output'];
-  readonly countryCode?: Maybe<Scalars['String']['output']>;
+  readonly countryCode: Scalars['String']['output'];
   readonly currencyList: ReadonlyArray<Currency>;
   readonly feedbackModalShown: Scalars['Boolean']['output'];
   readonly globals?: Maybe<Globals>;
@@ -1594,6 +1601,17 @@ export type Quiz = {
   readonly amount: Scalars['SatAmount']['output'];
   readonly completed: Scalars['Boolean']['output'];
   readonly id: Scalars['ID']['output'];
+  readonly notBefore?: Maybe<Scalars['Timestamp']['output']>;
+};
+
+export type QuizClaimInput = {
+  readonly id: Scalars['ID']['input'];
+};
+
+export type QuizClaimPayload = {
+  readonly __typename: 'QuizClaimPayload';
+  readonly errors: ReadonlyArray<Error>;
+  readonly quizzes: ReadonlyArray<Quiz>;
 };
 
 export type QuizCompletedInput = {
@@ -2222,7 +2240,7 @@ export type ColorSchemeQuery = { readonly __typename: 'Query', readonly colorSch
 export type CountryCodeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CountryCodeQuery = { readonly __typename: 'Query', readonly countryCode?: string | null };
+export type CountryCodeQuery = { readonly __typename: 'Query', readonly countryCode: string };
 
 export type FeedbackModalShownQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7193,6 +7211,8 @@ export type ResolversTypes = {
   PublicWallet: ResolverTypeWrapper<PublicWallet>;
   Query: ResolverTypeWrapper<{}>;
   Quiz: ResolverTypeWrapper<Quiz>;
+  QuizClaimInput: QuizClaimInput;
+  QuizClaimPayload: ResolverTypeWrapper<QuizClaimPayload>;
   QuizCompletedInput: QuizCompletedInput;
   QuizCompletedPayload: ResolverTypeWrapper<QuizCompletedPayload>;
   RealtimePrice: ResolverTypeWrapper<RealtimePrice>;
@@ -7397,6 +7417,8 @@ export type ResolversParentTypes = {
   PublicWallet: PublicWallet;
   Query: {};
   Quiz: Quiz;
+  QuizClaimInput: QuizClaimInput;
+  QuizClaimPayload: QuizClaimPayload;
   QuizCompletedInput: QuizCompletedInput;
   QuizCompletedPayload: QuizCompletedPayload;
   RealtimePrice: RealtimePrice;
@@ -7943,6 +7965,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   onChainUsdPaymentSend?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationOnChainUsdPaymentSendArgs, 'input'>>;
   onChainUsdPaymentSendAsBtcDenominated?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationOnChainUsdPaymentSendAsBtcDenominatedArgs, 'input'>>;
   onboardingFlowStart?: Resolver<ResolversTypes['OnboardingFlowStartResult'], ParentType, ContextType, RequireFields<MutationOnboardingFlowStartArgs, 'input'>>;
+  quizClaim?: Resolver<ResolversTypes['QuizClaimPayload'], ParentType, ContextType, RequireFields<MutationQuizClaimArgs, 'input'>>;
   quizCompleted?: Resolver<ResolversTypes['QuizCompletedPayload'], ParentType, ContextType, RequireFields<MutationQuizCompletedArgs, 'input'>>;
   userContactUpdateAlias?: Resolver<ResolversTypes['UserContactUpdateAliasPayload'], ParentType, ContextType, RequireFields<MutationUserContactUpdateAliasArgs, 'input'>>;
   userEmailDelete?: Resolver<ResolversTypes['UserEmailDeletePayload'], ParentType, ContextType>;
@@ -8122,7 +8145,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   btcPriceList?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['PricePoint']>>>, ParentType, ContextType, RequireFields<QueryBtcPriceListArgs, 'range'>>;
   businessMapMarkers?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['MapMarker']>>>, ParentType, ContextType>;
   colorScheme?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  countryCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  countryCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   currencyList?: Resolver<ReadonlyArray<ResolversTypes['Currency']>, ParentType, ContextType>;
   feedbackModalShown?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   globals?: Resolver<Maybe<ResolversTypes['Globals']>, ParentType, ContextType>;
@@ -8148,6 +8171,13 @@ export type QuizResolvers<ContextType = any, ParentType extends ResolversParentT
   amount?: Resolver<ResolversTypes['SatAmount'], ParentType, ContextType>;
   completed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  notBefore?: Resolver<Maybe<ResolversTypes['Timestamp']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type QuizClaimPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['QuizClaimPayload'] = ResolversParentTypes['QuizClaimPayload']> = {
+  errors?: Resolver<ReadonlyArray<ResolversTypes['Error']>, ParentType, ContextType>;
+  quizzes?: Resolver<ReadonlyArray<ResolversTypes['Quiz']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -8538,6 +8568,7 @@ export type Resolvers<ContextType = any> = {
   PublicWallet?: PublicWalletResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Quiz?: QuizResolvers<ContextType>;
+  QuizClaimPayload?: QuizClaimPayloadResolvers<ContextType>;
   QuizCompletedPayload?: QuizCompletedPayloadResolvers<ContextType>;
   RealtimePrice?: RealtimePriceResolvers<ContextType>;
   RealtimePricePayload?: RealtimePricePayloadResolvers<ContextType>;
