@@ -27,9 +27,6 @@ import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
-// import Breez SDK Wallet
-import useBreezBalance from "@app/hooks/useBreezBalance"
-
 gql`
   query conversionScreen {
     me {
@@ -68,9 +65,6 @@ export const ConversionDetailsScreen = () => {
   const { LL } = useI18nContext()
   const { formatDisplayAndWalletAmount } = useDisplayCurrency()
 
-  // FLASH FORK: adding balance from Breez SDK
-  const [breezBalance, refreshBreezBalance] = useBreezBalance()
-
   const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
   const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
@@ -105,7 +99,7 @@ export const ConversionDetailsScreen = () => {
     return <></>
   }
 
-  const btcWalletBalance = toBtcMoneyAmount(breezBalance ?? NaN)
+  const btcWalletBalance = toBtcMoneyAmount(btcWallet?.balance ?? NaN)
   const usdWalletBalance = toUsdMoneyAmount(usdWallet?.balance ?? NaN)
 
   const fromWalletBalance =

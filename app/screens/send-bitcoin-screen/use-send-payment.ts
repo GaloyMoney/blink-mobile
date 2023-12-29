@@ -27,12 +27,15 @@ import {
   fetchReverseSwapFeesBreezSDK,
   payLnurlBreezSDK,
   sendNoAmountPaymentBreezSDK,
-  paymentEvents,
-  breezHealthCheck,
 } from "@app/utils/breez-sdk"
 
 import * as sdk from "@breeztech/react-native-breez-sdk"
 import { WalletAmount } from "@app/types/amounts"
+
+let event: { type: string; data?: sdk.EventData | undefined }
+sdk.addEventListener((type, data) => {
+  if (type === "invoicePaid") event = { type, data }
+})
 
 type UseSendPaymentResult = {
   loading: boolean
@@ -134,8 +137,7 @@ gql`
 export const useSendPayment = (
   sendPaymentMutation?: SendPaymentMutation | null,
   paymentRequest?: string,
-  amountSats?: WalletAmount<WalletCurrency>,
-  memo?: string,
+  amountMsats?: WalletAmount<WalletCurrency>,
   // eslint-disable-next-line max-params
 ): UseSendPaymentResult => {
   const [intraLedgerPaymentSend, { loading: intraLedgerPaymentSendLoading }] =
@@ -184,27 +186,17 @@ export const useSendPayment = (
     onChainUsdPaymentSendLoading ||
     onChainUsdPaymentSendAsBtcDenominatedLoading
 
-  const successPromise = new Promise<void>((resolve) => {
-    paymentEvents.once("paymentSuccess", resolve)
-  })
-
-  const failurePromise = new Promise<Error>((_, reject) => {
-    paymentEvents.once("paymentFailure", reject)
-  })
-
   const sendPayment = useMemo(() => {
     let invoice: sdk.LnInvoice | null = null
     let currentFees: sdk.ReverseSwapPairInfo
     let status: PaymentSendResult | null | undefined = null
     let errors: readonly GraphQlApplicationError[] | undefined
     console.log("hasAttemptedSend:", hasAttemptedSend)
-    console.log("Health Check for Breez SDK...")
-    breezHealthCheck()
     return sendPaymentMutation && !hasAttemptedSend
       ? async () => {
           console.log("paymentRequest Step 1")
           setHasAttemptedSend(true)
-          if (paymentRequest && amountSats?.currency === "BTC") {
+          if (paymentRequest && amountMsats?.currency === "BTC") {
             if (
               paymentRequest.length > 110 &&
               !paymentRequest.toLowerCase().startsWith("lnurl")
@@ -219,15 +211,11 @@ export const useSendPayment = (
                   errorsMessage: "Failed to parse invoice",
                 }
               }
-            } else if (
-              paymentRequest.length < 64 &&
-              !paymentRequest.toLowerCase().startsWith("lnurl") &&
-              !paymentRequest.includes("@")
-            ) {
+            } else if (paymentRequest.length < 64) {
               try {
                 console.log("Fetching reverse swap fees using Breez SDK")
                 currentFees = await fetchReverseSwapFeesBreezSDK({
-                  sendAmountSat: amountSats?.amount * 1000 || 50000,
+                  sendAmountSat: amountMsats?.amount || 50000,
                 })
               } catch (error) {
                 console.error("Error fetching reverse swap fees with Breez SDK:", error)
@@ -246,47 +234,49 @@ export const useSendPayment = (
             ) {
               console.log("Starting sendPaymentBreezSDK using invoice with amount")
               try {
-                const response = await sendNoAmountPaymentBreezSDK(paymentRequest)
-                console.log("BreezSDK LNInvoice response:", response)
-                // Wait for the payment success event
-                await Promise.race([successPromise, failurePromise])
-                return {
-                  status: PaymentSendResult.Success,
-                  errors: [],
+                const payment = await sendNoAmountPaymentBreezSDK(paymentRequest)
+                if (payment) {
+                  console.log("payment made")
+                  return {
+                    status:
+                      event?.type === "invoicePaid"
+                        ? PaymentSendResult?.Success
+                        : PaymentSendResult?.Failure,
+                    errors: [],
+                  }
                 }
-              } catch (err) {
-                console.error("Failed to send LNInvoice using Breez SDK:", err)
                 return {
                   status: PaymentSendResult.Failure,
                   errors: [],
                 }
+              } catch (err) {
+                console.error("Failed to send payment using Breez SDK:", err)
               }
             } else if (
               sendPaymentMutation?.name === "sendPaymentMutation" &&
               paymentRequest.length > 110 &&
               !paymentRequest.toLowerCase().startsWith("lnurl") &&
               invoice?.amountMsat === null &&
-              amountSats?.amount
+              amountMsats?.amount
             ) {
               console.log("Starting sendPaymentBreezSDK using invoice without amount")
               try {
-                const response = await sendPaymentBreezSDK(
+                const payment = await sendPaymentBreezSDK(
                   paymentRequest,
-                  amountSats.amount,
+                  amountMsats.amount,
                 )
-                console.log("BreezSDK No Amount LNInvoice response:", response)
-                // Wait for the payment success event
-                await Promise.race([successPromise, failurePromise])
+                console.log(
+                  "sendPaymentBreezSDK using invoice without amount DEBUG:",
+                  JSON.stringify(payment, null, 2),
+                )
                 return {
-                  status: PaymentSendResult.Success,
+                  status: payment.paymentTime
+                    ? PaymentSendResult.Success
+                    : PaymentSendResult.Failure,
                   errors: [],
                 }
               } catch (err) {
-                console.error("Failed to send No Amount LNInvoice using Breez SDK:", err)
-                return {
-                  status: PaymentSendResult.Failure,
-                  errors: [],
-                }
+                console.error("Failed to send payment using Breez SDK:", err)
               }
             } else if (
               sendPaymentMutation?.name === "sendPaymentMutation" &&
@@ -297,21 +287,18 @@ export const useSendPayment = (
               try {
                 const payment = await payLnurlBreezSDK(
                   paymentRequest,
-                  amountSats?.amount,
-                  memo?.substring(0, 13) || "",
+                  amountMsats?.amount || 1000,
                 )
-                console.log("LNURL payment response:", payment)
-                // Wait for the payment success event
-                await Promise.race([successPromise, failurePromise])
+                console.log("payment:", JSON.stringify(payment, null, 2))
                 return {
-                  status: PaymentSendResult.Success,
+                  status:
+                    payment.type === "endpointSuccess"
+                      ? PaymentSendResult.Failure
+                      : PaymentSendResult.Success,
                   errors: [],
                 }
               } catch (err) {
-                return {
-                  status: PaymentSendResult.Failure,
-                  errors: [],
-                }
+                console.error("Failed to send payment using Breez SDK:", err)
               }
             } else if (
               sendPaymentMutation?.name === "_sendPaymentMutation" &&
@@ -321,24 +308,25 @@ export const useSendPayment = (
               if (currentFees) {
                 try {
                   const recommendedFees = await recommendedFeesBreezSDK()
-                  const response = await sendOnchainBreezSDK(
+                  const reverseSwapInfo = await sendOnchainBreezSDK(
                     currentFees,
                     paymentRequest,
                     recommendedFees.hourFee,
                   )
-                  console.log("BreezSDK onchain response:", response)
-                  // Wait for the payment success event
-                  await Promise.race([successPromise, failurePromise])
                   return {
-                    status: PaymentSendResult.Success,
+                    status: reverseSwapInfo.status
+                      ? PaymentSendResult.Success
+                      : PaymentSendResult.Failure,
                     errors: [],
                   }
                 } catch (err) {
                   console.error("Failed to send On-Chain payment using Breez SDK:", err)
-                  return {
-                    status: PaymentSendResult.Failure,
-                    errors: [],
-                  }
+                }
+              } else {
+                console.error("currentFees is null")
+                return {
+                  status: PaymentSendResult.Failure,
+                  errors: [],
                 }
               }
             }

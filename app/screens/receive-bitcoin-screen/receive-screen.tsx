@@ -20,7 +20,7 @@ import { SetLightningAddressModal } from "@app/components/set-lightning-address-
 import { GaloyCurrencyBubble } from "@app/components/atomic/galoy-currency-bubble"
 
 // Breez SDK
-import { paymentEvents } from "@app/utils/breez-sdk"
+import { addEventListener } from "@breeztech/react-native-breez-sdk"
 
 const ReceiveScreen = () => {
   const {
@@ -66,8 +66,8 @@ const ReceiveScreen = () => {
   >(undefined)
 
   useEffect(() => {
-    const handleInvoicePaid = () => {
-      if (request) {
+    const handleBreezEvent = (type: string) => {
+      if (type === "invoicePaid" && request) {
         request.state = PaymentRequestState.Paid
         if (request?.state === PaymentRequestState.Paid) {
           setUpdatedPaymentState(PaymentRequestState.Paid)
@@ -79,13 +79,6 @@ const ReceiveScreen = () => {
           return () => clearTimeout(id)
         }
       }
-    }
-    // Subscribe to the "paymentSuccess" event.
-    paymentEvents.on("invoicePaid", handleInvoicePaid)
-
-    // Clean up: unsubscribe to prevent memory leaks.
-    return () => {
-      paymentEvents.off("invoicePaid", handleInvoicePaid)
     }
     addEventListener(handleBreezEvent)
   }, [request?.state, navigation])
@@ -206,7 +199,7 @@ const ReceiveScreen = () => {
                       ? "Bitcoin Invoice | Valid for 7 days"
                       : request.info?.data?.invoiceType === Invoice.Lightning &&
                         request.receivingWalletDescriptor.currency === WalletCurrency.Usd
-                      ? "Cash Invoice | Valid for 5 minutes"
+                      ? "Cash Invoice | Valid for 7 days"
                       : request.info?.data?.invoiceType === Invoice.PayCode
                       ? "Lightning Address"
                       : "Invoice | Valid for 1 day"}
@@ -244,9 +237,9 @@ const ReceiveScreen = () => {
             {
               id: Invoice.Lightning,
               text: LL.ReceiveScreen.lightning(),
-              icon: "flash",
+              icon: "md-flash",
             },
-            { id: Invoice.PayCode, text: LL.ReceiveScreen.paycode(), icon: "at" },
+            { id: Invoice.PayCode, text: LL.ReceiveScreen.paycode(), icon: "md-at" },
             {
               id: Invoice.OnChain,
               text: LL.ReceiveScreen.onchain(),

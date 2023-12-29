@@ -201,10 +201,6 @@ export const ChatScreen: React.FC = () => {
 }
 
 const useStyles = makeStyles(({ colors }) => ({
-  header: {
-    backgroundColor: colors.white,
-  },
-
   activityIndicatorContainer: {
     alignItems: "center",
     flex: 1,
@@ -248,9 +244,9 @@ const useStyles = makeStyles(({ colors }) => ({
   listContainer: { flexGrow: 1 },
 
   searchBarContainer: {
-    backgroundColor: colors.white,
-    borderBottomColor: colors.white,
-    borderTopColor: colors.white,
+    backgroundColor: colors._lightpurple,
+    borderBottomColor: colors._lightpurple,
+    borderTopColor: colors._lightpurple,
     marginHorizontal: 26,
     marginVertical: 8,
   },
@@ -272,5 +268,9 @@ const useStyles = makeStyles(({ colors }) => ({
 
   icon: {
     color: colors.black,
+  },
+
+  header: {
+    backgroundColor: colors._lightpurple,
   },
 }))

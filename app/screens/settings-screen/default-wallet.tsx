@@ -91,7 +91,7 @@ export const DefaultWalletScreen: React.FC = () => {
       id: btcWalletId,
     },
     {
-      name: "Cash (USD)",
+      name: "Stablesats (USD)",
       id: usdWalletId,
     },
   ] as const

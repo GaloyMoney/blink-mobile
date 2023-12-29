@@ -1,35 +1,9 @@
-import {
-  INVITE_CODE,
-  // MNEMONIC_WORDS,
-  API_KEY,
-} from "@env"
+import { INVITE_CODE, MNEMONIC_WORDS, API_KEY } from "@env"
 import * as sdk from "@breeztech/react-native-breez-sdk"
 import * as bip39 from "bip39"
 import * as Keychain from "react-native-keychain"
-import { EventEmitter } from "events"
 
 const KEYCHAIN_MNEMONIC_KEY = "mnemonic_key"
-
-// SDK events listener
-export const paymentEvents = new EventEmitter()
-
-paymentEvents.setMaxListeners(20) // Adjust the limit as needed
-
-export const onBreezEvent = (event: sdk.BreezEvent) => {
-  console.log(`received event ${event.type}`)
-  if (event.type === "paymentSucceed") {
-    paymentEvents.emit("paymentSuccess")
-  } else if (event.type === "invoicePaid") {
-    paymentEvents.emit("invoicePaid")
-  } else if (event.type === "paymentFailed") {
-    paymentEvents.emit("paymentFailure", new Error("Payment failed"))
-  }
-}
-
-paymentEvents.once("paymentFailure", (error) => {
-  // Handle the payment failure error here
-  console.error("Payment failed with error:", error)
-})
 
 // Retry function
 const retry = <T>(fn: () => Promise<T>, ms = 15000, maxRetries = 3) =>
@@ -54,23 +28,19 @@ const retry = <T>(fn: () => Promise<T>, ms = 15000, maxRetries = 3) =>
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getMnemonic = async (): Promise<string> => {
   try {
-    console.log("Looking for mnemonic in keychain")
     const credentials = await Keychain.getGenericPassword({
       service: KEYCHAIN_MNEMONIC_KEY,
     })
     if (credentials) {
-      console.log("Mnemonic found in keychain")
       return credentials.password
     }
 
     // Generate mnemonic and store it in the keychain
     // For development, we use a fixed mnemonic stored in .env
-    console.log("Mnemonic not found in keychain. Generating new one")
     const mnemonic = bip39.generateMnemonic(128)
     await Keychain.setGenericPassword(KEYCHAIN_MNEMONIC_KEY, mnemonic, {
       service: KEYCHAIN_MNEMONIC_KEY,
     })
-    // console.log("Mnemonic stored in keychain:", mnemonic)
     return mnemonic
   } catch (error) {
     console.error("Error in getMnemonic: ", error)
@@ -78,22 +48,14 @@ const getMnemonic = async (): Promise<string> => {
   }
 }
 
-export const breezHealthCheck = async (): Promise<void> => {
-  const healthCheck = await sdk.serviceHealthCheck()
-  console.log(`Current service status is: ${healthCheck.status}`)
-  if (!healthCheck.status) {
-    throw new Error("Breez service is not available")
-  }
-}
-
 const connectToSDK = async () => {
   try {
-    const mnemonic = await getMnemonic() // MNEMONIC_WORDS
-    // console.log("Connecting with mnemonic: ", mnemonic)
+    const mnemonic = MNEMONIC_WORDS // await getMnemonic()
+    // console.log("Mnemonic: ", mnemonic)
     const seed = await sdk.mnemonicToSeed(mnemonic)
     const inviteCode = INVITE_CODE
     const nodeConfig: sdk.NodeConfig = {
-      type: sdk.NodeConfigVariant.GREENLIGHT,
+      type: sdk.NodeConfigType.GREENLIGHT,
       config: {
         inviteCode,
       },
@@ -104,9 +66,9 @@ const connectToSDK = async () => {
       nodeConfig,
     )
 
-    // console.log("Starting connection to Breez SDK")
-    await sdk.connect(config, seed, onBreezEvent)
-    // console.log("Finished connection to Breez SDK")
+    console.log("Starting connection to Breez SDK")
+    await sdk.connect(config, seed)
+    console.log("Finished connection to Breez SDK")
   } catch (error) {
     console.error("Connect error: ", error)
     throw error
@@ -118,7 +80,7 @@ let breezSDKInitializing: Promise<void | boolean> | null = null
 
 export const initializeBreezSDK = async (): Promise<boolean> => {
   if (breezSDKInitialized) {
-    // console.log("BreezSDK already initialized")
+    console.log("BreezSDK already initialized")
     return false
   }
 
@@ -158,28 +120,11 @@ export const receivePaymentBreezSDK = async (
 
 export const sendPaymentBreezSDK = async (
   paymentRequest: string,
-  amountMsat: number,
-): Promise<sdk.SendPaymentResponse> => {
+  paymentAmount?: number,
+): Promise<sdk.Payment> => {
   try {
-    const sendPaymentRequest: sdk.SendPaymentRequest = {
-      bolt11: paymentRequest,
-      amountMsat,
-    }
-    const response = await sdk.sendPayment(sendPaymentRequest)
-    if (response.payment.status === sdk.PaymentStatus.FAILED) {
-      console.log("Error paying Invoice: ", response.payment.details.data)
-      console.log("Reporting issue to Breez SDK")
-      const reportingResult = await sdk.reportIssue({
-        type: sdk.ReportIssueRequestVariant.PAYMENT_FAILURE,
-        data: {
-          paymentHash: (response.payment.details.data as sdk.LnPaymentDetails)
-            .paymentHash,
-        },
-      })
-      console.log("Report issue result: ", reportingResult)
-      throw new Error(response.payment.status)
-    }
-    return response
+    const payment = await sdk.sendPayment(paymentRequest, paymentAmount)
+    return payment
   } catch (error) {
     console.log(error)
     throw error
@@ -188,33 +133,16 @@ export const sendPaymentBreezSDK = async (
 
 export const sendNoAmountPaymentBreezSDK = async (
   paymentRequest: string,
-): Promise<sdk.SendPaymentResponse> => {
+): Promise<sdk.Payment> => {
   console.log("Stepping into Sending payment with no amount function")
   try {
     console.log("Trying to send payment with no amount")
-    const sendPaymentRequest: sdk.SendPaymentRequest = {
-      bolt11: paymentRequest,
-    }
-    const response = await sdk.sendPayment(sendPaymentRequest)
-    console.log("Payment status: ", response.payment.status)
-    if (response.payment.status === sdk.PaymentStatus.FAILED) {
-      console.log("Error paying Zero Amount Invoice: ", response.payment.details.data)
-      console.log("Reporting issue to Breez SDK")
-      const reportingResult = await sdk.reportIssue({
-        type: sdk.ReportIssueRequestVariant.PAYMENT_FAILURE,
-        data: {
-          paymentHash: (response.payment.details.data as sdk.LnPaymentDetails)
-            .paymentHash,
-        },
-      })
-      console.log("Report issue result: ", reportingResult)
-      throw new Error(response.payment.status)
-    }
-    if (response.payment.paymentType === null) {
+    const payment = await sdk.sendPayment(paymentRequest)
+    if (payment.paymentType === null) {
       console.log("Payment type is null, replacing with LN payment")
-      response.payment.paymentType = sdk.PaymentType.SENT
+      payment.paymentType = sdk.PaymentType.SEND
     }
-    return response
+    return payment
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.log(error.message, error.stack)
@@ -251,8 +179,6 @@ export const fetchReverseSwapFeesBreezSDK = async (
 ): Promise<sdk.ReverseSwapPairInfo> => {
   try {
     const fees = await sdk.fetchReverseSwapFees(reverseSwapfeeRequest)
-    console.log("min amount: ", fees.min)
-    console.log("max amount: ", fees.max)
     return fees
   } catch (error) {
     console.log(error)
@@ -264,29 +190,16 @@ export const sendOnchainBreezSDK = async (
   currentFees: sdk.ReverseSwapPairInfo,
   destinationAddress: string,
   satPerVbyte: number,
-): Promise<sdk.SendOnchainResponse> => {
+): Promise<sdk.ReverseSwapInfo> => {
   try {
-    const sendOnChainRequest: sdk.SendOnchainRequest = {
-      amountSat: currentFees.min,
-      onchainRecipientAddress: destinationAddress,
-      pairHash: currentFees.feesHash,
-      satPerVbyte,
-    }
     console.log("Sending onchain payment to address: ", destinationAddress)
-    const response = await sdk.sendOnchain(sendOnChainRequest)
-    if (response.reverseSwapInfo.status === sdk.ReverseSwapStatus.CANCELLED) {
-      console.log("Error paying to OnChain Address")
-      console.log("Reporting issue to Breez SDK")
-      const reportingResult = await sdk.reportIssue({
-        type: sdk.ReportIssueRequestVariant.PAYMENT_FAILURE,
-        data: {
-          paymentHash: response.reverseSwapInfo.id,
-        },
-      })
-      console.log("Report issue result: ", reportingResult)
-      throw new Error(response.reverseSwapInfo.status)
-    }
-    return response
+    const reverseSwapInfo = await sdk.sendOnchain(
+      currentFees.min,
+      destinationAddress,
+      currentFees.feesHash,
+      satPerVbyte,
+    )
+    return reverseSwapInfo
   } catch (error) {
     console.log(error)
     throw error
@@ -306,33 +219,27 @@ export const recommendedFeesBreezSDK = async (): Promise<sdk.RecommendedFees> =>
 
 export const payLnurlBreezSDK = async (
   lnurl: string,
-  amountSat: number,
-  memo: string,
+  amount: number,
 ): Promise<sdk.LnUrlPayResult> => {
   try {
-    const input: sdk.InputType = await sdk.parseInput(lnurl)
-    if (input.type === sdk.InputTypeVariant.LN_URL_PAY) {
-      const req: sdk.LnUrlPayRequest = {
-        data: input.data,
-        amountMsat: amountSat * 1000,
-        comment: memo,
+    let output: sdk.LnUrlPayResult
+    const input: sdk.InputResponse = await sdk.parseInput(lnurl)
+    if (input.type === sdk.InputType.LNURL_PAY) {
+      const amountSats: number =
+        amount > input.data.minSendable ? amount : input.data.minSendable
+      const result = await sdk.payLnurl(
+        input.data,
+        amountSats,
+        "Flash Cash LNURL Payment",
+      )
+      output = result
+    } else {
+      return {
+        type: sdk.LnUrlPayResultType.ENDPOINT_ERROR,
+        data: input.data.reason,
       }
-      const response = await sdk.payLnurl(req)
-      if (response.type === sdk.LnUrlPayResultVariant.PAY_ERROR) {
-        console.log("Error paying lnurl: ", response.data.reason)
-        console.log("Reporting issue to Breez SDK")
-        console.log("Payment hash: ", response.data.paymentHash)
-        const paymentHash = response.data.paymentHash
-        const reportingResult = await sdk.reportIssue({
-          type: sdk.ReportIssueRequestVariant.PAYMENT_FAILURE,
-          data: { paymentHash },
-        })
-        console.log("Report issue result: ", reportingResult)
-        throw new Error(response.type)
-      }
-      return response
     }
-    throw new Error("Unsupported input type")
+    return output
   } catch (error) {
     console.log(error)
     throw error
@@ -363,8 +270,8 @@ export const nodeInfoBreezSDK = async (): Promise<sdk.NodeState> => {
 
 export const listPaymentsBreezSDK = async (): Promise<sdk.Payment[]> => {
   try {
-    // const filter: sdk.PaymentTypeFilter = sdk.PaymentTypeFilter.ALL
-    const payments = await sdk.listPayments({})
+    const filter: sdk.PaymentTypeFilter = sdk.PaymentTypeFilter.ALL
+    const payments = await sdk.listPayments(filter)
     // console.log("Payments: ", payments)
     return payments
   } catch (error) {
@@ -373,17 +280,17 @@ export const listPaymentsBreezSDK = async (): Promise<sdk.Payment[]> => {
   }
 }
 
-// export const addLogListenerBreezSDK = async (): Promise<void> => {
-//   try {
-//     const listener: sdk.LogEntry = (l: sdk.LogEntry) => {
-//       console.log("BreezSDK log: ", l)
-//     }
-//     await sdk.addLogListener(listener)
-//   } catch (error) {
-//     console.log(error)
-//     throw error
-//   }
-// }
+export const addLogListenerBreezSDK = async (): Promise<void> => {
+  try {
+    const listener: sdk.LogEntryFn = (l: sdk.LogEntry) => {
+      console.log("BreezSDK log: ", l)
+    }
+    await sdk.addLogListener(listener)
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+}
 
 export const executeDevCommandBreezSDK = async (command: string): Promise<void> => {
   try {
@@ -394,5 +301,3 @@ export const executeDevCommandBreezSDK = async (command: string): Promise<void> 
     throw error
   }
 }
-
-// export * from "./eventListener"

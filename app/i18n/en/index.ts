@@ -59,7 +59,7 @@ const en: BaseTranslation = {
   ChatScreen: {
     noChatsTitle: "No Chats Found",
     noChatsYet:
-      "Enter a Flash username or \nnostr pubkey to start a chat",
+      "Enter a Flash username or nostr public key to start a chat",
     noMatchingChats: "No chats matching your search were found.",
     title: "Chat",
   },
@@ -499,7 +499,6 @@ const en: BaseTranslation = {
     title: "Map",
   },
   HomeScreen: {
-    cashout: "Cash Out",
     receive: "Receive",
     send: "Send",
     pay: "Pay",
@@ -609,12 +608,7 @@ const en: BaseTranslation = {
     invalidTitle: "Invalid QR Code",
     noQrCode: "We could not find a QR code in the image",
     title: "Scan QR",
-    permissionCamera: "We need permission to use your camera",
-    noCamera: "No camera found",
-    openSettings: "Open Settings",
-    unableToOpenSettings: "Unable to open settings",
     invalidContentLnurl: "We found:\n\n{found: string}\n\n is not currently supported",
-    imageLibraryPermissionsNotGranted: "We don't have permissions to access the image library.  Please check app settings for your platform.",
   },
   SecurityScreen: {
     biometricDescription: "Unlock with fingerprint or facial recognition.",
@@ -690,6 +684,7 @@ const en: BaseTranslation = {
   },
   SendBitcoinScreen: {
     amount: "Amount",
+    MinOnChainLimit: "Minimum amount for this transaction is US$2.00",
     amountExceed: "Amount exceeds your balance of {balance: string}",
     amountExceedsLimit: "Amount exceeds your remaining daily limit of {limit: string}",
     upgradeAccountToIncreaseLimit: "Upgrade your account to increase your limit",
@@ -967,7 +962,7 @@ const en: BaseTranslation = {
     beta: "beta",
     bitcoin: "Bitcoin",
     bitcoinPrice: "Bitcoin Price",
-    btcAccount: "Bitcoin Account",
+    btcAccount: "BTC Account",
     cancel: "Cancel",
     close: "Close",
     confirm: "Confirm",
@@ -1030,7 +1025,7 @@ const en: BaseTranslation = {
     transactionsError: "Error loading transactions",
     tryAgain: "Try Again",
     type: "Type",
-    usdAccount: "Cash Account",
+    usdAccount: "USD Account",
     username: "Username",
     usernameRequired: "Username is required",
     backupAccount: "Backup/upgrade account",

@@ -6,10 +6,11 @@ export const APP_STORE_LINK =
   "https://apps.apple.com/app/bitcoin-beach-wallet/id1531383905"
 export const PLAY_STORE_LINK = "https://play.google.com/store/apps/details?id=com.lnflash"
 export const PREFIX_LINKING = [
-  "https://pay.flashapp.me",
-  "https://pay.getflash.io",
-  "https://pay.lnflash.me",
-  "flash://",
+  "https://ln.bitcoinbeach.com",
+  "https://pay.mainnet.galoy.io",
+  "https://pay.bbw.sv",
+  "https://pay.blink.sv",
+  "bitcoinbeach://",
 ]
 
 // FIXME this should come from globals.lightningAddressDomainAliases
