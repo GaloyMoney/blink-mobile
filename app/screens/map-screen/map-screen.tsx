@@ -29,13 +29,6 @@ import countryCodes from "../../../utils/countryInfo.json"
 import { CountryCode } from "libphonenumber-js/mobile"
 import useDeviceLocation from "@app/hooks/use-device-location"
 
-const EL_ZONTE_COORDS = {
-  latitude: 13.496743,
-  longitude: -89.439462,
-  latitudeDelta: 0.02,
-  longitudeDelta: 0.02,
-}
-
 // essentially calculates zoom for location being set based on country
 const { height, width } = Dimensions.get("window")
 const LATITUDE_DELTA = 15 // <-- decrease for more zoom
@@ -103,25 +96,20 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   // this is used to finalize the initial location shown on the Map
   React.useEffect(() => {
     if (countryCode && wasLocationDenied && !loading) {
-      // El Salvador gets special treatment here and zones in on El Zonte
-      if (countryCode === "SV") {
-        setUserLocation(EL_ZONTE_COORDS)
-      } else {
-        // JSON 'hashmap' with every countrys' code listed with their lat and lng
-        const countryCodesToCoords: {
-          data: Record<CountryCode, { lat: number; lng: number }>
-        } = JSON.parse(JSON.stringify(countryCodes))
-        const countryCoords: { lat: number; lng: number } =
-          countryCodesToCoords.data[countryCode]
-        if (countryCoords) {
-          const region: Region = {
-            latitude: countryCoords.lat,
-            longitude: countryCoords.lng,
-            latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
-          }
-          setUserLocation(region)
+      // JSON 'hashmap' with every countrys' code listed with their lat and lng
+      const countryCodesToCoords: {
+        data: Record<CountryCode, { lat: number; lng: number }>
+      } = JSON.parse(JSON.stringify(countryCodes))
+      const countryCoords: { lat: number; lng: number } =
+        countryCodesToCoords.data[countryCode]
+      if (countryCoords) {
+        const region: Region = {
+          latitude: countryCoords.lat,
+          longitude: countryCoords.lng,
+          latitudeDelta: LATITUDE_DELTA,
+          longitudeDelta: LONGITUDE_DELTA,
         }
+        setUserLocation(region)
       }
       setIsLoadingLocation(false)
     }

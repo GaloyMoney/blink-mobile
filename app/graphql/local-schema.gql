@@ -16,7 +16,7 @@ extend type Query {
   price: String # FIXME test only?
   beta: Boolean!
   colorScheme: String!
-  countryCode: String
+  countryCode: String!
   feedbackModalShown: Boolean!
   hasPromptedSetDefaultAccount: Boolean!
   introducingCirclesModalShown: Boolean!
