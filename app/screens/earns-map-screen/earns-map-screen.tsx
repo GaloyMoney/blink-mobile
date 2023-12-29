@@ -120,15 +120,14 @@ export const EarnMapScreen: React.FC = () => {
       augmentCardWithGqlData({ card, quizServerData }),
     )
 
-    const sectionCompletion =
-      cards?.filter((item) => item?.completed).length / cards.length ?? 0
+    const sectionCompleted = cards?.every((item) => item?.completed) ?? false
 
-    if (sectionCompletion === 1) {
+    if (sectionCompleted) {
       currSection += 1
     } else if (isNaN(progress)) {
-      // only do it once for the first uncompleted section
-      progress = sectionCompletion
-    } else {
+      // get progress of the current section
+      progress = cards?.filter((item) => item?.completed).length / cards.length ?? 0
+
       const notBefore = cards[cards.length - 1]?.notBefore
       canDoNextSection = notBefore instanceof Date && new Date() > notBefore
     }
