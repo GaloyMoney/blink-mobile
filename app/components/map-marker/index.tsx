@@ -49,7 +49,6 @@ export default function MapMarker({
     <Marker
       ref={ref}
       coordinate={item.mapInfo.coordinates}
-      key={item.username}
       pinColor={color}
       onPress={() => handleMarkerPress(item)}
       stopPropagation

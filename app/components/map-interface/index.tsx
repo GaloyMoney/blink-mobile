@@ -60,6 +60,7 @@ export default function MapInterface({
           if (item?.username) {
             arr.push(
               <MapMarker
+                key={item.username}
                 item={item}
                 color={colors._orange}
                 handleCalloutPress={handleCalloutPress}

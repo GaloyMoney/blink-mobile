@@ -102,6 +102,9 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
           longitudeDelta: LONGITUDE_DELTA,
         }
         setUserLocation(region)
+      } else {
+        // backup if country code is not recognized
+        setUserLocation(EL_ZONTE_COORDS)
       }
     }
   }, [wasLocationDenied, countryCode, loading, setUserLocation])
@@ -164,7 +167,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useFocusEffect(requestLocationPermission)
+  React.useEffect(() => requestLocationPermission(), [requestLocationPermission])
 
   return (
     <Screen>
