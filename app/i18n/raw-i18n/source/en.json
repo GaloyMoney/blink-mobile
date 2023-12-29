@@ -2344,6 +2344,7 @@
         "paid": "Paid to/from",
         "received": "You received",
         "spent": "You spent",
+        "sending": "Sending",
         "receivingAccount": "Receiving Account",
         "sendingAccount": "Sending Account",
         "txNotBroadcast": "Your transaction is queued. It should appear in the mempool {countdown: string}.",
