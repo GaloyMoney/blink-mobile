@@ -1712,12 +1712,10 @@ export type SuccessPayload = {
 export type Transaction = {
   readonly __typename: 'Transaction';
   readonly createdAt: Scalars['Timestamp']['output'];
-  readonly date: Scalars['String']['output'];
   readonly direction: TxDirection;
   readonly id: Scalars['ID']['output'];
   /** From which protocol the payment has been initiated. */
   readonly initiationVia: InitiationVia;
-  readonly isReceive: Scalars['Boolean']['output'];
   readonly memo?: Maybe<Scalars['Memo']['output']>;
   /** Amount of the settlement currency sent or received. */
   readonly settlementAmount: Scalars['SignedAmount']['output'];
@@ -1732,7 +1730,6 @@ export type Transaction = {
   /** To which protocol the payment has settled on. */
   readonly settlementVia: SettlementVia;
   readonly status: TxStatus;
-  readonly text: Scalars['String']['output'];
 };
 
 /** A connection to a list of items. */
@@ -8246,11 +8243,9 @@ export interface TotpSecretScalarConfig extends GraphQLScalarTypeConfig<Resolver
 
 export type TransactionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Transaction'] = ResolversParentTypes['Transaction']> = {
   createdAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
-  date?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   direction?: Resolver<ResolversTypes['TxDirection'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   initiationVia?: Resolver<ResolversTypes['InitiationVia'], ParentType, ContextType>;
-  isReceive?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   memo?: Resolver<Maybe<ResolversTypes['Memo']>, ParentType, ContextType>;
   settlementAmount?: Resolver<ResolversTypes['SignedAmount'], ParentType, ContextType>;
   settlementCurrency?: Resolver<ResolversTypes['WalletCurrency'], ParentType, ContextType>;
@@ -8261,7 +8256,6 @@ export type TransactionResolvers<ContextType = any, ParentType extends Resolvers
   settlementPrice?: Resolver<ResolversTypes['PriceOfOneSettlementMinorUnitInDisplayMinorUnit'], ParentType, ContextType>;
   settlementVia?: Resolver<ResolversTypes['SettlementVia'], ParentType, ContextType>;
   status?: Resolver<ResolversTypes['TxStatus'], ParentType, ContextType>;
-  text?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
