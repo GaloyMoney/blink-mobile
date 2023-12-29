@@ -4,7 +4,6 @@ import * as React from "react"
 import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import { Dimensions } from "react-native"
-import Animated, { useSharedValue, withSpring, withTiming } from "react-native-reanimated"
 import Geolocation from "@react-native-community/geolocation"
 import { Region } from "react-native-maps"
 import { Screen } from "../../components/screen"
@@ -19,8 +18,6 @@ import countryCodes from "../../../utils/countryInfo.json"
 import { CountryCode } from "libphonenumber-js/mobile"
 import useDeviceLocation from "@app/hooks/use-device-location"
 import MapInterface, { MarkerData } from "@app/components/map-interface"
-import { Text, makeStyles } from "@rneui/themed"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 const EL_ZONTE_COORDS = {
   latitude: 13.496743,
@@ -33,10 +30,6 @@ const EL_ZONTE_COORDS = {
 const { height, width } = Dimensions.get("window")
 const LATITUDE_DELTA = 15 // <-- decrease for more zoom
 const LONGITUDE_DELTA = LATITUDE_DELTA * (width / height)
-
-// the size of the box that will encompass viewable markers on the map
-// const BOUNDING_BOX_HEIGHT = 5 // 1 latitude = 69 miles
-// const BOUNDING_BOX_WIDTH = 6 // 1 longitude = 54.6 miles
 
 const PAY_CONTAINER_HEIGHT = 106
 
@@ -70,8 +63,6 @@ gql`
 export const MapScreen: React.FC<Props> = ({ navigation }) => {
   const isAuthed = useIsAuthed()
   const { countryCode, loading } = useDeviceLocation()
-  const styles = useStyles()
-  const heightAnim = useSharedValue(-PAY_CONTAINER_HEIGHT)
   const { LL } = useI18nContext()
   const { data, error, refetch } = useBusinessMapMarkersQuery({
     notifyOnNetworkStatusChange: true,
@@ -81,11 +72,8 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   const [userLocation, setUserLocation] = React.useState<Region>()
   const [isRefreshed, setIsRefreshed] = React.useState(false)
   const [focusedMarker, setFocusedMarker] = React.useState<MarkerData | null>(null)
-  // boundingBox solution for one day when there's thousands of markers and its not reasonable to load them all at once
-  // const [boundingBox, setBoundingBox] = React.useState<BoundingBox>() 
   const [wasLocationDenied, setLocationDenied] = React.useState(false)
   const [mapBottomPadding, setMapBottomPadding] = React.useState(0)
-
 
   useFocusEffect(() => {
     if (!isRefreshed) {
@@ -97,14 +85,6 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   if (error) {
     toastShow({ message: error.message, LL })
   }
-
-  // -------- uncomment if using boundingBox ----------- //
-
-  // React.useEffect(() => {
-  //   if (userLocation) {
-  //     calculateBoundingBox(userLocation)
-  //   }
-  // }, [userLocation])
 
   // if getting location was denied and device's country code has been found (or defaulted)
   // this is used to finalize the initial location shown on the Map
@@ -147,28 +127,6 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
         },
       })
     }
-  }
-
-  const heightAnimate = (toValue: number, duration: number) => {
-    heightAnim.value = withTiming(toValue)
-  }
-
-  const handleMarkerPress = (item: MarkerData) => {
-    if (!focusedMarker) {
-      heightAnimate(0, 500)
-      setTimeout(() => {
-        setMapBottomPadding(PAY_CONTAINER_HEIGHT)
-      }, 500)
-    }
-    setFocusedMarker(item)
-  }
-
-  const handleMapPress = () => {
-    if (focusedMarker) {
-      setMapBottomPadding(0)
-      heightAnimate(-PAY_CONTAINER_HEIGHT, 300)
-    }
-    setFocusedMarker(null)
   }
 
   const getUserRegion = (callback: (region?: Region) => void) => {
@@ -218,84 +176,19 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
 
   useFocusEffect(requestLocationPermission)
 
-  // -------- uncomment if using boundingBox ----------- //
-
-  // const calculateBoundingBox = async (region: Region) => {
-  //   let _boundingBox: BoundingBox
-  //   if (mapViewRef.current) {
-  //     let { northEast, southWest } = await mapViewRef.current?.getMapBoundaries()
-  //     // TODO adjust to be height BOUNDING_BOX_HEIGHT and width BOUNDING_BOX_WIDTH
-  //     // and dont forget to account for how some of the values are positive and some negative
-  //     _boundingBox = { northEast, southWest }
-  //   } else {
-  //     // this shouldn't happen but if mapViewRef.current is null for whatever reason, we have a backup
-  //     _boundingBox = {
-  //       northEast: {
-  //         latitude: region.latitude + Math.round(BOUNDING_BOX_HEIGHT / 2),
-  //         longitude: region.longitude + Math.round(BOUNDING_BOX_WIDTH / 2),
-  //       },
-  //       southWest: {
-  //         latitude: region.latitude - Math.round(BOUNDING_BOX_HEIGHT / 2),
-  //         longitude: region.longitude - Math.round(BOUNDING_BOX_WIDTH / 2),
-  //       },
-  //     }
-  //   }
-  //   setBoundingBox(_boundingBox)
-  // }
-
   return (
     <Screen>
       {userLocation && (
-        <>
-          <MapInterface
-            data={data}
-            userLocation={userLocation}
-            handleMapPress={handleMapPress}
-            handleMarkerPress={handleMarkerPress}
-            handleCalloutPress={handleCalloutPress}
-            bottomPadding={mapBottomPadding}
-          />
-          <Animated.View style={[styles.payContainer, { bottom: heightAnim as unknown as number }]}>
-            <Text numberOfLines={1} ellipsizeMode="tail" style={styles.payCompany}>
-              {focusedMarker?.mapInfo?.title}
-            </Text>
-            <GaloyPrimaryButton
-              title={LL.MapScreen.payBusiness()}
-              onPress={() => handleCalloutPress(focusedMarker)}
-            />
-          </Animated.View>
-        </>
+        <MapInterface
+          data={data}
+          userLocation={userLocation}
+          handleMapPress={() => setFocusedMarker(null)}
+          handleMarkerPress={(item) => setFocusedMarker(item)}
+          focusedMarker={focusedMarker}
+          handleCalloutPress={handleCalloutPress}
+          bottomPadding={mapBottomPadding}
+        />
       )}
     </Screen>
   )
 }
-
-const useStyles = makeStyles(({ colors }) => ({
-  payContainer: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: -PAY_CONTAINER_HEIGHT,
-    width: "100%",
-    backgroundColor: "white",
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    padding: 10,
-    borderTopWidth: 1,
-    borderLeftWidth: 1,
-    borderRightWidth: 1,
-    borderColor: colors.grey4,
-    elevation: 10,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.4,
-    shadowRadius: 6,
-  },
-  payCompany: {
-    fontSize: 26,
-    marginBottom: 10,
-  },
-}))

@@ -1,8 +1,11 @@
 import { makeStyles, useTheme } from "@rneui/themed"
-import MapView, { Marker, Region } from "react-native-maps"
+import MapView, { Region } from "react-native-maps"
 import MapStyles from "./map-styles.json"
 import React, { useRef } from "react"
 import { BusinessMapMarkersQuery } from "@app/graphql/generated"
+import MapMarker from "../map-marker"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { StyleSheet } from "react-native"
 
 type Props = {
   data?: BusinessMapMarkersQuery
@@ -10,6 +13,7 @@ type Props = {
   bottomPadding: number
   handleMapPress: () => void
   handleMarkerPress: (_: MarkerData) => void
+  focusedMarker: MarkerData | null
   handleCalloutPress: (_: MarkerData) => void
 }
 
@@ -33,12 +37,15 @@ export default function MapInterface({
   bottomPadding,
   handleMapPress,
   handleMarkerPress,
+  focusedMarker,
   handleCalloutPress,
 }: Props) {
   const {
     theme: { colors, mode: themeMode },
   } = useTheme()
   const styles = useStyles()
+  const { LL } = useI18nContext()
+  const text = React.useMemo(() => LL.MapScreen.payBusiness(), [LL.MapScreen])
 
   const mapViewRef = useRef<MapView>(null)
 
@@ -55,19 +62,17 @@ export default function MapInterface({
       {(data?.businessMapMarkers ?? []).reduce(
         (arr: React.ReactElement[], item: MarkerData | null, i: number) => {
           if (item?.username) {
-            const marker = (
-              <Marker
-                coordinate={item.mapInfo.coordinates}
-                key={item.username}
-                pinColor={colors._orange}
-                title={item.mapInfo.title}
-                onPress={() => handleMarkerPress(item)}
-                onCalloutPress={() => handleCalloutPress(item)}
-                stopPropagation
-                pointerEvents="auto"
-              />
+            arr.push(
+              <MapMarker
+                item={item}
+                color={colors._orange}
+                handleCalloutPress={handleCalloutPress}
+                handleMarkerPress={handleMarkerPress}
+                isFocused={focusedMarker?.username === item.username}
+                text={text}
+                styles={styles}
+              />,
             )
-            arr.push(marker)
           }
 
           return arr
@@ -79,25 +84,45 @@ export default function MapInterface({
 }
 
 const useStyles = makeStyles(({ colors }) => ({
-  map: {
-    flex: 1,
+  android: {
+    marginTop: 15,
+    backgroundColor: colors._orange,
   },
-
+  
   customView: {
     alignItems: "center",
     margin: 12,
-    height: 30,
+    backgroundColor: "white",
+    padding: 15,
+    borderRadius: 3,
+    borderWidth: 1,
+    borderColor: colors.grey4,
+  },
+  
+  pseudoButton: {
+    minHeight: 50,
+    backgroundColor: colors.primary3,
+    borderRadius: 25,
+    justifyContent: 'center',
+    elevation: 4,
+    width: 200
+  },
+
+  ios: { paddingTop: 12 },
+
+  map: {
+    height: "100%",
     width: "100%",
   },
 
   title: { color: colors._darkGrey },
+
+  text: {
+    fontSize: 20,
+    lineHeight: 24,
+    fontWeight: "600",
+    color: colors.white,
+    margin: 8,
+    textAlign: 'center'
+  },
 }))
-
-// -------- uncomment if using boundingBox ----------- //
-
-// const { latitude, longitude } = item.mapInfo.coordinates
-// const isInView: boolean =
-//   latitude < boundingBox.northEast.latitude &&
-//   latitude > boundingBox.southWest.latitude &&
-//   longitude > boundingBox.southWest.longitude &&
-//   longitude < boundingBox.northEast.longitude
