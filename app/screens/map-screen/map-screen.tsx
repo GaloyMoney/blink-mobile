@@ -3,19 +3,20 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
-import { PermissionsAndroid, View } from "react-native"
+import { ActivityIndicator, Dimensions, View } from "react-native"
+import Geolocation from "@react-native-community/geolocation"
 import MapView, {
   Callout,
   CalloutSubview,
   MapMarkerProps,
   Marker,
+  Region,
 } from "react-native-maps"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { isIos } from "../../utils/helper"
 import { toastShow } from "../../utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import crashlytics from "@react-native-firebase/crashlytics"
 import { useBusinessMapMarkersQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
@@ -24,8 +25,25 @@ import { PhoneLoginInitiateType } from "../phone-auth-screen"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import MapStyles from "./map-styles.json"
 
+import countryCodes from "../../../utils/countryInfo.json"
+import { CountryCode } from "libphonenumber-js/mobile"
+import useDeviceLocation from "@app/hooks/use-device-location"
+
+// essentially calculates zoom for location being set based on country
+const { height, width } = Dimensions.get("window")
+const LATITUDE_DELTA = 15 // <-- decrease for more zoom
+const LONGITUDE_DELTA = LATITUDE_DELTA * (width / height)
+
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "Primary">
+}
+
+type GeolocationPermissionNegativeError = {
+  code: number
+  message: string
+  PERMISSION_DENIED: number
+  POSITION_UNAVAILABLE: number
+  TIMEOUT: number
 }
 
 gql`
@@ -49,8 +67,12 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   } = useTheme()
   const styles = useStyles()
   const isAuthed = useIsAuthed()
+  const { countryCode, loading } = useDeviceLocation()
 
+  const [isLoadingLocation, setIsLoadingLocation] = React.useState(true)
+  const [userLocation, setUserLocation] = React.useState<Region>()
   const [isRefreshed, setIsRefreshed] = React.useState(false)
+  const [wasLocationDenied, setLocationDenied] = React.useState(false)
   const { data, error, refetch } = useBusinessMapMarkersQuery({
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "cache-and-network",
@@ -70,38 +92,79 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
 
   const maps = data?.businessMapMarkers ?? []
 
-  const requestLocationPermission = useCallback(() => {
-    const asyncRequestLocationPermission = async () => {
-      try {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          {
-            title: LL.MapScreen.locationPermissionTitle(),
-            message: LL.MapScreen.locationPermissionMessage(),
-            buttonNeutral: LL.MapScreen.locationPermissionNeutral(),
-            buttonNegative: LL.MapScreen.locationPermissionNegative(),
-            buttonPositive: LL.MapScreen.locationPermissionPositive(),
-          },
-        )
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.debug("You can use the location")
-        } else {
-          console.debug("Location permission denied")
+  // if getting location was denied and device's country code has been found (or defaulted)
+  // this is used to finalize the initial location shown on the Map
+  React.useEffect(() => {
+    if (countryCode && wasLocationDenied && !loading) {
+      // JSON 'hashmap' with every countrys' code listed with their lat and lng
+      const countryCodesToCoords: {
+        data: Record<CountryCode, { lat: number; lng: number }>
+      } = JSON.parse(JSON.stringify(countryCodes))
+      const countryCoords: { lat: number; lng: number } =
+        countryCodesToCoords.data[countryCode]
+      if (countryCoords) {
+        const region: Region = {
+          latitude: countryCoords.lat,
+          longitude: countryCoords.lng,
+          latitudeDelta: LATITUDE_DELTA,
+          longitudeDelta: LONGITUDE_DELTA,
         }
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          crashlytics().recordError(err)
-        }
-        console.debug(err)
+        setUserLocation(region)
       }
+      setIsLoadingLocation(false)
     }
-    asyncRequestLocationPermission()
-    // disable eslint because we don't want to re-run this function when the language changes
+  }, [wasLocationDenied, countryCode, loading, setIsLoadingLocation, setUserLocation])
+
+  const getUserRegion = (callback: (region?: Region) => void) => {
+    try {
+      Geolocation.getCurrentPosition(
+        (data: GeolocationPosition) => {
+          if (data) {
+            const region: Region = {
+              latitude: data.coords.latitude,
+              longitude: data.coords.longitude,
+              latitudeDelta: 0.02,
+              longitudeDelta: 0.02,
+            }
+            callback(region)
+          }
+        },
+        () => {
+          callback(undefined)
+        },
+        { timeout: 5000 },
+      )
+    } catch (e) {
+      callback(undefined)
+    }
+  }
+
+  const requestLocationPermission = useCallback(() => {
+    const permittedResponse = () => {
+      getUserRegion(async (region) => {
+        if (region) {
+          setUserLocation(region)
+          setIsLoadingLocation(false)
+        } else {
+          setLocationDenied(true)
+        }
+      })
+    }
+
+    const negativeResponse = (error: GeolocationPermissionNegativeError) => {
+      console.debug("Permission location denied: ", error)
+      setLocationDenied(true)
+    }
+
+    Geolocation.requestAuthorization(permittedResponse, negativeResponse)
+    // disable eslint because we only want to ask for permissions once
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useFocusEffect(requestLocationPermission)
 
+  // TODO this should be memoized for performance improvements. Use reduce() inside a useMemo() with some dependency array values
+  // and/or a generator function that yields markers asynchronously???
   const markers: ReturnType<React.FC<MapMarkerProps>>[] = []
   maps.forEach((item) => {
     if (item) {
@@ -152,19 +215,20 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <Screen>
-      <MapView
-        style={styles.map}
-        showsUserLocation={true}
-        initialRegion={{
-          latitude: 13.496743,
-          longitude: -89.439462,
-          latitudeDelta: 0.02,
-          longitudeDelta: 0.02,
-        }}
-        customMapStyle={themeMode === "dark" ? MapStyles.dark : MapStyles.light}
-      >
-        {markers}
-      </MapView>
+      {isLoadingLocation ? (
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator size="large" color={colors.primary} />
+        </View>
+      ) : (
+        <MapView
+          style={styles.map}
+          showsUserLocation={true}
+          initialRegion={userLocation}
+          customMapStyle={themeMode === "dark" ? MapStyles.dark : MapStyles.light}
+        >
+          {markers}
+        </MapView>
+      )}
     </Screen>
   )
 }
@@ -172,6 +236,11 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
 const useStyles = makeStyles(({ colors }) => ({
   android: { marginTop: 18 },
 
+  loaderContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   customView: {
     alignItems: "center",
     margin: 12,

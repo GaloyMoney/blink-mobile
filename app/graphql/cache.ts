@@ -79,6 +79,9 @@ export const createCache = () =>
           colorScheme: {
             read: (value) => value ?? "system",
           },
+          countryCode: {
+            read: (value) => value ?? "SV",
+          },
           feedbackModalShown: {
             read: (value) => value ?? false,
           },

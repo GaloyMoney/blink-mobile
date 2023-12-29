@@ -27,10 +27,10 @@ export const ErrorType = {
   UnsupportedCountryError: "UnsupportedCountryError",
 } as const
 
-import axios from "axios"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import useDeviceLocation from "@app/hooks/use-device-location"
 
 type ErrorType = (typeof ErrorType)[keyof typeof ErrorType]
 
@@ -97,6 +97,7 @@ export const useRequestPhoneCodeRegistration = (): UseRequestPhoneCodeReturn => 
     useNavigation<StackNavigationProp<RootStackParamList, "phoneRegistrationInitiate">>()
 
   const { data } = useSupportedCountriesQuery()
+  const { countryCode: detectedCountryCode } = useDeviceLocation()
 
   const { isWhatsAppSupported, isSmsSupported, allSupportedCountries } = useMemo(() => {
     const currentCountry = data?.globals?.supportedCountries.find(
@@ -120,33 +121,13 @@ export const useRequestPhoneCodeRegistration = (): UseRequestPhoneCodeReturn => 
     }
   }, [data?.globals, countryCode])
 
+  // setting default country code from IP
   useEffect(() => {
-    const getCountryCodeFromIP = async () => {
-      let defaultCountryCode = "SV" as CountryCode
-      try {
-        const response = await axios({
-          method: "get",
-          url: "https://ipapi.co/json/",
-          timeout: 5000,
-        })
-        const data = response.data
-
-        if (data && data.country_code) {
-          const countryCode = data.country_code
-          defaultCountryCode = countryCode
-        } else {
-          console.warn("no data or country_code in response")
-        }
-      } catch (error) {
-        console.error(error)
-      }
-
-      setCountryCode(defaultCountryCode)
+    if (detectedCountryCode) {
+      setCountryCode(detectedCountryCode)
       setStatus(RequestPhoneCodeStatus.InputtingPhoneNumber)
     }
-
-    getCountryCodeFromIP()
-  }, [])
+  }, [detectedCountryCode])
 
   const setPhoneNumber = (number: string) => {
     if (status === RequestPhoneCodeStatus.RequestingCode) {
