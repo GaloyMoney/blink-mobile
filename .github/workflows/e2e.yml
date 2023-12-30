@@ -27,6 +27,16 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
+      
+      - name: Cache Dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            ios/Pods
+          key: ${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock', '**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-deps-
 
       - name: Install Dependencies
         run: yarn install
