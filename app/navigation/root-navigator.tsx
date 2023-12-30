@@ -102,6 +102,7 @@ export const RootStack = () => {
         headerTitleStyle: styles.title,
         headerBackTitleStyle: styles.title,
         headerTintColor: colors.black,
+        headerBackTestID: LL.common.back(),
       }}
       initialRouteName={isAuthed ? "authenticationCheck" : "getStarted"}
     >
@@ -428,6 +429,7 @@ export const ContactNavigator = () => {
       screenOptions={{
         gestureEnabled: true,
         headerBackTitle: LL.common.back(),
+        headerBackTestID: LL.common.back(),
         headerStyle: styles.headerStyle,
         headerTitleStyle: styles.title,
         headerBackTitleStyle: styles.title,
@@ -484,6 +486,7 @@ export const PhoneLoginNavigator = () => {
       screenOptions={{
         gestureEnabled: true,
         headerBackTitle: LL.common.back(),
+        headerBackTestID: LL.common.back(),
         headerStyle: styles.headerStyle,
         headerTitleStyle: styles.title,
         headerBackTitleStyle: styles.title,
