@@ -35,17 +35,15 @@ const isToday = (tx: TransactionFragment) => sameDay(tx.createdAt, new Date())
 const isYesterday = (tx: TransactionFragment) =>
   sameDay(tx.createdAt, new Date().setDate(new Date().getDate() - 1))
 
-type Common = TranslationFunctions["common"]
-
 export const groupTransactionsByDate = ({
   pendingIncomingTxs,
   txs,
-  common,
+  LL,
   locale,
 }: {
   pendingIncomingTxs?: TransactionFragment[]
   txs: TransactionFragment[]
-  common: Common
+  LL: TranslationFunctions
   locale: string
 }) => {
   const sections: SectionTransactions[] = []
@@ -56,16 +54,16 @@ export const groupTransactionsByDate = ({
   const transactionsByRelativeDate: Record<string, TransactionFragment[]> = {}
 
   for (const tx of pendingIncomingTxs ?? []) {
-    transactionsByRelativeDate[common.today()].push(tx)
+    transactionsByRelativeDate[LL.common.today()].push(tx)
   }
 
   for (const tx of settledOrOutgoingTransactions) {
     let dateString: string
 
     if (isToday(tx)) {
-      dateString = common.today()
+      dateString = LL.common.today()
     } else if (isYesterday(tx)) {
-      dateString = common.yesterday()
+      dateString = LL.common.yesterday()
     } else {
       dateString = formatDateByMonthYear(locale, tx.createdAt)
     }

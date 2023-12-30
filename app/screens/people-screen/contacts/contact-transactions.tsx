@@ -49,7 +49,7 @@ export const ContactTransactions = ({ contactUsername }: Props) => {
     () =>
       groupTransactionsByDate({
         txs: transactions?.edges?.map((edge) => edge.node) ?? [],
-        common: LL.common,
+        LL,
         locale,
       }),
     [transactions, LL, locale],

@@ -54,7 +54,7 @@ export const TransactionHistoryScreen: React.FC = () => {
           ? [...pendingIncomingTransactions]
           : [],
         txs: transactions?.edges?.map((edge) => edge.node) ?? [],
-        common: LL.common,
+        LL,
         locale,
       }),
     [pendingIncomingTransactions, transactions, LL, locale],
