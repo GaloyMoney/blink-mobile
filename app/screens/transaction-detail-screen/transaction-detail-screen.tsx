@@ -375,7 +375,9 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
 
         <Row
           entry={LL.common.date()}
-          value={<TransactionDate createdAt={createdAt} status={status} />}
+          value={
+            <TransactionDate createdAt={createdAt} status={status} includeTime={true} />
+          }
         />
         {!isReceive && <Row entry={LL.common.fees()} value={formattedFeeText} />}
         <Row entry={LL.common.description()} value={description} />

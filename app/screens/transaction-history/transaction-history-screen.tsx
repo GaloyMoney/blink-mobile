@@ -39,7 +39,7 @@ export const TransactionHistoryScreen: React.FC = () => {
   } = useTheme()
   const styles = useStyles()
 
-  const { LL } = useI18nContext()
+  const { LL, locale } = useI18nContext()
   const { data, error, fetchMore, refetch, loading } =
     useTransactionListForDefaultAccountQuery({ skip: !useIsAuthed() })
 
@@ -54,9 +54,10 @@ export const TransactionHistoryScreen: React.FC = () => {
           ? [...pendingIncomingTransactions]
           : [],
         txs: transactions?.edges?.map((edge) => edge.node) ?? [],
-        common: LL.common,
+        LL,
+        locale,
       }),
-    [pendingIncomingTransactions, transactions, LL],
+    [pendingIncomingTransactions, transactions, LL, locale],
   )
 
   if (error) {

@@ -35,8 +35,9 @@ type Props = {
 
 export const ContactTransactions = ({ contactUsername }: Props) => {
   const styles = useStyles()
-  const { LL } = useI18nContext()
+  const { LL, locale } = useI18nContext()
   const isAuthed = useIsAuthed()
+
   const { error, data, fetchMore } = useTransactionListForContactQuery({
     variables: { username: contactUsername },
     skip: !isAuthed,
@@ -48,9 +49,10 @@ export const ContactTransactions = ({ contactUsername }: Props) => {
     () =>
       groupTransactionsByDate({
         txs: transactions?.edges?.map((edge) => edge.node) ?? [],
-        common: LL.common,
+        LL,
+        locale,
       }),
-    [transactions, LL],
+    [transactions, LL, locale],
   )
 
   if (error) {

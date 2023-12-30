@@ -171,9 +171,9 @@ export const TransactionItem: React.FC<Props> = ({
         <ListItem.Subtitle>
           {subtitle ? (
             <TransactionDate
-              diffDate={true}
               createdAt={tx.createdAt}
               status={tx.status}
+              includeTime={false}
             />
           ) : undefined}
         </ListItem.Subtitle>
