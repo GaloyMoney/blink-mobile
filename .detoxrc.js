@@ -12,7 +12,7 @@ module.exports = {
   apps: {
     "ios.debug": {
       type: "ios.app",
-      binaryPath: "ios/build/Build/Products/Debug-iphonesimulator/GaloyApp.app",
+      binaryPath: "ios/build/Build/Products/Debug-iphonesimulator/Blink.app",
       build:
         "xcodebuild -workspace ios/GaloyApp.xcworkspace -scheme GaloyApp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
     },
@@ -30,13 +30,13 @@ module.exports = {
     simulator: {
       type: "ios.simulator",
       device: {
-        type: "iPhone 15",
+        type: "iPhone 11",
       },
     },
     emulator: {
       type: "android.emulator",
       device: {
-        avdName: "Pixel_3a",
+        avdName: "Pixel_API_29_AOSP",
       },
     },
   },

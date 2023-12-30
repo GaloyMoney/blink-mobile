@@ -1,35 +1,25 @@
-name: E2E Tests
+name: E2E
 
-on:
-  pull_request:
-    branches: [ main ]
+on: [pull_request]
 
 jobs:
-  e2e-android:
-    name: Run Detox Tests on Android
+  android:
+    name: E2E (Android)
     runs-on: macos-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: 20
 
-      - uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
+      - uses: actions/setup-java@v2
         with:
           java-version: '11'
           distribution: 'adopt'
-      
-      - name: Cache Dependencies
-        uses: actions/cache@v2
+
+      - uses: actions/cache@v2
         with:
           path: |
             node_modules
@@ -38,12 +28,81 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-deps-
 
-      - name: Install Dependencies
-        run: yarn install
+      - run: NOPOSTINSTALLPODS=1 yarn install
 
-      - name: Start Android Emulator
+      - name: Build app
+        run: yarn e2e:build android.emu.debug
+
+      - name: Start Metro
+        run: |
+          yarn start &
+          echo "METRO_PID=$!" >> $GITHUB_ENV
+
+      - name: Run Detox Tests (test attempt 1)
+        continue-on-error: true
+        id: test1
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
-          avd-name: Pixel_3a
-          script: yarn detox:build
+          avd-name: Pixel_API_29_AOSP
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none -camera-front none -partition-size 2047
+          arch: x86_64
+          script: yarn e2e:test android.emu.debug --headless -d -R 3
+
+      - name: Run Detox Tests (test attempt 2)
+        continue-on-error: true
+        id: test2
+        if: steps.test1.outcome != 'success'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          avd-name: Pixel_API_29_AOSP
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none -camera-front none -partition-size 2047
+          arch: x86_64
+          script: yarn e2e:test android.emu.debug --headless -d -R 3
+
+      - name: Run Detox Tests (test attempt 3)
+        if: steps.test1.outcome != 'success' && steps.test2.outcome != 'success'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          avd-name: Pixel_API_29_AOSP
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none -camera-front none -partition-size 2047
+          arch: x86_64
+          script: yarn e2e:test android.emu.debug --headless -d -R 3
+    
+      - name: Terminate Metro
+        if: always()
+        continue-on-error: true
+        run: kill $METRO_PID
+
+  # ios:
+  #   name: E2E (iOS)
+  #   runs-on: macOS-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v2
+
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version: 20
+
+  #     - uses: ruby/setup-ruby@v1
+  #       with:
+  #         bundler-cache: true
+
+  #     - run: yarn install
+
+  #     - name: Detox deps for ios
+  #       run: |
+  #         brew tap wix/brew
+  #         brew install applesimutils
+
+  #     - name: Build app
+  #       run: yarn e2e:build ios.sim.debug
+
+  #     - name: Run Detox Tests
+  #       run: bash ${{ github.workspace }}/ci/tasks/e2e-ios.sh
