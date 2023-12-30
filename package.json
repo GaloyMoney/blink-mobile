@@ -52,7 +52,8 @@
     "android:buildDebug": "yarn android:prepareAssets && ./android/gradlew -b ./android/build.gradle assembleDebug -Dorg.gradle.jvmargs='-Xmx4g -XX:MaxPermSize=512m'",
     "ios:prepareAssets": "react-native bundle --entry-file index.js --bundle-output ./ios/main.jsbundle --assets-dest ./ios/ --platform ios --dev false",
     "bundle-visualizer": "yarn run react-native-bundle-visualizer",
-    "splash": "yarn react-native generate-bootsplash --background-color \"#000\" --logo-width 300 app/assets/logo/app-logo-dark.svg"
+    "splash": "yarn react-native generate-bootsplash --background-color \"#000\" --logo-width 300 app/assets/logo/app-logo-dark.svg",
+    "detox:android": "detox build --configuration android.emu.debug && detox test --configuration android.emu.debug"
   },
   "dependencies": {
     "@apollo/client": "3.9.0-alpha.5",

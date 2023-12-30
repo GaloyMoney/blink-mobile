@@ -1,0 +1,39 @@
+name: E2E Tests
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  e2e-android:
+    name: Run Detox Tests on Android
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Start Android Emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          avd-name: Pixel_3a
+          script: yarn detox:build
