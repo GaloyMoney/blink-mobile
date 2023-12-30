@@ -5,58 +5,62 @@ import { TxStatus } from "@app/graphql/generated"
 
 type TransactionDateProps = {
   createdAt: number
+  includeTime: boolean
   status: TxStatus
-  diffDate?: boolean
 }
 
-export const outputRelativeDate = (createdAt: number, locale: string) => {
+export const formatDateForTransaction = ({
+  createdAt,
+  locale,
+  timezone,
+  now = Date.now(),
+  includeTime,
+}: {
+  createdAt: number
+  locale: string
+  timezone?: string
+  now?: number
+  includeTime: boolean
+}) => {
   const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" })
 
-  const durationInSeconds = Math.max(
-    0,
-    Math.floor((Date.now() - createdAt * 1000) / 1000),
-  )
-  let duration = ""
-  if (durationInSeconds < 60) {
-    duration = rtf.format(-durationInSeconds, "second")
-  } else if (durationInSeconds < 3600) {
-    duration = rtf.format(-Math.floor(durationInSeconds / 60), "minute")
-  } else if (durationInSeconds < 86400) {
-    duration = rtf.format(-Math.floor(durationInSeconds / 3600), "hour")
-  } else if (durationInSeconds < 2592000) {
-    // 30 days
-    duration = rtf.format(-Math.floor(durationInSeconds / 86400), "day")
-  } else if (durationInSeconds < 31536000) {
-    // 365 days
-    duration = rtf.format(-Math.floor(durationInSeconds / 2592000), "month")
+  const diffInSeconds = Math.max(0, Math.floor((now - createdAt * 1000) / 1000))
+  let output = ""
+
+  // if date is less than 1 day, we calculate relative time
+  // otherwise, we return absolute date and time
+  if (diffInSeconds < 60) {
+    output = rtf.format(-diffInSeconds, "second")
+  } else if (diffInSeconds < 3600) {
+    output = rtf.format(-Math.floor(diffInSeconds / 60), "minute")
+  } else if (diffInSeconds < 86400) {
+    output = rtf.format(-Math.floor(diffInSeconds / 3600), "hour")
   } else {
-    duration = rtf.format(-Math.floor(durationInSeconds / 31536000), "year")
+    const options: Intl.DateTimeFormatOptions = {
+      dateStyle: "full",
+    }
+    // forcing a timezone for the tests
+    if (timezone) {
+      options.timeZone = timezone
+    }
+    if (includeTime) {
+      options.timeStyle = "medium"
+    }
+
+    output = new Date(createdAt * 1000).toLocaleString(locale, options)
   }
 
-  return duration
+  return output
 }
 
 export const TransactionDate = ({
   createdAt,
   status,
-  diffDate = false,
+  includeTime,
 }: TransactionDateProps) => {
   const { LL, locale } = useI18nContext()
   if (status === "PENDING") {
     return <Text>{LL.common.pending().toUpperCase()}</Text>
   }
-  if (diffDate) {
-    return <Text>{outputRelativeDate(createdAt, locale)}</Text>
-  }
-  return (
-    <Text>
-      {new Intl.DateTimeFormat(locale, {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-      }).format(new Date(createdAt * 1000))}
-    </Text>
-  )
+  return <Text>{formatDateForTransaction({ createdAt, locale, includeTime })}</Text>
 }

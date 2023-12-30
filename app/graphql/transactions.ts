@@ -1,15 +1,39 @@
 import { TransactionFragment, TxDirection, TxStatus } from "./generated"
 
 import { TranslationFunctions } from "@app/i18n/i18n-types"
-import { sameDay, sameMonth } from "../utils/date"
 import { SectionTransactions } from "@app/screens/transaction-history/index.types"
+
+const getUserTimezoneDate = (date: Date): Date => {
+  const userTimezoneOffset = new Date().getTimezoneOffset() * 60000
+  return new Date(date.getTime() - userTimezoneOffset)
+}
+
+const sameDay = (d1: number, d2: number | Date): boolean => {
+  const date1 = getUserTimezoneDate(new Date(1000 * d1))
+
+  let date2: Date
+  if (typeof d2 === "number") {
+    date2 = getUserTimezoneDate(new Date(d2))
+  } else {
+    date2 = getUserTimezoneDate(d2)
+  }
+
+  return (
+    date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate()
+  )
+}
+
+const formatDateByMonthYear = (locale: string, date: number | Date): string => {
+  const parsedDate = typeof date === "number" ? new Date(1000 * date) : new Date(date)
+  return parsedDate.toLocaleString(locale, { month: "long", year: "numeric" }) // e.g., "November 2023"
+}
 
 const isToday = (tx: TransactionFragment) => sameDay(tx.createdAt, new Date())
 
 const isYesterday = (tx: TransactionFragment) =>
   sameDay(tx.createdAt, new Date().setDate(new Date().getDate() - 1))
-
-const isThisMonth = (tx: TransactionFragment) => sameMonth(tx.createdAt, new Date())
 
 type Common = TranslationFunctions["common"]
 
@@ -17,53 +41,44 @@ export const groupTransactionsByDate = ({
   pendingIncomingTxs,
   txs,
   common,
+  locale,
 }: {
   pendingIncomingTxs?: TransactionFragment[]
   txs: TransactionFragment[]
   common: Common
+  locale: string
 }) => {
   const sections: SectionTransactions[] = []
-
   const settledOrOutgoingTransactions = txs.filter(
     (tx) => tx.status !== TxStatus.Pending || tx.direction === TxDirection.Send,
   )
 
-  const today: TransactionFragment[] = []
-  const yesterday: TransactionFragment[] = []
-  const thisMonth: TransactionFragment[] = []
-  const before: TransactionFragment[] = []
+  const transactionsByRelativeDate: Record<string, TransactionFragment[]> = {}
 
   for (const tx of pendingIncomingTxs ?? []) {
-    today.push(tx)
+    transactionsByRelativeDate[common.today()].push(tx)
   }
 
   for (const tx of settledOrOutgoingTransactions) {
+    let dateString: string
+
     if (isToday(tx)) {
-      today.push(tx)
+      dateString = common.today()
     } else if (isYesterday(tx)) {
-      yesterday.push(tx)
-    } else if (isThisMonth(tx)) {
-      thisMonth.push(tx)
+      dateString = common.yesterday()
     } else {
-      before.push(tx)
+      dateString = formatDateByMonthYear(locale, tx.createdAt)
     }
+
+    if (!transactionsByRelativeDate[dateString]) {
+      transactionsByRelativeDate[dateString] = []
+    }
+    transactionsByRelativeDate[dateString].push(tx)
   }
 
-  if (today.length > 0) {
-    sections.push({ title: common.today(), data: today })
-  }
-
-  if (yesterday.length > 0) {
-    sections.push({ title: common.yesterday(), data: yesterday })
-  }
-
-  if (thisMonth.length > 0) {
-    sections.push({ title: common.thisMonth(), data: thisMonth })
-  }
-
-  if (before.length > 0) {
-    sections.push({ title: common.prevMonths(), data: before })
-  }
+  Object.keys(transactionsByRelativeDate).forEach((key) => {
+    sections.push({ title: key, data: transactionsByRelativeDate[key] })
+  })
 
   return sections
 }
