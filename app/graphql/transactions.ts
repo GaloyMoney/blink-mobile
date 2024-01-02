@@ -54,6 +54,10 @@ export const groupTransactionsByDate = ({
   const transactionsByRelativeDate: Record<string, TransactionFragment[]> = {}
 
   for (const tx of pendingIncomingTxs ?? []) {
+    if (!transactionsByRelativeDate[LL.common.today()]) {
+      transactionsByRelativeDate[LL.common.today()] = []
+    }
+
     transactionsByRelativeDate[LL.common.today()].push(tx)
   }
 
