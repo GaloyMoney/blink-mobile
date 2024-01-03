@@ -16,8 +16,6 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import { earnSections, EarnSectionType } from "../earns-screen/sections"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
-import BottomOngoing from "./bottom-ongoing-01.svg"
-import BottomStart from "./bottom-start-01.svg"
 import LeftFinish from "./left-finished-01.svg"
 import LeftLastOngoing from "./left-last-section-ongoing-01.svg"
 import LeftLastTodo from "./left-last-section-to-do-01.svg"
@@ -34,11 +32,10 @@ import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
 import { useQuizServer } from "./use-quiz-server"
 import { makeStyles, useTheme } from "@rneui/themed"
-
-const BottomOngoingEN = React.lazy(() => import("./bottom-ongoing-01.en.svg"))
-const BottomOngoingES = React.lazy(() => import("./bottom-ongoing-01.es.svg"))
-const BottomStartEN = React.lazy(() => import("./bottom-start-01.en.svg"))
-const BottomStartES = React.lazy(() => import("./bottom-start-01.es.svg"))
+import BottomOngoing from "@app/components/translateable-svgs/bottom-ongoing"
+import BottomStart from "@app/components/translateable-svgs/bottom-start"
+import BottomOngoingES from "./bottom-ongoing-01.es.svg"
+import BottomStartES from "./bottom-start-01.es.svg"
 
 type SideType = "left" | "right"
 interface IInBetweenTile {
@@ -248,6 +245,15 @@ export const EarnMapScreen: React.FC = () => {
     }
   }, [])
 
+  const translatedBottom = React.useMemo(() => {
+    switch (locale) {
+      case "es":
+        return progress === 0 ? <BottomStartES /> : <BottomOngoingES />
+      default:
+        return progress === 0 ? <BottomStart /> : <BottomOngoing />
+    }
+  }, [locale, progress])
+
   if (loading) {
     return (
       <Screen>
@@ -259,24 +265,6 @@ export const EarnMapScreen: React.FC = () => {
   }
 
   const backgroundColor = currSection < sectionsData.length ? colors._sky : colors._orange
-
-  const translatedBottomOngoing = () => {
-    switch (locale) {
-      case "es":
-        return <BottomOngoingES />
-      default:
-        return <BottomOngoingEN />
-    }
-  }
-
-  const translatedBottomStart = () => {
-    switch (locale) {
-      case "es":
-        return <BottomStartES />
-      default:
-        return <BottomStartEN />
-    }
-  }
 
   return (
     <Screen unsafe statusBar="light-content">
@@ -295,19 +283,7 @@ export const EarnMapScreen: React.FC = () => {
         <View style={styles.mainView}>
           <Finish currSection={currSection} length={sectionsData.length} />
           {SectionsComp}
-          {currSection === 0 ? (
-            progress === 0 ? (
-              <React.Suspense fallback={<BottomStart />}>
-                {translatedBottomStart()}
-              </React.Suspense>
-            ) : (
-              <React.Suspense fallback={<BottomOngoing />}>
-                {translatedBottomOngoing()}
-              </React.Suspense>
-            )
-          ) : (
-            <View style={styles.position} />
-          )}
+          {currSection === 0 ? translatedBottom : <View style={styles.position} />}
         </View>
       </ScrollView>
     </Screen>
