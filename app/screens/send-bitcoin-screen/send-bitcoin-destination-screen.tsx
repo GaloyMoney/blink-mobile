@@ -365,24 +365,15 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
         waitAndValidateDestination(input)
       }
     },
-    [
-      willInitiateValidation,
-      waitAndValidateDestination,
-      destinationState.unparsedDestination,
-    ],
+    [willInitiateValidation, waitAndValidateDestination],
   )
 
   useEffect(() => {
-    if (route.params?.payment) {
+    if (route.params?.autoValidate && route.params.payment) {
       handleChangeText(route.params?.payment)
+      initiateGoToNextScreen(route.params.payment)
     }
-  }, [route.params?.payment, handleChangeText])
-
-  useEffect(() => {
-    if (route.params?.autoValidate) {
-      initiateGoToNextScreen(destinationState.unparsedDestination)
-    }
-  }, [route.params?.autoValidate, initiateGoToNextScreen])
+  }, [route.params, initiateGoToNextScreen, handleChangeText])
 
   useEffect(() => {
     // If we scan a QR code encoded with a payment url for a specific user e.g. https://{domain}/{username}
