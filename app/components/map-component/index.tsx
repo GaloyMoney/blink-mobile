@@ -2,34 +2,20 @@ import { makeStyles, useTheme } from "@rneui/themed"
 import MapView, { Region } from "react-native-maps"
 import MapStyles from "./map-styles.json"
 import React, { useRef } from "react"
-import { BusinessMapMarkersQuery } from "@app/graphql/generated"
+import { BusinessMapMarkersQuery, MapMarker } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import MapMarker from "../map-marker"
+import MapMarkerComponent from "../map-marker-component"
 
 type Props = {
   data?: BusinessMapMarkersQuery
   userLocation?: Region
   handleMapPress: () => void
-  handleMarkerPress: (_: MarkerData) => void
-  focusedMarker: MarkerData | null
-  handleCalloutPress: (_: MarkerData) => void
+  handleMarkerPress: (_: MapMarker) => void
+  focusedMarker: MapMarker | null
+  handleCalloutPress: (_: MapMarker) => void
 }
 
-export type MarkerData = {
-  readonly __typename: "MapMarker"
-  readonly username?: string | null | undefined
-  readonly mapInfo: {
-    readonly __typename: "MapInfo"
-    readonly title: string
-    readonly coordinates: {
-      readonly __typename: "Coordinates"
-      readonly longitude: number
-      readonly latitude: number
-    }
-  }
-}
-
-export default function MapInterface({
+export default function MapComponent({
   data,
   userLocation,
   handleMapPress,
@@ -56,10 +42,10 @@ export default function MapInterface({
       onPress={handleMapPress}
     >
       {(data?.businessMapMarkers ?? []).reduce(
-        (arr: React.ReactElement[], item: MarkerData | null) => {
+        (arr: React.ReactElement[], item: MapMarker | null) => {
           if (item?.username) {
             arr.push(
-              <MapMarker
+              <MapMarkerComponent
                 key={item.username}
                 item={item}
                 color={colors._orange}
@@ -74,7 +60,7 @@ export default function MapInterface({
 
           return arr
         },
-        [] as React.ReactElement[],
+        [],
       )}
     </MapView>
   )

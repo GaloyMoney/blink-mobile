@@ -10,14 +10,14 @@ import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { toastShow } from "../../utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useBusinessMapMarkersQuery } from "@app/graphql/generated"
+import { MapMarker, useBusinessMapMarkersQuery } from "@app/graphql/generated"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { PhoneLoginInitiateType } from "../phone-auth-screen"
 import countryCodes from "../../../utils/countryInfo.json"
 import { CountryCode } from "libphonenumber-js/mobile"
 import useDeviceLocation from "@app/hooks/use-device-location"
-import MapInterface, { MarkerData } from "@app/components/map-interface"
+import MapComponent from "@app/components/map-component"
 
 const EL_ZONTE_COORDS = {
   latitude: 13.496743,
@@ -70,7 +70,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
 
   const [userLocation, setUserLocation] = React.useState<Region>()
   const [isRefreshed, setIsRefreshed] = React.useState(false)
-  const [focusedMarker, setFocusedMarker] = React.useState<MarkerData | null>(null)
+  const [focusedMarker, setFocusedMarker] = React.useState<MapMarker | null>(null)
   const [wasLocationDenied, setLocationDenied] = React.useState(false)
 
   useFocusEffect(() => {
@@ -109,7 +109,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     }
   }, [wasLocationDenied, countryCode, loading, setUserLocation])
 
-  const handleCalloutPress = (item: MarkerData | null) => {
+  const handleCalloutPress = (item: MapMarker | null) => {
     if (isAuthed && item?.username) {
       navigation.navigate("sendBitcoinDestination", { username: item.username })
     } else {
@@ -172,7 +172,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <Screen>
       {userLocation && (
-        <MapInterface
+        <MapComponent
           data={data}
           userLocation={userLocation}
           handleMapPress={() => setFocusedMarker(null)}

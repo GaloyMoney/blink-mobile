@@ -4,12 +4,12 @@ import {
   MapMarker as MapMarkerType,
   Marker,
 } from "react-native-maps"
-import { MarkerData } from "../map-interface"
 import { Text } from "@rneui/themed"
 import { useEffect, useRef } from "react"
 import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
 import { isIos } from "@app/utils/helper"
 import { LocalizedString } from "typesafe-i18n"
+import { MapMarker } from "@app/graphql/generated"
 
 /*
   In order to increase performance, markers are initially rendered without content in the callout.
@@ -18,10 +18,10 @@ import { LocalizedString } from "typesafe-i18n"
 */
 
 type Props = {
-  item: MarkerData
+  item: MapMarker
   color: string
-  handleMarkerPress: (item: MarkerData) => void
-  handleCalloutPress: (item: MarkerData) => void
+  handleMarkerPress: (item: MapMarker) => void
+  handleCalloutPress: (item: MapMarker) => void
   isFocused: boolean
   styles: {
     customView: StyleProp<ViewStyle>
@@ -32,7 +32,7 @@ type Props = {
   text: LocalizedString
 }
 
-export default function MapMarker({
+export default function MapMarkerComponent({
   item,
   color,
   handleMarkerPress,
