@@ -30,13 +30,13 @@ module.exports = {
     simulator: {
       type: "ios.simulator",
       device: {
-        type: "iPhone 11",
+        type: "iPhone SE (3rd generation)",
       },
     },
     emulator: {
       type: "android.emulator",
       device: {
-        avdName: "Pixel_API_29_AOSP",
+        avdName: "Pixel_API_34_AOSP",
       },
     },
   },

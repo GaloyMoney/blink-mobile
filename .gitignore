@@ -87,3 +87,5 @@ android/app/src/main/assets
 
 # testing
 /coverage
+
+artifacts

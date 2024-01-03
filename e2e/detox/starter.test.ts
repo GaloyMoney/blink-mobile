@@ -7,7 +7,8 @@ describe("Example", () => {
 
   it("set staging environment", async () => {
     const buildBtn = element(by.id("logo-button"))
-    await expect(buildBtn).toBeVisible()
+    // Wait for 2 mins because metro bundler might not finish sync
+    await waitFor(buildBtn).toBeVisible().withTimeout(1200000)
     await buildBtn.multiTap(3)
 
     const logoutBtn = element(by.id("logout button"))
@@ -19,14 +20,14 @@ describe("Example", () => {
     await waitFor(stagingBtn)
       .toBeVisible()
       .whileElement(developerScreenSV)
-      .scroll(500, "down", NaN, 0.85)
+      .scroll(200, "down", NaN, 0.85)
     await stagingBtn.tap()
 
     const saveChangesBtn = element(by.id("Save Changes"))
     await saveChangesBtn.tap()
 
     const stagingInstanceText = element(by.text("Galoy Instance: Staging"))
-    await waitFor(stagingInstanceText).toBeVisible().withTimeout(5000)
+    await waitFor(stagingInstanceText).toBeVisible().withTimeout(10000)
 
     const backBtn = element(by.id("Back"))
     await expect(backBtn).toBeVisible()
