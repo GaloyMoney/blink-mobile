@@ -81,10 +81,6 @@ export default function MapInterface({
 }
 
 const useStyles = makeStyles(({ colors }) => ({
-  android: {
-    backgroundColor: colors._orange,
-  },
-
   customView: {
     alignItems: "center",
     margin: 12,
