@@ -34,7 +34,12 @@ export const PaymentDestinationDisplay = ({
 
   if (destination.length < 40) {
     return (
-      <Text type="p1" numberOfLines={1} ellipsizeMode={"middle"}>
+      <Text
+        type="p1"
+        numberOfLines={1}
+        ellipsizeMode={"middle"}
+        style={styles.primaryTextStyle}
+      >
         {destination}
         {paymentType === "intraledger" ? `@${lnDomain}` : ""}
       </Text>

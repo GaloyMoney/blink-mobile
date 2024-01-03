@@ -358,16 +358,19 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     [validateDestination],
   )
 
-  const initiateGoToNextScreen = React.useCallback(async () => {
-    if (willInitiateValidation()) {
-      setGoToNextScreenWhenValid(true)
-      waitAndValidateDestination(destinationState.unparsedDestination)
-    }
-  }, [
-    willInitiateValidation,
-    waitAndValidateDestination,
-    destinationState.unparsedDestination,
-  ])
+  const initiateGoToNextScreen = React.useCallback(
+    async (input: string) => {
+      if (willInitiateValidation()) {
+        setGoToNextScreenWhenValid(true)
+        waitAndValidateDestination(input)
+      }
+    },
+    [
+      willInitiateValidation,
+      waitAndValidateDestination,
+      destinationState.unparsedDestination,
+    ],
+  )
 
   useEffect(() => {
     if (route.params?.payment) {
@@ -377,7 +380,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
 
   useEffect(() => {
     if (route.params?.autoValidate) {
-      initiateGoToNextScreen()
+      initiateGoToNextScreen(destinationState.unparsedDestination)
     }
   }, [route.params?.autoValidate, initiateGoToNextScreen])
 
@@ -390,6 +393,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   }, [route.params?.username, handleChangeText])
 
   const handlePaste = async () => {
+    setSelectedId("")
     try {
       const clipboard = await Clipboard.getString()
       dispatchDestinationStateAction({
@@ -418,6 +422,24 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
         LL,
       })
     }
+  }
+
+  const handleContactPress = (item: UserContact) => {
+    handleSelection(item.id)
+    dispatchDestinationStateAction({
+      type: SendBitcoinActions.SetUnparsedDestination,
+      payload: { unparsedDestination: item.username },
+    })
+    initiateGoToNextScreen(item.username)
+  }
+
+  const handleScanPress = () => {
+    setSelectedId("")
+    dispatchDestinationStateAction({
+      type: SendBitcoinActions.SetUnparsedDestination,
+      payload: { unparsedDestination: "" },
+    })
+    navigation.navigate("scanningQRCode")
   }
 
   const inputContainerStyle = React.useMemo(() => {
@@ -481,7 +503,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
               <Icon name="close" size={24} onPress={reset} color={styles.icon.color} />
             }
           />
-          <TouchableOpacity onPress={() => navigation.navigate("scanningQRCode")}>
+          <TouchableOpacity onPress={handleScanPress}>
             <View style={styles.iconContainer}>
               <ScanIcon fill={colors.primary} />
             </View>
@@ -506,10 +528,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
               containerStyle={
                 item.id === selectedId ? styles.selectedContainer : styles.itemContainer
               }
-              onPress={() => {
-                handleSelection(item.id)
-                handleChangeText(item.username)
-              }}
+              onPress={() => handleContactPress(item)}
             >
               <Icon name={"person-outline"} size={24} color={colors.primary} />
               <ListItem.Content>
@@ -531,7 +550,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
               destinationState.destinationState === DestinationState.Invalid ||
               !destinationState.unparsedDestination
             }
-            onPress={initiateGoToNextScreen}
+            onPress={() => initiateGoToNextScreen(destinationState.unparsedDestination)}
           />
         </View>
       </View>
@@ -555,7 +574,6 @@ const usestyles = makeStyles(({ colors }) => ({
     justifyContent: "center",
     alignItems: "center",
     height: 60,
-    marginBottom: 26,
     borderWidth: 1,
     borderColor: "transparent",
   },
@@ -635,6 +653,7 @@ const usestyles = makeStyles(({ colors }) => ({
   },
   flatList: {
     flex: 1,
+    marginTop: 20,
   },
   flatListContainer: {
     margin: 0,
