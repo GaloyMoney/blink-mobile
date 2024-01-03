@@ -34,6 +34,7 @@ import { NetworkErrorComponent } from "./graphql/network-error-component"
 import { FeatureFlagContextProvider } from "./config/feature-flags-context"
 import "./utils/logs"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
+import { NotificationModalProvider } from "./components/notification-modal"
 
 // FIXME should we only load the currently used local?
 // this would help to make the app load faster
@@ -57,11 +58,13 @@ export const App = () => (
               <ErrorBoundary FallbackComponent={ErrorScreen}>
                 <NavigationContainerWrapper>
                   <RootSiblingParent>
-                    <AppStateWrapper />
-                    <NotificationComponent />
-                    <RootStack />
+                    <NotificationModalProvider>
+                      <AppStateWrapper />
+                      <NotificationComponent />
+                      <RootStack />
+                      <NetworkErrorComponent />
+                    </NotificationModalProvider>
                     <GaloyToast />
-                    <NetworkErrorComponent />
                   </RootSiblingParent>
                 </NavigationContainerWrapper>
               </ErrorBoundary>
