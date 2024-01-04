@@ -54,6 +54,8 @@ type ProgressProps = {
   progress: number
 }
 
+const BADGER_WIDTH = 134
+
 const ProgressBar = ({ progress }: ProgressProps) => {
   const {
     theme: { colors },
@@ -271,10 +273,10 @@ export const EarnMapScreen: React.FC = () => {
         <View style={styles.mainView}>
           <Finish currSection={currSection} length={sectionsData.length} />
           {SectionsComp}
-          {currSection !== 0 ? (
+          {currSection === 0 ? (
             <View style={styles.bottomContainer}>
               <View style={styles.spacingBox}>
-                {progress === 0 && <BottomStart height={200} width={100} />}
+                {progress === 0 && <BottomStart height={159} width={BADGER_WIDTH} />}
               </View>
               <View style={styles.bottomSectionInner}>
                 <Text style={styles.bottomSectionText}>
@@ -301,20 +303,20 @@ const useStyles = makeStyles(({ colors }) => ({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    columnGap: 63,
+    columnGap: 30,
     height: 200,
     padding: 10,
   },
   spacingBox: {
-    height: 200,
-    width: 100,
+    height: 159,
+    width: BADGER_WIDTH,
   },
   bottomSectionText: {
     color: "white",
     textAlign: "center",
   },
   bottomSectionInner: {
-    width: 100,
+    width: BADGER_WIDTH,
   },
   finishText: {
     color: colors._white,
@@ -332,7 +334,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   mainView: {
-    alignItems: "center",
+    alignSelf: 'center'
   },
 
   textStyleBox: {
