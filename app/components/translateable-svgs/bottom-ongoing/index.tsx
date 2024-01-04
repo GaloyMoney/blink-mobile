@@ -20,9 +20,9 @@ export default function BottomOngoing() {
           <Rect x="196.216" y="31.725" fill="none" width="147.567" height="74.275" />
           <Text transform="matrix(1 0 0 1 220.3525 43.2446)">
             <TSpan x="0" y="0" fill="#FFFFFF" font-size="16">
-              {LL.EarnScreen.motivatingBadger1()}
+              {LL.EarnScreen.motivatingBadger()}
             </TSpan>
-            <TSpan x="-4.784" y="19" fill="#FFFFFF" font-size="16">
+            {/* <TSpan x="-4.784" y="19" fill="#FFFFFF" font-size="16">
               {LL.EarnScreen.motivatingBadger2()}
             </TSpan>
             <TSpan x="-15.456" y="38" fill="#FFFFFF" font-size="16">
@@ -30,7 +30,7 @@ export default function BottomOngoing() {
             </TSpan>
             <TSpan x="3.032" y="57" fill="#FFFFFF" font-size="16">
               {LL.EarnScreen.motivatingBadger4()}
-            </TSpan>
+            </TSpan> */}
           </Text>
         </G>
       </G>

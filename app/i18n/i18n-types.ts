@@ -6272,21 +6272,9 @@ type RootTranslation = {
 		 */
 		availableTomorrow: string
 		/**
-		 * D​i​g​ ​y​o​u​r​ ​w​a​y
+		 * D​i​g​ ​y​o​u​r​ ​w​a​y​ ​t​h​r​o​u​g​h​ ​t​h​e​s​e​ ​l​e​s​s​o​n​s​ ​a​n​d​ ​e​a​r​n​ ​a​s​ ​y​o​u​ ​l​e​a​r​n
 		 */
-		motivatingBadger1: string
-		/**
-		 * t​h​r​o​u​g​h​ ​t​h​e​s​e
-		 */
-		motivatingBadger2: string
-		/**
-		 * l​e​s​s​o​n​s​ ​a​n​d​ ​e​a​r​n
-		 */
-		motivatingBadger3: string
-		/**
-		 * a​s​ ​y​o​u​ ​l​e​a​r​n
-		 */
-		motivatingBadger4: string
+		motivatingBadger: string
 	}
 	GetStartedScreen: {
 		/**
@@ -15087,21 +15075,9 @@ export type TranslationFunctions = {
 		 */
 		availableTomorrow: () => LocalizedString
 		/**
-		 * Dig your way
+		 * Dig your way through these lessons and earn as you learn
 		 */
-		motivatingBadger1: () => LocalizedString
-		/**
-		 * through these
-		 */
-		motivatingBadger2: () => LocalizedString
-		/**
-		 * lessons and earn
-		 */
-		motivatingBadger3: () => LocalizedString
-		/**
-		 * as you learn
-		 */
-		motivatingBadger4: () => LocalizedString
+		motivatingBadger: () => LocalizedString
 	}
 	GetStartedScreen: {
 		/**

@@ -30,12 +30,9 @@ import RightComplete from "./right-section-completed-01.svg"
 import RightOngoing from "./right-section-ongoing-01.svg"
 import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
+import BottomStart from "./bottom-start-01.svg"
 import { useQuizServer } from "./use-quiz-server"
 import { makeStyles, useTheme } from "@rneui/themed"
-import BottomOngoing from "@app/components/translateable-svgs/bottom-ongoing"
-import BottomStart from "@app/components/translateable-svgs/bottom-start"
-import BottomOngoingES from "./bottom-ongoing-01.es.svg"
-import BottomStartES from "./bottom-start-01.es.svg"
 
 type SideType = "left" | "right"
 interface IInBetweenTile {
@@ -88,7 +85,7 @@ export const EarnMapScreen: React.FC = () => {
   } = useTheme()
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Earn">>()
-  const { LL, locale } = useI18nContext()
+  const { LL } = useI18nContext()
   const quizQuestionsContent = getQuizQuestionsContent({ LL })
   const sections = Object.keys(earnSections) as EarnSectionType[]
 
@@ -245,15 +242,6 @@ export const EarnMapScreen: React.FC = () => {
     }
   }, [])
 
-  const translatedBottom = React.useMemo(() => {
-    switch (locale) {
-      case "es":
-        return progress === 0 ? <BottomStartES /> : <BottomOngoingES />
-      default:
-        return progress === 0 ? <BottomStart /> : <BottomOngoing />
-    }
-  }, [locale, progress])
-
   if (loading) {
     return (
       <Screen>
@@ -283,7 +271,20 @@ export const EarnMapScreen: React.FC = () => {
         <View style={styles.mainView}>
           <Finish currSection={currSection} length={sectionsData.length} />
           {SectionsComp}
-          {currSection === 0 ? translatedBottom : <View style={styles.position} />}
+          {currSection !== 0 ? (
+            <View style={styles.bottomContainer}>
+              <View style={styles.spacingBox}>
+                {progress === 0 && <BottomStart height={200} width={100} />}
+              </View>
+              <View style={styles.bottomSectionInner}>
+                <Text style={styles.bottomSectionText}>
+                  {LL.EarnScreen.motivatingBadger()}
+                </Text>
+              </View>
+            </View>
+          ) : (
+            <View style={styles.position} />
+          )}
         </View>
       </ScrollView>
     </Screen>
@@ -295,7 +296,26 @@ const useStyles = makeStyles(({ colors }) => ({
     backgroundColor: colors._lightBlue,
     flexGrow: 1,
   },
-
+  bottomContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    columnGap: 63,
+    height: 200,
+    padding: 10,
+  },
+  spacingBox: {
+    height: 200,
+    width: 100,
+  },
+  bottomSectionText: {
+    color: "white",
+    textAlign: "center",
+  },
+  bottomSectionInner: {
+    width: 100,
+  },
   finishText: {
     color: colors._white,
     fontSize: 18,
@@ -312,7 +332,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   mainView: {
-    alignSelf: "center",
+    alignItems: "center",
   },
 
   textStyleBox: {

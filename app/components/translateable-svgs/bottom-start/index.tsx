@@ -2,37 +2,12 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { Path, Svg, Rect, G, Text, TSpan, Ellipse, Circle } from "react-native-svg"
 
 export default function BottomStart() {
-  const { LL } = useI18nContext()
 
   return (
     <Svg
       id="Layer_1"
-      x="0px"
-      y="0px"
-      width="375px"
-      height="195px"
       viewBox="0 0 375 195"
-      enable-background="new 0 0 375 195"
     >
-      <G>
-        <Rect y="60" fill="#3654FF" width="374.999" height="135" />
-        <G>
-          <Rect x="196.216" y="91.725" fill="none" width="147.567" height="74.275" />
-          <Text transform="matrix(1 0 0 1 220.3525 103.2441)">
-            <TSpan id="dig-your-way" x="0" y="0" fill="#FFFFFF" font-size="16">
-              {LL.EarnScreen.motivatingBadger1()}{" "}
-            </TSpan>
-            <TSpan x="-4.784" y="19" fill="#FFFFFF" font-size="16">
-              {LL.EarnScreen.motivatingBadger2()}{" "}
-            </TSpan>
-            <TSpan x="-15.456" y="38" fill="#FFFFFF" font-size="16">
-              {LL.EarnScreen.motivatingBadger3()}{" "}
-            </TSpan>
-            <TSpan x="3.032" y="57" fill="#FFFFFF" font-size="16">
-              {LL.EarnScreen.motivatingBadger4()}{" "}
-            </TSpan>
-          </Text>
-        </G>
         <G>
           <Ellipse
             opacity="0.2"
@@ -267,7 +242,6 @@ export default function BottomStart() {
 			C136.47,68.47,136.662,66.56,137.479,64.796z"
           />
         </G>
-      </G>
     </Svg>
   )
 }
