@@ -27,6 +27,7 @@ export type CustomModalProps = {
   primaryButtonDisabled?: boolean
   secondaryButtonTitle?: string
   secondaryButtonOnPress?: () => void
+  secondaryButtonLoading?: boolean
   showCloseIconButton?: boolean
   minHeight?: DimensionValue
   titleMaxWidth?: DimensionValue
@@ -50,6 +51,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
   primaryButtonDisabled,
   secondaryButtonTitle,
   secondaryButtonOnPress,
+  secondaryButtonLoading,
   showCloseIconButton = true,
 }) => {
   const styles = useStyles({
@@ -57,6 +59,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
     minHeight,
     titleMaxWidth,
     titleTextAlignment,
+    showCloseIconButton,
     /* eslint @typescript-eslint/ban-ts-comment: "off" */
     // @ts-ignore-next-line no-implicit-any error
   }) as StyleSheet.NamedStyles
@@ -108,6 +111,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
           {secondaryButtonTitle && secondaryButtonOnPress && (
             <GaloySecondaryButton
               title={secondaryButtonTitle}
+              loading={secondaryButtonLoading}
               onPress={secondaryButtonOnPress}
             />
           )}
@@ -121,6 +125,7 @@ export default CustomModal
 
 type UseStylesProps = {
   hasPrimaryButtonTextAbove: boolean
+  showCloseIconButton: boolean
   minHeight?: DimensionValue
   titleTextAlignment?: "auto" | "center" | "left" | "right" | "justify"
   titleMaxWidth?: DimensionValue
@@ -141,11 +146,12 @@ const useStyles = makeStyles(({ colors }, props: UseStylesProps) => ({
     justifyContent: "center",
     alignItems: "center",
     paddingBottom: 20,
+    paddingTop: props.showCloseIconButton ? 0 : 20,
   },
   modalTitleContainer: {
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 10,
+    paddingBottom: 10,
   },
   modalTitleText: {
     fontSize: 24,
@@ -154,7 +160,6 @@ const useStyles = makeStyles(({ colors }, props: UseStylesProps) => ({
     maxWidth: props.titleMaxWidth || "80%",
     textAlign: props.titleTextAlignment || "center",
     color: colors.black,
-    marginBottom: 10,
   },
   modalBodyContainer: {
     flex: 1,

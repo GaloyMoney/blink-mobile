@@ -52,6 +52,7 @@ const getStories = () => {
     "./app/components/custom-modal/custom-modal.stories.tsx": require("../app/components/custom-modal/custom-modal.stories.tsx"),
     "./app/components/menu-select/menu-select.stories.tsx": require("../app/components/menu-select/menu-select.stories.tsx"),
     "./app/components/modal-nfc/modal-nfc.stories.tsx": require("../app/components/modal-nfc/modal-nfc.stories.tsx"),
+    "./app/components/notification-modal/notification-modal.stories.tsx": require("../app/components/notification-modal/notification-modal.stories.tsx"),
     "./app/components/set-default-account-modal/set-default-account-modal.stories.tsx": require("../app/components/set-default-account-modal/set-default-account-modal.stories.tsx"),
     "./app/components/set-lightning-address-modal/set-lightning-address-modal.stories.tsx": require("../app/components/set-lightning-address-modal/set-lightning-address-modal.stories.tsx"),
     "./app/components/totp-export/totp-copy.stories.tsx": require("../app/components/totp-export/totp-copy.stories.tsx"),

@@ -1,5 +1,5 @@
 import React, { useState, createContext, useContext, useCallback, useMemo } from "react"
-import { Text, useTheme } from "@rneui/themed"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 import CustomModal from "../custom-modal/custom-modal"
 import { GaloyIcon, IconNamesType } from "../atomic/galoy-icon"
 
@@ -31,6 +31,7 @@ export const NotificationModalProvider: React.FC<React.PropsWithChildren> = ({
   const {
     theme: { colors },
   } = useTheme()
+  const styles = useStyles()
 
   const notify = useCallback(
     (args: NotifyModalArgs) => {
@@ -78,8 +79,8 @@ export const NotificationModalProvider: React.FC<React.PropsWithChildren> = ({
     return {
       title: activeNotification.title,
       isVisible: Boolean(activeNotification),
-      toggleModal: toggleModal,
-      showCloseIcon: !!activeNotification.dismissAction,
+      toggleModal,
+      showCloseIcon: Boolean(activeNotification.dismissAction),
       primaryButtonTitle: activeNotification.primaryButtonTitle,
       primaryButtonAction,
       secondaryButtonTitle: activeNotification.secondaryButtonTitle,
@@ -87,14 +88,7 @@ export const NotificationModalProvider: React.FC<React.PropsWithChildren> = ({
       text: activeNotification.text,
       icon: activeNotification.icon,
     }
-  }, [
-    activeNotification,
-    dismiss,
-    primaryIsLoading,
-    setPrimaryIsLoading,
-    secondaryIsLoading,
-    setSecondaryIsLoading,
-  ])
+  }, [activeNotification, dismiss, setPrimaryIsLoading, setSecondaryIsLoading])
 
   return (
     <NotificationModalContext.Provider
@@ -115,17 +109,18 @@ export const NotificationModalProvider: React.FC<React.PropsWithChildren> = ({
           primaryButtonLoading={primaryIsLoading}
           secondaryButtonOnPress={modalInfo.secondaryButtonAction}
           secondaryButtonTitle={modalInfo.secondaryButtonTitle}
+          secondaryButtonLoading={secondaryIsLoading}
           image={
             modalInfo.icon && (
               <GaloyIcon
                 name={modalInfo.icon as IconNamesType}
                 size={100}
-                color={colors.primary}
+                color={colors.primary3}
               />
             )
           }
           body={
-            <Text type="h2" style={{ textAlign: "center" }}>
+            <Text type="h2" style={styles.bodyText}>
               {modalInfo.text}
             </Text>
           }
@@ -134,5 +129,11 @@ export const NotificationModalProvider: React.FC<React.PropsWithChildren> = ({
     </NotificationModalContext.Provider>
   )
 }
+
+const useStyles = makeStyles(() => ({
+  bodyText: {
+    textAlign: "center",
+  },
+}))
 
 export const useNotificationModal = () => useContext(NotificationModalContext)
