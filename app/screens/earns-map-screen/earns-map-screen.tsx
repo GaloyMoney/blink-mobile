@@ -16,8 +16,6 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import { earnSections, EarnSectionType } from "../earns-screen/sections"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
-import BottomOngoing from "./bottom-ongoing-01.svg"
-import BottomStart from "./bottom-start-01.svg"
 import LeftFinish from "./left-finished-01.svg"
 import LeftLastOngoing from "./left-last-section-ongoing-01.svg"
 import LeftLastTodo from "./left-last-section-to-do-01.svg"
@@ -32,13 +30,9 @@ import RightComplete from "./right-section-completed-01.svg"
 import RightOngoing from "./right-section-ongoing-01.svg"
 import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
+import BottomStart from "./bottom-start-01.svg"
 import { useQuizServer } from "./use-quiz-server"
 import { makeStyles, useTheme } from "@rneui/themed"
-
-const BottomOngoingEN = React.lazy(() => import("./bottom-ongoing-01.en.svg"))
-const BottomOngoingES = React.lazy(() => import("./bottom-ongoing-01.es.svg"))
-const BottomStartEN = React.lazy(() => import("./bottom-start-01.en.svg"))
-const BottomStartES = React.lazy(() => import("./bottom-start-01.es.svg"))
 
 type SideType = "left" | "right"
 interface IInBetweenTile {
@@ -59,6 +53,8 @@ interface IBoxAdding {
 type ProgressProps = {
   progress: number
 }
+
+const BADGER_WIDTH = 134
 
 const ProgressBar = ({ progress }: ProgressProps) => {
   const {
@@ -91,7 +87,7 @@ export const EarnMapScreen: React.FC = () => {
   } = useTheme()
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Earn">>()
-  const { LL, locale } = useI18nContext()
+  const { LL } = useI18nContext()
   const quizQuestionsContent = getQuizQuestionsContent({ LL })
   const sections = Object.keys(earnSections) as EarnSectionType[]
 
@@ -260,24 +256,6 @@ export const EarnMapScreen: React.FC = () => {
 
   const backgroundColor = currSection < sectionsData.length ? colors._sky : colors._orange
 
-  const translatedBottomOngoing = () => {
-    switch (locale) {
-      case "es":
-        return <BottomOngoingES />
-      default:
-        return <BottomOngoingEN />
-    }
-  }
-
-  const translatedBottomStart = () => {
-    switch (locale) {
-      case "es":
-        return <BottomStartES />
-      default:
-        return <BottomStartEN />
-    }
-  }
-
   return (
     <Screen unsafe statusBar="light-content">
       <ScrollView
@@ -296,15 +274,16 @@ export const EarnMapScreen: React.FC = () => {
           <Finish currSection={currSection} length={sectionsData.length} />
           {SectionsComp}
           {currSection === 0 ? (
-            progress === 0 ? (
-              <React.Suspense fallback={<BottomStart />}>
-                {translatedBottomStart()}
-              </React.Suspense>
-            ) : (
-              <React.Suspense fallback={<BottomOngoing />}>
-                {translatedBottomOngoing()}
-              </React.Suspense>
-            )
+            <View style={styles.bottomContainer}>
+              <View style={styles.spacingBox}>
+                {progress === 0 && <BottomStart height={159} width={BADGER_WIDTH} />}
+              </View>
+              <View style={styles.bottomSectionInner}>
+                <Text style={styles.bottomSectionText}>
+                  {LL.EarnScreen.motivatingBadger()}
+                </Text>
+              </View>
+            </View>
           ) : (
             <View style={styles.position} />
           )}
@@ -319,7 +298,27 @@ const useStyles = makeStyles(({ colors }) => ({
     backgroundColor: colors._lightBlue,
     flexGrow: 1,
   },
-
+  bottomContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    columnGap: 30,
+    height: 200,
+    padding: 10,
+  },
+  spacingBox: {
+    height: 159,
+    width: BADGER_WIDTH,
+  },
+  bottomSectionText: {
+    color: "white",
+    textAlign: "center",
+    fontSize: 16,
+  },
+  bottomSectionInner: {
+    width: BADGER_WIDTH,
+  },
   finishText: {
     color: colors._white,
     fontSize: 18,

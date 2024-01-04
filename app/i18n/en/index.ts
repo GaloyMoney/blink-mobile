@@ -2036,7 +2036,8 @@ const en: BaseTranslation = {
     registerTitle: "Need to upgrade your account",
     registerContent: "Register with your phone number to receive sats",
     notYet: "Not yet",
-    availableTomorrow: "This section will be available tomorrow!"
+    availableTomorrow: "This section will be available tomorrow!",
+    motivatingBadger: "Dig your way through these lessons and earn as you learn",
   },
   GetStartedScreen: {
     logInCreateAccount: "Log in / create account",
