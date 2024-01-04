@@ -334,7 +334,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   mainView: {
-    alignSelf: 'center'
+    alignSelf: "center",
   },
 
   textStyleBox: {
