@@ -314,7 +314,7 @@ const useStyles = makeStyles(({ colors }) => ({
   bottomSectionText: {
     color: "white",
     textAlign: "center",
-    fontSize: 16
+    fontSize: 16,
   },
   bottomSectionInner: {
     width: BADGER_WIDTH,
