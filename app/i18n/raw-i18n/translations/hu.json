@@ -17,12 +17,12 @@
       "howToUseYourPaycode": "Hogyan használd a Fizetési kódodat?",
       "howToUseYourCashRegister": "Hogyan használd a Pénztáradat?",
       "howToUseYourAddressExplainer": "Oszd meg olyan személlyel, akinek kompatibilis tárcája van, például:",
-      "howToUseYourPaycodeExplainer": "A Fizetési Kódod (technikailag ez egy lnurl-pay cím) kinyomtathatod és ki is helyezheted az üzletedben, hogy fogadhass kifizetéseket. Bárki fizethet Neked úgy, hogy beszkenneli a Fizetési Kódod egy mobil Lightning tárca alkalmazással.\n\nAzonban tartsd szem előtt, hogy nem minden tárca alkalmazás tudja azt beolvasni, például:",
-      "howToUseYourCashRegisterExplainer": "A Pénztár Link segítségével bárki kezdeményzhet kifizetést a tárcád használata nélkül.\n\nKiállíthat számlát és az alapján, a kifizetések egyből a Te {bankName: string} Tárcádba fognak érkezni."
+      "howToUseYourPaycodeExplainer": "A Fizetési Kódod (technikailag ez egy LNURLpay cím) kinyomtathatod és ki is helyezheted az üzletedben, hogy fizetéseket fogadhass. Bárki fizethet Neked úgy, hogy beszkenneli a Fizetési Kódod egy mobil Lightning tárca alkalmazással.\n\nAzonban tartsd szem előtt, hogy nem minden tárca alkalmazás tudja azt beolvasni, például:",
+      "howToUseYourCashRegisterExplainer": "A Pénztár Link segítségével bárki kezdeményezhet fizetést a tárcádba való bejelentkezés nélkül.\n\nKiállíthat fizetési kérelmeket és azok alapján, a fizetések egyből a Te {bankName: string} tárcádba fognak érkezni."
   },
   "SetAccountModal": {
-      "title": "Alapértelmezett fiók beállítása",
-      "description": "A kezdetben ez a fiók lesz kiválasztva a fizetések küldéséhez és fogadásához. Bármikor megváltoztatható.",
+      "title": "Alapértelmezett számla beállítása",
+      "description": "A kezdetben ez a számla lesz kiválasztva a fizetések küldéséhez és fogadásához. Bármikor megváltoztatható.",
       "stablesatsTag": "Válaszd ezt stabil USD érték fenntartásához.",
       "bitcoinTag": "Válaszd ezt a Bitcoin alapon való elszámoláshoz."
   },
@@ -537,7 +537,7 @@
                           "Elősegíti a nagy távolságon átívelő kereskedelmet"
                       ],
                       "feedback": [
-                          "Helyes válasz! A javak fizikai formája olyan tényező, ami nehezití szállíthatóságát. Valójában a digitális valuták, mint például a bitcoin, a legkönnyebben szállítható értéktárolók, mert könnyen tárolhatók egy kis eszközön, és gyorsan átvihető két nagy távolságra lévő pont között. Tudtad, hogy a privát kulcsot ami akár több százmillió dollárt képviselhet, egy apró USB-meghajtón tárolhatod és könnyedén bárhová magaddal viheted a bitcoin esetében? Ez elég lenyűgöző",
+                          "Helyes válasz! A javak fizikai formája olyan tényező, ami nehezití szállíthatóságát. Valójában a digitális valuták, mint például a bitcoin, a legkönnyebben szállítható értéktárolók, mert könnyen tárolhatók egy kis eszközön, és gyorsan átvihető két nagy távolságra lévő pont között. Tudtad, hogy a privát kulcsot ami akár több százmillió dollárt képviselhet, egy apró USB meghajtón tárolhatod és könnyedén bárhová magaddal viheted a bitcoin esetében? Ez elég lenyűgöző",
                           "Sajnálom, ez helytelen! A könnyen szállítható és tárolható képesség pont egy szükséges tényező, ami miatt egy jó értéktároló könnyen mozgathatóvá válik. De ne aggódj, ez egy gyakori hiba. Végül is, ki ne szeretne egy tehénnel sétálgatni, mint értéktárolóval? Legalább beszélgetésindító téma lehetne",
                           "Hoppá, ez nem a helyes válasz! A hosszú távú kereskedelmet elősegítő képesség valójában fontos tényező, ez összefügg a jó értéktároló könnyen szállíthatóságával. Gondold el, ha az értéktárolód egy tehén, amit egy transzkontinentális üzlet nyélbeütéséhez kellene magaddal vinned."
                       ],
@@ -552,7 +552,7 @@
                           "Az arany bőségesebb, mint a gyémántok"
                       ],
                       "feedback": [
-                          "Pontosan**!** A gyémántok szabálytalan formája és minősége miatt kevésbé cserélhetőek ki egymással szemben az arannyal, amiért az arany jobban cserélhetőnek számít. Tudtad, hogy a bitcoin hálózatszinten fungibilis, de a blokkláncon való visszakövethetősége miatt néha a kereskedők vagy tőzsdék nem-fungibilisknek tekinthetik",
+                          "Pontosan**!** A gyémántok szabálytalan formája és minősége miatt kevésbé cserélhetőek ki egymással szemben az arannyal, amiért az arany jobban cserélhetőnek számít. Tudtad, hogy a bitcoin hálózatszinten fungibilis, de a blokkláncon való visszakövethetősége miatt néha a kereskedők vagy tőzsdék nem tekintik fungibilisnek.",
                           "Rossz válasz! Az arany lehet értékesebb a gyémántoknál, de ez nem az a fő ok, amiért jobban fungibilisnek számít. Úgy tűnik, hogy érdemes lenne kicsit elmélyülnöd a fungibilitás témájában",
                           "Sajnálom, ez nem jó válasz! Bár az arany lehet bőségesebb a gyémántoknál, ez nem az a fő ok, amiért jobban fungibilisnek számít. Legközelebb jobb szerencsét!"
                       ],
@@ -583,7 +583,7 @@
                       ],
                       "feedback": [
                           "Helyes választ adtál. Az arany nehéz kis mennyiségekre osztani mindennapos kereskedéshez. Tudtad, hogy az aranyat ritkasága és tartóssága miatt használták évezredek óta értéktárolónak",
-                          "Sajnálom, de ez nem teljesen helyes. A bitcoin nagyon jól osztható kis egységekre, a 'satoshi' alapegységig, sőt a Lightning hálózaton akár milli-satoshi (1/1000 satoshi) is lehet osztani",
+                          "Sajnálom, de ez nem teljesen helyes. A bitcoin nagyon jól osztható kis egységekre, a 'satoshi' alapegységig, sőt a Lightning hálózaton akár millisatoshi (1/1000 satoshi) is lehet osztani",
                           "Nem. Bár a fiat valuták nem olyan jól oszthatóak, mint a bitcoin, könnyen oszthatóak kisebb címletekre."
                       ],
                       "question": "Melyik NEM jó értéktároló azért, mert nehezen osztható kis mennyiségekre a mindennapi kereskedelemben?",
@@ -1984,33 +1984,33 @@
       "phoneNumberNeeded": "Telefonszám szükséges",
       "quizComplete": "Teljesítetted a kvízt, és ezért {amount: number} sat a jutalmad",
       "reviewQuiz": "Kvíz átnézése",
-      "satAccumulated": "Keresett Sat-ok",
+      "satAccumulated": "Keresett satoshik",
       "satsEarned": "{formattedNumber|sats} keresve",
       "sectionsCompleted": "Befejezett szakaszok",
       "title": "Keresés",
       "unlockQuestion": "Feloldáshoz, válaszolj a kérdésre:",
       "youEarned": "Kerestél",
-      "registerTitle": "Szükség van a fiókod frissítésére",
+      "registerTitle": "A magasabb szintű számlára kell váltanod",
       "registerContent": "Regisztrálj a telefonszámoddal, hogy sat-okat fogadhass",
       "notYet": "Not yet",
       "availableTomorrow": "This section will be available tomorrow!"
   },
   "GetStartedScreen": {
-      "logInCreateAccount": "Bejelentkezés / fiók létrehozása",
-      "createAccount": "Új fiók létrehozása",
+      "logInCreateAccount": "Bejelentkezés / számla létrehozása",
+      "createAccount": "Új számla létrehozása",
       "exploreWallet": "Tárca felfedezése",
       "logBackInWith": "Újra bejelentkezés ezzel:",
       "headline": "A Galoy által biztosított tárca",
-      "startTrialAccount": "Kezdés próbafiókkal",
-      "startWithTrialAccount": "Kezdés próbafiókkal",
-      "registerPhoneAccount": "Telefonos fiók regisztrálása",
-      "trialAccountCreationFailed": "Próbafiók létrehozása sikertelen",
-      "trialAccountCreationFailedMessage": "Sajnos nem sikerült létrehozni a próbaszámládat. Próbáld újra később, vagy hozz létre egy fiókot telefonszámmal.",
+      "startTrialAccount": "Kezdés próbaszámlával",
+      "startWithTrialAccount": "Kezdés próbaszámlával",
+      "registerPhoneAccount": "Telefonos számla regisztrálása",
+      "trialAccountCreationFailed": "Próbaszámla létrehozása sikertelen",
+      "trialAccountCreationFailedMessage": "Sajnos nem sikerült létrehozni a próbaszámládat. Próbáld újra később, vagy hozz létre egy számlát telefonszámmal.",
       "trialAccountHasLimits": "A próbaszámlának vannak korlátai",
       "trialAccountLimits": {
           "noBackup": "Nincs biztonsági másolat opció",
           "sendingLimit": "Csökkentett napi küldési korlát",
-          "noOnchain": "Nincs on-chain Bitcoin fogadás"
+          "noOnchain": "Nincs onchain Bitcoin fogadás"
       }
   },
   "MapScreen": {
@@ -2047,7 +2047,7 @@
       "oneWeek": "1 hét",
       "oneYear": "1 év",
       "fiveYears": "5 év",
-      "satPrice": "Ár 100 000 sats-hoz: ",
+      "satPrice": "100 000 satoshi ára: ",
       "last24Hours": "az elmúlt 24 óra",
       "lastWeek": "az elmúlt hét",
       "lastMonth": "az elmúlt hónap",
@@ -2064,10 +2064,10 @@
       "activateNotifications": "Szeretnéd aktiválni az értesítéseket, hogy értesülj, amikor megérkezik a fizetés?",
       "copyClipboard": "Számla a vágólapra másolva",
       "copyClipboardBitcoin": "Bitcoin cím a vágólapra másolva",
-      "copyClipboardPaycode": "Paycode/LNURLa vágólapra  másolva",
+      "copyClipboardPaycode": "Paycode/LNURL a vágólapra  másolva",
       "invoicePaid": "Ez a számla kifizetésre került",
       "setNote": "jegyzet beállítása",
-      "tapQrCodeCopy": "QR-kód másolása érintéssel",
+      "tapQrCodeCopy": "QR kód másolása érintéssel",
       "title": "Bitcoin fogadása",
       "usdTitle": "USD fogadása",
       "error": "Számla létrehozása sikertelen. Kérjük, vedd fel a kapcsolatot az ügyfélszolgálattal, ha a probléma továbbra is fennáll.",
@@ -2076,23 +2076,23 @@
       "addAmount": "Konkrét összeg igénylése",
       "expired": "A számla lejárt",
       "expiresIn": "Lejár",
-      "updateInvoice": "Számla frissítése",
+      "updateInvoice": "Fizetési kérelem frissítése",
       "flexibleAmountInvoice": "Rugalmas összegű számla",
       "copyAddress": "Cím másolása",
       "shareAddress": "Cím megosztása",
       "generatingInvoice": "Számla generálása",
       "regenerateInvoice": "Számla újragenerálása",
-      "useABitcoinOnchainAddress": "Használj egy Bitcoin on-chain címet",
-      "useALightningInvoice": "Használj egy Lightning számlát",
+      "useABitcoinOnchainAddress": "Használj egy Bitcoin onchain címet",
+      "useALightningInvoice": "Használj egy Lightning fizetési kérelmet",
       "setANote": "Jegyzet beállítása",
-      "invoiceAmount": "Számla összege",
-      "fees": "{minBankFee: string} sats díjak az on-chain fizetéshez {minBankFeeThreshold: string} sats alatt",
-      "regenerateInvoiceButtonTitle": "Számla újragenerálása",
+      "invoiceAmount": "Fizetési kérelem összege",
+      "fees": "{minBankFee: string} sats díjak az onchain fizetéshez {minBankFeeThreshold: string} sats alatt",
+      "regenerateInvoiceButtonTitle": "Fizetési kérelem újragenerálása",
       "setUsernameButtonTitle": "Felhasználónév beállítása",
-      "invoiceHasExpired": "A számla lejárt",
+      "invoiceHasExpired": "A fizetési kérelem lejárt",
       "setUsernameToAcceptViaPaycode": "Állítsd be a felhasználónevedet hogy Paycode QR kódot (LNURL) és Lightning címet használva fogadhass",
       "singleUse": "Egyszeri használat",
-      "invoiceExpired": "Lejárt számla",
+      "invoiceExpired": "Lejárt fizetési kérelem",
       "invoiceValidity": {
           "validFor1Day": "1 napig érvényes",
           "validForNext": "Következő {duration: string}ig érvényes",
@@ -2100,18 +2100,18 @@
           "expiresIn": "Lejár {duration: string}on belül",
           "expiresNow": "Most jár le"
       },
-      "invoiceHasBeenPaid": "A számla kifizetésre került",
-      "btcOnChainAddress": "Bitcoin On-chain Cím",
+      "invoiceHasBeenPaid": "A fizetési kérelem kifizetésre került",
+      "btcOnChainAddress": "Bitcoin Onchain Cím",
       "receiveViaInvoice": "Fogadás Lightningon",
       "receiveViaPaycode": "Fogadás Paycode-al",
-      "receiveViaOnchain": "Fogadás On-chain",
+      "receiveViaOnchain": "Fogadás Onchain",
       "payCodeOrLNURL": "Paycode / LNURL",
-      "cantReceiveZeroSats": "Nem fogadhatsz el nulla sat-ot. Kérlek, adj meg olyan összeget, ami legalább 1 vagy annál több sat."
+      "cantReceiveZeroSats": "Nem fogadhatsz el nulla satoshit. Kérlek, adj meg olyan összeget, ami legalább 1 vagy annál több sat."
   },
   "RedeemBitcoinScreen": {
       "title": "Bitcoin beváltása",
-      "usdTitle": "Beváltás USD-re",
-      "error": "Nem sikerült számlát generálni. Kérjük,  ha a probléma továbbra is fennáll, vedd fel a kapcsolatot az ügyfélszolgálattal.",
+      "usdTitle": "USD-re váltás",
+      "error": "Nem sikerült fizetési kérelmet generálni. Kérjük, ha a probléma továbbra is fennáll, vedd fel a kapcsolatot az ügyfélszolgálattal.",
       "redeemingError": "Nem sikerült beváltani a Bitcoint. Kérjük, ha a probléma továbbra is fennáll, vedd fel a kapcsolatot az ügyfélszolgálattal.",
       "submissionError": "Nem sikerült benyújtani a kifizetési kérelmet. Kérjük, ha a probléma továbbra is fennáll, vedd fel a kapcsolatot az ügyfélszolgálattal.",
       "minMaxRange": "Min: {minimumAmount: string}, Max: {maximumAmount: string}",
@@ -2120,8 +2120,8 @@
       "redeemAmountFrom": "Beváltás: {amountToRedeem: string} innen: {domain: string}"
   },
   "ScanningQRCodeScreen": {
-      "invalidContent": "Ezt találtuk:\n\n{found: string}\n\nEz nem érvényes Bitcoin cím vagy Lightning számla",
-      "expiredContent": "Ezt találtuk:\n\n{found: string}\n\nEz a számla lejárt",
+      "invalidContent": "Ezt találtuk:\n\n{found: string}\n\nEz nem egy érvényes Bitcoin cím vagy Lightning fizetési kérelem",
+      "expiredContent": "Ezt találtuk:\n\n{found: string}\n\nEz a fizetési kérelem lejárt",
       "invalidTitle": "Érvénytelen QR kód",
       "noQrCode": "Nem találtunk QR kódot a képen",
       "title": "QR kód beolvasása",
@@ -2151,13 +2151,13 @@
       "feeLabel": "Díj",
       "memoLabel": "Megjegyzés:",
       "paymentFinal": "A fizetések véglegesek.",
-      "stalePrice": "A Bitcoin ára elavult és utolsó frissítés óta eltelt idő: {timePeriod}. Kérjük, indítsd újra az alkalmazást, mielőtt fizetést hajtanál végre.",
+      "stalePrice": "A Bitcoin ár elavult. Az utolsó frissítés óta eltelt idő: {timePeriod}. Kérjük, indítsd újra az alkalmazást, mielőtt fizetést hajtanál végre.",
       "title": "Fizetés Megerősítése",
       "totalLabel": "Összesen:",
       "totalExceed": "Az összeg meghaladja az egyenleged, amely {balance: string}",
       "maxFeeSelected": "Ez a maximális díj, amit ezen tranzakcióért felszámíthatunk. Lehet, hogy kevesebb lesz, miután a fizetés megtörtént.",
       "feeError": "Nem sikerült kiszámítani a díjat",
-      "invoiceAlreadyPaid": "Ez a számla már kifizetésre került",
+      "invoiceAlreadyPaid": "Ez a fizetési kérelem már kifizetésre került",
       "somethingWentWrong": "Valami hiba történt",
       "paymentAlreadyAttempted": "A fizetés kisérlet már megtörtént.\n\nHa újra szeretnéd küldeni ezt a fizetést, kezdd elölről.",
       "slideToConfirm": "Húzd el a megerősítéshez",
@@ -2168,16 +2168,16 @@
       "usernameNowAddress": "Mostantól a {bankName: string} felhasználónevek {bankName: string} címek is.",
       "usernameNowAddressInfo": "Amikor beírsz egy {bankName: string} felhasználónevet, hozzá fogunk adni egy \"@{lnDomain: string}\"-t (pl. maria@{lnDomain: string}), hogy címmé alakítsuk. A felhasználóneved mostantól egy {bankName: string} cím is.\n\nLátogass el a Beállításaidban található {bankName: string} cím oldalra, hogy megtudd, hogyan használhatod illetve oszthatod meg fizetések fogadásához.",
       "enterValidDestination": "Kérlek, adj meg érvényes címet.",
-      "destinationOptions": "Küldhetsz {bankName: string} címre, LN címre, LN számlára vagy BTC címre.",
-      "expiredInvoice": "Ez a számla lejárt. Kérjük, generálj egy új számlát.",
-      "wrongNetwork": "Ez a számla más hálózathoz tartozik. Kérjük, generálj egy új számlát.",
+      "destinationOptions": "Küldhetsz {bankName: string} címre, LN címre, LN fizetési kérelemre vagy BTC címre.",
+      "expiredInvoice": "Ez a fizetési kérelem lejárt. Kérjük, generálj egy újat.",
+      "wrongNetwork": "Ez a fizetési kérelem más hálózathoz tartozik. Kérjük, generálj egy újat.",
       "invalidAmount": "Ez egy érvénytelen összeget tartalmaz. Kérjük, generáld újra egy érvényes összeggel.",
       "usernameDoesNotExist": "{lnAddress: string} úgy tűnik, hogy nem létező {bankName: string} cím.",
-      "usernameDoesNotExistAdvice": "Ellenőrizd, hogy helyesen írtad-e be, vagy kérd meg a címzettet, hogy küldjön LN számlát vagy BTC címet inkább.",
+      "usernameDoesNotExistAdvice": "Ellenőrizd, hogy helyesen írtad-e be, vagy kérd meg a címzettet, hogy inkább küldjön LN fizetési kérelmet vagy BTC címet.",
       "selfPaymentError": "{lnAddress: string} a te {bankName: string} címed.",
-      "selfPaymentAdvice": "Ha pénzt szeretnél küldeni egy másik saját számládra, használj inkább egy LN számlát, vagy BTC címet.",
+      "selfPaymentAdvice": "Ha pénzt szeretnél küldeni egy másik saját számládra, használj inkább egy LN fizetési kérelmet, vagy BTC címet.",
       "lnAddressError": "Nem érjük el ezt a Lightning címet. Ha biztos vagy benne, hogy létezik, próbáld újra később.",
-      "lnAddressAdvice": "Ellenőrizd a helyesírást, vagy kérd meg a címzettet, hogy küldjön számlát vagy BTC címet inkább.",
+      "lnAddressAdvice": "Ellenőrizd a helyesírást, vagy kérd meg a címzettet, hogy küldjön LN fizetési kérelmet vagy BTC címet inkább.",
       "unknownLightning": "Nem tudjuk értelmezni ezt a Lightning címet. Kérjük, próbáld újra.",
       "unknownOnchain": "Nem tudjuk értelmezni ezt a Bitcoin címet. Kérjük, próbáld újra.",
       "newBankAddressUsername": "{lnAddress: string} létezik {bankName: string} címként, de még sosem küldtél pénzt oda.",
@@ -2198,16 +2198,16 @@
       "amount": "Összeg",
       "amountExceed": "Az összeg meghaladja az egyenlegedet: {balance: string}",
       "amountExceedsLimit": "Az összeg meghaladja a napi limitet: {limit: string}",
-      "upgradeAccountToIncreaseLimit": "Magasabb tranzakciós limithez magasabb szintű fiókra váltás szükséges",
+      "upgradeAccountToIncreaseLimit": "Magasabb tranzakciós limithez magasabb szintű számlára váltás szükséges",
       "amountIsRequired": "Az összeg kötelező",
       "cost": "Költség",
       "destination": "Cél",
       "destinationIsRequired": "A cél kötelező",
       "fee": "Hálózati díj",
       "feeCalculationUnsuccessful": "Sikertelen számítás ⚠️",
-      "placeholder": "Felhasználónév, számla vagy cím",
+      "placeholder": "Felhasználónév, fizetési kérelem vagy cím",
       "invalidUsername": "Érvénytelen felhasználónév",
-      "noAmount": "Ez a számla nem tartalmaz összeget, ezért kézzel kell megadnod, hogy mennyi pénzt szeretnél küldeni",
+      "noAmount": "Ez a fizetési kérelem nem tartalmaz összeget, ezért kézzel kell megadnod, hogy mennyi pénzt szeretnél küldeni",
       "notConfirmed": "A fizetés elküldve,\nde még nincs megerősítve\n\nA fizetés állapotát a Tranzakciók menüpontban tekintheted meg",
       "note": "Megjegyzés vagy címke",
       "success": "A fizetés sikeresen elküldve",
@@ -2215,11 +2215,11 @@
       "max": "Max",
       "maxAmount": "Max. összeg",
       "title": "Bitcoin küldése",
-      "failedToFetchLnurlInvoice": "Nem sikerült lekérni az lnurl számlát",
-      "lnurlInvoiceIncorrectAmount": "Az lnurl szerver helytelen összeget adott vissza a számlához.",
+      "failedToFetchLnurlInvoice": "Nem sikerült lekérni az LNURL fizetési kérelmet",
+      "lnurlInvoiceIncorrectAmount": "Az LNURL szerver helytelen összegű fizetési kérelemmel válaszolt.",
       "confirmFeesModal": {
           "title": "Magas díj figyelmeztetés!",
-          "content": "A díjad több, mint 50%-kal nagyobb, mint az elküldött összeg. Biztos vagy benne, hogy folytatod?\n\nA díjak csökkentése érdekében kérd meg a címzettet, hogy fogadja a tranzakciót Lightning hálózaton.",
+          "content": "A díjad több, mint 50%kal nagyobb, mint az elküldött összeg. Biztos vagy benne, hogy folytatod?\n\nA díjak csökkentése érdekében kérd meg a címzettet, hogy fogadja a tranzakciót Lightning hálózaton.",
           "confirmButton": "Biztos vagyok benne."
       },
       "copiedDestination": "Címzett a vágólapra másolva.",
@@ -2236,19 +2236,19 @@
       "setToLight": "Mód: világos.",
       "darkDefault": "Mód: sötét, (Alapértelmezett).",
       "lightDefault": "Mód: világos, (Alapértelmezett).",
-      "csvTransactionsError": "Nem sikerült az tranzakciók CSV-fájlba exportálása. Valami hiba történt. Ha a probléma továbbra is fennáll, kérjük, lépj kapcsolatba az ügyfélszolgálattal.",
-      "lnurlNoUsername": "Az lnurl cím létrehozásához először be kell állítanod egy felhasználónevet. Szeretnél most beállítani egy felhasználónevet?",
-      "copyClipboardLnurl": "Lnurl cím a vágólapra másolva",
-      "defaultWallet": "Alapértelmezett fiók",
+      "csvTransactionsError": "Nem sikerült az tranzakciók CSV fájlba exportálása. Valami hiba történt. Ha a probléma továbbra is fennáll, kérjük, lépj kapcsolatba az ügyfélszolgálattal.",
+      "lnurlNoUsername": "Az LNURL cím létrehozásához először be kell állítanod egy felhasználónevet. Szeretnél most beállítani egy felhasználónevet?",
+      "copyClipboardLnurl": "LNURL cím a vágólapra másolva",
+      "defaultWallet": "Alapértelmezett számla",
       "rateUs": "Értékelj minket a {storeName: string} oldalon",
       "theme": "Téma",
-      "nfc": "NFC-ről való fogadás",
+      "nfc": "Fogadás NFC-vel",
       "nfcError": "Hiba az NFC címke olvasása közben. Kérlek, próbáld újra.",
-      "nfcNotCompatible": "A kártyáról kapott információ nem egy kompatibilis lnurl-withdraw link.",
+      "nfcNotCompatible": "A kártyáról kapott információ nem egy kompatibilis LNURLwithdraw link.",
       "nfcOnlyReceive": "Jelenleg csak NFC-ről való fogadás lehetséges",
       "nfcScanNow": "NFC beolvasása most",
       "nfcNotSupported": "Az NFC nem támogatott ezen a készüléken",
-      "logInOrCreateAccount": "Bejelentkezés vagy fiók létrehozása"
+      "logInOrCreateAccount": "Bejelentkezés vagy számla létrehozása"
   },
   "NotificationSettingsScreen": {
       "title": "Értesítési beállítások",
@@ -2265,8 +2265,8 @@
       }
   },
   "AccountScreen": {
-      "accountLevel": "Fiók szintje",
-      "upgrade": "Váltás magasabb szintű fiókra",
+      "accountLevel": "Számla szintje",
+      "upgrade": "Váltás magasabb szintű számlára",
       "logOutAndDeleteLocalData": "Kijelentkezés és helyi adatok törlése",
       "IUnderstand": "Értem. Kijelentkezem.",
       "logoutAlertTitle": "Biztosan ki szeretnél jelentkezni és törölni minden helyi adatot?",
@@ -2275,7 +2275,7 @@
       "logoutAlertContentPhoneEmail": "Újra meg kell adnod a telefonszámodat vagy az email címedet a bejelentkezéshez.\nA telefonszámod: {phoneNumber: string}, az email címed pedig: {email: string}, győződj meg róla, hogy hozzájuk férsz a bejelentkezéshez.",
       "usdBalanceWarning": "Stablesats egyenleged: {balance: string}.",
       "btcBalanceWarning": "Bitcoin egyenleged: {balance: string}.",
-      "secureYourAccount": "Regisztrálj a fiókod biztonságossá tételéhez",
+      "secureYourAccount": "Regisztrálj a számlád biztonságossá tételéhez",
       "tapToAdd": "Koppints a hozzáadáshoz",
       "deleteEmailPromptTitle": "Email törlése",
       "deleteEmailPromptContent": "Biztosan törölni szeretnéd az email címedet? Csak a telefonszámoddal tudsz majd bejelentkezni.",
@@ -2288,16 +2288,16 @@
       "removePhone": "Telefonszám eltávolítása",
       "removeEmail": "Email eltávolítása",
       "unverified": "Az email nincs ellenőrizve",
-      "unverifiedContent": "Biztonságosabbá teheted a fiókodat az email címed megerősítésével.",
+      "unverifiedContent": "Biztonságosabbá teheted a számládat az email címed megerősítésével.",
       "confirmEmail": "Email megerősítése",
       "emailUnverified": "Az email címed nincs megerősítve",
-      "emailUnverifiedContent": "Győződj meg róla, hogy újra be tudsz jelentkezni a fiókodba az email címed megerősítésével. Szeretnéd most elvégezni a megerősítést?",
+      "emailUnverifiedContent": "Győződj meg róla, hogy újra be tudsz jelentkezni a számládba az email címed megerősítésével. Szeretnéd most elvégezni a megerősítést?",
       "totp": "Kétlépcsős azonosítás",
       "totpDeactivated": "A kétlépcsős azonosítás letiltva",
       "totpDeleteAlertTitle": "Kétlépcsős azonosítás törlése",
       "totpDeleteAlertContent": "Biztosan törölni szeretnéd a kétlépcsős azonosítást?",
-      "copiedAccountId": "A fiókazonosítód a vágólapra másolva ",
-      "yourAccountId": "A fiókod azonosítója",
+      "copiedAccountId": "A számla azonosítód a vágólapra másolva",
+      "yourAccountId": "A számlád azonosítója",
       "copy": "Másol"
   },
   "TotpRegistrationInitiateScreen": {
@@ -2307,7 +2307,7 @@
   "TotpRegistrationValidateScreen": {
       "title": "Kétlépcsős azonosítás",
       "enter6digitCode": "Írd be az azonosító alkalmazásodból származó 6 jegyű kódot a kétlépcsős azonosításod érvényesítéséhez.",
-      "success": "A kétlépcsős azonosítást aktíváltuk. Mostantól csak a telefonszámod vagy az email címed ÉS a kétlépcsős azonosításod segítségével tudsz visszajelentkezni.\n\nAzokról az eszközökről, amelyekről nem történt még kétlépcsős bejelentkeés, újra be kell jelentkezned.\n\nKétlépcsős azonosítás beállítása esetén, amennyiben a fiókod nem fogod tudni elérni, annak visszaállításában az ügyfélszolgálat csak akkor tud segíteni ha a fiókodat 2. szintre emelted."
+      "success": "A kétlépcsős azonosítást aktiváltuk. Mostantól csak a telefonszámod vagy az email címed ÉS a kétlépcsős azonosítás segítségével tudsz visszajelentkezni.\n\nAzokról az eszközökről, amelyekről nem történt még kétlépcsős bejelentkezés, újra be kell jelentkezned.\n\nKétlépcsős azonosítás beállítása esetén, amennyiben a számládat nem tudnád elérni, annak visszaállításában az ügyfélszolgálat csak akkor tud segíteni ha 2. szintű számlára váltottál."
   },
   "TotpLoginValidateScreen": {
       "title": "Kétlépcsős azonosítás",
@@ -2318,8 +2318,8 @@
       "toastMessage": "Titok másolva a vágólapra!"
   },
   "DefaultWalletScreen": {
-      "title": "Alapértelmezett fiók",
-      "info": "Válasszd ki, hogy fogadás és küldés esetén melyik fiók legyen az alapértelmezett. Az egyes fizetéseknél a mobilalkalmazásban módosíthatod a küldő és fogadó fiókot. A pénztáron vagy a Lightning címen keresztül érkező fizetések mindig az alapértelmezett fiókba kerülnek.\n\nA Bitcoin volatilitásának elkerülése érdekében válaszd a Stablesats-ot. Ez lehetővé teszi számodra, hogy stabil USD értéket tarts fenn, miközben továbbra is tudsz fizetéseket fogadni és küldeni.\n\nBármikor megváltoztathatod ezt a beállítást, és ez nem befolyásolja jelenlegi egyenleged."
+      "title": "Alapértelmezett számla",
+      "info": "Válaszd ki, hogy fogadás és küldés esetén melyik számla legyen az alapértelmezett. Az egyes fizetéseknél a mobilalkalmazásban módosíthatod a küldő és fogadó számlát. A Pénztáron vagy a Lightning címen keresztül érkező fizetések mindig az alapértelmezett számlára kerülnek.\n\nA Bitcoin volatilitásának elkerülése érdekében válaszd a Stablesats-ot. Ez lehetővé teszi számodra, hogy stabil USD értéket tarts fenn, miközben továbbra is tudsz fizetéseket fogadni és küldeni.\n\nBármikor megváltoztathatod ezt a beállítást, és ez nem befolyásolja jelenlegi egyenleged."
   },
   "ThemeScreen": {
       "title": "Téma",
@@ -2374,7 +2374,7 @@
       "percentageToConvert": "% átváltása"
   },
   "UpgradeAccountModal": {
-      "title": "Váltás magasabb szintű fiókra",
+      "title": "Magasabb szintű számlára váltás",
       "backUpFunds": "Mentsd el az alapjaidat",
       "higherLimits": "Növeld a tranzakciós limitjeit",
       "receiveOnchain": "Bitcoin onchain fogadása",
@@ -2402,14 +2402,14 @@
       "learnToEarn": "Tanulj, hogy keress"
   },
   "PhoneLoginInitiateScreen": {
-      "title": "Fiók létrehozása",
+      "title": "Számla létrehozása",
       "header": "Add meg telefonszámodat, és küldünk neked egy hozzáférési kódot SMS-ben.",
       "headerVerify": "Ellenőrizzük, hogy ember vagy",
       "errorRequestingCaptcha": "Valami hiba történt az emberi lét megerősítése során, kérlek próbáld újra később.",
       "errorRequestingCode": "Valami hiba történt a telefonszám kód kérésekor, kérlek próbáld újra később.",
       "errorInvalidPhoneNumber": "Érvénytelen telefonszám. Biztos vagy benne, hogy helyesen adtad meg a számot?",
       "errorUnsupportedCountry": "Nem tudunk támogatást nyújtani az országodban.",
-      "infoArgentina": "Az argentin telefonszámok esetén az első szám elé 9-et kell írni.",
+      "infoArgentina": "Az argentin telefonszámok esetén az első szám elé 9-est kell írni.",
       "placeholder": "Telefonszám",
       "verify": "Ellenőrzés kattintással",
       "sms": "Küldés SMS-ben",
@@ -2418,9 +2418,9 @@
   "PhoneLoginValidationScreen": {
       "errorLoggingIn": "Hiba a bejelentkezés során. Biztosan a megfelelő kódot használtad?",
       "errorTooManyAttempts": "Túl sok próbálkozás. Kérlek, próbáld újra később.",
-      "errorIpNotAllowed": "Ez az IP-cím egy nem támogatott országból származik és nem lehet számlát létrehozni. Ha támogatott országban tartózkodsz, de VPN-t használsz, próbáld meg kikapcsolni.",
+      "errorIpNotAllowed": "Ez az IP cím egy nem támogatott országból származik és nem lehet számlát létrehozni. Ha támogatott országban tartózkodsz, de VPNt használsz, próbáld meg kikapcsolni.",
       "errorPhoneNotAllowed": "Ezzal  a telefonszámmal nem lehet számlákat létrehozni.",
-      "errorCannotUpgradeToExistingAccount": "Már létezik számla ezzel a telefonszámmal. Kérlek, lépj ki a próbaverziós fiókodból, majd jelentkezz be a telefonszámoddal.",
+      "errorCannotUpgradeToExistingAccount": "Már létezik számla ezzel a telefonszámmal. Kérlek, lépj ki a próbaszámládból, majd jelentkezz be a telefonszámoddal.",
       "header": "írd be ide az előbb elküldött kódot, amit a {channel: string} szolgáltatáson keresztül kaptál tőlünk a következő telefonszámon: {phoneNumber: string}",
       "placeholder": "6 jegyű kód",
       "sendAgain": "Újraküldés",
@@ -2437,7 +2437,7 @@
       "placeholder": "Telefonszám",
       "verify": "Koppints az ellenőrzéshez",
       "sms": "Küldés SMS-ben",
-      "whatsapp": "Küldés WhatsApp-on"
+      "whatsapp": "Küldés WhatsAppon"
   },
   "PhoneRegistrationValidateScreen": {
       "successTitle": "Telefonszám megerősítve"
@@ -2461,11 +2461,11 @@
       "send": "Kód küldése"
   },
   "EmailLoginValidateScreen": {
-      "header": "Ha van fiókod a(z) {email: string} email címhez csatolva, akkor kellett kapnod egy 6 jegyű kódot, amit alább kell megadnod.\n\nHa nem kapod meg a levelet, akkor lehet, hogy nem a megfelelő email címet adtad meg, vagy az email a spam mappádban van.",
+      "header": "Ha van számlád a(z) {email: string} email címhez csatolva, akkor kellett egy 6 jegyű kódot kapnod, amit alább kell megadnod.\n\nHa nem kapod meg a levelet, akkor lehet, hogy nem megfelelő email címet adtál meg, vagy az email a spam mappába került.",
       "success": "Az {email: string} email cím sikeresen megerősítve"
   },
   "common": {
-      "account": "Fiók",
+      "account": "Számla",
       "transactionLimits": "Tranzakciós Limitek",
       "activateWallet": "Tárca Aktiválása",
       "amountRequired": "Összeg szükséges",
@@ -2500,7 +2500,7 @@
       "from": "Feladó",
       "hour": "óra",
       "hours": "óra",
-      "invoice": "Számla",
+      "invoice": "Fizetési kérelem",
       "language": "Nyelv",
       "languagePreference": "Nyelvi beállítások",
       "lastName": "Vezetéknév",
@@ -2531,7 +2531,7 @@
       "setAnAmount": "Összeg beállítása",
       "share": "Megosztás",
       "shareBitcoin": "Bitcoin Cím Megosztása",
-      "shareLightning": "Lightning Számla Megosztása",
+      "shareLightning": "Lightning Fizetési Kérelem Megosztása",
       "soon": "Hamarosan!",
       "submit": "Beküldés",
       "success": "Siker!",
@@ -2545,7 +2545,7 @@
       "usdAccount": "USD Számla",
       "username": "Felhasználónév",
       "usernameRequired": "Felhasználónév szükséges",
-      "backupAccount": "Fiók Biztonsági Mentése / Frissítése",
+      "backupAccount": "Biztonsági Mentése / Magasabb szintű számlára váltás",
       "viewTransaction": "Tranzakció Megtekintése",
       "yes": "Igen",
       "pending": "Függőben",
@@ -2553,12 +2553,12 @@
       "yesterday": "Tegnap",
       "thisMonth": "Ez a hónap",
       "prevMonths": "Előző hónapok",
-      "problemMaybeReauth": "Probléma merült fel a kérés során. Kérjük, próbáld újra egy perc múlva. Ha a probléma továbbra is fennáll, javasoljuk, hogy jelentkezz ki, majd jelentkezz be újra. Kijelentkezni a Beállítások > Fiók > Kijelentkezés menüpontban tudsz.",
+      "problemMaybeReauth": "Probléma merült fel a kérés során. Kérjük, próbáld újra egy perc múlva. Ha a probléma továbbra is fennáll, javasoljuk, hogy jelentkezz ki, majd jelentkezz be újra. Kijelentkezni a Beállítások > Számla > Kijelentkezés menüpontban tudsz.",
       "warning": "Figyelmeztetés"
   },
   "errors": {
       "generic": "Hiba történt.\nKérjük, próbáld újra később.",
-      "invalidEmail": "Érvénytelen e-mail",
+      "invalidEmail": "Érvénytelen email",
       "invalidPhoneNumber": "érvénytelen telefonszám",
       "tooManyRequestsPhoneCode": "Túl sok kérés. Kérjük, várj, mielőtt újabb szöveges üzenetet kérnél.",
       "network": {
@@ -2591,7 +2591,7 @@
       "mattermost": "Mattermost",
       "thankYouText": "Köszönjük a visszajelzést! Szeretnél javaslatot tenni a fejlesztésre?",
       "defaultEmailSubject": "{bankName: string} - Támogatás",
-      "defaultSupportMessage": "Szia! Segítségre van szükségem a {bankName: string} -vel kapcsolatban, a(z) {version: string} verziót használom a(z) {os: string} operációs rendszeren.",
+      "defaultSupportMessage": "Szia! Segítségre van szükségem a {bankName: string}kel kapcsolatban, a(z) {version: string} verziót használom a(z) {os: string} operációs rendszeren.",
       "emailCopied": "{email: string} email cím a vágólapra másolva",
       "deleteAccount": "Számla törlése",
       "delete": "törlés",
@@ -2599,7 +2599,7 @@
       "finalConfirmationAccountDeletionTitle": "Végleges megerősítés szükséges",
       "finalConfirmationAccountDeletionMessage": "Biztosan törölni akarod a számládat? Ez a művelet visszafordíthatatlan.",
       "deleteAccountBalanceWarning": "A számla törlése a jelenlegi egyenleged elvesztéséhez vezet. Biztosan folytatnád?",
-      "deleteAccountConfirmation": "A számlád törlésre került.\n\nAmikor a szabályozási követelmények szerinti próbaidőszak lejár, a fiókodhoz kapcsolódó fennmaradó adatok véglegesen törlődnek.",
+      "deleteAccountConfirmation": "A számlád törlésre került.\n\nAmikor a szabályozási követelmények szerinti próbaidőszak lejár, a számlához kapcsolódó fennmaradó adatok véglegesen törlődnek.",
       "deleteAccountFromPhone": "Szia! Kérem a számlám törlését. A telefonszámom: {phoneNumber: string}.",
       "deleteAccountError": "Valami hiba történt. További segítségért lépj kapcsolatba az alábbi email címen: {email: string}.",
       "bye": "Viszlát!"
@@ -2643,11 +2643,11 @@
       "share": "Megosztás",
       "circlesGrowingSatsExplainer": {
           "your": "A te",
-          "grow": "növekedik, amint első sat-jait küldöd egy új Blink felhasználóknak!"
+          "grow": "növekedik, amint első satjait küldöd egy új Blink felhasználóknak!"
       },
       "circlesGrowingKeepGoing": "A köröd növekszik, ahogy üdvözölöd az embereket a Blinken - folytasd tovább!",
       "points": "pontok",
-      "innerCircleGrow": "A belső köröd akkor nő, amikor első sat-jait küldöd egy Blink felhasználónak!",
+      "innerCircleGrow": "A belső köröd akkor nő, amikor első satjait küldöd egy Blink felhasználónak!",
       "calculatingYourCircles": "Körök kiszámítása...",
       "innerCircleExplainer": "Terjeszted a Bitcoint a Blinken keresztül - folytasd csak tovább!",
       "innerCircleExplainerCard": "Terjesztem a Bitcoint a Blinken keresztül!",
@@ -2687,7 +2687,7 @@
       "firstName": "Keresztnév",
       "lastName": "Vezetéknév",
       "confirmNameContent": "Helyesen van leírva a neved?\n\n{firstName: string} {lastName: string}\n\nEgyeznie kell az igazolványodon szereplő névvel.",
-      "requirements": "A számlád felminősítése növelni fogja a limiteidet és további funkcionalitást biztosít, például banki átutalást a egyes országokban.\n\nMeg kell adnod a neved, egy kormány által kibocsátott igazolványt és egy szelfit. A neveddel kezdünk.",
+      "requirements": "A magasabb szintű számlára váltás növelni fogja a limiteket és további funkcionalitást biztosít, például banki átutalást egyes országokban.\n\nMeg kell adnod a neved, egy kormány által kibocsátott igazolványt és egy szelfit. A neveddel kezdünk.",
       "success": "Az irataid sikeresen beérkeztek és hamarosan feldolgozzuk. Visszatérhetsz erre az oldalra, hogy frissítést kapj a folyamat állapotáról.",
       "error": "Hiba történt a irataid benyújtásakor. Ha a probléma továbbra is fennáll, lépj kapcsolatba az ügyfélszolgálattal.",
       "status": "Az integrációs állapotod:",
