@@ -273,7 +273,7 @@ export const EarnMapScreen: React.FC = () => {
         <View style={styles.mainView}>
           <Finish currSection={currSection} length={sectionsData.length} />
           {SectionsComp}
-          {currSection === 0 ? (
+          {currSection !== 0 ? (
             <View style={styles.bottomContainer}>
               <View style={styles.spacingBox}>
                 {progress === 0 && <BottomStart height={159} width={BADGER_WIDTH} />}
@@ -314,6 +314,7 @@ const useStyles = makeStyles(({ colors }) => ({
   bottomSectionText: {
     color: "white",
     textAlign: "center",
+    fontSize: 16
   },
   bottomSectionInner: {
     width: BADGER_WIDTH,

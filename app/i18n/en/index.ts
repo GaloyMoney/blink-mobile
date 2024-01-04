@@ -2037,7 +2037,7 @@ const en: BaseTranslation = {
     registerContent: "Register with your phone number to receive sats",
     notYet: "Not yet",
     availableTomorrow: "This section will be available tomorrow!",
-    motivatingBadger: 'Dig your way through these lessons and earn as you learn'
+    motivatingBadger: "Dig your way through these lessons and earn as you learn",
   },
   GetStartedScreen: {
     logInCreateAccount: "Log in / create account",
