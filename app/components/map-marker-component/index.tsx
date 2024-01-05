@@ -20,7 +20,7 @@ import { MapMarker } from "@app/graphql/generated"
 type Props = {
   item: MapMarker
   color: string
-  handleMarkerPress: (item: MapMarker) => void
+  handleMarkerPress: (_item: MapMarker, _ref?: MapMarkerType) => void
   handleCalloutPress: (item: MapMarker) => void
   isFocused: boolean
   styles: {
@@ -51,12 +51,16 @@ export default function MapMarkerComponent({
 
   return (
     <Marker
+      id={item.username as string} // TODO remove type casting when Graph is updated to make username non-nullable
       ref={ref}
       coordinate={item.mapInfo.coordinates}
       pinColor={color}
-      onPress={() => handleMarkerPress(item)}
+      onPress={() => {
+        console.log("Pressing: ", item.username)
+        console.log("ref???? ", ref)
+        handleMarkerPress(item, isIos && ref.current ? ref.current : undefined)
+      }}
       stopPropagation
-      pointerEvents="auto"
     >
       <Callout tooltip={true} onPress={() => handleCalloutPress(item)}>
         {isFocused && (

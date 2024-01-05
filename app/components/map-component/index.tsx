@@ -1,5 +1,5 @@
 import { makeStyles, useTheme } from "@rneui/themed"
-import MapView, { Region } from "react-native-maps"
+import MapView, { Region, MapMarker as MapMarkerType } from "react-native-maps"
 import MapStyles from "./map-styles.json"
 import React, { useRef } from "react"
 import { BusinessMapMarkersQuery, MapMarker } from "@app/graphql/generated"
@@ -12,6 +12,7 @@ type Props = {
   handleMapPress: () => void
   handleMarkerPress: (_: MapMarker) => void
   focusedMarker: MapMarker | null
+  focusedMarkerRef: React.MutableRefObject<MapMarkerType | null>
   handleCalloutPress: (_: MapMarker) => void
 }
 
@@ -21,6 +22,7 @@ export default function MapComponent({
   handleMapPress,
   handleMarkerPress,
   focusedMarker,
+  focusedMarkerRef,
   handleCalloutPress,
 }: Props) {
   const {
@@ -40,6 +42,22 @@ export default function MapComponent({
       initialRegion={userLocation}
       customMapStyle={themeMode === "dark" ? MapStyles.dark : MapStyles.light}
       onPress={handleMapPress}
+      onMarkerSelect={(e) => {
+        // react-native-maps has a very annoying error on iOS
+        // When two markers are almost on top of each other, onSelect will get called for a nearby Marker
+        // This fix checks to see if that error happened, and quickly reopens the correct callout
+        const matchingLat =
+          e.nativeEvent.coordinate.latitude ===
+          focusedMarker?.mapInfo.coordinates.latitude
+        const matchingLng =
+          e.nativeEvent.coordinate.longitude ===
+          focusedMarker?.mapInfo.coordinates.longitude
+        if (!matchingLat || !matchingLng) {
+          if (focusedMarkerRef.current) {
+            focusedMarkerRef.current.showCallout()
+          }
+        }
+      }}
     >
       {(data?.businessMapMarkers ?? []).reduce(
         (arr: React.ReactElement[], item: MapMarker | null) => {

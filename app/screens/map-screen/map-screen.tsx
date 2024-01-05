@@ -4,7 +4,7 @@ import * as React from "react"
 import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import { Dimensions } from "react-native"
-import { Region } from "react-native-maps"
+import { Region, MapMarker as MapMarkerType } from "react-native-maps"
 import Geolocation from "@react-native-community/geolocation"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
@@ -67,6 +67,8 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "cache-and-network",
   })
+
+  const focusedMarkerRef = React.useRef<MapMarkerType | null>(null)
 
   const [userLocation, setUserLocation] = React.useState<Region>()
   const [isRefreshed, setIsRefreshed] = React.useState(false)
@@ -146,6 +148,18 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     }
   }
 
+  const handleMarkerPress = (item: MapMarker, ref?: MapMarkerType) => {
+    setFocusedMarker(item)
+    if (ref) {
+      focusedMarkerRef.current = ref
+    }
+  }
+
+  const handleMapPress = () => {
+    setFocusedMarker(null)
+    focusedMarkerRef.current = null
+  }
+
   const requestLocationPermission = useCallback(() => {
     const permittedResponse = () => {
       getUserRegion(async (region) => {
@@ -175,9 +189,10 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
         <MapComponent
           data={data}
           userLocation={userLocation}
-          handleMapPress={() => setFocusedMarker(null)}
-          handleMarkerPress={(item) => setFocusedMarker(item)}
+          handleMapPress={handleMapPress}
+          handleMarkerPress={handleMarkerPress}
           focusedMarker={focusedMarker}
+          focusedMarkerRef={focusedMarkerRef}
           handleCalloutPress={handleCalloutPress}
         />
       )}
