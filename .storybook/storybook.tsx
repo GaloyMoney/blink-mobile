@@ -15,14 +15,14 @@ import "./storybook.requires"
 import { detectDefaultLocale } from "../app/utils/locale-detector"
 import RNBootSplash from "react-native-bootsplash"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
-import { NotificationModalProvider } from "../app/components/notification-modal"
+import { NotificationsProvider } from "../app/components/notifications"
 
 RNBootSplash.hide({ fade: true })
 
 const StorybookUI = getStorybookUI({
   enableWebsockets: true, // for @storybook/react-native-server
   onDeviceUI: true,
-  initialSelection: { kind: "Notification Modal", name: "Default" },
+  initialSelection: { kind: "Notification Card UI", name: "Default" },
   shouldPersistSelection: false,
 })
 
@@ -40,7 +40,7 @@ export const StorybookUIRoot: React.FC = () => (
   <GestureHandlerRootView style={{ flex: 1 }}>
     <I18nWrapper>
       <ThemeWrapper>
-        <NotificationModalProvider>
+        <NotificationsProvider>
           <NavigationContainer>
             <Stack.Navigator>
               <Stack.Screen
@@ -53,7 +53,7 @@ export const StorybookUIRoot: React.FC = () => (
               />
             </Stack.Navigator>
           </NavigationContainer>
-        </NotificationModalProvider>
+        </NotificationsProvider>
       </ThemeWrapper>
     </I18nWrapper>
   </GestureHandlerRootView>

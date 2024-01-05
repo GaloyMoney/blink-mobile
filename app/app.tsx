@@ -18,7 +18,7 @@ import * as React from "react"
 import ErrorBoundary from "react-native-error-boundary"
 import { RootSiblingParent } from "react-native-root-siblings"
 import { GaloyToast } from "./components/galoy-toast"
-import { NotificationComponent } from "./components/notification"
+import { PushNotificationComponent } from "./components/push-notification"
 import { GaloyClient } from "./graphql/client"
 import TypesafeI18n from "./i18n/i18n-react"
 import { loadAllLocales } from "./i18n/i18n-util.sync"
@@ -34,7 +34,7 @@ import { NetworkErrorComponent } from "./graphql/network-error-component"
 import { FeatureFlagContextProvider } from "./config/feature-flags-context"
 import "./utils/logs"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
-import { NotificationModalProvider } from "./components/notification-modal"
+import { NotificationsProvider } from "./components/notifications/index"
 
 // FIXME should we only load the currently used local?
 // this would help to make the app load faster
@@ -58,12 +58,12 @@ export const App = () => (
               <ErrorBoundary FallbackComponent={ErrorScreen}>
                 <NavigationContainerWrapper>
                   <RootSiblingParent>
-                    <NotificationModalProvider>
+                    <NotificationsProvider>
                       <AppStateWrapper />
-                      <NotificationComponent />
+                      <PushNotificationComponent />
                       <RootStack />
                       <NetworkErrorComponent />
-                    </NotificationModalProvider>
+                    </NotificationsProvider>
                     <GaloyToast />
                   </RootSiblingParent>
                 </NavigationContainerWrapper>

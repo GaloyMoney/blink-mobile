@@ -170,7 +170,6 @@ const useStyles = makeStyles(({ colors }) => ({
     backgroundColor: colors.grey5,
     display: "flex",
     flexDirection: "column",
-    marginBottom: 20,
     borderRadius: 12,
     padding: 12,
   },
