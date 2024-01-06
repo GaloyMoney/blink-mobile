@@ -1,5 +1,5 @@
 import { makeStyles, useTheme } from "@rneui/themed"
-import MapView, { Region, MapMarker as MapMarkerType } from "react-native-maps"
+import MapView, { Region, MapMarker as MapMarkerType, LatLng } from "react-native-maps"
 import MapStyles from "./map-styles.json"
 import React, { useRef } from "react"
 import { BusinessMapMarkersQuery, MapMarker } from "@app/graphql/generated"
@@ -17,6 +17,8 @@ type Props = {
   focusedMarker: MapMarker | null
   focusedMarkerRef: React.MutableRefObject<MapMarkerType | null>
   handleCalloutPress: (_: MapMarker) => void
+  mostRecentCoordsRef: React.MutableRefObject<LatLng | undefined>
+  onError: () => void
 }
 
 export default function MapComponent({
@@ -27,6 +29,8 @@ export default function MapComponent({
   focusedMarker,
   focusedMarkerRef,
   handleCalloutPress,
+  mostRecentCoordsRef,
+  onError,
 }: Props) {
   const {
     theme: { colors, mode: themeMode },
@@ -48,13 +52,21 @@ export default function MapComponent({
           if (region && mapViewRef.current) {
             mapViewRef.current.animateToRegion(region)
           } else {
-            alert("Oops. Something went wrong while getting your location")
+            onError()
           }
         })
       } else {
-        alert("Oops. Something went wrong while getting your location")
+        onError()
       }
     })
+  }
+
+  // TODO debounce
+  const handleRegionChange = (region: Region) => {
+    mostRecentCoordsRef.current = {
+      latitude: region.latitude,
+      longitude: region.longitude,
+    }
   }
 
   return (
@@ -65,6 +77,7 @@ export default function MapComponent({
       initialRegion={userLocation}
       customMapStyle={themeMode === "dark" ? MapStyles.dark : MapStyles.light}
       onPress={handleMapPress}
+      onRegionChange={handleRegionChange}
       onMarkerSelect={(e) => {
         // react-native-maps has a very annoying error on iOS
         // When two markers are almost on top of each other, onSelect will get called for a nearby Marker

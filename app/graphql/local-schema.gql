@@ -9,7 +9,8 @@ extend type Query {
   beta: Boolean!
   colorScheme: String!
   countryCode: String!
-  latLng: LatLng
+  lat: Float
+  lng: Float
   feedbackModalShown: Boolean!
   hasPromptedSetDefaultAccount: Boolean!
   introducingCirclesModalShown: Boolean!
@@ -19,11 +20,6 @@ extend type Query {
 extend type Account {
   usdWallet: UsdWallet
   btcWallet: BTCWallet
-}
-
-extend type LatLng {
-  lat: Float!
-  lng: Float!
 }
 
 extend type ConsumerAccount {

@@ -1,24 +1,17 @@
 import { useFocusEffect } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import { Dimensions } from "react-native"
-import { Region, MapMarker as MapMarkerType, LatLng } from "react-native-maps"
+import { Region, MapMarker as MapMarkerType } from "react-native-maps"
 import Geolocation from "@react-native-community/geolocation"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { toastShow } from "../../utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { MapMarker, useBusinessMapMarkersQuery } from "@app/graphql/generated"
+import { MapMarker, useBusinessMapMarkersQuery, useLatLngQuery } from "@app/graphql/generated"
 import { updateMapLastCoords } from "@app/graphql/client-only-query"
-import {
-  check,
-  checkMultiple,
-  PERMISSIONS,
-  request,
-  RESULTS,
-} from "react-native-permissions"
+import { check, PERMISSIONS, RESULTS } from "react-native-permissions"
 import { gql, useApolloClient } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { PhoneLoginInitiateType } from "../phone-auth-screen"
@@ -42,14 +35,6 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * (width / height)
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "Primary">
-}
-
-type GeolocationPermissionNegativeError = {
-  code: number
-  message: string
-  PERMISSION_DENIED: number
-  POSITION_UNAVAILABLE: number
-  TIMEOUT: number
 }
 
 Geolocation.setRNConfiguration({
@@ -102,7 +87,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   const isAuthed = useIsAuthed()
   const client = useApolloClient()
   const { countryCode, loading } = useDeviceLocation()
-  const { data: lastCoordsData, error: lastCoordsError } = useMapLastCoordsQuery()
+  const { data: lastCoordsData, error: lastCoordsError } = useLatLngQuery()
   const { LL } = useI18nContext()
 
   const { data, error, refetch } = useBusinessMapMarkersQuery({
@@ -111,7 +96,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   })
 
   const focusedMarkerRef = React.useRef<MapMarkerType | null>(null)
-  const mostRecentCoords = React.useRef<LatLng>()
+  const mostRecentCoords = React.useRef<Region>()
 
   const [userLocation, setUserLocation] = React.useState<Region>()
   const [isRefreshed, setIsRefreshed] = React.useState(false)
@@ -150,6 +135,14 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     })
   }, [isIos, setLocationDenied])
 
+  React.useEffect(() => {
+    if(lastCoordsError) {
+      setLocationDenied(true)
+      setUserLocation(EL_ZONTE_COORDS)
+      alertOnLocationError()
+    }
+  }, [lastCoordsError])
+
   // save the last viewed location to be used as the initialLocation next time user uses app
   React.useEffect(() => {
     return () => {
@@ -163,8 +156,14 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   React.useEffect(() => {
     if (countryCode && wasLocationDenied && lastCoordsData && !loading) {
       // User has used map before, so we use their last viewed coords
-      if (lastCoordsData) {
-        setUserLocation(lastCoordsData)
+      if (lastCoordsData.lat && lastCoordsData.lng) {
+        const region: Region = {
+          latitude: lastCoordsData.lat,
+          longitude: lastCoordsData.lng,
+          latitudeDelta: 0.2,
+          longitudeDelta: 0.2
+        }
+        setUserLocation(region)
         // User is using maps for the first time, so we center on the center of their IP's country
       } else {
         // JSON 'hashmap' with every countrys' code listed with their lat and lng
@@ -202,6 +201,10 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     }
   }
 
+  const alertOnLocationError = () => {
+    alert("Oops. Something went wrong while getting your location")
+  }
+
   const handleMarkerPress = (item: MapMarker, ref?: MapMarkerType) => {
     setFocusedMarker(item)
     if (ref) {
@@ -214,7 +217,6 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     focusedMarkerRef.current = null
   }
 
-
   return (
     <Screen>
       {userLocation && (
@@ -226,6 +228,8 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
           focusedMarker={focusedMarker}
           focusedMarkerRef={focusedMarkerRef}
           handleCalloutPress={handleCalloutPress}
+          mostRecentCoordsRef={mostRecentCoords}
+          onError={alertOnLocationError}
         />
       )}
     </Screen>
