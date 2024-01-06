@@ -4,20 +4,29 @@ import * as React from "react"
 import { useCallback } from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import { Dimensions } from "react-native"
-import { Region, MapMarker as MapMarkerType } from "react-native-maps"
+import { Region, MapMarker as MapMarkerType, LatLng } from "react-native-maps"
 import Geolocation from "@react-native-community/geolocation"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { toastShow } from "../../utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { MapMarker, useBusinessMapMarkersQuery } from "@app/graphql/generated"
-import { gql } from "@apollo/client"
+import { updateMapLastCoords } from "@app/graphql/client-only-query"
+import {
+  check,
+  checkMultiple,
+  PERMISSIONS,
+  request,
+  RESULTS,
+} from "react-native-permissions"
+import { gql, useApolloClient } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { PhoneLoginInitiateType } from "../phone-auth-screen"
 import countryCodes from "../../../utils/countryInfo.json"
 import { CountryCode } from "libphonenumber-js/mobile"
 import useDeviceLocation from "@app/hooks/use-device-location"
 import MapComponent from "@app/components/map-component"
+import { isIos } from "@app/utils/helper"
 
 const EL_ZONTE_COORDS = {
   latitude: 13.496743,
@@ -43,6 +52,37 @@ type GeolocationPermissionNegativeError = {
   TIMEOUT: number
 }
 
+Geolocation.setRNConfiguration({
+  skipPermissionRequests: true,
+  enableBackgroundLocationUpdates: false,
+  authorizationLevel: "whenInUse",
+  locationProvider: "auto",
+})
+
+export const getUserRegion = (callback: (region?: Region) => void) => {
+  try {
+    Geolocation.getCurrentPosition(
+      (data: GeolocationPosition) => {
+        if (data) {
+          const region: Region = {
+            latitude: data.coords.latitude,
+            longitude: data.coords.longitude,
+            latitudeDelta: 0.02,
+            longitudeDelta: 0.02,
+          }
+          callback(region)
+        }
+      },
+      () => {
+        callback(undefined)
+      },
+      { timeout: 5000 },
+    )
+  } catch (e) {
+    callback(undefined)
+  }
+}
+
 gql`
   query businessMapMarkers {
     businessMapMarkers {
@@ -60,7 +100,9 @@ gql`
 
 export const MapScreen: React.FC<Props> = ({ navigation }) => {
   const isAuthed = useIsAuthed()
+  const client = useApolloClient()
   const { countryCode, loading } = useDeviceLocation()
+  const { data: lastCoordsData, error: lastCoordsError } = useMapLastCoordsQuery()
   const { LL } = useI18nContext()
 
   const { data, error, refetch } = useBusinessMapMarkersQuery({
@@ -69,6 +111,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   })
 
   const focusedMarkerRef = React.useRef<MapMarkerType | null>(null)
+  const mostRecentCoords = React.useRef<LatLng>()
 
   const [userLocation, setUserLocation] = React.useState<Region>()
   const [isRefreshed, setIsRefreshed] = React.useState(false)
@@ -86,30 +129,65 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     toastShow({ message: error.message, LL })
   }
 
-  // if getting location was denied and device's country code has been found (or defaulted)
-  // this is used to finalize the initial location shown on the Map
+  // On screen load, check (NOT request) if location permissions are given
   React.useEffect(() => {
-    if (countryCode && wasLocationDenied && !loading) {
-      // JSON 'hashmap' with every countrys' code listed with their lat and lng
-      const countryCodesToCoords: {
-        data: Record<CountryCode, { lat: number; lng: number }>
-      } = JSON.parse(JSON.stringify(countryCodes))
-      const countryCoords: { lat: number; lng: number } =
-        countryCodesToCoords.data[countryCode]
-      if (countryCoords) {
-        const region: Region = {
-          latitude: countryCoords.lat,
-          longitude: countryCoords.lng,
-          latitudeDelta: LATITUDE_DELTA,
-          longitudeDelta: LONGITUDE_DELTA,
-        }
-        setUserLocation(region)
+    check(
+      isIos
+        ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+        : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+    ).then((status) => {
+      if (status === RESULTS.GRANTED) {
+        getUserRegion(async (region) => {
+          if (region) {
+            setUserLocation(region)
+          } else {
+            setLocationDenied(true)
+          }
+        })
       } else {
-        // backup if country code is not recognized
-        setUserLocation(EL_ZONTE_COORDS)
+        setLocationDenied(true)
+      }
+    })
+  }, [isIos, setLocationDenied])
+
+  // save the last viewed location to be used as the initialLocation next time user uses app
+  React.useEffect(() => {
+    return () => {
+      if (mostRecentCoords.current) {
+        updateMapLastCoords(client, mostRecentCoords.current)
       }
     }
-  }, [wasLocationDenied, countryCode, loading, setUserLocation])
+  }, [])
+
+  // Flow when location permissions are denied
+  React.useEffect(() => {
+    if (countryCode && wasLocationDenied && lastCoordsData && !loading) {
+      // User has used map before, so we use their last viewed coords
+      if (lastCoordsData) {
+        setUserLocation(lastCoordsData)
+        // User is using maps for the first time, so we center on the center of their IP's country
+      } else {
+        // JSON 'hashmap' with every countrys' code listed with their lat and lng
+        const countryCodesToCoords: {
+          data: Record<CountryCode, { lat: number; lng: number }>
+        } = JSON.parse(JSON.stringify(countryCodes))
+        const countryCoords: { lat: number; lng: number } =
+          countryCodesToCoords.data[countryCode]
+        if (countryCoords) {
+          const region: Region = {
+            latitude: countryCoords.lat,
+            longitude: countryCoords.lng,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
+          }
+          setUserLocation(region)
+        } else {
+          // backup if country code is not recognized
+          setUserLocation(EL_ZONTE_COORDS)
+        }
+      }
+    }
+  }, [wasLocationDenied, countryCode, lastCoordsData, loading, setUserLocation])
 
   const handleCalloutPress = (item: MapMarker | null) => {
     if (isAuthed && item?.username) {
@@ -121,30 +199,6 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
           type: PhoneLoginInitiateType.CreateAccount,
         },
       })
-    }
-  }
-
-  const getUserRegion = (callback: (region?: Region) => void) => {
-    try {
-      Geolocation.getCurrentPosition(
-        (data: GeolocationPosition) => {
-          if (data) {
-            const region: Region = {
-              latitude: data.coords.latitude,
-              longitude: data.coords.longitude,
-              latitudeDelta: 0.02,
-              longitudeDelta: 0.02,
-            }
-            callback(region)
-          }
-        },
-        () => {
-          callback(undefined)
-        },
-        { timeout: 5000 },
-      )
-    } catch (e) {
-      callback(undefined)
     }
   }
 
@@ -160,28 +214,6 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     focusedMarkerRef.current = null
   }
 
-  const requestLocationPermission = useCallback(() => {
-    const permittedResponse = () => {
-      getUserRegion(async (region) => {
-        if (region) {
-          setUserLocation(region)
-        } else {
-          setLocationDenied(true)
-        }
-      })
-    }
-
-    const negativeResponse = (error: GeolocationPermissionNegativeError) => {
-      console.debug("Permission location denied: ", error)
-      setLocationDenied(true)
-    }
-
-    Geolocation.requestAuthorization(permittedResponse, negativeResponse)
-    // disable eslint because we only want to ask for permissions once
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  React.useEffect(() => requestLocationPermission(), [requestLocationPermission])
 
   return (
     <Screen>

@@ -5,6 +5,9 @@ import React, { useRef } from "react"
 import { BusinessMapMarkersQuery, MapMarker } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import MapMarkerComponent from "../map-marker-component"
+import { PERMISSIONS, RESULTS, request } from "react-native-permissions"
+import { isIos } from "@app/utils/helper"
+import { getUserRegion } from "@app/screens/map-screen/map-screen"
 
 type Props = {
   data?: BusinessMapMarkersQuery
@@ -33,6 +36,26 @@ export default function MapComponent({
   const text = React.useMemo(() => LL.MapScreen.payBusiness(), [LL.MapScreen])
 
   const mapViewRef = useRef<MapView>(null)
+
+  const requestLocationPermission = () => {
+    request(
+      isIos
+        ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+        : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+    ).then((status) => {
+      if (status === RESULTS.GRANTED) {
+        getUserRegion(async (region) => {
+          if (region && mapViewRef.current) {
+            mapViewRef.current.animateToRegion(region)
+          } else {
+            alert("Oops. Something went wrong while getting your location")
+          }
+        })
+      } else {
+        alert("Oops. Something went wrong while getting your location")
+      }
+    })
+  }
 
   return (
     <MapView

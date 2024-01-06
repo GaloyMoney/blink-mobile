@@ -881,10 +881,6 @@ query balanceHeader {
   }
 }
 
-query beta {
-  beta @client
-}
-
 query btcPriceList($range: PriceGraphRange!) {
   btcPriceList(range: $range) {
     timestamp
@@ -912,10 +908,6 @@ query businessMapMarkers {
     }
     __typename
   }
-}
-
-query colorScheme {
-  colorScheme @client
 }
 
 query contacts {
@@ -947,10 +939,6 @@ query conversionScreen {
     }
     __typename
   }
-}
-
-query countryCode {
-  countryCode @client
 }
 
 query currencyList {
@@ -987,10 +975,6 @@ query displayCurrency {
   }
 }
 
-query feedbackModalShown {
-  feedbackModalShown @client
-}
-
 query fullOnboardingScreen {
   me {
     id
@@ -1004,18 +988,6 @@ query fullOnboardingScreen {
     }
     __typename
   }
-}
-
-query hasPromptedSetDefaultAccount {
-  hasPromptedSetDefaultAccount @client
-}
-
-query hiddenBalanceToolTip {
-  hiddenBalanceToolTip @client
-}
-
-query hideBalance {
-  hideBalance @client
 }
 
 query homeAuthed {
@@ -1066,14 +1038,6 @@ query homeUnauthed {
     fractionDigits
     __typename
   }
-}
-
-query innerCircleValue {
-  innerCircleValue @client
-}
-
-query introducingCirclesModalShown {
-  introducingCirclesModalShown @client
 }
 
 query invite {

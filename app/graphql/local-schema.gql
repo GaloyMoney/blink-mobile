@@ -1,4 +1,3 @@
-
 extend type Contact {
   prettyName: String!
 }
@@ -10,6 +9,7 @@ extend type Query {
   beta: Boolean!
   colorScheme: String!
   countryCode: String!
+  latLng: LatLng
   feedbackModalShown: Boolean!
   hasPromptedSetDefaultAccount: Boolean!
   introducingCirclesModalShown: Boolean!
@@ -19,6 +19,11 @@ extend type Query {
 extend type Account {
   usdWallet: UsdWallet
   btcWallet: BTCWallet
+}
+
+extend type LatLng {
+  lat: Float!
+  lng: Float!
 }
 
 extend type ConsumerAccount {

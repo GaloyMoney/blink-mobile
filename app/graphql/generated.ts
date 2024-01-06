@@ -631,6 +631,12 @@ export const InvoicePaymentStatus = {
 } as const;
 
 export type InvoicePaymentStatus = typeof InvoicePaymentStatus[keyof typeof InvoicePaymentStatus];
+export type LatLng = {
+  readonly __typename: 'LatLng';
+  readonly lat: Scalars['Float']['output'];
+  readonly lng: Scalars['Float']['output'];
+};
+
 export type Leader = {
   readonly __typename: 'Leader';
   readonly name?: Maybe<Scalars['LeaderboardName']['output']>;
@@ -1520,6 +1526,7 @@ export type Query = {
   readonly hideBalance: Scalars['Boolean']['output'];
   readonly innerCircleValue: Scalars['Int']['output'];
   readonly introducingCirclesModalShown: Scalars['Boolean']['output'];
+  readonly latLng?: Maybe<LatLng>;
   readonly lnInvoicePaymentStatus: LnInvoicePaymentStatusPayload;
   readonly me?: Maybe<User>;
   readonly mobileVersions?: Maybe<ReadonlyArray<Maybe<MobileVersions>>>;
@@ -2211,51 +2218,6 @@ export type RealtimePriceQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type RealtimePriceQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly realtimePrice: { readonly __typename: 'RealtimePrice', readonly denominatorCurrency: string, readonly id: string, readonly timestamp: number, readonly btcSatPrice: { readonly __typename: 'PriceOfOneSatInMinorUnit', readonly base: number, readonly offset: number }, readonly usdCentPrice: { readonly __typename: 'PriceOfOneUsdCentInMinorUnit', readonly base: number, readonly offset: number } } } } | null };
-
-export type HideBalanceQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type HideBalanceQuery = { readonly __typename: 'Query', readonly hideBalance: boolean };
-
-export type HiddenBalanceToolTipQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type HiddenBalanceToolTipQuery = { readonly __typename: 'Query', readonly hiddenBalanceToolTip: boolean };
-
-export type BetaQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type BetaQuery = { readonly __typename: 'Query', readonly beta: boolean };
-
-export type ColorSchemeQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ColorSchemeQuery = { readonly __typename: 'Query', readonly colorScheme: string };
-
-export type CountryCodeQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type CountryCodeQuery = { readonly __typename: 'Query', readonly countryCode: string };
-
-export type FeedbackModalShownQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type FeedbackModalShownQuery = { readonly __typename: 'Query', readonly feedbackModalShown: boolean };
-
-export type HasPromptedSetDefaultAccountQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type HasPromptedSetDefaultAccountQuery = { readonly __typename: 'Query', readonly hasPromptedSetDefaultAccount: boolean };
-
-export type IntroducingCirclesModalShownQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type IntroducingCirclesModalShownQuery = { readonly __typename: 'Query', readonly introducingCirclesModalShown: boolean };
-
-export type InnerCircleValueQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type InnerCircleValueQuery = { readonly __typename: 'Query', readonly innerCircleValue: number };
 
 export type TransactionFragment = { readonly __typename: 'Transaction', readonly id: string, readonly status: TxStatus, readonly direction: TxDirection, readonly memo?: string | null, readonly createdAt: number, readonly settlementAmount: number, readonly settlementFee: number, readonly settlementDisplayFee: string, readonly settlementCurrency: WalletCurrency, readonly settlementDisplayAmount: string, readonly settlementDisplayCurrency: string, readonly settlementPrice: { readonly __typename: 'PriceOfOneSettlementMinorUnitInDisplayMinorUnit', readonly base: number, readonly offset: number, readonly currencyUnit: string, readonly formattedAmount: string }, readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string, readonly paymentRequest: string } | { readonly __typename: 'InitiationViaOnChain', readonly address: string }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly counterPartyWalletId?: string | null, readonly counterPartyUsername?: string | null } | { readonly __typename: 'SettlementViaLn', readonly preImage?: string | null } | { readonly __typename: 'SettlementViaOnChain', readonly transactionHash?: string | null, readonly arrivalInMempoolEstimatedAt?: number | null } };
 
@@ -3252,294 +3214,6 @@ export function useRealtimePriceLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type RealtimePriceQueryHookResult = ReturnType<typeof useRealtimePriceQuery>;
 export type RealtimePriceLazyQueryHookResult = ReturnType<typeof useRealtimePriceLazyQuery>;
 export type RealtimePriceQueryResult = Apollo.QueryResult<RealtimePriceQuery, RealtimePriceQueryVariables>;
-export const HideBalanceDocument = gql`
-    query hideBalance {
-  hideBalance @client
-}
-    `;
-
-/**
- * __useHideBalanceQuery__
- *
- * To run a query within a React component, call `useHideBalanceQuery` and pass it any options that fit your needs.
- * When your component renders, `useHideBalanceQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useHideBalanceQuery({
- *   variables: {
- *   },
- * });
- */
-export function useHideBalanceQuery(baseOptions?: Apollo.QueryHookOptions<HideBalanceQuery, HideBalanceQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<HideBalanceQuery, HideBalanceQueryVariables>(HideBalanceDocument, options);
-      }
-export function useHideBalanceLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<HideBalanceQuery, HideBalanceQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<HideBalanceQuery, HideBalanceQueryVariables>(HideBalanceDocument, options);
-        }
-export type HideBalanceQueryHookResult = ReturnType<typeof useHideBalanceQuery>;
-export type HideBalanceLazyQueryHookResult = ReturnType<typeof useHideBalanceLazyQuery>;
-export type HideBalanceQueryResult = Apollo.QueryResult<HideBalanceQuery, HideBalanceQueryVariables>;
-export const HiddenBalanceToolTipDocument = gql`
-    query hiddenBalanceToolTip {
-  hiddenBalanceToolTip @client
-}
-    `;
-
-/**
- * __useHiddenBalanceToolTipQuery__
- *
- * To run a query within a React component, call `useHiddenBalanceToolTipQuery` and pass it any options that fit your needs.
- * When your component renders, `useHiddenBalanceToolTipQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useHiddenBalanceToolTipQuery({
- *   variables: {
- *   },
- * });
- */
-export function useHiddenBalanceToolTipQuery(baseOptions?: Apollo.QueryHookOptions<HiddenBalanceToolTipQuery, HiddenBalanceToolTipQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<HiddenBalanceToolTipQuery, HiddenBalanceToolTipQueryVariables>(HiddenBalanceToolTipDocument, options);
-      }
-export function useHiddenBalanceToolTipLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<HiddenBalanceToolTipQuery, HiddenBalanceToolTipQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<HiddenBalanceToolTipQuery, HiddenBalanceToolTipQueryVariables>(HiddenBalanceToolTipDocument, options);
-        }
-export type HiddenBalanceToolTipQueryHookResult = ReturnType<typeof useHiddenBalanceToolTipQuery>;
-export type HiddenBalanceToolTipLazyQueryHookResult = ReturnType<typeof useHiddenBalanceToolTipLazyQuery>;
-export type HiddenBalanceToolTipQueryResult = Apollo.QueryResult<HiddenBalanceToolTipQuery, HiddenBalanceToolTipQueryVariables>;
-export const BetaDocument = gql`
-    query beta {
-  beta @client
-}
-    `;
-
-/**
- * __useBetaQuery__
- *
- * To run a query within a React component, call `useBetaQuery` and pass it any options that fit your needs.
- * When your component renders, `useBetaQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useBetaQuery({
- *   variables: {
- *   },
- * });
- */
-export function useBetaQuery(baseOptions?: Apollo.QueryHookOptions<BetaQuery, BetaQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<BetaQuery, BetaQueryVariables>(BetaDocument, options);
-      }
-export function useBetaLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BetaQuery, BetaQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<BetaQuery, BetaQueryVariables>(BetaDocument, options);
-        }
-export type BetaQueryHookResult = ReturnType<typeof useBetaQuery>;
-export type BetaLazyQueryHookResult = ReturnType<typeof useBetaLazyQuery>;
-export type BetaQueryResult = Apollo.QueryResult<BetaQuery, BetaQueryVariables>;
-export const ColorSchemeDocument = gql`
-    query colorScheme {
-  colorScheme @client
-}
-    `;
-
-/**
- * __useColorSchemeQuery__
- *
- * To run a query within a React component, call `useColorSchemeQuery` and pass it any options that fit your needs.
- * When your component renders, `useColorSchemeQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useColorSchemeQuery({
- *   variables: {
- *   },
- * });
- */
-export function useColorSchemeQuery(baseOptions?: Apollo.QueryHookOptions<ColorSchemeQuery, ColorSchemeQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ColorSchemeQuery, ColorSchemeQueryVariables>(ColorSchemeDocument, options);
-      }
-export function useColorSchemeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ColorSchemeQuery, ColorSchemeQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ColorSchemeQuery, ColorSchemeQueryVariables>(ColorSchemeDocument, options);
-        }
-export type ColorSchemeQueryHookResult = ReturnType<typeof useColorSchemeQuery>;
-export type ColorSchemeLazyQueryHookResult = ReturnType<typeof useColorSchemeLazyQuery>;
-export type ColorSchemeQueryResult = Apollo.QueryResult<ColorSchemeQuery, ColorSchemeQueryVariables>;
-export const CountryCodeDocument = gql`
-    query countryCode {
-  countryCode @client
-}
-    `;
-
-/**
- * __useCountryCodeQuery__
- *
- * To run a query within a React component, call `useCountryCodeQuery` and pass it any options that fit your needs.
- * When your component renders, `useCountryCodeQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useCountryCodeQuery({
- *   variables: {
- *   },
- * });
- */
-export function useCountryCodeQuery(baseOptions?: Apollo.QueryHookOptions<CountryCodeQuery, CountryCodeQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CountryCodeQuery, CountryCodeQueryVariables>(CountryCodeDocument, options);
-      }
-export function useCountryCodeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CountryCodeQuery, CountryCodeQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CountryCodeQuery, CountryCodeQueryVariables>(CountryCodeDocument, options);
-        }
-export type CountryCodeQueryHookResult = ReturnType<typeof useCountryCodeQuery>;
-export type CountryCodeLazyQueryHookResult = ReturnType<typeof useCountryCodeLazyQuery>;
-export type CountryCodeQueryResult = Apollo.QueryResult<CountryCodeQuery, CountryCodeQueryVariables>;
-export const FeedbackModalShownDocument = gql`
-    query feedbackModalShown {
-  feedbackModalShown @client
-}
-    `;
-
-/**
- * __useFeedbackModalShownQuery__
- *
- * To run a query within a React component, call `useFeedbackModalShownQuery` and pass it any options that fit your needs.
- * When your component renders, `useFeedbackModalShownQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFeedbackModalShownQuery({
- *   variables: {
- *   },
- * });
- */
-export function useFeedbackModalShownQuery(baseOptions?: Apollo.QueryHookOptions<FeedbackModalShownQuery, FeedbackModalShownQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FeedbackModalShownQuery, FeedbackModalShownQueryVariables>(FeedbackModalShownDocument, options);
-      }
-export function useFeedbackModalShownLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FeedbackModalShownQuery, FeedbackModalShownQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FeedbackModalShownQuery, FeedbackModalShownQueryVariables>(FeedbackModalShownDocument, options);
-        }
-export type FeedbackModalShownQueryHookResult = ReturnType<typeof useFeedbackModalShownQuery>;
-export type FeedbackModalShownLazyQueryHookResult = ReturnType<typeof useFeedbackModalShownLazyQuery>;
-export type FeedbackModalShownQueryResult = Apollo.QueryResult<FeedbackModalShownQuery, FeedbackModalShownQueryVariables>;
-export const HasPromptedSetDefaultAccountDocument = gql`
-    query hasPromptedSetDefaultAccount {
-  hasPromptedSetDefaultAccount @client
-}
-    `;
-
-/**
- * __useHasPromptedSetDefaultAccountQuery__
- *
- * To run a query within a React component, call `useHasPromptedSetDefaultAccountQuery` and pass it any options that fit your needs.
- * When your component renders, `useHasPromptedSetDefaultAccountQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useHasPromptedSetDefaultAccountQuery({
- *   variables: {
- *   },
- * });
- */
-export function useHasPromptedSetDefaultAccountQuery(baseOptions?: Apollo.QueryHookOptions<HasPromptedSetDefaultAccountQuery, HasPromptedSetDefaultAccountQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<HasPromptedSetDefaultAccountQuery, HasPromptedSetDefaultAccountQueryVariables>(HasPromptedSetDefaultAccountDocument, options);
-      }
-export function useHasPromptedSetDefaultAccountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<HasPromptedSetDefaultAccountQuery, HasPromptedSetDefaultAccountQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<HasPromptedSetDefaultAccountQuery, HasPromptedSetDefaultAccountQueryVariables>(HasPromptedSetDefaultAccountDocument, options);
-        }
-export type HasPromptedSetDefaultAccountQueryHookResult = ReturnType<typeof useHasPromptedSetDefaultAccountQuery>;
-export type HasPromptedSetDefaultAccountLazyQueryHookResult = ReturnType<typeof useHasPromptedSetDefaultAccountLazyQuery>;
-export type HasPromptedSetDefaultAccountQueryResult = Apollo.QueryResult<HasPromptedSetDefaultAccountQuery, HasPromptedSetDefaultAccountQueryVariables>;
-export const IntroducingCirclesModalShownDocument = gql`
-    query introducingCirclesModalShown {
-  introducingCirclesModalShown @client
-}
-    `;
-
-/**
- * __useIntroducingCirclesModalShownQuery__
- *
- * To run a query within a React component, call `useIntroducingCirclesModalShownQuery` and pass it any options that fit your needs.
- * When your component renders, `useIntroducingCirclesModalShownQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useIntroducingCirclesModalShownQuery({
- *   variables: {
- *   },
- * });
- */
-export function useIntroducingCirclesModalShownQuery(baseOptions?: Apollo.QueryHookOptions<IntroducingCirclesModalShownQuery, IntroducingCirclesModalShownQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<IntroducingCirclesModalShownQuery, IntroducingCirclesModalShownQueryVariables>(IntroducingCirclesModalShownDocument, options);
-      }
-export function useIntroducingCirclesModalShownLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IntroducingCirclesModalShownQuery, IntroducingCirclesModalShownQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<IntroducingCirclesModalShownQuery, IntroducingCirclesModalShownQueryVariables>(IntroducingCirclesModalShownDocument, options);
-        }
-export type IntroducingCirclesModalShownQueryHookResult = ReturnType<typeof useIntroducingCirclesModalShownQuery>;
-export type IntroducingCirclesModalShownLazyQueryHookResult = ReturnType<typeof useIntroducingCirclesModalShownLazyQuery>;
-export type IntroducingCirclesModalShownQueryResult = Apollo.QueryResult<IntroducingCirclesModalShownQuery, IntroducingCirclesModalShownQueryVariables>;
-export const InnerCircleValueDocument = gql`
-    query innerCircleValue {
-  innerCircleValue @client
-}
-    `;
-
-/**
- * __useInnerCircleValueQuery__
- *
- * To run a query within a React component, call `useInnerCircleValueQuery` and pass it any options that fit your needs.
- * When your component renders, `useInnerCircleValueQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useInnerCircleValueQuery({
- *   variables: {
- *   },
- * });
- */
-export function useInnerCircleValueQuery(baseOptions?: Apollo.QueryHookOptions<InnerCircleValueQuery, InnerCircleValueQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<InnerCircleValueQuery, InnerCircleValueQueryVariables>(InnerCircleValueDocument, options);
-      }
-export function useInnerCircleValueLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<InnerCircleValueQuery, InnerCircleValueQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<InnerCircleValueQuery, InnerCircleValueQueryVariables>(InnerCircleValueDocument, options);
-        }
-export type InnerCircleValueQueryHookResult = ReturnType<typeof useInnerCircleValueQuery>;
-export type InnerCircleValueLazyQueryHookResult = ReturnType<typeof useInnerCircleValueLazyQuery>;
-export type InnerCircleValueQueryResult = Apollo.QueryResult<InnerCircleValueQuery, InnerCircleValueQueryVariables>;
 export const NetworkDocument = gql`
     query network {
   globals {
@@ -7134,6 +6808,7 @@ export type ResolversTypes = {
   InvoiceEdge: ResolverTypeWrapper<InvoiceEdge>;
   InvoicePaymentStatus: InvoicePaymentStatus;
   Language: ResolverTypeWrapper<Scalars['Language']['output']>;
+  LatLng: ResolverTypeWrapper<LatLng>;
   Leader: ResolverTypeWrapper<Leader>;
   Leaderboard: ResolverTypeWrapper<Leaderboard>;
   LeaderboardName: ResolverTypeWrapper<Scalars['LeaderboardName']['output']>;
@@ -7347,6 +7022,7 @@ export type ResolversParentTypes = {
   InvoiceConnection: InvoiceConnection;
   InvoiceEdge: InvoiceEdge;
   Language: Scalars['Language']['output'];
+  LatLng: LatLng;
   Leader: Leader;
   Leaderboard: Leaderboard;
   LeaderboardName: Scalars['LeaderboardName']['output'];
@@ -7823,6 +7499,12 @@ export interface LanguageScalarConfig extends GraphQLScalarTypeConfig<ResolversT
   name: 'Language';
 }
 
+export type LatLngResolvers<ContextType = any, ParentType extends ResolversParentTypes['LatLng'] = ResolversParentTypes['LatLng']> = {
+  lat?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  lng?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type LeaderResolvers<ContextType = any, ParentType extends ResolversParentTypes['Leader'] = ResolversParentTypes['Leader']> = {
   name?: Resolver<Maybe<ResolversTypes['LeaderboardName']>, ParentType, ContextType>;
   points?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -8154,6 +7836,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   hideBalance?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   innerCircleValue?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   introducingCirclesModalShown?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  latLng?: Resolver<Maybe<ResolversTypes['LatLng']>, ParentType, ContextType>;
   lnInvoicePaymentStatus?: Resolver<ResolversTypes['LnInvoicePaymentStatusPayload'], ParentType, ContextType, RequireFields<QueryLnInvoicePaymentStatusArgs, 'input'>>;
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   mobileVersions?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['MobileVersions']>>>, ParentType, ContextType>;
@@ -8518,6 +8201,7 @@ export type Resolvers<ContextType = any> = {
   InvoiceConnection?: InvoiceConnectionResolvers<ContextType>;
   InvoiceEdge?: InvoiceEdgeResolvers<ContextType>;
   Language?: GraphQLScalarType;
+  LatLng?: LatLngResolvers<ContextType>;
   Leader?: LeaderResolvers<ContextType>;
   Leaderboard?: LeaderboardResolvers<ContextType>;
   LeaderboardName?: GraphQLScalarType;

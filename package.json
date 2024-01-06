@@ -115,6 +115,7 @@
     "react-native-maps": "^1.4.0",
     "react-native-modal": "^13.0.1",
     "react-native-nfc-manager": "^3.14.8",
+    "react-native-permissions": "^4.0.2",
     "react-native-push-notification": "^8.1.1",
     "react-native-qrcode-svg": "^6.2.0",
     "react-native-reanimated": "^3.5.4",

@@ -19546,6 +19546,11 @@ react-native-nfc-manager@^3.14.8:
   dependencies:
     "@expo/config-plugins" "~7.2.5"
 
+react-native-permissions@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-4.0.2.tgz#5c3caaf890aa3296f124a40d87421ad6f5bd14b2"
+  integrity sha512-ke/YE6VrSkCcLLI/AUTg1EXU9xn9ATdEgs8mjPU6Dy1QPmw3UlWysjzKs4M9FOVLmGrE6RtYPHfHugfQZas8GA==
+
 react-native-push-notification@^8.1.1:
   version "8.1.1"
   resolved "https://registry.npmjs.org/react-native-push-notification/-/react-native-push-notification-8.1.1.tgz#a41d20c70ea5a7709417e96261b225461f8dc73a"

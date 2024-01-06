@@ -19,6 +19,7 @@ import {
   IntroducingCirclesModalShownQuery,
 } from "./generated"
 import { CountryCode } from "libphonenumber-js/mobile"
+import { LatLng } from "react-native-maps"
 
 export default gql`
   query hideBalance {
@@ -39,6 +40,10 @@ export default gql`
 
   query countryCode {
     countryCode @client
+  }
+
+  query latLng {
+    latLng { lat lng } @client
   }
 
   query feedbackModalShown {
@@ -138,6 +143,20 @@ export const updateCountryCode = (
     console.warn("impossible to update country code")
   }
 }
+
+// export const updateMapLastCoords = (client: ApolloClient<unknown>, latLng: LatLng) => {
+//   try {
+//     client.writeQuery<MapLastCoordsQuery>({
+//       query: MapLastCoordsDocument,
+//       data: {
+//         __typename: "Query",
+//         latLng,
+//       },
+//     })
+//   } catch {
+//     console.warn("impossible to update map last coords")
+//   }
+// }
 
 export const setFeedbackModalShown = (client: ApolloClient<unknown>, shown: boolean) => {
   try {
