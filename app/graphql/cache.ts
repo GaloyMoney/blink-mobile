@@ -91,6 +91,9 @@ export const createCache = () =>
           introducingCirclesModalShown: {
             read: (value) => value ?? false,
           },
+          swapDefaultUnitOfAccount: {
+            read: (value) => value ?? false,
+          },
           innerCircleValue: {
             read: (value) => value ?? -1,
           },

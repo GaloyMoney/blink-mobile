@@ -1458,6 +1458,10 @@ query supportedCountries {
   }
 }
 
+query swapDefaultUnitOfAccount {
+  swapDefaultUnitOfAccount @client
+}
+
 query totpRegistrationScreen {
   me {
     id
