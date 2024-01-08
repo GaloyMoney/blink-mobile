@@ -15,13 +15,14 @@ import "./storybook.requires"
 import { detectDefaultLocale } from "../app/utils/locale-detector"
 import RNBootSplash from "react-native-bootsplash"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
+import { NotificationsProvider } from "../app/components/notifications"
 
 RNBootSplash.hide({ fade: true })
 
 const StorybookUI = getStorybookUI({
   enableWebsockets: true, // for @storybook/react-native-server
   onDeviceUI: true,
-  initialSelection: { kind: "Send Bitcoin Completed Screen", name: "Pending" },
+  initialSelection: { kind: "Notification Card UI", name: "Default" },
   shouldPersistSelection: false,
 })
 
@@ -39,7 +40,7 @@ export const StorybookUIRoot: React.FC = () => (
   <GestureHandlerRootView style={{ flex: 1 }}>
     <I18nWrapper>
       <ThemeWrapper>
-        <>
+        <NotificationsProvider>
           <NavigationContainer>
             <Stack.Navigator>
               <Stack.Screen
@@ -52,7 +53,7 @@ export const StorybookUIRoot: React.FC = () => (
               />
             </Stack.Navigator>
           </NavigationContainer>
-        </>
+        </NotificationsProvider>
       </ThemeWrapper>
     </I18nWrapper>
   </GestureHandlerRootView>

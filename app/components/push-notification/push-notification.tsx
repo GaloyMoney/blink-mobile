@@ -21,7 +21,7 @@ const circlesNotificationTypes = [
   "LeaderboardAllTimeThresholdReached",
 ]
 
-export const NotificationComponent = (): JSX.Element => {
+export const PushNotificationComponent = (): JSX.Element => {
   const client = useApolloClient()
   const isAuthed = useIsAuthed()
   const primaryNavigation = useNavigation<StackNavigationProp<PrimaryStackParamList>>()
