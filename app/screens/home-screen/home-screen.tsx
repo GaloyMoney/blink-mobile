@@ -40,7 +40,7 @@ import { isIos } from "@app/utils/helper"
 import { useMemo } from "react"
 import { BalanceHeader } from "../../components/balance-header"
 import { Screen } from "../../components/screen"
-import { TransactionItem } from "../../components/transaction-item"
+import { MemoizedTransactionItem } from "../../components/transaction-item"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { testProps } from "../../utils/testProps"
 import { PhoneLoginInitiateType } from "../phone-auth-screen"
@@ -246,7 +246,7 @@ export const HomeScreen: React.FC = () => {
             .map(
               (tx, index, array) =>
                 tx && (
-                  <TransactionItem
+                  <MemoizedTransactionItem
                     key={`transaction-${tx.id}`}
                     txid={tx.id}
                     subtitle

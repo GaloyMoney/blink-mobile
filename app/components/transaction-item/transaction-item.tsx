@@ -65,7 +65,7 @@ type Props = {
   isOnHomeScreen?: boolean
 }
 
-export const TransactionItem: React.FC<Props> = ({
+const TransactionItem: React.FC<Props> = ({
   txid,
   subtitle = false,
   isFirst = false,
@@ -192,6 +192,8 @@ export const TransactionItem: React.FC<Props> = ({
     </ListItem>
   )
 }
+
+export const MemoizedTransactionItem = React.memo(TransactionItem)
 
 type UseStyleProps = {
   isFirst?: boolean
