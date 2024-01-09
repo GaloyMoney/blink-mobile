@@ -17,6 +17,7 @@ export type Locales =
 	| 'es'
 	| 'fr'
 	| 'hr'
+	| 'hu'
 	| 'hy'
 	| 'it'
 	| 'ja'
@@ -6271,6 +6272,10 @@ type RootTranslation = {
 		 * T​h​i​s​ ​s​e​c​t​i​o​n​ ​w​i​l​l​ ​b​e​ ​a​v​a​i​l​a​b​l​e​ ​t​o​m​o​r​r​o​w​!
 		 */
 		availableTomorrow: string
+		/**
+		 * D​i​g​ ​y​o​u​r​ ​w​a​y​ ​t​h​r​o​u​g​h​ ​t​h​e​s​e​ ​l​e​s​s​o​n​s​ ​a​n​d​ ​e​a​r​n​ ​a​s​ ​y​o​u​ ​l​e​a​r​n
+		 */
+		motivatingBadger: string
 	}
 	GetStartedScreen: {
 		/**
@@ -15070,6 +15075,10 @@ export type TranslationFunctions = {
 		 * This section will be available tomorrow!
 		 */
 		availableTomorrow: () => LocalizedString
+		/**
+		 * Dig your way through these lessons and earn as you learn
+		 */
+		motivatingBadger: () => LocalizedString
 	}
 	GetStartedScreen: {
 		/**

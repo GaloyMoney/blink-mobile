@@ -40,10 +40,11 @@ import { isIos } from "@app/utils/helper"
 import { useMemo } from "react"
 import { BalanceHeader } from "../../components/balance-header"
 import { Screen } from "../../components/screen"
-import { TransactionItem } from "../../components/transaction-item"
+import { MemoizedTransactionItem } from "../../components/transaction-item"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { testProps } from "../../utils/testProps"
 import { PhoneLoginInitiateType } from "../phone-auth-screen"
+import { NotificationCard } from "@app/components/notifications"
 
 const TransactionCountToTriggerSetDefaultAccountModal = 1
 
@@ -245,7 +246,7 @@ export const HomeScreen: React.FC = () => {
             .map(
               (tx, index, array) =>
                 tx && (
-                  <TransactionItem
+                  <MemoizedTransactionItem
                     key={`transaction-${tx.id}`}
                     txid={tx.id}
                     subtitle
@@ -347,7 +348,7 @@ export const HomeScreen: React.FC = () => {
         />
       </View>
       <ScrollView
-        contentContainerStyle={[styles.scrollView, styles.container]}
+        contentContainerStyle={styles.scrollViewContainer}
         refreshControl={
           <RefreshControl
             refreshing={loading}
@@ -361,11 +362,7 @@ export const HomeScreen: React.FC = () => {
           loading={loading}
           setIsStablesatModalVisible={setIsStablesatModalVisible}
         />
-        {error && (
-          <View style={styles.marginButtonContainer}>
-            <GaloyErrorBox errorMessage={getErrorMessages(error)} />
-          </View>
-        )}
+        {error && <GaloyErrorBox errorMessage={getErrorMessages(error)} />}
         <View style={styles.listItemsContainer}>
           {buttons.map((item) => (
             <View key={item.icon} style={styles.button}>
@@ -378,26 +375,29 @@ export const HomeScreen: React.FC = () => {
             </View>
           ))}
         </View>
-
-        {recentTransactionsData && (
-          <>
-            <TouchableOpacity
-              style={styles.recentTransaction}
-              onPress={() => onMenuClick("transactionHistory")}
-              activeOpacity={0.6}
-            >
-              <Text
-                type="p1"
-                style={{ color: colors.primary }}
-                bold
-                {...testProps(recentTransactionsData.title)}
+        <NotificationCard />
+        <View>
+          {recentTransactionsData && (
+            <>
+              <TouchableOpacity
+                style={styles.recentTransaction}
+                onPress={() => onMenuClick("transactionHistory")}
+                activeOpacity={0.6}
               >
-                {recentTransactionsData?.title}
-              </Text>
-            </TouchableOpacity>
-            {recentTransactionsData?.details}
-          </>
-        )}
+                <Text
+                  type="p1"
+                  style={{ color: colors.primary }}
+                  bold
+                  {...testProps(recentTransactionsData.title)}
+                >
+                  {recentTransactionsData?.title}
+                </Text>
+              </TouchableOpacity>
+              {recentTransactionsData?.details}
+            </>
+          )}
+        </View>
+
         <AppUpdate />
         <SetDefaultAccountModal
           isVisible={setDefaultAccountModalVisible}
@@ -409,13 +409,14 @@ export const HomeScreen: React.FC = () => {
 }
 
 const useStyles = makeStyles(({ colors }) => ({
-  scrollView: {
-    paddingBottom: 12,
+  scrollViewContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    rowGap: 20,
   },
   listItemsContainer: {
     paddingHorizontal: 15,
     paddingVertical: 15,
-    marginBottom: 20,
     borderRadius: 12,
     backgroundColor: colors.grey5,
     display: "flex",
@@ -429,9 +430,6 @@ const useStyles = makeStyles(({ colors }) => ({
   icon: {
     height: 34,
     top: -22,
-  },
-  marginButtonContainer: {
-    marginBottom: 20,
   },
   modal: {
     marginBottom: 0,

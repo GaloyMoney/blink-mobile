@@ -8,7 +8,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { makeStyles, useTheme } from "@rneui/themed"
 import * as React from "react"
 import { ActivityIndicator, SectionList, Text, View } from "react-native"
-import { TransactionItem } from "../../components/transaction-item"
+import { MemoizedTransactionItem } from "../../components/transaction-item"
 import { toastShow } from "../../utils/toast"
 
 gql`
@@ -94,8 +94,10 @@ export const TransactionHistoryScreen: React.FC = () => {
     <Screen>
       <SectionList
         showsVerticalScrollIndicator={false}
+        maxToRenderPerBatch={10}
+        initialNumToRender={20}
         renderItem={({ item, index, section }) => (
-          <TransactionItem
+          <MemoizedTransactionItem
             key={`txn-${item.id}`}
             isFirst={index === 0}
             isLast={index === section.data.length - 1}
@@ -103,7 +105,6 @@ export const TransactionHistoryScreen: React.FC = () => {
             subtitle
           />
         )}
-        initialNumToRender={20}
         renderSectionHeader={({ section: { title } }) => (
           <View style={styles.sectionHeaderContainer}>
             <Text style={styles.sectionHeaderText}>{title}</Text>

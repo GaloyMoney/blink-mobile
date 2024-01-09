@@ -29,7 +29,6 @@ gql`
 const useStyles = makeStyles(() => ({
   bottom: {
     alignItems: "center",
-    marginVertical: 16,
   },
 
   lightningText: {

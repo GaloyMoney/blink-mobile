@@ -35,7 +35,8 @@
         "setUpAuthenticationDescription": "Utiliza datos biométricos para autenticar",
         "skip": "Saltar",
         "unlock": "Desbloquear",
-        "usePin": "Usar PIN"
+        "usePin": "Usar PIN",
+        "confirmLogout": "¿Está seguro de que desea cerrar sesión? Esto reiniciará su caché y todas las configuraciones de usuario locales."
     },
     "PeopleScreen": {
         "title": "Gente",
@@ -1990,7 +1991,9 @@
         "unlockQuestion": "Para desbloquear, responda la pregunta:",
         "youEarned": "Has Ganado",
         "registerTitle": "Necesitas actualizar tu cuenta",
-        "registerContent": "Regístrate con tu número de teléfono para recibir sats"
+        "registerContent": "Regístrate con tu número de teléfono para recibir sats",
+        "notYet": "Aún no",
+        "availableTomorrow": "¡Esta sección estará disponible mañana!"
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Log in / Crear Cuenta",
@@ -2157,6 +2160,8 @@
         "invoiceAlreadyPaid": "Esta factura ya ha sido pagada.",
         "somethingWentWrong": "Algo salió mal",
         "paymentAlreadyAttempted": "El pago ya se intentó.\n\nSi deseas enviar este pago nuevamente, comienza desde el principio del proceso.",
+        "slideToConfirm": "Desliza para confirmar",
+        "slideConfirming": "Confirmando...",
         "copiedDestination": "Destino copiado al portapapeles"
     },
     "SendBitcoinDestinationScreen": {
@@ -2217,7 +2222,8 @@
             "content": "Tu tarifa es un 50% más grande que la cantidad enviada. ¿Estás seguro de que quieres continuar?\n\nPara reducir la tarifa, pide al receptor que acepte la transacción a través de Lightning.",
             "confirmButton": "Estoy 100% seguro"
         },
-        "copiedDestination": "Destino copiado al portapapeles"
+        "copiedDestination": "Destino copiado al portapapeles",
+        "pendingPayment": "El pago ha sido enviado, pero aún no se ha confirmado.\n\nEs posible que el pago no se confirme, en cuyo caso los fondos se devolverán a su cuenta.\nBETA"
     },
     "SettingsScreen": {
         "activated": "Activada",
@@ -2338,6 +2344,7 @@
         "paid": "Pagado a/desde",
         "received": "Recibiste",
         "spent": "Gastaste",
+        "sending": "Enviando",
         "receivingAccount": "Cuenta receptora",
         "sendingAccount": "Cuenta de envio",
         "txNotBroadcast": "Tu transacción está en cola. Debería aparecer en la Mempool en {countdown: string}.",
@@ -2661,31 +2668,17 @@
         "someones": "de {username: string}",
         "groupEffort": "La adopción de Bitcoin es un esfuerzo de grupo.\nInvita a un amigo y envíale sats para comenzar a construir tus círculos.",
         "drivingAdoption": "Estoy impulsando la adopción de Bitcoin usando Blink.",
-        "septChallenge": {
-            "title": "¡Reto de septiembre!",
-            "description": "Círculo Interno {innerCircle: number}/21 - Gana $21\nTop 3 - ¡Gane boletos para Adopting Bitcoin!",
-            "details": "Aumenta tu círculo interno a 21 personas en septiembre y compártelo en las redes sociales con #blinkcircles para obtener 21 $ en tu cuenta de Stablesats. Los 3 mejores ganarán entradas para adopting Bitcoin!",
-            "peopleWelcomedSoFar": "gente bienvenida hasta ahora",
-            "yourRank": "Tu puesto",
-            "reminder": "Recordatorio: tu círculo interno crece cuando envías a un nuevo usuario de Blink sus primeros sats",
-            "fullDetails": "Detalles completos en"
-        },
-        "octoberChallenge": {
-            "title": "¡Reto de Octubre!",
-            "description": "¡Comparte tus círculos en las redes sociales con la etiqueta #blinkcircles para tener la oportunidad de ganar 1.000.000 de sats!",
-            "details": "¡Regalaremos 1.000.000 de sats!\n\n¡Comparte tus círculos en las redes sociales con la etiqueta `#blinkcircles` para participar! El ganador será elegido al azar el 31 de octubre.\n\n¡Debes tener al menos una persona en tu círculo interno para ingresar!",
-            "connectOnSocial": "Conecta en redes sociales:",
-            "fullDetails": "Detalles completos en"
-        },
-        "novemberChallenge": {
-            "title": "Desafío de Noviembre!",
-            "description": "Gana 2,100 sats por cada persona que le des la bienvenida a Blink durante Noviembre!",
-            "details": "Gana 2,100 sats por cada persona que le des la bienvenida a Blink durante Noviembre!\n\nPara reclamar tus sats, solamente comparte tu círculo en las redes, durante noviembre con el hash #blinkcircles.\n\nLos sats se te enviarán el 1 de Diciembre 2023."
-        },
+        "connectOnSocial": "Conecta en redes sociales:",
+        "fullDetails": "Detalles completos en",
         "decemberChallenge": {
             "title": "¡Reto de diciembre! ",
             "description": "\"¡+10 amigos a tu círculo interno para tener la oportunidad de ganar $100!\"",
             "details": "¡Has crecer su círculo íntimo en 10 personas en diciembre para tener la oportunidad de ganar $100! \n\nPara participar, comparte tus círculos en las redes sociales una vez que hayas llegado a 10 por mes y etiqueta #blinkcircles. \n\n¡El 1 de enero, se elegirán tres personas al azar para recibir $100!"
+        },
+        "januaryChallenge": {
+            "title": "Reto de enero!",
+            "description": "¡+10 a tu circulo exterior en enero por oportunidad de $100!",
+            "details": "¡Has crecer su círculo exterior en 10 personas en enero para tener la oportunidad de ganar $100! \n\nTu círculo exterior crece cuando las personas de tu círculo interior acogen a otras, así que tiende la mano y recuerda a los que has incorporado que compartan Blink con sus amigos y familiares.\n\nComparte tus círculos en las redes sociales con #blinkcircles para participar."
         }
     },
     "FullOnboarding": {
