@@ -10,6 +10,7 @@ import ContactModal, {
 } from "@app/components/contact-modal/contact-modal"
 import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
 import {
+  useBetaQuery,
   useSettingsScreenQuery,
   useWalletCsvTransactionsLazyQuery,
 } from "@app/graphql/generated"
@@ -86,6 +87,10 @@ export const SettingsScreen: React.FC = () => {
     returnPartialData: true,
     skip: !isAtLeastLevelZero,
   })
+
+  // get beta flag
+  const betaQuery = useBetaQuery()
+  const beta = betaQuery.data?.beta ?? false
 
   const { displayCurrency } = useDisplayCurrency()
 
@@ -295,12 +300,17 @@ export const SettingsScreen: React.FC = () => {
       icon: "help-circle-outline",
       id: "contact-us",
       action: () => {
-        setContactMethods([
+        const contactMethods: SupportChannels[] = [
           SupportChannels.Faq,
           SupportChannels.StatusPage,
           SupportChannels.Email,
           SupportChannels.WhatsApp,
-        ])
+        ]
+        if (beta) {
+          contactMethods.push(SupportChannels.Chatbot)
+        }
+
+        setContactMethods(contactMethods)
         toggleIsContactModalVisible()
       },
       enabled: true,

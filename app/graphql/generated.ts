@@ -1034,6 +1034,7 @@ export type Mutation = {
   readonly onChainUsdPaymentSendAsBtcDenominated: PaymentSendPayload;
   readonly onboardingFlowStart: OnboardingFlowStartResult;
   readonly quizClaim: QuizClaimPayload;
+  readonly supportChatMessageAdd: SupportChatMessageAddPayload;
   /** @deprecated will be moved to AccountContact */
   readonly userContactUpdateAlias: UserContactUpdateAliasPayload;
   readonly userEmailDelete: UserEmailDeletePayload;
@@ -1256,6 +1257,11 @@ export type MutationOnboardingFlowStartArgs = {
 
 export type MutationQuizClaimArgs = {
   input: QuizClaimInput;
+};
+
+
+export type MutationSupportChatMessageAddArgs = {
+  input: SupportChatMessageAddInput;
 };
 
 
@@ -1808,6 +1814,30 @@ export type SuccessPayload = {
   readonly success?: Maybe<Scalars['Boolean']['output']>;
 };
 
+export type SupportChatMessageAddInput = {
+  readonly message: Scalars['String']['input'];
+};
+
+export type SupportChatMessageAddPayload = {
+  readonly __typename: 'SupportChatMessageAddPayload';
+  readonly errors: ReadonlyArray<Error>;
+  readonly supportMessage?: Maybe<ReadonlyArray<Maybe<SupportMessage>>>;
+};
+
+export type SupportMessage = {
+  readonly __typename: 'SupportMessage';
+  readonly id: Scalars['ID']['output'];
+  readonly message: Scalars['String']['output'];
+  readonly role: SupportRole;
+  readonly timestamp: Scalars['Timestamp']['output'];
+};
+
+export const SupportRole = {
+  Assistant: 'ASSISTANT',
+  User: 'USER'
+} as const;
+
+export type SupportRole = typeof SupportRole[keyof typeof SupportRole];
 /**
  * Give details about an individual transaction.
  * Galoy have a smart routing system which is automatically
@@ -1992,6 +2022,7 @@ export type User = {
   readonly language: Scalars['Language']['output'];
   /** Phone number with international calling code. */
   readonly phone?: Maybe<Scalars['Phone']['output']>;
+  readonly supportChat: ReadonlyArray<SupportMessage>;
   /** Whether TOTP is enabled for this user. */
   readonly totpEnabled: Scalars['Boolean']['output'];
   /**
@@ -2417,6 +2448,18 @@ export type UserLogoutMutationVariables = Exact<{
 
 
 export type UserLogoutMutation = { readonly __typename: 'Mutation', readonly userLogout: { readonly __typename: 'SuccessPayload', readonly success?: boolean | null } };
+
+export type SupportChatQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SupportChatQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly supportChat: ReadonlyArray<{ readonly __typename: 'SupportMessage', readonly id: string, readonly message: string, readonly role: SupportRole, readonly timestamp: number }> } | null };
+
+export type SupportChatMessageAddMutationVariables = Exact<{
+  input: SupportChatMessageAddInput;
+}>;
+
+
+export type SupportChatMessageAddMutation = { readonly __typename: 'Mutation', readonly supportChatMessageAdd: { readonly __typename: 'SupportChatMessageAddPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly supportMessage?: ReadonlyArray<{ readonly __typename: 'SupportMessage', readonly id: string, readonly message: string, readonly role: SupportRole, readonly timestamp: number } | null> | null } };
 
 export type ConversionScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3926,6 +3969,87 @@ export function useUserLogoutMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type UserLogoutMutationHookResult = ReturnType<typeof useUserLogoutMutation>;
 export type UserLogoutMutationResult = Apollo.MutationResult<UserLogoutMutation>;
 export type UserLogoutMutationOptions = Apollo.BaseMutationOptions<UserLogoutMutation, UserLogoutMutationVariables>;
+export const SupportChatDocument = gql`
+    query supportChat {
+  me {
+    id
+    supportChat {
+      id
+      message
+      role
+      timestamp
+    }
+  }
+}
+    `;
+
+/**
+ * __useSupportChatQuery__
+ *
+ * To run a query within a React component, call `useSupportChatQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSupportChatQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSupportChatQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSupportChatQuery(baseOptions?: Apollo.QueryHookOptions<SupportChatQuery, SupportChatQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SupportChatQuery, SupportChatQueryVariables>(SupportChatDocument, options);
+      }
+export function useSupportChatLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SupportChatQuery, SupportChatQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SupportChatQuery, SupportChatQueryVariables>(SupportChatDocument, options);
+        }
+export type SupportChatQueryHookResult = ReturnType<typeof useSupportChatQuery>;
+export type SupportChatLazyQueryHookResult = ReturnType<typeof useSupportChatLazyQuery>;
+export type SupportChatQueryResult = Apollo.QueryResult<SupportChatQuery, SupportChatQueryVariables>;
+export const SupportChatMessageAddDocument = gql`
+    mutation supportChatMessageAdd($input: SupportChatMessageAddInput!) {
+  supportChatMessageAdd(input: $input) {
+    errors {
+      message
+    }
+    supportMessage {
+      id
+      message
+      role
+      timestamp
+    }
+  }
+}
+    `;
+export type SupportChatMessageAddMutationFn = Apollo.MutationFunction<SupportChatMessageAddMutation, SupportChatMessageAddMutationVariables>;
+
+/**
+ * __useSupportChatMessageAddMutation__
+ *
+ * To run a mutation, you first call `useSupportChatMessageAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSupportChatMessageAddMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [supportChatMessageAddMutation, { data, loading, error }] = useSupportChatMessageAddMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSupportChatMessageAddMutation(baseOptions?: Apollo.MutationHookOptions<SupportChatMessageAddMutation, SupportChatMessageAddMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SupportChatMessageAddMutation, SupportChatMessageAddMutationVariables>(SupportChatMessageAddDocument, options);
+      }
+export type SupportChatMessageAddMutationHookResult = ReturnType<typeof useSupportChatMessageAddMutation>;
+export type SupportChatMessageAddMutationResult = Apollo.MutationResult<SupportChatMessageAddMutation>;
+export type SupportChatMessageAddMutationOptions = Apollo.BaseMutationOptions<SupportChatMessageAddMutation, SupportChatMessageAddMutationVariables>;
 export const ConversionScreenDocument = gql`
     query conversionScreen {
   me {
@@ -7403,6 +7527,10 @@ export type ResolversTypes = {
   SignedDisplayMajorAmount: ResolverTypeWrapper<Scalars['SignedDisplayMajorAmount']['output']>;
   Subscription: ResolverTypeWrapper<{}>;
   SuccessPayload: ResolverTypeWrapper<SuccessPayload>;
+  SupportChatMessageAddInput: SupportChatMessageAddInput;
+  SupportChatMessageAddPayload: ResolverTypeWrapper<SupportChatMessageAddPayload>;
+  SupportMessage: ResolverTypeWrapper<SupportMessage>;
+  SupportRole: SupportRole;
   Timestamp: ResolverTypeWrapper<Scalars['Timestamp']['output']>;
   TotpCode: ResolverTypeWrapper<Scalars['TotpCode']['output']>;
   TotpRegistrationId: ResolverTypeWrapper<Scalars['TotpRegistrationId']['output']>;
@@ -7616,6 +7744,9 @@ export type ResolversParentTypes = {
   SignedDisplayMajorAmount: Scalars['SignedDisplayMajorAmount']['output'];
   Subscription: {};
   SuccessPayload: SuccessPayload;
+  SupportChatMessageAddInput: SupportChatMessageAddInput;
+  SupportChatMessageAddPayload: SupportChatMessageAddPayload;
+  SupportMessage: SupportMessage;
   Timestamp: Scalars['Timestamp']['output'];
   TotpCode: Scalars['TotpCode']['output'];
   TotpRegistrationId: Scalars['TotpRegistrationId']['output'];
@@ -8180,6 +8311,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   onChainUsdPaymentSendAsBtcDenominated?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationOnChainUsdPaymentSendAsBtcDenominatedArgs, 'input'>>;
   onboardingFlowStart?: Resolver<ResolversTypes['OnboardingFlowStartResult'], ParentType, ContextType, RequireFields<MutationOnboardingFlowStartArgs, 'input'>>;
   quizClaim?: Resolver<ResolversTypes['QuizClaimPayload'], ParentType, ContextType, RequireFields<MutationQuizClaimArgs, 'input'>>;
+  supportChatMessageAdd?: Resolver<ResolversTypes['SupportChatMessageAddPayload'], ParentType, ContextType, RequireFields<MutationSupportChatMessageAddArgs, 'input'>>;
   userContactUpdateAlias?: Resolver<ResolversTypes['UserContactUpdateAliasPayload'], ParentType, ContextType, RequireFields<MutationUserContactUpdateAliasArgs, 'input'>>;
   userEmailDelete?: Resolver<ResolversTypes['UserEmailDeletePayload'], ParentType, ContextType>;
   userEmailRegistrationInitiate?: Resolver<ResolversTypes['UserEmailRegistrationInitiatePayload'], ParentType, ContextType, RequireFields<MutationUserEmailRegistrationInitiateArgs, 'input'>>;
@@ -8487,6 +8619,20 @@ export type SuccessPayloadResolvers<ContextType = any, ParentType extends Resolv
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type SupportChatMessageAddPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['SupportChatMessageAddPayload'] = ResolversParentTypes['SupportChatMessageAddPayload']> = {
+  errors?: Resolver<ReadonlyArray<ResolversTypes['Error']>, ParentType, ContextType>;
+  supportMessage?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['SupportMessage']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type SupportMessageResolvers<ContextType = any, ParentType extends ResolversParentTypes['SupportMessage'] = ResolversParentTypes['SupportMessage']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  role?: Resolver<ResolversTypes['SupportRole'], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export interface TimestampScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Timestamp'], any> {
   name: 'Timestamp';
 }
@@ -8568,6 +8714,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   language?: Resolver<ResolversTypes['Language'], ParentType, ContextType>;
   phone?: Resolver<Maybe<ResolversTypes['Phone']>, ParentType, ContextType>;
+  supportChat?: Resolver<ReadonlyArray<ResolversTypes['SupportMessage']>, ParentType, ContextType>;
   totpEnabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   username?: Resolver<Maybe<ResolversTypes['Username']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -8808,6 +8955,8 @@ export type Resolvers<ContextType = any> = {
   SignedDisplayMajorAmount?: GraphQLScalarType;
   Subscription?: SubscriptionResolvers<ContextType>;
   SuccessPayload?: SuccessPayloadResolvers<ContextType>;
+  SupportChatMessageAddPayload?: SupportChatMessageAddPayloadResolvers<ContextType>;
+  SupportMessage?: SupportMessageResolvers<ContextType>;
   Timestamp?: GraphQLScalarType;
   TotpCode?: GraphQLScalarType;
   TotpRegistrationId?: GraphQLScalarType;

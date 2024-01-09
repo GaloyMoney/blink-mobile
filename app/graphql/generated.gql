@@ -496,6 +496,23 @@ mutation quizClaim($input: QuizClaimInput!) {
   }
 }
 
+mutation supportChatMessageAdd($input: SupportChatMessageAddInput!) {
+  supportChatMessageAdd(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    supportMessage {
+      id
+      message
+      role
+      timestamp
+      __typename
+    }
+    __typename
+  }
+}
+
 mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
   userContactUpdateAlias(input: $input) {
     errors {
@@ -1452,6 +1469,20 @@ query settingsScreen {
         walletCurrency
         __typename
       }
+      __typename
+    }
+    __typename
+  }
+}
+
+query supportChat {
+  me {
+    id
+    supportChat {
+      id
+      message
+      role
+      timestamp
       __typename
     }
     __typename
