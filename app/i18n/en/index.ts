@@ -2059,12 +2059,7 @@ const en: BaseTranslation = {
     },
   },
   MapScreen: {
-    locationPermissionMessage:
-      "Activate your location so you know where you are on the map",
-    locationPermissionNegative: "Cancel",
-    locationPermissionNeutral: "Ask Me Later",
-    locationPermissionPositive: "OK",
-    locationPermissionTitle: "Locate yourself on the map",
+    locationPermissionBlockedAndroid: "It looks like you've denied acces to your location here before. If you'd like to enable this feature, please update your location permissions for Blink in your Android phone settings",
     payBusiness: "Pay this business",
     title: "Map",
   },

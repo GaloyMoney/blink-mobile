@@ -5,13 +5,19 @@ import React, { useRef } from "react"
 import { BusinessMapMarkersQuery, MapMarker } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import MapMarkerComponent from "../map-marker-component"
-import { PERMISSIONS, RESULTS, request } from "react-native-permissions"
+import { PERMISSIONS, PermissionStatus, RESULTS, request } from "react-native-permissions"
 import { isIos } from "@app/utils/helper"
 import { getUserRegion } from "@app/screens/map-screen/map-screen"
+import LocationButtonCopy from "./location-button-copy"
+import debounce from "lodash.debounce"
+import { updateMapLastCoords } from "@app/graphql/client-only-query"
+import { useApolloClient } from "@apollo/client"
 
 type Props = {
   data?: BusinessMapMarkersQuery
   userLocation?: Region
+  permissionsStatus?: PermissionStatus
+  setPermissionsStatus: (_: PermissionStatus) => void
   handleMapPress: () => void
   handleMarkerPress: (_: MapMarker) => void
   focusedMarker: MapMarker | null
@@ -24,6 +30,8 @@ type Props = {
 export default function MapComponent({
   data,
   userLocation,
+  permissionsStatus,
+  setPermissionsStatus,
   handleMapPress,
   handleMarkerPress,
   focusedMarker,
@@ -37,6 +45,7 @@ export default function MapComponent({
   } = useTheme()
   const styles = useStyles()
   const { LL } = useI18nContext()
+  const client = useApolloClient()
   const text = React.useMemo(() => LL.MapScreen.payBusiness(), [LL.MapScreen])
 
   const mapViewRef = useRef<MapView>(null)
@@ -46,77 +55,92 @@ export default function MapComponent({
       isIos
         ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
         : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
-    ).then((status) => {
-      if (status === RESULTS.GRANTED) {
-        getUserRegion(async (region) => {
-          if (region && mapViewRef.current) {
-            mapViewRef.current.animateToRegion(region)
-          } else {
-            onError()
-          }
-        })
-      } else {
-        onError()
-      }
-    })
+    )
+      .then((status) => {
+        setPermissionsStatus(status)
+        if (status === RESULTS.GRANTED) {
+          getUserRegion(async (region) => {
+            if (region && mapViewRef.current) {
+              mapViewRef.current.animateToRegion(region)
+            } else {
+              onError()
+            }
+          })
+        } else if (!isIos && status === RESULTS.BLOCKED) {
+          alert(LL.MapScreen.locationPermissionBlockedAndroid())
+        }
+      })
+      .catch((_) => onError())
   }
 
-  // TODO debounce
-  const handleRegionChange = (region: Region) => {
-    mostRecentCoordsRef.current = {
-      latitude: region.latitude,
-      longitude: region.longitude,
-    }
-  }
+  const debouncedHandleRegionChange = React.useRef(
+    debounce(
+      (region: Region) => {
+        updateMapLastCoords(client, {
+          latitude: region.latitude,
+          longitude: region.longitude,
+        })
+      },
+      1000,
+      { trailing: true },
+    ),
+  ).current
 
   return (
-    <MapView
-      ref={mapViewRef}
-      style={styles.map}
-      showsUserLocation={true}
-      initialRegion={userLocation}
-      customMapStyle={themeMode === "dark" ? MapStyles.dark : MapStyles.light}
-      onPress={handleMapPress}
-      onRegionChange={handleRegionChange}
-      onMarkerSelect={(e) => {
-        // react-native-maps has a very annoying error on iOS
-        // When two markers are almost on top of each other, onSelect will get called for a nearby Marker
-        // This fix checks to see if that error happened, and quickly reopens the correct callout
-        const matchingLat =
-          e.nativeEvent.coordinate.latitude ===
-          focusedMarker?.mapInfo.coordinates.latitude
-        const matchingLng =
-          e.nativeEvent.coordinate.longitude ===
-          focusedMarker?.mapInfo.coordinates.longitude
-        if (!matchingLat || !matchingLng) {
-          if (focusedMarkerRef.current) {
-            focusedMarkerRef.current.showCallout()
+    <>
+      <MapView
+        ref={mapViewRef}
+        style={styles.map}
+        // we don't want MapView to ever ask for permissions directly,
+        // but we do want to take advantage of their 'center-location' button that comes from this prop
+        showsUserLocation={permissionsStatus === RESULTS.GRANTED}
+        initialRegion={userLocation}
+        customMapStyle={themeMode === "dark" ? MapStyles.dark : MapStyles.light}
+        onPress={handleMapPress}
+        onRegionChange={debouncedHandleRegionChange}
+        onMarkerSelect={(e) => {
+          // react-native-maps has a very annoying error on iOS
+          // When two markers are almost on top of each other onSelect will get called for a nearby Marker
+          // This improvement (not an optimal fix) checks to see if that error happened, and quickly reopens the correct callout
+          const matchingLat =
+            e.nativeEvent.coordinate.latitude ===
+            focusedMarker?.mapInfo.coordinates.latitude
+          const matchingLng =
+            e.nativeEvent.coordinate.longitude ===
+            focusedMarker?.mapInfo.coordinates.longitude
+          if (!matchingLat || !matchingLng) {
+            if (focusedMarkerRef.current) {
+              focusedMarkerRef.current.showCallout()
+            }
           }
-        }
-      }}
-    >
-      {(data?.businessMapMarkers ?? []).reduce(
-        (arr: React.ReactElement[], item: MapMarker | null) => {
-          if (item?.username) {
-            arr.push(
-              <MapMarkerComponent
-                key={item.username}
-                item={item}
-                color={colors._orange}
-                handleCalloutPress={handleCalloutPress}
-                handleMarkerPress={handleMarkerPress}
-                isFocused={focusedMarker?.username === item.username}
-                text={text}
-                styles={styles}
-              />,
-            )
-          }
+        }}
+      >
+        {(data?.businessMapMarkers ?? []).reduce(
+          (arr: React.ReactElement[], item: MapMarker | null) => {
+            if (item?.username) {
+              arr.push(
+                <MapMarkerComponent
+                  key={item.username}
+                  item={item}
+                  color={colors._orange}
+                  handleCalloutPress={handleCalloutPress}
+                  handleMarkerPress={handleMarkerPress}
+                  isFocused={focusedMarker?.username === item.username}
+                  text={text}
+                  styles={styles}
+                />,
+              )
+            }
 
-          return arr
-        },
-        [],
+            return arr
+          },
+          [],
+        )}
+      </MapView>
+      {permissionsStatus === RESULTS.DENIED && (
+        <LocationButtonCopy requestPermissions={requestLocationPermission} />
       )}
-    </MapView>
+    </>
   )
 }
 
