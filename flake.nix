@@ -2,7 +2,7 @@
   description = "Galoy Mobile dev environment";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -12,20 +12,10 @@
     flake-utils,
   }:
     flake-utils.lib.eachDefaultSystem (system: let
-      overlays = [
-        (self: super: {
-          nodejs = super.nodejs_18;
-          yarn = super.yarn.override {
-            nodejs = super.nodejs_18;
-          };
-        })
-      ];
-      pkgs = import nixpkgs {inherit overlays system;};
+      pkgs = import nixpkgs {inherit system;};
       nativeBuildInputs = with pkgs;
         [
-          nodejs
           tilt
-          yarn
           alejandra
           gnumake
           docker-compose
@@ -34,9 +24,6 @@
           vendir
           jq
           ytt
-        ]
-        ++ lib.optionals pkgs.stdenv.isLinux [
-          xvfb-run
         ];
     in
       with pkgs; {

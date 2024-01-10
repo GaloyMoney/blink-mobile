@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   gh: circleci/github-cli@2.3.0
   node: circleci/node@5.1.1
+  nix: eld/nix@1.1.1
   android: circleci/android@2.4.0
   rn: react-native-community/react-native@7.1.1
 
@@ -49,6 +50,17 @@ commands:
     steps:
       - run:
           command: yarn start
+          background: true
+  local_backend:
+    steps:
+      - nix/install
+      - run:
+          name: Set up Nix environment for Flakes
+          command: |
+            mkdir -p ~/.config/nix
+            echo 'experimental-features = nix-command flakes' > ~/.config/nix/nix.conf
+      - run:
+          command: nix develop -c make tilt-up
           background: true
 
 parameters:
@@ -106,6 +118,7 @@ jobs:
           path: ~/galoy-mobile
       - attach_workspace:
           at: ~/galoy-mobile
+      - local_backend
       - install_yarn_deps
       - android/create-avd:
           avd-name: Pixel_API_34_AOSP
@@ -129,6 +142,7 @@ jobs:
     steps:
       - checkout:
           path: ~/galoy-mobile
+      - local_backend
       - run: |
           brew tap wix/brew
           brew install applesimutils
@@ -224,7 +238,7 @@ jobs:
           name: Install Bundler 2.2.30
           command: |
             gem install bundler:2.2.30
-            echo "export BUNDLE_PATH=$(bundle show --path)" >> $BASH_ENV
+            echo "export BUNDLE_PATH=$(bundle show --paths)" >> $BASH_ENV
             source $BASH_ENV
       - add_ssh_keys:
           fingerprints:
