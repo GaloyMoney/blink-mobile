@@ -31,3 +31,12 @@ for service in bitcoin_services:
 
 dc_resource('otel-agent', labels = ["otel"])
 dc_resource('quickstart-test', labels = ['quickstart'], auto_init=False)
+
+local_resource(
+  name='init-setup',
+  labels = ['dev-setup'],
+  cmd='bin/setup.sh',
+  resource_deps = galoy_services + [
+    "init-lightning"
+  ]
+)

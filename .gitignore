@@ -75,6 +75,7 @@ yalc.lock
 
 *.log
 .env.local
+.env.tmp.ci
 .dependencies
 ios/assets
 ios/GaloyApp/assets

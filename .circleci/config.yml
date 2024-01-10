@@ -2,10 +2,12 @@ version: 2.1
 
 orbs:
   gh: circleci/github-cli@2.3.0
-  node: circleci/node@5.1.1
+  node: circleci/node@5.2.0
+  ruby: zebbra/ruby@0.0.2
   nix: eld/nix@1.1.1
   android: circleci/android@2.4.0
   rn: react-native-community/react-native@7.1.1
+  docker: circleci/docker@2.4.0
 
 commands:
   install_java:
@@ -30,12 +32,7 @@ commands:
           fingerprints:
             - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
       - run: brew update
-      - run:
-          name: Install Bundler 2.2.30
-          command: |
-            gem install bundler:2.2.30
-            echo "export BUNDLE_PATH=$(bundle show --path)" >> $BASH_ENV
-            source $BASH_ENV
+      - ruby/install-bundler
       - restore_cache:
           key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
       - run: cd ios && bundle config set deployment 'true'
@@ -51,7 +48,7 @@ commands:
       - run:
           command: yarn start
           background: true
-  local_backend:
+  nix-with-flake:
     steps:
       - nix/install
       - run:
@@ -59,9 +56,15 @@ commands:
           command: |
             mkdir -p ~/.config/nix
             echo 'experimental-features = nix-command flakes' > ~/.config/nix/nix.conf
+  local_backend:
+    steps:
       - run:
-          command: nix develop -c make tilt-up
+          command: |
+            nix develop -c make tilt-up
           background: true
+  wait_for_backend_ready:
+    steps:
+      - run: nix develop -c tilt wait --timeout 1h --for=condition=Ready uiresources init-setup
 
 parameters:
   version:
@@ -118,8 +121,9 @@ jobs:
           path: ~/galoy-mobile
       - attach_workspace:
           at: ~/galoy-mobile
-      - local_backend
       - install_yarn_deps
+      - nix-with-flake
+      - local_backend
       - android/create-avd:
           avd-name: Pixel_API_34_AOSP
           install: true
@@ -129,6 +133,7 @@ jobs:
           no-window: true
           post-emulator-launch-assemble-command: ""
       - metro_start
+      - wait_for_backend_ready
       - run: yarn e2e:test android.emu.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --headless
       - store_artifacts:
           path: artifacts
@@ -142,7 +147,6 @@ jobs:
     steps:
       - checkout:
           path: ~/galoy-mobile
-      - local_backend
       - run: |
           brew tap wix/brew
           brew install applesimutils
@@ -234,12 +238,7 @@ jobs:
       - checkout:
           path: ~/galoy-mobile
       - run: git checkout << pipeline.parameters.git_ref >>
-      - run:
-          name: Install Bundler 2.2.30
-          command: |
-            gem install bundler:2.2.30
-            echo "export BUNDLE_PATH=$(bundle show --paths)" >> $BASH_ENV
-            source $BASH_ENV
+      - ruby/install-bundler
       - add_ssh_keys:
           fingerprints:
             - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"

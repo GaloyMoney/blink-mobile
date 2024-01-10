@@ -368,7 +368,6 @@ type SettlementViaIntraLedger {
   """
   counterPartyUsername: Username
   counterPartyWalletId: WalletId
-  preImage: LnPaymentPreImage
 }
 
 type SettlementViaLn {
