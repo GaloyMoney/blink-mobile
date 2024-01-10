@@ -1659,6 +1659,7 @@ export type SettlementViaIntraLedger = {
   /** Settlement destination: Could be null if the payee does not have a username */
   readonly counterPartyUsername?: Maybe<Scalars['Username']['output']>;
   readonly counterPartyWalletId?: Maybe<Scalars['WalletId']['output']>;
+  readonly preImage?: Maybe<Scalars['LnPaymentPreImage']['output']>;
 };
 
 export type SettlementViaLn = {
@@ -8269,6 +8270,7 @@ export type SettlementViaResolvers<ContextType = any, ParentType extends Resolve
 export type SettlementViaIntraLedgerResolvers<ContextType = any, ParentType extends ResolversParentTypes['SettlementViaIntraLedger'] = ResolversParentTypes['SettlementViaIntraLedger']> = {
   counterPartyUsername?: Resolver<Maybe<ResolversTypes['Username']>, ParentType, ContextType>;
   counterPartyWalletId?: Resolver<Maybe<ResolversTypes['WalletId']>, ParentType, ContextType>;
+  preImage?: Resolver<Maybe<ResolversTypes['LnPaymentPreImage']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
