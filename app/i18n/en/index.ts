@@ -2059,8 +2059,10 @@ const en: BaseTranslation = {
     },
   },
   MapScreen: {
-    locationPermissionBlockedAndroid: "It looks like you've denied acces to your location here before. If you'd like to enable this feature, please update your location permissions for Blink in your Android phone settings",
+    navToSettingsTitle: "Location permissions",
+    navToSettingsText: "If you'd like to give Blink location permissions, please navigate to your settings and enable it there",
     payBusiness: "Pay this business",
+    openSettings: "Open settings",
     title: "Map",
   },
   HomeScreen: {

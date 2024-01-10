@@ -6339,13 +6339,21 @@ type RootTranslation = {
 	}
 	MapScreen: {
 		/**
-		 * I​t​ ​l​o​o​k​s​ ​l​i​k​e​ ​y​o​u​'​v​e​ ​d​e​n​i​e​d​ ​a​c​c​e​s​ ​t​o​ ​y​o​u​r​ ​l​o​c​a​t​i​o​n​ ​h​e​r​e​ ​b​e​f​o​r​e​.​ ​I​f​ ​y​o​u​'​d​ ​l​i​k​e​ ​t​o​ ​e​n​a​b​l​e​ ​t​h​i​s​ ​f​e​a​t​u​r​e​,​ ​p​l​e​a​s​e​ ​u​p​d​a​t​e​ ​y​o​u​r​ ​l​o​c​a​t​i​o​n​ ​p​e​r​m​i​s​s​i​o​n​s​ ​f​o​r​ ​B​l​i​n​k​ ​i​n​ ​y​o​u​r​ ​A​n​d​r​o​i​d​ ​p​h​o​n​e​ ​s​e​t​t​i​n​g​s
+		 * L​o​c​a​t​i​o​n​ ​p​e​r​m​i​s​s​i​o​n​s
 		 */
-		locationPermissionBlockedAndroid: string
+		navToSettingsTitle: string
+		/**
+		 * I​f​ ​y​o​u​'​d​ ​l​i​k​e​ ​t​o​ ​g​i​v​e​ ​B​l​i​n​k​ ​l​o​c​a​t​i​o​n​ ​p​e​r​m​i​s​s​i​o​n​s​,​ ​p​l​e​a​s​e​ ​n​a​v​i​g​a​t​e​ ​t​o​ ​y​o​u​r​ ​s​e​t​t​i​n​g​s​ ​a​n​d​ ​e​n​a​b​l​e​ ​i​t​ ​t​h​e​r​e
+		 */
+		navToSettingsText: string
 		/**
 		 * P​a​y​ ​t​h​i​s​ ​b​u​s​i​n​e​s​s
 		 */
 		payBusiness: string
+		/**
+		 * O​p​e​n​ ​s​e​t​t​i​n​g​s
+		 */
+		openSettings: string
 		/**
 		 * M​a​p
 		 */
@@ -15126,13 +15134,21 @@ export type TranslationFunctions = {
 	}
 	MapScreen: {
 		/**
-		 * It looks like you've denied acces to your location here before. If you'd like to enable this feature, please update your location permissions for Blink in your Android phone settings
+		 * Location permissions
 		 */
-		locationPermissionBlockedAndroid: () => LocalizedString
+		navToSettingsTitle: () => LocalizedString
+		/**
+		 * If you'd like to give Blink location permissions, please navigate to your settings and enable it there
+		 */
+		navToSettingsText: () => LocalizedString
 		/**
 		 * Pay this business
 		 */
 		payBusiness: () => LocalizedString
+		/**
+		 * Open settings
+		 */
+		openSettings: () => LocalizedString
 		/**
 		 * Map
 		 */

@@ -31,6 +31,10 @@ const EL_ZONTE_COORDS = {
   longitudeDelta: 0.02,
 }
 
+export const LOCATION_PERMISSION = isIos
+  ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+  : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
+
 // essentially calculates zoom for location being set based on country
 const { height, width } = Dimensions.get("window")
 const LATITUDE_DELTA = 15 // <-- decrease for more zoom
@@ -98,7 +102,6 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   })
 
   const focusedMarkerRef = React.useRef<MapMarkerType | null>(null)
-  const mostRecentCoords = React.useRef<Region>()
 
   const [userLocation, setUserLocation] = React.useState<Region>()
   const [isRefreshed, setIsRefreshed] = React.useState(false)
@@ -119,12 +122,8 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
 
   // On screen load, check (NOT request) if location permissions are given
   React.useEffect(() => {
-    check(
-      isIos
-        ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
-        : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
-    ).then((status) => {
-      console.log("Initial check: ", status);
+    check(LOCATION_PERMISSION).then((status) => {
+      console.log("Initial check: ", status)
       setPermissionsStatus(status)
       if (status === RESULTS.GRANTED) {
         getUserRegion(async (region) => {
@@ -151,7 +150,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   // Flow when location permissions are denied
   React.useEffect(() => {
     if (countryCode && !isInitializing && lastCoordsData && !loading) {
-      console.log("Got last coords? ", lastCoordsData);
+      console.log("Got last coords? ", lastCoordsData)
       // User has used map before, so we use their last viewed coords
       if (lastCoordsData.lat && lastCoordsData.lng) {
         const region: Region = {
@@ -227,7 +226,6 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
           focusedMarker={focusedMarker}
           focusedMarkerRef={focusedMarkerRef}
           handleCalloutPress={handleCalloutPress}
-          mostRecentCoordsRef={mostRecentCoords}
           onError={alertOnLocationError}
         />
       )}
