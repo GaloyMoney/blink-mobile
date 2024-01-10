@@ -5,12 +5,7 @@ import React, { useEffect, useRef } from "react"
 import { BusinessMapMarkersQuery, MapMarker } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import MapMarkerComponent from "../map-marker-component"
-import {
-  PermissionStatus,
-  RESULTS,
-  check,
-  request,
-} from "react-native-permissions"
+import { PermissionStatus, RESULTS, check, request } from "react-native-permissions"
 import { LOCATION_PERMISSION, getUserRegion } from "@app/screens/map-screen/map-screen"
 import LocationButtonCopy from "./location-button-copy"
 import debounce from "lodash.debounce"
@@ -67,6 +62,10 @@ export default function MapComponent({
     checkIfPermissionsChanged()
   })
 
+  const checkIfPermissionsChanged = React.useCallback(() => {
+    check(LOCATION_PERMISSION).then(setPermissionsStatus).catch(onError)
+  }, [setPermissionsStatus, onError])
+
   useEffect(() => {
     const subscription = AppState.addEventListener("change", (nextAppState) => {
       if (appState.current.match(/background/) && nextAppState === "active") {
@@ -77,16 +76,12 @@ export default function MapComponent({
     return () => {
       subscription.remove()
     }
-  }, [])
-
-  const checkIfPermissionsChanged = () => {
-    check(LOCATION_PERMISSION).then(setPermissionsStatus).catch(onError)
-  }
+  }, [checkIfPermissionsChanged])
 
   const requestLocationPermission = () => {
     request(LOCATION_PERMISSION)
       .then((status) => {
-        console.log("Permissions after request: ", status);
+        console.log("Permissions after request: ", status)
         setPermissionsStatus(status)
         if (status === RESULTS.GRANTED) {
           getUserRegion(async (region) => {

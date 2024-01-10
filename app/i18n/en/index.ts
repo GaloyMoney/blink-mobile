@@ -2064,6 +2064,7 @@ const en: BaseTranslation = {
     payBusiness: "Pay this business",
     openSettings: "Open settings",
     title: "Map",
+    error: 'Oops. Something went wrong while getting your location'
   },
   HomeScreen: {
     receive: "Receive",

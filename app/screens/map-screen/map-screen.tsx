@@ -2,7 +2,7 @@ import { useFocusEffect } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 // eslint-disable-next-line react-native/split-platform-components
-import { Dimensions } from "react-native"
+import { Alert, Dimensions } from "react-native"
 import { Region, MapMarker as MapMarkerType } from "react-native-maps"
 import Geolocation from "@react-native-community/geolocation"
 import { Screen } from "../../components/screen"
@@ -137,7 +137,11 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
         setInitializing(false)
       }
     })
-  }, [isIos])
+  }, [])
+
+  const alertOnLocationError = React.useCallback(() => {
+    Alert.alert(LL.common.error(), LL.MapScreen.error())
+  }, [LL])
 
   React.useEffect(() => {
     if (lastCoordsError) {
@@ -145,7 +149,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
       setUserLocation(EL_ZONTE_COORDS)
       alertOnLocationError()
     }
-  }, [lastCoordsError])
+  }, [lastCoordsError, alertOnLocationError])
 
   // Flow when location permissions are denied
   React.useEffect(() => {
@@ -195,10 +199,6 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
         },
       })
     }
-  }
-
-  const alertOnLocationError = () => {
-    alert("Oops. Something went wrong while getting your location")
   }
 
   const handleMarkerPress = (item: MapMarker, ref?: MapMarkerType) => {

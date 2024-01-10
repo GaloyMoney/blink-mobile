@@ -14,48 +14,49 @@ import { openSettings } from "react-native-permissions"
 
 export type OpenSettingsElement = { toggleVisibility: () => void }
 
-export const OpenSettingsModal = React.forwardRef<OpenSettingsElement, {}>(
-  function ConfirmDialog({}, ref): JSX.Element {
-    const styles = useStyles()
-    const {
-      theme: { colors },
-    } = useTheme()
-    const { LL } = useI18nContext()
+export const OpenSettingsModal = React.forwardRef<
+  OpenSettingsElement,
+  Record<never, never>
+>(function ConfirmDialog(_, ref): JSX.Element {
+  const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
+  const { LL } = useI18nContext()
 
-    const [isVisible, toggleVisible] = React.useState<boolean>(false)
+  const [isVisible, toggleVisible] = React.useState<boolean>(false)
 
-    React.useImperativeHandle(ref, () => ({
-      toggleVisibility() {
-        toggleVisible(!isVisible)
-      },
-    }))
+  React.useImperativeHandle(ref, () => ({
+    toggleVisibility() {
+      toggleVisible(!isVisible)
+    },
+  }))
 
-    async function navToSettings(){
-      toggleVisible(false);
-      await openSettings()
-    }
+  async function navToSettings() {
+    toggleVisible(false)
+    await openSettings()
+  }
 
-    return (
-      <CustomModal
-        isVisible={isVisible}
-        toggleModal={() => toggleVisible(!isVisible)}
-        title={LL.MapScreen.navToSettingsTitle()}
-        image={<GaloyIcon name="info" size={100} color={colors.primary3} />}
-        body={
-          <View style={styles.body}>
-            <Text type={"p2"} style={styles.warningText}>
-              {LL.MapScreen.navToSettingsText()}
-            </Text>
-          </View>
-        }
-        primaryButtonOnPress={navToSettings}
-        primaryButtonTitle={LL.MapScreen.openSettings()}
-        secondaryButtonTitle={LL.common.back()}
-        secondaryButtonOnPress={() => toggleVisible(!isVisible)}
-      />
-    )
-  },
-)
+  return (
+    <CustomModal
+      isVisible={isVisible}
+      toggleModal={() => toggleVisible(!isVisible)}
+      title={LL.MapScreen.navToSettingsTitle()}
+      image={<GaloyIcon name="info" size={100} color={colors.primary3} />}
+      body={
+        <View style={styles.body}>
+          <Text type={"p2"} style={styles.warningText}>
+            {LL.MapScreen.navToSettingsText()}
+          </Text>
+        </View>
+      }
+      primaryButtonOnPress={navToSettings}
+      primaryButtonTitle={LL.MapScreen.openSettings()}
+      secondaryButtonTitle={LL.common.back()}
+      secondaryButtonOnPress={() => toggleVisible(!isVisible)}
+    />
+  )
+})
 
 const useStyles = makeStyles(() => ({
   warningText: {

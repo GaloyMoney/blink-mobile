@@ -83,10 +83,10 @@ export const createCache = () =>
             read: (value) => value ?? "SV",
           },
           lat: {
-            read: (value) => value ?? null
+            read: (value) => value ?? null,
           },
           lng: {
-            read: (value) => value ?? null
+            read: (value) => value ?? null,
           },
           feedbackModalShown: {
             read: (value) => value ?? false,

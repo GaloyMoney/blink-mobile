@@ -2019,7 +2019,8 @@
         "navToSettingsText": "If you'd like to give Blink location permissions, please navigate to your settings and enable it there",
         "payBusiness": "Pay this business",
         "openSettings": "Open settings",
-        "title": "Map"
+        "title": "Map",
+        "error": "Oops. Something went wrong while getting your location"
     },
     "HomeScreen": {
         "receive": "Receive",
