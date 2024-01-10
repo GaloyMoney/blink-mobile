@@ -4,7 +4,7 @@ import React from "react"
 import { View } from "react-native"
 import CustomModal from "@app/components/custom-modal/custom-modal"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
-import PERMS, { openSettings } from "react-native-permissions"
+import { openSettings } from "react-native-permissions"
 
 /*
   the forwardRef and useImperativeHandle (in the parent) are used here to toggle the modal

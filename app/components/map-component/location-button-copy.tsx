@@ -6,14 +6,19 @@ type Props = {
   requestPermissions: () => void
 }
 
+// TODO have iOS version of icon
+// TODO have device's dark theme version for each OS
+
 export default function LocationButtonCopy({ requestPermissions }: Props) {
   return (
-    <TouchableOpacity
-      style={[styles.button, isIos ? styles.ios : styles.android]}
-      onPress={requestPermissions}
-    >
-      <CenterLocationAndroid height={22} width={22} fill={"#656565"} />
-    </TouchableOpacity>
+    <View style={styles.button}>
+      <TouchableOpacity
+        style={isIos ? styles.ios : styles.android}
+        onPress={requestPermissions}
+      >
+        <CenterLocationAndroid height={22} width={22} fill={"#656565"} />
+      </TouchableOpacity>
+    </View>
   )
 }
 
@@ -24,7 +29,6 @@ const styles = StyleSheet.create({
     right: 12,
     zIndex: 99,
   },
-  // TODO change to iOS design
   ios: {
     borderRadius: 2,
     backgroundColor: "#FFFFFF99",

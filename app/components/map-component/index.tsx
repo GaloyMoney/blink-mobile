@@ -1,19 +1,16 @@
 import { makeStyles, useTheme } from "@rneui/themed"
-import MapView, { Region, MapMarker as MapMarkerType, LatLng } from "react-native-maps"
+import MapView, { Region, MapMarker as MapMarkerType } from "react-native-maps"
 import MapStyles from "./map-styles.json"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef } from "react"
 import { BusinessMapMarkersQuery, MapMarker } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import MapMarkerComponent from "../map-marker-component"
 import {
-  PERMISSIONS,
   PermissionStatus,
   RESULTS,
-  Rationale,
   check,
   request,
 } from "react-native-permissions"
-import { isIos } from "@app/utils/helper"
 import { LOCATION_PERMISSION, getUserRegion } from "@app/screens/map-screen/map-screen"
 import LocationButtonCopy from "./location-button-copy"
 import debounce from "lodash.debounce"
@@ -33,15 +30,7 @@ type Props = {
   focusedMarker: MapMarker | null
   focusedMarkerRef: React.MutableRefObject<MapMarkerType | null>
   handleCalloutPress: (_: MapMarker) => void
-
   onError: () => void
-}
-
-const PERMISSIONS_RATIONALE: Rationale = {
-  title: "Request location",
-  message: "Test",
-  buttonPositive: "test",
-  buttonNegative: "test",
 }
 
 export default function MapComponent({
