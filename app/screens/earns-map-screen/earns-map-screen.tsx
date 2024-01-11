@@ -125,7 +125,7 @@ export const EarnMapScreen: React.FC = () => {
       progress = cards?.filter((item) => item?.completed).length / cards.length ?? 0
 
       const notBefore = cards[cards.length - 1]?.notBefore
-      canDoNextSection = notBefore instanceof Date && new Date() > notBefore
+      canDoNextSection = !notBefore || new Date() > notBefore
     }
   }
 
