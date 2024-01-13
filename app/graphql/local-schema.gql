@@ -9,12 +9,16 @@ extend type Query {
   beta: Boolean!
   colorScheme: String!
   countryCode: String!
-  lat: Float
-  lng: Float
+  latLng: LatLng
   feedbackModalShown: Boolean!
   hasPromptedSetDefaultAccount: Boolean!
   introducingCirclesModalShown: Boolean!
   innerCircleValue: Int!
+}
+
+extend type LatLng {
+  lat: Float!
+  lng: Float!
 }
 
 extend type Account {

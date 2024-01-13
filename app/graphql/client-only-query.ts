@@ -45,8 +45,7 @@ export default gql`
   }
 
   query latLng {
-    lat
-    lng @client
+    latLng @client { lat lng } 
   }
 
   query feedbackModalShown {
@@ -153,8 +152,11 @@ export const updateMapLastCoords = (client: ApolloClient<unknown>, latLng: LatLn
       query: LatLngDocument,
       data: {
         __typename: "Query",
-        lat: latLng.latitude,
-        lng: latLng.longitude,
+        latLng: {
+          __typename: 'LatLng',
+          lat: latLng.latitude,
+          lng: latLng.longitude
+        }
       },
     })
   } catch {

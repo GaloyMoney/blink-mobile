@@ -103,7 +103,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
 
   const focusedMarkerRef = React.useRef<MapMarkerType | null>(null)
 
-  const [userLocation, setUserLocation] = React.useState<Region>()
+  const [initialLocation, setInitialLocation] = React.useState<Region>()
   const [isRefreshed, setIsRefreshed] = React.useState(false)
   const [focusedMarker, setFocusedMarker] = React.useState<MapMarker | null>(null)
   const [isInitializing, setInitializing] = React.useState(true)
@@ -128,7 +128,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
       if (status === RESULTS.GRANTED) {
         getUserRegion(async (region) => {
           if (region) {
-            setUserLocation(region)
+            setInitialLocation(region)
           } else {
             setInitializing(false)
           }
@@ -146,24 +146,23 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   React.useEffect(() => {
     if (lastCoordsError) {
       setInitializing(false)
-      setUserLocation(EL_ZONTE_COORDS)
+      setInitialLocation(EL_ZONTE_COORDS)
       alertOnLocationError()
     }
   }, [lastCoordsError, alertOnLocationError])
 
   // Flow when location permissions are denied
   React.useEffect(() => {
-    if (countryCode && !isInitializing && lastCoordsData && !loading) {
-      console.log("Got last coords? ", lastCoordsData)
+    if (countryCode && !isInitializing && lastCoordsData && !loading && !initialLocation) {
       // User has used map before, so we use their last viewed coords
-      if (lastCoordsData.lat && lastCoordsData.lng) {
+      if (lastCoordsData.latLng?.lat && lastCoordsData.latLng?.lng) {
         const region: Region = {
-          latitude: lastCoordsData.lat,
-          longitude: lastCoordsData.lng,
+          latitude: lastCoordsData.latLng.lat,
+          longitude: lastCoordsData.latLng.lng,
           latitudeDelta: 5,
           longitudeDelta: LONGITUDE_DELTA,
         }
-        setUserLocation(region)
+        setInitialLocation(region)
         // User is using maps for the first time, so we center on the center of their IP's country
       } else {
         // JSON 'hashmap' with every countrys' code listed with their lat and lng
@@ -179,14 +178,14 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA,
           }
-          setUserLocation(region)
+          setInitialLocation(region)
         } else {
           // backup if country code is not recognized
-          setUserLocation(EL_ZONTE_COORDS)
+          setInitialLocation(EL_ZONTE_COORDS)
         }
       }
     }
-  }, [isInitializing, countryCode, lastCoordsData, loading, setUserLocation])
+  }, [isInitializing, countryCode, lastCoordsData, loading, setInitialLocation])
 
   const handleCalloutPress = (item: MapMarker | null) => {
     if (isAuthed && item?.username) {
@@ -215,10 +214,10 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <Screen>
-      {userLocation && (
+      {initialLocation && (
         <MapComponent
           data={data}
-          userLocation={userLocation}
+          userLocation={initialLocation}
           permissionsStatus={permissionsStatus}
           setPermissionsStatus={setPermissionsStatus}
           handleMapPress={handleMapPress}

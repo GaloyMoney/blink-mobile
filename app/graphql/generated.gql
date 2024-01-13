@@ -1093,8 +1093,11 @@ query language {
 }
 
 query latLng {
-  lat
-  lng @client
+  latLng @client {
+    lat
+    lng
+    __typename
+  }
 }
 
 query level {
