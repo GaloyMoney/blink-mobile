@@ -153,7 +153,13 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
 
   // Flow when location permissions are denied
   React.useEffect(() => {
-    if (countryCode && !isInitializing && lastCoordsData && !loading && !initialLocation) {
+    if (
+      countryCode &&
+      lastCoordsData &&
+      !isInitializing &&
+      !loading &&
+      !initialLocation
+    ) {
       // User has used map before, so we use their last viewed coords
       if (lastCoordsData.latLng?.lat && lastCoordsData.latLng?.lng) {
         const region: Region = {
@@ -185,7 +191,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
         }
       }
     }
-  }, [isInitializing, countryCode, lastCoordsData, loading, setInitialLocation])
+  }, [isInitializing, countryCode, lastCoordsData, loading, initialLocation])
 
   const handleCalloutPress = (item: MapMarker | null) => {
     if (isAuthed && item?.username) {

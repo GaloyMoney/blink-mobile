@@ -55,7 +55,9 @@ export default function MapMarkerComponent({
       ref={ref}
       coordinate={item.mapInfo.coordinates}
       pinColor={color}
-      onPress={() => handleMarkerPress(item, isIos && ref.current ? ref.current : undefined)}
+      onPress={() =>
+        handleMarkerPress(item, isIos && ref.current ? ref.current : undefined)
+      }
       stopPropagation
     >
       <Callout tooltip={true} onPress={() => handleCalloutPress(item)}>
