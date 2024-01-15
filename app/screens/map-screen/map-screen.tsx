@@ -2,7 +2,7 @@ import { useFocusEffect } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 // eslint-disable-next-line react-native/split-platform-components
-import { Alert, Dimensions, PermissionsAndroid, Platform } from "react-native"
+import { Alert, Dimensions } from "react-native"
 import { Region, MapMarker as MapMarkerType } from "react-native-maps"
 import Geolocation from "@react-native-community/geolocation"
 import { Screen } from "../../components/screen"

@@ -13,7 +13,7 @@ import { updateMapLastCoords } from "@app/graphql/client-only-query"
 import { useApolloClient } from "@apollo/client"
 import { OpenSettingsElement, OpenSettingsModal } from "./open-settings-modal"
 import { useFocusEffect } from "@react-navigation/native"
-import { AppState, PermissionsAndroid, Platform } from "react-native"
+import { AppState } from "react-native"
 import { isIOS } from "@rneui/base"
 
 type Props = {
