@@ -13,7 +13,8 @@ import { updateMapLastCoords } from "@app/graphql/client-only-query"
 import { useApolloClient } from "@apollo/client"
 import { OpenSettingsElement, OpenSettingsModal } from "./open-settings-modal"
 import { useFocusEffect } from "@react-navigation/native"
-import { AppState } from "react-native"
+import { AppState, PermissionsAndroid, Platform } from "react-native"
+import { isIOS } from "@rneui/base"
 
 type Props = {
   data?: BusinessMapMarkersQuery
@@ -78,11 +79,22 @@ export default function MapComponent({
     }
   }, [checkIfPermissionsChanged])
 
-  const requestLocationPermission = () => {
+  const respondToBlocked = (status: PermissionStatus) => {
+    // iOS will only ever ask once for permission, and initial checks can differentiate between BLOCKED vs DENIED
+    if (isIOS) {
+      if (permissionsStatus === RESULTS.BLOCKED && status === RESULTS.BLOCKED) {
+        toggleModal()
+      }
+      // Android can ask twice for permission, and initial checks cannot differentiate between BLOCKED vs DENIED
+    } else {
+      // TODO figure out how to not fire this after the 2nd time user blocks
+      toggleModal()
+    }
+  }
+
+  const requestLocationPermission = async () => {
     request(LOCATION_PERMISSION)
       .then((status) => {
-        console.log("Permissions after request: ", status)
-        setPermissionsStatus(status)
         if (status === RESULTS.GRANTED) {
           getUserRegion(async (region) => {
             if (region && mapViewRef.current) {
@@ -91,13 +103,12 @@ export default function MapComponent({
               onError()
             }
           })
-          // TODO figure out how to not fire this on user declaring 'Never ask again' on Android
-          // some Android phones do this automatically on the 2nd time they say press 'Don't allow'
         } else if (status === RESULTS.BLOCKED) {
-          toggleModal()
+          respondToBlocked(status)
         }
+        setPermissionsStatus(status)
       })
-      .catch((_) => onError())
+      .catch(() => onError())
   }
 
   const debouncedHandleRegionChange = React.useRef(
@@ -118,8 +129,6 @@ export default function MapComponent({
       <MapView
         ref={mapViewRef}
         style={styles.map}
-        // we don't want MapView to ever ask for permissions directly,
-        // but we do want to take advantage of their 'center-location' button that comes from this prop
         showsUserLocation={permissionsStatus === RESULTS.GRANTED}
         initialRegion={userLocation}
         customMapStyle={themeMode === "dark" ? MapStyles.dark : MapStyles.light}
