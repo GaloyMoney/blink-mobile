@@ -13,7 +13,7 @@ import { updateMapLastCoords } from "@app/graphql/client-only-query"
 import { useApolloClient } from "@apollo/client"
 import { OpenSettingsElement, OpenSettingsModal } from "./open-settings-modal"
 import { useFocusEffect } from "@react-navigation/native"
-import { AppState } from "react-native"
+import { AppState, View } from "react-native"
 import { isIOS } from "@rneui/base"
 
 type Props = {
@@ -92,17 +92,21 @@ export default function MapComponent({
     }
   }
 
+  const centerOnUser = () => {
+    getUserRegion(async (region) => {
+      if (region && mapViewRef.current) {
+        mapViewRef.current.animateToRegion(region)
+      } else {
+        onError()
+      }
+    })
+  }
+
   const requestLocationPermission = async () => {
     request(LOCATION_PERMISSION)
       .then((status) => {
         if (status === RESULTS.GRANTED) {
-          getUserRegion(async (region) => {
-            if (region && mapViewRef.current) {
-              mapViewRef.current.animateToRegion(region)
-            } else {
-              onError()
-            }
-          })
+          centerOnUser()
         } else if (status === RESULTS.BLOCKED) {
           respondToBlocked(status)
         }
@@ -125,11 +129,12 @@ export default function MapComponent({
   ).current
 
   return (
-    <>
+    <View style={styles.viewContainer}>
       <MapView
         ref={mapViewRef}
         style={styles.map}
         showsUserLocation={permissionsStatus === RESULTS.GRANTED}
+        showsMyLocationButton={false}
         initialRegion={userLocation}
         customMapStyle={themeMode === "dark" ? MapStyles.dark : MapStyles.light}
         onPress={handleMapPress}
@@ -173,16 +178,22 @@ export default function MapComponent({
           [],
         )}
       </MapView>
-      {(permissionsStatus === RESULTS.DENIED ||
-        permissionsStatus === RESULTS.BLOCKED) && (
-        <LocationButtonCopy requestPermissions={requestLocationPermission} />
-      )}
+      {permissionsStatus !== RESULTS.UNAVAILABLE &&
+        permissionsStatus !== RESULTS.LIMITED && (
+          <LocationButtonCopy
+            requestPermissions={requestLocationPermission}
+            permissionStatus={permissionsStatus}
+            centerOnUser={centerOnUser}
+          />
+        )}
       <OpenSettingsModal ref={openSettingsModalRef} />
-    </>
+    </View>
   )
 }
 
 const useStyles = makeStyles(({ colors }) => ({
+  viewContainer: { flex: 1 },
+
   customView: {
     alignItems: "center",
     margin: 12,
