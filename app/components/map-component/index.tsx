@@ -59,26 +59,6 @@ export default function MapComponent({
     [],
   )
 
-  useFocusEffect(() => {
-    checkIfPermissionsChanged()
-  })
-
-  const checkIfPermissionsChanged = React.useCallback(() => {
-    check(LOCATION_PERMISSION).then(setPermissionsStatus).catch(onError)
-  }, [setPermissionsStatus, onError])
-
-  useEffect(() => {
-    const subscription = AppState.addEventListener("change", (nextAppState) => {
-      if (appState.current.match(/background/) && nextAppState === "active") {
-        checkIfPermissionsChanged()
-      }
-    })
-
-    return () => {
-      subscription.remove()
-    }
-  }, [checkIfPermissionsChanged])
-
   const respondToBlocked = (status: PermissionStatus) => {
     // iOS will only ever ask once for permission, and initial checks can differentiate between BLOCKED vs DENIED
     if (isIOS) {
