@@ -83,12 +83,17 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
     prefixes: [...PREFIX_LINKING, "bitcoin://", "lightning://", "lapp://"],
     config: {
       screens: {
-        sendBitcoinDestination: ":payment",
         Primary: {
           screens: {
-            Home: "/",
+            Home: "home",
+            People: {
+              screens: {
+                circlesDashboard: "circles",
+              },
+            },
           },
         },
+        sendBitcoinDestination: ":payment",
       },
     },
     getInitialURL: async () => {
