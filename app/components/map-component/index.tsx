@@ -1,19 +1,18 @@
 import { makeStyles, useTheme } from "@rneui/themed"
 import MapView, { Region, MapMarker as MapMarkerType } from "react-native-maps"
 import MapStyles from "./map-styles.json"
-import React, { useEffect, useRef } from "react"
+import React, { useRef } from "react"
 import { BusinessMapMarkersQuery, MapMarker } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import MapMarkerComponent from "../map-marker-component"
-import { PermissionStatus, RESULTS, check, request } from "react-native-permissions"
+import { PermissionStatus, RESULTS, request } from "react-native-permissions"
 import { LOCATION_PERMISSION, getUserRegion } from "@app/screens/map-screen/map-screen"
 import LocationButtonCopy from "./location-button-copy"
 import debounce from "lodash.debounce"
 import { updateMapLastCoords } from "@app/graphql/client-only-query"
 import { useApolloClient } from "@apollo/client"
 import { OpenSettingsElement, OpenSettingsModal } from "./open-settings-modal"
-import { useFocusEffect } from "@react-navigation/native"
-import { AppState, View } from "react-native"
+import { View } from "react-native"
 import { isIOS } from "@rneui/base"
 
 type Props = {
@@ -49,7 +48,6 @@ export default function MapComponent({
   const client = useApolloClient()
   const text = React.useMemo(() => LL.MapScreen.payBusiness(), [LL.MapScreen])
 
-  const appState = useRef(AppState.currentState)
   const mapViewRef = useRef<MapView>(null)
   const openSettingsModalRef = React.useRef<OpenSettingsElement>(null)
 
