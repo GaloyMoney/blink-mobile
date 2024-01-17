@@ -51,6 +51,7 @@
             <category android:name="android.intent.category.BROWSABLE"/>
             <data android:scheme="lightning"/>
             <data android:scheme="bitcoinbeach"/>
+            <data android:scheme="blink"/>
             <data android:scheme="bitcoin"/>
             <data android:scheme="lapp"/>
         </intent-filter>
