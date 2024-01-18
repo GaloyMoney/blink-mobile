@@ -60,6 +60,11 @@ gql`
     }
   }
 `
+Geolocation.setRNConfiguration({
+  skipPermissionRequests: false,
+  authorizationLevel: "whenInUse",
+  enableBackgroundLocationUpdates: false,
+})
 
 export const MapScreen: React.FC<Props> = ({ navigation }) => {
   const {
