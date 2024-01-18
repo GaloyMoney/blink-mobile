@@ -36,7 +36,7 @@
         "skip": "Kihagy",
         "unlock": "Feloldás",
         "usePin": "PIN kód használata",
-        "confirmLogout": "Biztos, hogy ki szeretne jelentkezni? Ezzel visszaállítja a gyorsítótárat és az összes helyi felhasználói beállítást"
+        "confirmLogout": "Biztos, hogy szeretnél kijelentkezni? Ezzel visszaállítod a gyorsítótárat és az összes helyi felhasználói beállítást"
     },
     "PeopleScreen": {
         "title": "Emberek",
@@ -2246,7 +2246,7 @@
         "nfc": "Fogadás NFC-ből",
         "nfcError": "Hiba az NFC címke olvasása közben. Kérlek, próbáld újra.",
         "nfcNotCompatible": "A kártyáról kapott információ nem egy kompatibilis LNURLwithdraw link.",
-        "nfcOnlyReceive": "Egyelőre csak NFC-ből való vétel érhető el",
+        "nfcOnlyReceive": "Egyelőre csak NFC-ből való fogadás érhető el",
         "nfcScanNow": "NFC beolvasása most",
         "nfcNotSupported": "Az NFC nem támogatott ezen a készüléken",
         "logInOrCreateAccount": "Bejelentkezés vagy számla létrehozása"
@@ -2404,7 +2404,7 @@
     },
     "PhoneLoginInitiateScreen": {
         "title": "Számla létrehozása",
-        "header": "Add meg a telefonszámod és SMS-ben küldjük a hozzáférési kódot.",
+        "header": "Add meg a telefonszámod és SMS-ben küldjük a hozzáférési kódod.",
         "headerVerify": "Ellenőrizzük, hogy ember vagy",
         "errorRequestingCaptcha": "Valami hiba történt az emberi lét megerősítése során, kérlek próbáld újra később.",
         "errorRequestingCode": "Valami hiba történt a telefonszám kód kérésekor, kérlek próbáld újra később.",
@@ -2430,7 +2430,7 @@
     },
     "PhoneRegistrationInitiateScreen": {
         "title": "Telefonszám beállítása",
-        "header": "Add meg a telefonszámod és SMS-ben küldjük a hozzáférési kódot.",
+        "header": "Add meg a telefonszámod és SMS-ben küldjük a hozzáférési kódod.",
         "headerVerify": "Bizonyítsd, hogy ember vagy",
         "errorRequestingCode": "Valami hiba történt a telefon kód kérése közben, kérlek, próbáld újra később.",
         "errorInvalidPhoneNumber": "Érvénytelen telefonszám. Biztos vagy benne, hogy helyesen adtad meg a számot?",
@@ -2678,8 +2678,8 @@
         },
         "januaryChallenge": {
             "title": "Januári kihívás",
-            "description": "+10 külső kör januárban 100 dollár esélyért!",
-            "details": "Növeld a KÜLSŐ köredet 10-zel januárban, hogy nyerheaa 100 dollárt!\n\nA külső köröd akkor növekszik, amikor az belső körödben lévő emberek másokat is meghívnak, szóval lépj kapcsolatba azokkal, akiket te szerveztél be, hogy osszák meg a Blinket barátaikkal és családjukkal.\n\nOszd meg a köreidet a közösségi médiában a #blinkcircles hashtag-gel a részvételhez."
+            "description": "+10 külső kör, hogy nyehess 100 dollár januárban!",
+            "details": "Növeld a KÜLSŐ köredet 10-zel januárban, hogy nyerhess 100 dollárt!\n\nA külső köröd akkor növekszik, amikor a belső körödben lévő emberek másokat is meghívnak, szóval lépj kapcsolatba azokkal, akiket te szerveztél be, hogy osszák meg a Blink-et barátaikkal és családjukkal.\n\nOszd meg a köreidet a közösségi médiában a #blinkcircles hashtag-gel a részvételhez."
         }
     },
     "FullOnboarding": {
