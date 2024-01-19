@@ -1,13 +1,8 @@
 import { useApolloClient } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import {
-  PeopleStackParamList,
-  PrimaryStackParamList,
-} from "@app/navigation/stack-param-lists"
 import { addDeviceToken, hasNotificationPermission } from "@app/utils/notifications"
 import messaging, { FirebaseMessagingTypes } from "@react-native-firebase/messaging"
-import { useNavigation } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
+import { useLinkTo } from "@react-navigation/native"
 import React, { useEffect } from "react"
 
 const circlesNotificationTypes = [
@@ -24,8 +19,8 @@ const circlesNotificationTypes = [
 export const PushNotificationComponent = (): JSX.Element => {
   const client = useApolloClient()
   const isAuthed = useIsAuthed()
-  const primaryNavigation = useNavigation<StackNavigationProp<PrimaryStackParamList>>()
-  const circlesNavigation = useNavigation<StackNavigationProp<PeopleStackParamList>>()
+
+  const linkTo = useLinkTo()
 
   useEffect(() => {
     const showNotification = (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
@@ -42,8 +37,12 @@ export const PushNotificationComponent = (): JSX.Element => {
         typeof notificationType === "string" &&
         circlesNotificationTypes.includes(notificationType)
       ) {
-        primaryNavigation.navigate("People")
-        setTimeout(() => circlesNavigation.navigate("circlesDashboard"), 200)
+        linkTo("/people/circles")
+      }
+
+      const linkToScreen = remoteMessage.data?.linkTo ?? ""
+      if (typeof linkToScreen === "string") {
+        linkTo(linkToScreen)
       }
     }
 
@@ -69,7 +68,7 @@ export const PushNotificationComponent = (): JSX.Element => {
       })
 
     return unsubscribe
-  }, [circlesNavigation, primaryNavigation])
+  }, [linkTo])
 
   useEffect(() => {
     ;(async () => {
