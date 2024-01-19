@@ -89,11 +89,6 @@ gql`
     }
   }
 `
-Geolocation.setRNConfiguration({
-  skipPermissionRequests: false,
-  authorizationLevel: "whenInUse",
-  enableBackgroundLocationUpdates: false,
-})
 
 export const MapScreen: React.FC<Props> = ({ navigation }) => {
   const isAuthed = useIsAuthed()
@@ -198,8 +193,8 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
     }
   }, [isInitializing, countryCode, lastCoordsData, loading, initialLocation])
 
-  const handleCalloutPress = (item: MapMarker | null) => {
-    if (isAuthed && item?.username) {
+  const handleCalloutPress = (item: MapMarker) => {
+    if (isAuthed) {
       navigation.navigate("sendBitcoinDestination", { username: item.username })
     } else {
       navigation.navigate("phoneFlow", {
@@ -236,7 +231,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
           focusedMarker={focusedMarker}
           focusedMarkerRef={focusedMarkerRef}
           handleCalloutPress={handleCalloutPress}
-          onError={alertOnLocationError}
+          alertOnLocationError={alertOnLocationError}
         />
       )}
     </Screen>

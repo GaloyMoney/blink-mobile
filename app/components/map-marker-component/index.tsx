@@ -51,7 +51,7 @@ export default function MapMarkerComponent({
 
   return (
     <Marker
-      id={item.username as string} // TODO remove type casting when Graph is updated to make username non-nullable
+      id={item.username}
       ref={ref}
       coordinate={item.mapInfo.coordinates}
       pinColor={color}

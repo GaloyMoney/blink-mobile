@@ -25,7 +25,7 @@ type Props = {
   focusedMarker: MapMarker | null
   focusedMarkerRef: React.MutableRefObject<MapMarkerType | null>
   handleCalloutPress: (_: MapMarker) => void
-  onError: () => void
+  alertOnLocationError: () => void
 }
 
 export default function MapComponent({
@@ -38,7 +38,7 @@ export default function MapComponent({
   focusedMarker,
   focusedMarkerRef,
   handleCalloutPress,
-  onError,
+  alertOnLocationError,
 }: Props) {
   const {
     theme: { colors, mode: themeMode },
@@ -46,7 +46,7 @@ export default function MapComponent({
   const styles = useStyles()
   const { LL } = useI18nContext()
   const client = useApolloClient()
-  const text = React.useMemo(() => LL.MapScreen.payBusiness(), [LL.MapScreen])
+  const text = LL.MapScreen.payBusiness()
 
   const mapViewRef = useRef<MapView>(null)
   const openSettingsModalRef = React.useRef<OpenSettingsElement>(null)
@@ -70,12 +70,12 @@ export default function MapComponent({
     }
   }
 
-  const centerOnUser = () => {
+  const centerOnUser = async () => {
     getUserRegion(async (region) => {
       if (region && mapViewRef.current) {
         mapViewRef.current.animateToRegion(region)
       } else {
-        onError()
+        alertOnLocationError()
       }
     })
   }
@@ -90,7 +90,7 @@ export default function MapComponent({
         }
         setPermissionsStatus(status)
       })
-      .catch(() => onError())
+      .catch(() => alertOnLocationError())
   }
 
   const debouncedHandleRegionChange = React.useRef(
@@ -134,27 +134,18 @@ export default function MapComponent({
           }
         }}
       >
-        {(data?.businessMapMarkers ?? []).reduce(
-          (arr: React.ReactElement[], item: MapMarker | null) => {
-            if (item?.username) {
-              arr.push(
-                <MapMarkerComponent
-                  key={item.username}
-                  item={item}
-                  color={colors._orange}
-                  handleCalloutPress={handleCalloutPress}
-                  handleMarkerPress={handleMarkerPress}
-                  isFocused={focusedMarker?.username === item.username}
-                  text={text}
-                  styles={styles}
-                />,
-              )
-            }
-
-            return arr
-          },
-          [],
-        )}
+        {(data?.businessMapMarkers ?? []).map((item: MapMarker) => (
+          <MapMarkerComponent
+            key={item.username}
+            item={item}
+            color={colors._orange}
+            handleCalloutPress={handleCalloutPress}
+            handleMarkerPress={handleMarkerPress}
+            isFocused={focusedMarker?.username === item.username}
+            text={text}
+            styles={styles}
+          />
+        ))}
       </MapView>
       {permissionsStatus !== RESULTS.UNAVAILABLE &&
         permissionsStatus !== RESULTS.LIMITED && (
