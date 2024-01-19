@@ -851,7 +851,7 @@ export type MapInfo = {
 export type MapMarker = {
   readonly __typename: 'MapMarker';
   readonly mapInfo: MapInfo;
-  readonly username?: Maybe<Scalars['Username']['output']>;
+  readonly username: Scalars['Username']['output'];
 };
 
 export type MobileVersions = {
@@ -1509,7 +1509,7 @@ export type Query = {
   readonly accountDefaultWallet: PublicWallet;
   readonly beta: Scalars['Boolean']['output'];
   readonly btcPriceList?: Maybe<ReadonlyArray<Maybe<PricePoint>>>;
-  readonly businessMapMarkers?: Maybe<ReadonlyArray<Maybe<MapMarker>>>;
+  readonly businessMapMarkers: ReadonlyArray<MapMarker>;
   readonly colorScheme: Scalars['String']['output'];
   readonly countryCode: Scalars['String']['output'];
   readonly currencyList: ReadonlyArray<Currency>;
@@ -2360,7 +2360,7 @@ export type HomeUnauthedQuery = { readonly __typename: 'Query', readonly globals
 export type BusinessMapMarkersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BusinessMapMarkersQuery = { readonly __typename: 'Query', readonly businessMapMarkers?: ReadonlyArray<{ readonly __typename: 'MapMarker', readonly username?: string | null, readonly mapInfo: { readonly __typename: 'MapInfo', readonly title: string, readonly coordinates: { readonly __typename: 'Coordinates', readonly longitude: number, readonly latitude: number } } } | null> | null };
+export type BusinessMapMarkersQuery = { readonly __typename: 'Query', readonly businessMapMarkers: ReadonlyArray<{ readonly __typename: 'MapMarker', readonly username: string, readonly mapInfo: { readonly __typename: 'MapInfo', readonly title: string, readonly coordinates: { readonly __typename: 'Coordinates', readonly longitude: number, readonly latitude: number } } }> };
 
 export type CirclesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7906,7 +7906,7 @@ export type MapInfoResolvers<ContextType = any, ParentType extends ResolversPare
 
 export type MapMarkerResolvers<ContextType = any, ParentType extends ResolversParentTypes['MapMarker'] = ResolversParentTypes['MapMarker']> = {
   mapInfo?: Resolver<ResolversTypes['MapInfo'], ParentType, ContextType>;
-  username?: Resolver<Maybe<ResolversTypes['Username']>, ParentType, ContextType>;
+  username?: Resolver<ResolversTypes['Username'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -8144,7 +8144,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   accountDefaultWallet?: Resolver<ResolversTypes['PublicWallet'], ParentType, ContextType, RequireFields<QueryAccountDefaultWalletArgs, 'username'>>;
   beta?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   btcPriceList?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['PricePoint']>>>, ParentType, ContextType, RequireFields<QueryBtcPriceListArgs, 'range'>>;
-  businessMapMarkers?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['MapMarker']>>>, ParentType, ContextType>;
+  businessMapMarkers?: Resolver<ReadonlyArray<ResolversTypes['MapMarker']>, ParentType, ContextType>;
   colorScheme?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   countryCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   currencyList?: Resolver<ReadonlyArray<ResolversTypes['Currency']>, ParentType, ContextType>;
