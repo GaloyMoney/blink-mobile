@@ -40,6 +40,7 @@
 				<string>lightning</string>
 				<string>bitcoin</string>
 				<string>bitcoinbeach</string>
+				<string>blink</string>
 				<string>lapp</string>
 			</array>
 		</dict>
@@ -65,7 +66,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>654</string>
+	<string>661</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -84,15 +85,17 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Activate your camera to scan QR codes</string>
 	<key>NSFaceIDUsageDescription</key>
-	<string>$(PRODUCT_NAME) requires FaceID access for quick and secure authentication.</string>
+	<string>$(PRODUCT_NAME) requires FaceID access for quick and secure authentication</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Find Merchants who accept Lightning payments</string>
+	<string>Find merchants who accept bitcoin near you</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Find Merchants who accept Lightning payments</string>
+	<string>Find merchants who accept bitcoin near you</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Import a screenshot with a QR code</string>
 	<key>NFCReaderUsageDescription</key>
-	<string>We need to use NFC to receive payments from the card</string>
+	<string>Receive payments over NFC</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app includes a component that requires background location access, but your location is only used while in app to find merchants near you.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Ionicons.ttf</string>

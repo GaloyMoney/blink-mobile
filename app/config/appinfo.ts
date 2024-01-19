@@ -9,6 +9,7 @@ export const PREFIX_LINKING = [
   "https://pay.bbw.sv",
   "https://pay.blink.sv",
   "bitcoinbeach://",
+  "blink://",
 ]
 
 // FIXME this should come from globals.lightningAddressDomainAliases
