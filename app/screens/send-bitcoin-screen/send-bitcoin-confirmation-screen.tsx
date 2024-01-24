@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { ActivityIndicator, TouchableOpacity, View } from "react-native"
-import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 
 import { gql } from "@apollo/client"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
@@ -28,11 +27,11 @@ import {
   toUsdMoneyAmount,
   ZeroUsdMoneyAmount,
 } from "@app/types/amounts"
-import { logPaymentAttempt, logPaymentResult } from "@app/utils/analytics"
+import { logPaymentAttempt } from "@app/utils/analytics"
 import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { CommonActions, RouteProp, useNavigation } from "@react-navigation/native"
+import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 
@@ -105,7 +104,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     walletAmount: usdBalanceMoneyAmount,
   })
 
-  const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
+  const [paymentError, _setPaymentError] = useState<string | undefined>(undefined)
   const { LL } = useI18nContext()
 
   const fee = useFee(getFee)
@@ -137,71 +136,79 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
         paymentType: paymentDetail.paymentType,
         sendingWallet: sendingWalletDescriptor.currency,
       })
-      const { status, errorsMessage, extraInfo } = await sendPayment()
-      logPaymentResult({
-        paymentType: paymentDetail.paymentType,
-        paymentStatus: status,
-        sendingWallet: sendingWalletDescriptor.currency,
-      })
 
-      if (status === "SUCCESS" || status === "PENDING") {
-        navigation.dispatch((state) => {
-          const routes = [
-            { name: "Primary" },
-            {
-              name: "sendBitcoinCompleted",
-              params: {
-                arrivalAtMempoolEstimate: extraInfo?.arrivalAtMempoolEstimate,
-                status,
-              },
+      navigation.reset({
+        routes: [
+          { name: "Primary" },
+          {
+            name: "sendBitcoinPayment",
+            params: {
+              sendPayment,
+              paymentType: paymentDetail.paymentType,
+              sendingWallet: sendingWalletDescriptor.currency,
             },
-          ]
-          return CommonActions.reset({
-            ...state,
-            routes,
-            index: routes.length - 1,
-          })
-        })
-        ReactNativeHapticFeedback.trigger("notificationSuccess", {
-          ignoreAndroidSystemSettings: true,
-        })
-        return
-      }
-
-      if (status === "ALREADY_PAID") {
-        setPaymentError(LL.SendBitcoinConfirmationScreen.invoiceAlreadyPaid())
-        ReactNativeHapticFeedback.trigger("notificationError", {
-          ignoreAndroidSystemSettings: true,
-        })
-        return
-      }
-
-      setPaymentError(
-        errorsMessage || LL.SendBitcoinConfirmationScreen.somethingWentWrong(),
-      )
-      ReactNativeHapticFeedback.trigger("notificationError", {
-        ignoreAndroidSystemSettings: true,
+          },
+        ],
       })
+
+      // const { status, errorsMessage, extraInfo } = await sendPayment()
+
+      // if (status === "SUCCESS" || status === "PENDING") {
+      //   navigation.dispatch((state) => {
+      //     const routes = [
+      //       { name: "Primary" },
+      //       {
+      //         name: "sendBitcoinCompleted",
+      //         params: {
+      //           arrivalAtMempoolEstimate: extraInfo?.arrivalAtMempoolEstimate,
+      //           status,
+      //         },
+      //       },
+      //     ]
+      //     return CommonActions.reset({
+      //       ...state,
+      //       routes,
+      //       index: routes.length - 1,
+      //     })
+      //   })
+      //   ReactNativeHapticFeedback.trigger("notificationSuccess", {
+      //     ignoreAndroidSystemSettings: true,
+      //   })
+      //   return
+      // }
+
+      // if (status === "ALREADY_PAID") {
+      //   setPaymentError(LL.SendBitcoinConfirmationScreen.invoiceAlreadyPaid())
+      //   ReactNativeHapticFeedback.trigger("notificationError", {
+      //     ignoreAndroidSystemSettings: true,
+      //   })
+      //   return
+      // }
+
+      // setPaymentError(
+      //   errorsMessage || LL.SendBitcoinConfirmationScreen.somethingWentWrong(),
+      // )
+      // ReactNativeHapticFeedback.trigger("notificationError", {
+      //   ignoreAndroidSystemSettings: true,
+      // })
     } catch (err) {
       if (err instanceof Error) {
         crashlytics().recordError(err)
 
-        const indempotencyErrorPattern = /409: Conflict/i
-        if (indempotencyErrorPattern.test(err.message)) {
-          setPaymentError(LL.SendBitcoinConfirmationScreen.paymentAlreadyAttempted())
-          return
-        }
+        //   const indempotencyErrorPattern = /409: Conflict/i
+        //   if (indempotencyErrorPattern.test(err.message)) {
+        //     setPaymentError(LL.SendBitcoinConfirmationScreen.paymentAlreadyAttempted())
+        //     return
+        //   }
 
-        setPaymentError(err.message || err.toString())
+        //   setPaymentError(err.message || err.toString())
       }
     }
   }, [
-    LL,
     navigation,
     paymentDetail.paymentType,
     sendPayment,
-    setPaymentError,
-    sendingWalletDescriptor?.currency,
+    sendingWalletDescriptor.currency,
   ])
 
   let validAmount = true

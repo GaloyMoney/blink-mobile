@@ -1,0 +1,243 @@
+import LottieView from "lottie-react-native"
+import React, { useEffect, useState } from "react"
+import { Animated, BackHandler, Dimensions, Easing, View } from "react-native"
+
+import erroredLoop from "@app/assets/animations/Error Pulse Loop.json"
+import errored from "@app/assets/animations/Error.json"
+import lnSuccessLoop from "@app/assets/animations/Lightning Pulse Loop.json"
+import lnSuccess from "@app/assets/animations/Lightning Success.json"
+import onchainSuccessLoop from "@app/assets/animations/On Chain Pulse Loop.json"
+import onchainSuccess from "@app/assets/animations/On Chain Success.json"
+import sendingLoop from "@app/assets/animations/Sending Loop.json"
+import sendingStart from "@app/assets/animations/Sending Start.json"
+import sendingTransition from "@app/assets/animations/Sending Transition.json"
+import { Screen } from "@app/components/screen"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { logPaymentResult } from "@app/utils/analytics"
+import { RouteProp } from "@react-navigation/native"
+import { Text, makeStyles } from "@rneui/themed"
+
+import {
+  formatTimeToMempool,
+  timeToMempool,
+} from "../transaction-detail-screen/format-time"
+import { SendPayment, PaymentSendCompletedStatus } from "./use-send-payment"
+
+const animationMap = {
+  START: sendingStart,
+  LOOP: sendingLoop,
+  TRANSITION: sendingTransition,
+  LN_SUCCESS: lnSuccess,
+  LN_SUCCESS_LOOP: lnSuccessLoop,
+  ONCHAIN_SUCCESS: onchainSuccess,
+  ONCHAIN_SUCCESS_LOOP: onchainSuccessLoop,
+  ERRORED: errored,
+  ERRORED_LOOP: erroredLoop,
+}
+type PaymentAnimationState = keyof typeof animationMap
+
+type Props = {
+  route: RouteProp<RootStackParamList, "sendBitcoinPayment">
+}
+
+const calculateDuration = (frameCount: number) => (frameCount / 30) * 1000
+
+const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
+  const { LL, locale } = useI18nContext()
+
+  const styles = useStyles()
+  const [paymentAnimationState, setPaymentAnimationState] =
+    useState<PaymentAnimationState>("START")
+
+  const [paymentSuccess, setPaymentSuccess] = useState<string | undefined>(undefined)
+  const [paymentError, setPaymentError] = useState<string | undefined>(undefined)
+
+  const [paymentResult, setPaymentResult] = useState<Awaited<
+    ReturnType<SendPayment>
+  > | null>(null)
+
+  useEffect(() => {
+    route.params
+      .sendPayment()
+      .then((data) => {
+        setPaymentResult(data)
+        return data
+      })
+      .then(({ status }) =>
+        logPaymentResult({
+          paymentStatus: status,
+          paymentType: route.params.paymentType,
+          sendingWallet: route.params.sendingWallet,
+        }),
+      )
+  }, [route.params])
+
+  const [textViewPosition] = useState(new Animated.Value(Dimensions.get("window").height))
+  useEffect(() => {
+    if (["ONCHAIN_SUCCESS", "ERRORED", "LN_SUCCESS"].includes(paymentAnimationState)) {
+      // Animate text view to slide up from the bottom
+      setTimeout(
+        () =>
+          Animated.timing(textViewPosition, {
+            toValue: 0,
+            duration: 500,
+            easing: Easing.in(Easing.ease),
+            useNativeDriver: false,
+          }).start(),
+        2000,
+      )
+    }
+  }, [paymentAnimationState, textViewPosition])
+
+  useEffect(() => {
+    if (!paymentResult) return
+
+    const { status, errorsMessage, extraInfo } = paymentResult
+    const arrivalAtMempoolEstimate = extraInfo?.arrivalAtMempoolEstimate
+
+    if (status === "SUCCESS" || status === "PENDING") {
+      switch (processStatus({ arrivalAtMempoolEstimate, status })) {
+        case "SUCCESS":
+          return setPaymentSuccess(LL.SendBitcoinScreen.success())
+        case "QUEUED":
+          return setPaymentSuccess(
+            LL.TransactionDetailScreen.txNotBroadcast({
+              countdown: formatTimeToMempool(
+                timeToMempool(arrivalAtMempoolEstimate as number),
+                LL,
+                locale,
+              ),
+            }),
+          )
+        case "PENDING":
+          return setPaymentSuccess(LL.SendBitcoinScreen.pendingPayment())
+      }
+    } else if (status === "ALREADY_PAID") {
+      return setPaymentError(LL.SendBitcoinConfirmationScreen.invoiceAlreadyPaid())
+    } else {
+      return setPaymentError(
+        errorsMessage || LL.SendBitcoinConfirmationScreen.somethingWentWrong(),
+      )
+    }
+  }, [paymentResult, LL, locale])
+
+  // --- ANIMATION CONTROLLER ---
+  useEffect(() => {
+    if (paymentResult && paymentAnimationState === "LOOP") {
+      setPaymentAnimationState("TRANSITION")
+      setTimeout(() => {
+        if (paymentResult.status === "SUCCESS" || paymentResult.status === "PENDING") {
+          const { status, extraInfo } = paymentResult
+          const arrivalAtMempoolEstimate = extraInfo?.arrivalAtMempoolEstimate
+          setPaymentAnimationState(
+            processStatus({ arrivalAtMempoolEstimate, status }) === "QUEUED"
+              ? "ONCHAIN_SUCCESS"
+              : "LN_SUCCESS",
+          )
+        } else setPaymentAnimationState("ERRORED")
+      }, calculateDuration(35))
+    }
+  }, [paymentResult, paymentAnimationState, route.params.paymentType])
+
+  // Should not be able to go back until the payment has been sent
+  useEffect(() => {
+    if (paymentAnimationState.includes("_LOOP")) return
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", () => true)
+    return () => backHandler.remove()
+  }, [paymentAnimationState])
+
+  // Handle transitions to loops
+  const handleAnimationFinish = () => {
+    if (paymentAnimationState === "START") {
+      setPaymentAnimationState("LOOP")
+    } else if (paymentAnimationState === "ONCHAIN_SUCCESS") {
+      setPaymentAnimationState("ONCHAIN_SUCCESS_LOOP")
+    } else if (paymentAnimationState === "LN_SUCCESS") {
+      setPaymentAnimationState("LN_SUCCESS_LOOP")
+    } else if (paymentAnimationState === "ERRORED") {
+      setPaymentAnimationState("ERRORED_LOOP")
+    }
+  }
+
+  return (
+    <Screen>
+      <View style={styles.animView}>
+        {Object.entries(animationMap).map(([state, source]) => (
+          <LottieView
+            key={state}
+            style={[styles.animView, paymentAnimationState !== state && styles.hidden]}
+            source={source}
+            autoPlay={paymentAnimationState === state}
+            loop={state.includes("LOOP")}
+            speed={state === "START" || state === "LOOP" ? 1.5 : 1}
+            onAnimationFinish={() =>
+              paymentAnimationState === state && handleAnimationFinish()
+            }
+          />
+        ))}
+      </View>
+      <Animated.View style={[styles.txInfo, { top: textViewPosition }]}>
+        {paymentSuccess && <Text type="h2">{paymentSuccess}</Text>}
+        {paymentError && <Text type="h2">{paymentError}</Text>}
+      </Animated.View>
+    </Screen>
+  )
+}
+
+// TODO: proper type from the backend so we don't need this processing in the front end
+// ie: it should return QUEUED for an onchain send payment
+type StatusProcessed = "SUCCESS" | "PENDING" | "QUEUED"
+
+const processStatus = ({
+  status,
+  arrivalAtMempoolEstimate,
+}: {
+  status: PaymentSendCompletedStatus
+  arrivalAtMempoolEstimate: number | undefined
+}): StatusProcessed => {
+  if (status === "SUCCESS") {
+    return "SUCCESS"
+  }
+
+  if (arrivalAtMempoolEstimate) {
+    return "QUEUED"
+  }
+  return "PENDING"
+}
+
+const useStyles = makeStyles(() => ({
+  animView: {
+    flex: 1,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    transform: [{ scale: calculateScale() }],
+  },
+  hidden: {
+    width: 0,
+    height: 0,
+    position: "absolute",
+    opacity: 0,
+  },
+  txInfo: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
+    marginTop: 10,
+  },
+}))
+
+const calculateScale = () => {
+  const screen = Dimensions.get("window")
+  const screenAspectRatio = screen.width / screen.height
+  const animationAspectRatio = 9 / 16
+  return screenAspectRatio > animationAspectRatio
+    ? screen.width / (screen.height * animationAspectRatio)
+    : screen.height / (screen.width / animationAspectRatio)
+}
+
+export default SendBitcoinPaymentScreen

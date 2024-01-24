@@ -38,7 +38,8 @@ import SendBitcoinCompletedScreen from "@app/screens/send-bitcoin-screen/send-bi
 import SendBitcoinConfirmationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-confirmation-screen"
 import SendBitcoinDestinationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
 import SendBitcoinDetailsScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-details-screen"
-import { AccountScreen } from "@app/screens/settings-screen/account"
+import SendBitcoinPaymentScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-payment-screen"
+import { AccountScreen } from "@app/screens/settings-screen/account-screen"
 import { DefaultWalletScreen } from "@app/screens/settings-screen/default-wallet"
 import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
 import { NotificationSettingsScreen } from "@app/screens/settings-screen/notifications-screen"
@@ -157,6 +158,11 @@ export const RootStack = () => {
         name="sendBitcoinConfirmation"
         component={SendBitcoinConfirmationScreen}
         options={{ title: LL.SendBitcoinScreen.title() }}
+      />
+      <RootNavigator.Screen
+        name="sendBitcoinPayment"
+        component={SendBitcoinPaymentScreen}
+        options={{ headerShown: false, headerLeft: () => <></>, gestureEnabled: false }}
       />
       <RootNavigator.Screen
         name="sendBitcoinCompleted"

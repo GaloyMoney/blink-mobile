@@ -21,16 +21,15 @@ import { PaymentSendExtraInfo, SendPaymentMutation } from "./payment-details/ind
 
 export type PaymentSendCompletedStatus = "SUCCESS" | "PENDING"
 
+export type SendPayment = () => Promise<{
+  status: PaymentSendResult | null | undefined
+  errorsMessage?: string
+  extraInfo?: PaymentSendExtraInfo
+}>
+
 type UseSendPaymentResult = {
   loading: boolean
-  sendPayment:
-    | (() => Promise<{
-        status: PaymentSendResult | null | undefined
-        errorsMessage?: string
-        extraInfo?: PaymentSendExtraInfo
-      }>)
-    | undefined
-    | null
+  sendPayment: SendPayment | undefined | null
   hasAttemptedSend: boolean
 }
 
