@@ -6,9 +6,13 @@ import {
   ReceiveDestination,
 } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
 import { PaymentDetail } from "@app/screens/send-bitcoin-screen/payment-details/index.types"
-import { PaymentSendCompletedStatus } from "@app/screens/send-bitcoin-screen/use-send-payment"
+import {
+  PaymentSendCompletedStatus,
+  SendPayment,
+} from "@app/screens/send-bitcoin-screen/use-send-payment"
 import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
+import { PaymentType } from "@galoymoney/client"
 import { NavigatorScreenParams } from "@react-navigation/native"
 
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
@@ -36,6 +40,11 @@ export type RootStackParamList = {
   sendBitcoinDestination?: {
     payment?: string
     username?: string
+  }
+  sendBitcoinPayment: {
+    sendPayment: SendPayment
+    paymentType: PaymentType
+    sendingWallet: WalletCurrency
   }
   sendBitcoinDetails: {
     paymentDestination: PaymentDestination
