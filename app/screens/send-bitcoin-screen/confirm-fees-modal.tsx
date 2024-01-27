@@ -22,8 +22,6 @@ export const ConfirmFeesModal: React.FC<ConfirmFeesModalProps> = ({
   } = useTheme()
   const { LL } = useI18nContext()
 
-  console.log({ isVisible, action })
-
   return (
     <CustomModal
       isVisible={isVisible}
@@ -37,10 +35,10 @@ export const ConfirmFeesModal: React.FC<ConfirmFeesModalProps> = ({
           </Text>
         </View>
       }
-      primaryButtonOnPress={action}
-      primaryButtonTitle={LL.SendBitcoinScreen.confirmFeesModal.confirmButton()}
-      secondaryButtonTitle={LL.common.cancel()}
-      secondaryButtonOnPress={cancel}
+      primaryButtonOnPress={cancel}
+      primaryButtonTitle={LL.common.cancel()}
+      secondaryButtonTitle={LL.SendBitcoinScreen.confirmFeesModal.confirmButton()}
+      secondaryButtonOnPress={action}
     />
   )
 }
