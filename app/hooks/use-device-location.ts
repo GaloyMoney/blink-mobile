@@ -12,6 +12,7 @@ const useDeviceLocation = () => {
   const [loading, setLoading] = useState(true)
   const [countryCode, setCountryCode] = useState<CountryCode>("SV")
 
+  // if error this will resort to the default "SV" countryCode
   useEffect(() => {
     if (error) {
       setLoading(false)

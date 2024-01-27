@@ -82,6 +82,9 @@ export const createCache = () =>
           countryCode: {
             read: (value) => value ?? "SV",
           },
+          region: {
+            read: (value) => value ?? null,
+          },
           feedbackModalShown: {
             read: (value) => value ?? false,
           },

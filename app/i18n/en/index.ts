@@ -2059,14 +2059,12 @@ const en: BaseTranslation = {
     },
   },
   MapScreen: {
-    locationPermissionMessage:
-      "Activate your location so you know where you are on the map",
-    locationPermissionNegative: "Cancel",
-    locationPermissionNeutral: "Ask Me Later",
-    locationPermissionPositive: "OK",
-    locationPermissionTitle: "Locate yourself on the map",
+    navToSettingsTitle: "Location permissions",
+    navToSettingsText: "If you'd like to give Blink location permissions, please navigate to your settings and enable it there",
     payBusiness: "Pay this business",
+    openSettings: "Open settings",
     title: "Map",
+    error: 'Oops. Something went wrong while getting your location'
   },
   HomeScreen: {
     receive: "Receive",

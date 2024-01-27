@@ -88,6 +88,8 @@
 	<string>$(PRODUCT_NAME) requires FaceID access for quick and secure authentication</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Find merchants who accept bitcoin near you</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Find merchants who accept bitcoin near you</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Import a screenshot with a QR code</string>
 	<key>NFCReaderUsageDescription</key>

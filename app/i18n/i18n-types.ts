@@ -6339,33 +6339,29 @@ type RootTranslation = {
 	}
 	MapScreen: {
 		/**
-		 * A​c​t​i​v​a​t​e​ ​y​o​u​r​ ​l​o​c​a​t​i​o​n​ ​s​o​ ​y​o​u​ ​k​n​o​w​ ​w​h​e​r​e​ ​y​o​u​ ​a​r​e​ ​o​n​ ​t​h​e​ ​m​a​p
+		 * L​o​c​a​t​i​o​n​ ​p​e​r​m​i​s​s​i​o​n​s
 		 */
-		locationPermissionMessage: string
+		navToSettingsTitle: string
 		/**
-		 * C​a​n​c​e​l
+		 * I​f​ ​y​o​u​'​d​ ​l​i​k​e​ ​t​o​ ​g​i​v​e​ ​B​l​i​n​k​ ​l​o​c​a​t​i​o​n​ ​p​e​r​m​i​s​s​i​o​n​s​,​ ​p​l​e​a​s​e​ ​n​a​v​i​g​a​t​e​ ​t​o​ ​y​o​u​r​ ​s​e​t​t​i​n​g​s​ ​a​n​d​ ​e​n​a​b​l​e​ ​i​t​ ​t​h​e​r​e
 		 */
-		locationPermissionNegative: string
-		/**
-		 * A​s​k​ ​M​e​ ​L​a​t​e​r
-		 */
-		locationPermissionNeutral: string
-		/**
-		 * O​K
-		 */
-		locationPermissionPositive: string
-		/**
-		 * L​o​c​a​t​e​ ​y​o​u​r​s​e​l​f​ ​o​n​ ​t​h​e​ ​m​a​p
-		 */
-		locationPermissionTitle: string
+		navToSettingsText: string
 		/**
 		 * P​a​y​ ​t​h​i​s​ ​b​u​s​i​n​e​s​s
 		 */
 		payBusiness: string
 		/**
+		 * O​p​e​n​ ​s​e​t​t​i​n​g​s
+		 */
+		openSettings: string
+		/**
 		 * M​a​p
 		 */
 		title: string
+		/**
+		 * O​o​p​s​.​ ​S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​ ​w​h​i​l​e​ ​g​e​t​t​i​n​g​ ​y​o​u​r​ ​l​o​c​a​t​i​o​n
+		 */
+		error: string
 	}
 	HomeScreen: {
 		/**
@@ -15142,33 +15138,29 @@ export type TranslationFunctions = {
 	}
 	MapScreen: {
 		/**
-		 * Activate your location so you know where you are on the map
+		 * Location permissions
 		 */
-		locationPermissionMessage: () => LocalizedString
+		navToSettingsTitle: () => LocalizedString
 		/**
-		 * Cancel
+		 * If you'd like to give Blink location permissions, please navigate to your settings and enable it there
 		 */
-		locationPermissionNegative: () => LocalizedString
-		/**
-		 * Ask Me Later
-		 */
-		locationPermissionNeutral: () => LocalizedString
-		/**
-		 * OK
-		 */
-		locationPermissionPositive: () => LocalizedString
-		/**
-		 * Locate yourself on the map
-		 */
-		locationPermissionTitle: () => LocalizedString
+		navToSettingsText: () => LocalizedString
 		/**
 		 * Pay this business
 		 */
 		payBusiness: () => LocalizedString
 		/**
+		 * Open settings
+		 */
+		openSettings: () => LocalizedString
+		/**
 		 * Map
 		 */
 		title: () => LocalizedString
+		/**
+		 * Oops. Something went wrong while getting your location
+		 */
+		error: () => LocalizedString
 	}
 	HomeScreen: {
 		/**

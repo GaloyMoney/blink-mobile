@@ -17,8 +17,11 @@ import {
   InnerCircleValueQuery,
   IntroducingCirclesModalShownDocument,
   IntroducingCirclesModalShownQuery,
+  RegionDocument,
+  RegionQuery,
 } from "./generated"
 import { CountryCode } from "libphonenumber-js/mobile"
+import { Region } from "react-native-maps"
 
 export default gql`
   query hideBalance {
@@ -39,6 +42,15 @@ export default gql`
 
   query countryCode {
     countryCode @client
+  }
+
+  query region {
+    region @client {
+      latitude
+      longitude
+      latitudeDelta
+      longitudeDelta
+    }
   }
 
   query feedbackModalShown {
@@ -136,6 +148,23 @@ export const updateCountryCode = (
     })
   } catch {
     console.warn("impossible to update country code")
+  }
+}
+
+export const updateMapLastCoords = (client: ApolloClient<unknown>, region: Region) => {
+  try {
+    client.writeQuery<RegionQuery>({
+      query: RegionDocument,
+      data: {
+        __typename: "Query",
+        region: {
+          __typename: "Region",
+          ...region,
+        },
+      },
+    })
+  } catch {
+    console.warn("impossible to update map last coords")
   }
 }
 

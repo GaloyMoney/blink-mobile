@@ -1261,6 +1261,16 @@ query realtimePrice {
   }
 }
 
+query region {
+  region @client {
+    latitude
+    longitude
+    latitudeDelta
+    longitudeDelta
+    __typename
+  }
+}
+
 query scanningQRCodeScreen {
   globals {
     network

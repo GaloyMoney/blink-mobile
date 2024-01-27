@@ -1,4 +1,3 @@
-
 extend type Contact {
   prettyName: String!
 }
@@ -10,10 +9,18 @@ extend type Query {
   beta: Boolean!
   colorScheme: String!
   countryCode: String!
+  region: Region
   feedbackModalShown: Boolean!
   hasPromptedSetDefaultAccount: Boolean!
   introducingCirclesModalShown: Boolean!
   innerCircleValue: Int!
+}
+
+extend type Region {
+  latitude: Float!
+  longitude: Float!
+  latitudeDelta: Float!
+  longitudeDelta: Float!
 }
 
 extend type Account {
