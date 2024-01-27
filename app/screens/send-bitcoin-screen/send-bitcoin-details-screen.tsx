@@ -436,6 +436,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     >
       <ConfirmFeesModal
         action={() => {
+          setModalHighFeesVisible(false)
           navigation.navigate("sendBitcoinConfirmation", { paymentDetail })
         }}
         isVisible={modalHighFeesVisible}
