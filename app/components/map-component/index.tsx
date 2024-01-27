@@ -50,6 +50,7 @@ export default function MapComponent({
 
   const mapViewRef = useRef<MapView>(null)
   const openSettingsModalRef = React.useRef<OpenSettingsElement>(null)
+  const isAndroidn2ndPermissionRequest = React.useRef(false)
 
   // toggle modal from inside modal component instead of here in the parent
   const toggleModal = React.useCallback(
@@ -65,8 +66,7 @@ export default function MapComponent({
       }
       // Android can ask twice for permission, and initial checks cannot differentiate between BLOCKED vs DENIED
     } else {
-      // TODO figure out how to not fire this after the 2nd time user blocks
-      toggleModal()
+      !isAndroidn2ndPermissionRequest.current && toggleModal()
     }
   }
 
@@ -81,29 +81,32 @@ export default function MapComponent({
   }
 
   const requestLocationPermission = async () => {
-    request(LOCATION_PERMISSION)
-      .then((status) => {
-        if (status === RESULTS.GRANTED) {
-          centerOnUser()
-        } else if (status === RESULTS.BLOCKED) {
-          respondToBlocked(status)
-        }
-        setPermissionsStatus(status)
-      })
-      .catch(() => alertOnLocationError())
+    try {
+      const status = await request(
+        LOCATION_PERMISSION,
+        () =>
+          new Promise((resolve) => {
+            // This will only trigger on Android if it's the 2nd request ever
+            isAndroidn2ndPermissionRequest.current = true
+            resolve(true)
+          }),
+      )
+      if (status === RESULTS.GRANTED) {
+        centerOnUser()
+      } else if (status === RESULTS.BLOCKED) {
+        respondToBlocked(status)
+      }
+      isAndroidn2ndPermissionRequest.current = false
+      setPermissionsStatus(status)
+    } catch {
+      alertOnLocationError()
+    }
   }
 
   const debouncedHandleRegionChange = React.useRef(
-    debounce(
-      (region: Region) => {
-        updateMapLastCoords(client, {
-          latitude: region.latitude,
-          longitude: region.longitude,
-        })
-      },
-      1000,
-      { trailing: true },
-    ),
+    debounce((region: Region) => updateMapLastCoords(client, region), 1000, {
+      trailing: true,
+    }),
   ).current
 
   return (

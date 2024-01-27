@@ -631,12 +631,6 @@ export const InvoicePaymentStatus = {
 } as const;
 
 export type InvoicePaymentStatus = typeof InvoicePaymentStatus[keyof typeof InvoicePaymentStatus];
-export type LatLng = {
-  readonly __typename: 'LatLng';
-  readonly lat: Scalars['Float']['output'];
-  readonly lng: Scalars['Float']['output'];
-};
-
 export type Leader = {
   readonly __typename: 'Leader';
   readonly name?: Maybe<Scalars['LeaderboardName']['output']>;
@@ -1526,7 +1520,6 @@ export type Query = {
   readonly hideBalance: Scalars['Boolean']['output'];
   readonly innerCircleValue: Scalars['Int']['output'];
   readonly introducingCirclesModalShown: Scalars['Boolean']['output'];
-  readonly latLng?: Maybe<LatLng>;
   readonly lnInvoicePaymentStatus: LnInvoicePaymentStatusPayload;
   readonly me?: Maybe<User>;
   readonly mobileVersions?: Maybe<ReadonlyArray<Maybe<MobileVersions>>>;
@@ -1536,6 +1529,7 @@ export type Query = {
   readonly price?: Maybe<Scalars['String']['output']>;
   /** Returns 1 Sat and 1 Usd Cent price for the given currency */
   readonly realtimePrice: RealtimePrice;
+  readonly region?: Maybe<Region>;
   /** @deprecated will be migrated to AccountDefaultWalletId */
   readonly userDefaultWalletId: Scalars['WalletId']['output'];
   readonly usernameAvailable?: Maybe<Scalars['Boolean']['output']>;
@@ -1649,6 +1643,14 @@ export type RealtimePricePayload = {
   readonly __typename: 'RealtimePricePayload';
   readonly errors: ReadonlyArray<Error>;
   readonly realtimePrice?: Maybe<RealtimePrice>;
+};
+
+export type Region = {
+  readonly __typename: 'Region';
+  readonly latitude: Scalars['Float']['output'];
+  readonly latitudeDelta: Scalars['Float']['output'];
+  readonly longitude: Scalars['Float']['output'];
+  readonly longitudeDelta: Scalars['Float']['output'];
 };
 
 export type SatAmountPayload = {
@@ -2245,10 +2247,10 @@ export type CountryCodeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type CountryCodeQuery = { readonly __typename: 'Query', readonly countryCode: string };
 
-export type LatLngQueryVariables = Exact<{ [key: string]: never; }>;
+export type RegionQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type LatLngQuery = { readonly __typename: 'Query', readonly latLng?: { readonly __typename: 'LatLng', readonly lat: number, readonly lng: number } | null };
+export type RegionQuery = { readonly __typename: 'Query', readonly region?: { readonly __typename: 'Region', readonly latitude: number, readonly longitude: number, readonly latitudeDelta: number, readonly longitudeDelta: number } | null };
 
 export type FeedbackModalShownQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3425,41 +3427,43 @@ export function useCountryCodeLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type CountryCodeQueryHookResult = ReturnType<typeof useCountryCodeQuery>;
 export type CountryCodeLazyQueryHookResult = ReturnType<typeof useCountryCodeLazyQuery>;
 export type CountryCodeQueryResult = Apollo.QueryResult<CountryCodeQuery, CountryCodeQueryVariables>;
-export const LatLngDocument = gql`
-    query latLng {
-  latLng @client {
-    lat
-    lng
+export const RegionDocument = gql`
+    query region {
+  region @client {
+    latitude
+    longitude
+    latitudeDelta
+    longitudeDelta
   }
 }
     `;
 
 /**
- * __useLatLngQuery__
+ * __useRegionQuery__
  *
- * To run a query within a React component, call `useLatLngQuery` and pass it any options that fit your needs.
- * When your component renders, `useLatLngQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useRegionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRegionQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useLatLngQuery({
+ * const { data, loading, error } = useRegionQuery({
  *   variables: {
  *   },
  * });
  */
-export function useLatLngQuery(baseOptions?: Apollo.QueryHookOptions<LatLngQuery, LatLngQueryVariables>) {
+export function useRegionQuery(baseOptions?: Apollo.QueryHookOptions<RegionQuery, RegionQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<LatLngQuery, LatLngQueryVariables>(LatLngDocument, options);
+        return Apollo.useQuery<RegionQuery, RegionQueryVariables>(RegionDocument, options);
       }
-export function useLatLngLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LatLngQuery, LatLngQueryVariables>) {
+export function useRegionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RegionQuery, RegionQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<LatLngQuery, LatLngQueryVariables>(LatLngDocument, options);
+          return Apollo.useLazyQuery<RegionQuery, RegionQueryVariables>(RegionDocument, options);
         }
-export type LatLngQueryHookResult = ReturnType<typeof useLatLngQuery>;
-export type LatLngLazyQueryHookResult = ReturnType<typeof useLatLngLazyQuery>;
-export type LatLngQueryResult = Apollo.QueryResult<LatLngQuery, LatLngQueryVariables>;
+export type RegionQueryHookResult = ReturnType<typeof useRegionQuery>;
+export type RegionLazyQueryHookResult = ReturnType<typeof useRegionLazyQuery>;
+export type RegionQueryResult = Apollo.QueryResult<RegionQuery, RegionQueryVariables>;
 export const FeedbackModalShownDocument = gql`
     query feedbackModalShown {
   feedbackModalShown @client
@@ -7182,7 +7186,6 @@ export type ResolversTypes = {
   InvoiceEdge: ResolverTypeWrapper<InvoiceEdge>;
   InvoicePaymentStatus: InvoicePaymentStatus;
   Language: ResolverTypeWrapper<Scalars['Language']['output']>;
-  LatLng: ResolverTypeWrapper<LatLng>;
   Leader: ResolverTypeWrapper<Leader>;
   Leaderboard: ResolverTypeWrapper<Leaderboard>;
   LeaderboardName: ResolverTypeWrapper<Scalars['LeaderboardName']['output']>;
@@ -7267,6 +7270,7 @@ export type ResolversTypes = {
   RealtimePrice: ResolverTypeWrapper<RealtimePrice>;
   RealtimePriceInput: RealtimePriceInput;
   RealtimePricePayload: ResolverTypeWrapper<RealtimePricePayload>;
+  Region: ResolverTypeWrapper<Region>;
   SafeInt: ResolverTypeWrapper<Scalars['SafeInt']['output']>;
   SatAmount: ResolverTypeWrapper<Scalars['SatAmount']['output']>;
   SatAmountPayload: ResolverTypeWrapper<SatAmountPayload>;
@@ -7396,7 +7400,6 @@ export type ResolversParentTypes = {
   InvoiceConnection: InvoiceConnection;
   InvoiceEdge: InvoiceEdge;
   Language: Scalars['Language']['output'];
-  LatLng: LatLng;
   Leader: Leader;
   Leaderboard: Leaderboard;
   LeaderboardName: Scalars['LeaderboardName']['output'];
@@ -7474,6 +7477,7 @@ export type ResolversParentTypes = {
   RealtimePrice: RealtimePrice;
   RealtimePriceInput: RealtimePriceInput;
   RealtimePricePayload: RealtimePricePayload;
+  Region: Region;
   SafeInt: Scalars['SafeInt']['output'];
   SatAmount: Scalars['SatAmount']['output'];
   SatAmountPayload: SatAmountPayload;
@@ -7873,12 +7877,6 @@ export interface LanguageScalarConfig extends GraphQLScalarTypeConfig<ResolversT
   name: 'Language';
 }
 
-export type LatLngResolvers<ContextType = any, ParentType extends ResolversParentTypes['LatLng'] = ResolversParentTypes['LatLng']> = {
-  lat?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  lng?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type LeaderResolvers<ContextType = any, ParentType extends ResolversParentTypes['Leader'] = ResolversParentTypes['Leader']> = {
   name?: Resolver<Maybe<ResolversTypes['LeaderboardName']>, ParentType, ContextType>;
   points?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -8210,7 +8208,6 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   hideBalance?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   innerCircleValue?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   introducingCirclesModalShown?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  latLng?: Resolver<Maybe<ResolversTypes['LatLng']>, ParentType, ContextType>;
   lnInvoicePaymentStatus?: Resolver<ResolversTypes['LnInvoicePaymentStatusPayload'], ParentType, ContextType, RequireFields<QueryLnInvoicePaymentStatusArgs, 'input'>>;
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   mobileVersions?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['MobileVersions']>>>, ParentType, ContextType>;
@@ -8219,6 +8216,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   onChainUsdTxFeeAsBtcDenominated?: Resolver<ResolversTypes['OnChainUsdTxFee'], ParentType, ContextType, RequireFields<QueryOnChainUsdTxFeeAsBtcDenominatedArgs, 'address' | 'amount' | 'speed' | 'walletId'>>;
   price?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   realtimePrice?: Resolver<ResolversTypes['RealtimePrice'], ParentType, ContextType, RequireFields<QueryRealtimePriceArgs, 'currency'>>;
+  region?: Resolver<Maybe<ResolversTypes['Region']>, ParentType, ContextType>;
   userDefaultWalletId?: Resolver<ResolversTypes['WalletId'], ParentType, ContextType, RequireFields<QueryUserDefaultWalletIdArgs, 'username'>>;
   usernameAvailable?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<QueryUsernameAvailableArgs, 'username'>>;
   welcomeLeaderboard?: Resolver<ResolversTypes['Leaderboard'], ParentType, ContextType, RequireFields<QueryWelcomeLeaderboardArgs, 'input'>>;
@@ -8256,6 +8254,14 @@ export type RealtimePriceResolvers<ContextType = any, ParentType extends Resolve
 export type RealtimePricePayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['RealtimePricePayload'] = ResolversParentTypes['RealtimePricePayload']> = {
   errors?: Resolver<ReadonlyArray<ResolversTypes['Error']>, ParentType, ContextType>;
   realtimePrice?: Resolver<Maybe<ResolversTypes['RealtimePrice']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type RegionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Region'] = ResolversParentTypes['Region']> = {
+  latitude?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  latitudeDelta?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  longitude?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  longitudeDelta?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -8576,7 +8582,6 @@ export type Resolvers<ContextType = any> = {
   InvoiceConnection?: InvoiceConnectionResolvers<ContextType>;
   InvoiceEdge?: InvoiceEdgeResolvers<ContextType>;
   Language?: GraphQLScalarType;
-  LatLng?: LatLngResolvers<ContextType>;
   Leader?: LeaderResolvers<ContextType>;
   Leaderboard?: LeaderboardResolvers<ContextType>;
   LeaderboardName?: GraphQLScalarType;
@@ -8626,6 +8631,7 @@ export type Resolvers<ContextType = any> = {
   QuizCompletedPayload?: QuizCompletedPayloadResolvers<ContextType>;
   RealtimePrice?: RealtimePriceResolvers<ContextType>;
   RealtimePricePayload?: RealtimePricePayloadResolvers<ContextType>;
+  Region?: RegionResolvers<ContextType>;
   SafeInt?: GraphQLScalarType;
   SatAmount?: GraphQLScalarType;
   SatAmountPayload?: SatAmountPayloadResolvers<ContextType>;

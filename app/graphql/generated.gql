@@ -1092,14 +1092,6 @@ query language {
   }
 }
 
-query latLng {
-  latLng @client {
-    lat
-    lng
-    __typename
-  }
-}
-
 query level {
   me {
     id
@@ -1265,6 +1257,16 @@ query realtimePrice {
       }
       __typename
     }
+    __typename
+  }
+}
+
+query region {
+  region @client {
+    latitude
+    longitude
+    latitudeDelta
+    longitudeDelta
     __typename
   }
 }

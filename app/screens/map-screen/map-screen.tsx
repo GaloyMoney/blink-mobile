@@ -12,7 +12,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import {
   MapMarker,
   useBusinessMapMarkersQuery,
-  useLatLngQuery,
+  useRegionQuery,
 } from "@app/graphql/generated"
 import { check, PERMISSIONS, PermissionStatus, RESULTS } from "react-native-permissions"
 import { gql } from "@apollo/client"
@@ -93,7 +93,7 @@ gql`
 export const MapScreen: React.FC<Props> = ({ navigation }) => {
   const isAuthed = useIsAuthed()
   const { countryCode, loading } = useDeviceLocation()
-  const { data: lastCoordsData, error: lastCoordsError } = useLatLngQuery()
+  const { data: lastRegion, error: lastRegionError } = useRegionQuery()
   const { LL } = useI18nContext()
 
   const { data, error, refetch } = useBusinessMapMarkersQuery({
@@ -122,8 +122,8 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
 
   // On screen load, check (NOT request) if location permissions are given
   React.useEffect(() => {
-    check(LOCATION_PERMISSION).then((status) => {
-      console.log("Initial check: ", status)
+    ;(async () => {
+      const status = await check(LOCATION_PERMISSION)
       setPermissionsStatus(status)
       if (status === RESULTS.GRANTED) {
         getUserRegion(async (region) => {
@@ -136,7 +136,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
       } else {
         setInitializing(false)
       }
-    })
+    })()
   }, [])
 
   const alertOnLocationError = React.useCallback(() => {
@@ -144,29 +144,24 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   }, [LL])
 
   React.useEffect(() => {
-    if (lastCoordsError) {
+    if (lastRegionError) {
       setInitializing(false)
       setInitialLocation(EL_ZONTE_COORDS)
       alertOnLocationError()
     }
-  }, [lastCoordsError, alertOnLocationError])
+  }, [lastRegionError, alertOnLocationError])
 
   // Flow when location permissions are denied
   React.useEffect(() => {
-    if (
-      countryCode &&
-      lastCoordsData &&
-      !isInitializing &&
-      !loading &&
-      !initialLocation
-    ) {
+    if (countryCode && lastRegion && !isInitializing && !loading && !initialLocation) {
       // User has used map before, so we use their last viewed coords
-      if (lastCoordsData.latLng?.lat && lastCoordsData.latLng?.lng) {
+      if (lastRegion.region) {
+        const { latitude, longitude, latitudeDelta, longitudeDelta } = lastRegion.region
         const region: Region = {
-          latitude: lastCoordsData.latLng.lat,
-          longitude: lastCoordsData.latLng.lng,
-          latitudeDelta: 5,
-          longitudeDelta: LONGITUDE_DELTA,
+          latitude,
+          longitude,
+          latitudeDelta,
+          longitudeDelta,
         }
         setInitialLocation(region)
         // User is using maps for the first time, so we center on the center of their IP's country
@@ -185,13 +180,13 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
             longitudeDelta: LONGITUDE_DELTA,
           }
           setInitialLocation(region)
-        } else {
           // backup if country code is not recognized
+        } else {
           setInitialLocation(EL_ZONTE_COORDS)
         }
       }
     }
-  }, [isInitializing, countryCode, lastCoordsData, loading, initialLocation])
+  }, [isInitializing, countryCode, lastRegion, loading, initialLocation])
 
   const handleCalloutPress = (item: MapMarker) => {
     if (isAuthed) {

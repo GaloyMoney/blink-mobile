@@ -17,11 +17,11 @@ import {
   InnerCircleValueQuery,
   IntroducingCirclesModalShownDocument,
   IntroducingCirclesModalShownQuery,
-  LatLngDocument,
-  LatLngQuery,
+  RegionDocument,
+  RegionQuery,
 } from "./generated"
 import { CountryCode } from "libphonenumber-js/mobile"
-import { LatLng } from "react-native-maps"
+import { Region } from "react-native-maps"
 
 export default gql`
   query hideBalance {
@@ -44,10 +44,12 @@ export default gql`
     countryCode @client
   }
 
-  query latLng {
-    latLng @client {
-      lat
-      lng
+  query region {
+    region @client {
+      latitude
+      longitude
+      latitudeDelta
+      longitudeDelta
     }
   }
 
@@ -149,16 +151,15 @@ export const updateCountryCode = (
   }
 }
 
-export const updateMapLastCoords = (client: ApolloClient<unknown>, latLng: LatLng) => {
+export const updateMapLastCoords = (client: ApolloClient<unknown>, region: Region) => {
   try {
-    client.writeQuery<LatLngQuery>({
-      query: LatLngDocument,
+    client.writeQuery<RegionQuery>({
+      query: RegionDocument,
       data: {
         __typename: "Query",
-        latLng: {
-          __typename: "LatLng",
-          lat: latLng.latitude,
-          lng: latLng.longitude,
+        region: {
+          __typename: "Region",
+          ...region,
         },
       },
     })
