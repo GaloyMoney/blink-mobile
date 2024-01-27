@@ -163,6 +163,7 @@ const useStyles = makeStyles(() => ({
     flexDirection: "row",
     alignItems: "center",
     flexWrap: "wrap",
+    marginTop: 5,
   },
   informationText: {
     paddingLeft: 2,
