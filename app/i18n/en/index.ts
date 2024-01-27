@@ -2217,7 +2217,8 @@ const en: BaseTranslation = {
     paymentAlreadyAttempted: "Payment already attempted.\n\nIf you want to send this payment again, start from scratch.",
     slideToConfirm: "Slide to Confirm",
     slideConfirming: "Confirming...",
-    copiedDestination: "Copied destination to clipboard"
+    copiedDestination: "Copied destination to clipboard",
+    lightningRecommended: "High fee! We recommend Lightning.",
   },
   SendBitcoinDestinationScreen: {
     usernameNowAddress:
@@ -2604,12 +2605,14 @@ const en: BaseTranslation = {
     hour: "hour",
     hours: "hours",
     invoice: "Invoice",
+    intraledger: "Intraledger",
     language: "Language",
     languagePreference: "Language preference",
     lastName: "Last Name",
     later: "Later",
     loggedOut: "You have been logged out.",
     logout: "Log Out",
+    lightning: "Lightning",
     minutes: "minutes",
     errorAuthToken: "Missing auth token",
     needWallet: "Log in or create an account to access your wallet",
@@ -2620,6 +2623,7 @@ const en: BaseTranslation = {
     ok: "OK",
     or: "or",
     openWallet: "Open Wallet",
+    onchain: "Onchain",
     paymentRequest: "Payment Request",
     phone: "Phone",
     phoneNumber: "Phone Number",
