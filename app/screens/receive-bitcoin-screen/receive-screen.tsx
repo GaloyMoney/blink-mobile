@@ -37,8 +37,18 @@ const ReceiveScreen = () => {
 
   const [displayReceiveNfc, setDisplayReceiveNfc] = useState(false)
 
-  const nfcText = LL.ReceiveScreen.nfc()
   useEffect(() => {
+    const nfcIcon = {
+      marginTop: -1,
+      marginRight: 14,
+      padding: 8,
+      display: "flex",
+      flexDirection: "row",
+      columnGap: 4,
+      backgroundColor: colors.grey5,
+      borderRadius: 4,
+    } as const
+
     ;(async () => {
       if (
         request?.type === "Lightning" &&
@@ -47,11 +57,8 @@ const ReceiveScreen = () => {
       ) {
         navigation.setOptions({
           headerRight: () => (
-            <TouchableOpacity
-              style={styles.nfcIcon}
-              onPress={() => setDisplayReceiveNfc(true)}
-            >
-              <Text type="p2">{nfcText}</Text>
+            <TouchableOpacity style={nfcIcon} onPress={() => setDisplayReceiveNfc(true)}>
+              <Text type="p2">{LL.ReceiveScreen.nfc()}</Text>
               <CustomIcon name="nfc" color={colors.black} />
             </TouchableOpacity>
           ),
@@ -60,9 +67,7 @@ const ReceiveScreen = () => {
         navigation.setOptions({ headerRight: () => <></> })
       }
     })()
-    // Disable exhaustive-deps because styles.nfcIcon was causing an infinite loop
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nfcText, colors.black, navigation, request?.state, request?.type])
+  }, [LL, colors, navigation, request?.state, request?.type])
 
   // notification permission
   useEffect(() => {
@@ -360,16 +365,6 @@ const useStyles = makeStyles(({ colors }) => ({
     fontWeight: "700",
   },
   btcLow: {},
-  nfcIcon: {
-    marginTop: -1,
-    marginRight: 14,
-    padding: 8,
-    display: "flex",
-    flexDirection: "row",
-    columnGap: 4,
-    backgroundColor: colors.grey5,
-    borderRadius: 4,
-  },
 }))
 
 export default withMyLnUpdateSub(ReceiveScreen)
