@@ -343,10 +343,6 @@ const useStyles = makeStyles(({ colors }) => ({
     top: 0,
   },
 
-  noPermissionsView: {
-    ...StyleSheet.absoluteFillObject,
-  },
-
   iconClose: { position: "absolute", top: -2, color: colors._black },
 
   iconGalery: { opacity: 0.8 },
