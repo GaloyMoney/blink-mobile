@@ -695,8 +695,6 @@ const useStyles = makeStyles(({ colors }) => ({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 8,
-    height: 18,
   },
   iconContainer: {
     justifyContent: "center",
