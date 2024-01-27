@@ -50,7 +50,7 @@ export default function MapComponent({
 
   const mapViewRef = useRef<MapView>(null)
   const openSettingsModalRef = React.useRef<OpenSettingsElement>(null)
-  const isAndroidn2ndPermissionRequest = React.useRef(false)
+  const isAndroidSecondPermissionRequest = React.useRef(false)
 
   // toggle modal from inside modal component instead of here in the parent
   const toggleModal = React.useCallback(
@@ -66,7 +66,7 @@ export default function MapComponent({
       }
       // Android can ask twice for permission, and initial checks cannot differentiate between BLOCKED vs DENIED
     } else {
-      !isAndroidn2ndPermissionRequest.current && toggleModal()
+      !isAndroidSecondPermissionRequest.current && toggleModal()
     }
   }
 
@@ -87,7 +87,7 @@ export default function MapComponent({
         () =>
           new Promise((resolve) => {
             // This will only trigger on Android if it's the 2nd request ever
-            isAndroidn2ndPermissionRequest.current = true
+            isAndroidSecondPermissionRequest.current = true
             resolve(true)
           }),
       )
@@ -96,7 +96,7 @@ export default function MapComponent({
       } else if (status === RESULTS.BLOCKED) {
         respondToBlocked(status)
       }
-      isAndroidn2ndPermissionRequest.current = false
+      isAndroidSecondPermissionRequest.current = false
       setPermissionsStatus(status)
     } catch {
       alertOnLocationError()
