@@ -25,7 +25,12 @@ const ButtonForButtonGroup: React.FC<
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.button}>
-        <Text {...testProps(text)} style={styles.text}>
+        <Text
+          {...testProps(text)}
+          style={styles.text}
+          ellipsizeMode="tail"
+          numberOfLines={1}
+        >
           {text}
         </Text>
         {typeof icon === "string" ? (
