@@ -415,31 +415,33 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
             />
           )}
 
-        {settlementVia?.__typename === "SettlementViaLn" && settlementVia?.preImage && (
-          <Row
-            entry={LL.common.preimageProofOfPayment()}
-            value={settlementVia?.preImage}
-            icons={[
-              <View key="icon-0">
-                <TouchableWithoutFeedback
-                  onPress={() =>
-                    copyToClipboard({
-                      content: settlementVia?.preImage || "",
-                      type: LL.common.preimageProofOfPayment(),
-                    })
-                  }
-                >
-                  <Icon
-                    name="copy-outline"
-                    size={22}
-                    color={colors.primary}
-                    style={styles.icon}
-                  />
-                </TouchableWithoutFeedback>
-              </View>,
-            ]}
-          />
-        )}
+        {(settlementVia?.__typename === "SettlementViaLn" ||
+          settlementVia?.__typename === "SettlementViaIntraLedger") &&
+          settlementVia?.preImage && (
+            <Row
+              entry={LL.common.preimageProofOfPayment()}
+              value={settlementVia?.preImage}
+              icons={[
+                <View key="icon-0">
+                  <TouchableWithoutFeedback
+                    onPress={() =>
+                      copyToClipboard({
+                        content: settlementVia?.preImage || "",
+                        type: LL.common.preimageProofOfPayment(),
+                      })
+                    }
+                  >
+                    <Icon
+                      name="copy-outline"
+                      size={22}
+                      color={colors.primary}
+                      style={styles.icon}
+                    />
+                  </TouchableWithoutFeedback>
+                </View>,
+              ]}
+            />
+          )}
         {initiationVia?.__typename === "InitiationViaLn" &&
           initiationVia?.paymentRequest && (
             <Row

@@ -39,6 +39,7 @@ fragment Transaction on Transaction {
     ... on SettlementViaIntraLedger {
       counterPartyWalletId
       counterPartyUsername
+      preImage
       __typename
     }
     ... on SettlementViaLn {

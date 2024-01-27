@@ -39,6 +39,7 @@ export default gql`
       ... on SettlementViaIntraLedger {
         counterPartyWalletId
         counterPartyUsername
+        preImage
       }
       ... on SettlementViaLn {
         preImage
