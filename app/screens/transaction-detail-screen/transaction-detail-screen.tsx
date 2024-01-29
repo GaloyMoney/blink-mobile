@@ -1,11 +1,14 @@
 import * as React from "react"
 import { Linking, TouchableWithoutFeedback, View } from "react-native"
+import { ScrollView } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
-import Clipboard from "@react-native-clipboard/clipboard"
 
 import { useFragment } from "@apollo/client"
+import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
+import { GaloyInfo } from "@app/components/atomic/galoy-info"
 import { TransactionDate } from "@app/components/transaction-date"
 import { useDescriptionDisplay } from "@app/components/transaction-item"
+import { DeepPartialObject } from "@app/components/transaction-item/index.types"
 import { WalletSummary } from "@app/components/wallet-summary"
 import {
   SettlementVia,
@@ -14,25 +17,21 @@ import {
   useTransactionListForDefaultAccountLazyQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
+import { useAppConfig } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { toWalletAmount } from "@app/types/amounts"
+import { isIos } from "@app/utils/helper"
+import { toastShow } from "@app/utils/toast"
+import Clipboard from "@react-native-clipboard/clipboard"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
 
 import { IconTransaction } from "../../components/icon-transactions"
 import { Screen } from "../../components/screen"
-
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { useAppConfig } from "@app/hooks"
-import { makeStyles, Text, useTheme } from "@rneui/themed"
-import { toWalletAmount } from "@app/types/amounts"
-import { isIos } from "@app/utils/helper"
-import { GaloyInfo } from "@app/components/atomic/galoy-info"
-import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
-import { DeepPartialObject } from "@app/components/transaction-item/index.types"
-import { ScrollView } from "react-native-gesture-handler"
 import { formatTimeToMempool, timeToMempool } from "./format-time"
-import { toastShow } from "@app/utils/toast"
 
 const Row = ({
   entry,

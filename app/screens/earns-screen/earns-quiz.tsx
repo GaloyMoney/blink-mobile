@@ -1,5 +1,4 @@
 /* eslint-disable react-native/no-inline-styles */
-import { Button } from "@rneui/base"
 import * as React from "react"
 import { useEffect, useState } from "react"
 import {
@@ -9,27 +8,29 @@ import {
   TouchableWithoutFeedback,
   Pressable,
 } from "react-native"
+import { ScrollView } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from "react-native-vector-icons/Ionicons"
 
 import { gql } from "@apollo/client"
+import { useQuizClaimMutation } from "@app/graphql/generated"
 import { getErrorMessages } from "@app/graphql/utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { toastShow } from "@app/utils/toast"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
+import { Button } from "@rneui/base"
+import { makeStyles, useTheme } from "@rneui/themed"
+
 import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { shuffle } from "../../utils/helper"
 import { sleep } from "../../utils/sleep"
+import { useQuizServer } from "../earns-map-screen/use-quiz-server"
 import { SVGs } from "./earn-svg-factory"
 import { augmentCardWithGqlData, getQuizQuestionsContent } from "./earns-utils"
-import { useQuizServer } from "../earns-map-screen/use-quiz-server"
-import { makeStyles, useTheme } from "@rneui/themed"
-import { ScrollView } from "react-native-gesture-handler"
-import { useQuizClaimMutation } from "@app/graphql/generated"
 
 const useStyles = makeStyles(({ colors }) => ({
   answersViewInner: {

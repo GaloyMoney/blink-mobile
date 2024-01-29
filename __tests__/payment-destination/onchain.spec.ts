@@ -1,4 +1,5 @@
 import { WalletCurrency } from "@app/graphql/generated"
+import { createOnchainDestination } from "@app/screens/send-bitcoin-screen/payment-destination"
 import {
   PaymentDetail,
   CreateAmountLightningPaymentDetailsParams,
@@ -8,6 +9,9 @@ import {
   CreateAmountOnchainPaymentDetailsParams,
   CreateIntraledgerPaymentDetailsParams,
 } from "@app/screens/send-bitcoin-screen/payment-details"
+import { ZeroBtcMoneyAmount, toBtcMoneyAmount } from "@app/types/amounts"
+
+import { defaultPaymentDetailParams } from "./helpers"
 
 const mockCreateAmountLightningPaymentDetail = jest.fn<
   PaymentDetail<WalletCurrency>,
@@ -44,9 +48,6 @@ jest.mock("@app/screens/send-bitcoin-screen/payment-details", () => {
     createIntraledgerPaymentDetails: mockCreateIntraledgerPaymentDetail,
   }
 })
-import { createOnchainDestination } from "@app/screens/send-bitcoin-screen/payment-destination"
-import { defaultPaymentDetailParams } from "./helpers"
-import { ZeroBtcMoneyAmount, toBtcMoneyAmount } from "@app/types/amounts"
 
 describe("create onchain destination", () => {
   const baseParsedOnchainDestination = {

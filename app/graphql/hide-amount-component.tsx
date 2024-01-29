@@ -2,6 +2,7 @@ import * as React from "react"
 import { PropsWithChildren, useState } from "react"
 
 import { useHideBalanceQuery } from "@app/graphql/generated"
+
 import { HideAmountContextProvider } from "./hide-amount-context"
 
 export const HideAmountContainer: React.FC<PropsWithChildren> = ({ children }) => {

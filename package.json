@@ -185,6 +185,7 @@
     "@testing-library/jest-native": "^5.4.1",
     "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/react-native": "^11.5.1",
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@tsconfig/react-native": "^3.0.0",
     "@types/jest": "^29.5.10",
     "@types/lodash.debounce": "^4.0.9",

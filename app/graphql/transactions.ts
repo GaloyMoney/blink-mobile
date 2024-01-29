@@ -1,7 +1,7 @@
-import { TransactionFragment, TxDirection, TxStatus } from "./generated"
-
 import { TranslationFunctions } from "@app/i18n/i18n-types"
 import { SectionTransactions } from "@app/screens/transaction-history/index.types"
+
+import { TransactionFragment, TxDirection, TxStatus } from "./generated"
 
 const getUserTimezoneDate = (date: Date): Date => {
   const userTimezoneOffset = new Date().getTimezoneOffset() * 60000

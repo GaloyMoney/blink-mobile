@@ -1,8 +1,16 @@
 import { WalletCurrency } from "@app/graphql/generated"
 import {
+  createIntraLedgerDestination,
+  resolveIntraledgerDestination,
+} from "@app/screens/send-bitcoin-screen/payment-destination"
+import { InvalidDestinationReason } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
+import {
   PaymentDetail,
   CreateIntraledgerPaymentDetailsParams,
 } from "@app/screens/send-bitcoin-screen/payment-details"
+import { ZeroBtcMoneyAmount } from "@app/types/amounts"
+
+import { defaultPaymentDetailParams } from "./helpers"
 
 const mockCreateIntraledgerPaymentDetail = jest.fn<
   PaymentDetail<WalletCurrency>,
@@ -14,13 +22,6 @@ jest.mock("@app/screens/send-bitcoin-screen/payment-details", () => {
     createIntraledgerPaymentDetails: mockCreateIntraledgerPaymentDetail,
   }
 })
-import {
-  createIntraLedgerDestination,
-  resolveIntraledgerDestination,
-} from "@app/screens/send-bitcoin-screen/payment-destination"
-import { defaultPaymentDetailParams } from "./helpers"
-import { InvalidDestinationReason } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
-import { ZeroBtcMoneyAmount } from "@app/types/amounts"
 
 describe("resolve intraledger", () => {
   const defaultIntraledgerParams = {

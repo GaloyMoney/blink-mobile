@@ -1,15 +1,16 @@
+import { useEffect, useRef } from "react"
+import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
 import {
   Callout,
   CalloutSubview,
   MapMarker as MapMarkerType,
   Marker,
 } from "react-native-maps"
-import { Text } from "@rneui/themed"
-import { useEffect, useRef } from "react"
-import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
-import { isIos } from "@app/utils/helper"
 import { LocalizedString } from "typesafe-i18n"
+
 import { MapMarker } from "@app/graphql/generated"
+import { isIos } from "@app/utils/helper"
+import { Text } from "@rneui/themed"
 
 /*
   In order to increase performance, markers are initially rendered without content in the callout.

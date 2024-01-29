@@ -1,15 +1,17 @@
 import React from "react"
-import { StoryScreen } from "../../../.storybook/views"
+
+import { MockedProvider } from "@apollo/client/testing"
 import { Meta } from "@storybook/react"
+
+import { StoryScreen } from "../../../.storybook/views"
+import { createCache } from "../../graphql/cache"
+import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
+import mocks from "../../graphql/mocks"
+import { AmountInvalidReason, LimitType } from "./payment-details"
 import {
   SendBitcoinDetailsExtraInfo,
   SendBitcoinDetailsExtraInfoProps,
 } from "./send-bitcoin-details-extra-info"
-import { AmountInvalidReason, LimitType } from "./payment-details"
-import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
-import { MockedProvider } from "@apollo/client/testing"
-import { createCache } from "../../graphql/cache"
-import mocks from "../../graphql/mocks"
 
 export default {
   title: "Send Bitcoin Details Extra Info",

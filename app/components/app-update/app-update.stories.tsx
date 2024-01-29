@@ -1,13 +1,15 @@
 import React from "react"
-import { AppUpdate, AppUpdateModal } from "./app-update"
-import { StoryScreen } from "../../../.storybook/views"
-import { Meta } from "@storybook/react"
-import { MockedProvider } from "@apollo/client/testing"
-import { createCache } from "../../graphql/cache"
-import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
-import { MobileUpdateDocument } from "../../graphql/generated"
-import { GaloyPrimaryButton } from "../../components/atomic/galoy-primary-button"
 import { View } from "react-native"
+
+import { MockedProvider } from "@apollo/client/testing"
+import { Meta } from "@storybook/react"
+
+import { StoryScreen } from "../../../.storybook/views"
+import { GaloyPrimaryButton } from "../../components/atomic/galoy-primary-button"
+import { createCache } from "../../graphql/cache"
+import { MobileUpdateDocument } from "../../graphql/generated"
+import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
+import { AppUpdate, AppUpdateModal } from "./app-update"
 
 const updateAvailable = [
   {

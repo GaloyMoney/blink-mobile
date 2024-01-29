@@ -6,6 +6,7 @@ import {
   toWalletAmount,
 } from "@app/types/amounts"
 import { PaymentType } from "@galoymoney/client"
+
 import {
   ConvertMoneyAmount,
   PaymentDetail,

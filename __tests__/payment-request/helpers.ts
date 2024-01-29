@@ -1,10 +1,9 @@
 import { WalletCurrency } from "@app/graphql/generated"
-import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
-
 import {
   BaseCreatePaymentRequestCreationDataParams,
   Invoice,
 } from "@app/screens/receive-bitcoin-screen/payment/index.types"
+import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 
 export const btcWalletDescriptor = {
   id: "btc-wallet-id",

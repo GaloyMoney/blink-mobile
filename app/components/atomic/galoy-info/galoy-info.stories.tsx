@@ -1,7 +1,9 @@
-import { GaloyInfo } from "./galoy-info"
-import { StoryScreen, UseCase } from "../../../../.storybook/views"
 import React from "react"
+
 import { Meta } from "@storybook/react"
+
+import { StoryScreen, UseCase } from "../../../../.storybook/views"
+import { GaloyInfo } from "./galoy-info"
 
 export default {
   title: "Galoy Info",

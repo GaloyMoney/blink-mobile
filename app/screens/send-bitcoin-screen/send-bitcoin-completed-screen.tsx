@@ -1,28 +1,29 @@
 import React, { useCallback, useEffect } from "react"
+import { View, Alert } from "react-native"
+import InAppReview from "react-native-in-app-review"
 
+import { useApolloClient } from "@apollo/client"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { Screen } from "@app/components/screen"
 import {
   SuccessIconAnimation,
   CompletedTextAnimation,
 } from "@app/components/success-animation"
+import { setFeedbackModalShown } from "@app/graphql/client-only-query"
+import { useFeedbackModalShownQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { logAppFeedback } from "@app/utils/analytics"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
-import { View, Alert } from "react-native"
+
 import { testProps } from "../../utils/testProps"
-import { useApolloClient } from "@apollo/client"
-import { useFeedbackModalShownQuery } from "@app/graphql/generated"
-import { setFeedbackModalShown } from "@app/graphql/client-only-query"
-import { SuggestionModal } from "./suggestion-modal"
-import { logAppFeedback } from "@app/utils/analytics"
-import InAppReview from "react-native-in-app-review"
 import {
   formatTimeToMempool,
   timeToMempool,
 } from "../transaction-detail-screen/format-time"
+import { SuggestionModal } from "./suggestion-modal"
 import { PaymentSendCompletedStatus } from "./use-send-payment"
 
 type Props = {

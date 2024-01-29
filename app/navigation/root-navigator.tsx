@@ -1,27 +1,8 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
 import * as React from "react"
-
-import {
-  AuthenticationCheckScreen,
-  AuthenticationScreen,
-} from "../screens/authentication-screen"
-import { PinScreen } from "../screens/authentication-screen/pin-screen"
-import { DeveloperScreen } from "../screens/developer-screen"
-import { EarnMapScreen } from "../screens/earns-map-screen"
-import { EarnQuiz, EarnSection } from "../screens/earns-screen"
-import { SectionCompleted } from "../screens/earns-screen/section-completed"
-import { GetStartedScreen } from "../screens/get-started-screen"
-import { HomeScreen } from "../screens/home-screen"
-import { MapScreen } from "../screens/map-screen/map-screen"
-import { ContactsDetailScreen, PeopleScreen } from "../screens/people-screen"
-
-import { PriceHistoryScreen } from "../screens/price/price-history-screen"
 
 import HomeIcon from "@app/assets/icons/home.svg"
 import LearnIcon from "@app/assets/icons/learn.svg"
 import MapIcon from "@app/assets/icons/map.svg"
-
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import {
@@ -37,6 +18,7 @@ import {
   EmailRegistrationInitiateScreen,
   EmailRegistrationValidateScreen,
 } from "@app/screens/email-registration-screen"
+import { FullOnboardingFlowScreen } from "@app/screens/full-onboarding-flow"
 import { GaloyAddressScreen } from "@app/screens/galoy-address-screen"
 import { CirclesDashboardScreen } from "@app/screens/people-screen/circles/circles-dashboard-screen"
 import { AllContactsScreen } from "@app/screens/people-screen/contacts/all-contacts"
@@ -51,13 +33,14 @@ import { PhoneRegistrationValidateScreen } from "@app/screens/phone-auth-screen/
 import ReceiveScreen from "@app/screens/receive-bitcoin-screen/receive-screen"
 import RedeemBitcoinDetailScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-detail-screen"
 import RedeemBitcoinResultScreen from "@app/screens/redeem-lnurl-withdrawal-screen/redeem-bitcoin-result-screen"
+import SendBitcoinCompletedScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-completed-screen"
 import SendBitcoinConfirmationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-confirmation-screen"
 import SendBitcoinDestinationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
 import SendBitcoinDetailsScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-details-screen"
-import SendBitcoinCompletedScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-completed-screen"
 import { AccountScreen } from "@app/screens/settings-screen/account-screen"
 import { DefaultWalletScreen } from "@app/screens/settings-screen/default-wallet"
 import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
+import { NotificationSettingsScreen } from "@app/screens/settings-screen/notifications-screen"
 import { ThemeScreen } from "@app/screens/settings-screen/theme-screen"
 import { TransactionLimitsScreen } from "@app/screens/settings-screen/transaction-limits-screen"
 import {
@@ -67,7 +50,24 @@ import {
 } from "@app/screens/totp-screen"
 import { WebViewScreen } from "@app/screens/webview/webview"
 import { testProps } from "@app/utils/testProps"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
 import { makeStyles, useTheme } from "@rneui/themed"
+
+import {
+  AuthenticationCheckScreen,
+  AuthenticationScreen,
+} from "../screens/authentication-screen"
+import { PinScreen } from "../screens/authentication-screen/pin-screen"
+import { DeveloperScreen } from "../screens/developer-screen"
+import { EarnMapScreen } from "../screens/earns-map-screen"
+import { EarnQuiz, EarnSection } from "../screens/earns-screen"
+import { SectionCompleted } from "../screens/earns-screen/section-completed"
+import { GetStartedScreen } from "../screens/get-started-screen"
+import { HomeScreen } from "../screens/home-screen"
+import { MapScreen } from "../screens/map-screen/map-screen"
+import { ContactsDetailScreen, PeopleScreen } from "../screens/people-screen"
+import { PriceHistoryScreen } from "../screens/price/price-history-screen"
 import { ScanningQRCodeScreen } from "../screens/send-bitcoin-screen"
 import { SettingsScreen } from "../screens/settings-screen"
 import { LanguageScreen } from "../screens/settings-screen/language-screen"
@@ -80,8 +80,6 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
-import { NotificationSettingsScreen } from "@app/screens/settings-screen/notifications-screen"
-import { FullOnboardingFlowScreen } from "@app/screens/full-onboarding-flow"
 
 const RootNavigator = createStackNavigator<RootStackParamList>()
 

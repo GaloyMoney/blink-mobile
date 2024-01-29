@@ -1,20 +1,19 @@
-import { useCirclesQuery, WelcomeProfile } from "@app/graphql/generated"
-import { makeStyles, Text, ThemeProvider, useTheme } from "@rneui/themed"
 import { forwardRef, useMemo, useRef } from "react"
 import { View, Share as NativeShare } from "react-native"
+import { LinearGradient } from "react-native-linear-gradient"
+import Share from "react-native-share"
+import { captureRef } from "react-native-view-shot"
 
 import LogoDarkMode from "@app/assets/logo/app-logo-dark.svg"
 import LogoLightMode from "@app/assets/logo/blink-logo-light.svg"
-
-import { captureRef } from "react-native-view-shot"
-import Share from "react-native-share"
 import { Circle } from "@app/components/circle"
-import { LinearGradient } from "react-native-linear-gradient"
-import crashlytics from "@react-native-firebase/crashlytics"
-import { useI18nContext } from "@app/i18n/i18n-react"
 import { getInviteLink } from "@app/config/appinfo"
+import { useCirclesQuery, WelcomeProfile } from "@app/graphql/generated"
 import { useAppConfig } from "@app/hooks"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import theme from "@app/rne-theme/theme"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { makeStyles, Text, ThemeProvider, useTheme } from "@rneui/themed"
 
 export const useCirclesCard = () => {
   const shareImgRef = useRef<View | null>(null)

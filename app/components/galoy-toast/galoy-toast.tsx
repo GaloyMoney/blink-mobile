@@ -4,6 +4,7 @@ import Toast, {
   ErrorToast,
   BaseToastProps,
 } from "react-native-toast-message"
+
 import { light } from "../../rne-theme/colors"
 
 const styles = {

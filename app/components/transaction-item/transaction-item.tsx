@@ -7,20 +7,20 @@ import {
   TransactionFragmentDoc,
   WalletCurrency,
 } from "@app/graphql/generated"
+import { useHideAmount } from "@app/graphql/hide-amount-context"
+import { useAppConfig } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { toWalletAmount } from "@app/types/amounts"
 import { testProps } from "@app/utils/testProps"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-
-import { useAppConfig } from "@app/hooks"
-import { toWalletAmount } from "@app/types/amounts"
 import { Text, makeStyles, ListItem } from "@rneui/themed"
+
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
-import { useI18nContext } from "@app/i18n/i18n-react"
 import { DeepPartialObject } from "./index.types"
-import { useHideAmount } from "@app/graphql/hide-amount-context"
 
 // This should extend the Transaction directly from the cache
 export const useDescriptionDisplay = ({

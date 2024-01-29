@@ -1,12 +1,14 @@
 import React from "react"
 import { Pressable, PressableProps, TextStyle, ViewStyle, StyleProp } from "react-native"
+
+import { testProps } from "@app/utils/testProps"
 import { useTheme, Text } from "@rneui/themed"
+
 import {
   GaloyIcon,
   IconNamesType,
   circleDiameterThatContainsSquare,
 } from "../galoy-icon/galoy-icon"
-import { testProps } from "@app/utils/testProps"
 
 export type GaloyIconButtonProps = {
   name: IconNamesType

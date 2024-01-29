@@ -1,19 +1,21 @@
-import { makeStyles, useTheme } from "@rneui/themed"
-import MapView, { Region, MapMarker as MapMarkerType } from "react-native-maps"
-import MapStyles from "./map-styles.json"
+import debounce from "lodash.debounce"
 import React, { useRef } from "react"
+import { View } from "react-native"
+import MapView, { Region, MapMarker as MapMarkerType } from "react-native-maps"
+import { PermissionStatus, RESULTS, request } from "react-native-permissions"
+
+import { useApolloClient } from "@apollo/client"
+import { updateMapLastCoords } from "@app/graphql/client-only-query"
 import { BusinessMapMarkersQuery, MapMarker } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import MapMarkerComponent from "../map-marker-component"
-import { PermissionStatus, RESULTS, request } from "react-native-permissions"
 import { LOCATION_PERMISSION, getUserRegion } from "@app/screens/map-screen/map-screen"
-import LocationButtonCopy from "./location-button-copy"
-import debounce from "lodash.debounce"
-import { updateMapLastCoords } from "@app/graphql/client-only-query"
-import { useApolloClient } from "@apollo/client"
-import { OpenSettingsElement, OpenSettingsModal } from "./open-settings-modal"
-import { View } from "react-native"
 import { isIOS } from "@rneui/base"
+import { makeStyles, useTheme } from "@rneui/themed"
+
+import MapMarkerComponent from "../map-marker-component"
+import LocationButtonCopy from "./location-button-copy"
+import MapStyles from "./map-styles.json"
+import { OpenSettingsElement, OpenSettingsModal } from "./open-settings-modal"
 
 type Props = {
   data?: BusinessMapMarkersQuery

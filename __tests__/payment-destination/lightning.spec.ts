@@ -1,9 +1,13 @@
 import { WalletCurrency } from "@app/graphql/generated"
+import { createLightningDestination } from "@app/screens/send-bitcoin-screen/payment-destination"
 import {
   PaymentDetail,
   CreateAmountLightningPaymentDetailsParams,
   CreateNoAmountLightningPaymentDetailsParams,
 } from "@app/screens/send-bitcoin-screen/payment-details"
+import { ZeroBtcMoneyAmount, toBtcMoneyAmount } from "@app/types/amounts"
+
+import { defaultPaymentDetailParams } from "./helpers"
 
 const mockCreateAmountLightningPaymentDetail = jest.fn<
   PaymentDetail<WalletCurrency>,
@@ -20,9 +24,6 @@ jest.mock("@app/screens/send-bitcoin-screen/payment-details", () => {
     createNoAmountLightningPaymentDetails: mockCreateNoAmountLightningPaymentDetail,
   }
 })
-import { createLightningDestination } from "@app/screens/send-bitcoin-screen/payment-destination"
-import { defaultPaymentDetailParams } from "./helpers"
-import { ZeroBtcMoneyAmount, toBtcMoneyAmount } from "@app/types/amounts"
 
 describe("create lightning destination", () => {
   const baseParsedLightningDestination = {

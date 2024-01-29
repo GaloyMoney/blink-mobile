@@ -1,16 +1,15 @@
 import * as React from "react"
-import { useI18nContext } from "@app/i18n/i18n-react"
-
 import { View } from "react-native"
+
+import { useApolloClient } from "@apollo/client"
+import { GaloyInfo } from "@app/components/atomic/galoy-info"
+import { MenuSelect, MenuSelectItem } from "@app/components/menu-select"
+import { updateColorScheme } from "@app/graphql/client-only-query"
+import { useColorSchemeQuery } from "@app/graphql/generated"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { makeStyles } from "@rneui/themed"
 
 import { Screen } from "../../components/screen"
-
-import { useApolloClient } from "@apollo/client"
-import { useColorSchemeQuery } from "@app/graphql/generated"
-import { updateColorScheme } from "@app/graphql/client-only-query"
-import { GaloyInfo } from "@app/components/atomic/galoy-info"
-import { MenuSelect, MenuSelectItem } from "@app/components/menu-select"
 
 const useStyles = makeStyles(() => ({
   container: {

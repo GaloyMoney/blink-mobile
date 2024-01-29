@@ -1,7 +1,9 @@
 import React from "react"
 import { ActivityIndicator, TouchableOpacity, View } from "react-native"
-import { GaloyIcon, IconNamesType } from "../atomic/galoy-icon"
+
 import { makeStyles, useTheme, Text } from "@rneui/themed"
+
+import { GaloyIcon, IconNamesType } from "../atomic/galoy-icon"
 import { GaloyIconButton } from "../atomic/galoy-icon-button"
 
 export type NotificationCardUIProps = {

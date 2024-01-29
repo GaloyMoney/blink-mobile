@@ -1,7 +1,9 @@
 import React from "react"
-import { useTheme } from "@rneui/themed"
-import { GaloyIcon } from "../galoy-icon"
+
 import { WalletCurrency } from "@app/graphql/generated"
+import { useTheme } from "@rneui/themed"
+
+import { GaloyIcon } from "../galoy-icon"
 
 export const GaloyCurrencyBubble = ({
   currency,

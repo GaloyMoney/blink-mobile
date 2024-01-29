@@ -1,8 +1,13 @@
-import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { ActivityIndicator, Alert, StyleSheet, Text, View } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import { SvgProps } from "react-native-svg"
+
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { makeStyles, useTheme } from "@rneui/themed"
+
 import { MountainHeader } from "../../components/mountain-header"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
@@ -11,11 +16,9 @@ import {
   getCardsFromSection,
   getQuizQuestionsContent,
 } from "../earns-screen"
-
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { useNavigation } from "@react-navigation/native"
 import { earnSections, EarnSectionType } from "../earns-screen/sections"
 import BitcoinCircle from "./bitcoin-circle-01.svg"
+import BottomStart from "./bottom-start-01.svg"
 import LeftFinish from "./left-finished-01.svg"
 import LeftLastOngoing from "./left-last-section-ongoing-01.svg"
 import LeftLastTodo from "./left-last-section-to-do-01.svg"
@@ -30,9 +33,7 @@ import RightComplete from "./right-section-completed-01.svg"
 import RightOngoing from "./right-section-ongoing-01.svg"
 import RightTodo from "./right-section-to-do-01.svg"
 import TextBlock from "./text-block-medium.svg"
-import BottomStart from "./bottom-start-01.svg"
 import { useQuizServer } from "./use-quiz-server"
-import { makeStyles, useTheme } from "@rneui/themed"
 
 type SideType = "left" | "right"
 interface IInBetweenTile {

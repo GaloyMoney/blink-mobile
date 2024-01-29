@@ -1,7 +1,8 @@
-import { useColorSchemeQuery } from "@app/graphql/generated"
-import { useThemeMode, ThemeMode } from "@rneui/themed"
 import { useEffect } from "react"
 import { Appearance } from "react-native"
+
+import { useColorSchemeQuery } from "@app/graphql/generated"
+import { useThemeMode, ThemeMode } from "@rneui/themed"
 
 export const ThemeSyncGraphql = () => {
   const { mode, setMode } = useThemeMode()

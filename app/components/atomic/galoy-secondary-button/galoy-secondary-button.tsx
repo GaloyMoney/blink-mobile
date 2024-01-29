@@ -1,8 +1,10 @@
 import React, { FunctionComponent, PropsWithChildren } from "react"
-import { Button, ButtonProps, makeStyles, useTheme } from "@rneui/themed"
 import { TouchableHighlight } from "react-native"
-import { GaloyIcon, IconNamesType } from "../galoy-icon"
+
 import { testProps } from "@app/utils/testProps"
+import { Button, ButtonProps, makeStyles, useTheme } from "@rneui/themed"
+
+import { GaloyIcon, IconNamesType } from "../galoy-icon"
 
 declare module "@rneui/themed" {
   interface ButtonProps {

@@ -1,28 +1,30 @@
-import { useFocusEffect } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
+import { CountryCode } from "libphonenumber-js/mobile"
 import * as React from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import { Alert, Dimensions } from "react-native"
 import { Region, MapMarker as MapMarkerType } from "react-native-maps"
-import Geolocation from "@react-native-community/geolocation"
-import { Screen } from "../../components/screen"
-import { RootStackParamList } from "../../navigation/stack-param-lists"
-import { toastShow } from "../../utils/toast"
-import { useI18nContext } from "@app/i18n/i18n-react"
+import { check, PERMISSIONS, PermissionStatus, RESULTS } from "react-native-permissions"
+
+import { gql } from "@apollo/client"
+import MapComponent from "@app/components/map-component"
 import {
   MapMarker,
   useBusinessMapMarkersQuery,
   useRegionQuery,
 } from "@app/graphql/generated"
-import { check, PERMISSIONS, PermissionStatus, RESULTS } from "react-native-permissions"
-import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { PhoneLoginInitiateType } from "../phone-auth-screen"
-import countryCodes from "../../../utils/countryInfo.json"
-import { CountryCode } from "libphonenumber-js/mobile"
 import useDeviceLocation from "@app/hooks/use-device-location"
-import MapComponent from "@app/components/map-component"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { isIos } from "@app/utils/helper"
+import Geolocation from "@react-native-community/geolocation"
+import { useFocusEffect } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+
+import countryCodes from "../../../utils/countryInfo.json"
+import { Screen } from "../../components/screen"
+import { RootStackParamList } from "../../navigation/stack-param-lists"
+import { toastShow } from "../../utils/toast"
+import { PhoneLoginInitiateType } from "../phone-auth-screen"
 
 const EL_ZONTE_COORDS = {
   latitude: 13.496743,

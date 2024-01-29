@@ -1,3 +1,7 @@
+import React, { useEffect, useState } from "react"
+import { View } from "react-native"
+import { TouchableWithoutFeedback } from "react-native-gesture-handler"
+
 import { AmountInput } from "@app/components/amount-input"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { Screen } from "@app/components/screen"
@@ -17,9 +21,6 @@ import { testProps } from "@app/utils/testProps"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { makeStyles, Text } from "@rneui/themed"
-import React, { useEffect, useState } from "react"
-import { View } from "react-native"
-import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 
 type Prop = {
   route: RouteProp<RootStackParamList, "redeemBitcoinDetail">

@@ -1,13 +1,13 @@
 import React from "react"
+import { View } from "react-native"
 
 import { MockedProvider } from "@apollo/client/testing"
 
 import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import mocks from "../../graphql/mocks"
-import { NotificationCard, NotificationsProvider, useNotifications } from "./index"
 import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
-import { View } from "react-native"
+import { NotificationCard, NotificationsProvider, useNotifications } from "./index"
 
 export default {
   title: "Notification",

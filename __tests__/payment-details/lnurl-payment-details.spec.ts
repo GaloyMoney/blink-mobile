@@ -1,7 +1,9 @@
-import { WalletCurrency } from "@app/graphql/generated"
-import * as PaymentDetails from "@app/screens/send-bitcoin-screen/payment-details/lightning"
 import { LnUrlPayServiceResponse, Satoshis } from "lnurl-pay/dist/types/types"
 import { createMock } from "ts-auto-mock"
+
+import { WalletCurrency } from "@app/graphql/generated"
+import * as PaymentDetails from "@app/screens/send-bitcoin-screen/payment-details/lightning"
+
 import {
   btcSendingWalletDescriptor,
   btcTestAmount,

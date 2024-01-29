@@ -1,4 +1,9 @@
+import { bech32 } from "bech32"
+
 import { WalletCurrency } from "@app/graphql/generated"
+import { BtcMoneyAmount } from "@app/types/amounts"
+
+import { getPaymentRequestFullUri, prToDateString } from "./helpers"
 import {
   CreatePaymentRequestParams,
   GetFullUriFn,
@@ -9,9 +14,6 @@ import {
   PaymentRequestInformation,
   GetCopyableInvoiceFn,
 } from "./index.types"
-import { BtcMoneyAmount } from "@app/types/amounts"
-import { getPaymentRequestFullUri, prToDateString } from "./helpers"
-import { bech32 } from "bech32"
 
 export const createPaymentRequest = (
   params: CreatePaymentRequestParams,

@@ -1,18 +1,20 @@
+import * as React from "react"
+import { View } from "react-native"
+
 import { gql } from "@apollo/client"
+import { GaloyInfo } from "@app/components/atomic/galoy-info"
+import { MenuSelect, MenuSelectItem } from "@app/components/menu-select"
 import {
   useAccountUpdateDefaultWalletIdMutation,
   useSetDefaultWalletScreenQuery,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { Text, makeStyles } from "@rneui/themed"
-import * as React from "react"
-import { View } from "react-native"
+
 import { Screen } from "../../components/screen"
 import { testProps } from "../../utils/testProps"
-import { GaloyInfo } from "@app/components/atomic/galoy-info"
-import { MenuSelect, MenuSelectItem } from "@app/components/menu-select"
-import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 gql`
   mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {

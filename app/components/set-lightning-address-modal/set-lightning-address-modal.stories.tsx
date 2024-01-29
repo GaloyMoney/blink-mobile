@@ -1,12 +1,14 @@
 import React, { useState } from "react"
 import { View } from "react-native"
+
 import { Meta } from "@storybook/react"
+
+import { StoryScreen } from "../../../.storybook/views"
+import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
 import {
   SetLightningAddressModalUI,
   SetLightningAddressModalUIProps,
 } from "./set-lightning-address-modal"
-import { StoryScreen } from "../../../.storybook/views"
-import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
 
 const SetLNAddressWithToggle: React.FC<SetLightningAddressModalUIProps> = (props) => {
   const [isVisible, setIsVisible] = useState(true)

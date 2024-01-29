@@ -1,34 +1,36 @@
-import { gql } from "@apollo/client"
-import analytics from "@react-native-firebase/analytics"
-import { RouteProp, useNavigation } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useCallback, useEffect, useState } from "react"
 import { ActivityIndicator, View } from "react-native"
+
+import { gql } from "@apollo/client"
+import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
+import { GaloyInfo } from "@app/components/atomic/galoy-info"
+import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import {
   PhoneCodeChannelType,
   useUserLoginMutation,
   useUserLoginUpgradeMutation,
 } from "@app/graphql/generated"
+import { AccountLevel, useLevel } from "@app/graphql/level-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import crashlytics from "@react-native-firebase/crashlytics"
-import { Text, makeStyles, useTheme, Input } from "@rneui/themed"
-import { Screen } from "../../components/screen"
-import { useAppConfig } from "../../hooks"
-import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
-import { parseTimer } from "../../utils/timer"
-import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
-import { GaloyInfo } from "@app/components/atomic/galoy-info"
-import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
 import {
   logUpgradeLoginAttempt,
   logUpgradeLoginSuccess,
   logValidateAuthCodeFailure,
 } from "@app/utils/analytics"
-import { PhoneCodeChannelToFriendlyName } from "./request-phone-code-login"
-import { AccountLevel, useLevel } from "@app/graphql/level-context"
 import { testProps } from "@app/utils/testProps"
+import analytics from "@react-native-firebase/analytics"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { RouteProp, useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { Text, makeStyles, useTheme, Input } from "@rneui/themed"
+
+import { Screen } from "../../components/screen"
+import { useAppConfig } from "../../hooks"
+import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
+import { parseTimer } from "../../utils/timer"
+import { PhoneCodeChannelToFriendlyName } from "./request-phone-code-login"
 
 gql`
   mutation userLogin($input: UserLoginInput!) {

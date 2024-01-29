@@ -1,7 +1,8 @@
 import React from "react"
 import { Text } from "react-native"
-import { useI18nContext } from "@app/i18n/i18n-react"
+
 import { TxStatus } from "@app/graphql/generated"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 type TransactionDateProps = {
   createdAt: number

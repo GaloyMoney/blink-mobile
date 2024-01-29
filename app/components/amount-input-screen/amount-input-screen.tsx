@@ -1,4 +1,6 @@
 import * as React from "react"
+import { useCallback, useEffect, useReducer } from "react"
+
 import { WalletCurrency } from "@app/graphql/generated"
 import { CurrencyInfo, useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -10,7 +12,7 @@ import {
   MoneyAmount,
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
-import { useCallback, useEffect, useReducer } from "react"
+
 import { AmountInputScreenUI } from "./amount-input-screen-ui"
 import {
   Key,

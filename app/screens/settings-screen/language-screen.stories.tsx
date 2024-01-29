@@ -1,11 +1,13 @@
 import * as React from "react"
-import { StoryScreen } from "../../../.storybook/views"
-import { LanguageScreen } from "./language-screen"
-import { Meta } from "@storybook/react"
-import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
+
 import { MockedProvider } from "@apollo/client/testing"
+import { Meta } from "@storybook/react"
+
+import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { LanguageDocument } from "../../graphql/generated"
+import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
+import { LanguageScreen } from "./language-screen"
 
 const mocks = [
   {

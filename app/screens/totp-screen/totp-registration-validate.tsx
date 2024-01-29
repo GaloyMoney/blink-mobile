@@ -1,3 +1,6 @@
+import React, { useCallback, useState } from "react"
+import { Alert } from "react-native"
+
 import { gql } from "@apollo/client"
 import { CodeInput } from "@app/components/code-input"
 import {
@@ -9,8 +12,6 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import React, { useCallback, useState } from "react"
-import { Alert } from "react-native"
 
 gql`
   mutation userTotpRegistrationValidate($input: UserTotpRegistrationValidateInput!) {

@@ -1,7 +1,9 @@
 import React from "react"
-import { Story, UseCase } from "../../../../.storybook/views"
-import { GaloyCurrencyBubble } from "."
+
 import { WalletCurrency } from "@app/graphql/generated"
+
+import { GaloyCurrencyBubble } from "."
+import { Story, UseCase } from "../../../../.storybook/views"
 
 const UseCaseWrapper = ({ children, text, style }) => (
   <UseCase style={style} text={text}>

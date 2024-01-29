@@ -1,11 +1,5 @@
 import { WalletCurrency } from "@app/graphql/generated"
 import {
-  AmountInvalidReason,
-  AmountStatus,
-  LimitType,
-  PaymentDetail,
-} from "./index.types"
-import {
   BtcMoneyAmount,
   UsdMoneyAmount,
   greaterThan,
@@ -14,6 +8,13 @@ import {
   toUsdMoneyAmount,
 } from "@app/types/amounts"
 import { PaymentType } from "@galoymoney/client"
+
+import {
+  AmountInvalidReason,
+  AmountStatus,
+  LimitType,
+  PaymentDetail,
+} from "./index.types"
 
 export const isValidAmount = ({
   paymentDetail,

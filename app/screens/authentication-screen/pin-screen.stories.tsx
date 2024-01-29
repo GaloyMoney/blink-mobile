@@ -1,11 +1,13 @@
 import * as React from "react"
+
 import { MockedProvider } from "@apollo/client/testing"
+import { Meta } from "@storybook/react"
+
 import { createCache } from "../../graphql/cache"
 import mocks from "../../graphql/mocks"
-import { PinScreen } from "./pin-screen"
-import { Meta } from "@storybook/react"
 import { AuthenticationContextProvider } from "../../navigation/navigation-container-wrapper"
 import { PersistentStateProvider } from "../../store/persistent-state"
+import { PinScreen } from "./pin-screen"
 
 export default {
   title: "Pin Screen",

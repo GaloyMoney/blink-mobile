@@ -1,6 +1,16 @@
+import { requestInvoice, utils } from "lnurl-pay"
+import React, { useEffect, useState } from "react"
+import { TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
+import ReactNativeModal from "react-native-modal"
+import Icon from "react-native-vector-icons/Ionicons"
+
 import { gql } from "@apollo/client"
 import { AmountInput } from "@app/components/amount-input/amount-input"
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
+import { NoteInput } from "@app/components/note-input"
+import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 import { Screen } from "@app/components/screen"
 import {
   Network,
@@ -11,9 +21,10 @@ import {
   Wallet,
   WalletCurrency,
 } from "@app/graphql/generated"
+import { useHideAmount } from "@app/graphql/hide-amount-context"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import Clipboard from "@react-native-clipboard/clipboard"
 import { useLevel } from "@app/graphql/level-context"
+import { getBtcWallet, getDefaultWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -25,27 +36,18 @@ import {
   toUsdMoneyAmount,
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
+import { toastShow } from "@app/utils/toast"
 import { decodeInvoiceString, Network as NetworkLibGaloy } from "@galoymoney/client"
+import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { NavigationProp, RouteProp, useNavigation } from "@react-navigation/native"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
-import React, { useEffect, useState } from "react"
-import { TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
-import ReactNativeModal from "react-native-modal"
-import Icon from "react-native-vector-icons/Ionicons"
+
 import { testProps } from "../../utils/testProps"
+import { ConfirmFeesModal } from "./confirm-fees-modal"
 import { isValidAmount } from "./payment-details"
 import { PaymentDetail } from "./payment-details/index.types"
 import { SendBitcoinDetailsExtraInfo } from "./send-bitcoin-details-extra-info"
-import { requestInvoice, utils } from "lnurl-pay"
-import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
-import { getBtcWallet, getDefaultWallet, getUsdWallet } from "@app/graphql/wallets-utils"
-import { NoteInput } from "@app/components/note-input"
-import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
-import { useHideAmount } from "@app/graphql/hide-amount-context"
-import { ConfirmFeesModal } from "./confirm-fees-modal"
-import { GaloyIcon } from "@app/components/atomic/galoy-icon"
-import { toastShow } from "@app/utils/toast"
 
 gql`
   query sendBitcoinDetailsScreen {

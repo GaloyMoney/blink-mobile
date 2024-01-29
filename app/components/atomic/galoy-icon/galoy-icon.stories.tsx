@@ -1,8 +1,10 @@
 import React from "react"
-import { Story, UseCase } from "../../../../.storybook/views"
-import { GaloyIcon, IconNames, IconNamesType } from "."
 import { StyleSheet, View } from "react-native"
+
 import { useTheme, Text } from "@rneui/themed"
+
+import { GaloyIcon, IconNames, IconNamesType } from "."
+import { Story, UseCase } from "../../../../.storybook/views"
 
 const styles = StyleSheet.create({
   iconContainer: {

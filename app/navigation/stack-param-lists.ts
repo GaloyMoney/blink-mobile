@@ -1,16 +1,17 @@
-import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
-import { AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
 import { PhoneCodeChannelType, UserContact, WalletCurrency } from "@app/graphql/generated"
 import { EarnSectionType } from "@app/screens/earns-screen/sections"
-import { PaymentDetail } from "@app/screens/send-bitcoin-screen/payment-details/index.types"
+import { PhoneLoginInitiateType } from "@app/screens/phone-auth-screen"
 import {
   PaymentDestination,
   ReceiveDestination,
 } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
-import { WalletDescriptor } from "@app/types/wallets"
-import { PhoneLoginInitiateType } from "@app/screens/phone-auth-screen"
-import { NavigatorScreenParams } from "@react-navigation/native"
+import { PaymentDetail } from "@app/screens/send-bitcoin-screen/payment-details/index.types"
 import { PaymentSendCompletedStatus } from "@app/screens/send-bitcoin-screen/use-send-payment"
+import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
+import { WalletDescriptor } from "@app/types/wallets"
+import { NavigatorScreenParams } from "@react-navigation/native"
+
+import { AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
 
 export type RootStackParamList = {
   getStarted: undefined

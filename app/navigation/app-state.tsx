@@ -1,9 +1,10 @@
+import React, { useCallback, useEffect } from "react"
+import { AppState, AppStateStatus } from "react-native"
+
 import { useApolloClient } from "@apollo/client"
 import { HomeAuthedDocument } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { logEnterBackground, logEnterForeground } from "@app/utils/analytics"
-import React, { useCallback, useEffect } from "react"
-import { AppState, AppStateStatus } from "react-native"
 
 export const AppStateWrapper: React.FC = () => {
   const isAuthed = useIsAuthed()

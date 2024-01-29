@@ -1,8 +1,10 @@
 import React from "react"
 import { Pressable, StyleProp, View, ViewStyle } from "react-native"
-import { makeStyles, useTheme, Text } from "@rneui/themed"
-import { Key as KeyType } from "../amount-input-screen/number-pad-reducer"
+
 import { testProps } from "@app/utils/testProps"
+import { makeStyles, useTheme, Text } from "@rneui/themed"
+
+import { Key as KeyType } from "../amount-input-screen/number-pad-reducer"
 
 const useStyles = makeStyles(({ colors }) => ({
   container: {},

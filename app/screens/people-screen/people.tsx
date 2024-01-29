@@ -1,10 +1,11 @@
 import * as React from "react"
+
 import { makeStyles } from "@rneui/themed"
 
 import { Screen } from "../../components/screen"
 import { CirclesCardPeopleHome } from "./circles/circles-card-people-home"
-import { ContactsCard } from "./contacts/contacts-card"
 import { InviteFriendsCard } from "./circles/invite-friends-card"
+import { ContactsCard } from "./contacts/contacts-card"
 
 export const PeopleScreen: React.FC = () => {
   const styles = useStyles()

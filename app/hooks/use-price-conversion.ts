@@ -1,3 +1,5 @@
+import { useMemo } from "react"
+
 import { useRealtimePriceQuery, WalletCurrency } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import {
@@ -7,7 +9,6 @@ import {
   moneyAmountIsCurrencyType,
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
-import { useMemo } from "react"
 import crashlytics from "@react-native-firebase/crashlytics"
 
 export const SATS_PER_BTC = 100000000

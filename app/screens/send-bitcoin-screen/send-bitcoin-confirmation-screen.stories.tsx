@@ -1,15 +1,17 @@
-import { MockedProvider } from "@apollo/client/testing"
-import { Meta } from "@storybook/react"
 import React from "react"
+
+import { MockedProvider } from "@apollo/client/testing"
+import { DisplayCurrency, toUsdMoneyAmount } from "@app/types/amounts"
+import { Meta } from "@storybook/react"
+
 import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
-import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
-import SendBitcoinConfirmationScreen from "./send-bitcoin-confirmation-screen"
-import * as PaymentDetails from "./payment-details/intraledger"
-import mocks from "../../graphql/mocks"
 import { WalletCurrency } from "../../graphql/generated"
+import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
+import mocks from "../../graphql/mocks"
 import { ConvertMoneyAmount } from "./payment-details/index.types"
-import { DisplayCurrency, toUsdMoneyAmount } from "@app/types/amounts"
+import * as PaymentDetails from "./payment-details/intraledger"
+import SendBitcoinConfirmationScreen from "./send-bitcoin-confirmation-screen"
 
 export default {
   title: "SendBitcoinConfirmationScreen",

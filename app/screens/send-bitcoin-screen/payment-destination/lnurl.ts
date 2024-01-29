@@ -1,11 +1,14 @@
+import { getParams } from "js-lnurl"
+import { requestPayServiceParams } from "lnurl-pay"
+import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
+
 import {
   AccountDefaultWalletLazyQueryHookResult,
   WalletCurrency,
 } from "@app/graphql/generated"
+import { toBtcMoneyAmount } from "@app/types/amounts"
 import { LnurlPaymentDestination, PaymentType } from "@galoymoney/client"
 
-import { toBtcMoneyAmount } from "@app/types/amounts"
-import { getParams } from "js-lnurl"
 import { createLnurlPaymentDetails } from "../payment-details"
 import {
   CreatePaymentDetailParams,
@@ -17,8 +20,6 @@ import {
   ResolvedLnurlPaymentDestination,
 } from "./index.types"
 import { resolveIntraledgerDestination } from "./intraledger"
-import { requestPayServiceParams } from "lnurl-pay"
-import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 
 export type ResolveLnurlDestinationParams = {
   parsedLnurlDestination: LnurlPaymentDestination

@@ -1,11 +1,19 @@
+import React, { useState } from "react"
+import { ActivityIndicator, TouchableOpacity, View } from "react-native"
+import ReactNativeHapticFeedback from "react-native-haptic-feedback"
+
 import { gql } from "@apollo/client"
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+import GaloySliderButton from "@app/components/atomic/galoy-slider-button/galoy-slider-button"
 import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 import { Screen } from "@app/components/screen"
 import {
   useSendBitcoinConfirmationScreenQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
+import { useHideAmount } from "@app/graphql/hide-amount-context"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -20,22 +28,16 @@ import {
   ZeroUsdMoneyAmount,
 } from "@app/types/amounts"
 import { logPaymentAttempt, logPaymentResult } from "@app/utils/analytics"
+import { toastShow } from "@app/utils/toast"
+import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { CommonActions, RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import React, { useState } from "react"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
-import { ActivityIndicator, TouchableOpacity, View } from "react-native"
-import ReactNativeHapticFeedback from "react-native-haptic-feedback"
+
 import { testProps } from "../../utils/testProps"
 import useFee from "./use-fee"
 import { useSendPayment } from "./use-send-payment"
-import { useHideAmount } from "@app/graphql/hide-amount-context"
-import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
-import GaloySliderButton from "@app/components/atomic/galoy-slider-button/galoy-slider-button"
-import { GaloyIcon } from "@app/components/atomic/galoy-icon"
-import Clipboard from "@react-native-clipboard/clipboard"
-import { toastShow } from "@app/utils/toast"
 
 gql`
   query sendBitcoinConfirmationScreen {

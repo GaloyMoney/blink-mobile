@@ -1,10 +1,11 @@
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { Text, makeStyles, useTheme } from "@rneui/themed"
 import React from "react"
 import { View } from "react-native"
-import CustomModal from "@app/components/custom-modal/custom-modal"
-import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { openSettings } from "react-native-permissions"
+
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+import CustomModal from "@app/components/custom-modal/custom-modal"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 
 /*
   the forwardRef and useImperativeHandle (in the parent) are used here to toggle the modal

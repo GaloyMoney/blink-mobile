@@ -1,12 +1,14 @@
 import * as React from "react"
+import { SafeAreaView } from "react-native"
+import ReactNativeModal from "react-native-modal"
+
 import { WalletCurrency } from "@app/graphql/generated"
+import { timing } from "@app/rne-theme/timing"
 import { ConvertMoneyAmount } from "@app/screens/send-bitcoin-screen/payment-details"
 import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { makeStyles } from "@rneui/themed"
-import { SafeAreaView } from "react-native"
-import ReactNativeModal from "react-native-modal"
+
 import { AmountInputScreen } from "../amount-input-screen"
-import { timing } from "@app/rne-theme/timing"
 
 export type AmountInputModalProps = {
   moneyAmount?: MoneyAmount<WalletOrDisplayCurrency>

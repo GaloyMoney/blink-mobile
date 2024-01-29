@@ -1,12 +1,9 @@
+import fetch from "cross-fetch"
 import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from "react"
-import {
-  BaseCreatePaymentRequestCreationDataParams,
-  Invoice,
-  InvoiceType,
-  PaymentRequest,
-  PaymentRequestState,
-  PaymentRequestCreationData,
-} from "./payment/index.types"
+import { Alert, Share } from "react-native"
+import ReactNativeHapticFeedback from "react-native-haptic-feedback"
+
+import { gql } from "@apollo/client"
 import {
   WalletCurrency,
   useLnInvoiceCreateMutation,
@@ -16,27 +13,30 @@ import {
   usePaymentRequestQuery,
   useRealtimePriceQuery,
 } from "@app/graphql/generated"
-import { createPaymentRequestCreationData } from "./payment/payment-request-creation-data"
-
-import { useAppConfig, usePriceConversion } from "@app/hooks"
-import Clipboard from "@react-native-clipboard/clipboard"
-import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { getBtcWallet, getDefaultWallet, getUsdWallet } from "@app/graphql/wallets-utils"
-import { createPaymentRequest } from "./payment/payment-request"
-import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
-import { generateFutureLocalTime, secondsToH, secondsToHMS } from "./payment/helpers"
-import { toastShow } from "@app/utils/toast"
+import { getBtcWallet, getDefaultWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+import { useAppConfig, usePriceConversion } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import fetch from "cross-fetch"
-import ReactNativeHapticFeedback from "react-native-haptic-feedback"
-
-import crashlytics from "@react-native-firebase/crashlytics"
-import { Alert, Share } from "react-native"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
+import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { BtcWalletDescriptor } from "@app/types/wallets"
+import { toastShow } from "@app/utils/toast"
+import Clipboard from "@react-native-clipboard/clipboard"
+import crashlytics from "@react-native-firebase/crashlytics"
+
 import { ReceiveDestination } from "../send-bitcoin-screen/payment-destination/index.types"
+import { generateFutureLocalTime, secondsToH, secondsToHMS } from "./payment/helpers"
+import {
+  BaseCreatePaymentRequestCreationDataParams,
+  Invoice,
+  InvoiceType,
+  PaymentRequest,
+  PaymentRequestState,
+  PaymentRequestCreationData,
+} from "./payment/index.types"
+import { createPaymentRequest } from "./payment/payment-request"
+import { createPaymentRequestCreationData } from "./payment/payment-request-creation-data"
 
 gql`
   query paymentRequest {

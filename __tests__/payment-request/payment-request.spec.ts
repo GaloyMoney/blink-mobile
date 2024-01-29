@@ -1,15 +1,16 @@
-import { createPaymentRequestCreationData } from "@app/screens/receive-bitcoin-screen/payment/payment-request-creation-data"
-
 import { createMock } from "ts-auto-mock"
+
 import { LnInvoice } from "@app/graphql/generated"
 import {
   GeneratePaymentRequestMutations,
   Invoice,
   PaymentRequestState,
 } from "@app/screens/receive-bitcoin-screen/payment/index.types"
-import { btcWalletDescriptor, defaultParams, usdWalletDescriptor } from "./helpers"
 import { createPaymentRequest } from "@app/screens/receive-bitcoin-screen/payment/payment-request"
+import { createPaymentRequestCreationData } from "@app/screens/receive-bitcoin-screen/payment/payment-request-creation-data"
 import { toUsdMoneyAmount } from "@app/types/amounts"
+
+import { btcWalletDescriptor, defaultParams, usdWalletDescriptor } from "./helpers"
 
 const usdAmountInvoice =
   "lnbc49100n1p3l2q6cpp5y8lc3dv7qnplxhc3z9j0sap4n0hu99g39tl3srx6zj0hrqy2snwsdqqcqzpuxqzfvsp5q6t5f3xeruu4k5sk5nlmxx2kzlw2pydmmjk9g4qqmsc9c6ffzldq9qyyssq9lesnumasvvlvwc7yckvuepklttlvwhjqw3539qqqttsyh5s5j246spy9gezng7ng3d40qsrn6dhsrgs7rccaftzulx5auqqd5lz0psqfskeg4"

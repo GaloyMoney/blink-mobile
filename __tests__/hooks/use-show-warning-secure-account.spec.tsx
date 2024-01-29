@@ -1,15 +1,16 @@
 import * as React from "react"
-import { useShowWarningSecureAccount } from "@app/screens/settings-screen/show-warning-secure-account"
-import { renderHook } from "@testing-library/react-hooks"
+import { PropsWithChildren } from "react"
+import { act } from "react-test-renderer"
+
+import { MockedProvider } from "@apollo/client/testing"
 import {
   CurrencyListDocument,
   RealtimePriceDocument,
   WarningSecureAccountDocument,
 } from "@app/graphql/generated"
 import { IsAuthedContextProvider } from "@app/graphql/is-authed-context"
-import { PropsWithChildren } from "react"
-import { MockedProvider } from "@apollo/client/testing"
-import { act } from "react-test-renderer"
+import { useShowWarningSecureAccount } from "@app/screens/settings-screen/show-warning-secure-account"
+import { renderHook } from "@testing-library/react-hooks"
 
 // FIXME: the mockPrice doesn't work as expect.
 // it's ok because we have more than $5 in the dollar wallet

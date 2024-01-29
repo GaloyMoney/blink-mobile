@@ -1,20 +1,21 @@
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { Alert, Text, View } from "react-native"
-import { Button } from "@rneui/base"
 import Icon from "react-native-vector-icons/Ionicons"
 
-import { Screen } from "../../components/screen"
-import KeyStoreWrapper from "../../utils/storage/secureStorage"
-import { PinScreenPurpose } from "../../utils/enum"
-import { sleep } from "../../utils/sleep"
-import { RootStackParamList } from "../../navigation/stack-param-lists"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { RouteProp, useNavigation } from "@react-navigation/native"
-import useLogout from "../../hooks/use-logout"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useAuthenticationContext } from "@app/navigation/navigation-container-wrapper"
+import { RouteProp, useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { Button } from "@rneui/base"
 import { makeStyles } from "@rneui/themed"
+
+import { Screen } from "../../components/screen"
+import useLogout from "../../hooks/use-logout"
+import { RootStackParamList } from "../../navigation/stack-param-lists"
+import { PinScreenPurpose } from "../../utils/enum"
+import { sleep } from "../../utils/sleep"
+import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
 type Props = {
   route: RouteProp<RootStackParamList, "pin">

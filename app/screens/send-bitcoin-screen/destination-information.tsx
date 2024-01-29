@@ -1,13 +1,15 @@
-import { ModalTooltip } from "@app/components/modal-tooltip/modal-tooltip"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { TranslationFunctions } from "@app/i18n/i18n-types"
-import { useAppConfig } from "@app/hooks"
 import React from "react"
 import { View } from "react-native"
-import { DestinationState, SendBitcoinDestinationState } from "./send-bitcoin-reducer"
+
+import { ModalTooltip } from "@app/components/modal-tooltip/modal-tooltip"
+import { useAppConfig } from "@app/hooks"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { TranslationFunctions } from "@app/i18n/i18n-types"
 import { IntraledgerPaymentDestination } from "@galoymoney/client"
-import { InvalidDestinationReason } from "./payment-destination/index.types"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
+
+import { InvalidDestinationReason } from "./payment-destination/index.types"
+import { DestinationState, SendBitcoinDestinationState } from "./send-bitcoin-reducer"
 
 const createToLnAddress = (lnDomain: string) => {
   return (handle: string) => {

@@ -1,6 +1,6 @@
+import { gql, WatchQueryFetchPolicy } from "@apollo/client"
 import { Quiz, useMyQuizQuestionsQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { gql, WatchQueryFetchPolicy } from "@apollo/client"
 
 gql`
   query myQuizQuestions {

@@ -1,9 +1,10 @@
-import { useApolloClient } from "@apollo/client"
-import { useEffect, useState } from "react"
-import { updateCountryCode } from "@app/graphql/client-only-query"
-import { useCountryCodeQuery } from "@app/graphql/generated"
 import axios from "axios"
 import { CountryCode } from "libphonenumber-js/mobile"
+import { useEffect, useState } from "react"
+
+import { useApolloClient } from "@apollo/client"
+import { updateCountryCode } from "@app/graphql/client-only-query"
+import { useCountryCodeQuery } from "@app/graphql/generated"
 
 const useDeviceLocation = () => {
   const client = useApolloClient()

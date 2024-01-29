@@ -1,5 +1,7 @@
-import { RouteProp, useNavigation } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
+import {
+  CountryCode as PhoneNumberCountryCode,
+  getCountryCallingCode,
+} from "libphonenumber-js/mobile"
 import * as React from "react"
 import { useEffect } from "react"
 import { ActivityIndicator, View } from "react-native"
@@ -9,13 +11,21 @@ import CountryPicker, {
   DEFAULT_THEME,
   Flag,
 } from "react-native-country-picker-modal"
-import {
-  CountryCode as PhoneNumberCountryCode,
-  getCountryCallingCode,
-} from "libphonenumber-js/mobile"
+import { TouchableOpacity } from "react-native-gesture-handler"
+
+import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
+import { GaloyInfo } from "@app/components/atomic/galoy-info"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { ContactSupportButton } from "@app/components/contact-support-button/contact-support-button"
+import { PhoneCodeChannelType } from "@app/graphql/generated"
+import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { testProps } from "@app/utils/testProps"
+import { RouteProp, useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { makeStyles, useTheme, Text, Input } from "@rneui/themed"
+
 import { Screen } from "../../components/screen"
 import type { PhoneValidationStackParamList } from "../../navigation/stack-param-lists"
 import {
@@ -23,14 +33,6 @@ import {
   RequestPhoneCodeStatus,
   useRequestPhoneCodeLogin,
 } from "./request-phone-code-login"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
-import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
-import { PhoneCodeChannelType } from "@app/graphql/generated"
-import { TouchableOpacity } from "react-native-gesture-handler"
-import { testProps } from "@app/utils/testProps"
-import { GaloyInfo } from "@app/components/atomic/galoy-info"
-import { useAppConfig } from "@app/hooks"
 
 const DEFAULT_COUNTRY_CODE = "SV"
 const PLACEHOLDER_PHONE_NUMBER = "123-456-7890"

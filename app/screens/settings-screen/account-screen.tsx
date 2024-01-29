@@ -1,5 +1,13 @@
+import React from "react"
+import { Alert, TextInput, View } from "react-native"
+import Modal from "react-native-modal"
+
 import { gql } from "@apollo/client"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { Screen } from "@app/components/screen"
+import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
+import { CONTACT_EMAIL_ADDRESS } from "@app/config"
 import {
   useAccountDeleteMutation,
   useAccountScreenQuery,
@@ -10,25 +18,19 @@ import {
   useUserTotpDeleteMutation,
 } from "@app/graphql/generated"
 import { AccountLevel, useLevel } from "@app/graphql/level-context"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import useLogout from "@app/hooks/use-logout"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
-import { StackNavigationProp } from "@react-navigation/stack"
-import React from "react"
-import { Alert, TextInput, View } from "react-native"
-import { SettingsRow } from "./settings-row"
-import { Text, makeStyles, useTheme } from "@rneui/themed"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import Modal from "react-native-modal"
-import { CONTACT_EMAIL_ADDRESS } from "@app/config"
-import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
-import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
-import { useShowWarningSecureAccount } from "./show-warning-secure-account"
-import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
+
 import { AccountId } from "./account-id"
+import { SettingsRow } from "./settings-row"
+import { useShowWarningSecureAccount } from "./show-warning-secure-account"
 
 gql`
   query accountScreen {

@@ -1,6 +1,9 @@
+import { useCallback, useMemo } from "react"
+
 import { gql } from "@apollo/client"
 import { useCurrencyListQuery, WalletCurrency } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { ConvertMoneyAmount } from "@app/screens/send-bitcoin-screen/payment-details"
 import {
   DisplayAmount,
@@ -12,9 +15,8 @@ import {
   WalletAmount,
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
-import { useCallback, useMemo } from "react"
+
 import { usePriceConversion } from "./use-price-conversion"
-import { useI18nContext } from "@app/i18n/i18n-react"
 
 gql`
   query displayCurrency {

@@ -1,8 +1,10 @@
 import * as React from "react"
 import { View, Text } from "react-native"
-import Montain from "./mointains-cloud-01.svg"
+
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { makeStyles } from "@rneui/themed"
+
+import Montain from "./mointains-cloud-01.svg"
 
 const useStyles = makeStyles(({ colors }) => ({
   amountContainer: {

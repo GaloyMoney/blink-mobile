@@ -1,6 +1,7 @@
 import React from "react"
-import { Story, UseCase } from "../../../../.storybook/views"
+
 import { GaloySecondaryButton } from "."
+import { Story, UseCase } from "../../../../.storybook/views"
 
 export default {
   title: "Galoy Secondary Button",

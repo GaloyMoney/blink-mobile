@@ -1,22 +1,22 @@
-import { Text, makeStyles, useTheme } from "@rneui/themed"
-
-import { Circle, CircleRef } from "@app/components/circle"
-import { gql } from "@apollo/client"
+import { useRef, useState } from "react"
 import { RefreshControl, View } from "react-native"
+import { ScrollView } from "react-native-gesture-handler"
+
+import { gql } from "@apollo/client"
+import LogoDarkMode from "@app/assets/logo/app-logo-dark.svg"
+import LogoLightMode from "@app/assets/logo/blink-logo-light.svg"
+import { Circle, CircleRef } from "@app/components/circle"
+import { DecemberChallengeCard } from "@app/components/december-challenge"
+import { IntroducingCirclesModal } from "@app/components/introducing-circles-modal"
+import { JanuaryChallengeCard } from "@app/components/january-challenge"
 import { useCirclesQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { ShareCircles } from "./share-circles-card"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 
-import LogoDarkMode from "@app/assets/logo/app-logo-dark.svg"
-import LogoLightMode from "@app/assets/logo/blink-logo-light.svg"
-import { useRef, useState } from "react"
-import { InviteFriendsCard } from "./invite-friends-card"
 import { Screen } from "../../../components/screen"
-import { IntroducingCirclesModal } from "@app/components/introducing-circles-modal"
-import { ScrollView } from "react-native-gesture-handler"
-import { DecemberChallengeCard } from "@app/components/december-challenge"
-import { JanuaryChallengeCard } from "@app/components/january-challenge"
+import { InviteFriendsCard } from "./invite-friends-card"
+import { ShareCircles } from "./share-circles-card"
 
 gql`
   query Circles {

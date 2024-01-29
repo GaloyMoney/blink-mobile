@@ -1,8 +1,9 @@
-import { useTheme, Text, makeStyles } from "@rneui/themed"
 import React from "react"
 import { Pressable, PressableProps, StyleProp, View, ViewStyle } from "react-native"
+
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { testProps } from "@app/utils/testProps"
+import { useTheme, Text, makeStyles } from "@rneui/themed"
 
 export type AmountInputButtonProps = {
   placeholder?: string

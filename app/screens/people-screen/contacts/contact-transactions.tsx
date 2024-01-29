@@ -1,14 +1,15 @@
-import { gql } from "@apollo/client"
-import { useI18nContext } from "@app/i18n/i18n-react"
 import * as React from "react"
 import { SectionList, Text, View } from "react-native"
-import { MemoizedTransactionItem } from "@app/components/transaction-item"
-import { toastShow } from "../../../utils/toast"
 
+import { gql } from "@apollo/client"
+import { MemoizedTransactionItem } from "@app/components/transaction-item"
 import { useTransactionListForContactQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { groupTransactionsByDate } from "@app/graphql/transactions"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { makeStyles } from "@rneui/themed"
+
+import { toastShow } from "../../../utils/toast"
 
 gql`
   query transactionListForContact(

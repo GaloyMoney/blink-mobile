@@ -1,7 +1,8 @@
-import { useAppConfig } from "@app/hooks"
-import { Text, makeStyles } from "@rneui/themed"
 import React from "react"
 import { ActivityIndicator } from "react-native"
+
+import { useAppConfig } from "@app/hooks"
+import { Text, makeStyles } from "@rneui/themed"
 
 const useStyles = makeStyles(() => ({
   highlight: {

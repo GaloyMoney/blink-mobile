@@ -1,12 +1,14 @@
 import * as React from "react"
-import { StoryScreen } from "../../../.storybook/views"
-import { SettingsScreen } from "./settings-screen"
+
+import { MockedProvider } from "@apollo/client/testing"
 import { Meta } from "@storybook/react"
-import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
+
+import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { SettingsScreenDocument } from "../../graphql/generated"
+import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import mocks from "../../graphql/mocks"
-import { MockedProvider } from "@apollo/client/testing"
+import { SettingsScreen } from "./settings-screen"
 
 const mocksWithUsername = [
   ...mocks,

@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react"
+import { ActivityIndicator, Alert, View } from "react-native"
+
 import { gql } from "@apollo/client"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { Screen } from "@app/components/screen"
@@ -13,8 +16,6 @@ import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { makeStyles } from "@rneui/base"
 import { Text, useTheme } from "@rneui/themed"
-import { useEffect, useState } from "react"
-import { ActivityIndicator, Alert, View } from "react-native"
 
 const generateOtpAuthURI = (
   accountName: string,

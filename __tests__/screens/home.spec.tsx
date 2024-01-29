@@ -1,7 +1,8 @@
 import React from "react"
-import { HomeScreen } from "../../app/screens/home-screen"
 
 import { act, render } from "@testing-library/react-native"
+
+import { HomeScreen } from "../../app/screens/home-screen"
 import { ContextForScreen } from "./helper"
 
 jest.mock("@react-native-firebase/app-check", () => {

@@ -1,8 +1,10 @@
 import React from "react"
-import { Meta } from "@storybook/react"
+
 import { MockedProvider } from "@apollo/client/testing"
-import { createCache } from "../../graphql/cache"
+import { Meta } from "@storybook/react"
+
 import { StoryScreen } from "../../../.storybook/views"
+import { createCache } from "../../graphql/cache"
 import { EmailRegistrationValidateScreen } from "./email-registration-validate"
 
 const mocks = []

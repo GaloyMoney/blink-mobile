@@ -1,6 +1,8 @@
+import { getQuizQuestionsContent } from "@app/screens/earns-screen/earns-utils"
+
 import { i18nObject } from "../../app/i18n/i18n-util"
 import { loadLocale } from "../../app/i18n/i18n-util.sync"
-import { getQuizQuestionsContent } from "@app/screens/earns-screen/earns-utils"
+
 const expectedEnglishQuizSections = [
   {
     section: {

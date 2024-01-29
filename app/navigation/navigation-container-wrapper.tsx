@@ -1,3 +1,8 @@
+import * as React from "react"
+import { useRef } from "react"
+import { Linking } from "react-native"
+import RNBootSplash from "react-native-bootsplash"
+
 import { PREFIX_LINKING } from "@app/config"
 import analytics from "@react-native-firebase/analytics"
 import {
@@ -7,14 +12,10 @@ import {
   PartialState,
   DarkTheme,
 } from "@react-navigation/native"
-import * as React from "react"
-import { useRef } from "react"
-import { Linking } from "react-native"
-import { useIsAuthed } from "../graphql/is-authed-context"
-import { RootStackParamList } from "./stack-param-lists"
 import { useTheme } from "@rneui/themed"
 
-import RNBootSplash from "react-native-bootsplash"
+import { useIsAuthed } from "../graphql/is-authed-context"
+import { RootStackParamList } from "./stack-param-lists"
 
 export type AuthenticationContextType = {
   isAppLocked: boolean

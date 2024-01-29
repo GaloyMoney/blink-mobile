@@ -7,11 +7,11 @@ import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import mocks from "../../graphql/mocks"
+import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
 import {
   SetDefaultAccountModalUI,
   SetDefaultAccountModalUIProps,
 } from "./set-default-account-modal"
-import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
 
 const SetDefaultAccountModalWithToggle: React.FC<SetDefaultAccountModalUIProps> = (
   props,

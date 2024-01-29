@@ -1,11 +1,13 @@
+import React from "react"
+import { Button, View } from "react-native"
+
 import { MockedProvider } from "@apollo/client/testing"
 import { Meta } from "@storybook/react"
-import React from "react"
+
 import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import mocks from "../../graphql/mocks"
 import { DeviceAccountFailModal } from "./device-account-fail-modal"
-import { Button, View } from "react-native"
 
 export default {
   title: "Failed device account modal",
