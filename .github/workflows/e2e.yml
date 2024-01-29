@@ -35,7 +35,7 @@ jobs:
           path: android/app/build/outputs
 
   test-e2e-android:
-    name: Run Detox Tests
+    name: Run Detox Tests for APK
     runs-on: ubuntu-latest
     needs: build-e2e-android
 
@@ -66,13 +66,13 @@ jobs:
           yarn start &
           echo "METRO_PID=$!" >> $GITHUB_ENV
 
-      - uses: DeterminateSystems/nix-installer-action@v4
-      - uses: DeterminateSystems/magic-nix-cache-action@v2
-      - name: Run local backend in background
-        run: |
-          nix develop -c make tilt-up &
-          sleep 30
-      - run: nix develop -c tilt wait --timeout 1h --for=condition=Ready uiresources init-setup
+      # - uses: DeterminateSystems/nix-installer-action@v4
+      # - uses: DeterminateSystems/magic-nix-cache-action@v2
+      # - name: Run local backend in background
+      #   run: |
+      #     nix develop -c make tilt-up &
+      #     sleep 30
+      # - run: nix develop -c tilt wait --timeout 1h --for=condition=Ready uiresources init-setup
       - name: Run Detox Tests (test attempt 1)
         continue-on-error: true
         id: test1
@@ -109,9 +109,92 @@ jobs:
           arch: x86_64
           script: yarn e2e:test android.emu.debug --headless -d -R 3
 
-      # TODO: Store Artifacts in a bucket and get link
+      - uses: actions/upload-artifact@v4
+        with:
+          name: recordings
+          path: artifacts
 
       - name: Terminate Metro
         if: always()
         continue-on-error: true
         run: kill $METRO_PID
+
+  build-e2e-ios:
+    name: Build IPA
+    runs-on: macos-latest # Building on GH Hosted Mac
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 20
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            ios/Pods
+          key: ${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock', '**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-deps-
+
+      - run: yarn install
+      - name: Build app
+        run: yarn e2e:build ios.sim.debug
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: built-e2e-ipa
+          path: ios/build/Build/Products/Debug-iphonesimulator/Blink.app
+
+  test-e2e-ios:
+    name: Run Detox Tests for IPA
+    runs-on: self-hosted-m1
+    needs: build-e2e-ios
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v4
+        with:
+          name: built-e2e-ipa
+          path: ios/build/Build/Products/Debug-iphonesimulator/Blink.app
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 20
+      - run: npm install -g yarn
+
+      - uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            ios/Pods
+          key: ${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock', '**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-deps-
+      - run: yarn install
+      - name: Start Metro
+        run: |
+          yarn start &
+          echo "METRO_PID=$!" >> $GITHUB_ENV
+
+      - uses: DeterminateSystems/magic-nix-cache-action@v2
+      - name: Run local backend in background
+        run: |
+          nix develop -c make tilt-up &
+          echo "TILT_PID=$!" >> $GITHUB_ENV
+          sleep 30
+      - run: nix develop -c tilt wait --timeout 1h --for=condition=Ready uiresources init-setup
+      #
+      # RUN TESTS ON SIM
+      #
+      - name: Terminate Tilt
+        if: always()
+        continue-on-error: true
+        run: |
+          kill $TILT_PID
+      - name: Terminate Metro
+        if: always()
+        continue-on-error: true
+        run: nix develop -c make tilt-down
