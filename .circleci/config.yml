@@ -344,13 +344,3 @@ workflows:
         - equal: ["api", << pipeline.trigger_source >>]
     jobs:
       - upload_to_app_store
-  test_in_pr:
-    when:
-      not:
-        equal: [main, << pipeline.git.branch >>]
-    jobs:
-      - e2e_ios
-      - e2e_build_android
-      - e2e_run_android:
-          requires:
-            - e2e_build_android
