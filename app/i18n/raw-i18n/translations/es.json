@@ -1993,7 +1993,8 @@
         "registerTitle": "Necesitas actualizar tu cuenta",
         "registerContent": "Regístrate con tu número de teléfono para recibir sats",
         "notYet": "Aún no",
-        "availableTomorrow": "¡Esta sección estará disponible mañana!"
+        "availableTomorrow": "¡Esta sección estará disponible mañana!",
+        "motivatingBadger": "Dig your way through these lessons and earn as you learn"
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Log in / Crear Cuenta",
@@ -2014,13 +2015,12 @@
         }
     },
     "MapScreen": {
-        "locationPermissionMessage": "Active la localización para poder ubicarlo en el mapa",
-        "locationPermissionNegative": "Cancelar",
-        "locationPermissionNeutral": "Pregúntarme más tarde",
-        "locationPermissionPositive": "OK",
-        "locationPermissionTitle": "Ubícate en el mapa",
+        "navToSettingsTitle": "Location permissions",
+        "navToSettingsText": "If you'd like to give Blink location permissions, please navigate to your settings and enable it there",
         "payBusiness": "Pagar aquí",
-        "title": "Mapa"
+        "openSettings": "Open settings",
+        "title": "Mapa",
+        "error": "Oops. Something went wrong while getting your location"
     },
     "HomeScreen": {
         "receive": "Recibir",
@@ -2162,7 +2162,8 @@
         "paymentAlreadyAttempted": "El pago ya se intentó.\n\nSi deseas enviar este pago nuevamente, comienza desde el principio del proceso.",
         "slideToConfirm": "Desliza para confirmar",
         "slideConfirming": "Confirmando...",
-        "copiedDestination": "Destino copiado al portapapeles"
+        "copiedDestination": "Destino copiado al portapapeles",
+        "lightningRecommended": "High fee! We recommend Lightning."
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "Los nombres de usuario de {bankName} ahora son direcciones de {bankName}.",
@@ -2501,12 +2502,14 @@
         "hour": "hora",
         "hours": "horas",
         "invoice": "Factura",
+        "intraledger": "Intraledger",
         "language": "Idioma",
         "languagePreference": "Configuración de idioma",
         "lastName": "Apellido",
         "later": "Más tarde",
         "loggedOut": "Se ha cerrado su sesión.",
         "logout": "Cerrar sesion",
+        "lightning": "Lightning",
         "minutes": "minutos",
         "errorAuthToken": "Token de autenticación faltante",
         "needWallet": "Inicia sesión o crea una cuenta para acceder a tu billetera",
@@ -2517,6 +2520,7 @@
         "ok": "OK",
         "or": "o",
         "openWallet": "Abrir billetera",
+        "onchain": "Onchain",
         "paymentRequest": "Solicitud de Pago",
         "phone": "Teléfono",
         "phoneNumber": "Número de teléfono",
@@ -2679,6 +2683,11 @@
             "title": "Reto de enero!",
             "description": "¡+10 a tu circulo exterior en enero por oportunidad de $100!",
             "details": "¡Has crecer su círculo exterior en 10 personas en enero para tener la oportunidad de ganar $100! \n\nTu círculo exterior crece cuando las personas de tu círculo interior acogen a otras, así que tiende la mano y recuerda a los que has incorporado que compartan Blink con sus amigos y familiares.\n\nComparte tus círculos en las redes sociales con #blinkcircles para participar."
+        },
+        "februaryChallenge": {
+            "title": "¡Reto de febrero!",
+            "description": "+3 en tu círculo interno para tener la oportunidad de ganar una billetera hardware Seedsigner",
+            "details": "Haz crecer tu círculo interno en 3 personas en enero para tener la oportunidad de ganar una billetera de hardware Seedsigner.\n\nRecordatorio: tus círculos crecen cuando envías los primeros sats a un nuevo usuario de Blink.\n\nComparte tus círculos en redes sociales con #blinkcircles para participar."
         }
     },
     "FullOnboarding": {
