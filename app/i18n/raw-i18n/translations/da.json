@@ -35,7 +35,8 @@
         "setUpAuthenticationDescription": "Brug biometrisk autentificering",
         "skip": "Spring over",
         "unlock": "Lås op",
-        "usePin": "Brug PIN"
+        "usePin": "Brug PIN",
+        "confirmLogout": "Are you sure you'd like to log out? This will reset your cache and all local user settings"
     },
     "PeopleScreen": {
         "title": "Mennesker",
@@ -1990,7 +1991,10 @@
         "unlockQuestion": "For at låse op, besvar spørgsmålet:",
         "youEarned": "Du har tjent",
         "registerTitle": "Din konto skal opgraderes",
-        "registerContent": "Registrér med dit telefonnummer for at modtage sats."
+        "registerContent": "Registrér med dit telefonnummer for at modtage sats.",
+        "notYet": "Not yet",
+        "availableTomorrow": "This section will be available tomorrow!",
+        "motivatingBadger": "Dig your way through these lessons and earn as you learn"
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Log in / opret konto",
@@ -2011,13 +2015,12 @@
         }
     },
     "MapScreen": {
-        "locationPermissionMessage": "Aktivér din placering, så du ved, hvor du er på kortet.",
-        "locationPermissionNegative": "Annuller",
-        "locationPermissionNeutral": "Spørg mig senere",
-        "locationPermissionPositive": "OK",
-        "locationPermissionTitle": "Find dig selv på kortet.",
+        "navToSettingsTitle": "Location permissions",
+        "navToSettingsText": "If you'd like to give Blink location permissions, please navigate to your settings and enable it there",
         "payBusiness": "Betal denne forretning",
-        "title": "Kort"
+        "openSettings": "Open settings",
+        "title": "Kort",
+        "error": "Oops. Something went wrong while getting your location"
     },
     "HomeScreen": {
         "receive": "Modtag",
@@ -2156,7 +2159,11 @@
         "feeError": "Kunne ikke beregne gebyr",
         "invoiceAlreadyPaid": "Denne faktura er allerede blevet betalt",
         "somethingWentWrong": "Noget gik galt",
-        "paymentAlreadyAttempted": "Betalingen er allerede forsøgt gennemført.\n\nHvis du ønsker at sende denne betaling igen, venligst start forfra."
+        "paymentAlreadyAttempted": "Betalingen er allerede forsøgt gennemført.\n\nHvis du ønsker at sende denne betaling igen, venligst start forfra.",
+        "slideToConfirm": "Slide to Confirm",
+        "slideConfirming": "Confirming...",
+        "copiedDestination": "Copied destination to clipboard",
+        "lightningRecommended": "High fee! We recommend Lightning."
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "{bankName: string} brugernavne er nu {bankName: string} adresser.",
@@ -2184,7 +2191,8 @@
             "checkBox": "{lnAddress: string} er den rigtige adresse.",
             "confirmButton": "Jeg er 100% sikker"
         },
-        "clipboardError": "Fejl ved at hente værdi fra udklipsholderen."
+        "clipboardError": "Fejl ved at hente værdi fra udklipsholderen.",
+        "pastedClipboardSuccess": "Pasted from clipboard"
     },
     "SendBitcoinScreen": {
         "willBeSentToMempoolBy": "Transaktionen skulle nu blive tilføjet til mempool",
@@ -2214,7 +2222,9 @@
             "title": "Advarsel om højt gebyr!",
             "content": "Dit gebyr er mere end 50% større end det beløb, der sendes. Er du sikker på, at du ønsker at fortsætte?\n\nFor at reducere gebyrer, bed modtageren om at acceptere betaling via Lightning.",
             "confirmButton": "Jeg er 100% sikker"
-        }
+        },
+        "copiedDestination": "Copied destination to clipboard",
+        "pendingPayment": "The payment has been sent, but hasn't confirmed yet.\n\nIt's possible the payment will not confirm, in which case the funds will be returned to your account."
     },
     "SettingsScreen": {
         "activated": "Aktiveret",
@@ -2298,7 +2308,7 @@
     "TotpRegistrationValidateScreen": {
         "title": "To-faktor godkendelse",
         "enter6digitCode": "Indtast den 6-cifrede kode fra din autentificeringsapp for at bekræfte din to-faktor godkendelse.",
-        "success": "To-faktor godkendelse er blevet aktiveret. Du vil nu kun kunne logge ind med din telefon eller e-mail OG din to-faktor godkendelse.\n\nKun fuldt ud KYC-konti kan gendannes, hvis en bruger har mistet adgangen til deres to-faktor godkendelse."
+        "success": "Two-factor authentication has been enabled. You will now only be able to log back in with your phone or email AND your two factor authentication.\n\nDevices on this account which are not logged in with 2FA will need to log back in.\n\nOnly level 2 accounts can be recovered by customer support in the event of lost 2FA access."
     },
     "TotpLoginValidateScreen": {
         "title": "To-faktor godkendelse",
@@ -2335,6 +2345,7 @@
         "paid": "Betalt til/fra",
         "received": "Du modtog",
         "spent": "Du brugte",
+        "sending": "Sending",
         "receivingAccount": "Modtagelseskonto",
         "sendingAccount": "Afsendelseskonto",
         "txNotBroadcast": "Din transaktion er i kø. Den bør vises i mempoolen om {countdown: string}.",
@@ -2491,12 +2502,14 @@
         "hour": "time",
         "hours": "timer",
         "invoice": "Faktura",
+        "intraledger": "Intraledger",
         "language": "Sprog",
         "languagePreference": "Sprogpræference",
         "lastName": "Efternavn",
         "later": "Senere",
         "loggedOut": "Du er blevet logget ud.",
         "logout": "Log ud",
+        "lightning": "Lightning",
         "minutes": "minutter",
         "errorAuthToken": "Mangler godkendelsestoken",
         "needWallet": "Log ind eller opret en konto for at få adgang til din tegnebog",
@@ -2507,6 +2520,7 @@
         "ok": "OK",
         "or": "eller",
         "openWallet": "Åben Tegnebog",
+        "onchain": "Onchain",
         "paymentRequest": "Betalingsforspørgsel",
         "phone": "Telefon",
         "phoneNumber": "Telefonnummer",
@@ -2658,31 +2672,22 @@
         "someones": "{username: string}'s",
         "groupEffort": "Udbredelse af Bitcoin er en gruppeindsats.\nInviter en ven og send dem sats for at begynde at opbygge dine cirkler.",
         "drivingAdoption": "Jeg bidrager til udbredelsen af Bitcoin med Blink.",
-        "septChallenge": {
-            "title": "September udfordring!",
-            "description": "Indre Cirkel {innerCircle: number}/21 - Tjen $21\nTop 3 - Vind billetter til Adopting Bitcoin!",
-            "details": "Forøg din indre cirkel med 21 mennesker i september og del på sociale medier med #blinkcircles for at få $21 ind på din Stablesats-konto. Top 3 vinder billetter til Adopting Bitcoin!",
-            "peopleWelcomedSoFar": "mennesker der er budt velkommen indtil videre",
-            "yourRank": "din placering",
-            "reminder": "Påmindelse: Din indre cirkel vokser, når du sender en ny Blink-bruger deres første sats",
-            "fullDetails": "Alle detaljer på"
-        },
-        "octoberChallenge": {
-            "title": "Oktober Udfordring!",
-            "description": "Del dine #blinkcircles for en chance for at vinde 1.000.000 sats!",
-            "details": "Vi uddeler 1.000.000 sats!\n\nDel dine cirkler på sociale medier med taget `#blinkcircles` for at deltage! Vinderen vil blive valgt tilfældigt den 31. oktober.\n\n Du skal have mindst én person i din indre cirkel for at deltage!",
-            "connectOnSocial": "Følg på sociale medier: ",
-            "fullDetails": "Alle detaljer på "
-        },
-        "novemberChallenge": {
-            "title": "November Udfordring!",
-            "description": "Tjen 2.100 sats for hver person, du byder velkommen til Blink i november!",
-            "details": "Tjen 2.100 sats for hver person, du byder velkommen til Blink i november!\n\nFor at få dine sats skal du blot dele dine cirkler på sociale medier når som helst i november med taget `#blinkcircles`.\n\nDine sats udbetales den 1. december 2023."
-        },
+        "connectOnSocial": "Følg på sociale medier: ",
+        "fullDetails": "Alle detaljer på ",
         "decemberChallenge": {
             "title": "December Udfordring!",
             "description": "+10 indre cirkel for en chance for at vinde $100!",
             "details": "Udvid din indre kreds med 10 personer i december for en chance for at vinde $100!\n\nFor at deltage skal du dele dine cirkler på sociale medier, når du har nået 10 for måneden, og tagge #blinkcircles.\n\nDen 1. januar vil tre personer blive valgt tilfældigt til at modtage $100!"
+        },
+        "januaryChallenge": {
+            "title": "January Challenge!",
+            "description": "+10 outer circle in January for a chance at $100!",
+            "details": "Grow your OUTER circle by 10 in January for a chance at $100!\n\nYour outer circle grows when people in your inner circle welcome others, so reach out and remind those you onboarded to share Blink with their friends and family.\n\nShare your circles on social with #blinkcircles to participate."
+        },
+        "februaryChallenge": {
+            "title": "February Challenge!",
+            "description": "+3 inner circle for a chance to win a Seedsigner hardware wallet!",
+            "details": "Grow your inner circle by 3 in February for a chance to win a Seedsigner hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
         }
     },
     "FullOnboarding": {
