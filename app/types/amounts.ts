@@ -169,6 +169,20 @@ export const addMoneyAmounts = <T extends WalletOrDisplayCurrency>({
   }
 }
 
+export const multiplyMoneyAmounts = <T extends WalletOrDisplayCurrency>({
+  value,
+  multiplier,
+}: {
+  value: MoneyAmount<T>
+  multiplier: number
+}): MoneyAmount<T> => {
+  return {
+    amount: value.amount * multiplier,
+    currency: value.currency,
+    currencyCode: value.currencyCode,
+  }
+}
+
 export const subtractMoneyAmounts = <T extends WalletOrDisplayCurrency>({
   a,
   b,

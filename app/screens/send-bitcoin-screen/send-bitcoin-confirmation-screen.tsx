@@ -1,41 +1,42 @@
 import { gql } from "@apollo/client"
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+import GaloySliderButton from "@app/components/atomic/galoy-slider-button/galoy-slider-button"
 import { PaymentDestinationDisplay } from "@app/components/payment-destination-display"
 import { Screen } from "@app/components/screen"
 import {
   useSendBitcoinConfirmationScreenQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
+import { useHideAmount } from "@app/graphql/hide-amount-context"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import {
   addMoneyAmounts,
   DisplayCurrency,
+  greaterThan,
   lessThanOrEqualTo,
   moneyAmountIsCurrencyType,
+  multiplyMoneyAmounts,
   toBtcMoneyAmount,
   toUsdMoneyAmount,
-  ZeroBtcMoneyAmount,
   ZeroUsdMoneyAmount,
 } from "@app/types/amounts"
 import { logPaymentAttempt, logPaymentResult } from "@app/utils/analytics"
+import { toastShow } from "@app/utils/toast"
+import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { CommonActions, RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import React, { useState } from "react"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
+import React, { useState } from "react"
 import { ActivityIndicator, TouchableOpacity, View } from "react-native"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { testProps } from "../../utils/testProps"
 import useFee from "./use-fee"
 import { useSendPayment } from "./use-send-payment"
-import { useHideAmount } from "@app/graphql/hide-amount-context"
-import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
-import GaloySliderButton from "@app/components/atomic/galoy-slider-button/galoy-slider-button"
-import { GaloyIcon } from "@app/components/atomic/galoy-icon"
-import Clipboard from "@react-native-clipboard/clipboard"
-import { toastShow } from "@app/utils/toast"
 
 gql`
   query sendBitcoinConfirmationScreen {
@@ -204,15 +205,16 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   let validAmount = true
   let invalidAmountErrorMessage = ""
 
+  const totalAmount = addMoneyAmounts({
+    a: settlementAmount,
+    b: fee.amount || ZeroUsdMoneyAmount,
+  })
+
   if (
     moneyAmountIsCurrencyType(settlementAmount, WalletCurrency.Btc) &&
     btcBalanceMoneyAmount &&
     !isSendingMax
   ) {
-    const totalAmount = addMoneyAmounts({
-      a: settlementAmount,
-      b: fee.amount || ZeroBtcMoneyAmount,
-    })
     validAmount = lessThanOrEqualTo({
       value: totalAmount,
       lessThanOrEqualTo: btcBalanceMoneyAmount,
@@ -229,10 +231,6 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     usdBalanceMoneyAmount &&
     !isSendingMax
   ) {
-    const totalAmount = addMoneyAmounts({
-      a: settlementAmount,
-      b: fee.amount || ZeroUsdMoneyAmount,
-    })
     validAmount = lessThanOrEqualTo({
       value: totalAmount,
       lessThanOrEqualTo: usdBalanceMoneyAmount,
@@ -256,11 +254,56 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
   const errorMessage = paymentError || invalidAmountErrorMessage
 
   const displayAmount = convertMoneyAmount(settlementAmount, DisplayCurrency)
+
+  const transactionType = () => {
+    if (paymentType === "intraledger") return LL.common.intraledger()
+    if (paymentType === "onchain") return LL.common.onchain()
+    if (paymentType === "lightning") return LL.common.lightning()
+    if (paymentType === "lnurl") return LL.common.lightning()
+  }
+
+  const isLightningRecommended = () => {
+    const ratioFeeToAmount = 50 // 2%
+
+    if (!fee.amount) return false
+
+    const feeMultiplied = multiplyMoneyAmounts({
+      value: fee.amount,
+      multiplier: ratioFeeToAmount,
+    })
+
+    if (
+      paymentType === "onchain" &&
+      greaterThan({ value: feeMultiplied, greaterThan: totalAmount })
+    )
+      return true
+    return false
+  }
+
+  const LightningRecommendedComponent = isLightningRecommended() ? (
+    <View style={styles.feeWarning}>
+      <GaloyIcon name="warning" size={18} color={colors.warning} />
+      <Text
+        type="p3"
+        style={styles.feeWarningText}
+        numberOfLines={1}
+        ellipsizeMode="tail"
+      >
+        {" "}
+        {LL.SendBitcoinConfirmationScreen.lightningRecommended()}
+      </Text>
+    </View>
+  ) : (
+    <></>
+  )
+
   return (
     <Screen preset="scroll" style={styles.screenStyle} keyboardOffset="navigationHeader">
       <View style={styles.sendBitcoinConfirmationContainer}>
         <View style={styles.fieldContainer}>
-          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
+          <Text style={styles.fieldTitleText}>
+            {LL.SendBitcoinScreen.destination()} - {transactionType()}
+          </Text>
           <View style={styles.fieldBackground}>
             <PaymentDestinationDisplay
               destination={destination}
@@ -337,10 +380,18 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           </View>
         ) : null}
         <View style={styles.fieldContainer}>
-          <Text style={styles.fieldTitleText}>
-            {LL.SendBitcoinConfirmationScreen.feeLabel()}
-          </Text>
-          <View style={styles.fieldBackground}>
+          <View style={styles.feeTextContainer}>
+            <Text style={styles.fieldTitleText}>
+              {LL.SendBitcoinConfirmationScreen.feeLabel()}
+            </Text>
+            {LightningRecommendedComponent}
+          </View>
+          <View
+            style={[
+              styles.fieldBackground,
+              isLightningRecommended() ? styles.warningOutline : undefined,
+            ]}
+          >
             {fee.status === "loading" && <ActivityIndicator />}
             {fee.status === "set" && (
               <Text type="p2" {...testProps("Successful Fee")}>
@@ -403,6 +454,10 @@ const useStyles = makeStyles(({ colors }) => ({
     minHeight: 60,
     borderRadius: 10,
     alignItems: "center",
+  },
+  warningOutline: {
+    borderColor: colors.warning,
+    borderWidth: 2,
   },
   fieldTitleText: {
     fontWeight: "bold",
@@ -487,5 +542,20 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "center",
     alignItems: "flex-start",
     paddingLeft: 20,
+  },
+  feeWarning: {
+    paddingBottom: 4,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 0.95,
+  },
+  feeWarningText: {
+    color: colors.warning,
+  },
+  feeTextContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 }))

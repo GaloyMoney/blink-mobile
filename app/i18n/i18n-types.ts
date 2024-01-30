@@ -6903,6 +6903,10 @@ type RootTranslation = {
 		 * C​o​p​i​e​d​ ​d​e​s​t​i​n​a​t​i​o​n​ ​t​o​ ​c​l​i​p​b​o​a​r​d
 		 */
 		copiedDestination: string
+		/**
+		 * H​i​g​h​ ​f​e​e​!​ ​W​e​ ​r​e​c​o​m​m​e​n​d​ ​L​i​g​h​t​n​i​n​g​.
+		 */
+		lightningRecommended: string
 	}
 	SendBitcoinDestinationScreen: {
 		/**
@@ -8106,6 +8110,10 @@ type RootTranslation = {
 		 */
 		invoice: string
 		/**
+		 * I​n​t​r​a​l​e​d​g​e​r
+		 */
+		intraledger: string
+		/**
 		 * L​a​n​g​u​a​g​e
 		 */
 		language: string
@@ -8129,6 +8137,10 @@ type RootTranslation = {
 		 * L​o​g​ ​O​u​t
 		 */
 		logout: string
+		/**
+		 * L​i​g​h​t​n​i​n​g
+		 */
+		lightning: string
 		/**
 		 * m​i​n​u​t​e​s
 		 */
@@ -8169,6 +8181,10 @@ type RootTranslation = {
 		 * O​p​e​n​ ​W​a​l​l​e​t
 		 */
 		openWallet: string
+		/**
+		 * O​n​c​h​a​i​n
+		 */
+		onchain: string
 		/**
 		 * P​a​y​m​e​n​t​ ​R​e​q​u​e​s​t
 		 */
@@ -15686,6 +15702,10 @@ export type TranslationFunctions = {
 		 * Copied destination to clipboard
 		 */
 		copiedDestination: () => LocalizedString
+		/**
+		 * High fee! We recommend Lightning.
+		 */
+		lightningRecommended: () => LocalizedString
 	}
 	SendBitcoinDestinationScreen: {
 		/**
@@ -16850,6 +16870,10 @@ export type TranslationFunctions = {
 		 */
 		invoice: () => LocalizedString
 		/**
+		 * Intraledger
+		 */
+		intraledger: () => LocalizedString
+		/**
 		 * Language
 		 */
 		language: () => LocalizedString
@@ -16873,6 +16897,10 @@ export type TranslationFunctions = {
 		 * Log Out
 		 */
 		logout: () => LocalizedString
+		/**
+		 * Lightning
+		 */
+		lightning: () => LocalizedString
 		/**
 		 * minutes
 		 */
@@ -16913,6 +16941,10 @@ export type TranslationFunctions = {
 		 * Open Wallet
 		 */
 		openWallet: () => LocalizedString
+		/**
+		 * Onchain
+		 */
+		onchain: () => LocalizedString
 		/**
 		 * Payment Request
 		 */

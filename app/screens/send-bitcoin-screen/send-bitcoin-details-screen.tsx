@@ -278,6 +278,13 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     toggleModal()
   }
 
+  const transactionType = () => {
+    if (paymentDetail?.paymentType === "intraledger") return LL.common.intraledger()
+    if (paymentDetail?.paymentType === "onchain") return LL.common.onchain()
+    if (paymentDetail?.paymentType === "lightning") return LL.common.lightning()
+    if (paymentDetail?.paymentType === "lnurl") return LL.common.lightning()
+  }
+
   const ChooseWalletModal = wallets && (
     <ReactNativeModal
       style={styles.modal}
@@ -444,7 +451,9 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
       />
       <View style={styles.sendBitcoinAmountContainer}>
         <View style={styles.fieldContainer}>
-          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
+          <Text style={styles.fieldTitleText}>
+            {LL.SendBitcoinScreen.destination()} - {transactionType()}
+          </Text>
           <View style={styles.destinationFieldContainer}>
             <View style={styles.disabledFieldBackground}>
               <PaymentDestinationDisplay
@@ -507,7 +516,6 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                       : usdWalletText}
                   </Text>
                 </View>
-                <View />
               </View>
 
               <View style={styles.pickWalletIcon}>
