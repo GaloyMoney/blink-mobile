@@ -2683,6 +2683,11 @@
             "title": "January Challenge!",
             "description": "+10 outer circle in January for a chance at $100!",
             "details": "Grow your OUTER circle by 10 in January for a chance at $100!\n\nYour outer circle grows when people in your inner circle welcome others, so reach out and remind those you onboarded to share Blink with their friends and family.\n\nShare your circles on social with #blinkcircles to participate."
+        },
+        "februaryChallenge": {
+            "title": "February Challenge!",
+            "description": "+3 inner circle for a chance to win a Seedsigner hardware wallet!",
+            "details": "Grow your inner circle by 3 in February for a chance to win a Seedsigner hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
         }
     },
     "FullOnboarding": {
