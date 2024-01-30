@@ -35,7 +35,8 @@
         "setUpAuthenticationDescription": "Tumia uthibitishaji wa kibiometriki",
         "skip": "Ruka",
         "unlock": "Fungua",
-        "usePin": "Tumia pini"
+        "usePin": "Tumia pini",
+        "confirmLogout": "Are you sure you'd like to log out? This will reset your cache and all local user settings"
     },
     "PeopleScreen": {
         "title": "Watunzi",
@@ -1990,7 +1991,10 @@
         "unlockQuestion": "Ili kufungua, jibu swali:",
         "youEarned": "Umechuma",
         "registerTitle": "Unahitaji kuboresha akaunti yako",
-        "registerContent": "Jiandikishe na namba yako ya simu ili upokee sats"
+        "registerContent": "Jiandikishe na namba yako ya simu ili upokee sats",
+        "notYet": "Not yet",
+        "availableTomorrow": "This section will be available tomorrow!",
+        "motivatingBadger": "Dig your way through these lessons and earn as you learn"
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Ingia / Unda akaunti",
@@ -2011,13 +2015,12 @@
         }
     },
     "MapScreen": {
-        "locationPermissionMessage": "Washa eneo lako ili ujue ulipo kwenye ramani",
-        "locationPermissionNegative": "Ghairi",
-        "locationPermissionNeutral": "Niulize Baadaye",
-        "locationPermissionPositive": "sawa",
-        "locationPermissionTitle": "Jipate kwenye ramani.",
+        "navToSettingsTitle": "Location permissions",
+        "navToSettingsText": "If you'd like to give Blink location permissions, please navigate to your settings and enable it there",
         "payBusiness": "Lipa biashara hii",
-        "title": "Ramani"
+        "openSettings": "Open settings",
+        "title": "Ramani",
+        "error": "Oops. Something went wrong while getting your location"
     },
     "HomeScreen": {
         "receive": "Pokea",
@@ -2157,7 +2160,10 @@
         "invoiceAlreadyPaid": "Laini ya malipo imekwisha kulipiwa",
         "somethingWentWrong": "Kitu kimeenda vibaya",
         "paymentAlreadyAttempted": "Malipo tayari yamejaribiwa.\n\nIkiwa unataka kutuma malipo haya tena, anza upya.",
-        "copiedDestination": "Imeiga marudio kwenye ubao wa kunakili"
+        "slideToConfirm": "Slide to Confirm",
+        "slideConfirming": "Confirming...",
+        "copiedDestination": "Imeiga marudio kwenye ubao wa kunakili",
+        "lightningRecommended": "High fee! We recommend Lightning."
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "{bankName: string} majina ya watumiaji sasa ni anwani za {bankName: string} ",
@@ -2217,7 +2223,8 @@
             "content": "Ada yako ni zaidi ya 50% zaidi ya kiasi kilichotumwa. Una uhakika unataka kuendelea?\n\nIli kupunguza ada, omba mpokeaji akubali muamala kupitia Lightning",
             "confirmButton": "Nina uhakika 100%"
         },
-        "copiedDestination": "Imeakiliwa marudio kwenye ubao wa kunakili"
+        "copiedDestination": "Imeakiliwa marudio kwenye ubao wa kunakili",
+        "pendingPayment": "The payment has been sent, but hasn't confirmed yet.\n\nIt's possible the payment will not confirm, in which case the funds will be returned to your account."
     },
     "SettingsScreen": {
         "activated": "Imewezeshwa",
@@ -2338,6 +2345,7 @@
         "paid": "Imelipwa kutoka/kuelekea",
         "received": "Ulipokea",
         "spent": "Umetumia",
+        "sending": "Sending",
         "receivingAccount": "Akaunti ya Kupokelea",
         "sendingAccount": "Akaunti ya Kutuma",
         "txNotBroadcast": "Muamala wako umeorodheshwa. Unapaswa kuonekana kwenye mempool {countdown: string}.",
@@ -2494,12 +2502,14 @@
         "hour": "saa",
         "hours": "masaa",
         "invoice": "Ankara ya malipo",
+        "intraledger": "Intraledger",
         "language": "Lugha",
         "languagePreference": "Upendeleo wa lugha",
         "lastName": "Jina la mwisho",
         "later": "Baadaye",
         "loggedOut": "Umetolewa kwenye programu",
         "logout": "Toka Nje",
+        "lightning": "Lightning",
         "minutes": "dakika",
         "errorAuthToken": "Tokeni ya kuthibitisha haipo",
         "needWallet": "Ingia au tengeneza akaunti ili ufikie mfuko wako wa fedha",
@@ -2510,6 +2520,7 @@
         "ok": "Sawa",
         "or": "au",
         "openWallet": "Fungua pochi",
+        "onchain": "Onchain",
         "paymentRequest": "Ombi la Malipo",
         "phone": "Simu",
         "phoneNumber": "Nambari ya simu",
@@ -2661,31 +2672,22 @@
         "someones": "{username: string}'s",
         "groupEffort": "Kupokelewa kwa Bitcoin ni jitihada ya pamoja.\nMwalike rafiki na umtumie sats kuanza kujenga mduara wako.",
         "drivingAdoption": "Nachochea kupokelewa kwa Bitcoin kutumia Blink.",
-        "septChallenge": {
-            "title": "Mashindano ya Septemba!",
-            "description": "Mduara wa Ndani {innerCircle: number}/21 - Pata $21\nWatatu wa juu - Washinde tiketi za Adopting Bitcoin!",
-            "details": "Ongeza mduara wako wa ndani na watu 21 mwezi wa Septemba na shiriki kwenye mitandao ya kijamii kwa kutumia #blinkcircles kupata $21 kwenye akaunti yako ya Stablesats. Watatu wa juu washinde tiketi za Adopting Bitcoin!",
-            "peopleWelcomedSoFar": "watu walio karibishwa hadi sasa",
-            "yourRank": "nafasi yako",
-            "reminder": "Kumbusho: Mduara wako wa ndani unaongezeka unapomtuma mtumiaji mpya wa Blink sats yao ya kwanza",
-            "fullDetails": "Maelezo kamili kwenye"
-        },
-        "octoberChallenge": {
-            "title": "Mashindano ya Oktoba!",
-            "description": "Shiriki #blinkcircles kwa nafasi ya kushinda 1,000,000 sats!",
-            "details": "Tunatoa 1,000,000 sats!\n\nShiriki mduara wako kwenye mitandao ya kijamii kwa tagi `#blinkcircles` kushiriki! Mshindi atachaguliwa kwa nasibu mnamo Oktoba 31.\n\nLazima uwe na mtu angalau mmoja kwenye Mduara wa Ndani ili kushiriki!",
-            "connectOnSocial": "unganisha kwenye mitandao ya kijamii: ",
-            "fullDetails": "Maelezo kamili kwenye "
-        },
-        "novemberChallenge": {
-            "title": "Mtihani wa Novemba!",
-            "description": "Pata 2,100 sats kwa kila mtu unayekaribisha kwenye Blink Novemba!",
-            "details": "Pata 2,100 sats kwa kila mtu unayekaribisha kwenye Blink Novemba!\n\nKudai sats zako, tuweke tu Circles yako kwenye mitandao ya kijamii wakati wowote Novemba na lebo `#blinkcircles`.\n\nSats zako zitalipwa tarehe 1 Desemba, 2023."
-        },
+        "connectOnSocial": "unganisha kwenye mitandao ya kijamii: ",
+        "fullDetails": "Maelezo kamili kwenye ",
         "decemberChallenge": {
             "title": "Mtihani wa Desemba!",
             "description": "+10 mduara wa ndani kwa nafasi ya $100!",
             "details": "Kuza mduara wako wa ndani na watu 10 mwezi wa Desemba kwa nafasi ya $100!\n\nKushiriki, weka mduara wako kwenye mitandao ya kijamii mara tu ukifikia 10 kwa mwezi na tagi #blinkcircles.\n\nTarehe 1 Januari, watu watatu watateuliwa kwa nasibu kupokea $100!"
+        },
+        "januaryChallenge": {
+            "title": "January Challenge!",
+            "description": "+10 outer circle in January for a chance at $100!",
+            "details": "Grow your OUTER circle by 10 in January for a chance at $100!\n\nYour outer circle grows when people in your inner circle welcome others, so reach out and remind those you onboarded to share Blink with their friends and family.\n\nShare your circles on social with #blinkcircles to participate."
+        },
+        "februaryChallenge": {
+            "title": "February Challenge!",
+            "description": "+3 inner circle for a chance to win a Seedsigner hardware wallet!",
+            "details": "Grow your inner circle by 3 in February for a chance to win a Seedsigner hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
         }
     },
     "FullOnboarding": {

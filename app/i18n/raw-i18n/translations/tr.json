@@ -2015,13 +2015,12 @@
         }
     },
     "MapScreen": {
-        "locationPermissionMessage": "Haritada nerede olduğunu görebilmemiz için konum servislerini aktifleştir",
-        "locationPermissionNegative": "İptal",
-        "locationPermissionNeutral": "Daha sonra tekrar sor",
-        "locationPermissionPositive": "Tamam",
-        "locationPermissionTitle": "Kendini haritada göster",
+        "navToSettingsTitle": "Location permissions",
+        "navToSettingsText": "If you'd like to give Blink location permissions, please navigate to your settings and enable it there",
         "payBusiness": "Bu işletmeye ödeme yapın",
-        "title": "Harita"
+        "openSettings": "Open settings",
+        "title": "Harita",
+        "error": "Oops. Something went wrong while getting your location"
     },
     "HomeScreen": {
         "receive": "Al",
@@ -2163,7 +2162,8 @@
         "paymentAlreadyAttempted": "Ödeme zaten denendi.\n\nBu ödemeyi tekrar göndermek istiyorsanız, sıfırdan başlayın.",
         "slideToConfirm": "Onaylamak için kaydırın",
         "slideConfirming": "Onaylanıyor...",
-        "copiedDestination": "Hedefi panoya kopyalama"
+        "copiedDestination": "Hedefi panoya kopyalama",
+        "lightningRecommended": "High fee! We recommend Lightning."
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "{BankName: string} kullanıcı adları artık {bankName: string} adresleridir.",
@@ -2502,12 +2502,14 @@
         "hour": "saat",
         "hours": "saatler",
         "invoice": "Fatura",
+        "intraledger": "Intraledger",
         "language": "Dil",
         "languagePreference": "Dil seçenekleri",
         "lastName": "Soyadı",
         "later": "Sonra",
         "loggedOut": "Çıkış yaptınız.",
         "logout": "Çıkış yap",
+        "lightning": "Lightning",
         "minutes": "dakikalar",
         "errorAuthToken": "Kimlik doğrulama belirteci eksik",
         "needWallet": "Cüzdanınıza erişmek için giriş yapın veya bir hesap oluşturun",
@@ -2518,6 +2520,7 @@
         "ok": "Tamam",
         "or": "ya da",
         "openWallet": "Cüzdanı aç",
+        "onchain": "Onchain",
         "paymentRequest": "Ödeme Talebi",
         "phone": "Telefon",
         "phoneNumber": "Telefon numarası",
@@ -2680,6 +2683,11 @@
             "title": "Ocak Meydan Okuması!",
             "description": "100$ kazanma şansı için Ocak ayında +10 dış çember!",
             "details": "Ocak ayında 100 $ kazanma şansı için DIŞ çemberinizi 10 büyütün!\n\nİç çevrenizdeki insanlar başkalarını hoş karşıladığında dış çevreniz büyür, bu yüzden onlara ulaşın ve Blink'i arkadaşlarıyla ve aileleriyle paylaşmalarını hatırlatın.\n\nKatılmak için çemberlerinizi #blinkcircles etiketiyle sosyal medyada paylaşın."
+        },
+        "februaryChallenge": {
+            "title": "February Challenge!",
+            "description": "+3 inner circle for a chance to win a Seedsigner hardware wallet!",
+            "details": "Grow your inner circle by 3 in February for a chance to win a Seedsigner hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
         }
     },
     "FullOnboarding": {
