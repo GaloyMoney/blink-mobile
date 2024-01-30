@@ -10,6 +10,10 @@ export const FEB_1_2024_12_AM_UTC_MINUS_6 = new Date(
   Date.UTC(2024, 1, 1, 6, 0, 0),
 ).getTime()
 
+export const MAR_1_2024_12_AM_UTC_MINUS_6 = new Date(
+  Date.UTC(2024, 2, 1, 6, 0, 0),
+).getTime()
+
 const secondsToDDMMSS = (totalSeconds: number) => {
   if (totalSeconds < 0) return ""
 
@@ -26,11 +30,10 @@ const secondsToDDMMSS = (totalSeconds: number) => {
   return `${formattedDays}:${formattedHours}:${formattedMinutes}:${formattedSeconds}`
 }
 
-export const getTimeLeft = () => {
+export const getTimeLeft = ({ after, until }: { after: number; until: number }) => {
   const dateNow = Date.now()
-  if (dateNow > JAN_1_2024_12_AM_UTC_MINUS_6 || dateNow < DEC_1_12_AM_UTC_MINUS_6)
-    return ""
+  if (dateNow > until || dateNow < after) return ""
 
-  const sLeft = (JAN_1_2024_12_AM_UTC_MINUS_6 - dateNow) / 1000
+  const sLeft = (until - dateNow) / 1000
   return secondsToDDMMSS(sLeft)
 }

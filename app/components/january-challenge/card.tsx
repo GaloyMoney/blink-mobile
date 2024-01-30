@@ -21,14 +21,24 @@ export const JanuaryChallengeCard: React.FC = () => {
   const styles = useStyles()
   const { LL } = useI18nContext()
 
-  const [countDown, setCountDown] = useState(getTimeLeft())
+  const [countDown, setCountDown] = useState(
+    getTimeLeft({
+      after: JAN_1_2024_12_AM_UTC_MINUS_6,
+      until: FEB_1_2024_12_AM_UTC_MINUS_6,
+    }),
+  )
 
   useEffect(() => {
     const dateNow = Date.now()
-    if (dateNow > JAN_1_2024_12_AM_UTC_MINUS_6) return
+    if (dateNow > FEB_1_2024_12_AM_UTC_MINUS_6) return
 
     const t = setInterval(() => {
-      setCountDown(getTimeLeft())
+      setCountDown(
+        getTimeLeft({
+          after: JAN_1_2024_12_AM_UTC_MINUS_6,
+          until: FEB_1_2024_12_AM_UTC_MINUS_6,
+        }),
+      )
     }, 1000)
 
     return () => clearInterval(t)
