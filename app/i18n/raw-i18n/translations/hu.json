@@ -2015,13 +2015,12 @@
         }
     },
     "MapScreen": {
-        "locationPermissionMessage": "Engedélyezd a helymeghatározást, hogy tudd, hol vagy a térképen",
-        "locationPermissionNegative": "Mégsem",
-        "locationPermissionNeutral": "Kérdezz később",
-        "locationPermissionPositive": "Rendben",
-        "locationPermissionTitle": "Határozd meg a helyed a térképen",
+        "navToSettingsTitle": "Location permissions",
+        "navToSettingsText": "If you'd like to give Blink location permissions, please navigate to your settings and enable it there",
         "payBusiness": "Fizess ennek az üzletnek",
-        "title": "Térkép"
+        "openSettings": "Open settings",
+        "title": "Térkép",
+        "error": "Oops. Something went wrong while getting your location"
     },
     "HomeScreen": {
         "receive": "Fogadás",
@@ -2163,7 +2162,8 @@
         "paymentAlreadyAttempted": "A fizetés kisérlet már megtörtént.\n\nHa újra szeretnéd küldeni ezt a fizetést, kezdd elölről.",
         "slideToConfirm": "Húzd el a megerősítéshez",
         "slideConfirming": "Megerősítés...",
-        "copiedDestination": "Címzett a vágólapra másolva"
+        "copiedDestination": "Címzett a vágólapra másolva",
+        "lightningRecommended": "High fee! We recommend Lightning."
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "Mostantól a {bankName: string} felhasználónevek {bankName: string} címek is.",
@@ -2502,12 +2502,14 @@
         "hour": "óra",
         "hours": "óra",
         "invoice": "Fizetési kérelem",
+        "intraledger": "Intraledger",
         "language": "Nyelv",
         "languagePreference": "Nyelvi beállítások",
         "lastName": "Vezetéknév",
         "later": "Később",
         "loggedOut": "Kijelentkeztél.",
         "logout": "Kijelentkezés",
+        "lightning": "Lightning",
         "minutes": "perc",
         "errorAuthToken": "Hiányzó authentikációs token",
         "needWallet": "Jelentkezz be vagy hozz létre számlát a tárcád eléréséhez",
@@ -2518,6 +2520,7 @@
         "ok": "OK",
         "or": "vagy",
         "openWallet": "Pénztárca megnyitása",
+        "onchain": "Onchain",
         "paymentRequest": "Fizetési Kérés",
         "phone": "Telefon",
         "phoneNumber": "Telefonszám",
@@ -2680,6 +2683,11 @@
             "title": "Januári kihívás",
             "description": "+10 külső kör, hogy nyehess 100 dollár januárban!",
             "details": "Növeld a KÜLSŐ köredet 10-zel januárban, hogy nyerhess 100 dollárt!\n\nA külső köröd akkor növekszik, amikor a belső körödben lévő emberek másokat is meghívnak, szóval lépj kapcsolatba azokkal, akiket te szerveztél be, hogy osszák meg a Blink-et barátaikkal és családjukkal.\n\nOszd meg a köreidet a közösségi médiában a #blinkcircles hashtag-gel a részvételhez."
+        },
+        "februaryChallenge": {
+            "title": "February Challenge!",
+            "description": "+3 inner circle for a chance to win a Seedsigner hardware wallet!",
+            "details": "Grow your inner circle by 3 in February for a chance to win a Seedsigner hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
         }
     },
     "FullOnboarding": {
