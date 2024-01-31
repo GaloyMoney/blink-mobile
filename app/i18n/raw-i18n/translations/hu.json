@@ -1119,7 +1119,7 @@
                         "feedback": [
                             "Pontosan. A Bitcoin nem igényel megbízható harmadik felet, és lehetővé teszi a tranzakciók közvetlen lebonyolítását az egyének között Ezt peer-to-peer tranzakciónak nevezzük, központi hatóság vagy közvetítők nélkül.",
                             "Nem, ez nem az. Próbáld újra",
-                            "A központosított kiadók által okozott pénzkínálat önkényes inflációja valóban egy probléma, amit a Bitcoin elegánsan megold, de van egy még alapvetőbb probléma, amit Satoshi kezelt. Próbáld újra!"
+                            "A központosított kinocsátók által okozott pénzkínálat önkényes inflációja valóban egy probléma, amit a Bitcoin elegánsan megold, de van egy még alapvetőbb probléma, amit Satoshi kezelt. Próbáld újra!"
                         ],
                         "question": "Melyik volt a fő probléma, amit Satoshi Nakamoto meg akart oldani a Bitcoin létrehozásával",
                         "text": "Az 1971 utáni fiat valuta rendszer minden szinten bizalmat igényel, mert adósságalapú és mellőzi a ritkaság tulajdonságot. Ez magában foglalja a jövőbeli adósságok visszafizetésének képességébe vetett bizalmat, a kereskedelmi és központi bankokban vetett bizalmat, hogy ne értéktelenítsék a valutát, valamint a tranzakciókhoz való hozzáférés és a források szabad használatába vetett bizalmat.\n\nEzt a bizalmat számos alkalommal megsértették, beleértve a 2008/09-es Globális Pénzügyi Válságot is. E probléma kezelése érdekében Satoshi Nakamoto olyan digitális pénzformát kívánt létrehozni, amely nem igényel harmadik felekbe vetett bizalmat a tranzakciókhoz, és nem értékteleníthető egy központi hatóság által több egység kibocsátásával.\n",
