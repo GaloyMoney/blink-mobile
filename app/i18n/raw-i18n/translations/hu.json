@@ -1117,9 +1117,9 @@
                             "Az infláció, amit a központi hatóságok okoznak több egység kibocsátásával"
                         ],
                         "feedback": [
-                            "Pontosan. A Bitcoin nem igényel megbízható harmadik felet, és lehetővé teszi a tranzakciók közvetlen lebonyolítását az egyének között, ami peer-to-peer tranzakciónak nevezünk, központi hatóság vagy közvetítők nélkül",
+                            "Pontosan. A Bitcoin nem igényel megbízható harmadik felet, és lehetővé teszi a tranzakciók közvetlen lebonyolítását az egyének között Ezt peer-to-peer tranzakciónak nevezzük, központi hatóság vagy közvetítők nélkül.",
                             "Nem, ez nem az. Próbáld újra",
-                            "A központosított kiadók által okozott pénzkínálat önkényes inflációja valóban egy probléma, amit a Bitcoin elegánsan megold, de van egy még alapvetőbb probléma, amit Satoshi kezelt. Próbáld újra!"
+                            "A központosított kinocsátók által okozott pénzkínálat önkényes inflációja valóban egy probléma, amit a Bitcoin elegánsan megold, de van egy még alapvetőbb probléma, amit Satoshi kezelt. Próbáld újra!"
                         ],
                         "question": "Melyik volt a fő probléma, amit Satoshi Nakamoto meg akart oldani a Bitcoin létrehozásával",
                         "text": "Az 1971 utáni fiat valuta rendszer minden szinten bizalmat igényel, mert adósságalapú és mellőzi a ritkaság tulajdonságot. Ez magában foglalja a jövőbeli adósságok visszafizetésének képességébe vetett bizalmat, a kereskedelmi és központi bankokban vetett bizalmat, hogy ne értéktelenítsék a valutát, valamint a tranzakciókhoz való hozzáférés és a források szabad használatába vetett bizalmat.\n\nEzt a bizalmat számos alkalommal megsértették, beleértve a 2008/09-es Globális Pénzügyi Válságot is. E probléma kezelése érdekében Satoshi Nakamoto olyan digitális pénzformát kívánt létrehozni, amely nem igényel harmadik felekbe vetett bizalmat a tranzakciókhoz, és nem értékteleníthető egy központi hatóság által több egység kibocsátásával.\n",
@@ -1143,16 +1143,16 @@
                     "genesisBlock": {
                         "answers": [
                             "A pénzügyi ellenőrzés visszaszerzése a pénzügyi elit kezéből, lehetőséget adva az átlagembereknek, hogy részt vegyenek egy decentralizált pénzügyi rendszerben",
-                            "Egy olyan digitális pénzforma létrehozása, amely könnyen értékteleníthető egy központi hatóság által",
+                            "Egy olyan digitális pénzforma létrehozása, amely könnyen elértékteleníthető egy központi hatóság által",
                             "Megkönnyíteni a harmadik felek számára a tranzakciók lebonyolítását"
                         ],
                         "feedback": [
                             "Ez pontosan így van. Találgass, mit gondolnak a pénzügyi elit tagjai a bitcoinról",
-                            "Nem, hülyeség. Ezt már megvan a fiat pénznél. Próbáld újra, és gondolj Satoshi üzenetére a Genesis Blokkban, mielőtt válaszolsz",
+                            "Nem, butaság. Ezt már megvan a fiat pénznél. Próbáld újra, és gondolj Satoshi üzenetére a Genesis Blokkban, mielőtt válaszolsz",
                             "Sajnálom, ez nem teljesen helyes. Bár a harmadik felek hasznosak lehetnek a tranzakciók lebonyolításában, ezekbe az közvetítőkbe vetett bizalom volt az egyik probléma, amit Satoshi Nakamoto meg akart oldani a Bitcoin létrehozásával. Talán próbáld meg egy másik válasszal."
                         ],
                         "question": "Miért hozta létre Satoshi Nakamoto a Bitcoint",
-                        "text": "Egyértelmű, miért hozta létre Satoshi Nakamoto a Bitcoint, amikor megvizsgáljuk a Bitcoin blokklánc első blokkját, amelyet Genesis blokknak neveznek.\n\nEzt a blokkot Satoshi hozta létre, amikor 2009-ben elindította a Bitcoint, és tartalmaz egy utalást a bankoknak nyújtott mentőcsomagra a 2008/09-es Globális Pénzügyi Válság után.\n\n\"The Times 03/Jan/2009 A kancellár a második bankmentés előtt\"\n\nEz a válság, amelyben a hagyományos pénzügyi rendszerekbe vetett bizalom súlyosan megsérült, inspirálta Satoshit arra, hogy egy olyan digitális pénzformát hozzon létre, amely nem igényel harmadik felekbe vetett bizalmat a tranzakciókhoz, és nem értékteleníthető egy központi hatóság által több egység kibocsátásával.\n",
+                        "text": "Egyértelmű, miért hozta létre Satoshi Nakamoto a Bitcoint, amikor megvizsgáljuk a Bitcoin blokklánc első blokkját, amelyet Genesis blokknak neveznek.\n\nEzt a blokkot Satoshi hozta létre, amikor 2009-ben elindította a Bitcoint, és tartalmaz egy utalást a bankoknak nyújtott mentőcsomagra a 2008/09-es Globális Pénzügyi Válság után.\n\n\"The Times 03/Jan/2009 A kancellár a második bankmentés előtt\"\n\nEz a válság, amelyben a hagyományos pénzügyi rendszerekbe vetett bizalom súlyosan megsérült, inspirálta Satoshit arra, hogy egy olyan digitális pénzformát hozzon létre, amely nem igényel harmadik felekbe vetett bizalmat a tranzakciókhoz, és nem értékteleníthető el egy központi hatóság által több egység kibocsátásával.\n",
                         "title": "A Genesis Blokk"
                     },
                     "cypherpunks": {
@@ -2015,12 +2015,12 @@
         }
     },
     "MapScreen": {
-        "navToSettingsTitle": "Location permissions",
-        "navToSettingsText": "If you'd like to give Blink location permissions, please navigate to your settings and enable it there",
+        "navToSettingsTitle": "Helymeghatározási engedélyek",
+        "navToSettingsText": "Ha szeretnéd engedélyezni hogy a Blink meghatározza a helyedet, kérjük, engedélyezd a beállításokban.",
         "payBusiness": "Fizess ennek az üzletnek",
-        "openSettings": "Open settings",
+        "openSettings": "Beállítások megnyitása",
         "title": "Térkép",
-        "error": "Oops. Something went wrong while getting your location"
+        "error": "Valami hiba történt a helyzeted lekérdezése közben"
     },
     "HomeScreen": {
         "receive": "Fogadás",
@@ -2163,7 +2163,7 @@
         "slideToConfirm": "Húzd el a megerősítéshez",
         "slideConfirming": "Megerősítés...",
         "copiedDestination": "Címzett a vágólapra másolva",
-        "lightningRecommended": "High fee! We recommend Lightning."
+        "lightningRecommended": "Magas díj! Ajánljuk a Lightning használatát."
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "Mostantól a {bankName: string} felhasználónevek {bankName: string} címek is.",
@@ -2502,7 +2502,7 @@
         "hour": "óra",
         "hours": "óra",
         "invoice": "Fizetési kérelem",
-        "intraledger": "Intraledger",
+        "intraledger": "Belső átvezetés",
         "language": "Nyelv",
         "languagePreference": "Nyelvi beállítások",
         "lastName": "Vezetéknév",
@@ -2685,9 +2685,9 @@
             "details": "Növeld a KÜLSŐ köredet 10-zel januárban, hogy nyerhess 100 dollárt!\n\nA külső köröd akkor növekszik, amikor a belső körödben lévő emberek másokat is meghívnak, szóval lépj kapcsolatba azokkal, akiket te szerveztél be, hogy osszák meg a Blink-et barátaikkal és családjukkal.\n\nOszd meg a köreidet a közösségi médiában a #blinkcircles hashtag-gel a részvételhez."
         },
         "februaryChallenge": {
-            "title": "February Challenge!",
-            "description": "+3 inner circle for a chance to win a Seedsigner hardware wallet!",
-            "details": "Grow your inner circle by 3 in February for a chance to win a Seedsigner hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
+            "title": "Februári kihívás!",
+            "description": "Növeld 3-al a belső köröd, hogy Seedsigner hardver tárcát nyerhess!",
+            "details": "Növeld belső körödet 3-mal februárban, hogy esélyed legyen nyerni egy Seedsigner hardver tárcát!\n\nEmlékeztető: a körök akkor növekednek, amikor egy új Blink felhasználónak küldöd az első satoshiját.\n\nOszd meg körödet a közösségi médiában a #blinkcircles hashtaggel a részvételhez."
         }
     },
     "FullOnboarding": {
