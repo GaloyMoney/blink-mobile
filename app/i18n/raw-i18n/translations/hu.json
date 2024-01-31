@@ -2015,12 +2015,12 @@
         }
     },
     "MapScreen": {
-        "navToSettingsTitle": "Location permissions",
-        "navToSettingsText": "If you'd like to give Blink location permissions, please navigate to your settings and enable it there",
+        "navToSettingsTitle": "Helymeghatározási engedélyek",
+        "navToSettingsText": "Ha szeretnéd engedélyezni hogy a Blink meghatározza a helyedet, kérjük, engedélyezd a beállításokban.",
         "payBusiness": "Fizess ennek az üzletnek",
-        "openSettings": "Open settings",
+        "openSettings": "Beállítások megnyitása",
         "title": "Térkép",
-        "error": "Oops. Something went wrong while getting your location"
+        "error": "Valami hiba történt a helyzeted lekérdezése közben"
     },
     "HomeScreen": {
         "receive": "Fogadás",
@@ -2163,7 +2163,7 @@
         "slideToConfirm": "Húzd el a megerősítéshez",
         "slideConfirming": "Megerősítés...",
         "copiedDestination": "Címzett a vágólapra másolva",
-        "lightningRecommended": "High fee! We recommend Lightning."
+        "lightningRecommended": "Magas díj! Ajánljuk a Lightning használatát."
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "Mostantól a {bankName: string} felhasználónevek {bankName: string} címek is.",
@@ -2502,7 +2502,7 @@
         "hour": "óra",
         "hours": "óra",
         "invoice": "Fizetési kérelem",
-        "intraledger": "Intraledger",
+        "intraledger": "Főkönyvi",
         "language": "Nyelv",
         "languagePreference": "Nyelvi beállítások",
         "lastName": "Vezetéknév",
@@ -2685,9 +2685,9 @@
             "details": "Növeld a KÜLSŐ köredet 10-zel januárban, hogy nyerhess 100 dollárt!\n\nA külső köröd akkor növekszik, amikor a belső körödben lévő emberek másokat is meghívnak, szóval lépj kapcsolatba azokkal, akiket te szerveztél be, hogy osszák meg a Blink-et barátaikkal és családjukkal.\n\nOszd meg a köreidet a közösségi médiában a #blinkcircles hashtag-gel a részvételhez."
         },
         "februaryChallenge": {
-            "title": "February Challenge!",
-            "description": "+3 inner circle for a chance to win a Seedsigner hardware wallet!",
-            "details": "Grow your inner circle by 3 in February for a chance to win a Seedsigner hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
+            "title": "Februári kihívás!",
+            "description": "Növeld 3-al a belső köröd, hogy Seedsigner hardver tárcát nyerhess!",
+            "details": "Növeld belső körödet 3-mal februárban, hogy esélyed legyen nyerni egy Seedsigner hardver tárcát!\n\nEmlékeztető: a körök akkor növekednek, amikor egy új Blink felhasználónak küldöd az első satoshiját.\n\nOszd meg körödet a közösségi médiában a #blinkcircles hashtaggel a részvételhez."
         }
     },
     "FullOnboarding": {
