@@ -1198,7 +1198,7 @@
                         ],
                         "feedback": [
                             "Helyes! A kriptografikus hash függvény segítségével jön létre a megmásíthatatlan bejegyzés minden egyes tranzakcióról a blokkláncon, amelyet fel lehet használni az adatok integritásának ellenőrzésére a láncban. Tudtad, hogy a kriptografikus hash függvény az a Bitcoin hálózat biztonságát segítő proof-of-work mechanizmus lényegi része is",
-                            "Ez egy vicces ötlet, de nem, a kriptográfiai hash függvény valójában az ellenkezőjét biztosítja. Próbáld újra",
+                            "Ez egy vicces ötlet, de nem, a kriptografikus hash függvény valójában az ellenkezőjét biztosítja. Próbáld újra",
                             "Ha! Nem vagyok biztos benne, hogy ki mondta neked, hogy a Bitcoin blokkláncot MI hozta létre, de úgy tűnik, vicceltek veled. Próbáld újra!"
                         ],
                         "question": "Mi a kriptográfiai hash függvény célja a Bitcoin blokkláncban",
