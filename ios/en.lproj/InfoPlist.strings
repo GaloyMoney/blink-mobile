@@ -1,0 +1,14 @@
+/* 
+  InfoPlist.strings
+  GaloyApp
+
+  Created by Maxwell Dunk-Green on 2024-02-01.
+  Copyright © 2024 Galoy Inc. All rights reserved.
+*/
+
+"NSCameraUsageDescription" = "Activate your camera to scan QR codes"
+"NSFaceIDUsageDescription" = "$(PRODUCT_NAME) requires FaceID access for quick and secure authentication"
+"NSLocationWhenInUseUsageDescription" = "$(PRODUCT_NAME) test test test Find merchants who accept bitcoin near you"
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "This app includes a component that requires background location access, but your location is only used while in app to find merchants near you"
+"NSPhotoLibraryUsageDescription" = "Import a screenshot with a QR code"
+"NFCReaderUsageDescription" = "Receive payments over NFC"
