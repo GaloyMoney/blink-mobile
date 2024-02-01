@@ -12,8 +12,12 @@ Galoy-mobile relies on typesafe-i18n which has an [opinionated file structure](h
 
 if the new language code is `af`: 
 
+Step 1.
 - copy `ca/index.ts` into `af/index.ts`
 - rename `ca.json` to `af.json` in `af/index.ts`
 - add import formatjs into `mapping.ts` (`import "@formatjs/intl-relativetimeformat/locale-data/af"`)
 - add mapping into `mapping.ts` with `language-code:native-language-name`
 - run `yarn update-translations`
+
+Step 2.
+- create the directory `app/ios/af.lproj`
