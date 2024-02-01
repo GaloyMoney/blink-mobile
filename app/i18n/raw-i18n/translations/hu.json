@@ -1197,7 +1197,7 @@
                             "Biztosítani, hogy a Bitcoint létrehozó mesterséges intelligencia elegendő számítási kapacitással rendelkezzen a világ uralásához"
                         ],
                         "feedback": [
-                            "Helyes! A kriptográfiai hash függvény segítségével jön létre a megmásíthatatlan bejegyzés minden egyes tranzakcióról a blokkláncon, amelyet fel lehet használni az adatok integritásának ellenőrzésére a láncban. Tudtad, hogy a kriptográfiai hash függvény az a Bitcoin hálózat biztonságát segítő proof-of-work mechanizmus lényegi része is",
+                            "Helyes! A kriptografikus hash függvény segítségével jön létre a megmásíthatatlan bejegyzés minden egyes tranzakcióról a blokkláncon, amelyet fel lehet használni az adatok integritásának ellenőrzésére a láncban. Tudtad, hogy a kriptografikus hash függvény az a Bitcoin hálózat biztonságát segítő proof-of-work mechanizmus lényegi része is",
                             "Ez egy vicces ötlet, de nem, a kriptográfiai hash függvény valójában az ellenkezőjét biztosítja. Próbáld újra",
                             "Ha! Nem vagyok biztos benne, hogy ki mondta neked, hogy a Bitcoin blokkláncot MI hozta létre, de úgy tűnik, vicceltek veled. Próbáld újra!"
                         ],
