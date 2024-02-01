@@ -1214,9 +1214,9 @@
                         "feedback": [
                             "Helyes! A privát kulcsot tranzakciók aláírására és a bitcoinok tulajdonjogának igazolására használják. Ez a Bitcoin fizetések küldésének és fogadásának elengedhetetlen része, és fontos, hogy titokban tartsuk és biztonságban őrizzük. Szép munka",
                             "Majdnem. **** Bár a privát kulcs használható egy bitcoin cím tulajdonjogának ellenőrzésére, nem ez az elsődleges célja",
-                            "Közzétenni a közösségi médiában olyan, mint online közzétenni a banki belépési adataidat - biztos módja a Bitcoinjaid ellopásának. Maradjunk a szív meghódításának hagyományosabb módszereinél!"
+                            "Közzétenni a közösségi médiában olyan, mint online közzétenni a banki belépési adataidat - biztos módja a bitcoinjaid ellopásának. Maradjunk a szív meghódításának hagyományosabb módszereinél!"
                         ],
-                        "question": "Mi a privát kulcs célja egy Bitcoin tranzakcióban",
+                        "question": "Mi a privát kulcs célja egy bitcoin tranzakcióban",
                         "text": "A Bitcoin egy másik alapköve a Nyilvános Kulcs Kriptográfia, amely egy kulcspárt használ - egy nyilvános és egy privát kulcsot - a tranzakciók aláírására és a Bitcoin címek tulajdonjogának igazolására.\n\nA privát kulcs egy hosszú karakterlánc, amelyet a Bitcoin tranzakciók engedélyezésére használnak. Gyakran 12 szóból álló kombinációként ábrázolják (néha 24). Csak a helyes sorrendben adják ki a megfelelő privát kulcsot.\n\nAki ismeri egy bitcoin cím privát kulcsát, az irányítja az abban a címben lévő bitcoint. Ezért fontos, hogy titokban tartsák és soha ne osszák meg senkivel. Ideális esetben offline módon kell tárolni, hogy semmilyen nem kívánt program ne férhessen hozzá.",
                         "title": "Nyilvános Kulcs Kriptográfia"
                     },
