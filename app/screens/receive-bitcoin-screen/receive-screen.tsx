@@ -2,7 +2,7 @@ import { Screen } from "@app/components/screen"
 import { WalletCurrency } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { requestNotificationPermission } from "@app/utils/notifications"
+import { addDeviceToken, requestNotificationPermission } from "@app/utils/notifications"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import React, { useEffect, useState } from "react"
 import { TouchableOpacity, View } from "react-native"
@@ -21,7 +21,8 @@ import { GaloyCurrencyBubble } from "@app/components/atomic/galoy-currency-bubbl
 import { ModalNfc } from "@app/components/modal-nfc"
 import { CustomIcon } from "@app/components/custom-icon"
 import nfcManager from "react-native-nfc-manager"
-
+import { useApolloClient } from "@apollo/client"
+import messaging from "@react-native-firebase/messaging"
 const ReceiveScreen = () => {
   const {
     theme: { colors },
@@ -29,6 +30,7 @@ const ReceiveScreen = () => {
   const styles = useStyles()
   const { LL } = useI18nContext()
   const navigation = useNavigation()
+  const client = useApolloClient()
 
   const isAuthed = useIsAuthed()
   const isFocused = useIsFocused()
@@ -67,15 +69,23 @@ const ReceiveScreen = () => {
   // notification permission
   useEffect(() => {
     let timeout: NodeJS.Timeout
-    if (isAuthed && isFocused) {
+    if (isAuthed && isFocused && client) {
       const WAIT_TIME_TO_PROMPT_USER = 5000
       timeout = setTimeout(
-        requestNotificationPermission, // no op if already requested
+        async () => {
+          const result = await requestNotificationPermission()
+          if (
+            result === messaging.AuthorizationStatus.PROVISIONAL ||
+            result === messaging.AuthorizationStatus.AUTHORIZED
+          ) {
+            await addDeviceToken(client)
+          }
+        }, // no op if already requested
         WAIT_TIME_TO_PROMPT_USER,
       )
     }
     return () => timeout && clearTimeout(timeout)
-  }, [isAuthed, isFocused])
+  }, [isAuthed, isFocused, client])
 
   useEffect(() => {
     if (request?.state === PaymentRequestState.Paid) {

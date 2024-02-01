@@ -24,25 +24,34 @@ export const PushNotificationComponent = (): JSX.Element => {
 
   useEffect(() => {
     const showNotification = (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
-      if (remoteMessage.notification?.body) {
-        // TODO: add notifee library to show local notifications
-        console.log(
-          remoteMessage.notification.title || "",
-          remoteMessage.notification.body,
-        )
-      }
+      try {
+        if (remoteMessage.notification?.body) {
+          // TODO: add notifee library to show local notifications
+          console.log(
+            remoteMessage.notification.title || "",
+            remoteMessage.notification.body,
+          )
+        }
 
-      const notificationType = remoteMessage.data?.notificationType ?? ""
-      if (
-        typeof notificationType === "string" &&
-        circlesNotificationTypes.includes(notificationType)
-      ) {
-        linkTo("/people/circles")
-      }
+        const notificationType = remoteMessage.data?.notificationType ?? ""
+        if (
+          typeof notificationType === "string" &&
+          circlesNotificationTypes.includes(notificationType)
+        ) {
+          linkTo("/people/circles")
+        }
 
-      const linkToScreen = remoteMessage.data?.linkTo ?? ""
-      if (typeof linkToScreen === "string") {
-        linkTo(linkToScreen)
+        const linkToScreen = remoteMessage.data?.linkTo ?? ""
+        if (
+          typeof linkToScreen === "string" &&
+          linkToScreen &&
+          linkToScreen.startsWith("/")
+        ) {
+          linkTo(linkToScreen)
+        }
+        // linkTo throws an error if the link is invalid
+      } catch (error) {
+        console.error("Error in showNotification", error)
       }
     }
 
@@ -76,7 +85,10 @@ export const PushNotificationComponent = (): JSX.Element => {
         const hasPermission = await hasNotificationPermission()
         if (hasPermission) {
           addDeviceToken(client)
-          messaging().onTokenRefresh(() => addDeviceToken(client))
+          const unsubscribeFromRefresh = messaging().onTokenRefresh(() =>
+            addDeviceToken(client),
+          )
+          return unsubscribeFromRefresh
         }
       }
     })()
