@@ -65,7 +65,7 @@
         "message": "Sikeres átváltás"
     },
     "EarnScreen": {
-        "earnSats": "Kapj {formattedNumber|sats}t",
+        "earnSats": "Kapj {formattedNumber|sats}ot",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Mi a Bitcoin?",
