@@ -1222,8 +1222,8 @@
                     },
                     "publicKey": {
                         "answers": [
-                            "Egyetlen kulcsból korlátlan számú bitcoin cím generálására",
-                            "Bitcoin tranzakciók engedélyezésére",
+                            "Egyetlen kulcsból korlátlan számú bitcoin cím generálása",
+                            "Bitcoin tranzakciók engedélyezése",
                             "Annak ellenőrzése, hogy a létező összes bitcoin kínálata ne haladja meg a 21 milliót"
                         ],
                         "feedback": [
