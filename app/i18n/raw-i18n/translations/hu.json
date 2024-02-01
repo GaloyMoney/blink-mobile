@@ -1224,7 +1224,7 @@
                         "answers": [
                             "Egyetlen kulcsból korlátlan számú bitcoin cím generálására",
                             "Bitcoin tranzakciók engedélyezésére",
-                            "Annak ellenőrzésére, hogy a létező összes bitcoin kínálata ne haladja meg a 21 milliót"
+                            "Annak ellenőrzése, hogy a létező összes bitcoin kínálata ne haladja meg a 21 milliót"
                         ],
                         "feedback": [
                             "Helyes! Megjegyzendő, hogy bár a pénzeszközök csak a privát kulccsal mozgathatók, jó ötlet lehet nem megosztani a fő nyilvános kulcsot nyilvános fórumon a pénzügyi magánélet megőrzése érdekében. Csak a Bitcoin címeket oszd meg a fizetőkkel a fizetések fogadásához",
