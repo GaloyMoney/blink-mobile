@@ -1201,7 +1201,7 @@
                             "Ez egy vicces ötlet, de nem, a kriptografikus hash függvény valójában az ellenkezőjét biztosítja. Próbáld újra",
                             "Ha! Nem vagyok biztos benne, hogy ki mondta neked, hogy a Bitcoin blokkláncot MI hozta létre, de úgy tűnik, vicceltek veled. Próbáld újra!"
                         ],
-                        "question": "Mi a kriptográfiai hash függvény célja a Bitcoin blokkláncban",
+                        "question": "Mi a kriptografikus hash függvény célja a Bitcoin blokkláncban",
                         "text": "A Bitcoin blokklánc egy elosztott adatbázis, amely folyamatosan bővülő Bitcoin tranzakciók listáját, a blokkokat tartja nyilván.\n\nA blokkokat kriptográfiai hash-ek segítségével kötik össze egymáshoz. Minden blokk tartalmazza az előző blokk kriptográfiai hash-ét, valamint egy időbélyeget és tranzakciós adatokat. Ez egy blokkláncot hoz létre, amelyben minden blokk összekapcsolódik, és minden egyes blokk az azt megelőzőre épül.\n\nA kriptográfiai hash függvény biztosítja, hogy amikor egy blokk hozzáadásra kerül a lánchoz, azt nem lehet megváltoztatni vagy kicserélni anélkül, hogy az összes azt követő blokkot a láncban megváltoztatnák.\n\nEz egy megmásíthatatlan bejegyzést hoz létre minden tranzakcióról, amely megtörtént a blokkláncon, és amelyet fel lehet használni az adatok integritásának ellenőrzésére a láncban.\n",
                         "title": "Mi pontosan a blokklánc?"
                     },
