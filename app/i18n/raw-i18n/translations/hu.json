@@ -1208,7 +1208,7 @@
                     "privateKey": {
                         "answers": [
                             "Tranzakciók aláírására és a bitcoinok tulajdonjogának igazolására",
-                            "Egy Bitcoin cím tulajdonjogának ellenőrzésére",
+                            "Egy bitcoin cím tulajdonjogának ellenőrzésére",
                             "Elcsábítani egy idegent, azáltal, hogy megosztod a közösségi médiában"
                         ],
                         "feedback": [
