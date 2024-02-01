@@ -1228,7 +1228,7 @@
                         ],
                         "feedback": [
                             "Helyes! Megjegyzendő, hogy bár a pénzeszközök csak a privát kulccsal mozgathatók, jó ötlet lehet nem megosztani a fő nyilvános kulcsot nyilvános fórumon a pénzügyi magánélet megőrzése érdekében. Csak a bitcoin címeket oszd meg a fizetőkkel a fizetések fogadásához",
-                            "Nem, a fő nyilvános kulcsot nem használják Bitcoin tranzakciók engedélyezésére. Erre a privát kulcs szolgál. Próbáld újra",
+                            "Nem, a fő nyilvános kulcsot nem használják bitcoin tranzakciók engedélyezésére. Erre a privát kulcs szolgál. Próbáld újra",
                             "Nem. Bár minden felhasználó önállóan ellenőrizheti a bitcoin hálózatban a monetáris kínálatot egy bitcoin csomóponttal, ez nem az, amire a fő nyilvános kulcsot használják. Próbáld újra."
                         ],
                         "question": "Mi a fő nyilvános kulcs célja a Bitcoinban",
