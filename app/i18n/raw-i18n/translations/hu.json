@@ -65,7 +65,7 @@
         "message": "Sikeres átváltás"
     },
     "EarnScreen": {
-        "earnSats": "Kapj {formattedNumber|sats}t",
+        "earnSats": "Kapj {formattedNumber|sats}ot",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Mi a Bitcoin?",
@@ -1179,15 +1179,15 @@
                         "answers": [
                             "A blokkláncot",
                             "Az internetet",
-                            "Egy decentralizált csomópontok hálózatát"
+                            "Csomópontok decentralizált hálózata"
                         ],
                         "feedback": [
                             "Helyes! Satoshi volt az első, aki sikeresen megvalósította a blokkláncot - egy olyan fogalmat, amelyet először 1991-ben írt le Stuart Haber és W. Scott Stornetta. Ez egy decentralizált könyvelési forma, amely ellenáll a manipulációnak, és lehetővé teszi a felhasználók számára, hogy tranzakciókat hajtsanak végre és ellenőrizzenek anélkül, hogy központi hatóságra lenne szükség",
                             "Nem. Az internet egy, az összekapcsolt számítógépek, globális hálózata, de nem Satoshitól származik, és nem oldja meg a központosítás és a dupla költések problémáját. Próbáld újra",
-                            "Egy decentralizált csomópontok hálózata fontos része a Bitcoinnak, de önmagában nem oldja meg a központosítás és a dupla költések problémáját. Próbáld újra!"
+                            "A decentralizált csomópontok hálózata fontos része a Bitcoinnak, de önmagában nem oldja meg a központosítás és a dupla költések problémáját. Próbáld újra!"
                         ],
                         "question": "Milyen technológiát alkalmazott Satoshi a központosítás és a dupla költések problémáinak megoldására",
-                        "text": "A központosítás és a lehetséges dupla költések korábban említett problémáinak megoldására Satoshi egy decentralizált csomópontok hálózatán alapuló megoldást talált ki.\n\nA csomópontok olyan számítógépek, amelyek folyamatos kapcsolatban állnak egymással. Ez önmagában nem újdonság. Az internetnek magának is hasonló, összekapcsolt csomópontokból álló infrastruktúrája van.\n\nAzonban minden bitcoin csomópont tárol egy másolatot a főkönyvéről amely tartalmazza a Bitcoin hálózat történetének összes tranzakcióiját.\n\nEz az új, decentralizált könyvelési forma, amelyet blokkláncnak neveznek, először a Bitcoinban valósult meg sikeresen, és rendkívül ellenáll a manipulációnak.\n",
+                        "text": "A központosítás és a lehetséges dupla költések korábban említett problémáinak megoldására Satoshi egy decentralizált csomópontok hálózatán alapuló megoldást talált ki.\n\nA csomópontok olyan számítógépek, amelyek folyamatos kapcsolatban állnak egymással. Ez önmagában nem újdonság. Az internetnek magának is hasonló, összekapcsolt csomópontokból álló infrastruktúrája van.\n\nAzonban minden bitcoin csomópont tárol egy másolatot a főkönyvéről amely tartalmazza a Bitcoin hálózat történetének összes tranzakcióját.\n\nEz az új, decentralizált könyvelési forma, amelyet blokkláncnak neveznek, először a Bitcoinban valósult meg sikeresen, és rendkívül ellenáll a manipulációnak.\n",
                         "title": "Peer-to-Peer Hálózat"
                     },
                     "blockchain": {
@@ -1197,49 +1197,49 @@
                             "Biztosítani, hogy a Bitcoint létrehozó mesterséges intelligencia elegendő számítási kapacitással rendelkezzen a világ uralásához"
                         ],
                         "feedback": [
-                            "Helyes! A kriptográfiai hash függvény segítségével jön létre a megmásíthatatlan bejegyzés minden egyes tranzakcióról a blokkláncon, amelyet fel lehet használni az adatok integritásának ellenőrzésére a láncban. Tudtad, hogy a kriptográfiai hash függvény az a Bitcoin hálózat biztonságát segítő proof-of-work mechanizmus lényegi része is",
-                            "Ez egy vicces ötlet, de nem, a kriptográfiai hash függvény valójában az ellenkezőjét biztosítja. Próbáld újra",
+                            "Helyes! A kriptografikus hash függvény segítségével jön létre a megmásíthatatlan bejegyzés minden egyes tranzakcióról a blokkláncon, amelyet fel lehet használni az adatok integritásának ellenőrzésére a láncban. Tudtad, hogy a kriptografikus hash függvény az a Bitcoin hálózat biztonságát segítő proof-of-work mechanizmus lényegi része is",
+                            "Ez egy vicces ötlet, de nem, a kriptografikus hash függvény valójában az ellenkezőjét biztosítja. Próbáld újra",
                             "Ha! Nem vagyok biztos benne, hogy ki mondta neked, hogy a Bitcoin blokkláncot MI hozta létre, de úgy tűnik, vicceltek veled. Próbáld újra!"
                         ],
-                        "question": "Mi a kriptográfiai hash függvény célja a Bitcoin blokkláncban",
-                        "text": "A Bitcoin blokklánc egy elosztott adatbázis, amely folyamatosan bővülő Bitcoin tranzakciók listáját, a blokkokat tartja nyilván.\n\nA blokkokat kriptográfiai hash-ek segítségével kötik össze egymáshoz. Minden blokk tartalmazza az előző blokk kriptográfiai hash-ét, valamint egy időbélyeget és tranzakciós adatokat. Ez egy blokkláncot hoz létre, amelyben minden blokk összekapcsolódik, és minden egyes blokk az azt megelőzőre épül.\n\nA kriptográfiai hash függvény biztosítja, hogy amikor egy blokk hozzáadásra kerül a lánchoz, azt nem lehet megváltoztatni vagy kicserélni anélkül, hogy az összes azt követő blokkot a láncban megváltoztatnák.\n\nEz egy megmásíthatatlan bejegyzést hoz létre minden tranzakcióról, amely megtörtént a blokkláncon, és amelyet fel lehet használni az adatok integritásának ellenőrzésére a láncban.\n",
+                        "question": "Mi a kriptografikus hash függvény célja a Bitcoin blokkláncban",
+                        "text": "A Bitcoin blokklánc egy elosztott adatbázis, amely a folyamatosan bővülő Bitcoin tranzakciók listáját, a blokkokat tartja nyilván.\n\nA blokkokat kriptografikus hash-ek segítségével kötik össze egymáshoz. Minden blokk tartalmazza az előző blokk kriptografikus hash-ét, valamint egy időbélyeget és tranzakciós adatokat. Ez egy blokkláncot hoz létre, amelyben minden blokk összekapcsolódik, és minden egyes blokk az azt megelőzőre épül.\n\nA kriptografikus hash függvény biztosítja, hogy amikor egy blokk hozzáadásra kerül a lánchoz, azt nem lehet megváltoztatni vagy kicserélni anélkül, hogy az összes azt követő blokkot a láncban megváltoztatnák.\n\nEz egy megmásíthatatlan bejegyzést hoz létre minden tranzakcióról, amely megtörtént a blokkláncon, és amelyet fel lehet használni az adatok integritásának ellenőrzésére a láncban.\n",
                         "title": "Mi pontosan a blokklánc?"
                     },
                     "privateKey": {
                         "answers": [
-                            "Tranzakciók aláírására és a Bitcoin tulajdonjogának igazolására",
-                            "Egy Bitcoin cím tulajdonjogának ellenőrzésére",
+                            "Tranzakciók aláírására és a bitcoinok tulajdonjogának igazolására",
+                            "Egy bitcoin cím tulajdonjogának ellenőrzésére",
                             "Elcsábítani egy idegent, azáltal, hogy megosztod a közösségi médiában"
                         ],
                         "feedback": [
-                            "Helyes! A privát kulcsot tranzakciók aláírására és a Bitcoin tulajdonjogának igazolására használják. Ez a Bitcoin fizetések küldésének és fogadásának elengedhetetlen része, és fontos, hogy titokban tartsuk és biztonságban őrizzük. Szép munka",
-                            "Majdnem. **** Bár a privát kulcs használható egy Bitcoin cím tulajdonjogának ellenőrzésére, nem ez az elsődleges célja",
-                            "Közzétenni a közösségi médiában olyan, mint online közzétenni a banki belépési adataidat - biztos módja a Bitcoinjaid ellopásának. Maradjunk a szív meghódításának hagyományosabb módszereinél!"
+                            "Helyes! A privát kulcsot tranzakciók aláírására és a bitcoinok tulajdonjogának igazolására használják. Ez a Bitcoin fizetések küldésének és fogadásának elengedhetetlen része, és fontos, hogy titokban tartsuk és biztonságban őrizzük. Szép munka",
+                            "Majdnem. **** Bár a privát kulcs használható egy bitcoin cím tulajdonjogának ellenőrzésére, nem ez az elsődleges célja",
+                            "Közzétenni a közösségi médiában olyan, mint online közzétenni a banki belépési adataidat - biztos módja a bitcoinjaid ellopásának. Maradjunk a szív meghódításának hagyományosabb módszereinél!"
                         ],
-                        "question": "Mi a privát kulcs célja egy Bitcoin tranzakcióban",
-                        "text": "A Bitcoin egy másik alapköve a Nyilvános Kulcs Kriptográfia, amely egy kulcspárt használ - egy nyilvános és egy privát kulcsot - a tranzakciók aláírására és a Bitcoin címek tulajdonjogának igazolására.\n\nA privát kulcs egy hosszú karakterlánc, amelyet a Bitcoin tranzakciók engedélyezésére használnak. Gyakran 12 szóból álló kombinációként ábrázolják (néha 24). Csak a helyes sorrendben adják ki a megfelelő privát kulcsot.\n\nAki ismeri egy bitcoin cím privát kulcsát, az irányítja az abban a címben lévő bitcoint. Ezért fontos, hogy titokban tartsák és soha ne osszák meg senkivel. Ideális esetben offline módon kell tárolni, hogy semmilyen nem kívánt program ne férhessen hozzá.",
+                        "question": "Mi a privát kulcs célja egy bitcoin tranzakcióban",
+                        "text": "A Bitcoin egy másik alapköve a Nyilvános Kulcs Kriptográfia, amely egy kulcspárt használ - egy nyilvános és egy privát kulcsot - a tranzakciók aláírására és a bitcoin címek tulajdonjogának igazolására.\n\nA privát kulcs egy hosszú karakterlánc, amelyet a bitcoin tranzakciók engedélyezésére használnak. Gyakran 12 szóból álló kombinációként ábrázolják (néha 24). Csak a helyes sorrendben adják ki a megfelelő privát kulcsot.\n\nAki ismeri egy bitcoin cím privát kulcsát, az irányítja az abban a címben lévő bitcoint. Ezért fontos, hogy titokban tartsák és soha ne osszák meg senkivel. Ideális esetben offline módon kell tárolni, hogy semmilyen nem kívánt program ne férhessen hozzá.",
                         "title": "Nyilvános Kulcs Kriptográfia"
                     },
                     "publicKey": {
                         "answers": [
-                            "Egyetlen kulcsból korlátlan számú Bitcoin cím generálására",
-                            "Bitcoin tranzakciók engedélyezésére",
-                            "Annak ellenőrzésére, hogy a létező összes bitcoin kínálata ne haladja meg a 21 milliót"
+                            "Egyetlen kulcsból korlátlan számú bitcoin cím generálása",
+                            "Bitcoin tranzakciók engedélyezése",
+                            "Annak ellenőrzése, hogy a létező összes bitcoin kínálata ne haladja meg a 21 milliót"
                         ],
                         "feedback": [
-                            "Helyes! Megjegyzendő, hogy bár a pénzeszközök csak a privát kulccsal mozgathatók, jó ötlet lehet nem megosztani a fő nyilvános kulcsot nyilvános fórumon a pénzügyi magánélet megőrzése érdekében. Csak a Bitcoin címeket oszd meg a fizetőkkel a fizetések fogadásához",
-                            "Nem, a fő nyilvános kulcsot nem használják Bitcoin tranzakciók engedélyezésére. Erre a privát kulcs szolgál. Próbáld újra",
+                            "Helyes! Megjegyzendő, hogy bár a pénzeszközök csak a privát kulccsal mozgathatók, jó ötlet lehet nem megosztani a fő nyilvános kulcsot nyilvános fórumon a pénzügyi magánélet megőrzése érdekében. Csak a bitcoin címeket oszd meg a fizetőkkel a fizetések fogadásához",
+                            "Nem, a fő nyilvános kulcsot nem használják bitcoin tranzakciók engedélyezésére. Erre a privát kulcs szolgál. Próbáld újra",
                             "Nem. Bár minden felhasználó önállóan ellenőrizheti a bitcoin hálózatban a monetáris kínálatot egy bitcoin csomóponttal, ez nem az, amire a fő nyilvános kulcsot használják. Próbáld újra."
                         ],
                         "question": "Mi a fő nyilvános kulcs célja a Bitcoinban",
-                        "text": "A Bitcoinban a fő nyilvános kulcs egy olyan kulcs, amely kriptográfiai módszerekkel egy Bitcoin privát kulcsból származtatható, és arra használjuk, hogy Bitcoin címeket hozzunak létre, ahova a fizetők Bitcoinokat küldhetnek.\n\nEgyetlen fő nyilvános kulcsból korlátlan számú Bitcoin cím generálható.\n\nMíg a privát kulcsot használják a Bitcoin tranzakciók engedélyezésére, és ezért titokban kell tartani, a nyilvános kulcsból származó Bitcoin címeket meg lehet osztani a fizetővel a tőlük érkező fizetések fogadásához.\n\nA fő nyilvános kulcsok hosszú számsorokból és betűkből állnak, és xpub, ypub vagy zpub-val kezdődnek.\n\nEgy Bitcoin cím a fizetések fogadására 1-gyel, 3-mal vagy bc1-gyel kezdődik.\n",
+                        "text": "A Bitcoinban a fő nyilvános kulcs egy olyan kulcs, amely kriptográfiai módszerekkel egy bitcoin privát kulcsból származtatható, és arra használjuk, hogy bitcoin címeket hozzunk létre, ahova a fizetők bitcoint küldhetnek.\n\nEgyetlen fő nyilvános kulcsból korlátlan számú bitcoin cím generálható.\n\nMíg a privát kulcsot használják a bitcoin tranzakciók engedélyezésére, és ezért titokban kell tartani, a nyilvános kulcsból származó bitcoin címeket meg lehet osztani a fizetővel a tőlük érkező fizetések fogadásához.\n\nA fő nyilvános kulcsok hosszú számsorokból és betűkből állnak, és xpub, ypub vagy zpub-val kezdődnek.\n\nEgy bitcoin cím a fizetések fogadására 1-gyel, 3-mal vagy bc1-gyel kezdődik.\n",
                         "title": "Bitcoin Címek és a Fő Nyilvános Kulcs"
                     },
                     "mining": {
                         "answers": [
                             "Tranzakciók hozzáadása a blokklánchoz és a hálózat biztonságának biztosítása",
                             "Nagy mennyiségű pénz keresése",
-                            "Óriási mennyiségű számítási kapacitás felhalmozása az mesterséges intelligencia világuralmának elősegítésére"
+                            "Óriási mennyiségű számítási kapacitás felhalmozása az mesterséges intelligencia világuralmának elősegítése"
                         ],
                         "feedback": [
                             "Helyes! A bányászok számítások formájában végzett munkát végeznek és versenyeznek más bányászokkal, hogy ki adhatja hozzá a következő tranzakciós blokkot a blokklánchoz, és szerezheti meg a blokkjutalmat",
@@ -1247,7 +1247,7 @@
                             "Hűha, ez egy nagyratörő cél! Bár igaz, hogy a bányászat jelentős számítási kapacitást igényel, elég biztos vagyok abban, hogy a fő cél nem egy mesterséges intelligencia uralta világ létrehozása. Sok szerencsét legközelebb!"
                         ],
                         "question": "Mi a fő célja a bányászatnak a Bitcoin hálózatban",
-                        "text": "Amikor egy felhasználó tranzakciót szeretne indítani a Bitcoin hálózatban, alá kell írnia a tranzakciót a privát kulcsával, hogy igazolja, rendelkezik az átutalandó összeggel. Miután a tranzakció aláírásra került, azt közvetítik a peer-to-peer hálózaton.\n\nA bányászat a folyamat, amely során a tranzakciókat hozzáadják a Bitcoin blokklánchoz. Amikor egy tranzakció közvetítésre kerül a hálózaton, azt a bányászok fogadják és ellenőrzik, hogy a tranzakció érvényes-e (azaz a felhasználó rendelkezik-e a szükséges összeggel és a tranzakció aláírására amihez a privát kulcsot használtál meg felel-e az összeghez kapcsolódó nyilvános kulccsal).\n\nMiután egy tranzakciót ellenőriztek, azt hozzáadják egy tranzakciós blokkhoz, együtt egy matematikai rejtvénnyel. A bányászok versenyeznek a rejtvény megoldásáért, és az első, aki megoldja, hozzáadhatja a blokkot a blokklánchoz és igényelheti a jutalmat bitcoinnal. A jelenlegi jutalom 6.25 bitcoin, plusz a blokkban szereplő tranzakciós díjak összege.\n\nA tranzakciók blokklánchoz történő hozzáadásán túl a bányászat szerepet játszik a Bitcoin hálózat biztonságának biztosításában is. Ez azért van, mert a rejtvény megoldása jelentős számítási kapacitást igényel, és egy blokk hozzáadása a blokklánchoz más bányászoknak is ellenőrizniük kell a megoldást. Ez nagyon nehézzé teszi, hogy bárki vagy bármilyen csoport manipulálja a blokkláncot.\n",
+                        "text": "Amikor egy felhasználó tranzakciót szeretne indítani a Bitcoin hálózatban, alá kell írnia a tranzakciót a privát kulcsával, hogy igazolja, rendelkezik az átutalandó összeggel. Miután a tranzakció aláírásra került, azt közvetítik a peer-to-peer hálózaton.\n\nA bányászat a folyamat, amely során a tranzakciókat hozzáadják a Bitcoin blokklánchoz. Amikor egy tranzakció közvetítésre kerül a hálózaton, azt a bányászok fogadják és ellenőrzik, hogy a tranzakció érvényes-e (azaz a felhasználó rendelkezik-e a szükséges összeggel és a tranzakció aláírása amihez a privát kulcsot használta, megfelel-e az összeghez kapcsolódó nyilvános kulccsal).\n\nMiután egy tranzakciót ellenőriztek, azt hozzáadják egy tranzakciós blokkhoz, együtt egy matematikai rejtvénnyel. A bányászok versenyeznek a rejtvény megoldásáért, és az első, aki megoldja, hozzáadhatja a blokkot a blokklánchoz és igényelheti a jutalmat bitcoinnal. A jelenlegi jutalom 6.25 bitcoin, plusz a blokkban szereplő tranzakciós díjak összege.\n\nA tranzakciók blokklánchoz történő hozzáadásán túl a bányászat szerepet játszik a Bitcoin hálózat biztonságának biztosításában is. Ez azért van, mert a rejtvény megoldása jelentős számítási kapacitást igényel, és egy blokk hozzáadásához a blokklánchoz más bányászoknak is ellenőrizniük kell a megoldást. Ez nagyon nehézzé teszi, hogy bárki vagy bármilyen csoport manipulálja a blokkláncot.\n",
                         "title": "Bányászat"
                     },
                     "proofOfWork": {
@@ -2422,7 +2422,7 @@
         "errorIpNotAllowed": "Ez az IP cím egy nem támogatott országból származik és nem lehet számlát létrehozni. Ha támogatott országban tartózkodsz, de VPNt használsz, próbáld meg kikapcsolni.",
         "errorPhoneNotAllowed": "Ezzal  a telefonszámmal nem lehet számlákat létrehozni.",
         "errorCannotUpgradeToExistingAccount": "Már létezik számla ezzel a telefonszámmal. Kérlek, lépj ki a próbaszámládból, majd jelentkezz be a telefonszámoddal.",
-        "header": "írd be ide az előbb elküldött kódot, amit a {channel: string} szolgáltatáson keresztül kaptál tőlünk a következő telefonszámon: {phoneNumber: string}",
+        "header": "írd be ide a kódot, amit a {channel: string} szolgáltatáson keresztül kaptál tőlünk a következő telefonszámon: {phoneNumber: string}",
         "placeholder": "6 jegyű kód",
         "sendAgain": "Újraküldés",
         "tryAgain": "Próbáld újra",
