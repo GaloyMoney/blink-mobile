@@ -28,6 +28,7 @@ type Props = {
     title: StyleProp<TextStyle>
     text: StyleProp<TextStyle>
     pseudoButton: StyleProp<ViewStyle>
+    border: StyleProp<ViewStyle>
   }
   text: LocalizedString
 }
@@ -60,23 +61,25 @@ export default function MapMarkerComponent({
       }
       stopPropagation
     >
-      <Callout tooltip={true} onPress={() => handleCalloutPress(item)}>
+      <Callout tooltip onPress={() => handleCalloutPress(item)}>
         {isFocused && (
-          <View style={styles.customView}>
-            <Text type="h1" style={styles.title} numberOfLines={1} ellipsizeMode="tail">
-              {item.mapInfo.title}
-            </Text>
-            {isIos ? (
-              <CalloutSubview onPress={() => handleCalloutPress(item)}>
+          <View style={styles.border}>
+            <View style={styles.customView}>
+              <Text type="h1" style={styles.title} numberOfLines={2} ellipsizeMode="tail">
+                {item.mapInfo.title}
+              </Text>
+              {isIos ? (
+                <CalloutSubview onPress={() => handleCalloutPress(item)}>
+                  <View style={styles.pseudoButton}>
+                    <Text style={styles.text}>{text}</Text>
+                  </View>
+                </CalloutSubview>
+              ) : (
                 <View style={styles.pseudoButton}>
                   <Text style={styles.text}>{text}</Text>
                 </View>
-              </CalloutSubview>
-            ) : (
-              <View style={styles.pseudoButton}>
-                <Text style={styles.text}>{text}</Text>
-              </View>
-            )}
+              )}
+            </View>
           </View>
         )}
       </Callout>

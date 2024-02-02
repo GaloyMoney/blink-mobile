@@ -12,7 +12,7 @@ import debounce from "lodash.debounce"
 import { updateMapLastCoords } from "@app/graphql/client-only-query"
 import { useApolloClient } from "@apollo/client"
 import { OpenSettingsElement, OpenSettingsModal } from "./open-settings-modal"
-import { View } from "react-native"
+import { Dimensions, View } from "react-native"
 import { isIOS } from "@rneui/base"
 
 type Props = {
@@ -163,26 +163,29 @@ export default function MapComponent({
   )
 }
 
+const { width: screenWidth } = Dimensions.get("window")
+
 const useStyles = makeStyles(({ colors }) => ({
   viewContainer: { flex: 1 },
 
-  customView: {
-    alignItems: "center",
-    margin: 12,
-    backgroundColor: "white",
-    padding: 15,
+  border: {
+    maxWidth: screenWidth,
+    overflow: "hidden",
     borderRadius: 3,
     borderWidth: 1,
     borderColor: colors.grey4,
+    padding: 10,
+    backgroundColor: colors.white,
+  },
+
+  customView: {
+    alignItems: "center",
+    rowGap: 10,
   },
 
   pseudoButton: {
-    marginTop: 15,
-    minHeight: 50,
     backgroundColor: colors.primary3,
     borderRadius: 25,
-    justifyContent: "center",
-    elevation: 4,
     width: 200,
   },
 
@@ -191,7 +194,7 @@ const useStyles = makeStyles(({ colors }) => ({
     width: "100%",
   },
 
-  title: { color: colors._darkGrey },
+  title: { color: colors._darkGrey, textAlign: "center" },
 
   text: {
     fontSize: 20,
