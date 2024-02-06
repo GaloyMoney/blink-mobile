@@ -35,7 +35,6 @@ export type RootStackParamList = {
   sendBitcoinDestination: {
     payment?: string
     username?: string
-    autoValidate?: boolean
   }
   sendBitcoinDetails: {
     paymentDestination: PaymentDestination

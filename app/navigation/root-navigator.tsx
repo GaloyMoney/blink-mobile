@@ -433,6 +433,7 @@ export const ContactNavigator = () => {
         headerBackTitleStyle: styles.title,
         headerTintColor: colors.black,
       }}
+      initialRouteName="peopleHome"
     >
       <StackContacts.Screen
         name="peopleHome"

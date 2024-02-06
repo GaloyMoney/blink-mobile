@@ -369,7 +369,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   )
 
   useEffect(() => {
-    if (route.params?.autoValidate && route.params.payment) {
+    if (route.params.payment) {
       handleChangeText(route.params?.payment)
       initiateGoToNextScreen(route.params.payment)
     }

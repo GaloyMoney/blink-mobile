@@ -1,5 +1,6 @@
 import { useApolloClient } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useAuthenticationContext } from "@app/navigation/navigation-container-wrapper"
 import { addDeviceToken, hasNotificationPermission } from "@app/utils/notifications"
 import messaging, { FirebaseMessagingTypes } from "@react-native-firebase/messaging"
 import { useLinkTo } from "@react-navigation/native"
@@ -21,8 +22,13 @@ export const PushNotificationComponent = (): JSX.Element => {
   const isAuthed = useIsAuthed()
 
   const linkTo = useLinkTo()
+  const isAppLocked = useAuthenticationContext().isAppLocked
 
   useEffect(() => {
+    if (isAppLocked) {
+      return
+    }
+
     const showNotification = (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
       try {
         if (remoteMessage.notification?.body) {
@@ -55,13 +61,8 @@ export const PushNotificationComponent = (): JSX.Element => {
       }
     }
 
-    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      console.debug("onMessage")
-      showNotification(remoteMessage)
-    })
-
     // When the application is running, but in the background.
-    messaging().onNotificationOpenedApp(
+    const unsubscribeBackground = messaging().onNotificationOpenedApp(
       (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
         showNotification(remoteMessage)
       },
@@ -76,8 +77,10 @@ export const PushNotificationComponent = (): JSX.Element => {
         }
       })
 
-    return unsubscribe
-  }, [linkTo])
+    return () => {
+      unsubscribeBackground()
+    }
+  }, [linkTo, isAppLocked])
 
   useEffect(() => {
     ;(async () => {
