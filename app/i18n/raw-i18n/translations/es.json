@@ -1,6 +1,6 @@
 {
     "GaloyAddressScreen": {
-        "title": "Recibe pagos usando:",
+        "title": "Recibe pagos usando: ",
         "buttonTitle": "Establece tu dirección",
         "yourAddress": "Tu dirección {bankName}",
         "notAbleToChange": "No podrá cambiar su dirección {bankName: string} después de que esta esté configurada.",
