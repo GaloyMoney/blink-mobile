@@ -1,14 +1,14 @@
-export const timeout = 3000
+import { config } from "dotenv"
+import path from "path"
 
-// Staging or Local
-export const testEnvironment = () => process.env.TEST_ENV || "Staging"
+config({ path: path.join(__dirname, "../../../dev/.env") })
 
-const getRandomPhoneNumber = (): string => {
-  const randomDigits = Math.floor(Math.random() * 40 + 60) // Generates a number between 60 and 99
-    .toString()
-  return `+503650555${randomDigits}`
+if (!process.env.ALICE_PHONE || !process.env.BOB_PHONE) {
+  throw new Error("Development environment environment configuration is incorrect")
 }
 
-export const phoneNumber = getRandomPhoneNumber()
-export const otp =
-  (testEnvironment() === "Staging" && process.env.GALOY_STAGING_GLOBAL_OTP) || "000000"
+export const timeout = 3000
+export const otp = process.env.GALOY_STAGING_GLOBAL_OTP || "000000"
+
+export const ALICE_PHONE = process.env.ALICE_PHONE
+export const BOB_PHONE = process.env.BOB_PHONE

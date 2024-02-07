@@ -73,9 +73,9 @@ ios/GoogleService-Info.plist
 .yalc
 yalc.lock
 
+*.tmp.ci
 *.log
 .env.local
-.env.tmp.ci
 .dependencies
 ios/assets
 ios/GaloyApp/assets

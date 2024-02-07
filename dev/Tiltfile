@@ -18,9 +18,9 @@ local_resource(
 )
 
 docker_compose('vendor/galoy-quickstart/docker-compose.yml')
-galoy_services = ["apollo-router", "galoy", "trigger", "redis", "mongodb", "mongodb-migrate", "price", "price-history", "price-history-migrate", "postgres-price-history", "svix", "svix-pg", "stablesats"]
-auth_services = ["oathkeeper", "kratos", "kratos-pg", "hydra", "postgresdhydra", "hydra-migrate"]
-bitcoin_services = ["bitcoind", "bitcoind-signer", "lnd1", "lnd-outside-1", "bria", "postgres-bria", "fulcrum"]
+galoy_services = ["apollo-router", "galoy", "trigger", "redis", "mongodb", "mongodb-migrate", "price", "price-history", "price-history-migrate", "price-history-pg", "svix", "svix-pg", "stablesats"]
+auth_services = ["oathkeeper", "kratos", "kratos-pg", "hydra", "hydra-pg", "hydra-migrate"]
+bitcoin_services = ["bitcoind", "bitcoind-signer", "lnd1", "lnd-outside-1", "bria", "bria-pg", "fulcrum"]
 
 for service in galoy_services:
     dc_resource(service, labels = ["galoy"])
@@ -38,5 +38,14 @@ local_resource(
   cmd='bin/setup.sh',
   resource_deps = galoy_services + [
     "init-lightning"
+  ]
+)
+
+local_resource(
+  name='blocks',
+  labels = ['dev-setup'],
+  cmd='bin/blocks.sh',
+  resource_deps = [
+    "init-setup"
   ]
 )

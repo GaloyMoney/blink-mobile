@@ -111,8 +111,6 @@ jobs:
           paths:
             - android/app/build
   e2e_run_android:
-    environment:
-      TEST_ENV: Local
     executor:
       name: android/android-machine
       resource-class: xlarge
@@ -158,11 +156,8 @@ jobs:
             - ios/build/Build/Products/Debug-iphonesimulator/Blink.app
 
   e2e_run_ios:
-    environment:
-      GALOY_STAGING_GLOBAL_OTP: 403370
-    macos:
-      xcode: 14.2.0
-    resource_class: macos.x86.medium.gen2
+    machine: true
+    resource_class: galoymoney/mac
     shell: /bin/bash --login -o pipefail
     working_directory: ~/galoy-mobile
     steps:
@@ -173,9 +168,11 @@ jobs:
           brew install applesimutils
       - install_yarn_deps
       - nix-with-flake
-      # - local_backend
+      - local_backend
       - rn/ios_simulator_start:
           device: iPhone SE (3rd generation)
+      - metro_start
+      - wait_for_backend_ready
       - run: yarn e2e:test ios.sim.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all
       - store_artifacts:
           path: artifacts

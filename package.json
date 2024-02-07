@@ -215,6 +215,7 @@
     "cross-fetch": "^3.1.6",
     "csv-parse": "^5.3.5",
     "detox": "^20.14.7",
+    "dotenv": "^16.4.1",
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-import": "^2.27.5",
