@@ -86,7 +86,6 @@ export const WebViewScreen: React.FC<Props> = ({ route }) => {
           sendPayment: async (paymentRequestStr) => {
             navigate("sendBitcoinDestination", {
               payment: paymentRequestStr,
-              autoValidate: true,
             })
 
             return { preimage: "preimage" }
