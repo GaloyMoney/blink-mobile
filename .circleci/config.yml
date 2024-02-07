@@ -26,12 +26,16 @@ commands:
           node-version: '18.18.2'
       - run: yarn global add node-gyp
       - rn/yarn_install
+  setup_path_bins:
+    steps:
+      - run: |
+          echo 'export PATH="/Users/m1/.nvm/versions/node/v18.19.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"' >> $BASH_ENV
+          source $BASH_ENV
   prepare_ruby:
     steps:
       - add_ssh_keys:
           fingerprints:
             - "19:7e:f3:6c:be:a7:17:01:7d:09:ca:39:c3:98:86:90"
-      - run: brew update
       - ruby/install-bundler
       - restore_cache:
           key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
@@ -163,11 +167,11 @@ jobs:
     steps:
       - checkout:
           path: ~/galoy-mobile
+      - setup_path_bins
       - run: |
-          brew tap wix/brew
-          brew install applesimutils
-      - install_yarn_deps
-      - nix-with-flake
+          nvm use 18
+          node i -g yarn
+          yarn install
       - local_backend
       - rn/ios_simulator_start:
           device: iPhone SE (3rd generation)
@@ -367,6 +371,6 @@ workflows:
           requires:
             - e2e_build_android
       - e2e_build_ios
-      - e2e_run_ios:
-          requires:
-            - e2e_build_ios
+      - e2e_run_ios
+          # requires:
+          #   - e2e_build_ios
