@@ -1994,7 +1994,7 @@
         "registerContent": "Regístrate con tu número de teléfono para recibir sats",
         "notYet": "Aún no",
         "availableTomorrow": "¡Esta sección estará disponible mañana!",
-        "motivatingBadger": "Dig your way through these lessons and earn as you learn"
+        "motivatingBadger": "Ábrete camino a través de estas lecciones y gana mientras aprendes"
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Log in / Crear Cuenta",
@@ -2015,12 +2015,12 @@
         }
     },
     "MapScreen": {
-        "navToSettingsTitle": "Location permissions",
-        "navToSettingsText": "If you'd like to give Blink location permissions, please navigate to your settings and enable it there",
+        "navToSettingsTitle": "Permisos de localización",
+        "navToSettingsText": "Si deseas conceder permisos de localización a Blink, accede a la configuración y habilítalos.",
         "payBusiness": "Pagar aquí",
-        "openSettings": "Open settings",
+        "openSettings": "Abrir configuración",
         "title": "Mapa",
-        "error": "Oops. Something went wrong while getting your location"
+        "error": "Ups. Algo salió mal al obtener tu ubicación"
     },
     "HomeScreen": {
         "receive": "Recibir",
@@ -2163,7 +2163,7 @@
         "slideToConfirm": "Desliza para confirmar",
         "slideConfirming": "Confirmando...",
         "copiedDestination": "Destino copiado al portapapeles",
-        "lightningRecommended": "High fee! We recommend Lightning."
+        "lightningRecommended": "Tasa elevada. Recomendamos Lightning."
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "Los nombres de usuario de {bankName} ahora son direcciones de {bankName}.",
@@ -2502,7 +2502,7 @@
         "hour": "hora",
         "hours": "horas",
         "invoice": "Factura",
-        "intraledger": "Intraledger",
+        "intraledger": "Intraledger ",
         "language": "Idioma",
         "languagePreference": "Configuración de idioma",
         "lastName": "Apellido",
