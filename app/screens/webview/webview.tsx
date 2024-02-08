@@ -51,11 +51,7 @@ export const WebViewScreen: React.FC<Props> = ({ route }) => {
     navigation.setOptions({
       headerLeft: () => (
         <TouchableOpacity style={styles.iconContainer} onPress={handleBackPress}>
-          <GaloyIcon
-            name="caret-left"
-            size={20}
-            color={mode === "light" ? colors.black : colors._white}
-          />
+          <GaloyIcon name="caret-left" size={20} color={colors.black} />
         </TouchableOpacity>
       ),
     })
