@@ -32,7 +32,7 @@ export type RootStackParamList = {
   addressScreen: undefined
   defaultWallet: undefined
   theme: undefined
-  sendBitcoinDestination: {
+  sendBitcoinDestination?: {
     payment?: string
     username?: string
   }
