@@ -3,7 +3,7 @@ import { WalletCurrency } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { requestNotificationPermission } from "@app/utils/notifications"
-import { useIsFocused, useNavigation } from "@react-navigation/native"
+import { RouteProp, useIsFocused, useNavigation } from "@react-navigation/native"
 import React, { useEffect } from "react"
 import { TouchableOpacity, View } from "react-native"
 import { testProps } from "../../utils/testProps"
@@ -20,9 +20,14 @@ import { SetLightningAddressModal } from "@app/components/set-lightning-address-
 import { GaloyCurrencyBubble } from "@app/components/atomic/galoy-currency-bubble"
 
 // Breez SDK
-import { addEventListener } from "@breeztech/react-native-breez-sdk"
+import { paymentEvents } from "@app/utils/breez-sdk"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 
-const ReceiveScreen = () => {
+type Props = {
+  route: RouteProp<RootStackParamList, "receiveBitcoin">
+}
+
+const ReceiveScreen = ({ route }: Props) => {
   const {
     theme: { colors },
   } = useTheme()
@@ -33,8 +38,12 @@ const ReceiveScreen = () => {
   const isAuthed = useIsAuthed()
   const isFocused = useIsFocused()
 
-  const request = useReceiveBitcoin()
+  const isFirstTransaction = route.params.transactionLength === 0
+  const request = useReceiveBitcoin(isFirstTransaction)
 
+  const [currentWallet, setCurrentWallet] = React.useState(
+    request?.receivingWalletDescriptor.currency,
+  )
   // notification permission
   useEffect(() => {
     let timeout: NodeJS.Timeout
@@ -66,22 +75,35 @@ const ReceiveScreen = () => {
   >(undefined)
 
   useEffect(() => {
-    const handleBreezEvent = (type: string) => {
-      if (type === "invoicePaid" && request) {
-        request.state = PaymentRequestState.Paid
-        if (request?.state === PaymentRequestState.Paid) {
-          setUpdatedPaymentState(PaymentRequestState.Paid)
-          const id = setTimeout(() => {
-            if (navigation.canGoBack()) {
-              navigation.goBack()
-            }
-          }, 5000)
-          return () => clearTimeout(id)
-        }
+    if (request) {
+      // Subscribe to the "paymentSuccess" event.
+      paymentEvents.once("invoicePaid", handleInvoicePaid)
+
+      // Clean up: unsubscribe to prevent memory leaks.
+      return () => {
+        paymentEvents.off("invoicePaid", handleInvoicePaid)
       }
     }
-    addEventListener(handleBreezEvent)
-  }, [request?.state, navigation])
+  }, [request])
+
+  useEffect(() => {
+    setCurrentWallet(request?.receivingWalletDescriptor.currency)
+  }, [request?.receivingWalletDescriptor?.currency])
+
+  const handleInvoicePaid = () => {
+    if (request) {
+      request.state = PaymentRequestState.Paid
+      if (request?.state === PaymentRequestState.Paid) {
+        setUpdatedPaymentState(PaymentRequestState.Paid)
+        const id = setTimeout(() => {
+          if (navigation.canGoBack()) {
+            navigation.goBack()
+          }
+        }, 5000)
+        return () => clearTimeout(id)
+      }
+    }
+  }
 
   // FLASH FORK DEBUGGING -----------------------------
   // console.log("request", request?.info?.data?.paymentRequest)
@@ -146,7 +168,9 @@ const ReceiveScreen = () => {
           style={styles.receivingWalletPicker}
           disabled={!request.canSetReceivingWalletDescriptor}
         />
-
+        {currentWallet === "BTC" && isFirstTransaction && (
+          <Text style={styles.warning}>{LL.ReceiveScreen.initialDeposit()}</Text>
+        )}
         <QRView
           type={request.info?.data?.invoiceType || Invoice.OnChain}
           getFullUri={request.info?.data?.getFullUriFn}
@@ -199,7 +223,7 @@ const ReceiveScreen = () => {
                       ? "Bitcoin Invoice | Valid for 7 days"
                       : request.info?.data?.invoiceType === Invoice.Lightning &&
                         request.receivingWalletDescriptor.currency === WalletCurrency.Usd
-                      ? "Cash Invoice | Valid for 7 days"
+                      ? "Cash Invoice | Valid for 5 minutes"
                       : request.info?.data?.invoiceType === Invoice.PayCode
                       ? "Lightning Address"
                       : "Invoice | Valid for 1 day"}
@@ -237,9 +261,9 @@ const ReceiveScreen = () => {
             {
               id: Invoice.Lightning,
               text: LL.ReceiveScreen.lightning(),
-              icon: "md-flash",
+              icon: "flash",
             },
-            { id: Invoice.PayCode, text: LL.ReceiveScreen.paycode(), icon: "md-at" },
+            { id: Invoice.PayCode, text: LL.ReceiveScreen.paycode(), icon: "at" },
             {
               id: Invoice.OnChain,
               text: LL.ReceiveScreen.onchain(),
@@ -256,6 +280,15 @@ const ReceiveScreen = () => {
           convertMoneyAmount={request.convertMoneyAmount}
           walletCurrency={request.receivingWalletDescriptor.currency}
           showValuesIfDisabled={false}
+          minAmount={
+            currentWallet === "BTC" && isFirstTransaction
+              ? {
+                  amount: 2501,
+                  currency: "BTC",
+                  currencyCode: "SAT",
+                }
+              : undefined
+          }
           big={false}
         />
         <NoteInput
@@ -352,6 +385,11 @@ const useStyles = makeStyles(({ colors }) => ({
     marginRight: 10,
   },
   onchainCharges: { marginTop: 10, alignItems: "center" },
+  warning: {
+    fontSize: 12,
+    color: colors.warning,
+    marginBottom: 10,
+  },
 }))
 
 export default withMyLnUpdateSub(ReceiveScreen)

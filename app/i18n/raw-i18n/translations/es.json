@@ -539,7 +539,8 @@
         "receiveViaInvoice": "Recibir vía Lightning",
         "receiveViaPaycode": "Recibir vía de código de pago",
         "receiveViaOnchain": "Recibir vía Onchain",
-        "payCodeOrLNURL": "Código de pago / LNURL"
+        "payCodeOrLNURL": "Código de pago / LNURL",
+        "initialDeposit": "* Initial deposit of $5 recommended for channel setup. ~$1 will be paid as setup fee."
     },
     "RedeemBitcoinScreen": {
         "title": "Canjear Bitcoin",

@@ -48,10 +48,14 @@ export const PinScreen: React.FC<Props> = ({ route }) => {
     if (newEnteredPIN === (await KeyStoreWrapper.getPinOrEmptyString())) {
       KeyStoreWrapper.resetPinAttempts()
       setAppUnlocked()
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "Primary" }],
-      })
+      if (screenPurpose === PinScreenPurpose.ShowSeedPhrase) {
+        navigation.replace("BackupShowSeedPhrase")
+      } else {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Primary" }],
+        })
+      }
     } else if (pinAttempts < MAX_PIN_ATTEMPTS - 1) {
       const newPinAttempts = pinAttempts + 1
       KeyStoreWrapper.setPinAttempts(newPinAttempts.toString())
@@ -90,7 +94,10 @@ export const PinScreen: React.FC<Props> = ({ route }) => {
       setEnteredPIN(newEnteredPIN)
 
       if (newEnteredPIN.length === 4) {
-        if (screenPurpose === PinScreenPurpose.AuthenticatePin) {
+        if (
+          screenPurpose === PinScreenPurpose.AuthenticatePin ||
+          screenPurpose === PinScreenPurpose.ShowSeedPhrase
+        ) {
           handleCompletedPinForAuthenticatePin(newEnteredPIN)
         } else if (screenPurpose === PinScreenPurpose.SetPin) {
           handleCompletedPinForSetPin(newEnteredPIN)

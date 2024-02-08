@@ -1523,6 +1523,10 @@ type RootTranslation = {
 	}
 	HomeScreen: {
 		/**
+		 * Cashout
+		 */
+		cashout: string
+		/**
 		 * R​e​c​e​i​v​e
 		 */
 		receive: string
@@ -2146,6 +2150,10 @@ type RootTranslation = {
 		 * Minimum amount for this transaction is US$2.00
 		 */
 		MinOnChainLimit: string
+		/**
+		 * Minimum amount for this transaction is 5500 sats
+		 */
+		MinOnChainSatLimit: string
 		/**
 		 * A​m​o​u​n​t​ ​e​x​c​e​e​d​s​ ​y​o​u​r​ ​b​a​l​a​n​c​e​ ​o​f​ ​{​b​a​l​a​n​c​e​}
 		 * @param {string} balance
@@ -5072,6 +5080,10 @@ export type TranslationFunctions = {
 	}
 	HomeScreen: {
 		/**
+		 * Cash Out
+		 */
+		cashout: () => LocalizedString
+		/**
 		 * Receive
 		 */
 		receive: () => LocalizedString
@@ -5188,6 +5200,7 @@ export type TranslationFunctions = {
 		title: () => LocalizedString
 	}
 	ReceiveScreen: {
+    [x: string]: any
 		/**
 		 * Do you want to activate notifications to be notified when the payment has arrived?
 		 */
@@ -5382,6 +5395,10 @@ export type TranslationFunctions = {
 		 * Paycode / LNURL
 		 */
 		payCodeOrLNURL: () => LocalizedString
+		/**
+		 * Initial Deposit Warning
+		 */
+		initialDeposit: () => LocalizedString
 	}
 	RedeemBitcoinScreen: {
 		/**
@@ -5423,41 +5440,64 @@ export type TranslationFunctions = {
 	}
 	ScanningQRCodeScreen: {
 		/**
-		 * We found:
-
-	{found}
-
-	This is not a valid Bitcoin address or Lightning invoice
+		 * W​e​ ​f​o​u​n​d​:​
+	​
+	​{​f​o​u​n​d​}​
+	​
+	​T​h​i​s​ ​i​s​ ​n​o​t​ ​a​ ​v​a​l​i​d​ ​B​i​t​c​o​i​n​ ​a​d​d​r​e​s​s​ ​o​r​ ​L​i​g​h​t​n​i​n​g​ ​i​n​v​o​i​c​e
+		 * @param {string} found
 		 */
-		invalidContent: (arg: { found: string }) => LocalizedString
+		invalidContent: RequiredParams<'found'>
 		/**
-		 * We found:
-
-	{found}
-
-	This invoice has expired
+		 * W​e​ ​f​o​u​n​d​:​
+	​
+	​{​f​o​u​n​d​}​
+	​
+	​T​h​i​s​ ​i​n​v​o​i​c​e​ ​h​a​s​ ​e​x​p​i​r​e​d
+		 * @param {string} found
 		 */
-		expiredContent: (arg: { found: string }) => LocalizedString
+		expiredContent: RequiredParams<'found'>
 		/**
-		 * Invalid QR Code
+		 * I​n​v​a​l​i​d​ ​Q​R​ ​C​o​d​e
 		 */
-		invalidTitle: () => LocalizedString
+		invalidTitle: string
 		/**
-		 * We could not find a QR code in the image
+		 * W​e​ ​c​o​u​l​d​ ​n​o​t​ ​f​i​n​d​ ​a​ ​Q​R​ ​c​o​d​e​ ​i​n​ ​t​h​e​ ​i​m​a​g​e
 		 */
-		noQrCode: () => LocalizedString
+		noQrCode: string
 		/**
-		 * Scan QR
+		 * S​c​a​n​ ​Q​R
 		 */
-		title: () => LocalizedString
+		title: string
 		/**
-		 * We found:
-
-	{found}
-
-	 is not currently supported
+		 * W​e​ ​n​e​e​d​ ​p​e​r​m​i​s​s​i​o​n​ ​t​o​ ​u​s​e​ ​y​o​u​r​ ​c​a​m​e​r​a
 		 */
-		invalidContentLnurl: (arg: { found: string }) => LocalizedString
+		permissionCamera: string
+		/**
+		 * N​o​ ​c​a​m​e​r​a​ ​f​o​u​n​d
+		 */
+		noCamera: string
+		/**
+		 * O​p​e​n​ ​S​e​t​t​i​n​g​s
+		 */
+		openSettings: string
+		/**
+		 * U​n​a​b​l​e​ ​t​o​ ​o​p​e​n​ ​s​e​t​t​i​n​g​s
+		 */
+		unableToOpenSettings: string
+		/**
+		 * W​e​ ​f​o​u​n​d​:​
+	​
+	​{​f​o​u​n​d​}​
+	​
+	​ ​i​s​ ​n​o​t​ ​c​u​r​r​e​n​t​l​y​ ​s​u​p​p​o​r​t​e​d
+		 * @param {string} found
+		 */
+		invalidContentLnurl: RequiredParams<'found'>
+		/**
+		 * W​e​ ​d​o​n​'​t​ ​h​a​v​e​ ​p​e​r​m​i​s​s​i​o​n​s​ ​t​o​ ​a​c​c​e​s​s​ ​t​h​e​ ​i​m​a​g​e​ ​l​i​b​r​a​r​y​.​ ​ ​P​l​e​a​s​e​ ​c​h​e​c​k​ ​a​p​p​ ​s​e​t​t​i​n​g​s​ ​f​o​r​ ​y​o​u​r​ ​p​l​a​t​f​o​r​m​.
+		 */
+		imageLibraryPermissionsNotGranted: string
 	}
 	SecurityScreen: {
 		/**
@@ -5665,6 +5705,10 @@ export type TranslationFunctions = {
 		 */
 		MinOnChainLimit: () => LocalizedString
 		/**
+		 * Minimum amount for this transaction is 5500 sats
+		 */
+		MinOnChainSatLimit: () => LocalizedString
+		/**
 		 * Amount exceeds your balance of {balance}
 		 */
 		amountExceed: (arg: { balance: string }) => LocalizedString
@@ -5846,6 +5890,11 @@ export type TranslationFunctions = {
 		 * Log in or create account
 		 */
 		logInOrCreateAccount: () => LocalizedString
+		/**
+		 * Backup seed phrase
+		 */
+		backup: () => LocalizedString
+		showSeedPhrase: () => LocalizedString
 	}
 	AccountScreen: {
 		/**
@@ -6011,6 +6060,41 @@ export type TranslationFunctions = {
 		 * Enter the 6-digit code from your authenticator app to log in. This code changes every 30 seconds.
 		 */
 		content: () => LocalizedString
+	}
+	BackupStart: {
+		title: () => LocalizedString
+		description: () => LocalizedString
+		continue: () => LocalizedString
+	}
+	BackupSeedPhrase: {		
+		title: () => LocalizedString
+		description: () => LocalizedString
+		backupToICloud: () => LocalizedString
+		backupToGoogleDrive: () => LocalizedString
+		verify: () => LocalizedString
+	}
+	BackupDoubleCheck: {
+		title: () => LocalizedString
+		description1: () => LocalizedString
+		description2: () => LocalizedString
+		continue: () => LocalizedString
+	}
+	BackupVerify: {		
+		title: () => LocalizedString
+		correctTitle: () => LocalizedString
+		wrongTitle: () => LocalizedString
+		tryAgain: () => LocalizedString
+		continue: () => LocalizedString
+	}
+	BackupComplete: {		
+		title: () => LocalizedString
+		description: () => LocalizedString
+		complete: () => LocalizedString
+	}
+	BackupShowSeedPhrase: {		
+		title: () => LocalizedString
+		description: () => LocalizedString
+		done: () => LocalizedString
 	}
 	CopySecretComponent: {
 		/**

@@ -225,7 +225,7 @@ export type PersistentState = PersistentState_7
 
 export const defaultPersistentState: PersistentState = {
   schemaVersion: 7,
-  galoyInstance: { id: "Main" },
+  galoyInstance: { id: "Staging" },
   galoyAuthToken: "",
   hasInitializedBreezSDK: false,
 }

@@ -23,17 +23,8 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 // import Breez SDK Wallet
-import useBreezBalance from "@app/hooks/useBreezBalance"
+// import { addLogListenerBreezSDK } from "@app/utils/breez-sdk/index"
 import { useIsFocused } from "@react-navigation/native"
-import * as sdk from "@breeztech/react-native-breez-sdk"
-
-sdk.addEventListener((type, data) => {
-  if (data) {
-    console.log(`received event ${type} with data: ${JSON.stringify(data)}`)
-  } else {
-    console.log(`received event ${type}`)
-  }
-})
 
 const Loader = () => {
   const styles = useStyles()
@@ -75,6 +66,8 @@ type Props = {
   setIsStablesatModalVisible: (value: boolean) => void
   navigation?: StackNavigationProp<RootStackParamList, "conversionDetails">
   refreshTriggered: boolean
+  breezBalance: number | null
+  refreshBreezBalance: () => void
 }
 
 const WalletOverview: React.FC<Props> = ({
@@ -84,6 +77,8 @@ const WalletOverview: React.FC<Props> = ({
   setIsStablesatModalVisible,
   // navigation,
   refreshTriggered,
+  breezBalance,
+  refreshBreezBalance,
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isGaloyWalletVisible, setIsGaloyWalletVisible] = React.useState(false)
@@ -112,7 +107,6 @@ const WalletOverview: React.FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refreshTriggered, isFocused])
 
-  const [breezBalance, refreshBreezBalance] = useBreezBalance()
   let btcInDisplayCurrencyFormatted: string | undefined = "$-0.01"
   let usdInDisplayCurrencyFormatted: string | undefined = "$-0.01"
   let extBtcInDisplayCurrencyFormatted: string | undefined = "$-0.01"

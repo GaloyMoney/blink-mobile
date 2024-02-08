@@ -114,7 +114,7 @@ gql`
   }
 `
 
-export const useReceiveBitcoin = () => {
+export const useReceiveBitcoin = (isFirstTransaction: Boolean) => {
   const [lnNoAmountInvoiceCreate] = useLnNoAmountInvoiceCreateMutation()
   const [lnUsdInvoiceCreate] = useLnUsdInvoiceCreateMutation()
   const [lnInvoiceCreate] = useLnInvoiceCreateMutation()
@@ -198,6 +198,14 @@ export const useReceiveBitcoin = () => {
           convertMoneyAmount: _convertMoneyAmount,
           username: username || undefined,
           posUrl,
+          unitOfAccountAmount:
+            defaultWallet.walletCurrency === "BTC" && isFirstTransaction
+              ? {
+                  amount: 500,
+                  currency: "DisplayCurrency",
+                  currencyCode: "USD",
+                }
+              : undefined,
           network: data.globals?.network,
         }
       setPRCD(createPaymentRequestCreationData(initialPRParams))
@@ -268,7 +276,7 @@ export const useReceiveBitcoin = () => {
   // For Expires In
   useLayoutEffect(() => {
     if (pr?.info?.data?.invoiceType === "Lightning" && pr.info?.data?.expiresAt) {
-      let intervalId: undefined | NodeJS.Timer = undefined
+      let intervalId: undefined | NodeJS.Timeout = undefined
 
       const setExpiresTime = () => {
         const currentTime = new Date()
@@ -390,11 +398,19 @@ export const useReceiveBitcoin = () => {
     setPRCD((pr) => {
       if (pr && pr.setReceivingWalletDescriptor) {
         if (walletCurrency === WalletCurrency.Btc && bitcoinWallet) {
+          if (isFirstTransaction) {
+            setAmount({
+              amount: 500,
+              currency: "DisplayCurrency",
+              currencyCode: "USD",
+            })
+          }
           return pr.setReceivingWalletDescriptor({
             id: bitcoinWallet.id,
             currency: WalletCurrency.Btc,
           })
         } else if (walletCurrency === WalletCurrency.Usd && usdWallet) {
+          setAmount(undefined)
           return pr.setReceivingWalletDescriptor({
             id: usdWallet.id,
             currency: WalletCurrency.Usd,
@@ -404,7 +420,7 @@ export const useReceiveBitcoin = () => {
       return pr
     })
   }
-  const setAmount = (amount: MoneyAmount<WalletOrDisplayCurrency>) => {
+  const setAmount = (amount?: MoneyAmount<WalletOrDisplayCurrency>) => {
     setPRCD((pr) => {
       if (pr && pr.setAmount) {
         return pr.setAmount(amount)

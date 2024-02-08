@@ -59,7 +59,7 @@ export type RootStackParamList = {
   lnurl: { username: string }
   sectionCompleted: { amount: number; sectionTitle: string }
   priceHistory: undefined
-  receiveBitcoin: undefined
+  receiveBitcoin: { transactionLength: number }
   redeemBitcoinDetail: {
     receiveDestination: ReceiveDestination
   }
@@ -78,7 +78,7 @@ export type RootStackParamList = {
   phoneFlow: undefined
   phoneRegistrationInitiate: undefined
   phoneRegistrationValidate: { phone: string; channel: PhoneCodeChannelType }
-  transactionDetail: { txid: string }
+  transactionDetail: { tx: TransactionFragment }
   breezTransactionDetail: { tx: TransactionFragment }
   transactionHistory?: undefined
   Earn: undefined
@@ -91,6 +91,12 @@ export type RootStackParamList = {
   totpRegistrationInitiate: undefined
   totpRegistrationValidate: { totpRegistrationId: string }
   totpLoginValidate: { authToken: string }
+  BackupStart: undefined
+  BackupSeedPhrase: undefined
+  BackupDoubleCheck: undefined
+  BackupVerify: undefined
+  BackupComplete: undefined
+  BackupShowSeedPhrase: undefined
 }
 
 export type ChatStackParamList = {

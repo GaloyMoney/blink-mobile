@@ -255,7 +255,7 @@ export const EarnSection = ({ route }: Props) => {
               icon={
                 item.completed ? (
                   <Icon
-                    name="ios-checkmark-circle-outline"
+                    name="checkmark-circle-outline"
                     size={36}
                     color={colors._white}
                     style={styles.icon}

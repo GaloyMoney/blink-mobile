@@ -42,6 +42,7 @@ yarn-error.log
 buck-out/
 \.buckd/
 *.keystore
+*.jks
 
 # VS Code
 .vscode

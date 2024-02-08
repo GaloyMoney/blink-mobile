@@ -80,6 +80,14 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
+import {
+  BackupComplete,
+  BackupDoubleCheck,
+  BackupSeedPhrase,
+  BackupShowSeedPhrase,
+  BackupStart,
+  BackupVerify,
+} from "@app/screens"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -151,7 +159,7 @@ export const RootStack = () => {
         name="scanningQRCode"
         component={ScanningQRCodeScreen}
         options={{
-          title: LL.ScanningQRCodeScreen.title(),
+          title: LL.ScanningQRCodeScreen.title,
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
@@ -224,7 +232,7 @@ export const RootStack = () => {
         component={EarnSection}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-          headerStyle: { backgroundColor: colors._gold },
+          headerStyle: { backgroundColor: colors?._gold },
           headerTintColor: colors._black,
           headerTitleStyle: {
             fontWeight: "bold",
@@ -406,6 +414,34 @@ export const RootStack = () => {
           title: LL.TotpLoginValidateScreen.title(),
         }}
       />
+      <RootNavigator.Group
+        screenOptions={{
+          title: "",
+          headerShadowVisible: false,
+          headerStyle: { backgroundColor: "#fff" },
+          headerBackTitleStyle: { color: "#000" },
+          headerTintColor: "#000",
+        }}
+      >
+        <RootNavigator.Screen name="BackupStart" component={BackupStart} />
+        <RootNavigator.Screen name="BackupSeedPhrase" component={BackupSeedPhrase} />
+        <RootNavigator.Screen name="BackupDoubleCheck" component={BackupDoubleCheck} />
+        <RootNavigator.Screen name="BackupVerify" component={BackupVerify} />
+        <RootNavigator.Screen
+          name="BackupComplete"
+          component={BackupComplete}
+          options={{
+            headerLeft: () => <></>,
+          }}
+        />
+        <RootNavigator.Screen
+          name="BackupShowSeedPhrase"
+          component={BackupShowSeedPhrase}
+          options={{
+            headerLeft: () => <></>,
+          }}
+        />
+      </RootNavigator.Group>
     </RootNavigator.Navigator>
   )
 }
@@ -516,7 +552,7 @@ export const PrimaryNavigator = () => {
           headerShown: false,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Contacts"
         component={ContactNavigator}
         options={{
@@ -537,7 +573,7 @@ export const PrimaryNavigator = () => {
           title: LL.ChatScreen.title(),
           tabBarIcon: ({ color }) => <ChatIcon color={color} />,
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Map"
         component={MapScreen}
@@ -549,7 +585,7 @@ export const PrimaryNavigator = () => {
           tabBarIcon: ({ color }) => <MapIcon color={color} />,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Earn"
         component={EarnMapScreen}
         options={{
@@ -559,7 +595,7 @@ export const PrimaryNavigator = () => {
           tabBarTestID: LL.EarnScreen.title(),
           tabBarIcon: ({ color }) => <LearnIcon {...testProps("Earn")} color={color} />,
         }}
-      />
+      /> */}
     </Tab.Navigator>
   )
 }

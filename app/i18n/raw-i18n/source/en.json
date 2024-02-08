@@ -48,7 +48,7 @@
     },
     "ChatScreen": {
         "noChatsTitle": "No Chats Found",
-        "noChatsYet": "Enter a Flash username or nostr public key to start a chat",
+        "noChatsYet": "Enter a Flash username or \nnostr pubkey to start a chat",
         "noMatchingChats": "No chats matching your search were found.",
         "title": "Chat"
     },
@@ -553,7 +553,8 @@
         "receiveViaInvoice": "Receive via Lightning",
         "receiveViaPaycode": "Receive via Paycode",
         "receiveViaOnchain": "Receive via Onchain",
-        "payCodeOrLNURL": "Paycode / LNURL"
+        "payCodeOrLNURL": "Paycode / LNURL",
+        "initialDeposit": "* Initial deposit of $5 recommended for channel setup. ~$1 will be paid as setup fee."
     },
     "RedeemBitcoinScreen": {
         "title": "Redeem Bitcoin",
@@ -631,6 +632,7 @@
     "SendBitcoinScreen": {
         "amount": "Amount",
         "MinOnChainLimit": "Minimum amount for this transaction is US$2.00",
+        "MinOnChainSatLimit": "Minimum amount for this transaction is 5,500 sats",
         "amountExceed": "Amount exceeds your balance of {balance: string}",
         "amountExceedsLimit": "Amount exceeds your remaining daily limit of {limit: string}",
         "upgradeAccountToIncreaseLimit": "Upgrade your account to increase your limit",
@@ -942,7 +944,7 @@
         "soon": "Coming soon!",
         "submit": "Submit",
         "success": "Success!",
-        "stablesatsUsd": "Stablesats USD",
+        "stablesatsUsd": "Cash (USD)",
         "to": "To",
         "total": "Total",
         "transactions": "Transactions",

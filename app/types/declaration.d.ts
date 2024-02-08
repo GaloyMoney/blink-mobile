@@ -28,4 +28,6 @@ declare module "@env" {
   export const INVITE_CODE: string
   export const MNEMONIC_WORDS: string
   export const API_KEY: string
+  export const GREENLIGHT_PARTNER_CERT: string
+  export const GREENLIGHT_PARTNER_KEY: string
 }

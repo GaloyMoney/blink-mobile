@@ -111,7 +111,7 @@ type BasePaymentRequestCreationData<T extends WalletCurrency> = {
   // Amount
   canSetAmount: boolean
   setAmount?: (
-    unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency>,
+    unitOfAccountAmount?: MoneyAmount<WalletOrDisplayCurrency>,
   ) => PaymentRequestCreationData<T>
   unitOfAccountAmount?: MoneyAmount<WalletOrDisplayCurrency>
   settlementAmount?: WalletAmount<T>

@@ -59,7 +59,7 @@ const en: BaseTranslation = {
   ChatScreen: {
     noChatsTitle: "No Chats Found",
     noChatsYet:
-      "Enter a Flash username or nostr public key to start a chat",
+      "Enter a Flash username or \nnostr pubkey to start a chat",
     noMatchingChats: "No chats matching your search were found.",
     title: "Chat",
   },
@@ -499,6 +499,7 @@ const en: BaseTranslation = {
     title: "Map",
   },
   HomeScreen: {
+    cashout: "Cash Out",
     receive: "Receive",
     send: "Send",
     pay: "Pay",
@@ -586,7 +587,8 @@ const en: BaseTranslation = {
     receiveViaInvoice: "Receive via Lightning",
     receiveViaPaycode: "Receive via Paycode",
     receiveViaOnchain: "Receive via Onchain",
-    payCodeOrLNURL: "Paycode / LNURL"
+    payCodeOrLNURL: "Paycode / LNURL",
+    initialDeposit: "* Initial deposit of $5 recommended for channel setup. ~$1 will be paid as setup fee."
   },
   RedeemBitcoinScreen: {
     title: "Redeem Bitcoin",
@@ -608,7 +610,12 @@ const en: BaseTranslation = {
     invalidTitle: "Invalid QR Code",
     noQrCode: "We could not find a QR code in the image",
     title: "Scan QR",
+    permissionCamera: "We need permission to use your camera",
+    noCamera: "No camera found",
+    openSettings: "Open Settings",
+    unableToOpenSettings: "Unable to open settings",
     invalidContentLnurl: "We found:\n\n{found: string}\n\n is not currently supported",
+    imageLibraryPermissionsNotGranted: "We don't have permissions to access the image library.  Please check app settings for your platform.",
   },
   SecurityScreen: {
     biometricDescription: "Unlock with fingerprint or facial recognition.",
@@ -685,6 +692,7 @@ const en: BaseTranslation = {
   SendBitcoinScreen: {
     amount: "Amount",
     MinOnChainLimit: "Minimum amount for this transaction is US$2.00",
+    MinOnChainSatLimit: "Minimum amount for this transaction is 5,500 sats",
     amountExceed: "Amount exceeds your balance of {balance: string}",
     amountExceedsLimit: "Amount exceeds your remaining daily limit of {limit: string}",
     upgradeAccountToIncreaseLimit: "Upgrade your account to increase your limit",
@@ -738,6 +746,8 @@ const en: BaseTranslation = {
     nfcScanNow: "Scan NFC Now",
     nfcNotSupported: "NFC is not supported on this device",
     logInOrCreateAccount: "Log in or create account",
+    backup: "Backup",
+    showSeedPhrase: "Reveal recovery phrase"
   },
   AccountScreen: {
     accountLevel: "Account Level",
@@ -784,6 +794,41 @@ const en: BaseTranslation = {
   TotpLoginValidateScreen: {
     title: "Two-factor authentication",
     content: "Enter the 6-digit code from your authenticator app to log in. This code changes every 30 seconds.",
+  },
+  BackupStart: {
+    title: "First, let's create your \nrecovery phrase",
+    description: "A recovery phrase is a series of 12 words in a specific order. This word combination is unique to your wallet. Make sure to have pen and paper ready so you can write it down.",
+    continue: "Continue"
+  },
+  BackupSeedPhrase: {
+    title: "This is your recovery phrase",
+    description: "Make sure to write it down as shown here. You have to verify this later.",
+    backupToICloud: "Backup to iCloud",
+    backupToGoogleDrive: "Backup to Google Drive",
+    verify: "Verify"
+  },
+  BackupDoubleCheck: {
+		title: "Let's double-check",
+		description1: "Well done. Now let’s verify that you've written down your recovery phrase correctly.",
+		description2: "Yes, it’s that important.",
+		continue: "Continue"
+	},
+  BackupVerify: {
+		title: "Tap the words in the \ncorrect order.",
+    correctTitle: "Perfect. Make sure to securely store your recovery phrase.",
+    wrongTitle: "Sorry, that’s not the correct third word. Give it another try.",
+		tryAgain: "Try again",
+		continue: "Continue"
+	},
+  BackupComplete: {
+		title: "Your backup is complete",
+		description: "You should now have your recovery phrase and password written down for future reference.",
+		complete: "Complete"
+	},
+  BackupShowSeedPhrase: {
+    title: "This is your recovery phrase",
+    description: "Make sure to write it down as shown here. You'll need to recover your wallet.",
+    done: "Done"
   },
   CopySecretComponent: {
     button: "Copy secret",
@@ -962,7 +1007,7 @@ const en: BaseTranslation = {
     beta: "beta",
     bitcoin: "Bitcoin",
     bitcoinPrice: "Bitcoin Price",
-    btcAccount: "BTC Account",
+    btcAccount: "Bitcoin Account",
     cancel: "Cancel",
     close: "Close",
     confirm: "Confirm",
@@ -1025,7 +1070,7 @@ const en: BaseTranslation = {
     transactionsError: "Error loading transactions",
     tryAgain: "Try Again",
     type: "Type",
-    usdAccount: "USD Account",
+    usdAccount: "Cash Account",
     username: "Username",
     usernameRequired: "Username is required",
     backupAccount: "Backup/upgrade account",
@@ -1111,7 +1156,7 @@ const en: BaseTranslation = {
     minAmountNotMet: "Amount must be at least {minAmount: string}.",
   },
   AmountInputButton: {
-    tapToSetAmount: "Tap to set amount (Default: 1 satoshi for invoices)",
+    tapToSetAmount: "Tap to set amount",
     tapToSetOnChainAmount: "Tap to set amount",
   },
   AppUpdate: {

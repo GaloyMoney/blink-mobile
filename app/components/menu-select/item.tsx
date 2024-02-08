@@ -50,7 +50,7 @@ export const Item: React.FC<ItemProps> = ({
     <ListItem {...props} key={value} bottomDivider onPress={onPress}>
       <View style={styles.iconContainer}>
         {showActivityIndicator && <ActivityIndicator />}
-        {selected && <Icon name="ios-checkmark-circle" size={18} color={colors.green} />}
+        {selected && <Icon name="checkmark-circle" size={18} color={colors.green} />}
       </View>
       <ListItem.Title {...(testPropId ? testProps(testPropId) : {})}>
         {children}

@@ -48,7 +48,7 @@ export const useDescriptionDisplay = ({
     case "SettlementViaOnChain":
       return "OnChain Payment"
     case "SettlementViaLn":
-      return "Invoice"
+      return "Invoice to BTC wallet"
     case "SettlementViaIntraLedger":
       return isReceive
         ? `${LL.common.from()} ${

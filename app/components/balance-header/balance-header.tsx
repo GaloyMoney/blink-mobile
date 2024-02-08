@@ -18,9 +18,6 @@ import {
 } from "@app/types/amounts"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
-// import Breez SDK Wallet
-import useBreezBalance from "@app/hooks/useBreezBalance"
-
 const Loader = () => {
   const styles = useStyles()
   return (
@@ -56,21 +53,20 @@ type Props = {
   loading: boolean
   isContentVisible: boolean
   setIsContentVisible: React.Dispatch<React.SetStateAction<boolean>>
+  breezBalance: number | null
 }
 
 export const BalanceHeader: React.FC<Props> = ({
   loading,
   isContentVisible,
   setIsContentVisible,
+  breezBalance,
 }) => {
   const styles = useStyles()
 
   const isAuthed = useIsAuthed()
   const { formatMoneyAmount } = useDisplayCurrency()
   const { convertMoneyAmount } = usePriceConversion()
-
-  // get Breez SDK Balance
-  const [breezBalance, refreshBreezBalance] = useBreezBalance()
 
   // TODO: use suspense for this component with the apollo suspense hook (in beta)
   // so there is no need to pass loading from parent?

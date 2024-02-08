@@ -103,7 +103,7 @@ export const GetStartedScreen: React.FC = () => {
           onPress={handleCreateDeviceAccount}
           containerStyle={styles.buttonContainer}
         />
-        {appCheckToken ? null : (
+        {/* {appCheckToken ? null : (
           // <GaloySecondaryButton
           //   title={LL.GetStartedScreen.startTrialAccount()}
           //   onPress={handleCreateDeviceAccount}
@@ -112,7 +112,7 @@ export const GetStartedScreen: React.FC = () => {
             title={LL.GetStartedScreen.setupBusinessAccount()}
             onPress={handleCreateAccount}
           />
-        )}
+        )} */}
         <View style={styles.loginFooterContainer}>
           <Text type="p2">{LL.GetStartedScreen.logBackInWith()} </Text>
           <TouchableOpacity activeOpacity={0.5} onPress={handleCreateAccount}>

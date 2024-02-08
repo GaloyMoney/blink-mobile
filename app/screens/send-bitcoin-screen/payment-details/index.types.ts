@@ -187,6 +187,7 @@ export const AmountInvalidReason = {
   InsufficientLimit: "InsufficientLimit",
   NoAmount: "NoAmount",
   MinOnChainLimit: "MinOnChainLimit",
+  MinOnChainSatLimit: "MinOnChainSatLimit",
 } as const
 
 export type AmountInvalidReason =
@@ -221,4 +222,8 @@ export type AmountStatus =
   | {
       validAmount: false
       invalidReason: typeof AmountInvalidReason.MinOnChainLimit
+    }
+  | {
+      validAmount: false
+      invalidReason: typeof AmountInvalidReason.MinOnChainSatLimit
     }

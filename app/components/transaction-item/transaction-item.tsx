@@ -3,7 +3,6 @@ import { View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 
 // eslint-disable-next-line camelcase
-import { useFragment_experimental } from "@apollo/client"
 import {
   TransactionFragment,
   TransactionFragmentDoc,
@@ -49,7 +48,11 @@ export const useDescriptionDisplay = ({
     case "SettlementViaOnChain":
       return "OnChain Payment"
     case "SettlementViaLn":
-      return "Invoice"
+      if (isReceive) {
+        return "Receive to USD wallet"
+      } else {
+        return "Send from USD wallet"
+      }
     case "SettlementViaIntraLedger":
       return isReceive
         ? `${LL.common.from()} ${
@@ -76,7 +79,7 @@ const AmountDisplayStyle = ({
 }
 
 type Props = {
-  txid: string
+  tx: TransactionFragment | undefined
   subtitle?: boolean
   isFirst?: boolean
   isLast?: boolean
@@ -84,7 +87,7 @@ type Props = {
 }
 
 export const TransactionItem: React.FC<Props> = ({
-  txid,
+  tx,
   subtitle = false,
   isFirst = false,
   isLast = false,
@@ -97,15 +100,6 @@ export const TransactionItem: React.FC<Props> = ({
   })
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-
-  const { data: tx } = useFragment_experimental<TransactionFragment>({
-    fragment: TransactionFragmentDoc,
-    fragmentName: "Transaction",
-    from: {
-      __typename: "Transaction",
-      id: txid,
-    },
-  })
 
   const {
     appConfig: { galoyInstance },
@@ -149,11 +143,7 @@ export const TransactionItem: React.FC<Props> = ({
     <ListItem
       {...testProps("transaction-item")}
       containerStyle={styles.container}
-      onPress={() =>
-        navigation.navigate("transactionDetail", {
-          txid: tx.id,
-        })
-      }
+      onPress={() => navigation.navigate("transactionDetail", { tx })}
     >
       <IconTransaction
         onChain={tx.settlementVia.__typename === "SettlementViaOnChain"}

@@ -118,38 +118,43 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
       paymentDetail.paymentType === "lightning" ||
       paymentDetail.paymentType === "lnurl"
     ) {
-      console.log("lightning")
       setFee(getLightningFee)
     } else if (paymentDetail.sendingWalletDescriptor.currency === WalletCurrency.Btc) {
-      console.log("not lightning")
       const getBreezFee = async (): Promise<void> => {
-        const rawBreezFee = await fetchReverseSwapFeesBreezSDK({
-          sendAmountSat: settlementAmount.amount,
-        })
-        const formattedBreezFee: FeeType = {
-          amount: {
-            amount: rawBreezFee.feesClaim,
-            currency: "BTC",
-            currencyCode: "BTC",
-          },
-          status: "set",
+        try {
+          const rawBreezFee = await fetchReverseSwapFeesBreezSDK({
+            sendAmountSat: settlementAmount.amount * 100,
+          })
+          const formattedBreezFee: FeeType = {
+            amount: {
+              amount: rawBreezFee.feesClaim,
+              currency: "BTC",
+              currencyCode: "BTC",
+            },
+            status: "set",
+          }
+          setFee(formattedBreezFee)
+        } catch (err) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         }
-        setFee(formattedBreezFee)
       }
-
       // This ensures that getBreezFee is only called when the component mounts
       getBreezFee()
     } else {
       setFee(getLightningFee)
     }
-  }, [getLightningFee, paymentDetail.paymentType])
-  console.log("fee", fee)
+  }, [
+    getLightningFee,
+    paymentDetail.paymentType,
+    paymentDetail.sendingWalletDescriptor.currency,
+    settlementAmount.amount,
+  ])
 
   const {
     loading: sendPaymentLoading,
     sendPayment,
     hasAttemptedSend,
-  } = useSendPayment(sendPaymentMutation, destination, settlementAmount)
+  } = useSendPayment(sendPaymentMutation, destination, settlementAmount, note)
 
   let feeDisplayText = ""
   if (fee.amount) {

@@ -37,6 +37,9 @@ import { SettingsRow } from "./settings-row"
 import { useShowWarningSecureAccount } from "./show-warning-secure-account"
 import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+import { loadJson } from "@app/utils/storage"
+import BiometricWrapper from "@app/utils/biometricAuthentication"
+import { AuthenticationScreenPurpose, PinScreenPurpose } from "@app/utils/enum"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -81,7 +84,7 @@ export const SettingsScreen: React.FC = () => {
 
   const { isAtLeastLevelZero, currentLevel } = useLevel()
   const { LL } = useI18nContext()
-
+  const [backupIsCompleted, setBackupIsCompleted] = React.useState(false)
   const [hiddenContactMethods, setHiddenContactMethods] = React.useState<
     SupportChannelsToHide[]
   >([SupportChannels.Telegram, SupportChannels.Mattermost])
@@ -103,7 +106,7 @@ export const SettingsScreen: React.FC = () => {
   const btcWalletId = btcWallet?.id
   const usdWalletId = usdWallet?.id
   const defaultWalletId = data?.me?.defaultAccount?.defaultWalletId
-  const defaultWalletCurrency = defaultWalletId === btcWalletId ? "BTC" : "Stablesats USD"
+  const defaultWalletCurrency = defaultWalletId === btcWalletId ? "BTC" : "Cash (USD)"
 
   const lightningAddress = username
     ? getLightningAddress(appConfig.galoyInstance.lnAddressHostname, username)
@@ -115,6 +118,15 @@ export const SettingsScreen: React.FC = () => {
     })
 
   const showWarningSecureAccount = useShowWarningSecureAccount()
+
+  React.useEffect(() => {
+    checkBackupCompleted()
+  }, [])
+
+  const checkBackupCompleted = async () => {
+    const res = await loadJson("backupCompleted")
+    setBackupIsCompleted(res)
+  }
 
   const fetchCsvTransactions = async () => {
     const walletIds: string[] = []
@@ -176,6 +188,27 @@ export const SettingsScreen: React.FC = () => {
         crashlytics().recordError(new Error(errorMessage))
       }
     })
+  }
+
+  const onPressBackup = async () => {
+    if (!backupIsCompleted) {
+      navigation.navigate("BackupStart")
+    } else {
+      const isPinEnabled = await KeyStoreWrapper.getIsPinEnabled()
+      const isSensorAvailable = await BiometricWrapper.isSensorAvailable()
+      const getIsBiometricsEnabled = await KeyStoreWrapper.getIsBiometricsEnabled()
+
+      if (isSensorAvailable && getIsBiometricsEnabled) {
+        navigation.navigate("authentication", {
+          screenPurpose: AuthenticationScreenPurpose.ShowSeedPhrase,
+          isPinEnabled,
+        })
+      } else if (isPinEnabled) {
+        navigation.navigate("pin", { screenPurpose: PinScreenPurpose.ShowSeedPhrase })
+      } else {
+        navigation.navigate("BackupShowSeedPhrase")
+      }
+    }
   }
 
   const contactMessageBody = LL.support.defaultSupportMessage({
@@ -247,6 +280,16 @@ export const SettingsScreen: React.FC = () => {
       greyed: !isAtLeastLevelZero || !lightningAddress,
     },
     {
+      category: backupIsCompleted
+        ? LL.SettingsScreen.showSeedPhrase()
+        : LL.SettingsScreen.backup(),
+      icon: "apps-outline",
+      id: "backup",
+      action: onPressBackup,
+      enabled: true,
+      chevron: true,
+    },
+    {
       category: `${LL.SettingsScreen.nfc()} - beta`,
       icon: "radio-outline",
       id: "nfc",
@@ -256,7 +299,7 @@ export const SettingsScreen: React.FC = () => {
     },
     {
       category: LL.common.language(),
-      icon: "ios-language",
+      icon: "language",
       id: "language",
       subTitleText: language,
       action: () => navigation.navigate("language"),
@@ -265,7 +308,7 @@ export const SettingsScreen: React.FC = () => {
     },
     {
       category: `${LL.common.currency()}`,
-      icon: "ios-cash",
+      icon: "cash",
       id: "currency",
       action: () => navigation.navigate("currency"),
       subTitleText: displayCurrency,
@@ -291,7 +334,7 @@ export const SettingsScreen: React.FC = () => {
     },
     {
       category: LL.common.csvExport(),
-      icon: "ios-download",
+      icon: "download",
       id: "csv",
       action: fetchCsvTransactions,
       enabled: isAtLeastLevelZero && !loadingCsvTransactions,

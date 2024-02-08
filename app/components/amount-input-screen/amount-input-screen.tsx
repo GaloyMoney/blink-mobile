@@ -219,7 +219,6 @@ export const AmountInputScreen: React.FC<AmountInputScreenProps> = ({
     })
   } else if (
     minAmountInPrimaryCurrency &&
-    newPrimaryAmount.amount &&
     lessThan({
       value: convertMoneyAmount(newPrimaryAmount, minAmountInPrimaryCurrency.currency),
       lessThan: minAmountInPrimaryCurrency,

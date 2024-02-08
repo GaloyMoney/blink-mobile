@@ -98,6 +98,7 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
         },
       })
       if (!res.ok) {
+        alert("FAILED: " + res.ok)
         console.error(`Error fetching from server: ${res.status} ${res.statusText}`)
         return // Or handle this error appropriately
       }
@@ -105,7 +106,7 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
       const data: {
         result: string | undefined
       } = await res.json()
-
+      // alert("SUCCESS")
       const authToken = data.result
 
       if (!authToken) {

@@ -62,8 +62,13 @@ export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
     } else if (screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication) {
       KeyStoreWrapper.setIsBiometricsEnabled()
     }
-    setAppUnlocked()
-    navigation.replace("Primary")
+
+    if (screenPurpose === AuthenticationScreenPurpose.ShowSeedPhrase) {
+      navigation.replace("BackupShowSeedPhrase")
+    } else {
+      setAppUnlocked()
+      navigation.replace("Primary")
+    }
   }
 
   const handleAuthenticationFailure = () => {
@@ -91,7 +96,12 @@ export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
       <GaloySecondaryButton
         title={LL.AuthenticationScreen.usePin()}
         onPress={() =>
-          navigation.navigate("pin", { screenPurpose: PinScreenPurpose.AuthenticatePin })
+          navigation.navigate("pin", {
+            screenPurpose:
+              screenPurpose === AuthenticationScreenPurpose.ShowSeedPhrase
+                ? PinScreenPurpose.ShowSeedPhrase
+                : PinScreenPurpose.AuthenticatePin,
+          })
         }
         containerStyle={styles.buttonContainer}
       />
@@ -100,7 +110,10 @@ export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
     PinButtonContent = null
   }
 
-  if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
+  if (
+    screenPurpose === AuthenticationScreenPurpose.Authenticate ||
+    screenPurpose === AuthenticationScreenPurpose.ShowSeedPhrase
+  ) {
     AlternateContent = (
       <>
         {PinButtonContent}
@@ -124,7 +137,10 @@ export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
   }
 
   let buttonTitle = ""
-  if (screenPurpose === AuthenticationScreenPurpose.Authenticate) {
+  if (
+    screenPurpose === AuthenticationScreenPurpose.Authenticate ||
+    screenPurpose === AuthenticationScreenPurpose.ShowSeedPhrase
+  ) {
     buttonTitle = LL.AuthenticationScreen.unlock()
   } else if (screenPurpose === AuthenticationScreenPurpose.TurnOnAuthentication) {
     buttonTitle = LL.AuthenticationScreen.setUp()
