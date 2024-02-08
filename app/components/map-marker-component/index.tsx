@@ -1,15 +1,15 @@
+import { MapMarker } from "@app/graphql/generated"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { isIos } from "@app/utils/helper"
+import { Text, makeStyles } from "@rneui/themed"
+import { useEffect, useRef } from "react"
+import { Dimensions, View } from "react-native"
 import {
   Callout,
   CalloutSubview,
   MapMarker as MapMarkerType,
   Marker,
 } from "react-native-maps"
-import { Text } from "@rneui/themed"
-import { useEffect, useRef } from "react"
-import { StyleProp, TextStyle, View, ViewStyle } from "react-native"
-import { isIos } from "@app/utils/helper"
-import { LocalizedString } from "typesafe-i18n"
-import { MapMarker } from "@app/graphql/generated"
 
 /*
   In order to increase performance, markers are initially rendered without content in the callout.
@@ -23,14 +23,6 @@ type Props = {
   handleMarkerPress: (_item: MapMarker, _ref?: MapMarkerType) => void
   handleCalloutPress: (item: MapMarker) => void
   isFocused: boolean
-  styles: {
-    customView: StyleProp<ViewStyle>
-    title: StyleProp<TextStyle>
-    text: StyleProp<TextStyle>
-    pseudoButton: StyleProp<ViewStyle>
-    border: StyleProp<ViewStyle>
-  }
-  text: LocalizedString
 }
 
 export default function MapMarkerComponent({
@@ -39,10 +31,10 @@ export default function MapMarkerComponent({
   handleMarkerPress,
   handleCalloutPress,
   isFocused,
-  styles,
-  text,
 }: Props) {
   const ref = useRef<MapMarkerType>(null)
+  const { LL } = useI18nContext()
+  const styles = useStyles()
 
   useEffect(() => {
     if (isFocused && ref.current) {
@@ -71,12 +63,12 @@ export default function MapMarkerComponent({
               {isIos ? (
                 <CalloutSubview onPress={() => handleCalloutPress(item)}>
                   <View style={styles.pseudoButton}>
-                    <Text style={styles.text}>{text}</Text>
+                    <Text style={styles.text}>{LL.MapScreen.payBusiness()}</Text>
                   </View>
                 </CalloutSubview>
               ) : (
                 <View style={styles.pseudoButton}>
-                  <Text style={styles.text}>{text}</Text>
+                  <Text style={styles.text}>{LL.MapScreen.payBusiness()}</Text>
                 </View>
               )}
             </View>
@@ -86,3 +78,44 @@ export default function MapMarkerComponent({
     </Marker>
   )
 }
+
+const { width: screenWidth } = Dimensions.get("window")
+
+const useStyles = makeStyles(({ colors }) => ({
+  border: {
+    maxWidth: screenWidth,
+    overflow: "hidden",
+    borderRadius: 3,
+    borderWidth: 1,
+    borderColor: colors.grey4,
+    padding: 10,
+    backgroundColor: colors.white,
+  },
+
+  customView: {
+    alignItems: "center",
+    rowGap: 10,
+  },
+
+  pseudoButton: {
+    backgroundColor: colors.primary3,
+    borderRadius: 25,
+    width: 200,
+  },
+
+  map: {
+    height: "100%",
+    width: "100%",
+  },
+
+  title: { color: colors.black, textAlign: "center" },
+
+  text: {
+    fontSize: 20,
+    lineHeight: 24,
+    fontWeight: "600",
+    color: colors.white,
+    margin: 8,
+    textAlign: "center",
+  },
+}))

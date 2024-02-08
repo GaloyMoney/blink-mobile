@@ -31,8 +31,8 @@ export default function LocationButtonCopy({
 const useStyles = makeStyles(({ colors }) => ({
   button: {
     position: "absolute",
-    top: 12,
-    right: 12,
+    bottom: 28,
+    left: 8,
     zIndex: 99,
   },
   android: {
