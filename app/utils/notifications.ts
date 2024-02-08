@@ -4,6 +4,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { DeviceNotificationTokenCreateDocument } from "@app/graphql/generated"
 // eslint-disable-next-line react-native/split-platform-components
 import { Platform, PermissionsAndroid } from "react-native"
+import { sleep } from "./sleep"
 
 // No op if the permission has already been requested
 export const requestNotificationPermission = () => messaging().requestPermission()
@@ -21,6 +22,9 @@ gql`
 
 export const addDeviceToken = async (client: ApolloClient<unknown>): Promise<void> => {
   try {
+    // we get some concurrency issues where, in rare case, the request is sent twice and our backend doesn't support it
+    await sleep(Math.random() * 5000)
+
     const deviceToken = await messaging().getToken()
     await client.mutate({
       mutation: DeviceNotificationTokenCreateDocument,
