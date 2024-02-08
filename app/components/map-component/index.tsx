@@ -1,19 +1,18 @@
-import { makeStyles, useTheme } from "@rneui/themed"
-import MapView, { Region, MapMarker as MapMarkerType } from "react-native-maps"
-import MapStyles from "./map-styles.json"
-import React, { useRef } from "react"
-import { BusinessMapMarkersQuery, MapMarker } from "@app/graphql/generated"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import MapMarkerComponent from "../map-marker-component"
-import { PermissionStatus, RESULTS, request } from "react-native-permissions"
-import { LOCATION_PERMISSION, getUserRegion } from "@app/screens/map-screen/map-screen"
-import LocationButtonCopy from "./location-button-copy"
-import debounce from "lodash.debounce"
-import { updateMapLastCoords } from "@app/graphql/client-only-query"
 import { useApolloClient } from "@apollo/client"
-import { OpenSettingsElement, OpenSettingsModal } from "./open-settings-modal"
-import { Dimensions, View } from "react-native"
+import { updateMapLastCoords } from "@app/graphql/client-only-query"
+import { BusinessMapMarkersQuery, MapMarker } from "@app/graphql/generated"
+import { LOCATION_PERMISSION, getUserRegion } from "@app/screens/map-screen/map-screen"
 import { isIOS } from "@rneui/base"
+import { makeStyles, useTheme } from "@rneui/themed"
+import debounce from "lodash.debounce"
+import React, { useRef } from "react"
+import { View } from "react-native"
+import MapView, { MapMarker as MapMarkerType, Region } from "react-native-maps"
+import { PermissionStatus, RESULTS, request } from "react-native-permissions"
+import MapMarkerComponent from "../map-marker-component"
+import LocationButtonCopy from "./location-button-copy"
+import MapStyles from "./map-styles.json"
+import { OpenSettingsElement, OpenSettingsModal } from "./open-settings-modal"
 
 type Props = {
   data?: BusinessMapMarkersQuery
@@ -44,9 +43,7 @@ export default function MapComponent({
     theme: { colors, mode: themeMode },
   } = useTheme()
   const styles = useStyles()
-  const { LL } = useI18nContext()
   const client = useApolloClient()
-  const text = LL.MapScreen.payBusiness()
 
   const mapViewRef = useRef<MapView>(null)
   const openSettingsModalRef = React.useRef<OpenSettingsElement>(null)
@@ -145,8 +142,6 @@ export default function MapComponent({
             handleCalloutPress={handleCalloutPress}
             handleMarkerPress={handleMarkerPress}
             isFocused={focusedMarker?.username === item.username}
-            text={text}
-            styles={styles}
           />
         ))}
       </MapView>
@@ -163,45 +158,11 @@ export default function MapComponent({
   )
 }
 
-const { width: screenWidth } = Dimensions.get("window")
-
-const useStyles = makeStyles(({ colors }) => ({
-  viewContainer: { flex: 1 },
-
-  border: {
-    maxWidth: screenWidth,
-    overflow: "hidden",
-    borderRadius: 3,
-    borderWidth: 1,
-    borderColor: colors.grey4,
-    padding: 10,
-    backgroundColor: colors.white,
-  },
-
-  customView: {
-    alignItems: "center",
-    rowGap: 10,
-  },
-
-  pseudoButton: {
-    backgroundColor: colors.primary3,
-    borderRadius: 25,
-    width: 200,
-  },
-
+const useStyles = makeStyles(() => ({
   map: {
     height: "100%",
     width: "100%",
   },
 
-  title: { color: colors._darkGrey, textAlign: "center" },
-
-  text: {
-    fontSize: 20,
-    lineHeight: 24,
-    fontWeight: "600",
-    color: colors.white,
-    margin: 8,
-    textAlign: "center",
-  },
+  viewContainer: { flex: 1 },
 }))
