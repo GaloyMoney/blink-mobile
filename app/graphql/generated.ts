@@ -854,6 +854,32 @@ export type MapMarker = {
   readonly username: Scalars['Username']['output'];
 };
 
+export type Merchant = {
+  readonly __typename: 'Merchant';
+  /** GPS coordinates for the merchant that can be used to place the related business on a map */
+  readonly coordinates: Coordinates;
+  readonly createdAt: Scalars['Timestamp']['output'];
+  readonly id: Scalars['ID']['output'];
+  readonly title: Scalars['String']['output'];
+  /** The username of the merchant */
+  readonly username: Scalars['Username']['output'];
+  /** Whether the merchant has been validated */
+  readonly validated: Scalars['Boolean']['output'];
+};
+
+export type MerchantMapSuggestInput = {
+  readonly latitude: Scalars['Float']['input'];
+  readonly longitude: Scalars['Float']['input'];
+  readonly title: Scalars['String']['input'];
+  readonly username: Scalars['Username']['input'];
+};
+
+export type MerchantPayload = {
+  readonly __typename: 'MerchantPayload';
+  readonly errors: ReadonlyArray<Error>;
+  readonly merchant?: Maybe<Merchant>;
+};
+
 export type MobileVersions = {
   readonly __typename: 'MobileVersions';
   readonly currentSupported: Scalars['Int']['output'];
@@ -961,6 +987,7 @@ export type Mutation = {
   readonly lnUsdInvoiceFeeProbe: SatAmountPayload;
   /** Sends a payment to a lightning address. */
   readonly lnurlPaymentSend: PaymentSendPayload;
+  readonly merchantMapSuggest: MerchantPayload;
   readonly onChainAddressCreate: OnChainAddressPayload;
   readonly onChainAddressCurrent: OnChainAddressPayload;
   readonly onChainPaymentSend: PaymentSendPayload;
@@ -1143,6 +1170,11 @@ export type MutationLnUsdInvoiceFeeProbeArgs = {
 
 export type MutationLnurlPaymentSendArgs = {
   input: LnurlPaymentSendInput;
+};
+
+
+export type MutationMerchantMapSuggestArgs = {
+  input: MerchantMapSuggestInput;
 };
 
 
@@ -7219,6 +7251,9 @@ export type ResolversTypes = {
   MapInfo: ResolverTypeWrapper<MapInfo>;
   MapMarker: ResolverTypeWrapper<MapMarker>;
   Memo: ResolverTypeWrapper<Scalars['Memo']['output']>;
+  Merchant: ResolverTypeWrapper<Merchant>;
+  MerchantMapSuggestInput: MerchantMapSuggestInput;
+  MerchantPayload: ResolverTypeWrapper<MerchantPayload>;
   Minutes: ResolverTypeWrapper<Scalars['Minutes']['output']>;
   MobileVersions: ResolverTypeWrapper<MobileVersions>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -7433,6 +7468,9 @@ export type ResolversParentTypes = {
   MapInfo: MapInfo;
   MapMarker: MapMarker;
   Memo: Scalars['Memo']['output'];
+  Merchant: Merchant;
+  MerchantMapSuggestInput: MerchantMapSuggestInput;
+  MerchantPayload: MerchantPayload;
   Minutes: Scalars['Minutes']['output'];
   MobileVersions: MobileVersions;
   Mutation: {};
@@ -7968,6 +8006,22 @@ export interface MemoScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'Memo';
 }
 
+export type MerchantResolvers<ContextType = any, ParentType extends ResolversParentTypes['Merchant'] = ResolversParentTypes['Merchant']> = {
+  coordinates?: Resolver<ResolversTypes['Coordinates'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  username?: Resolver<ResolversTypes['Username'], ParentType, ContextType>;
+  validated?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MerchantPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['MerchantPayload'] = ResolversParentTypes['MerchantPayload']> = {
+  errors?: Resolver<ReadonlyArray<ResolversTypes['Error']>, ParentType, ContextType>;
+  merchant?: Resolver<Maybe<ResolversTypes['Merchant']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export interface MinutesScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Minutes'], any> {
   name: 'Minutes';
 }
@@ -8013,6 +8067,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   lnUsdInvoiceCreateOnBehalfOfRecipient?: Resolver<ResolversTypes['LnInvoicePayload'], ParentType, ContextType, RequireFields<MutationLnUsdInvoiceCreateOnBehalfOfRecipientArgs, 'input'>>;
   lnUsdInvoiceFeeProbe?: Resolver<ResolversTypes['SatAmountPayload'], ParentType, ContextType, RequireFields<MutationLnUsdInvoiceFeeProbeArgs, 'input'>>;
   lnurlPaymentSend?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationLnurlPaymentSendArgs, 'input'>>;
+  merchantMapSuggest?: Resolver<ResolversTypes['MerchantPayload'], ParentType, ContextType, RequireFields<MutationMerchantMapSuggestArgs, 'input'>>;
   onChainAddressCreate?: Resolver<ResolversTypes['OnChainAddressPayload'], ParentType, ContextType, RequireFields<MutationOnChainAddressCreateArgs, 'input'>>;
   onChainAddressCurrent?: Resolver<ResolversTypes['OnChainAddressPayload'], ParentType, ContextType, RequireFields<MutationOnChainAddressCurrentArgs, 'input'>>;
   onChainPaymentSend?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationOnChainPaymentSendArgs, 'input'>>;
@@ -8598,6 +8653,8 @@ export type Resolvers<ContextType = any> = {
   MapInfo?: MapInfoResolvers<ContextType>;
   MapMarker?: MapMarkerResolvers<ContextType>;
   Memo?: GraphQLScalarType;
+  Merchant?: MerchantResolvers<ContextType>;
+  MerchantPayload?: MerchantPayloadResolvers<ContextType>;
   Minutes?: GraphQLScalarType;
   MobileVersions?: MobileVersionsResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
