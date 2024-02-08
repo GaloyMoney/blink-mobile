@@ -187,7 +187,7 @@ export const EarnMapScreen: React.FC = () => {
 
     const onPress = () => {
       nextSectionNotYetAvailable
-        ? Alert.alert(LL.EarnScreen.notYet(), LL.EarnScreen.availableTomorrow())
+        ? Alert.alert(LL.EarnScreen.oneSectionADay(), LL.EarnScreen.availableTomorrow())
         : navigation.navigate("earnsSection", { section })
     }
 

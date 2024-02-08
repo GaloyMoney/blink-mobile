@@ -2035,8 +2035,8 @@ const en: BaseTranslation = {
     youEarned: "You Earned",
     registerTitle: "Need to upgrade your account",
     registerContent: "Register with your phone number to receive sats",
-    notYet: "Not yet",
-    availableTomorrow: "This section will be available tomorrow!",
+    oneSectionADay: "One section a day!",
+    availableTomorrow: "Come back tomorrow to continue learning about Bitcoin!",
     motivatingBadger: "Dig your way through these lessons and earn as you learn",
   },
   GetStartedScreen: {

@@ -6265,11 +6265,11 @@ type RootTranslation = {
 		 */
 		registerContent: string
 		/**
-		 * N​o​t​ ​y​e​t
+		 * O​n​e​ ​s​e​c​t​i​o​n​ ​a​ ​d​a​y​!
 		 */
-		notYet: string
+		oneSectionADay: string
 		/**
-		 * T​h​i​s​ ​s​e​c​t​i​o​n​ ​w​i​l​l​ ​b​e​ ​a​v​a​i​l​a​b​l​e​ ​t​o​m​o​r​r​o​w​!
+		 * C​o​m​e​ ​b​a​c​k​ ​t​o​m​o​r​r​o​w​ ​t​o​ ​c​o​n​t​i​n​u​e​ ​l​e​a​r​n​i​n​g​ ​a​b​o​u​t​ ​B​i​t​c​o​i​n​!
 		 */
 		availableTomorrow: string
 		/**
@@ -15098,11 +15098,11 @@ export type TranslationFunctions = {
 		 */
 		registerContent: () => LocalizedString
 		/**
-		 * Not yet
+		 * One section a day!
 		 */
-		notYet: () => LocalizedString
+		oneSectionADay: () => LocalizedString
 		/**
-		 * This section will be available tomorrow!
+		 * Come back tomorrow to continue learning about Bitcoin!
 		 */
 		availableTomorrow: () => LocalizedString
 		/**
