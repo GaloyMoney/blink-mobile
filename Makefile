@@ -18,3 +18,9 @@ reset-ios:
 
 start:
 	yarn start
+
+tilt-up:
+	cd dev && GALOY_QUICKSTART_PATH="dev/vendor/galoy-quickstart" tilt up
+
+tilt-down:
+	cd dev && GALOY_QUICKSTART_PATH="dev/vendor/galoy-quickstart" tilt down
