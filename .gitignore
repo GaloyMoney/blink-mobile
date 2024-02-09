@@ -87,3 +87,8 @@ android/app/src/main/assets
 
 # testing
 /coverage
+
+.env.local
+*.tmp.ci
+artifacts
+.direnv
