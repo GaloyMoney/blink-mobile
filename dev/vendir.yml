@@ -1,0 +1,19 @@
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+
+directories:
+  - path: vendor
+    contents:
+      - path: galoy-quickstart
+        git:
+          url: https://github.com/GaloyMoney/galoy.git
+          ref: '0.20.42'
+        includePaths:
+          - quickstart/bin/*
+          - quickstart/dev/**/*
+          - quickstart/graphql/**/*
+          - quickstart/galoy/test/**/*
+          - quickstart/docker-compose.yml
+          - quickstart/.env.galoy
+          - quickstart/.gitignore
+        newRootPath: quickstart

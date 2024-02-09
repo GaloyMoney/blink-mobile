@@ -1,0 +1,11 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - git:
+      commitTitle: 'feat: adding suggest and approve endpoint for the map (#3937)'
+      sha: d2f6f35ab4fb67397094684d4b7fc0cf79d47111
+      tags:
+      - 0.20.42
+    path: galoy-quickstart
+  path: vendor
+kind: LockConfig
