@@ -219,6 +219,8 @@ services:
     - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-agent:4318
     ports:
     - 6685:6685
+    links:
+    - notifications-pg:notifications-pg
   notifications-pg:
     image: postgres:14.1
     environment:
