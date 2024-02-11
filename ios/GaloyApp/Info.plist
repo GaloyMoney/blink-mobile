@@ -82,20 +82,21 @@
 			</dict>
 		</dict>
 	</dict>
+
+	<!-- Remember to add any permission-related key-string pairs to InfoPlist.strings for localization -->
 	<key>NSCameraUsageDescription</key>
 	<string>Activate your camera to scan QR codes</string>
 	<key>NSFaceIDUsageDescription</key>
-	<string>$(PRODUCT_NAME) requires FaceID access for quick and secure authentication</string>
+	<string>FaceID access for quick and secure authentication</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Find merchants who accept bitcoin near you</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Find merchants who accept bitcoin near you</string>
+	<string>This app includes a component that requires background location access, but your location is only used while in app to find merchants near you.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Import a screenshot with a QR code</string>
 	<key>NFCReaderUsageDescription</key>
 	<string>Receive payments over NFC</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This app includes a component that requires background location access, but your location is only used while in app to find merchants near you.</string>
+	
 	<key>UIAppFonts</key>
 	<array>
 		<string>Ionicons.ttf</string>
