@@ -180,16 +180,37 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
 
   let ListEmptyContent: React.ReactNode
 
-  if (allContacts.length > 0) {
-    ListEmptyContent = (
-      <View style={styles.emptyListNoMatching}>
-        <Text style={styles.emptyListTitle}>{LL.PeopleScreen.noMatchingContacts()}</Text>
-      </View>
-    )
-  } else if (loading) {
+  if (loading) {
     ListEmptyContent = (
       <View style={styles.activityIndicatorContainer}>
         <ActivityIndicator size="large" color={colors.primary} />
+      </View>
+    )
+  } else if (
+    // TODO: refactor: ideally this should come from destinationState.destination
+    // but currently this is not validated when the user is typing,
+    // only validated on paste, or when the user is pressing the send button
+    // so there is no way to dynamically know if this is a bitcoin or lightning or lnurl
+    // until a refactor is done
+    destinationState.unparsedDestination.startsWith("bc1") ||
+    destinationState.unparsedDestination.startsWith("tb1") ||
+    destinationState.unparsedDestination.startsWith("lnurl") ||
+    destinationState.unparsedDestination.startsWith("lightning:") ||
+    destinationState.unparsedDestination.startsWith("bitcoin:") ||
+    destinationState.unparsedDestination.startsWith("1") ||
+    destinationState.unparsedDestination.startsWith("3") ||
+    destinationState.unparsedDestination.startsWith("lnbc1") ||
+    // if the user is typing a lightning address
+    // ideally we should filter from the rules below contact from the same instance
+    // ie: test and test@blink.sv are the same user
+    // but anyhow, more refactor is needed for contacts to have extenral contacts
+    destinationState.unparsedDestination.includes("@")
+  ) {
+    ListEmptyContent = <></>
+  } else if (allContacts.length > 0) {
+    ListEmptyContent = (
+      <View style={styles.emptyListNoMatching}>
+        <Text style={styles.emptyListTitle}>{LL.PeopleScreen.noMatchingContacts()}</Text>
       </View>
     )
   } else {
@@ -387,17 +408,12 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     setSelectedId("")
     try {
       const clipboard = await Clipboard.getString()
+      updateMatchingContacts(clipboard)
       dispatchDestinationStateAction({
         type: SendBitcoinActions.SetUnparsedPastedDestination,
         payload: {
           unparsedDestination: clipboard,
         },
-      })
-      toastShow({
-        type: "success",
-        message: (translations) =>
-          translations.SendBitcoinDestinationScreen.pastedClipboardSuccess(),
-        LL,
       })
       if (willInitiateValidation()) {
         waitAndValidateDestination(clipboard)
