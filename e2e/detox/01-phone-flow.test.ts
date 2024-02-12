@@ -21,8 +21,10 @@ describe("Login with Phone Flow", () => {
 
   it("set environment", async () => {
     const buildBtn = element(by.id("logo-button"))
-    // Wait for 2 mins because metro bundler might not finish sync
-    await waitFor(buildBtn).toBeVisible().withTimeout(1200000)
+    await waitFor(buildBtn)
+      .toBeVisible()
+      // Wait for 5 mins because metro bundler might not finish sync
+      .withTimeout(5 * 600000)
     await buildBtn.multiTap(3)
 
     const logoutBtn = element(by.id("logout button"))
