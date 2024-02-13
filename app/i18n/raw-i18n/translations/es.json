@@ -42,7 +42,7 @@
         "title": "Gente",
         "copy": "Copiar",
         "noContactsTitle": "No se encontraron contactos",
-        "noContactsYet": "Envíe o reciba un pago utilizando un nombre de usuario y los contactos se agregarán automáticamente aquí",
+        "noContactsYet": "Envía o recibe un pago utilizando un nombre de usuario y los contactos se agregarán automáticamente aquí",
         "noMatchingContacts": "No se encontraron coincidencias para su búsqueda.",
         "allContacts": "Contactos",
         "viewAllContacts": "Ver contactos",
@@ -173,11 +173,11 @@
                         ],
                         "feedback": [
                             "Es correcto. El dinero te permite fácilmente la compra de algo sin rebuscar una forma de pago",
-                            "No tontillo, sabes que esa no es la respuesta.",
+                            "No, sabes que esa no es la respuesta.",
                             "Ni cerca, a eso le llamamos un eclipse solar. 🌚"
                         ],
                         "question": "¿Cuál coincidencia resuelve el dinero?",
-                        "text": "Desde hace siglos, antes de que la gente tuviera dinero, ellos trueques, -- O tenían que ver la forma de cambiar un único artículo, a cambio de otro artículo o servicio. \n \n Digamos que deseas un plato de comida de un restaurante, y le ofreces a cambio al dueño una escoba. El dueño podría decir \"NO\" -- pero podría aceptar 3 sombreros a cambio. Si tu felizmente los tienes. \n \n ¡¡\"Puedes imaginar lo difícil e ineficiente que una \"Economía de Trueque\" puede ser!! \n \n Por el contrario, con dinero, simplemente entregas un billete de a $20 y sabrás que inmediatamente el dueño del restaurant lo aceptara.",
+                        "text": "Desde hace siglos, antes de que la gente tuviera dinero, ellos trueques, -- O tenían que ver la forma de cambiar un único artículo, a cambio de otro artículo o servicio. \n \n Digamos que deseas un plato de comida de un restaurante, y le ofreces a cambio al dueño una escoba. El dueño podría decir \"NO\" -- pero podría aceptar 3 sombreros a cambio. Si tu felizmente los tienes. \n \n ¡\"Puedes imaginar lo difícil e ineficiente que una \"Economía de Trueque\" puede ser! \n \n Por el contrario, con dinero, simplemente entregas un billete de a $20 y sabrás que inmediatamente el dueño del restaurant lo aceptara.",
                         "title": "El dinero resuelve la “coincidencia de lo que se quiere o desea” ... ¿¿Qué es eso??"
                     },
                     "moneyEvolution": {
@@ -317,7 +317,7 @@
                             "Si bien algunos pueden creer que esto es así, no es la respuesta que estamos buscando aquí."
                         ],
                         "question": "¿Cuáles son algunos otros problemas que existen con el dinero fiduciario?",
-                        "text": "Sí, existen muchos otros problemas con el dinero fiduciario moderno. \n\nPrimero, puede ser extremadamente difícil mover dinero alrededor del mundo. A menudo, los gobiernos restringirán directamente el movimiento, y en ocasiones incluso confiscarán dinero, sin una razón o explicación válida. E incluso cuando puede enviar dinero, las altas tarifas de transacción lo hacen muy costoso.\n\nEn segundo lugar, incluso en los EE. UU., ha habido una pérdida total de privacidad, ya que la mayoría del comercio se realiza con tarjetas de débito y crédito, así como en línea con otros sistemas como PayPal y Apple Pay.\n\n¿Alguna vez ha notado cómo un ¿Aparece el anuncio en sus redes sociales o Gmail momentos después de buscar un determinado producto o servicio? Esto se conoce como “capitalismo de vigilancia” y se basa en empresas que venden sus datos financieros personales.",
+                        "text": "Sí, existen muchos otros problemas con el dinero fiduciario moderno. \n\nPrimero, puede ser extremadamente difícil mover dinero alrededor del mundo. A menudo, los gobiernos restringirán directamente el movimiento, y en ocasiones incluso confiscarán dinero, sin una razón o explicación válida. E incluso cuando puede enviar dinero, las altas tarifas de transacción lo hacen muy costoso.\n\nEn segundo lugar, incluso en los EE. UU., ha habido una pérdida total de privacidad, ya que la mayoría del comercio se realiza con tarjetas de débito y crédito, así como en línea con otros sistemas como PayPal y Apple Pay.\n\n¿Alguna vez has notado cómo un ¿Aparece el anuncio en sus redes sociales o Gmail momentos después de buscar un determinado producto o servicio? Esto se conoce como “capitalismo de vigilancia” y se basa en empresas que venden sus datos financieros personales.",
                         "title": "Bien, el dinero fiduciario pierde valor con el tiempo. ¿Hay otros problemas?"
                     }
                 }
@@ -327,7 +327,7 @@
                 "questions": {
                     "LimitedSupply": {
                         "answers": [
-                            "Si. Nunca podrán existir más de los 21 millones de Bitcoin que han sido Creados.",
+                            "Si. Nunca podrán existir más de los 21 millones de Bitcoin que han sido creados.",
                             "No. El gobierno puede crear más Bitcoin en cualquier momento.",
                             "No, Los programas de Bitcoin pueden ser cambiados para permitir que puedan ser creados más Bitcoins."
                         ],
@@ -336,14 +336,14 @@
                             "Respuesta incorrecta. El gobierno no tiene ningún control sobre Bitcoin.",
                             "Incorrecto. Uno de los atributos del Bitcoin, es que su suministro está limitado para siempre."
                         ],
-                        "question": "¿Está el suministro de Bitcoin Limitado para Siempre?",
+                        "question": "¿Es el suministro de Bitcoin limitado para siempre?",
                         "text": "Los gobiernos pueden imprimir todo el dinero (Fiat) en cantidades ilimitadas. \n \n Por el contrario, el suministro de Bitcoin está arreglado --y nunca excederá de los 21 millones de monedas. \n \n Un continuo incremento del suministro de moneda impresa (Fiat) crea inflación. Esto significa que el dinero que guardes ahora tendrá menos valor en el futuro.\n \n Un simple ejemplo: \n Un pedazo de pan costaba cerca de 8 centavos en 1920. en 1990 es mismo pedazo de pan en 1990 cotaba cerca de $1.00, ¡y hoy el precio estaría cercano a $2.50! \n \n El suministro limitado de Bitcoin crea el efecto opuesto, uno de deflación.\n \n Esto significa que el bitcoin que guardes hoy, está diseñado para adquirir mayor valor en el futuro. --- porque se escasea.",
                         "title": "Característica Especial #1: \n Suministro Limitado"
                     },
                     "Decentralized": {
                         "answers": [
-                            "No. Bitcoin es completamente “descentralizada”.",
-                            "Si, centralizada y controlada por las Naciones Unidas.",
+                            "No. Bitcoin es completamente “descentralizado”.",
+                            "Si, centralizado y controlado por las Naciones Unidas.",
                             "Si, es centralizada y controlada por los bancos más grandes del mundo."
                         ],
                         "feedback": [
@@ -351,9 +351,9 @@
                             "Respuesta Incorrecta. Por favor intenta de nuevo.",
                             "Incorrecto. ¡Tú ya sabes que eso no es cierto!"
                         ],
-                        "question": "¿Bitcoin es Centralizada?",
-                        "text": "El dinero Fiat es controlado por los bancos y los gobiernos, es por eso que las personas se refieren a esto como divisas “centralizas”.\n \n Bitcoin no está controlada por ninguna persona, gobierno o compañía, lo que la vuelve “descentralizada” \n \n El no tener involucrado a ningún banco significa que nadie puede negarte el acceso a Bitcoin, Ni por cuestiones de raza, genero, ingresos, historia crediticia, localización geográfica, o cualquier otro factor. \n \n Cualquiera, en cualquier lugar del mundo puede acceder y usar Bitcoin cada vez que lo desee. ¡Todo lo que necesitas es una computadora o smartphone, y una conexión de internet!",
-                        "title": "Característica Especial #2: Descentralizada"
+                        "question": "¿Bitcoin es Centralizado?",
+                        "text": "El dinero Fiat es controlado por los bancos y los gobiernos, es por eso que las personas se refieren a esto como divisas “centralizas”.\n \n Bitcoin no está controlado por ninguna persona, gobierno o compañía, lo que la vuelve “descentralizado” \n \n El no tener involucrado a ningún banco significa que nadie puede negarte el acceso a Bitcoin, Ni por cuestiones de raza, genero, ingresos, historia crediticia, localización geográfica, o cualquier otro factor. \n \n Cualquiera, en cualquier lugar del mundo puede acceder y usar Bitcoin cada vez que lo desee. ¡Todo lo que necesitas es una computadora o smartphone, y una conexión de internet!",
+                        "title": "Característica Especial #2: Descentralizado"
                     },
                     "NoCounterfeitMoney": {
                         "answers": [
@@ -389,29 +389,29 @@
                         "answers": [
                             "Si. La red de Bitcoin es muy segura.",
                             "Talvez, eso depende del día de la semana.",
-                            "No. Esta es programa open source, y es fácilmente atacada."
+                            "No. Es un programa open source, y es fácilmente atacado."
                         ],
                         "feedback": [
                             "Correcto. De hecho, la red de Bitcoin jamás ha sido hackeada ni una vez. Responde la próxima pregunta para aprender más.",
                             "Buen intento, pero estas Equivocado. La red de Bitcoin está a salvo y segura. 24 horas al día, 365 días al año.",
-                            "Incorrecto. Aunque es en efecto software “open source” — o disponible para el público gratis— aun así, es extremadamente segura."
+                            "Incorrecto. Aunque Bitcoin es un software “open source” — o disponible para el público gratis es extremadamente seguro."
                         ],
                         "question": "¿Es la red Bitcoin segura?",
                         "text": "La red de Bitcoin vale ahora más de $100 billones hoy. Por consiguiente, la red debe ser muy segura, por eso el dinero nunca ha sido robado.\n \n Bitcoin es conocido mundialmente como la primer Criptomoneda o Criptodivisa. \n \n la palabra “crypto” proviene en parte del nombre criptografía. En simples palabras, la criptografía protege información a través de muchas funciones matemáticas complejas. \n \n La mayoría de gente no se da cuenta, pero ¡Bitcoin es actualmente la moneda digital más segura del mundo! \n \n (Probablemente escucharas de algunos Hackeos o robos de Bitcoin. De esto hablaremos en la siguiente pregunta.)",
-                        "title": "Característica Especial #5: \n Seguridad -- Parte I"
+                        "title": "Característica Especial #5: \n Seguro -- Parte I"
                     },
                     "securePartTwo": {
                         "answers": [
-                            "No. Bitcoin Nunca ha sido hackeada.",
-                            "Si, Bitcoin es hackeada frecuentemente.",
-                            "Si. Bitcoin usualmente tiene hackeos en Días festivos. cuando los bancos están cerrados."
+                            "No. Bitcoin Nunca ha sido hackeado.",
+                            "Si, Bitcoin es hackeado frecuentemente.",
+                            "Si. Bitcoin usualmente tiene hackeos en días festivos. cuando los bancos están cerrados."
                         ],
                         "feedback": [
-                            "Esto es correcto. La red de Bitcoin nunca se ha visto comprometida. De cualquier manera, es importante que uses una billetera digital segura ¡Como lo es Bitcoin Beach Wallet, desarrollada por Galoy! para mantener tus Bitcoins personales seguros todo el tiempo.",
+                            "Esto es correcto. La red de Bitcoin nunca se ha visto comprometida. De cualquier manera, es importante que uses una billetera digital segura para mantener tus Bitcoins personales seguros todo el tiempo.",
                             "Equivocado, intenta de nuevo.",
                             "No amiguito, sabes bien que eso no es correcto."
                         ],
-                        "question": "¿Bitcoin ha sido alguna vez hackeada?",
+                        "question": "¿Bitcoin ha sido alguna vez hackeado?",
                         "text": "Siendo directos: la red Bitcoin por si misma NUNCA ha sido hackeada. ni siquiera una vez. \n \n ¿Exactamente que ha sido hackeado? \n \n Algunas billeteras digitales que no tienen la seguridad apropiada en sus aplicaciones. \n \n Justo como una cartera o billetera física guarda nuestro dinero impreso (Fiat) en forma de papel, las billeteras digitales guardan cierta cantidad de Bitcoin. \n \n En el mundo físico, los criminales roban bancos, y se van con dólares estadounidenses. El hecho de que alguien robe un banco no tiene ninguna relación de que el dólar americano sea o no una moneda estable. \n \n De manera similar, algunos hackers de computadoras han robado dinero de billeteras digitales inseguras. el equivalente en línea al robo de un banco. \n \n Sin embargo, es importante conocer, ¡Que la red de Bitcoin NUNCA ha sido hackeada o comprometida!",
                         "title": "Característica Especial #5: \n Seguridad -- Parte II"
                     }
@@ -491,7 +491,7 @@
                             "Lo siento, esa no es la respuesta correcta. Si bien aprender sobre otras culturas y sociedades puede haber sido un beneficio secundario de promover la adopción de una reserva de valor extranjera, no fue la razón principal.",
                             "Me temo que esa no es la respuesta correcta. Si bien mostrar riqueza y estatus puede haber sido una motivación para algunos individuos, no fue la razón principal por la cual los comerciantes y comerciantes tenían un incentivo para promover la adopción de una reserva de valor extranjera en su propia sociedad."
                         ],
-                        "question": "¿Por qué los comerciantes y comerciantes de las primeras sociedades humanas tenían un incentivo para promover la adopción de una reserva de valor extranjera en su propia sociedad?",
+                        "question": "¿Por qué los comercios y comerciantes de las primeras sociedades humanas tenían un incentivo para promover la adopción de una reserva de valor extranjera en su propia sociedad?",
                         "text": "A medida que las sociedades humanas y las rutas comerciales se desarrollaron con el tiempo, las reservas de valor que surgieron en diferentes sociedades comenzaron a competir entre sí. Los inversores  y comerciantes tenían que decidir si guardarían sus ganancias en el depósito de valor de su propia sociedad o en el depósito de valor de la sociedad con la que comerciaban, o en una combinación de ambos.\n\nMantener ahorros en una reserva de valor extranjera dio a los comerciantes la capacidad de realizar transacciones comerciales más fácilmente en esa sociedad, y también les dio un incentivo para promover la adopción de esa reserva de valor en su propia sociedad, ya que aumentaría el poder adquisitivo de sus clientes. ahorros.\n\nCuando dos sociedades adoptan la misma reserva de valor, ven una reducción significativa en el costo del comercio entre sí y un aumento en la riqueza basada en el comercio. En el siglo XIX, la mayor parte del mundo convergió en un único depósito de valor –el oro– y en este período se produjo el mayor aumento del comercio de la historia.\n",
                         "title": "Los beneficios de converger en una única reserva de valor"
                     }
@@ -773,7 +773,7 @@
                         ],
                         "feedback": [
                             "¡Felicidades! Es interesante pensar en cómo ha evolucionado el dinero a lo largo del tiempo, desde su uso inicial como medio para facilitar el comercio en pequeñas comunidades hasta su papel actual como medio de intercambio en las economías modernas.",
-                            "Lo siento, ¡parece que lo entendiste al revés! Más suerte con tu próxima suposición.",
+                            "Lo siento, ¡parece que lo entendiste al revés! Más suerte con tu próxima respuesta.",
                             "¡Equivocado! El crédito existe desde hace casi tanto tiempo como el dinero, y probablemente llegó para quedarse. ¡Más suerte con tu próxima respuesta!"
                         ],
                         "question": "¿Cuál era la función principal del dinero?",
@@ -1418,7 +1418,7 @@
                         ],
                         "question": "¿Cómo permite Lightning Network que los usuarios se paguen entre sí si no están conectados directamente a través de un canal de pago?",
                         "text": "Quizás estés pensando que montar un canal de pago con cientos de comercios podría resultar tedioso, pero no. La belleza de Lightning Network es que es una red de canales interconectados.\n\nDigamos que Bob convenció a su amiga Carol para que también se uniera a Lightning Network. Alice tiene un canal con Bob y Bob tiene un canal con Carol. Luego, Alice y Carol pueden pagarse mutuamente \"enrutando\" a través de Bob.\n\nAlgunos trucos criptográficos bastante inteligentes garantizan que Bob no pueda robar el dinero mientras pasa a través de él.\n\nCuando realiza un pago en Lightning Network, su nodo busca una ruta de canales entre usted y su destino. Esto es lo que se conoce como enrutamiento. Por supuesto, todo esto lo hacen automáticamente los nodos Lightning involucrados, lo que permite que suceda en un abrir y cerrar de ojos.\n",
-                        "title": "Routing - Enrutamiento"
+                        "title": "Enrutamiento"
                     }
                 }
             },
@@ -1432,7 +1432,7 @@
                             "Ha subido y bajado aleatoriamente"
                         ],
                         "feedback": [
-                            "¡Bien hecho! Parece tener una buena comprensión de la tendencia general del tipo de cambio de bitcoin. A pesar de algunas fluctuaciones, ha ido aumentando constantemente. ¡Sigue con el buen trabajo!",
+                            "¡Bien hecho! Pareces tener una buena comprensión de la tendencia general del tipo de cambio de bitcoin. A pesar de algunas fluctuaciones, ha ido aumentando constantemente. ¡Sigue con el buen trabajo!",
                             "Lo siento, eso no está del todo bien. Si bien el tipo de cambio de bitcoin ciertamente ha tenido altibajos, la tendencia general no ha sido consistentemente a la baja. ¡Intenta otra vez!",
                             "Lo siento, eso es incorrecto. Si bien el tipo de cambio de bitcoin ciertamente ha tenido altibajos, la tendencia general no ha sido completamente aleatoria. ¡Sigue intentándolo!"
                         ],
@@ -1608,7 +1608,7 @@
                         ],
                         "question": "¿Pueden los gobiernos prohibir efectivamente el bitcoin?",
                         "text": "Es técnicamente posible que los gobiernos prohíban Bitcoin, pero hacer cumplir dicha prohibición sería difícil debido a la naturaleza descentralizada de la red Bitcoin.\n\nBitcoin se basa en claves privadas, que son simplemente números aleatorios, para controlar el acceso a las transacciones registradas en la cadena de bloques. Estas claves privadas se pueden generar y almacenar en cualquier lugar, lo que las hace en gran medida indetectables.\n\nAdemás, la infraestructura necesaria para acceder a la red bitcoin es relativamente simple y está ampliamente disponible, lo que facilita que las personas verifiquen las transacciones sin confianza.\n\nComo dijo Saifedean Ammous, \"Prohibir bitcoin no es muy diferente de intentar prohibir las matemáticas. Simplemente demostrará su utilidad y atraerá a más personas\".\n",
-                        "title": "Los Gobiernos Prohibirán Bitcoin"
+                        "title": "Los Gobiernos prohibirán Bitcoin"
                     }
                 }
             },
@@ -1703,7 +1703,7 @@
                         ],
                         "question": "¿Cuál es la razón principal por la que bitcoin se considera valioso a pesar de que cualquiera puede copiar su código?",
                         "text": "Un argumento en contra del valor del bitcoin es que no es escaso porque hay miles de otras criptomonedas disponibles y porque cualquiera puede copiar el código y crear su propia versión.\n\nSin embargo, esto pasa por alto el hecho de que bitcoin es más que un simple fragmento de código. Es un protocolo de código abierto para transferir valor que atrae personas y recursos por su transparencia y riguroso proceso de desarrollo.\n\nComo señaló @BTCSchellingPt, \"el código abierto es en gran medida una meritocracia. Tienes las soluciones de construcción mental de la colmena. Obtienes todo ese escrutinio y eso vuelve a la seguridad. Bitcoin Core es probablemente una de las bases de código más analizadas en el mundo. mundo.\"\n\nEn otras palabras, el valor de bitcoin no reside sólo en su código, sino también en la comunidad y la infraestructura que lo rodea.\n",
-                        "title": "Bitcoin no escasea porque hay miles de criptomonedas"
+                        "title": "Bitcoin no es escazo porque hay miles de criptomonedas"
                     }
                 }
             },
@@ -1981,10 +1981,10 @@
         "finishText": "Eso es todo por ahora, te avisaremos cuando haya más por desenterrar",
         "getRewardNow": "Responder al cuestionario",
         "keepDigging": "Sigue nadando",
-        "phoneNumberNeeded": "Numero de telefono requerido",
+        "phoneNumberNeeded": "Numero de teléfono requerido",
         "quizComplete": "Prueba completada, has ganado {amount: number} sats",
         "reviewQuiz": "Cuestionario de repaso",
-        "satAccumulated": "Satoshis acumulado",
+        "satAccumulated": "Satoshis acumulados",
         "satsEarned": "‪{formattedNumber|sats}‬ ganados",
         "sectionsCompleted": "Has completado",
         "title": "Ganar",
@@ -1992,8 +1992,8 @@
         "youEarned": "Has Ganado",
         "registerTitle": "Necesitas actualizar tu cuenta",
         "registerContent": "Regístrate con tu número de teléfono para recibir sats",
-        "notYet": "Aún no",
-        "availableTomorrow": "¡Esta sección estará disponible mañana!",
+        "oneSectionADay": "¡Una sección al día!",
+        "availableTomorrow": "¡Vuelve mañana para seguir aprendiendo sobre Bitcoin!",
         "motivatingBadger": "Ábrete camino a través de estas lecciones y gana mientras aprendes"
     },
     "GetStartedScreen": {
@@ -2256,7 +2256,7 @@
         "pushNotifications": "Notificaciones push",
         "notificationCategories": {
             "Circles": {
-                "title": "Circulos",
+                "title": "Círculos",
                 "description": "Notificaciones sobre tus círculos."
             },
             "Payments": {
@@ -2387,7 +2387,7 @@
         "title": "Establece tu dirección de {bankName: string}",
         "Errors": {
             "tooShort": "La dirección debe tener al menos 3 caracteres",
-            "tooLong": "La dirección debe tener como máximo 50 caracteres",
+            "tooLong": "La dirección debe tener como máximo 50 carácteres",
             "invalidCharacter": "La dirección solo puede contener letras, números y guiones bajos",
             "addressUnavailable": "Lo siento, esta dirección ya está ocupada por otro usuario.",
             "unknownError": "Se produjo un error desconocido, inténtelo de nuevo más tarde"
@@ -2612,7 +2612,7 @@
         "overLimit": "No se puede enviar más de la cantidad máxima",
         "underLimit": "No se puede enviar una cantidad inferior a la mínima",
         "commentRequired": "Se requiere una nota",
-        "viewPrintable": "Ver Versión Imprimible"
+        "viewPrintable": "Ver versión imprimible"
     },
     "DisplayCurrencyScreen": {
         "errorLoading": "Error al cargar la lista de monedas"
@@ -2677,12 +2677,12 @@
         "decemberChallenge": {
             "title": "¡Reto de diciembre! ",
             "description": "\"¡+10 amigos a tu círculo interno para tener la oportunidad de ganar $100!\"",
-            "details": "¡Has crecer su círculo íntimo en 10 personas en diciembre para tener la oportunidad de ganar $100! \n\nPara participar, comparte tus círculos en las redes sociales una vez que hayas llegado a 10 por mes y etiqueta #blinkcircles. \n\n¡El 1 de enero, se elegirán tres personas al azar para recibir $100!"
+            "details": "¡Has crecer tu círculo íntimo en 10 personas en diciembre para tener la oportunidad de ganar $100! \n\nPara participar, comparte tus círculos en las redes sociales una vez que hayas llegado a 10 por mes y etiqueta #blinkcircles. \n\n¡El 1 de enero, se elegirán tres personas al azar para recibir $100!"
         },
         "januaryChallenge": {
             "title": "Reto de enero!",
             "description": "¡+10 a tu circulo exterior en enero por oportunidad de $100!",
-            "details": "¡Has crecer su círculo exterior en 10 personas en enero para tener la oportunidad de ganar $100! \n\nTu círculo exterior crece cuando las personas de tu círculo interior acogen a otras, así que tiende la mano y recuerda a los que has incorporado que compartan Blink con sus amigos y familiares.\n\nComparte tus círculos en las redes sociales con #blinkcircles para participar."
+            "details": "¡Has crecer tu círculo exterior en 10 personas en enero para tener la oportunidad de ganar $100! \n\nTu círculo exterior crece cuando las personas de tu círculo interior acogen a otras, así que tiende la mano y recuerda a los que has incorporado que compartan Blink con sus amigos y familiares.\n\nComparte tus círculos en las redes sociales con #blinkcircles para participar."
         },
         "februaryChallenge": {
             "title": "¡Reto de febrero!",
