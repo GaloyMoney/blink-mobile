@@ -382,9 +382,12 @@ export const useReceiveBitcoin = () => {
 
       const { callback, k1 } = destination.validDestination
 
-      const url = `${callback}${callback.includes("?") ? "&" : "?"}k1=${k1}&pr=${
-        pr.info.data.paymentRequest
-      }`
+      const urlObject = new URL(callback)
+      const searchParams = urlObject.searchParams
+      searchParams.set("k1", k1)
+      searchParams.set("pr", pr.info.data.paymentRequest)
+
+      const url = urlObject.toString()
 
       const result = await fetch(url)
       if (result.ok) {
