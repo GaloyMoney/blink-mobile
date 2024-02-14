@@ -4982,6 +4982,10 @@ export type TranslationFunctions = {
 		 */
 		quickStart: () => LocalizedString
 		/**
+		 * I already have a wallet
+		 */
+		restoreWallet: () => LocalizedString
+		/**
 		 * Explore wallet instead
 		 */
 		exploreWalletInstead: () => LocalizedString
@@ -6095,6 +6099,21 @@ export type TranslationFunctions = {
 		title: () => LocalizedString
 		description: () => LocalizedString
 		done: () => LocalizedString
+	}
+	ImportWalletOptions: {		
+		title: () => LocalizedString
+		recoveryPhrase: () => LocalizedString
+		importBTCWallet: () => LocalizedString
+		phone: () => LocalizedString
+		importUsingPhone: () => LocalizedString
+		email: () => LocalizedString
+		importUsingEmail: () => LocalizedString
+		login: () => LocalizedString
+	}
+	ImportWallet: {		
+		title: () => LocalizedString
+		description: () => LocalizedString
+		complete: () => LocalizedString
 	}
 	CopySecretComponent: {
 		/**

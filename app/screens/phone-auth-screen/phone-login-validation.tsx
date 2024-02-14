@@ -204,8 +204,14 @@ export const PhoneLoginValidationScreen: React.FC<PhoneLoginValidationScreenProp
               return
             }
             analytics().logLogin({ method: "phone" })
-            saveToken(authToken)
-            navigation.replace("Primary")
+            if (route.params.onComplete) {
+              route.params.onComplete(authToken)
+              navigation.popToTop()
+              navigation.goBack()
+            } else {
+              saveToken(authToken)
+              navigation.replace("Primary")
+            }
             return
           }
 

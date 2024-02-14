@@ -1,5 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack"
+import {
+  CardStyleInterpolators,
+  StackScreenProps,
+  createStackNavigator,
+} from "@react-navigation/stack"
 import * as React from "react"
 
 import {
@@ -87,6 +91,8 @@ import {
   BackupShowSeedPhrase,
   BackupStart,
   BackupVerify,
+  ImportWalletOptions,
+  ImportWallet,
 } from "@app/screens"
 
 const useStyles = makeStyles(({ colors }) => ({
@@ -441,6 +447,11 @@ export const RootStack = () => {
             headerLeft: () => <></>,
           }}
         />
+        <RootNavigator.Screen name="ImportWallet" component={ImportWallet} />
+        <RootNavigator.Screen
+          name="ImportWalletOptions"
+          component={ImportWalletOptions}
+        />
       </RootNavigator.Group>
     </RootNavigator.Navigator>
   )
@@ -492,8 +503,8 @@ export const ContactNavigator = () => {
   )
 }
 const StackPhoneValidation = createStackNavigator<PhoneValidationStackParamList>()
-
-export const PhoneLoginNavigator = () => {
+type Props = StackScreenProps<RootStackParamList, "phoneFlow">
+export const PhoneLoginNavigator: React.FC<Props> = ({ route }) => {
   const { LL } = useI18nContext()
   return (
     <StackPhoneValidation.Navigator>
@@ -503,6 +514,7 @@ export const PhoneLoginNavigator = () => {
           headerShown: false,
           title: LL.common.phoneNumber(),
         }}
+        initialParams={route.params}
         component={PhoneLoginInitiateScreen}
       />
       <StackPhoneValidation.Screen

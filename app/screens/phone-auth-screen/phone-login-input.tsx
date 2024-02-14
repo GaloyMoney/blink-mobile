@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
+import { StackNavigationProp, StackScreenProps } from "@react-navigation/stack"
 import * as React from "react"
 import { useEffect } from "react"
 import { ActivityIndicator, View } from "react-native"
@@ -98,7 +98,9 @@ const useStyles = makeStyles(({ colors }) => ({
   loadingView: { flex: 1, justifyContent: "center", alignItems: "center" },
 }))
 
-export const PhoneLoginInitiateScreen: React.FC = () => {
+type Props = StackScreenProps<PhoneValidationStackParamList, "phoneLoginInitiate">
+
+export const PhoneLoginInitiateScreen: React.FC<Props> = ({ route }) => {
   const styles = useStyles()
 
   const navigation =
@@ -135,6 +137,7 @@ export const PhoneLoginInitiateScreen: React.FC = () => {
       navigation.navigate("phoneLoginValidate", {
         phone: validatedPhoneNumber || "",
         channel: phoneCodeChannel,
+        onComplete: route.params.onComplete,
       })
     }
   }, [status, phoneCodeChannel, validatedPhoneNumber, navigation, setStatus])

@@ -1,85 +1,63 @@
-import React, { useState } from "react"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { Pressable, TouchableOpacity, View } from "react-native"
-import { Screen } from "../../components/screen"
+import React, { useEffect, useState } from "react"
+import { StackScreenProps } from "@react-navigation/stack"
+import { ActivityIndicator, Pressable, TouchableOpacity, View } from "react-native"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
+
+// components
+import { Screen } from "../../components/screen"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+
+// hooks
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { useAppConfig, useCreateAccount } from "@app/hooks"
+
+// assets
 import AppLogoLightMode from "../../assets/logo/app-logo-light.svg"
 import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
-import { Text, makeStyles, useTheme } from "@rneui/themed"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import { useFeatureFlags } from "@app/config/feature-flags-context"
-import useAppCheckToken from "./use-device-token"
-import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
-import { DeviceAccountModal } from "./device-account-modal"
+
+// utils
 import { logGetStartedAction } from "@app/utils/analytics"
-import { useNavigation } from "@react-navigation/native"
 import { testProps } from "@app/utils/testProps"
 
-export const GetStartedScreen: React.FC = () => {
-  const navigation =
-    useNavigation<StackNavigationProp<RootStackParamList, "getStarted">>()
+type Props = StackScreenProps<RootStackParamList, "getStarted">
 
+export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
+  const {
+    theme: { mode },
+  } = useTheme()
   const styles = useStyles()
+  const { LL } = useI18nContext()
+  const { saveToken } = useAppConfig()
+  const { createDeviceAccountAndLogin } = useCreateAccount()
+  const [loading, setLoading] = useState(false)
+  const [secretMenuCounter, setSecretMenuCounter] = useState(0)
 
-  const [secretMenuCounter, setSecretMenuCounter] = React.useState(0)
-  React.useEffect(() => {
+  const AppLogo = mode === "dark" ? AppLogoDarkMode : AppLogoLightMode
+
+  useEffect(() => {
     if (secretMenuCounter > 2) {
       navigation.navigate("developerScreen")
       setSecretMenuCounter(0)
     }
   }, [navigation, secretMenuCounter])
 
-  const {
-    theme: { mode },
-  } = useTheme()
-  const AppLogo = mode === "dark" ? AppLogoDarkMode : AppLogoLightMode
-
-  const { LL } = useI18nContext()
-  const [confirmationModalVisible, setConfirmationModalVisible] = useState(false)
-  const openConfirmationModal = () => setConfirmationModalVisible(true)
-  const closeConfirmationModal = () => {
-    setConfirmationModalVisible(false)
-  }
-
-  const { deviceAccountEnabled } = useFeatureFlags()
-
-  // console.log("deviceAccountEnabled=========> ", deviceAccountEnabled)
-
-  const [appCheckToken] = useAppCheckToken({ skip: !deviceAccountEnabled })
-
-  const handleCreateAccount = () => {
-    logGetStartedAction({
-      action: "log_in",
-      createDeviceAccountEnabled: Boolean(appCheckToken),
-    })
-    navigation.navigate("phoneFlow")
-  }
-
-  const handleExploreWallet = () => {
-    logGetStartedAction({
-      action: "explore_wallet",
-      createDeviceAccountEnabled: Boolean(appCheckToken),
-    })
-    navigation.navigate("Primary")
-  }
-
   const handleCreateDeviceAccount = async () => {
     logGetStartedAction({
       action: "create_device_account",
       createDeviceAccountEnabled: Boolean(true),
     })
-
-    openConfirmationModal()
+    setLoading(true)
+    const token = await createDeviceAccountAndLogin()
+    setLoading(false)
+    if (token) {
+      saveToken(token)
+      navigation.navigate("Primary")
+    }
   }
 
-  const handleLoginWithEmail = async () => {
-    logGetStartedAction({
-      action: "login_with_email",
-      createDeviceAccountEnabled: Boolean(appCheckToken),
-    })
-
-    navigation.navigate("emailLoginInitiate")
+  const onRestoreWallet = () => {
+    navigation.navigate("ImportWalletOptions")
   }
 
   return (
@@ -91,47 +69,25 @@ export const GetStartedScreen: React.FC = () => {
       >
         <AppLogo width={"100%"} height={"100%"} />
       </Pressable>
-      <DeviceAccountModal
-        isVisible={confirmationModalVisible}
-        closeModal={closeConfirmationModal}
-        appCheckToken={appCheckToken}
-      />
-
       <View style={styles.bottom}>
         <GaloyPrimaryButton
           title={LL.GetStartedScreen.quickStart()}
           onPress={handleCreateDeviceAccount}
           containerStyle={styles.buttonContainer}
         />
-        {/* {appCheckToken ? null : (
-          // <GaloySecondaryButton
-          //   title={LL.GetStartedScreen.startTrialAccount()}
-          //   onPress={handleCreateDeviceAccount}
-          // />
-          <GaloySecondaryButton
-            title={LL.GetStartedScreen.setupBusinessAccount()}
-            onPress={handleCreateAccount}
-          />
-        )} */}
         <View style={styles.loginFooterContainer}>
-          <Text type="p2">{LL.GetStartedScreen.logBackInWith()} </Text>
-          <TouchableOpacity activeOpacity={0.5} onPress={handleCreateAccount}>
+          <TouchableOpacity activeOpacity={0.5} onPress={onRestoreWallet}>
             <Text type="p2" style={styles.buttonText}>
-              {LL.common.phone()}
-            </Text>
-          </TouchableOpacity>
-          <Text type="p2"> {LL.common.or()} </Text>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            onPress={handleLoginWithEmail}
-            {...testProps("email-button")}
-          >
-            <Text type="p2" style={styles.buttonText}>
-              {LL.common.email()}
+              {LL.GetStartedScreen.restoreWallet()}
             </Text>
           </TouchableOpacity>
         </View>
       </View>
+      {loading && (
+        <View style={styles.loading}>
+          <ActivityIndicator size={"large"} color={"#60aa55"} />
+        </View>
+      )}
     </Screen>
   )
 }
@@ -143,13 +99,10 @@ const useStyles = makeStyles(() => ({
     justifyContent: "flex-end",
     marginBottom: 36,
   },
-
   buttonContainer: {
     marginVertical: 6,
   },
-
   logoContainer: { width: "100%", height: "50%", marginTop: 50 },
-
   loginFooterContainer: {
     marginTop: 24,
     justifyContent: "center",
@@ -157,5 +110,14 @@ const useStyles = makeStyles(() => ({
   },
   buttonText: {
     textDecorationLine: "underline",
+  },
+  loading: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
   },
 }))

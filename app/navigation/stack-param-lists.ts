@@ -75,9 +75,13 @@ export type RootStackParamList = {
     settlementAmount: MoneyAmount<typeof WalletCurrency.Btc>
     displayAmount: MoneyAmount<DisplayCurrency>
   }
-  phoneFlow: undefined
-  phoneRegistrationInitiate: undefined
-  phoneRegistrationValidate: { phone: string; channel: PhoneCodeChannelType }
+  phoneFlow: { onComplete?: (token?: string) => void }
+  phoneRegistrationInitiate: { onComplete?: (token?: string) => void }
+  phoneRegistrationValidate: {
+    phone: string
+    channel: PhoneCodeChannelType
+    onComplete?: (token?: string) => void
+  }
   transactionDetail: { tx: TransactionFragment }
   breezTransactionDetail: { tx: TransactionFragment }
   transactionHistory?: undefined
@@ -86,7 +90,7 @@ export type RootStackParamList = {
   transactionLimitsScreen: undefined
   emailRegistrationInitiate: undefined
   emailRegistrationValidate: { email: string; emailRegistrationId: string }
-  emailLoginInitiate: undefined
+  emailLoginInitiate: { onComplete?: (token?: string) => void }
   emailLoginValidate: { email: string; emailLoginId: string }
   totpRegistrationInitiate: undefined
   totpRegistrationValidate: { totpRegistrationId: string }
@@ -97,6 +101,8 @@ export type RootStackParamList = {
   BackupVerify: undefined
   BackupComplete: undefined
   BackupShowSeedPhrase: undefined
+  ImportWallet: { onComplete?: (token?: string) => void }
+  ImportWalletOptions: undefined
 }
 
 export type ChatStackParamList = {
@@ -116,8 +122,12 @@ export type ContactStackParamList = {
 
 export type PhoneValidationStackParamList = {
   Primary: undefined
-  phoneLoginInitiate: undefined
-  phoneLoginValidate: { phone: string; channel: PhoneCodeChannelType }
+  phoneLoginInitiate: { onComplete?: (token?: string) => void }
+  phoneLoginValidate: {
+    phone: string
+    channel: PhoneCodeChannelType
+    onComplete?: (token?: string) => void
+  }
   authentication: {
     screenPurpose: AuthenticationScreenPurpose
   }
