@@ -1992,8 +1992,8 @@
         "youEarned": "Kazandınız",
         "registerTitle": "Hesabınızı güncellemeniz gerekiyor",
         "registerContent": "Sat almak için telefon numaranız ile kayıt olun",
-        "notYet": "Henüz değil",
-        "availableTomorrow": "Bu bölüm yarın kullanıma açılacak!",
+        "oneSectionADay": "Günde bir bölüm!",
+        "availableTomorrow": "Bitcoin hakkında daha fazla şey öğrenmek için yarın tekrar gel!",
         "motivatingBadger": "Bu derslerde yolunuzu kazın ve öğrendikçe kazanın"
     },
     "GetStartedScreen": {
@@ -2015,12 +2015,12 @@
         }
     },
     "MapScreen": {
-        "navToSettingsTitle": "Location permissions",
-        "navToSettingsText": "If you'd like to give Blink location permissions, please navigate to your settings and enable it there",
+        "navToSettingsTitle": "Konum izni",
+        "navToSettingsText": "Eğer Blink'e konum izni vermek istiyosanız lütfen ayarlarda ilgili yere gidip oradan onay verin",
         "payBusiness": "Bu işletmeye ödeme yapın",
-        "openSettings": "Open settings",
+        "openSettings": "Ayarları aç",
         "title": "Harita",
-        "error": "Oops. Something went wrong while getting your location"
+        "error": "Hay aksi. Konum bilgini alırken bir şeyler yanlış gitti."
     },
     "HomeScreen": {
         "receive": "Al",
@@ -2163,7 +2163,7 @@
         "slideToConfirm": "Onaylamak için kaydırın",
         "slideConfirming": "Onaylanıyor...",
         "copiedDestination": "Hedefi panoya kopyalama",
-        "lightningRecommended": "High fee! We recommend Lightning."
+        "lightningRecommended": "Yüksek komisyon! Lightning kullanmanızı öneriyoruz."
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "{BankName: string} kullanıcı adları artık {bankName: string} adresleridir.",
@@ -2685,9 +2685,9 @@
             "details": "Ocak ayında 100 $ kazanma şansı için DIŞ çemberinizi 10 büyütün!\n\nİç çevrenizdeki insanlar başkalarını hoş karşıladığında dış çevreniz büyür, bu yüzden onlara ulaşın ve Blink'i arkadaşlarıyla ve aileleriyle paylaşmalarını hatırlatın.\n\nKatılmak için çemberlerinizi #blinkcircles etiketiyle sosyal medyada paylaşın."
         },
         "februaryChallenge": {
-            "title": "February Challenge!",
-            "description": "+3 inner circle for a chance to win a Seedsigner hardware wallet!",
-            "details": "Grow your inner circle by 3 in February for a chance to win a Seedsigner hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
+            "title": "Şubat Meydan Okuması!",
+            "description": "Seedsigner soğuk cüzdanı kazanmak için iç çevrenize 3 kişi katın!",
+            "details": "Seedsigner soğuk cüzdanı kazanma şansı için Şubat ayında yakın çevrenizi 3 kişi büyütün!\n\nHatırlatma: Yeni bir Blink kullanıcısına ilk satlerini gönderdiğinizde çemberleriniz büyür.\n\nKatılmak için çevrelerinizi #blinkcircles etiketiyle sosyal medyada paylaşın."
         }
     },
     "FullOnboarding": {
