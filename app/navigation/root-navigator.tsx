@@ -93,6 +93,7 @@ import {
   BackupVerify,
   ImportWalletOptions,
   ImportWallet,
+  BackupOptions,
 } from "@app/screens"
 
 const useStyles = makeStyles(({ colors }) => ({
@@ -429,6 +430,7 @@ export const RootStack = () => {
           headerTintColor: "#000",
         }}
       >
+        <RootNavigator.Screen name="BackupOptions" component={BackupOptions} />
         <RootNavigator.Screen name="BackupStart" component={BackupStart} />
         <RootNavigator.Screen name="BackupSeedPhrase" component={BackupSeedPhrase} />
         <RootNavigator.Screen name="BackupDoubleCheck" component={BackupDoubleCheck} />
@@ -443,9 +445,6 @@ export const RootStack = () => {
         <RootNavigator.Screen
           name="BackupShowSeedPhrase"
           component={BackupShowSeedPhrase}
-          options={{
-            headerLeft: () => <></>,
-          }}
         />
         <RootNavigator.Screen name="ImportWallet" component={ImportWallet} />
         <RootNavigator.Screen

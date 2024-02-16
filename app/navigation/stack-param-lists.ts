@@ -75,8 +75,8 @@ export type RootStackParamList = {
     settlementAmount: MoneyAmount<typeof WalletCurrency.Btc>
     displayAmount: MoneyAmount<DisplayCurrency>
   }
-  phoneFlow: { onComplete?: (token?: string) => void }
-  phoneRegistrationInitiate: { onComplete?: (token?: string) => void }
+  phoneFlow: { onComplete?: (token?: string) => void } | undefined
+  phoneRegistrationInitiate: { onComplete?: (token?: string) => void } | undefined
   phoneRegistrationValidate: {
     phone: string
     channel: PhoneCodeChannelType
@@ -95,14 +95,15 @@ export type RootStackParamList = {
   totpRegistrationInitiate: undefined
   totpRegistrationValidate: { totpRegistrationId: string }
   totpLoginValidate: { authToken: string }
+  BackupOptions: undefined
   BackupStart: undefined
   BackupSeedPhrase: undefined
   BackupDoubleCheck: undefined
   BackupVerify: undefined
   BackupComplete: undefined
   BackupShowSeedPhrase: undefined
-  ImportWallet: { onComplete?: (token?: string) => void }
-  ImportWalletOptions: undefined
+  ImportWallet: { insideApp?: boolean; onComplete?: (token?: string) => void }
+  ImportWalletOptions: { insideApp?: boolean } | undefined
 }
 
 export type ChatStackParamList = {

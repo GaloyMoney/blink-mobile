@@ -5,6 +5,10 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { logLogout } from "@app/utils/analytics"
 import { useCallback } from "react"
 import { usePersistentStateContext } from "@app/store/persistent-state"
+import * as Keychain from "react-native-keychain"
+import { disconnectToSDK } from "@app/utils/breez-sdk"
+
+const KEYCHAIN_MNEMONIC_KEY = "mnemonic_key"
 
 const useLogout = () => {
   const { resetState } = usePersistentStateContext()
@@ -16,6 +20,8 @@ const useLogout = () => {
         await KeyStoreWrapper.removeIsBiometricsEnabled()
         await KeyStoreWrapper.removePin()
         await KeyStoreWrapper.removePinAttempts()
+        await Keychain.resetInternetCredentials(KEYCHAIN_MNEMONIC_KEY)
+        await disconnectToSDK()
 
         logLogout()
         if (stateToDefault) {

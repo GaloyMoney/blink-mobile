@@ -2,12 +2,17 @@ import React, { useRef, useState } from "react"
 import styled from "styled-components/native"
 import { ActivityIndicator, Alert, FlatList, TextInput } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { useCreateAccount } from "@app/hooks"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import * as Keychain from "react-native-keychain"
 import * as bip39 from "bip39"
+
+// hooks
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { useCreateAccount } from "@app/hooks"
+
+// utils
+import { disconnectToSDK, initializeBreezSDK } from "@app/utils/breez-sdk"
 
 type Props = StackScreenProps<RootStackParamList, "ImportWallet">
 
@@ -20,6 +25,7 @@ type ShuffledPhraseType = {
 const KEYCHAIN_MNEMONIC_KEY = "mnemonic_key"
 
 const ImportWallet: React.FC<Props> = ({ navigation, route }) => {
+  const insideApp = route.params?.insideApp
   const { LL } = useI18nContext()
   const bottom = useSafeAreaInsets().bottom
   const inputRef = useRef<TextInput[]>([])
@@ -37,9 +43,17 @@ const ImportWallet: React.FC<Props> = ({ navigation, route }) => {
         KEYCHAIN_MNEMONIC_KEY,
         mnemonicKey,
       )
-      const token: any = await createDeviceAccountAndLogin()
-      if (route.params?.onComplete) {
-        route.params?.onComplete(token)
+      if (insideApp) {
+        await disconnectToSDK()
+        await initializeBreezSDK()
+        if (route.params?.onComplete) {
+          route.params?.onComplete("")
+        }
+      } else {
+        const token: any = await createDeviceAccountAndLogin()
+        if (route.params?.onComplete) {
+          route.params?.onComplete(token)
+        }
       }
       navigation.goBack()
     } else {
@@ -89,7 +103,9 @@ const ImportWallet: React.FC<Props> = ({ navigation, route }) => {
   return (
     <Wrapper>
       <Container>
-        <Title>{LL.ImportWallet.title()}</Title>
+        <Title>
+          {insideApp ? LL.ImportWallet.importTitle() : LL.ImportWallet.title()}
+        </Title>
         <Description>{LL.ImportWallet.description()}</Description>
         <FlatList
           data={inputSeedPhrase}
@@ -200,7 +216,7 @@ const Btn = styled.TouchableOpacity<{
   background-color: ${({ isOutline, disabled }) =>
     isOutline ? "#fff" : disabled ? "#DEDEDE" : "#60aa55"};
   border: ${({ isOutline }) => (isOutline ? 1 : 0)}px solid #bbb;
-  margin-bottom: ${({ bottom }) => bottom}px;
+  margin-bottom: ${({ bottom }) => bottom || 10}px;
   padding-vertical: 14px;
 `
 

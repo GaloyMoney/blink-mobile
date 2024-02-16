@@ -699,10 +699,10 @@
         "title": "Upgrade your account",
         "backUpFunds": "Back up your funds",
         "higherLimits": "Increase your transaction limits",
-        "receiveOnchain": "Receive bitcoin onchain",
+        "receiveOnchain": "Earn rewards",
         "onlyAPhoneNumber": "Quick and easy phone number verification",
         "letsGo": "Let's go!",
-        "stayInTrialMode": "Stay in trial mode"
+        "stayInTrialMode": "Maybe later"
     },
     "SetAddressModal": {
         "title": "Set {bankName: string} address",

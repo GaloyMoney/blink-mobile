@@ -137,7 +137,7 @@ export const PhoneLoginInitiateScreen: React.FC<Props> = ({ route }) => {
       navigation.navigate("phoneLoginValidate", {
         phone: validatedPhoneNumber || "",
         channel: phoneCodeChannel,
-        onComplete: route.params.onComplete,
+        onComplete: route.params?.onComplete,
       })
     }
   }, [status, phoneCodeChannel, validatedPhoneNumber, navigation, setStatus])

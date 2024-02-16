@@ -61,7 +61,7 @@ const Btn = styled.TouchableOpacity<{ bottom: number }>`
   justify-content: center;
   border-radius: 5px;
   background-color: #60aa55;
-  margin-bottom: ${({ bottom }) => bottom}px;
+  margin-bottom: ${({ bottom }) => bottom || 10}px;
   padding-vertical: 14px;
 `
 

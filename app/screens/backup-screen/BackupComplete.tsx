@@ -19,7 +19,7 @@ const BackupComplete: React.FC<Props> = ({ navigation }) => {
 
   const onContinue = () => {
     save("backupCompleted", true)
-    navigation.navigate("Primary")
+    navigation.navigate("BackupOptions")
   }
 
   return (
@@ -76,7 +76,7 @@ const Btn = styled.TouchableOpacity<{ bottom: number }>`
   justify-content: center;
   border-radius: 5px;
   background-color: #60aa55;
-  margin-bottom: ${({ bottom }) => bottom}px;
+  margin-bottom: ${({ bottom }) => bottom || 10}px;
   padding-vertical: 14px;
 `
 

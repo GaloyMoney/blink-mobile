@@ -5898,6 +5898,7 @@ export type TranslationFunctions = {
 		 * Backup seed phrase
 		 */
 		backup: () => LocalizedString
+		importWallet: () => LocalizedString
 		showSeedPhrase: () => LocalizedString
 	}
 	AccountScreen: {
@@ -6065,6 +6066,17 @@ export type TranslationFunctions = {
 		 */
 		content: () => LocalizedString
 	}
+	BackupOptions: {		
+		title: () => LocalizedString
+		recoveryPhrase: () => LocalizedString
+		recoveryPhraseDesc: () => LocalizedString
+		revealRecoveryPhrase: () => LocalizedString
+		revealRecoveryPhraseDesc: () => LocalizedString
+		phone: () => LocalizedString
+		phoneDesc: () => LocalizedString
+		usePhoneNumber: () => LocalizedString
+		done: () => LocalizedString
+	}
 	BackupStart: {
 		title: () => LocalizedString
 		description: () => LocalizedString
@@ -6101,7 +6113,8 @@ export type TranslationFunctions = {
 		done: () => LocalizedString
 	}
 	ImportWalletOptions: {		
-		title: () => LocalizedString
+		loginOptions: () => LocalizedString
+		importOptions: () => LocalizedString
 		recoveryPhrase: () => LocalizedString
 		importBTCWallet: () => LocalizedString
 		phone: () => LocalizedString
@@ -6109,9 +6122,11 @@ export type TranslationFunctions = {
 		email: () => LocalizedString
 		importUsingEmail: () => LocalizedString
 		login: () => LocalizedString
+		done: () => LocalizedString
 	}
 	ImportWallet: {		
 		title: () => LocalizedString
+		importTitle: () => LocalizedString
 		description: () => LocalizedString
 		complete: () => LocalizedString
 	}
@@ -6315,7 +6330,7 @@ export type TranslationFunctions = {
 		 */
 		higherLimits: () => LocalizedString
 		/**
-		 * Receive bitcoin onchain
+		 * Earn rewards
 		 */
 		receiveOnchain: () => LocalizedString
 		/**
@@ -6327,7 +6342,7 @@ export type TranslationFunctions = {
 		 */
 		letsGo: () => LocalizedString
 		/**
-		 * Stay in trial mode
+		 * Maybe later
 		 */
 		stayInTrialMode: () => LocalizedString
 	}

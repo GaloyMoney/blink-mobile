@@ -44,6 +44,7 @@ target 'LNFlash' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec', :modular_headers => false
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
 
 
   post_install do |installer|

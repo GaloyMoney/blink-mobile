@@ -223,7 +223,7 @@ const Btn = styled.TouchableOpacity<{
   background-color: ${({ isOutline, disabled }) =>
     isOutline ? "#fff" : disabled ? "#DEDEDE" : "#60aa55"};
   border: ${({ isOutline }) => (isOutline ? 1 : 0)}px solid #bbb;
-  margin-bottom: ${({ bottom }) => bottom}px;
+  margin-bottom: ${({ bottom }) => bottom || 10}px;
   padding-vertical: 14px;
 `
 

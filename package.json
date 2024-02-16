@@ -131,6 +131,7 @@
     "react-native-error-boundary": "^1.2.3",
     "react-native-file-viewer": "^2.1.5",
     "react-native-fingerprint-scanner": "git+https://github.com/hieuvp/react-native-fingerprint-scanner.git#9cecc0db326471c571553ea85f7c016fee2f803d",
+    "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.14.0",
     "react-native-get-random-values": "^1.9.0",
     "react-native-gradle-plugin": "^0.71.19",

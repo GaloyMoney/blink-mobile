@@ -21,7 +21,8 @@ const KEYCHAIN_MNEMONIC_KEY = "mnemonic_key"
 
 type Props = StackScreenProps<RootStackParamList, "ImportWalletOptions">
 
-const ImportWalletOptions: React.FC<Props> = ({ navigation }) => {
+const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
+  const insideApp = route.params?.insideApp
   const bottom = useSafeAreaInsets().bottom
   const { LL } = useI18nContext()
   const { saveToken } = useAppConfig()
@@ -34,15 +35,21 @@ const ImportWalletOptions: React.FC<Props> = ({ navigation }) => {
   const [token, setToken] = useState<string | undefined>("")
 
   useEffect(() => {
-    navigation.addListener("beforeRemove", (e: any) => {
-      if (e.data.action.type === "POP") {
-        Keychain.resetInternetCredentials(KEYCHAIN_MNEMONIC_KEY)
-      }
-    })
+    if (!insideApp) {
+      navigation.addListener("beforeRemove", beforeRemoveListener)
+      return () => navigation.removeListener("beforeRemove", beforeRemoveListener)
+    }
   }, [])
+
+  const beforeRemoveListener = (e: any) => {
+    if (e.data.action.type === "POP") {
+      Keychain.resetInternetCredentials(KEYCHAIN_MNEMONIC_KEY)
+    }
+  }
 
   const onImportBTCWallet = () => {
     navigation.navigate("ImportWallet", {
+      insideApp,
       onComplete: (token) => {
         setBTCWalletImported(true)
         setToken(token)
@@ -80,18 +87,26 @@ const ImportWalletOptions: React.FC<Props> = ({ navigation }) => {
   }
 
   const onLogin = async () => {
-    if (token) {
-      saveToken(token)
-      navigation.replace("Primary")
+    if (!insideApp) {
+      if (token) {
+        saveToken(token)
+        navigation.replace("Primary")
+      } else {
+        alert("Login failed. Please try again")
+      }
     } else {
-      alert("Login failed. Please try again")
+      navigation.goBack()
     }
   }
 
   return (
     <Wrapper>
       <Container>
-        <Title>{LL.ImportWalletOptions.title()}</Title>
+        <Title>
+          {insideApp
+            ? LL.ImportWalletOptions.importOptions()
+            : LL.ImportWalletOptions.loginOptions()}
+        </Title>
 
         <Btn onPress={onImportBTCWallet} disabled={BTCWalletImported}>
           <Icon
@@ -152,7 +167,9 @@ const ImportWalletOptions: React.FC<Props> = ({ navigation }) => {
         bottom={bottom}
         onPress={onLogin}
       >
-        <MainBtnTitle>{LL.ImportWalletOptions.login()}</MainBtnTitle>
+        <MainBtnTitle>
+          {insideApp ? LL.ImportWalletOptions.done() : LL.ImportWalletOptions.login()}
+        </MainBtnTitle>
       </MainBtn>
     </Wrapper>
   )

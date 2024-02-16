@@ -748,6 +748,7 @@ const en: BaseTranslation = {
     nfcNotSupported: "NFC is not supported on this device",
     logInOrCreateAccount: "Log in or create account",
     backup: "Backup",
+    importWallet: "Import Wallet",
     showSeedPhrase: "Reveal recovery phrase"
   },
   AccountScreen: {
@@ -796,6 +797,17 @@ const en: BaseTranslation = {
     title: "Two-factor authentication",
     content: "Enter the 6-digit code from your authenticator app to log in. This code changes every 30 seconds.",
   },
+  BackupOptions: {		
+		title: "Backup options",
+    recoveryPhrase: "Recovery Phrase",
+    recoveryPhraseDesc: "Backup Bitcoin Wallet using recovery phrase",
+    revealRecoveryPhrase: "Reveal Recovery Phrase",
+    revealRecoveryPhraseDesc: "Use your recovery phrase to import Bitcoin Wallet",
+    phone: "Phone",
+    phoneDesc: "Backup USD Wallet using phone number",
+    usePhoneNumber: "Use yourNumber phone number to import USD Wallet",
+		done: "Done",
+	},
   BackupStart: {
     title: "First, let's create your \nrecovery phrase",
     description: "A recovery phrase is a series of 12 words in a specific order. This word combination is unique to your wallet. Make sure to have pen and paper ready so you can write it down.",
@@ -832,7 +844,8 @@ const en: BaseTranslation = {
     done: "Done"
   },
   ImportWalletOptions: {		
-		title: "Login options",
+		loginOptions: "Login options",
+		importOptions: "Import wallet options",
     recoveryPhrase: "Recovery Phrase",
     importBTCWallet: "Import Bitcoin Wallet using recovery phrase",
     phone: "Phone",
@@ -840,9 +853,11 @@ const en: BaseTranslation = {
     email: "Email",
     importUsingEmail: "Import USD Wallet using email address",
 		login: "Login",
+    done: "Done",
 	},
   ImportWallet: {		
 		title: "Sign in with a recovery phrase",
+		importTitle: "Import your wallet with a recovery phrase",
 		description: "This is a 12-word phrase you were given when you created your previous wallet.",
 		complete: "Complete",
 	},
@@ -916,10 +931,10 @@ const en: BaseTranslation = {
     title: "Upgrade your account",
     backUpFunds: "Back up your funds",
     higherLimits: "Increase your transaction limits",
-    receiveOnchain: "Receive bitcoin onchain",
+    receiveOnchain: "Earn rewards",
     onlyAPhoneNumber: "Quick and easy phone number verification",
     letsGo: "Let's go!",
-    stayInTrialMode: "Stay in trial mode",
+    stayInTrialMode: "Maybe later",
   },
   SetAddressModal: {
     title: "Set {bankName: string} address",

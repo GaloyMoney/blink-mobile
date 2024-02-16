@@ -4,6 +4,7 @@ import * as bip39 from "bip39"
 import * as Keychain from "react-native-keychain"
 import { EventEmitter } from "events"
 import { base64ToBytes, toMilliSatoshi } from "../conversion"
+import RNFS from "react-native-fs"
 
 const _GREENLIGHT_PARTNER_CERT: number[] = Array.from(
   base64ToBytes(GREENLIGHT_PARTNER_CERT),
@@ -111,6 +112,34 @@ const connectToSDK = async () => {
     // console.log("Finished connection to Breez SDK")
   } catch (error) {
     console.error("Connect error: ", error)
+    throw error
+  }
+}
+
+export const disconnectToSDK = async () => {
+  try {
+    const nodeConfig: sdk.NodeConfig = {
+      type: sdk.NodeConfigVariant.GREENLIGHT,
+      config: {
+        partnerCredentials: {
+          deviceCert: _GREENLIGHT_PARTNER_CERT,
+          deviceKey: _GREENLIGHT_PARTNER_KEY,
+        },
+      },
+    }
+
+    const config = await sdk.defaultConfig(
+      sdk.EnvironmentType.PRODUCTION,
+      API_KEY,
+      nodeConfig,
+    )
+
+    await sdk.disconnect()
+    await RNFS.unlink(config.workingDir)
+    breezSDKInitialized = false
+    breezSDKInitializing = null
+  } catch (error) {
+    console.error("Disconnect error: ", error)
     throw error
   }
 }

@@ -136,10 +136,6 @@ export const AccountScreen = () => {
 
   const [text, setText] = React.useState("")
   const [modalVisible, setModalVisible] = React.useState(false)
-  const [upgradeAccountModalVisible, setUpgradeAccountModalVisible] =
-    React.useState(false)
-  const closeUpgradeAccountModal = () => setUpgradeAccountModalVisible(false)
-  const openUpgradeAccountModal = () => setUpgradeAccountModalVisible(true)
 
   const { data } = useAccountScreenQuery({
     fetchPolicy: "cache-and-network",
@@ -435,21 +431,6 @@ export const AccountScreen = () => {
       greyed: !isAtLeastLevelZero,
       styleDivider: true,
     },
-
-    {
-      category: LL.common.backupAccount(),
-      id: "upgrade-to-level-one",
-      icon: "person-outline",
-      subTitleText: showWarningSecureAccount ? LL.AccountScreen.secureYourAccount() : "",
-      chevronLogo: showWarningSecureAccount ? "alert-circle-outline" : undefined,
-      chevronColor: showWarningSecureAccount ? colors.primary : undefined,
-      chevronSize: showWarningSecureAccount ? 24 : undefined,
-      action: openUpgradeAccountModal,
-      enabled: true,
-      hidden: currentLevel !== AccountLevel.Zero,
-      styleDivider: true,
-    },
-
     {
       category: LL.AccountScreen.phoneNumberAuthentication(),
       id: "phone",
@@ -585,10 +566,6 @@ export const AccountScreen = () => {
         <SettingsRow setting={setting} key={setting.id} />
       ))}
       {AccountDeletionModal}
-      <UpgradeAccountModal
-        isVisible={upgradeAccountModalVisible}
-        closeModal={closeUpgradeAccountModal}
-      />
     </Screen>
   )
 }
