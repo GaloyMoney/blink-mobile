@@ -1922,10 +1922,10 @@
     "@formatjs/intl-localematcher" "0.5.2"
     tslib "^2.4.0"
 
-"@galoymoney/client@^0.2.8":
-  version "0.2.8"
-  resolved "https://registry.npmjs.org/@galoymoney/client/-/client-0.2.8.tgz#eaa68df140b7a6795834d05aa6d97634380ab8b1"
-  integrity sha512-xD9jvGGkiUMMlCfazp52W1SDpCRQ/JFuBKB9pnH5Hb0YRLzQ4Rw4lUXBsEE93YQlEN3i0XiUNycJZohAMPWxuQ==
+"@galoymoney/client@^0.2.9":
+  version "0.2.9"
+  resolved "https://registry.npmjs.org/@galoymoney/client/-/client-0.2.9.tgz#fa8c70658d1dfeeed7dbaad1caa6b654347e87b4"
+  integrity sha512-s7aim0ZLx99noIU0OCVRDuDd2Yp2S0HWMBm6I1B+Brb+vEVTD9E1TG7dvpCiHuALSBrjU3NsjELlapzHuZtMbA==
 
 "@galoymoney/react-native-geetest-module@^0.1.3":
   version "0.1.5"

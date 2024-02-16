@@ -2583,6 +2583,7 @@ export type SendBitcoinDestinationQueryVariables = Exact<{ [key: string]: never;
 export type SendBitcoinDestinationQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string } | { readonly __typename: 'UsdWallet', readonly id: string }> }, readonly contacts: ReadonlyArray<{ readonly __typename: 'UserContact', readonly id: string, readonly username: string, readonly alias?: string | null, readonly transactionsCount: number }> } | null };
 
 export type AccountDefaultWalletQueryVariables = Exact<{
+  walletCurrency?: InputMaybe<WalletCurrency>;
   username: Scalars['Username']['input'];
 }>;
 
@@ -5259,8 +5260,8 @@ export type SendBitcoinDestinationQueryHookResult = ReturnType<typeof useSendBit
 export type SendBitcoinDestinationLazyQueryHookResult = ReturnType<typeof useSendBitcoinDestinationLazyQuery>;
 export type SendBitcoinDestinationQueryResult = Apollo.QueryResult<SendBitcoinDestinationQuery, SendBitcoinDestinationQueryVariables>;
 export const AccountDefaultWalletDocument = gql`
-    query accountDefaultWallet($username: Username!) {
-  accountDefaultWallet(username: $username) {
+    query accountDefaultWallet($walletCurrency: WalletCurrency, $username: Username!) {
+  accountDefaultWallet(walletCurrency: $walletCurrency, username: $username) {
     id
   }
 }
@@ -5278,6 +5279,7 @@ export const AccountDefaultWalletDocument = gql`
  * @example
  * const { data, loading, error } = useAccountDefaultWalletQuery({
  *   variables: {
+ *      walletCurrency: // value for 'walletCurrency'
  *      username: // value for 'username'
  *   },
  * });

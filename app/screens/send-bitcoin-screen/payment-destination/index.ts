@@ -32,13 +32,19 @@ export const parseDestination = async ({
   })
 
   switch (parsedDestination.paymentType) {
-    case PaymentType.Intraledger: {
+    case PaymentType.IntraledgerWithFlag:
+      return resolveIntraledgerDestination({
+        parsedIntraledgerDestination: parsedDestination,
+        accountDefaultWalletQuery,
+        myWalletIds,
+        flag: parsedDestination.flag,
+      })
+    case PaymentType.Intraledger:
       return resolveIntraledgerDestination({
         parsedIntraledgerDestination: parsedDestination,
         accountDefaultWalletQuery,
         myWalletIds,
       })
-    }
     case PaymentType.Lnurl: {
       return resolveLnurlDestination({
         parsedLnurlDestination: parsedDestination,
