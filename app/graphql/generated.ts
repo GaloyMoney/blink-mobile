@@ -706,6 +706,21 @@ export type LnInvoicePaymentInput = {
   readonly walletId: Scalars['WalletId']['input'];
 };
 
+export type LnInvoicePaymentStatus = {
+  readonly __typename: 'LnInvoicePaymentStatus';
+  readonly paymentHash?: Maybe<Scalars['PaymentHash']['output']>;
+  readonly paymentRequest?: Maybe<Scalars['LnPaymentRequest']['output']>;
+  readonly status?: Maybe<InvoicePaymentStatus>;
+};
+
+export type LnInvoicePaymentStatusByHashInput = {
+  readonly paymentHash: Scalars['PaymentHash']['input'];
+};
+
+export type LnInvoicePaymentStatusByPaymentRequestInput = {
+  readonly paymentRequest: Scalars['LnPaymentRequest']['input'];
+};
+
 export type LnInvoicePaymentStatusInput = {
   readonly paymentRequest: Scalars['LnPaymentRequest']['input'];
 };
@@ -713,6 +728,8 @@ export type LnInvoicePaymentStatusInput = {
 export type LnInvoicePaymentStatusPayload = {
   readonly __typename: 'LnInvoicePaymentStatusPayload';
   readonly errors: ReadonlyArray<Error>;
+  readonly paymentHash?: Maybe<Scalars['PaymentHash']['output']>;
+  readonly paymentRequest?: Maybe<Scalars['LnPaymentRequest']['output']>;
   readonly status?: Maybe<InvoicePaymentStatus>;
 };
 
@@ -1552,7 +1569,10 @@ export type Query = {
   readonly hideBalance: Scalars['Boolean']['output'];
   readonly innerCircleValue: Scalars['Int']['output'];
   readonly introducingCirclesModalShown: Scalars['Boolean']['output'];
+  /** @deprecated Deprecated in favor of lnInvoicePaymentStatusByPaymentRequest */
   readonly lnInvoicePaymentStatus: LnInvoicePaymentStatusPayload;
+  readonly lnInvoicePaymentStatusByHash: LnInvoicePaymentStatus;
+  readonly lnInvoicePaymentStatusByPaymentRequest: LnInvoicePaymentStatus;
   readonly me?: Maybe<User>;
   readonly mobileVersions?: Maybe<ReadonlyArray<Maybe<MobileVersions>>>;
   readonly onChainTxFee: OnChainTxFee;
@@ -1582,6 +1602,16 @@ export type QueryBtcPriceListArgs = {
 
 export type QueryLnInvoicePaymentStatusArgs = {
   input: LnInvoicePaymentStatusInput;
+};
+
+
+export type QueryLnInvoicePaymentStatusByHashArgs = {
+  input: LnInvoicePaymentStatusByHashInput;
+};
+
+
+export type QueryLnInvoicePaymentStatusByPaymentRequestArgs = {
+  input: LnInvoicePaymentStatusByPaymentRequestInput;
 };
 
 
@@ -1717,7 +1747,10 @@ export type SettlementViaOnChain = {
 
 export type Subscription = {
   readonly __typename: 'Subscription';
+  /** @deprecated Deprecated in favor of lnInvoicePaymentStatusByPaymentRequest */
   readonly lnInvoicePaymentStatus: LnInvoicePaymentStatusPayload;
+  readonly lnInvoicePaymentStatusByHash: LnInvoicePaymentStatusPayload;
+  readonly lnInvoicePaymentStatusByPaymentRequest: LnInvoicePaymentStatusPayload;
   readonly myUpdates: MyUpdatesPayload;
   readonly price: PricePayload;
   /** Returns the price of 1 satoshi */
@@ -1727,6 +1760,16 @@ export type Subscription = {
 
 export type SubscriptionLnInvoicePaymentStatusArgs = {
   input: LnInvoicePaymentStatusInput;
+};
+
+
+export type SubscriptionLnInvoicePaymentStatusByHashArgs = {
+  input: LnInvoicePaymentStatusByHashInput;
+};
+
+
+export type SubscriptionLnInvoicePaymentStatusByPaymentRequestArgs = {
+  input: LnInvoicePaymentStatusByPaymentRequestInput;
 };
 
 
@@ -2540,6 +2583,7 @@ export type SendBitcoinDestinationQueryVariables = Exact<{ [key: string]: never;
 export type SendBitcoinDestinationQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly id: string } | { readonly __typename: 'UsdWallet', readonly id: string }> }, readonly contacts: ReadonlyArray<{ readonly __typename: 'UserContact', readonly id: string, readonly username: string, readonly alias?: string | null, readonly transactionsCount: number }> } | null };
 
 export type AccountDefaultWalletQueryVariables = Exact<{
+  walletCurrency?: InputMaybe<WalletCurrency>;
   username: Scalars['Username']['input'];
 }>;
 
@@ -5216,8 +5260,8 @@ export type SendBitcoinDestinationQueryHookResult = ReturnType<typeof useSendBit
 export type SendBitcoinDestinationLazyQueryHookResult = ReturnType<typeof useSendBitcoinDestinationLazyQuery>;
 export type SendBitcoinDestinationQueryResult = Apollo.QueryResult<SendBitcoinDestinationQuery, SendBitcoinDestinationQueryVariables>;
 export const AccountDefaultWalletDocument = gql`
-    query accountDefaultWallet($username: Username!) {
-  accountDefaultWallet(username: $username) {
+    query accountDefaultWallet($walletCurrency: WalletCurrency, $username: Username!) {
+  accountDefaultWallet(walletCurrency: $walletCurrency, username: $username) {
     id
   }
 }
@@ -5235,6 +5279,7 @@ export const AccountDefaultWalletDocument = gql`
  * @example
  * const { data, loading, error } = useAccountDefaultWalletQuery({
  *   variables: {
+ *      walletCurrency: // value for 'walletCurrency'
  *      username: // value for 'username'
  *   },
  * });
@@ -7229,6 +7274,9 @@ export type ResolversTypes = {
   LnInvoiceFeeProbeInput: LnInvoiceFeeProbeInput;
   LnInvoicePayload: ResolverTypeWrapper<LnInvoicePayload>;
   LnInvoicePaymentInput: LnInvoicePaymentInput;
+  LnInvoicePaymentStatus: ResolverTypeWrapper<LnInvoicePaymentStatus>;
+  LnInvoicePaymentStatusByHashInput: LnInvoicePaymentStatusByHashInput;
+  LnInvoicePaymentStatusByPaymentRequestInput: LnInvoicePaymentStatusByPaymentRequestInput;
   LnInvoicePaymentStatusInput: LnInvoicePaymentStatusInput;
   LnInvoicePaymentStatusPayload: ResolverTypeWrapper<LnInvoicePaymentStatusPayload>;
   LnNoAmountInvoice: ResolverTypeWrapper<LnNoAmountInvoice>;
@@ -7446,6 +7494,9 @@ export type ResolversParentTypes = {
   LnInvoiceFeeProbeInput: LnInvoiceFeeProbeInput;
   LnInvoicePayload: LnInvoicePayload;
   LnInvoicePaymentInput: LnInvoicePaymentInput;
+  LnInvoicePaymentStatus: LnInvoicePaymentStatus;
+  LnInvoicePaymentStatusByHashInput: LnInvoicePaymentStatusByHashInput;
+  LnInvoicePaymentStatusByPaymentRequestInput: LnInvoicePaymentStatusByPaymentRequestInput;
   LnInvoicePaymentStatusInput: LnInvoicePaymentStatusInput;
   LnInvoicePaymentStatusPayload: LnInvoicePaymentStatusPayload;
   LnNoAmountInvoice: LnNoAmountInvoice;
@@ -7949,8 +8000,17 @@ export type LnInvoicePayloadResolvers<ContextType = any, ParentType extends Reso
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type LnInvoicePaymentStatusResolvers<ContextType = any, ParentType extends ResolversParentTypes['LnInvoicePaymentStatus'] = ResolversParentTypes['LnInvoicePaymentStatus']> = {
+  paymentHash?: Resolver<Maybe<ResolversTypes['PaymentHash']>, ParentType, ContextType>;
+  paymentRequest?: Resolver<Maybe<ResolversTypes['LnPaymentRequest']>, ParentType, ContextType>;
+  status?: Resolver<Maybe<ResolversTypes['InvoicePaymentStatus']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type LnInvoicePaymentStatusPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['LnInvoicePaymentStatusPayload'] = ResolversParentTypes['LnInvoicePaymentStatusPayload']> = {
   errors?: Resolver<ReadonlyArray<ResolversTypes['Error']>, ParentType, ContextType>;
+  paymentHash?: Resolver<Maybe<ResolversTypes['PaymentHash']>, ParentType, ContextType>;
+  paymentRequest?: Resolver<Maybe<ResolversTypes['LnPaymentRequest']>, ParentType, ContextType>;
   status?: Resolver<Maybe<ResolversTypes['InvoicePaymentStatus']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -8265,6 +8325,8 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   innerCircleValue?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   introducingCirclesModalShown?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   lnInvoicePaymentStatus?: Resolver<ResolversTypes['LnInvoicePaymentStatusPayload'], ParentType, ContextType, RequireFields<QueryLnInvoicePaymentStatusArgs, 'input'>>;
+  lnInvoicePaymentStatusByHash?: Resolver<ResolversTypes['LnInvoicePaymentStatus'], ParentType, ContextType, RequireFields<QueryLnInvoicePaymentStatusByHashArgs, 'input'>>;
+  lnInvoicePaymentStatusByPaymentRequest?: Resolver<ResolversTypes['LnInvoicePaymentStatus'], ParentType, ContextType, RequireFields<QueryLnInvoicePaymentStatusByPaymentRequestArgs, 'input'>>;
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   mobileVersions?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['MobileVersions']>>>, ParentType, ContextType>;
   onChainTxFee?: Resolver<ResolversTypes['OnChainTxFee'], ParentType, ContextType, RequireFields<QueryOnChainTxFeeArgs, 'address' | 'amount' | 'speed' | 'walletId'>>;
@@ -8373,6 +8435,8 @@ export interface SignedDisplayMajorAmountScalarConfig extends GraphQLScalarTypeC
 
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
   lnInvoicePaymentStatus?: SubscriptionResolver<ResolversTypes['LnInvoicePaymentStatusPayload'], "lnInvoicePaymentStatus", ParentType, ContextType, RequireFields<SubscriptionLnInvoicePaymentStatusArgs, 'input'>>;
+  lnInvoicePaymentStatusByHash?: SubscriptionResolver<ResolversTypes['LnInvoicePaymentStatusPayload'], "lnInvoicePaymentStatusByHash", ParentType, ContextType, RequireFields<SubscriptionLnInvoicePaymentStatusByHashArgs, 'input'>>;
+  lnInvoicePaymentStatusByPaymentRequest?: SubscriptionResolver<ResolversTypes['LnInvoicePaymentStatusPayload'], "lnInvoicePaymentStatusByPaymentRequest", ParentType, ContextType, RequireFields<SubscriptionLnInvoicePaymentStatusByPaymentRequestArgs, 'input'>>;
   myUpdates?: SubscriptionResolver<ResolversTypes['MyUpdatesPayload'], "myUpdates", ParentType, ContextType>;
   price?: SubscriptionResolver<ResolversTypes['PricePayload'], "price", ParentType, ContextType, RequireFields<SubscriptionPriceArgs, 'input'>>;
   realtimePrice?: SubscriptionResolver<ResolversTypes['RealtimePricePayload'], "realtimePrice", ParentType, ContextType, RequireFields<SubscriptionRealtimePriceArgs, 'input'>>;
@@ -8643,6 +8707,7 @@ export type Resolvers<ContextType = any> = {
   LeaderboardName?: GraphQLScalarType;
   LnInvoice?: LnInvoiceResolvers<ContextType>;
   LnInvoicePayload?: LnInvoicePayloadResolvers<ContextType>;
+  LnInvoicePaymentStatus?: LnInvoicePaymentStatusResolvers<ContextType>;
   LnInvoicePaymentStatusPayload?: LnInvoicePaymentStatusPayloadResolvers<ContextType>;
   LnNoAmountInvoice?: LnNoAmountInvoiceResolvers<ContextType>;
   LnNoAmountInvoicePayload?: LnNoAmountInvoicePayloadResolvers<ContextType>;

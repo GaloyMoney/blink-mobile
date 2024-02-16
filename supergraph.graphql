@@ -835,6 +835,26 @@ input LnInvoicePaymentInput
   walletId: WalletId!
 }
 
+type LnInvoicePaymentStatus
+  @join__type(graph: GALOY)
+{
+  paymentHash: PaymentHash
+  paymentRequest: LnPaymentRequest
+  status: InvoicePaymentStatus
+}
+
+input LnInvoicePaymentStatusByHashInput
+  @join__type(graph: GALOY)
+{
+  paymentHash: PaymentHash!
+}
+
+input LnInvoicePaymentStatusByPaymentRequestInput
+  @join__type(graph: GALOY)
+{
+  paymentRequest: LnPaymentRequest!
+}
+
 input LnInvoicePaymentStatusInput
   @join__type(graph: GALOY)
 {
@@ -845,6 +865,8 @@ type LnInvoicePaymentStatusPayload
   @join__type(graph: GALOY)
 {
   errors: [Error!]!
+  paymentHash: PaymentHash
+  paymentRequest: LnPaymentRequest
   status: InvoicePaymentStatus
 }
 
@@ -1052,12 +1074,46 @@ type MapMarker
   @join__type(graph: GALOY)
 {
   mapInfo: MapInfo!
-  username: Username
+  username: Username!
 }
 
 """Text field in a lightning payment transaction"""
 scalar Memo
   @join__type(graph: GALOY)
+
+type Merchant
+  @join__type(graph: GALOY)
+{
+  """
+  GPS coordinates for the merchant that can be used to place the related business on a map
+  """
+  coordinates: Coordinates!
+  createdAt: Timestamp!
+  id: ID!
+  title: String!
+
+  """The username of the merchant"""
+  username: Username!
+
+  """Whether the merchant has been validated"""
+  validated: Boolean!
+}
+
+input MerchantMapSuggestInput
+  @join__type(graph: GALOY)
+{
+  latitude: Float!
+  longitude: Float!
+  title: String!
+  username: Username!
+}
+
+type MerchantPayload
+  @join__type(graph: GALOY)
+{
+  errors: [Error!]!
+  merchant: Merchant
+}
 
 """(Positive) amount of minutes"""
 scalar Minutes
@@ -1191,6 +1247,7 @@ type Mutation
 
   """Sends a payment to a lightning address."""
   lnurlPaymentSend(input: LnurlPaymentSendInput!): PaymentSendPayload! @join__field(graph: GALOY)
+  merchantMapSuggest(input: MerchantMapSuggestInput!): MerchantPayload! @join__field(graph: GALOY)
   onChainAddressCreate(input: OnChainAddressCreateInput!): OnChainAddressPayload! @join__field(graph: GALOY)
   onChainAddressCurrent(input: OnChainAddressCurrentInput!): OnChainAddressPayload! @join__field(graph: GALOY)
   onChainPaymentSend(input: OnChainPaymentSendInput!): PaymentSendPayload! @join__field(graph: GALOY)
@@ -1561,10 +1618,12 @@ type Query
   welcomeLeaderboard(input: WelcomeLeaderboardInput!): Leaderboard! @join__field(graph: CIRCLES)
   accountDefaultWallet(username: Username!, walletCurrency: WalletCurrency): PublicWallet! @join__field(graph: GALOY)
   btcPriceList(range: PriceGraphRange!): [PricePoint] @join__field(graph: GALOY)
-  businessMapMarkers: [MapMarker] @join__field(graph: GALOY)
+  businessMapMarkers: [MapMarker!]! @join__field(graph: GALOY)
   currencyList: [Currency!]! @join__field(graph: GALOY)
   globals: Globals @join__field(graph: GALOY)
-  lnInvoicePaymentStatus(input: LnInvoicePaymentStatusInput!): LnInvoicePaymentStatusPayload! @join__field(graph: GALOY)
+  lnInvoicePaymentStatus(input: LnInvoicePaymentStatusInput!): LnInvoicePaymentStatusPayload! @join__field(graph: GALOY) @deprecated(reason: "Deprecated in favor of lnInvoicePaymentStatusByPaymentRequest")
+  lnInvoicePaymentStatusByHash(input: LnInvoicePaymentStatusByHashInput!): LnInvoicePaymentStatus! @join__field(graph: GALOY)
+  lnInvoicePaymentStatusByPaymentRequest(input: LnInvoicePaymentStatusByPaymentRequestInput!): LnInvoicePaymentStatus! @join__field(graph: GALOY)
   me: User @join__field(graph: GALOY)
   mobileVersions: [MobileVersions] @join__field(graph: GALOY)
   onChainTxFee(address: OnChainAddress!, amount: SatAmount!, speed: PayoutSpeed! = FAST, walletId: WalletId!): OnChainTxFee! @join__field(graph: GALOY)
@@ -1707,7 +1766,9 @@ scalar SignedDisplayMajorAmount
 type Subscription
   @join__type(graph: GALOY)
 {
-  lnInvoicePaymentStatus(input: LnInvoicePaymentStatusInput!): LnInvoicePaymentStatusPayload!
+  lnInvoicePaymentStatus(input: LnInvoicePaymentStatusInput!): LnInvoicePaymentStatusPayload! @deprecated(reason: "Deprecated in favor of lnInvoicePaymentStatusByPaymentRequest")
+  lnInvoicePaymentStatusByHash(input: LnInvoicePaymentStatusByHashInput!): LnInvoicePaymentStatusPayload!
+  lnInvoicePaymentStatusByPaymentRequest(input: LnInvoicePaymentStatusByPaymentRequestInput!): LnInvoicePaymentStatusPayload!
   myUpdates: MyUpdatesPayload!
   price(input: PriceInput!): PricePayload!
 
@@ -2074,6 +2135,8 @@ enum UserNotificationCategory
 {
   CIRCLES @join__enumValue(graph: GALOY)
   PAYMENTS @join__enumValue(graph: GALOY)
+  BALANCE @join__enumValue(graph: GALOY)
+  ADMIN_NOTIFICATION @join__enumValue(graph: GALOY)
 }
 
 enum UserNotificationChannel

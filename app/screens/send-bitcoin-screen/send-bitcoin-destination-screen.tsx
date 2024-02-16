@@ -63,8 +63,8 @@ gql`
     }
   }
 
-  query accountDefaultWallet($username: Username!) {
-    accountDefaultWallet(username: $username) {
+  query accountDefaultWallet($walletCurrency: WalletCurrency, $username: Username!) {
+    accountDefaultWallet(walletCurrency: $walletCurrency, username: $username) {
       id
     }
   }

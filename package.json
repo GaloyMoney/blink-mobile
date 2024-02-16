@@ -60,7 +60,7 @@
     "@formatjs/intl-getcanonicallocales": "^2.3.0",
     "@formatjs/intl-locale": "^3.4.3",
     "@formatjs/intl-relativetimeformat": "^11.2.10",
-    "@galoymoney/client": "^0.2.8",
+    "@galoymoney/client": "^0.2.9",
     "@galoymoney/react-native-geetest-module": "^0.1.3",
     "@react-native-async-storage/async-storage": "^1.19.3",
     "@react-native-clipboard/clipboard": "^1.12.1",
