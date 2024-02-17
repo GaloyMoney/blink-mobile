@@ -70,7 +70,7 @@ jobs:
 
       # Tests on iOS Simulator
       - name: Run Detox Tests on iOS Simulator
-        run: yarn e2e:test ios.sim.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location ios-recordings
+        run: nix develop -c sh -c 'yarn e2e:test ios.sim.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location ios-recordings'
 
       - run: killall Simulator
         if: always()
@@ -93,7 +93,7 @@ jobs:
           adb wait-for-device
 
       - name: Run Detox Tests on Android Emulator
-        run: yarn e2e:test android.emu.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location android-recordings
+        run: nix develop -c sh -c 'yarn e2e:test android.emu.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location android-recordings'
 
       - name: Kill Android Emulator
         if: always()
