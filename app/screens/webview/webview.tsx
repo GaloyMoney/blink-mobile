@@ -55,15 +55,7 @@ export const WebViewScreen: React.FC<Props> = ({ route }) => {
         </TouchableOpacity>
       ),
     })
-  }, [
-    navigation,
-    handleBackPress,
-    LL,
-    mode,
-    colors.black,
-    colors._white,
-    styles.iconContainer,
-  ])
+  }, [navigation, handleBackPress, LL, styles.iconContainer, colors.black])
 
   const handleWebViewNavigationStateChange = (newNavState: WebViewNavigation) => {
     setCanGoBack(newNavState.canGoBack)
