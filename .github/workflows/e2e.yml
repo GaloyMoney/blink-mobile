@@ -1,8 +1,6 @@
 name: E2E
 
-on:
-  pull_request:
-    branches: [main]
+on: [pull_request]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}

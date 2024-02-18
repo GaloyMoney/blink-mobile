@@ -1,45 +1,26 @@
 import "detox"
 
-import { timeout, otp, ALICE_PHONE, ALICE_EMAIL } from "./utils/config"
+import { timeout, ALICE_PHONE, ALICE_EMAIL } from "./utils/config"
 
 import { i18nObject } from "../../app/i18n/i18n-util"
 import { loadLocale } from "../../app/i18n/i18n-util.sync"
 
 import { getKratosCode } from "./utils/commandline"
-import { setLocalEnvironment, tap } from "./utils/controls"
+
+import { tap } from "./utils/controls"
+import { loginAs, setLocalEnvironment } from "./utils/common-flows"
 
 describe("Login/Register Flow", () => {
   loadLocale("en")
   const LL = i18nObject("en")
 
   beforeAll(async () => {
-    await device.launchApp()
+    await device.launchApp({ newInstance: true })
   })
 
   it("set environment", setLocalEnvironment)
 
-  it("login as an user", async () => {
-    await tap(by.id(LL.GetStartedScreen.createAccount()))
-
-    const telephoneInput = element(by.id("telephoneNumber"))
-    await waitFor(telephoneInput).toBeVisible().withTimeout(timeout)
-    await telephoneInput.clearText()
-    await telephoneInput.typeText(ALICE_PHONE)
-    await tap(by.id(LL.PhoneLoginInitiateScreen.sms()))
-
-    const otpInput = element(by.id("oneTimeCode"))
-    try {
-      await waitFor(otpInput).toBeVisible().withTimeout(timeout)
-      await otpInput.clearText()
-      await otpInput.typeText(otp)
-    } catch {
-      /* empty because sometimes the page just moves to the next page coz 000000 is default */
-    }
-
-    await waitFor(element(by.text(LL.HomeScreen.myAccounts())))
-      .toBeVisible()
-      .withTimeout(timeout)
-  })
+  it("login as an user", loginAs(ALICE_PHONE, LL))
 
   it("add an email", async () => {
     await tap(by.id("menu"))
