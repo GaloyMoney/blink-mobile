@@ -25,6 +25,7 @@ import {
 } from "../transaction-detail-screen/format-time"
 import { SuggestionModal } from "./suggestion-modal"
 import { PaymentSendCompletedStatus } from "./use-send-payment"
+import { useAppConfig } from "@app/hooks"
 
 type Props = {
   route: RouteProp<RootStackParamList, "sendBitcoinCompleted">
@@ -66,7 +67,13 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
     InAppReview.RequestInAppReview()
   }
 
+  const { appConfig } = useAppConfig()
+
   const requestFeedback = useCallback(() => {
+    if (!appConfig || appConfig.galoyInstance.id === "Local") {
+      return
+    }
+
     if (InAppReview.isAvailable()) {
       Alert.alert(
         "",
