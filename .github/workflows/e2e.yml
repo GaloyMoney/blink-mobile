@@ -1,8 +1,6 @@
 name: E2E
 
-on:
-  pull_request:
-    branches: [main]
+on: [pull_request]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -67,6 +65,7 @@ jobs:
             nix develop -c sh -c 'cd dev && tilt ci' && exit 0 || sleep 15
           done
           exit 1
+      - run: nix develop -c sh -c 'cd dev && tilt up' &
 
       # Tests on iOS Simulator
       - name: Run Detox Tests on iOS Simulator
