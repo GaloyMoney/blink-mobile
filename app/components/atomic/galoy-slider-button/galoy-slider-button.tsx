@@ -15,6 +15,7 @@ import Animated, {
 } from "react-native-reanimated"
 import { GaloyIcon } from "../galoy-icon"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
+import { testProps } from "@app/utils/testProps"
 
 const BUTTON_WIDTH = Dimensions.get("screen").width - 40
 const SWIPE_RANGE = BUTTON_WIDTH - 50
@@ -103,6 +104,7 @@ const GaloySliderButton = ({
         <PanGestureHandler
           enabled={!isLoading && !disabled}
           onGestureEvent={animatedGestureHandler}
+          {...testProps("slider")}
         >
           <Animated.View
             style={[
