@@ -1,5 +1,5 @@
 import path from "path"
-import { execSync } from "child_process"
+import { execSync, exec } from "child_process"
 
 const REPO_ROOT = path.join(__dirname, "../../..")
 
@@ -10,13 +10,15 @@ export const runDevSetup = () => {
   )
 }
 
-export const getKratosCode = (email: string) => {
-  const emailBody = execSync(
-    `source "${REPO_ROOT}/dev/vendor/galoy-quickstart/dev/helpers/cli.sh" && 
+export const getKratosCode = async (email: string): Promise<string> =>
+  new Promise((resolve) => {
+    exec(
+      `source "${REPO_ROOT}/dev/vendor/galoy-quickstart/dev/helpers/cli.sh" && 
       kratos_pg -c "SELECT body FROM courier_messages WHERE recipient='${email}' ORDER BY created_at DESC LIMIT 1;"`,
-    { encoding: "utf-8" },
-  )
-
-  const code = emailBody.match(/\b\d{6}\b/)?.[0]
-  return code || ""
-}
+      { encoding: "utf-8" },
+      (_, emailBody, __) => {
+        const code = emailBody.match(/\b\d{6}\b/)?.[0]
+        resolve(code || "")
+      },
+    )
+  })

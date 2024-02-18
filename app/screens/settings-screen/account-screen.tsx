@@ -31,6 +31,7 @@ import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { AccountId } from "./account-id"
 import { SettingsRow } from "./settings-row"
 import { useShowWarningSecureAccount } from "./show-warning-secure-account"
+import { testProps } from "@app/utils/testProps"
 
 gql`
   query accountScreen {
@@ -592,6 +593,7 @@ export const AccountScreen = () => {
       preset="scroll"
       keyboardShouldPersistTaps="handled"
       keyboardOffset="navigationHeader"
+      {...testProps("account-screen-scroll-view")}
     >
       <AccountId />
       {accountSettingsList.map((setting) => (

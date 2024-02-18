@@ -18,14 +18,12 @@ export const addSmallAmount = async (LL: TranslationFunctions) => {
     .withTimeout(timeout)
 }
 
-export const waitForHomeScreen = async (LL: TranslationFunctions) => {
-  const el = element(by.id(LL.HomeScreen.myAccounts()))
-  await waitFor(el)
-    .toBeVisible()
-    .withTimeout(timeout * 3)
-}
-
 export const verifyTextPresent = async (text: string) => {
   const el = element(by.text(text))
   await waitFor(el).toBeVisible().withTimeout(timeout)
 }
+
+export const sleep = (ms: number): Promise<void> =>
+  new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
