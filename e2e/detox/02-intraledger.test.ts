@@ -5,13 +5,8 @@ import { timeout, ALICE_PHONE, BOB_USERNAME } from "./utils/config"
 import { i18nObject } from "../../app/i18n/i18n-util"
 import { loadLocale } from "../../app/i18n/i18n-util.sync"
 
-import {
-  addSmallAmount,
-  tap,
-  verifyTextPresent,
-  waitForHomeScreen,
-} from "./utils/controls"
-import { setLocalAndLoginAs } from "./utils/common-flows"
+import { addSmallAmount, tap, verifyTextPresent, sleep } from "./utils/controls"
+import { setLocalAndLoginAs, waitForHomeScreen } from "./utils/common-flows"
 
 describe("Intraledger Flow", () => {
   loadLocale("en")
@@ -41,6 +36,8 @@ describe("Intraledger Flow", () => {
     const slider = element(by.id("slider"))
     await waitFor(slider).toBeVisible().withTimeout(timeout)
     await slider.swipe("right", "fast", 0.9, 0.5, 0.5)
+
+    await sleep(3000)
   })
 
   it("check if latest transaction has been updated", async () => {

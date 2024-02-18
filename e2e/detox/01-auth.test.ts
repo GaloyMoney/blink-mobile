@@ -8,7 +8,7 @@ import { loadLocale } from "../../app/i18n/i18n-util.sync"
 import { getKratosCode } from "./utils/commandline"
 
 import { tap } from "./utils/controls"
-import { loginAs, setLocalEnvironment } from "./utils/common-flows"
+import { loginAs, setLocalEnvironment, waitForAccountScreen } from "./utils/common-flows"
 
 describe("Login/Register Flow", () => {
   loadLocale("en")
@@ -33,19 +33,30 @@ describe("Login/Register Flow", () => {
     await emailInput.typeText(ALICE_EMAIL)
     await tap(by.id(LL.EmailRegistrationInitiateScreen.send()))
 
-    const codeInput = element(by.id("000000"))
+    const codeInput = element(by.id("code-input"))
     await waitFor(codeInput).toBeVisible().withTimeout(timeout)
-    const code = getKratosCode(ALICE_EMAIL)
+
+    const code = await getKratosCode(ALICE_EMAIL)
     await codeInput.clearText()
     await codeInput.typeText(code)
 
-    await tap(by.label(LL.common.ok()))
+    await tap(by.text(LL.common.ok()))
   })
 
   it("logout", async () => {
-    await tap(by.id(LL.AccountScreen.logOutAndDeleteLocalData()))
-    await tap(by.label(LL.AccountScreen.IUnderstand()))
-    await tap(by.label(LL.common.ok()))
+    await waitForAccountScreen(LL)
+
+    const logoutBtn = element(by.id(LL.AccountScreen.logOutAndDeleteLocalData()))
+    const accountScreenSV = by.id("account-screen-scroll-view")
+
+    await waitFor(logoutBtn)
+      .toBeVisible()
+      .whileElement(accountScreenSV)
+      .scroll(400, "down", NaN, 0.85)
+    await logoutBtn.tap()
+
+    await tap(by.text(LL.AccountScreen.IUnderstand()))
+    await tap(by.text(LL.common.ok()))
   })
 
   it("reset to local environment", setLocalEnvironment)
@@ -59,9 +70,10 @@ describe("Login/Register Flow", () => {
     await emailInput.typeText(ALICE_EMAIL)
     await tap(by.id(LL.EmailRegistrationInitiateScreen.send()))
 
-    const codeInput = element(by.id("000000"))
+    const codeInput = element(by.id("code-input"))
     await waitFor(codeInput).toBeVisible().withTimeout(timeout)
-    const code = getKratosCode(ALICE_EMAIL)
+
+    const code = await getKratosCode(ALICE_EMAIL)
     await codeInput.clearText()
     await codeInput.typeText(code)
   })

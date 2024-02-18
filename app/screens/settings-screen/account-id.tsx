@@ -7,6 +7,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { Text, makeStyles } from "@rneui/themed"
+import { testProps } from "@app/utils/testProps"
 
 export const AccountId: React.FC = () => {
   const { data } = useAccountScreenQuery()
@@ -30,7 +31,9 @@ export const AccountId: React.FC = () => {
 
   return (
     <View style={styles.accountId}>
-      <Text type="p2">{LL.AccountScreen.yourAccountId()}</Text>
+      <Text {...testProps(LL.AccountScreen.yourAccountId())} type="p2">
+        {LL.AccountScreen.yourAccountId()}
+      </Text>
       <View style={styles.wrapper}>
         <View style={styles.accIdWrapper}>
           <View style={styles.accIdXs}>

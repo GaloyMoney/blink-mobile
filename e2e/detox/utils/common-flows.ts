@@ -3,13 +3,27 @@ import { TranslationFunctions } from "../../../app/i18n/i18n-types"
 import { otp, timeout } from "./config"
 import { tap } from "./controls"
 
+export const waitForAccountScreen = async (LL: TranslationFunctions) => {
+  const el = element(by.id(LL.AccountScreen.yourAccountId()))
+  await waitFor(el)
+    .toBeVisible()
+    .withTimeout(timeout * 3)
+}
+
+export const waitForHomeScreen = async (LL: TranslationFunctions) => {
+  const el = element(by.id(LL.HomeScreen.myAccounts()))
+  await waitFor(el)
+    .toBeVisible()
+    .withTimeout(timeout * 3)
+}
+
 export const setLocalEnvironment = async () => {
   const buildBtn = element(by.id("logo-button"))
   await waitFor(buildBtn)
     .toBeVisible()
     // Wait for 5 mins because metro bundler might not finish sync
     .withTimeout(5 * 600000)
-  await buildBtn.multiTap(3)
+  await buildBtn.multiTap(5)
 
   const logoutBtn = element(by.id("logout button"))
   await waitFor(logoutBtn).toBeVisible().withTimeout(timeout)
