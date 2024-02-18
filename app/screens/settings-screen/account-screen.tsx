@@ -29,6 +29,7 @@ import { useShowWarningSecureAccount } from "./show-warning-secure-account"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { useNavigation } from "@react-navigation/native"
 import { AccountId } from "./account-id"
+import { testProps } from "@app/utils/testProps"
 
 gql`
   query accountScreen {
@@ -590,6 +591,7 @@ export const AccountScreen = () => {
       preset="scroll"
       keyboardShouldPersistTaps="handled"
       keyboardOffset="navigationHeader"
+      {...testProps("account-screen-scroll-view")}
     >
       <AccountId />
       {accountSettingsList.map((setting) => (
