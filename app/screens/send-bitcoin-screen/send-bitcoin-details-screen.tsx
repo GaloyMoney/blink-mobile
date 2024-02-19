@@ -302,6 +302,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           return (
             <TouchableWithoutFeedback
               key={wallet.id}
+              {...testProps(wallet.walletCurrency)}
               onPress={() => {
                 chooseWallet(wallet)
               }}
@@ -484,7 +485,11 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
         </View>
         <View style={styles.fieldContainer}>
           <Text style={styles.fieldTitleText}>{LL.common.from()}</Text>
-          <TouchableWithoutFeedback onPress={toggleModal} accessible={false}>
+          <TouchableWithoutFeedback
+            {...testProps("choose-wallet-to-send-from")}
+            onPress={toggleModal}
+            accessible={false}
+          >
             <View style={styles.fieldBackground}>
               <View style={styles.walletSelectorTypeContainer}>
                 <View
@@ -756,6 +761,8 @@ const useOnchainFeeAlert = (
     ;(async () => {
       const result = await getOnChainTxFee()
       const fees = result.data?.onChainTxFee.amount
+
+      console.log(result.data)
       if (fees) {
         setOnChainTxFee(fees)
       } else {

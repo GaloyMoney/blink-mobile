@@ -129,6 +129,10 @@ type AuthTokenPayload {
   totpRequired: Boolean
 }
 
+type Authorization {
+  scopes: [Scope!]!
+}
+
 """
 A wallet belonging to an account which contains a BTC balance and a list of transactions.
 """
@@ -195,6 +199,7 @@ type BTCWallet implements Wallet {
     last: Int
   ): TransactionConnection
   transactionsByPaymentHash(paymentHash: PaymentHash!): [Transaction!]!
+  transactionsByPaymentRequest(paymentRequest: LnPaymentRequest!): [Transaction!]!
   walletCurrency: WalletCurrency!
 }
 
@@ -543,6 +548,13 @@ type LnInvoice implements Invoice {
   satoshis: SatAmount!
 }
 
+input LnInvoiceCancelInput {
+  paymentHash: PaymentHash!
+
+  """Wallet ID for a wallet associated with the current account."""
+  walletId: WalletId!
+}
+
 input LnInvoiceCreateInput {
   """Amount in satoshis."""
   amount: SatAmount!
@@ -595,12 +607,28 @@ input LnInvoicePaymentInput {
   walletId: WalletId!
 }
 
+type LnInvoicePaymentStatus {
+  paymentHash: PaymentHash
+  paymentRequest: LnPaymentRequest
+  status: InvoicePaymentStatus
+}
+
+input LnInvoicePaymentStatusByHashInput {
+  paymentHash: PaymentHash!
+}
+
+input LnInvoicePaymentStatusByPaymentRequestInput {
+  paymentRequest: LnPaymentRequest!
+}
+
 input LnInvoicePaymentStatusInput {
   paymentRequest: LnPaymentRequest!
 }
 
 type LnInvoicePaymentStatusPayload {
   errors: [Error!]!
+  paymentHash: PaymentHash
+  paymentRequest: LnPaymentRequest
   status: InvoicePaymentStatus
 }
 
@@ -778,6 +806,34 @@ type MapMarker {
 """Text field in a lightning payment transaction"""
 scalar Memo
 
+type Merchant {
+  """
+  GPS coordinates for the merchant that can be used to place the related business on a map
+  """
+  coordinates: Coordinates!
+  createdAt: Timestamp!
+  id: ID!
+  title: String!
+
+  """The username of the merchant"""
+  username: Username!
+
+  """Whether the merchant has been validated"""
+  validated: Boolean!
+}
+
+input MerchantMapSuggestInput {
+  latitude: Float!
+  longitude: Float!
+  title: String!
+  username: Username!
+}
+
+type MerchantPayload {
+  errors: [Error!]!
+  merchant: Merchant
+}
+
 """(Positive) amount of minutes"""
 scalar Minutes
 
@@ -818,6 +874,9 @@ type Mutation {
 
   """Sends a payment to a lightning address."""
   lnAddressPaymentSend(input: LnAddressPaymentSendInput!): PaymentSendPayload!
+
+  """Cancel an unpaid lightning invoice for an associated wallet."""
+  lnInvoiceCancel(input: LnInvoiceCancelInput!): SuccessPayload!
 
   """
   Returns a lightning invoice for an associated wallet.
@@ -898,6 +957,7 @@ type Mutation {
 
   """Sends a payment to a lightning address."""
   lnurlPaymentSend(input: LnurlPaymentSendInput!): PaymentSendPayload!
+  merchantMapSuggest(input: MerchantMapSuggestInput!): MerchantPayload!
   onChainAddressCreate(input: OnChainAddressCreateInput!): OnChainAddressPayload!
   onChainAddressCurrent(input: OnChainAddressCurrentInput!): OnChainAddressPayload!
   onChainPaymentSend(input: OnChainPaymentSendInput!): PaymentSendPayload!
@@ -905,7 +965,6 @@ type Mutation {
   onChainUsdPaymentSend(input: OnChainUsdPaymentSendInput!): PaymentSendPayload!
   onChainUsdPaymentSendAsBtcDenominated(input: OnChainUsdPaymentSendAsBtcDenominatedInput!): PaymentSendPayload!
   quizClaim(input: QuizClaimInput!): QuizClaimPayload!
-  quizCompleted(input: QuizCompletedInput!): QuizCompletedPayload! @deprecated(reason: "Use quizClaim instead")
   userContactUpdateAlias(input: UserContactUpdateAliasInput!): UserContactUpdateAliasPayload! @deprecated(reason: "will be moved to AccountContact")
   userEmailDelete: UserEmailDeletePayload!
   userEmailRegistrationInitiate(input: UserEmailRegistrationInitiateInput!): UserEmailRegistrationInitiatePayload!
@@ -1160,11 +1219,16 @@ type PublicWallet {
 
 type Query {
   accountDefaultWallet(username: Username!, walletCurrency: WalletCurrency): PublicWallet!
+
+  """Retrieve the list of scopes permitted for the user's token or API key"""
+  authorization: Authorization!
   btcPriceList(range: PriceGraphRange!): [PricePoint]
   businessMapMarkers: [MapMarker!]!
   currencyList: [Currency!]!
   globals: Globals
-  lnInvoicePaymentStatus(input: LnInvoicePaymentStatusInput!): LnInvoicePaymentStatusPayload!
+  lnInvoicePaymentStatus(input: LnInvoicePaymentStatusInput!): LnInvoicePaymentStatusPayload! @deprecated(reason: "Deprecated in favor of lnInvoicePaymentStatusByPaymentRequest")
+  lnInvoicePaymentStatusByHash(input: LnInvoicePaymentStatusByHashInput!): LnInvoicePaymentStatus!
+  lnInvoicePaymentStatusByPaymentRequest(input: LnInvoicePaymentStatusByPaymentRequestInput!): LnInvoicePaymentStatus!
   me: User
   mobileVersions: [MobileVersions]
   onChainTxFee(address: OnChainAddress!, amount: SatAmount!, speed: PayoutSpeed! = FAST, walletId: WalletId!): OnChainTxFee!
@@ -1192,15 +1256,6 @@ input QuizClaimInput {
 type QuizClaimPayload {
   errors: [Error!]!
   quizzes: [Quiz!]!
-}
-
-input QuizCompletedInput {
-  id: ID!
-}
-
-type QuizCompletedPayload {
-  errors: [Error!]!
-  quiz: Quiz
 }
 
 type RealtimePrice {
@@ -1237,6 +1292,12 @@ type SatAmountPayload {
   errors: [Error!]!
 }
 
+enum Scope {
+  READ
+  RECEIVE
+  WRITE
+}
+
 """(Positive) amount of seconds"""
 scalar Seconds
 
@@ -1271,7 +1332,9 @@ A string amount (of a currency) that can be negative (e.g. in a transaction)
 scalar SignedDisplayMajorAmount
 
 type Subscription {
-  lnInvoicePaymentStatus(input: LnInvoicePaymentStatusInput!): LnInvoicePaymentStatusPayload!
+  lnInvoicePaymentStatus(input: LnInvoicePaymentStatusInput!): LnInvoicePaymentStatusPayload! @deprecated(reason: "Deprecated in favor of lnInvoicePaymentStatusByPaymentRequest")
+  lnInvoicePaymentStatusByHash(input: LnInvoicePaymentStatusByHashInput!): LnInvoicePaymentStatusPayload!
+  lnInvoicePaymentStatusByPaymentRequest(input: LnInvoicePaymentStatusByPaymentRequestInput!): LnInvoicePaymentStatusPayload!
   myUpdates: MyUpdatesPayload!
   price(input: PriceInput!): PricePayload!
 
@@ -1438,6 +1501,7 @@ type UsdWallet implements Wallet {
     last: Int
   ): TransactionConnection
   transactionsByPaymentHash(paymentHash: PaymentHash!): [Transaction!]!
+  transactionsByPaymentRequest(paymentRequest: LnPaymentRequest!): [Transaction!]!
   walletCurrency: WalletCurrency!
 }
 
@@ -1711,6 +1775,12 @@ interface Wallet {
   transactionsByPaymentHash(
     """The payment hash of the lightning invoice paid in this transaction."""
     paymentHash: PaymentHash!
+  ): [Transaction!]!
+
+  """Returns the transactions that include this paymentRequest."""
+  transactionsByPaymentRequest(
+    """Lightning invoice paid in this transaction."""
+    paymentRequest: LnPaymentRequest!
   ): [Transaction!]!
   walletCurrency: WalletCurrency!
 }

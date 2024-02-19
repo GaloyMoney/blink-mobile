@@ -1,15 +1,114 @@
 name: E2E
 
-on: [pull_request]
+on:
+  pull_request:
+    branches: [main]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
-  e2e:
-    name: E2E Tests
+  e2e-android:
+    name: Android
     runs-on: self-hosted
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # In case this is run on a runner without nix
+      # - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@v2
+      - uses: nicknovitski/nix-develop@v1
+
+      # Caching
+      - uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            ios/Pods
+          key: ${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock', '**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-deps-
+
+      # Installations
+      - name: Install Node Modules and Pods
+        run: yarn install
+        env:
+          LANG: en_US.UTF-8
+
+      # Metro
+      - name: Start Metro
+        run: |
+          yarn start &
+          echo "METRO_PID=$!" >> $GITHUB_ENV
+
+      # Builds
+      - run: yarn e2e:build android.emu.debug
+
+      # Start Tilt
+      - name: Tilt CI
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 10
+          retry_wait_seconds: 30
+          max_attempts: 3
+          command: cd dev && tilt ci
+      - name: Tilt Server
+        run: |
+          lsof -ti:10350 | xargs kill -9 || true
+          make tilt-up &
+          echo "TILT_SERVER_PID=$!" >> $GITHUB_ENV
+
+      # Tests on Android Emulator
+      - name: Start Android Emulator
+        run: |
+          make emulator &
+          adb wait-for-device
+
+      - name: Run Detox Tests on Android Emulator
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 15
+          retry_wait_seconds: 1
+          max_attempts: 3
+          command: |
+            rm -rf android-recordings || true
+            make reset-e2e
+            yarn e2e:test android.emu.debug -d --take-screenshots all --record-videos all --record-logs all --artifacts-location android-recordings
+
+      - name: Kill Android Emulator
+        if: always()
+        continue-on-error: true
+        run: adb emu kill
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-recordings
+          path: android-recordings
+
+      # Cleanup
+      - name: Terminate Metro
+        if: always()
+        continue-on-error: true
+        run: kill $METRO_PID
+
+      - name: Cleanup
+        if: always()
+        continue-on-error: true
+        run: |
+          kill $METRO_PID || true
+          kill $TILT_SERVER_PID || true
+          cd dev && tilt down || true
+          docker rm -f $(docker ps -aq) || true
+          lsof -ti:10350,8080,8081 | xargs kill -9 || true
+
+  e2e-ios:
+    name: iOS
+    runs-on: self-hosted
+    timeout-minutes: 45
 
     steps:
       - uses: actions/checkout@v2
@@ -43,26 +142,32 @@ jobs:
 
       # Builds
       - run: yarn e2e:build ios.sim.debug
-      - run: yarn e2e:build android.emu.debug
 
       # Start Tilt
       - name: Tilt CI
         uses: nick-fields/retry@v3
         with:
           timeout_minutes: 10
-          retry_wait_seconds: 15
-          max_attempts: 5
+          retry_wait_seconds: 30
+          max_attempts: 3
           command: cd dev && tilt ci
+      - name: Tilt Server
+        run: |
+          lsof -ti:10350 | xargs kill -9 || true
+          make tilt-up &
+          echo "TILT_SERVER_PID=$!" >> $GITHUB_ENV
 
       # Tests on iOS Simulator
       - name: Run Detox Tests on iOS Simulator
         uses: nick-fields/retry@v3
         with:
-          timeout_minutes: 10
-          max_attempts: 5
+          timeout_minutes: 15
+          retry_wait_seconds: 1
+          max_attempts: 3
           command: |
             rm -rf ios-recordings || true
-            yarn e2e:test ios.sim.debug -d --take-screenshots all --record-videos all --record-logs all --artifacts-location ios-recordings
+            make reset-e2e
+            yarn e2e:test ios.sim.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location ios-recordings
 
       - run: killall Simulator
         if: always()
@@ -74,42 +179,13 @@ jobs:
           name: ios-recordings
           path: ios-recordings
 
-      # Tests on Android Emulator
-      - name: Start Android Emulator
-        run: |
-          make emulator &
-          adb wait-for-device
-
-      - name: Run Detox Tests on Android Emulator
-        uses: nick-fields/retry@v3
-        with:
-          timeout_minutes: 10
-          max_attempts: 5
-          command: |
-            rm -rf android-recordings || true
-            yarn e2e:test android.emu.debug -d --take-screenshots all --record-videos all --record-logs all --artifacts-location android-recordings
-
-      - name: Kill Android Emulator
-        if: always()
-        continue-on-error: true
-        run: adb emu kill
-
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: android-recordings
-          path: android-recordings
-
       # Cleanup
-      - name: Terminate Metro
-        if: always()
-        continue-on-error: true
-        run: kill $METRO_PID
-
-      - name: Destroy backend
+      - name: Cleanup
         if: always()
         continue-on-error: true
         run: |
+          kill $METRO_PID || true
+          kill $TILT_SERVER_PID || true
           cd dev && tilt down || true
-          docker volume prune -af || true
-          docker rm -f $(docker ps -aq)
+          docker rm -f $(docker ps -aq) || true
+          lsof -ti:10350,8080,8081 | xargs kill -9 || true

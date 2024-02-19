@@ -89,6 +89,8 @@ android/app/src/main/assets
 .env.local
 *.tmp.ci
 artifacts
+ios-recordings
+android-recordings
 .direnv
 
 ios/.xcode.env.local

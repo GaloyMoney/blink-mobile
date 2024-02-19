@@ -1,14 +1,64 @@
 import "detox"
 
-import { timeout, ALICE_PHONE, ALICE_EMAIL } from "./utils/config"
-
+import { TranslationFunctions } from "../../app/i18n/i18n-types"
 import { i18nObject } from "../../app/i18n/i18n-util"
 import { loadLocale } from "../../app/i18n/i18n-util.sync"
-
 import { getKratosCode } from "./utils/commandline"
-
+import { waitForAccountScreen } from "./utils/common-flows"
+import { timeout, ALICE_PHONE, ALICE_EMAIL, otp } from "./utils/config"
 import { tap } from "./utils/controls"
-import { loginAs, setLocalEnvironment, waitForAccountScreen } from "./utils/common-flows"
+
+export const setLocalEnvironment = async () => {
+  const buildBtn = element(by.id("logo-button"))
+  await waitFor(buildBtn)
+    .toBeVisible()
+    // Wait for 5 mins because metro bundler might not finish sync
+    .withTimeout(5 * 600000)
+  await buildBtn.multiTap(5)
+
+  const logoutBtn = element(by.id("logout button"))
+  await waitFor(logoutBtn).toBeVisible().withTimeout(timeout)
+
+  const envBtn = element(by.id("Local Button"))
+  const developerScreenSV = by.id("developer-screen-scroll-view")
+
+  await waitFor(envBtn)
+    .toBeVisible()
+    .whileElement(developerScreenSV)
+    .scroll(400, "down", NaN, 0.85)
+  await envBtn.tap()
+
+  const saveChangesBtn = element(by.id("Save Changes"))
+  await saveChangesBtn.tap()
+
+  const stagingInstanceText = element(by.text(`Galoy Instance: Local`))
+  await waitFor(stagingInstanceText).toBeVisible().withTimeout(10000)
+
+  await tap(by.id("Back"))
+}
+
+export const loginAs = (phone: string, LL: TranslationFunctions) => async () => {
+  await tap(by.id(LL.GetStartedScreen.createAccount()))
+
+  const telephoneInput = element(by.id("telephoneNumber"))
+  await waitFor(telephoneInput).toBeVisible().withTimeout(timeout)
+  await telephoneInput.clearText()
+  await telephoneInput.typeText(phone)
+  await tap(by.id(LL.PhoneLoginInitiateScreen.sms()))
+
+  const otpInput = element(by.id("oneTimeCode"))
+  try {
+    await waitFor(otpInput).toBeVisible().withTimeout(timeout)
+    await otpInput.clearText()
+    await otpInput.typeText(otp)
+  } catch {
+    /* empty because sometimes the page just moves to the next page coz 000000 is default */
+  }
+
+  await waitFor(element(by.text(LL.HomeScreen.myAccounts())))
+    .toBeVisible()
+    .withTimeout(timeout)
+}
 
 describe("Login/Register Flow", () => {
   loadLocale("en")
