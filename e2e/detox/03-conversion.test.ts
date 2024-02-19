@@ -14,9 +14,8 @@ describe("Intraledger Flow", () => {
 
   beforeAll(async () => {
     await device.launchApp({ newInstance: true })
+    await setLocalAndLoginAs(ALICE_PHONE, LL)()
   })
-
-  it("login alice", setLocalAndLoginAs(ALICE_PHONE, LL))
 
   it("initially stablesats funds should be zero", async () => {
     await expect(element(by.id("stablesats-balance"))).toHaveText("$0.00")

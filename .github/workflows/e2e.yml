@@ -1,6 +1,8 @@
 name: E2E
 
-on: [pull_request]
+on:
+  pull_request:
+    branches: [main]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -66,7 +68,6 @@ jobs:
           done
           exit 1
       - run: nix develop -c sh -c 'cd dev && tilt up' &
-
       # Tests on iOS Simulator
       - name: Run Detox Tests on iOS Simulator
         run: nix develop -c sh -c 'yarn e2e:test ios.sim.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location ios-recordings'
