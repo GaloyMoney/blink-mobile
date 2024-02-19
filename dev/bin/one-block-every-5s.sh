@@ -8,5 +8,5 @@
 
  while true; do
    bitcoin_cli -generate 1
-   sleep 2
+   sleep 5
  done

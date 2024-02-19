@@ -5,7 +5,13 @@ import { timeout, ALICE_PHONE, BOB_USERNAME } from "./utils/config"
 import { i18nObject } from "../../app/i18n/i18n-util"
 import { loadLocale } from "../../app/i18n/i18n-util.sync"
 
-import { addSmallAmount, tap, verifyTextPresent, sleep } from "./utils/controls"
+import {
+  addSmallAmount,
+  tap,
+  verifyTextPresent,
+  sleep,
+  slideSlider,
+} from "./utils/controls"
 import { setLocalAndLoginAs, waitForHomeScreen } from "./utils/common-flows"
 
 describe("Intraledger Flow", () => {
@@ -14,9 +20,8 @@ describe("Intraledger Flow", () => {
 
   beforeAll(async () => {
     await device.launchApp({ newInstance: true })
+    await setLocalAndLoginAs(ALICE_PHONE, LL)()
   })
-
-  it("login alice", setLocalAndLoginAs(ALICE_PHONE, LL))
 
   it("send to bob", async () => {
     await tap(by.id(LL.HomeScreen.send()))
@@ -33,10 +38,7 @@ describe("Intraledger Flow", () => {
     await addSmallAmount(LL)
     await tap(by.id(LL.common.next()))
 
-    const slider = element(by.id("slider"))
-    await waitFor(slider).toBeVisible().withTimeout(timeout)
-    await slider.swipe("right", "fast", 0.9, 0.5, 0.5)
-
+    await slideSlider()
     await sleep(3000)
   })
 

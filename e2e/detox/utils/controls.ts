@@ -18,6 +18,24 @@ export const addSmallAmount = async (LL: TranslationFunctions) => {
     .withTimeout(timeout)
 }
 
+export const addLargeAmount = async (LL: TranslationFunctions) => {
+  await tap(by.id("Amount Input Button"))
+  await tap(by.id("Key 5"))
+  await tap(by.id("Key ."))
+  await tap(by.id("Key 0"))
+  await tap(by.id("Key 0"))
+  await tap(by.id(LL.AmountInputScreen.setAmount()))
+  await waitFor(element(by.id("Amount Input Button")))
+    .toBeVisible()
+    .withTimeout(timeout)
+}
+
+export const slideSlider = async () => {
+  const slider = element(by.id("slider"))
+  await waitFor(slider).toBeVisible().withTimeout(timeout)
+  await slider.swipe("right", "fast", 0.9, 0.5, 0.5)
+}
+
 export const verifyTextPresent = async (text: string) => {
   const el = element(by.text(text))
   await waitFor(el).toBeVisible().withTimeout(timeout)
