@@ -250,7 +250,8 @@ export const SettingsScreen: React.FC = () => {
       icon: "apps-outline",
       id: "backup",
       action: () => navigation.navigate("BackupOptions"),
-      enabled: true,
+      enabled: isAtLeastLevelZero,
+      greyed: !isAtLeastLevelZero,
       chevron: true,
     },
     {
@@ -258,7 +259,8 @@ export const SettingsScreen: React.FC = () => {
       icon: "grid-outline",
       id: "importWallet",
       action: () => navigation.navigate("ImportWalletOptions", { insideApp: true }),
-      enabled: true,
+      enabled: isAtLeastLevelZero,
+      greyed: !isAtLeastLevelZero,
       chevron: true,
     },
     {

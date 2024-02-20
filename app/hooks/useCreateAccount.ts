@@ -64,7 +64,6 @@ export const useCreateAccount = () => {
         },
       })
       if (!res.ok) {
-        alert("FAILED: " + res.ok)
         console.error(`Error fetching from server: ${res.status} ${res.statusText}`)
         return // Or handle this error appropriately
       }

@@ -6,6 +6,7 @@ import { RootStackParamList } from "../../navigation/stack-param-lists"
 
 // components
 import { Screen } from "../../components/screen"
+import { DeviceAccountFailModal } from "./device-account-fail-modal"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 // hooks
@@ -31,12 +32,14 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
   const { saveToken } = useAppConfig()
   const { createDeviceAccountAndLogin } = useCreateAccount()
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
   const [secretMenuCounter, setSecretMenuCounter] = useState(0)
 
   const AppLogo = mode === "dark" ? AppLogoDarkMode : AppLogoLightMode
 
   useEffect(() => {
     if (secretMenuCounter > 2) {
+      setError(false)
       navigation.navigate("developerScreen")
       setSecretMenuCounter(0)
     }
@@ -51,13 +54,22 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
     const token = await createDeviceAccountAndLogin()
     setLoading(false)
     if (token) {
+      setError(false)
       saveToken(token)
       navigation.navigate("Primary")
+    } else {
+      setError(true)
     }
   }
 
   const onRestoreWallet = () => {
+    setError(false)
     navigation.navigate("ImportWalletOptions")
+  }
+
+  const navigateToHomeScreen = () => {
+    setError(false)
+    navigation.navigate("Primary")
   }
 
   return (
@@ -88,6 +100,11 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
           <ActivityIndicator size={"large"} color={"#60aa55"} />
         </View>
       )}
+      <DeviceAccountFailModal
+        isVisible={error}
+        closeModal={() => setError(false)}
+        navigateToHomeScreen={navigateToHomeScreen}
+      />
     </Screen>
   )
 }

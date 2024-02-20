@@ -428,7 +428,7 @@
         "startWithTrialAccount": "Start with trial account",
         "registerPhoneAccount": "Registra el compte de telèfon",
         "trialAccountCreationFailed": "La creació del compte de prova ha fallat",
-        "trialAccountCreationFailedMessage": "Unfortunately, we were unable to create your trial account. Try again later or create an account with a phone number.",
+        "trialAccountCreationFailedMessage": "Unfortunately, we were unable to create your account. Try again later, please.",
         "trialAccountHasLimits": "El compte de prova té limits",
         "trialAccountLimits": {
             "noBackup": "No hi ha opció de còpia de seguretat",
@@ -789,7 +789,7 @@
         "loggedOut": "Has tancat la sessió.",
         "logout": "Sortir",
         "minutes": "minuts",
-        "needWallet": "Log in or create an account to access your wallet",
+        "needWallet": "Create an account to access your wallet",
         "next": "Següent",
         "No": "No",
         "note": "Nota",

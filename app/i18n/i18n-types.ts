@@ -5022,11 +5022,11 @@ export type TranslationFunctions = {
 		 */
 		registerPhoneAccount: () => LocalizedString
 		/**
-		 * Trial account creation failed
+		 * Account creation temporarily unavailable
 		 */
 		trialAccountCreationFailed: () => LocalizedString
 		/**
-		 * Unfortunately, we were unable to create your trial account. Try again later or create an account with a phone number.
+		 * Unfortunately, we were unable to create your account. Try again later, please.
 		 */
 		trialAccountCreationFailedMessage: () => LocalizedString
 		/**
@@ -6776,7 +6776,7 @@ export type TranslationFunctions = {
 		 */
 		errorAuthToken: () => LocalizedString
 		/**
-		 * Log in or create an account to access your wallet
+		 * Create an account to access your wallet
 		 */
 		needWallet: () => LocalizedString
 		/**

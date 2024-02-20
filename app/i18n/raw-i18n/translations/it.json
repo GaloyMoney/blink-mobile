@@ -428,7 +428,7 @@
         "startWithTrialAccount": "Start with trial account",
         "registerPhoneAccount": "Register phone account",
         "trialAccountCreationFailed": "Creazione del conto di prova fallita",
-        "trialAccountCreationFailedMessage": "Unfortunately, we were unable to create your trial account. Try again later or create an account with a phone number.",
+        "trialAccountCreationFailedMessage": "Unfortunately, we were unable to create your account. Try again later, please.",
         "trialAccountHasLimits": "Il conto prova ha dei limiti",
         "trialAccountLimits": {
             "noBackup": "Nessuna opzione di backup",
@@ -789,7 +789,7 @@
         "loggedOut": "È stato effettuato il logout.",
         "logout": "Log Out",
         "minutes": "minuti",
-        "needWallet": "Log in or create an account to access your wallet",
+        "needWallet": "Create an account to access your wallet",
         "next": "Avanti",
         "No": "No",
         "note": "Nota",

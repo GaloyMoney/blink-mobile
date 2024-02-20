@@ -7,14 +7,12 @@ import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 export type DeviceAccountFailModalProps = {
   isVisible: boolean
   closeModal: () => void
-  navigateToPhoneLogin: () => void
   navigateToHomeScreen: () => void
 }
 
 export const DeviceAccountFailModal: React.FC<DeviceAccountFailModalProps> = ({
   isVisible,
   closeModal,
-  navigateToPhoneLogin,
   navigateToHomeScreen,
 }) => {
   const { LL } = useI18nContext()
@@ -31,10 +29,8 @@ export const DeviceAccountFailModal: React.FC<DeviceAccountFailModalProps> = ({
           {LL.GetStartedScreen.trialAccountCreationFailedMessage()}
         </Text>
       }
-      primaryButtonTitle={LL.GetStartedScreen.registerPhoneAccount()}
-      primaryButtonOnPress={navigateToPhoneLogin}
-      secondaryButtonTitle={LL.GetStartedScreen.exploreWallet()}
-      secondaryButtonOnPress={navigateToHomeScreen}
+      primaryButtonTitle={LL.GetStartedScreen.exploreWallet()}
+      primaryButtonOnPress={navigateToHomeScreen}
     />
   )
 }
