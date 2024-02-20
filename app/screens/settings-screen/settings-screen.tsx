@@ -37,6 +37,7 @@ import { SettingsRow } from "./settings-row"
 import { useShowWarningSecureAccount } from "./show-warning-secure-account"
 import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+import { ShowNostrSecret } from "./show-nostr-secret"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -165,6 +166,7 @@ export const SettingsScreen: React.FC = () => {
   }
 
   const [isNFCActive, setIsNFCActive] = React.useState(false)
+  const [showNostrSecret, setShowNostrSecret] = React.useState(false)
 
   const rateUs = () => {
     Rate.rate(ratingOptions, (success, errorMessage) => {
@@ -244,6 +246,16 @@ export const SettingsScreen: React.FC = () => {
       action: () => navigation.navigate("addressScreen"),
       enabled: isAtLeastLevelZero && Boolean(lightningAddress),
       greyed: !isAtLeastLevelZero || !lightningAddress,
+    },
+    {
+      category: LL.SettingsScreen.showNostrSecret(),
+      icon: "globe-outline",
+      id: "nostrSecret",
+      action: () => {
+        setShowNostrSecret(true)
+      },
+      enabled: true,
+      chevron: true,
     },
     {
       category: LL.SettingsScreen.backup(),
@@ -382,6 +394,12 @@ export const SettingsScreen: React.FC = () => {
         toggleModal={toggleIsSetLightningAddressModalVisible}
       />
       <ModalNfc isActive={isNFCActive} setIsActive={setIsNFCActive} />
+      <ShowNostrSecret
+        isActive={showNostrSecret}
+        onCancel={() => {
+          setShowNostrSecret(false)
+        }}
+      />
     </Screen>
   )
 }

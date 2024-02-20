@@ -9,7 +9,7 @@ export const base64ToBytes = (data: BytesLikeType): Uint8Array => {
     ? b64ToBytes(data)
     : data instanceof Uint8Array
     ? data
-    : Uint8Array.from(data)
+    : Uint8Array.from(data || [])
 }
 
 export const toLong = (value: LongLikeType | Uint8Array): Long => {

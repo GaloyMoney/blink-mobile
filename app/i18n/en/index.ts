@@ -749,7 +749,8 @@ const en: BaseTranslation = {
     logInOrCreateAccount: "Log in or create account",
     backup: "Backup",
     importWallet: "Import Wallet",
-    showSeedPhrase: "Reveal recovery phrase"
+    showSeedPhrase: "Reveal recovery phrase",
+    showNostrSecret: "Reveal Nostr secret",
   },
   AccountScreen: {
     accountLevel: "Account Level",

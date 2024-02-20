@@ -47,6 +47,7 @@ import { formatPaymentsBreezSDK } from "@app/hooks/useBreezPayments"
 import { breezSDKInitialized, listPaymentsBreezSDK } from "@app/utils/breez-sdk"
 import { toBtcMoneyAmount } from "@app/types/amounts"
 import useBreezBalance from "@app/hooks/useBreezBalance"
+import useNostrProfile from "@app/hooks/use-nostr-profile"
 
 const TransactionCountToTriggerSetDefaultAccountModal = 1
 
@@ -65,6 +66,7 @@ export const HomeScreen: React.FC = () => {
   const { LL } = useI18nContext()
   const { convertMoneyAmount } = usePriceConversion()
   const [breezBalance, refreshBreezBalance] = useBreezBalance()
+  const { nostrSecretKey } = useNostrProfile()
 
   // queries
   const { data: { hideBalance } = {} } = useHideBalanceQuery()

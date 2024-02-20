@@ -5900,6 +5900,7 @@ export type TranslationFunctions = {
 		backup: () => LocalizedString
 		importWallet: () => LocalizedString
 		showSeedPhrase: () => LocalizedString
+		showNostrSecret: () => LocalizedString
 	}
 	AccountScreen: {
 		/**
