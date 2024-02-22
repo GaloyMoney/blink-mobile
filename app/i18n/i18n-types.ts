@@ -8804,6 +8804,24 @@ type RootTranslation = {
 			 */
 			details: string
 		}
+		marchChallenge: {
+			/**
+			 * M​a​r​c​h​ ​C​h​a​l​l​e​n​g​e​!
+			 */
+			title: string
+			/**
+			 * +​3​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​a​n​d​ ​+​3​ ​o​u​t​e​r​ ​c​i​r​c​l​e​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​t​o​ ​w​i​n​ ​$​1​0​0
+			 */
+			description: string
+			/**
+			 * G​r​o​w​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​3​ ​a​n​d​ ​y​o​u​r​ ​o​u​t​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​3​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​a​t​ ​w​i​n​n​i​n​g​ ​$​1​0​0​!​
+		​
+		​R​e​m​i​n​d​e​r​:​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​g​r​o​w​ ​w​h​e​n​ ​y​o​u​ ​s​e​n​d​ ​a​ ​n​e​w​ ​B​l​i​n​k​ ​u​s​e​r​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s​.​
+		​
+		​S​h​a​r​e​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​o​n​ ​s​o​c​i​a​l​ ​w​i​t​h​ ​#​b​l​i​n​k​c​i​r​c​l​e​s​ ​t​o​ ​p​a​r​t​i​c​i​p​a​t​e​.
+			 */
+			details: string
+		}
 	}
 	FullOnboarding: {
 		/**
@@ -17557,6 +17575,24 @@ export type TranslationFunctions = {
 			description: () => LocalizedString
 			/**
 			 * Grow your inner circle by 3 in February for a chance to win a Seedsigner hardware wallet!
+	
+		Reminder: your circles grow when you send a new Blink user their first sats.
+	
+		Share your circles on social with #blinkcircles to participate.
+			 */
+			details: () => LocalizedString
+		}
+		marchChallenge: {
+			/**
+			 * March Challenge!
+			 */
+			title: () => LocalizedString
+			/**
+			 * +3 inner circle and +3 outer circle for a chance to win $100
+			 */
+			description: () => LocalizedString
+			/**
+			 * Grow your inner circle by 3 and your outer circle by 3 for a chance at winning $100!
 	
 		Reminder: your circles grow when you send a new Blink user their first sats.
 	
