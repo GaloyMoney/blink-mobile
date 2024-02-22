@@ -26,6 +26,7 @@ import {
 } from "@app/types/amounts"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
+import { testProps } from "@app/utils/testProps"
 
 gql`
   query conversionScreen {

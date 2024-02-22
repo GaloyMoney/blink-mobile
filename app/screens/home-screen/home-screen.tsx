@@ -254,6 +254,7 @@ export const HomeScreen: React.FC = () => {
                     subtitle
                     isOnHomeScreen={true}
                     isLast={index === array.length - 1}
+                    testId={`transaction-by-index-${index}`}
                   />
                 ),
             )}

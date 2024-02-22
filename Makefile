@@ -27,3 +27,7 @@ tilt-down:
 
 emulator:
 	emulator -avd Pixel_API_34 -gpu swiftshader -wipe-data -no-boot-anim
+
+reset-e2e:
+	tilt trigger dev-setup
+	tilt wait --timeout 5m --for=condition=Ready uiresources dev-setup

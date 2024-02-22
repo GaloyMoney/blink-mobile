@@ -1,12 +1,12 @@
 import "detox"
 
-import { timeout, ALICE_PHONE, ALICE_USERNAME } from "./utils/config"
+import { timeout, ALICE_USERNAME, ALICE_TOKEN } from "./utils/config"
 
 import { i18nObject } from "../../app/i18n/i18n-util"
 import { loadLocale } from "../../app/i18n/i18n-util.sync"
 
 import { tap } from "./utils/controls"
-import { setLocalAndLoginAs, waitForHomeScreen } from "./utils/common-flows"
+import { setLocalAndLoginWithAccessToken, waitForHomeScreen } from "./utils/common-flows"
 
 describe("Intraledger Flow", () => {
   loadLocale("en")
@@ -14,7 +14,7 @@ describe("Intraledger Flow", () => {
 
   beforeAll(async () => {
     await device.launchApp({ newInstance: true })
-    await setLocalAndLoginAs(ALICE_PHONE, LL)()
+    await setLocalAndLoginWithAccessToken(ALICE_TOKEN, LL)
   })
 
   it("initially stablesats funds should be zero", async () => {

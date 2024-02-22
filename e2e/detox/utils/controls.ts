@@ -7,23 +7,11 @@ export const tap = async (match: Detox.NativeMatcher) => {
   await el.tap()
 }
 
-export const addSmallAmount = async (LL: TranslationFunctions) => {
+export const addAmount = async (amount: string, LL: TranslationFunctions) => {
   await tap(by.id("Amount Input Button"))
-  await tap(by.id("Key ."))
-  await tap(by.id("Key 0"))
-  await tap(by.id("Key 2"))
-  await tap(by.id(LL.AmountInputScreen.setAmount()))
-  await waitFor(element(by.id("Amount Input Button")))
-    .toBeVisible()
-    .withTimeout(timeout)
-}
-
-export const addLargeAmount = async (LL: TranslationFunctions) => {
-  await tap(by.id("Amount Input Button"))
-  await tap(by.id("Key 5"))
-  await tap(by.id("Key ."))
-  await tap(by.id("Key 0"))
-  await tap(by.id("Key 0"))
+  for (const char of amount) {
+    await tap(by.id(`Key ${char}`))
+  }
   await tap(by.id(LL.AmountInputScreen.setAmount()))
   await waitFor(element(by.id("Amount Input Button")))
     .toBeVisible()

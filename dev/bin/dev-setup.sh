@@ -15,14 +15,7 @@ BOB_SUFFIX=$(cat /dev/urandom | tr -dc '0-9' | fold -w 6 | head -n 1)
 BOB_PHONE="+919836$BOB_SUFFIX"
 BOB_USERNAME="bob_$BOB_SUFFIX"
 
-# Sometimes server isn't ready
-success=0
-for attempt in {1..10}; do
-  login_user "alice" "$ALICE_PHONE" "000000" && { success=1; break; }
-  sleep 5
-done
-if [ $success -ne 1 ]; then exit 1; fi
-
+login_user "alice" "$ALICE_PHONE" "000000"
 echo "alice logged in"
 ALICE_TOKEN=$(read_value "alice")
 receive_onchain
