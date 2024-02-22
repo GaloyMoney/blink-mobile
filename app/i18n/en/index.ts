@@ -862,6 +862,10 @@ const en: BaseTranslation = {
 		description: "This is a 12-word phrase you were given when you created your previous wallet.",
 		complete: "Complete",
 	},
+  TransactionHistoryTabs: {		
+		titleBTC: "BTC",
+		titleUSD: "USD"
+	},
   CopySecretComponent: {
     button: "Copy secret",
     toastMessage: "Secret copied to clipboard!"

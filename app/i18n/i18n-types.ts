@@ -6131,6 +6131,10 @@ export type TranslationFunctions = {
 		description: () => LocalizedString
 		complete: () => LocalizedString
 	}
+	TransactionHistoryTabs: {		
+		titleBTC: () => LocalizedString
+		titleUSD: () => LocalizedString		
+	}
 	CopySecretComponent: {
 		/**
 		 * Copy secret

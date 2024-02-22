@@ -48,6 +48,8 @@ import { breezSDKInitialized, listPaymentsBreezSDK } from "@app/utils/breez-sdk"
 import { toBtcMoneyAmount } from "@app/types/amounts"
 import useBreezBalance from "@app/hooks/useBreezBalance"
 import useNostrProfile from "@app/hooks/use-nostr-profile"
+import { useAppDispatch } from "@app/store/redux"
+import { setUserData } from "@app/store/redux/slices/userSlice"
 
 const TransactionCountToTriggerSetDefaultAccountModal = 1
 
@@ -67,6 +69,7 @@ export const HomeScreen: React.FC = () => {
   const { convertMoneyAmount } = usePriceConversion()
   const [breezBalance, refreshBreezBalance] = useBreezBalance()
   const { nostrSecretKey } = useNostrProfile()
+  const dispatch = useAppDispatch()
 
   // queries
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
@@ -106,6 +109,12 @@ export const HomeScreen: React.FC = () => {
   const loading = (loadingAuthed || loadingPrice || loadingUnauthed) && isAuthed
   const transactionsEdges = dataAuthed?.me?.defaultAccount?.transactions?.edges ?? []
   const numberOfTxs = dataAuthed?.me?.defaultAccount?.transactions?.edges?.length ?? 0
+
+  useEffect(() => {
+    if (dataAuthed?.me) {
+      dispatch(setUserData(dataAuthed.me))
+    }
+  }, [dataAuthed?.me])
 
   useEffect(() => {
     setIsContentVisible(isBalanceVisible)
@@ -216,7 +225,7 @@ export const HomeScreen: React.FC = () => {
     | "scanningQRCode"
     | "sendBitcoinDestination"
     | "receiveBitcoin"
-    | "transactionHistory"
+    | "TransactionHistoryTabs"
   type IconNamesType = keyof typeof icons
 
   const buttons = [
@@ -343,7 +352,7 @@ export const HomeScreen: React.FC = () => {
           <>
             <TouchableWithoutFeedback
               style={styles.recentTransaction}
-              onPress={() => onMenuClick("transactionHistory")}
+              onPress={() => onMenuClick("TransactionHistoryTabs")}
             >
               <Text type="p1" bold {...testProps(LL.TransactionScreen.title())}>
                 {LL.TransactionScreen.title()}

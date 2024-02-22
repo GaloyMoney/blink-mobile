@@ -76,7 +76,6 @@ import {
   BreezTransactionDetailScreen,
   TransactionDetailScreen,
 } from "../screens/transaction-detail-screen"
-import { TransactionHistoryScreen } from "../screens/transaction-history/transaction-history-screen"
 import {
   ChatStackParamList,
   ContactStackParamList,
@@ -94,6 +93,7 @@ import {
   ImportWalletOptions,
   ImportWallet,
   BackupOptions,
+  TransactionHistoryTabs,
 } from "@app/screens"
 
 const useStyles = makeStyles(({ colors }) => ({
@@ -346,11 +346,6 @@ export const RootStack = () => {
         }}
       />
       <RootNavigator.Screen
-        name="transactionHistory"
-        component={TransactionHistoryScreen}
-        options={{ title: LL.TransactionScreen.transactionHistoryTitle() }}
-      />
-      <RootNavigator.Screen
         name="priceHistory"
         component={PriceHistoryScreen}
         options={{
@@ -452,6 +447,11 @@ export const RootStack = () => {
           component={ImportWalletOptions}
         />
       </RootNavigator.Group>
+      <RootNavigator.Screen
+        name="TransactionHistoryTabs"
+        component={TransactionHistoryTabs}
+        options={{ title: LL.TransactionScreen.transactionHistoryTitle() }}
+      />
     </RootNavigator.Navigator>
   )
 }

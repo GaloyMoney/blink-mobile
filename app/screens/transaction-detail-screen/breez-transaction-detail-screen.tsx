@@ -4,7 +4,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 
 // eslint-disable-next-line camelcase
 import { TransactionDate } from "@app/components/transaction-date"
-import { useDescriptionDisplay } from "@app/components/transaction-item"
+import { useDescriptionDisplay } from "@app/components/transaction-item/breez-transaction-item"
 import { WalletSummary } from "@app/components/wallet-summary"
 import { SettlementVia, WalletCurrency } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"

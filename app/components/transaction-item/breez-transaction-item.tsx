@@ -22,6 +22,7 @@ import HideableArea from "../hideable-area/hideable-area"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useAppSelector } from "@app/store/redux"
 
 // This should extend the Transaction directly from the cache
 export const useDescriptionDisplay = ({
@@ -32,6 +33,7 @@ export const useDescriptionDisplay = ({
   bankName: string
 }) => {
   const { LL } = useI18nContext()
+  const { userData } = useAppSelector((state) => state.user)
 
   if (!tx) {
     return ""
@@ -48,7 +50,13 @@ export const useDescriptionDisplay = ({
     case "SettlementViaOnChain":
       return "OnChain Payment"
     case "SettlementViaLn":
-      return "Invoice to BTC wallet"
+      if (isReceive) {
+        return `Pay to Flash Wallet User${
+          userData.username ? ": " + userData.username : ""
+        }`
+      } else {
+        return "Send"
+      }
     case "SettlementViaIntraLedger":
       return isReceive
         ? `${LL.common.from()} ${

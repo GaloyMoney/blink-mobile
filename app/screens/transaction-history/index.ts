@@ -1,1 +1,3 @@
-export * from "./transaction-history-screen"
+export * from "./TransactionHistoryTabs"
+export * from "./BTCTransactionHistory"
+export * from "./USDTransactionHistory"

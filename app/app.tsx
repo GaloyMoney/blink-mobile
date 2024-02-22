@@ -34,6 +34,8 @@ import { NetworkErrorComponent } from "./graphql/network-error-component"
 import { FeatureFlagContextProvider } from "./config/feature-flags-context"
 import "./utils/logs"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
+import { Provider } from "react-redux"
+import { store } from "./store/redux"
 
 // FIXME should we only load the currently used local?
 // this would help to make the app load faster
@@ -50,26 +52,28 @@ export const App = () => (
   /* eslint-disable-next-line react-native/no-inline-styles */
   <GestureHandlerRootView style={{ flex: 1 }}>
     <PersistentStateProvider>
-      <TypesafeI18n locale={detectDefaultLocale()}>
-        <ThemeProvider theme={theme}>
-          <GaloyClient>
-            <FeatureFlagContextProvider>
-              <ErrorBoundary FallbackComponent={ErrorScreen}>
-                <NavigationContainerWrapper>
-                  <RootSiblingParent>
-                    <AppStateWrapper />
-                    <NotificationComponent />
-                    <RootStack />
-                    <GaloyToast />
-                    <NetworkErrorComponent />
-                  </RootSiblingParent>
-                </NavigationContainerWrapper>
-              </ErrorBoundary>
-              <ThemeSyncGraphql />
-            </FeatureFlagContextProvider>
-          </GaloyClient>
-        </ThemeProvider>
-      </TypesafeI18n>
+      <Provider store={store}>
+        <TypesafeI18n locale={detectDefaultLocale()}>
+          <ThemeProvider theme={theme}>
+            <GaloyClient>
+              <FeatureFlagContextProvider>
+                <ErrorBoundary FallbackComponent={ErrorScreen}>
+                  <NavigationContainerWrapper>
+                    <RootSiblingParent>
+                      <AppStateWrapper />
+                      <NotificationComponent />
+                      <RootStack />
+                      <GaloyToast />
+                      <NetworkErrorComponent />
+                    </RootSiblingParent>
+                  </NavigationContainerWrapper>
+                </ErrorBoundary>
+                <ThemeSyncGraphql />
+              </FeatureFlagContextProvider>
+            </GaloyClient>
+          </ThemeProvider>
+        </TypesafeI18n>
+      </Provider>
     </PersistentStateProvider>
   </GestureHandlerRootView>
 )

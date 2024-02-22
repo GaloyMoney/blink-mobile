@@ -7,11 +7,14 @@ import { useCallback } from "react"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 import * as Keychain from "react-native-keychain"
 import { disconnectToSDK } from "@app/utils/breez-sdk"
+import { useAppDispatch } from "@app/store/redux"
+import { resetUserSlice } from "@app/store/redux/slices/userSlice"
 
 const KEYCHAIN_MNEMONIC_KEY = "mnemonic_key"
 
 const useLogout = () => {
   const { resetState } = usePersistentStateContext()
+  const dispatch = useAppDispatch()
 
   const logout = useCallback(
     async (stateToDefault = true): Promise<void> => {
@@ -22,6 +25,7 @@ const useLogout = () => {
         await KeyStoreWrapper.removePinAttempts()
         await Keychain.resetInternetCredentials(KEYCHAIN_MNEMONIC_KEY)
         await disconnectToSDK()
+        dispatch(resetUserSlice())
 
         logLogout()
         if (stateToDefault) {
