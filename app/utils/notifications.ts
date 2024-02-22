@@ -19,7 +19,13 @@ gql`
   }
 `
 
+// This is a global variable to avoid adding the device token multiple times at the same time
+let addingDeviceToken = false
 export const addDeviceToken = async (client: ApolloClient<unknown>): Promise<void> => {
+  if (addingDeviceToken) {
+    return
+  }
+  addingDeviceToken = true
   try {
     const deviceToken = await messaging().getToken()
     await client.mutate({
@@ -31,6 +37,9 @@ export const addDeviceToken = async (client: ApolloClient<unknown>): Promise<voi
       crashlytics().recordError(err)
     }
     console.error(err, "impossible to upload device token")
+  }
+  if (addingDeviceToken) {
+    addingDeviceToken = false
   }
 }
 
