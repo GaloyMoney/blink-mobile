@@ -2808,6 +2808,11 @@ const en: BaseTranslation = {
       description: "+3 inner circle for a chance to win a Seedsigner hardware wallet!",
       details: "Grow your inner circle by 3 in February for a chance to win a Seedsigner hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
     },
+    marchChallenge: {
+      title: "March Challenge!",
+      description: "+3 inner circle and +3 outer circle for a chance to win $100",
+      details: "Grow your inner circle by 3 and your outer circle by 3 for a chance at winning $100!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
+    }
   },
   FullOnboarding: {
     title: "Full onboarding",
