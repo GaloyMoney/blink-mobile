@@ -39,3 +39,29 @@ export const getOnchainAddress = async (): Promise<string> =>
       },
     )
   })
+
+export const getLnInvoiceForBob = async (): Promise<string> =>
+  new Promise((resolve) => {
+    exec(
+      `source ${REPO_ROOT}/dev/vendor/galoy-quickstart/bin/helpers.sh
+      source ${REPO_ROOT}/dev/vendor/galoy-quickstart/dev/helpers/cli.sh
+
+      cd ${REPO_ROOT}/dev
+
+      variables=$(
+        jq -n \
+        --arg wallet_id "$(read_value 'bob.btc_wallet_id')" \
+        '{input: {walletId: $wallet_id}}'
+      )
+      exec_graphql "bob" 'ln-no-amount-invoice-create' "$variables"
+      invoice="$(graphql_output '.data.lnNoAmountInvoiceCreate.invoice')"
+      payment_request="$(echo $invoice | jq -r '.paymentRequest')"
+
+      echo $payment_request
+    `,
+      { encoding: "utf-8" },
+      (_, output, __) => {
+        resolve(output)
+      },
+    )
+  })

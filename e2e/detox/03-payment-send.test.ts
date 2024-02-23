@@ -7,6 +7,7 @@ import { loadLocale } from "../../app/i18n/i18n-util.sync"
 
 import { addAmount, tap, verifyTextPresent, sleep, slideSlider } from "./utils/controls"
 import { setLocalAndLoginWithAccessToken, waitForHomeScreen } from "./utils/common-flows"
+import { getExternalLNNoAmountInvoice, getLnInvoiceForBob } from "./utils/commandline"
 
 loadLocale("en")
 const LL = i18nObject("en")
@@ -104,6 +105,83 @@ describe("Intraledger using Username - USD Amount", () => {
 
     await verifyTextPresent(LL.TransactionDetailScreen.spent())
     await verifyTextPresent("-$0.02")
+
+    await tap(by.id("close"))
+    await waitForHomeScreen(LL)
+  })
+})
+
+describe("Intraledger using LN Invoice", () => {
+  it("send btc to bob using his ln invoice", async () => {
+    await tap(by.id(LL.HomeScreen.send()))
+
+    const invoice = await getLnInvoiceForBob()
+
+    const invoiceInput = element(by.id(LL.SendBitcoinScreen.placeholder()))
+    await waitFor(invoiceInput).toBeVisible().withTimeout(timeout)
+    await invoiceInput.clearText()
+    await invoiceInput.typeText(invoice)
+    await tap(by.id(LL.common.next()))
+
+    await addAmount("0.02", LL)
+
+    // some bug
+    await device.disableSynchronization()
+    await tap(by.id(LL.common.next()))
+    await device.enableSynchronization()
+
+    await slideSlider()
+    await sleep(3000)
+
+    await tap(by.id(LL.common.back()))
+    await waitForHomeScreen(LL)
+  })
+
+  it("check if latest transaction has been updated", async () => {
+    const tx = element(by.id(`transaction-by-index-0`))
+    await waitFor(tx)
+      .toBeVisible()
+      .withTimeout(timeout * 10)
+    await tx.tap()
+
+    await verifyTextPresent(LL.TransactionDetailScreen.spent())
+    await verifyTextPresent("-$0.02")
+
+    await tap(by.id("close"))
+    await waitForHomeScreen(LL)
+  })
+})
+
+describe("External LN Invoice", () => {
+  it("send btc to an external invoice taken from lnd-outside-1", async () => {
+    await tap(by.id(LL.HomeScreen.send()))
+
+    const invoice = await getExternalLNNoAmountInvoice()
+
+    const invoiceInput = element(by.id(LL.SendBitcoinScreen.placeholder()))
+    await waitFor(invoiceInput).toBeVisible().withTimeout(timeout)
+    await invoiceInput.clearText()
+    await invoiceInput.typeText(invoice)
+    await tap(by.id(LL.common.next()))
+
+    await addAmount("0.02", LL)
+    await tap(by.id(LL.common.next()))
+
+    await slideSlider()
+    await sleep(3000)
+
+    await tap(by.id(LL.common.back()))
+    await waitForHomeScreen(LL)
+  })
+
+  it("check if latest transaction has been updated", async () => {
+    const tx = element(by.id(`transaction-by-index-0`))
+    await waitFor(tx)
+      .toBeVisible()
+      .withTimeout(timeout * 10)
+    await tx.tap()
+
+    await verifyTextPresent(LL.TransactionDetailScreen.spent())
 
     await tap(by.id("close"))
     await waitForHomeScreen(LL)

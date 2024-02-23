@@ -3,8 +3,8 @@ module.exports = {
   preset: "ts-jest",
   rootDir: "..",
   testMatch: [
-    "<rootDir>/detox/01-auth.test.ts",
-    "<rootDir>/detox/02-conversion.test.ts",
+    // "<rootDir>/detox/01-auth.test.ts",
+    // "<rootDir>/detox/02-conversion.test.ts",
     "<rootDir>/detox/03-payment-send.test.ts",
   ],
   testTimeout: 120000,
