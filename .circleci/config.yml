@@ -257,6 +257,9 @@ jobs:
       - run: gcloud auth activate-service-account --key-file key.json
       - restore_cache:
           key: 1-gem-{{ checksum "ios/Gemfile.lock" }}
+      - run: |
+          rbenv install 2.7.7
+          rbenv global 2.7.7
       - run: cd ios && bundle config set deployment 'true'
       - run: cd ios && bundle config set --local path 'vendor/bundle'
       - run: cd ios && bundle check || bundle install
