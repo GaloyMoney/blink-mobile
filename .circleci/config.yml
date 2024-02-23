@@ -30,7 +30,7 @@ parameters:
 jobs:
   test_android_in_pr:
     docker:
-      - image: cimg/android:2022.12
+      - image: cimg/android:2024.01
     resource_class: xlarge
     environment:
       TERM: dumb
@@ -166,7 +166,7 @@ jobs:
 
   build_android:
     docker:
-      - image: cimg/android:2022.12
+      - image: cimg/android:2024.01
     resource_class: xlarge
     environment:
       TERM: dumb
