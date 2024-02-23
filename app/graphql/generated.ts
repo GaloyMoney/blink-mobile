@@ -225,12 +225,13 @@ export type ApiKey = {
   readonly name: Scalars['String']['output'];
   readonly readOnly: Scalars['Boolean']['output'];
   readonly revoked: Scalars['Boolean']['output'];
+  readonly scopes: ReadonlyArray<Scope>;
 };
 
 export type ApiKeyCreateInput = {
   readonly expireInDays?: InputMaybe<Scalars['Int']['input']>;
   readonly name: Scalars['String']['input'];
-  readonly readOnly?: Scalars['Boolean']['input'];
+  readonly scopes?: ReadonlyArray<Scope>;
 };
 
 export type ApiKeyCreatePayload = {
@@ -1728,6 +1729,13 @@ export type SatAmountPayload = {
   readonly errors: ReadonlyArray<Error>;
 };
 
+export const Scope = {
+  Read: 'READ',
+  Receive: 'RECEIVE',
+  Write: 'WRITE'
+} as const;
+
+export type Scope = typeof Scope[keyof typeof Scope];
 export type SettlementVia = SettlementViaIntraLedger | SettlementViaLn | SettlementViaOnChain;
 
 export type SettlementViaIntraLedger = {
@@ -7380,6 +7388,7 @@ export type ResolversTypes = {
   SafeInt: ResolverTypeWrapper<Scalars['SafeInt']['output']>;
   SatAmount: ResolverTypeWrapper<Scalars['SatAmount']['output']>;
   SatAmountPayload: ResolverTypeWrapper<SatAmountPayload>;
+  Scope: Scope;
   Seconds: ResolverTypeWrapper<Scalars['Seconds']['output']>;
   SettlementVia: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['SettlementVia']>;
   SettlementViaIntraLedger: ResolverTypeWrapper<SettlementViaIntraLedger>;
@@ -7718,6 +7727,7 @@ export type ApiKeyResolvers<ContextType = any, ParentType extends ResolversParen
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   readOnly?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   revoked?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  scopes?: Resolver<ReadonlyArray<ResolversTypes['Scope']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
