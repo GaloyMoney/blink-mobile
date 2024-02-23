@@ -164,6 +164,78 @@ jobs:
             exit $error_code
           no_output_timeout: 15m
 
+  build_android_pr_test:
+    macos:
+      xcode: 15.2.0
+    resource_class: macos.x86.medium.gen2
+    environment:
+      TERM: dumb
+      JAVA_OPTS: -Xms2g -Xmx4g
+      GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError"
+      ANDROID_HOME: /Users/distiller/Library/Android/sdk
+      PUBLIC_VERSION: 2.2.999
+      BUILD_NUMBER: 800
+      # GCS_DIRECTORY: << pipeline.parameters.gcs_directory >>
+    working_directory: ~/galoy-mobile
+    shell: /bin/bash --login -o pipefail
+    steps:
+      - gh/install
+      - checkout:
+          path: ~/galoy-mobile
+
+      - node/install:
+           install-yarn: true
+           node-version: '18.18.2'
+
+      - run: |
+          brew update
+          HOMEBREW_NO_AUTO_UPDATE=1 brew install --cask google-cloud-sdk zulu17
+
+      - run: |
+          wget https://dl.google.com/android/repository/commandlinetools-mac-11076708_latest.zip
+          unzip commandlinetools-mac-11076708_latest.zip
+          mkdir -p "$ANDROID_HOME/cmdline-tools/latest"
+          mv cmdline-tools/* $ANDROID_HOME/cmdline-tools/latest
+          echo 'export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"' >> $BASH_ENV
+          source $BASH_ENV
+          echo "y" | sdkmanager --licenses
+
+
+      - run: echo $GCLOUD_BUCKET_KEY | base64 --decode > key.json
+      - run: gcloud auth activate-service-account --key-file key.json
+
+      - run: |
+          rbenv install 2.7.7
+          rbenv global 2.7.7
+
+      - run: cd android && bundle config set deployment 'true'
+      - run: cd android && bundle check || bundle install
+      - run: gem install cocoapods
+
+      - run: yarn global add node-gyp
+      - restore_cache:
+          key: 1-yarn-{{ checksum "yarn.lock" }}
+      - run: yarn install
+      - save_cache:
+          key: 1-yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+
+      - run: echo $RELEASE_KEYSTORE | base64 -d > android/app/release.keystore
+      - run:
+          name: build
+          command: |
+            cd android
+            sed -i'' -e "s/versionCode .*$/versionCode $BUILD_NUMBER/g" app/build.gradle
+            bundle exec fastlane android build 2>&1 | tee android_build_output.log
+          no_output_timeout: 15m
+      # - run:
+      #     name: upload to gcs
+          # command: gsutil cp -r android/app/build/outputs/* gs://galoy-build-artifacts/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$(date +%s)-v${PUBLIC_VERSION}/
+      - store_artifacts:
+          path: android/android_build_output.log
+
+
   build_android:
     docker:
       - image: cimg/android:2024.01
@@ -353,3 +425,6 @@ workflows:
         - equal: ["api", << pipeline.trigger_source >>]
     jobs:
       - upload_to_app_store
+  build_android_pr_test:
+    jobs:
+      - build_android_pr_test
