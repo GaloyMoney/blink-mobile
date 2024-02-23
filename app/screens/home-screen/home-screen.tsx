@@ -351,6 +351,7 @@ export const HomeScreen: React.FC = () => {
         />
       </View>
       <ScrollView
+        {...testProps("home-screen")}
         contentContainerStyle={styles.scrollViewContainer}
         refreshControl={
           <RefreshControl

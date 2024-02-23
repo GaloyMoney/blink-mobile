@@ -66,4 +66,6 @@ export const setLocalAndLoginWithAccessToken = async (
   await waitFor(balanceHeader)
     .toBeVisible()
     .withTimeout(timeout * 3)
+
+  await device.setURLBlacklist([".*127.0.0.1.*", ".*localhost.*"])
 }

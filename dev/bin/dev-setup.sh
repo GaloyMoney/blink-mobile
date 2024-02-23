@@ -7,26 +7,27 @@ REPO_ROOT=$(git rev-parse --show-toplevel)
 source ${REPO_ROOT}/dev/vendor/galoy-quickstart/bin/helpers.sh
 source ${REPO_ROOT}/dev/vendor/galoy-quickstart/dev/helpers/cli.sh
 
-ALICE_SUFFIX=$(cat /dev/urandom | tr -dc '0-9' | fold -w 6 | head -n 1)
+ALICE_SUFFIX=$(LC_ALL=C cat /dev/urandom | od -An -tu1 | tr -d ' ' | tr -cd '0-9' | head -c 6)
 ALICE_PHONE="+919836$ALICE_SUFFIX"
 ALICE_USERNAME="alice_$ALICE_SUFFIX"
 
-BOB_SUFFIX=$(cat /dev/urandom | tr -dc '0-9' | fold -w 6 | head -n 1)
+BOB_SUFFIX=$(LC_ALL=C cat /dev/urandom | od -An -tu1 | tr -d ' ' | tr -cd '0-9' | head -c 6)
 BOB_PHONE="+919836$BOB_SUFFIX"
 BOB_USERNAME="bob_$BOB_SUFFIX"
 
 login_user "alice" "$ALICE_PHONE" "000000"
 echo "alice logged in"
 ALICE_TOKEN=$(read_value "alice")
-receive_onchain
+receive_onchain "alice" "btc"
+receive_onchain "alice" "usd"
 exec_graphql 'alice' 'user-update-username' "{\"input\": {\"username\": \"$ALICE_USERNAME\"}}"
 echo "alice funded & set up"
 
-login_user "alice" "$BOB_PHONE" "000000"
+login_user "bob" "$BOB_PHONE" "000000"
 echo "bob logged in"
-BOB_TOKEN=$(read_value "alice")
-receive_onchain
-exec_graphql 'alice' 'user-update-username' "{\"input\": {\"username\": \"$BOB_USERNAME\"}}"
+BOB_TOKEN=$(read_value "bob")
+receive_onchain "bob"
+exec_graphql 'bob' 'user-update-username' "{\"input\": {\"username\": \"$BOB_USERNAME\"}}"
 echo "bob funded & set up"
 
 cat <<EOF > ${REPO_ROOT}/dev/.env.tmp.ci

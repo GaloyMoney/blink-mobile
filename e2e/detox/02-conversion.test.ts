@@ -5,8 +5,8 @@ import { timeout, ALICE_USERNAME, ALICE_TOKEN } from "./utils/config"
 import { i18nObject } from "../../app/i18n/i18n-util"
 import { loadLocale } from "../../app/i18n/i18n-util.sync"
 
-import { tap } from "./utils/controls"
-import { setLocalAndLoginWithAccessToken, waitForHomeScreen } from "./utils/common-flows"
+import { tap, verifyTextPresent } from "./utils/controls"
+import { waitForHomeScreen, setLocalAndLoginWithAccessToken } from "./utils/common-flows"
 
 describe("Intraledger Flow", () => {
   loadLocale("en")
@@ -15,10 +15,6 @@ describe("Intraledger Flow", () => {
   beforeAll(async () => {
     await device.launchApp({ newInstance: true })
     await setLocalAndLoginWithAccessToken(ALICE_TOKEN, LL)
-  })
-
-  it("initially stablesats funds should be zero", async () => {
-    await expect(element(by.id("stablesats-balance"))).toHaveText("$0.00")
   })
 
   it("go to conversion screen", async () => {
@@ -36,13 +32,30 @@ describe("Intraledger Flow", () => {
   })
 
   it("convert", async () => {
-    await tap(by.id("convert-50%"))
+    await tap(by.id("convert-25%"))
     await tap(by.id(LL.common.next()))
     await tap(by.id(LL.common.convert()))
+    await waitForHomeScreen(LL)
   })
 
-  it("check if stablesats fund is non-zero", async () => {
-    await waitForHomeScreen(LL)
-    await expect(element(by.id("stablesats-balance"))).not.toHaveText("$0.00")
+  it("check if last two transactions indicate conversion", async () => {
+    // The home screen displays the top two transactions
+    const tx1 = element(by.id("transaction-by-index-0"))
+    await waitFor(tx1)
+      .toBeVisible()
+      .withTimeout(timeout * 10)
+    await tx1.tap()
+
+    await verifyTextPresent("From Local User")
+    await tap(by.id("close"))
+
+    const tx2 = element(by.id("transaction-by-index-1"))
+    await waitFor(tx2)
+      .toBeVisible()
+      .withTimeout(timeout * 10)
+    await tx2.tap()
+
+    await verifyTextPresent("To Local User")
+    await tap(by.id("close"))
   })
 })

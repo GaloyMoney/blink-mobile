@@ -30,7 +30,7 @@ module.exports = {
     simulator: {
       type: "ios.simulator",
       device: {
-        type: "iPhone SE (3rd generation)",
+        type: "iPhone 15 Pro",
       },
     },
     emulator: {

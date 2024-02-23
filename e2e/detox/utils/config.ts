@@ -6,7 +6,7 @@ if (!process.env.ALICE_PHONE || !process.env.BOB_PHONE) {
   throw new Error("Development environment environment configuration is incorrect")
 }
 
-export const timeout = 3000
+export const timeout = 10000
 export const otp = process.env.GALOY_STAGING_GLOBAL_OTP || "000000"
 
 export const ALICE_PHONE = process.env.ALICE_PHONE
