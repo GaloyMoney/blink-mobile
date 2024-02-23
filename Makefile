@@ -20,7 +20,7 @@ start:
 	yarn start
 
 tilt-up:
-	cd dev && GALOY_QUICKSTART_PATH="dev/vendor/galoy-quickstart" tilt up
+	cd dev && tilt up
 
 tilt-down:
-	cd dev && GALOY_QUICKSTART_PATH="dev/vendor/galoy-quickstart" tilt down
+	cd dev && tilt down

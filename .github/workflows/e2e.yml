@@ -1,0 +1,120 @@
+name: E2E
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    name: E2E Tests
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # Node, Ruby, Java, Android Sdk
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 20
+      - run: npm i -g yarn
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - uses: actions/setup-java@v2
+        with:
+          java-version: 17
+          distribution: temurin
+      - uses: android-actions/setup-android@v3
+
+      # Caching
+      - uses: gradle/actions/setup-gradle@v3
+      - uses: DeterminateSystems/magic-nix-cache-action@v2
+      - uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            ios/Pods
+          key: ${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock', '**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-deps-
+
+      # Installations
+      - name: Install Node Modules and Pods
+        run: yarn install
+        env:
+          LANG: en_US.UTF-8
+          LC_ALL: en_US.UTF-8
+
+      # Metro
+      - name: Start Metro
+        run: |
+          yarn start &
+          echo "METRO_PID=$!" >> $GITHUB_ENV
+
+      # Build
+      - run: yarn e2e:build ios.sim.debug
+      - run: yarn e2e:build android.emu.debug
+
+      # Start Tilt
+      - name: Tilt CI
+        run: |
+          for i in {1..5}; do
+            echo "Tilt CI attempt $i"
+            nix develop -c sh -c 'cd dev && tilt ci' && exit 0 || sleep 15
+          done
+          exit 1
+
+      # Tests on iOS Simulator
+      - name: Run Detox Tests on iOS Simulator
+        run: yarn e2e:test ios.sim.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location ios-recordings
+
+      - run: killall Simulator
+        if: always()
+        continue-on-error: true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ios-recordings
+          path: ios-recordings
+
+      # Tests on Android Emulator
+      - name: Start Android Emulator
+        run: |
+          sdkmanager --install 'build-tools;34.0.0' platform-tools > /dev/null
+          sdkmanager --install emulator --channel=0 > /dev/null
+          sdkmanager --install 'system-images;android-34;google_apis_playstore;arm64-v8a' --channel=0 > /dev/null
+          echo no | avdmanager create avd --force -n Pixel_API_34_AOSP --abi 'google_apis_playstore/arm64-v8a' --package 'system-images;android-34;google_apis_playstore;arm64-v8a' --device 'pixel_6a'
+          emulator -avd Pixel_API_34_AOSP -gpu swiftshader_indirect -no-boot-anim &
+          adb wait-for-device
+
+      - name: Run Detox Tests on Android Emulator
+        run: yarn e2e:test android.emu.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location android-recordings
+
+      - name: Kill Android Emulator
+        if: always()
+        continue-on-error: true
+        run: adb emu kill
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-recordings
+          path: android-recordings
+
+      # Cleanup
+      - name: Terminate Metro
+        if: always()
+        continue-on-error: true
+        run: kill $METRO_PID
+
+      - name: Destroy backend
+        if: always()
+        continue-on-error: true
+        run: |
+          nix develop -c sh -c 'cd dev && tilt down' || true
+          docker rm -f $(docker ps -aq)

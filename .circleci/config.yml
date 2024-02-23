@@ -349,10 +349,3 @@ workflows:
         - equal: ["api", << pipeline.trigger_source >>]
     jobs:
       - upload_to_app_store
-  test_in_pr:
-    when:
-      not:
-        equal: [main, << pipeline.git.branch >>]
-    jobs:
-      - test_android_in_pr
-      - test_ios_in_pr

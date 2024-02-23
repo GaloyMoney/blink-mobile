@@ -202,7 +202,7 @@ export const DeveloperScreen: React.FC = () => {
 
   return (
     <Screen>
-      <ScrollView>
+      <ScrollView {...testProps("developer-screen-scroll-view")}>
         <View style={styles.screenContainer}>
           <Button
             title="Log out"

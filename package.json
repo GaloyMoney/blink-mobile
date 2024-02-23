@@ -52,7 +52,9 @@
     "android:buildDebug": "yarn android:prepareAssets && ./android/gradlew -b ./android/build.gradle assembleDebug -Dorg.gradle.jvmargs='-Xmx4g -XX:MaxPermSize=512m'",
     "ios:prepareAssets": "react-native bundle --entry-file index.js --bundle-output ./ios/main.jsbundle --assets-dest ./ios/ --platform ios --dev false",
     "bundle-visualizer": "yarn run react-native-bundle-visualizer",
-    "splash": "yarn react-native generate-bootsplash --background-color \"#000\" --logo-width 300 app/assets/logo/app-logo-dark.svg"
+    "splash": "yarn react-native generate-bootsplash --background-color \"#000\" --logo-width 300 app/assets/logo/app-logo-dark.svg",
+    "e2e:build": "detox build --configuration",
+    "e2e:test": "detox test --configuration"
   },
   "dependencies": {
     "@apollo/client": "3.9.0-alpha.5",
@@ -211,6 +213,8 @@
     "browserstack-local": "^1.5.1",
     "cross-fetch": "^3.1.6",
     "csv-parse": "^5.3.5",
+    "detox": "^20.18.1",
+    "dotenv": "^16.4.2",
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-import": "^2.27.5",
