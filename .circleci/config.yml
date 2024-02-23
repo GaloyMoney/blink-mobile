@@ -187,7 +187,6 @@ jobs:
       - checkout:
           path: ~/galoy-mobile
 
-      - run: yarn global add node-gyp
       - node/install:
            install-yarn: true
            node-version: '18.18.2'
@@ -202,6 +201,7 @@ jobs:
 
       - restore_cache:
           key: 2-yarn-{{ checksum "yarn.lock" }}-android
+      - run: yarn global add node-gyp
       - run: yarn install
       - save_cache:
           key: 2-yarn-{{ checksum "yarn.lock" }}-android
