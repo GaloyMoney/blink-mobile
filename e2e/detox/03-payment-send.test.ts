@@ -7,7 +7,11 @@ import { loadLocale } from "../../app/i18n/i18n-util.sync"
 
 import { addAmount, tap, verifyTextPresent, sleep, slideSlider } from "./utils/controls"
 import { setLocalAndLoginWithAccessToken, waitForHomeScreen } from "./utils/common-flows"
-import { getExternalLNNoAmountInvoice, getLnInvoiceForBob } from "./utils/commandline"
+import {
+  getExternalLNNoAmountInvoice,
+  getLnInvoiceForBob,
+  getOnchainAddress,
+} from "./utils/commandline"
 
 loadLocale("en")
 const LL = i18nObject("en")
@@ -152,7 +156,7 @@ describe("Intraledger using LN Invoice", () => {
   })
 })
 
-describe("External LN Invoice", () => {
+describe("Send to External LN Invoice", () => {
   it("send btc to an external invoice taken from lnd-outside-1", async () => {
     await tap(by.id(LL.HomeScreen.send()))
 
@@ -182,6 +186,43 @@ describe("External LN Invoice", () => {
     await tx.tap()
 
     await verifyTextPresent(LL.TransactionDetailScreen.spent())
+
+    await tap(by.id("close"))
+    await waitForHomeScreen(LL)
+  })
+})
+
+describe("Send to Onchain Address", () => {
+  it("send btc to an onchain address from bitcoind", async () => {
+    await tap(by.id(LL.HomeScreen.send()))
+
+    const address = await getOnchainAddress()
+
+    const addressInput = element(by.id(LL.SendBitcoinScreen.placeholder()))
+    await waitFor(addressInput).toBeVisible().withTimeout(timeout)
+    await addressInput.clearText()
+    await addressInput.typeText(address)
+    await tap(by.id(LL.common.next()))
+
+    await addAmount("25.0", LL)
+    await tap(by.id(LL.common.next()))
+
+    await slideSlider()
+    await sleep(3000)
+
+    await tap(by.id(LL.common.back()))
+    await waitForHomeScreen(LL)
+  })
+
+  it("check if latest transaction has been updated", async () => {
+    const tx = element(by.id(`transaction-by-index-0`))
+    await waitFor(tx)
+      .toBeVisible()
+      .withTimeout(timeout * 10)
+    await tx.tap()
+
+    // can take a bit of time for tx to be confirmed
+    await verifyTextPresent(LL.TransactionDetailScreen.spent(), timeout * 30)
 
     await tap(by.id("close"))
     await waitForHomeScreen(LL)

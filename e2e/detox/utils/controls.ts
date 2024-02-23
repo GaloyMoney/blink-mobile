@@ -24,9 +24,11 @@ export const slideSlider = async () => {
   await slider.swipe("right", "fast", 0.9, 0.5, 0.5)
 }
 
-export const verifyTextPresent = async (text: string) => {
+export const verifyTextPresent = async (text: string, waitTime?: number) => {
   const el = element(by.text(text))
-  await waitFor(el).toBeVisible().withTimeout(timeout)
+  await waitFor(el)
+    .toBeVisible()
+    .withTimeout(waitTime || timeout)
 }
 
 export const sleep = (ms: number): Promise<void> =>

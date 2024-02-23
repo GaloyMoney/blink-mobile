@@ -95,7 +95,7 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
       )
       setFeedbackModalShown(client, true)
     }
-  }, [LL, client])
+  }, [LL, client, appConfig])
 
   const FEEDBACK_DELAY = 3000
   const CALLBACK_DELAY = 3000
