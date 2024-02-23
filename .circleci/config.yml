@@ -187,6 +187,7 @@ jobs:
       - checkout:
           path: ~/galoy-mobile
 
+      - run: yarn global add node-gyp
       - node/install:
            install-yarn: true
            node-version: '18.18.2'
