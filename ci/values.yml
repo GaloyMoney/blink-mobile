@@ -5,8 +5,8 @@ git_uri: git@github.com:GaloyMoney/galoy-mobile.git
 git_mobile_deployments_uri: git@github.com:GaloyMoney/galoy-mobile-deployments.git
 git_version_branch: main
 
-git_branch: fix-ci-build
-pipeline_git_branch: fix-ci-build
+git_branch: main
+pipeline_git_branch: main
 git_build_number_branch: build-numbers
 
 github_private_key: ((github.private_key))
