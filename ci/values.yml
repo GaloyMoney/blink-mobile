@@ -35,3 +35,4 @@ galoy_token_2: ((galoy-tokens.galoy_token_2))
 mailslurp_api_key: ((galoy-tokens.mailslurp_api_key))
 
 android_keystore: ((android.keystore))
+fastlane_match_password: ((fastlane.match_password))

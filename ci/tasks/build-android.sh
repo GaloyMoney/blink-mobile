@@ -22,3 +22,8 @@ pushd android
 bundle install
 sed -i'' -e "s/versionCode .*$/versionCode $BUILD_NUMBER/g" app/build.gradle
 bundle exec fastlane android build
+popd
+popd
+
+mkdir -p artifacts/android/app/build/outputs
+cp -r repo/android/app/build/outputs/* artifacts/android/app/build/outputs

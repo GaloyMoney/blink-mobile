@@ -5,6 +5,7 @@ RUN apk update \
   && apk add yq --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
 
 RUN curl -sSL https://sdk.cloud.google.com | bash
+ENV PATH $PATH:/root/google-cloud-sdk/bin
 
 ENV GH_CLI_VERSION 2.23.0
 RUN mkdir ghcli && cd ghcli \
