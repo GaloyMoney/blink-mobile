@@ -169,6 +169,7 @@ jobs:
         path: pipeline-tasks/ci/tasks/upload-to-gcs.sh
       params:
         INPUTS: android/app/build/outputs/*
+        VERSION_FILE: repo/.git/ref
         GCS_DIRECTORY: dev/android
         bucket: #@ data.values.build_artifacts_bucket_name
         json_key: #@ data.values.build_artifacts_bucket_creds
@@ -203,8 +204,11 @@ jobs:
       params:
         VERSION_FILE: repo/.git/ref
         MATCH_PASSWORD: #@ data.values.fastlane_match_password
+        MATCH_KEYCHAIN_PASSWORD: #@ data.values.fastlane_match_keychain_password
         GITHUB_SSH_KEY: #@ data.values.github_private_key
-
+        APPSTORE_API_KEY: #@ data.values.appstore_api_key
+        APPSTORE_API_KEY_ID: #@ data.values.appstore_api_key_id
+        APPSTORE_ISSUER_ID: #@ data.values.appstore_issuer_id
   - task: upload-to-gcs
     config:
       platform: linux
@@ -217,8 +221,8 @@ jobs:
         path: pipeline-tasks/ci/tasks/upload-to-gcs.sh
       params:
         INPUTS: ios/Blink.ipa
-        VERSION_FILE: repo/.git/ref
         GCS_DIRECTORY: dev/ios
+        VERSION_FILE: repo/.git/ref
         bucket: #@ data.values.build_artifacts_bucket_name
         json_key: #@ data.values.build_artifacts_bucket_creds
 
@@ -334,29 +338,41 @@ jobs:
       params:
         PLATFORM: android
   - task: build
+    tags: [ mac-m1 ]
+    config:
+      platform: darwin
+      inputs:
+      - name: repo
+      - name: pipeline-tasks
+      - name: build-number-android
+      - name: testflight-version
+      outputs:
+      - name: repo
+      - name: artifacts
+      run:
+        path: /bin/sh
+        args:
+          - "-c"
+          - "arch -arm64 pipeline-tasks/ci/tasks/build-android.sh"
+      params:
+        VERSION_FILE: testflight-version/version
+        ANDROID_KEYSTORE: #@ data.values.android_keystore
+  - task: upload-to-gcs
     config:
       platform: linux
       image_resource: #@ task_image_config()
       inputs:
       - name: repo
+      - name: artifacts
       - name: pipeline-tasks
-      - name: build-number-android
-      - name: built-dev-apk
-      - name: testflight-version
-      outputs:
-      - name: job-number
       run:
-        path: pipeline-tasks/ci/tasks/build-on-circleci.sh
+        path: pipeline-tasks/ci/tasks/upload-to-gcs.sh
       params:
-        PLATFORM: android
-        WAIT_FOR_BUILD_MINS: 30
-        BUILD_NUMBER_FILE: build-number-android/android
-        GIT_REF_FILE: built-dev-apk/url
-        GIT_REF_PATTERN: dev/android/galoy-mobile-.+-v(.+)/apk
-        VERSION_FILE: testflight-version/version
+        INPUTS: android/app/build/outputs/*
         GCS_DIRECTORY: prod/android
-        CIRCLECI_TOKEN: #@ data.values.circleci_token
-    on_abort: #@ cancel_circleci_build_on_abort()
+        VERSION_FILE: testflight-version/version
+        bucket: #@ data.values.build_artifacts_bucket_name
+        json_key: #@ data.values.build_artifacts_bucket_creds
   - put: build-number-android
     params:
       repository: build-number-android
@@ -393,29 +409,45 @@ jobs:
       params:
         PLATFORM: ios
   - task: build
+    tags: [ mac-m1 ]
+    config:
+      platform: darwin
+      inputs:
+      - name: repo
+      - name: pipeline-tasks
+      - name: build-number-ios
+      outputs:
+      - name: repo
+      - name: artifacts
+      run:
+        path: /bin/sh
+        args:
+          - "-c"
+          - "arch -arm64 pipeline-tasks/ci/tasks/build-ios.sh"
+      params:
+        VERSION_FILE: testflight-version/version
+        MATCH_PASSWORD: #@ data.values.fastlane_match_password
+        MATCH_KEYCHAIN_PASSWORD: #@ data.values.fastlane_match_keychain_password
+        GITHUB_SSH_KEY: #@ data.values.github_private_key
+        APPSTORE_API_KEY: #@ data.values.appstore_api_key
+        APPSTORE_API_KEY_ID: #@ data.values.appstore_api_key_id
+        APPSTORE_ISSUER_ID: #@ data.values.appstore_issuer_id
+  - task: upload-to-gcs
     config:
       platform: linux
       image_resource: #@ task_image_config()
       inputs:
       - name: repo
+      - name: artifacts
       - name: pipeline-tasks
-      - name: build-number-ios
-      - name: built-dev-ipa
-      - name: testflight-version
-      outputs:
-      - name: job-number
       run:
-        path: pipeline-tasks/ci/tasks/build-on-circleci.sh
+        path: pipeline-tasks/ci/tasks/upload-to-gcs.sh
       params:
-        PLATFORM: ios
-        WAIT_FOR_BUILD_MINS: 45
-        BUILD_NUMBER_FILE: build-number-ios/ios
-        GIT_REF_FILE: built-dev-ipa/url
-        GIT_REF_PATTERN: dev/ios/galoy-mobile-.+-v(.+)/Blink
-        VERSION_FILE: testflight-version/version
+        INPUTS: ios/Blink.ipa
         GCS_DIRECTORY: prod/ios
-        CIRCLECI_TOKEN: #@ data.values.circleci_token
-    on_abort: #@ cancel_circleci_build_on_abort()
+        VERSION_FILE: testflight-version/version
+        bucket: #@ data.values.build_artifacts_bucket_name
+        json_key: #@ data.values.build_artifacts_bucket_creds
   - put: build-number-ios
     params:
       repository: build-number-ios

@@ -5,7 +5,7 @@ git_uri: git@github.com:GaloyMoney/galoy-mobile.git
 git_mobile_deployments_uri: git@github.com:GaloyMoney/galoy-mobile-deployments.git
 git_version_branch: main
 
-git_branch: main
+git_branch: fix-ci-build
 pipeline_git_branch: fix-ci-build
 git_build_number_branch: build-numbers
 
@@ -36,3 +36,7 @@ mailslurp_api_key: ((galoy-tokens.mailslurp_api_key))
 
 android_keystore: ((android.keystore))
 fastlane_match_password: ((fastlane.match_password))
+fastlane_match_keychain_password: ((fastlane.match_keychain_password))
+appstore_api_key: ((appstore.appstore_api_key))
+appstore_api_key_id: ((appstore.appstore_api_key_id))
+appstore_issuer_id: ((appstore.appstore_api_issuer_id))
