@@ -24,20 +24,6 @@ source:
   repository: #@ release_pipeline_image()
 #@ end
 
-#@ def cancel_circleci_build_on_abort():
-task: cancel
-config:
-  platform: linux
-  image_resource: #@ task_image_config()
-  inputs:
-  - name: pipeline-tasks
-  - name: job-number
-  run:
-    path: pipeline-tasks/ci/tasks/cancel-circleci-job.sh
-  params:
-    CIRCLECI_TOKEN: #@ data.values.circleci_token
-#@ end
-
 groups:
 - name: all
   jobs:
@@ -365,6 +351,7 @@ jobs:
       - name: repo
       - name: artifacts
       - name: pipeline-tasks
+      - name: testflight-version
       run:
         path: pipeline-tasks/ci/tasks/upload-to-gcs.sh
       params:
@@ -416,6 +403,7 @@ jobs:
       - name: repo
       - name: pipeline-tasks
       - name: build-number-ios
+      - name: testflight-version
       outputs:
       - name: repo
       - name: artifacts
@@ -440,6 +428,7 @@ jobs:
       - name: repo
       - name: artifacts
       - name: pipeline-tasks
+      - name: testflight-version
       run:
         path: pipeline-tasks/ci/tasks/upload-to-gcs.sh
       params:
@@ -485,7 +474,6 @@ resources:
   source:
     ignore_paths:
     - "ci/*"
-    - ".circleci/*"
     - ".github/*"
     - "docs/*"
     - "README.md"

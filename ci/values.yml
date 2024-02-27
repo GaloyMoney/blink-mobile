@@ -25,7 +25,6 @@ build_artifacts_bucket_creds: ((build-artifacts-bucket-creds.creds_json))
 artifacts_bucket_name: ((staging-gcp-creds.bucket_name))
 staging_inception_creds: ((staging-gcp-creds.creds_json))
 
-circleci_token: ((circleci-token.circleci_token))
 browserstack_user: ((browserstack-creds.browserstack_user))
 browserstack_access_key: ((browserstack-creds.browserstack_access_key))
 browserstack_ios_build: ((browserstack-creds.browserstack_ios_build))
