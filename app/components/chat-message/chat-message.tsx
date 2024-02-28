@@ -9,10 +9,9 @@ import { MessageType } from "@flyerhq/react-native-chat-ui"
 import { MyCryptoKey } from "@app/types/crypto"
 import { encrypt, decrypt } from "@app/utils/crypto"
 import { nip19 } from "nostr-tools"
+import useNostrProfile from "@app/hooks/use-nostr-profile"
 
 type Props = {
-  sender: NDKUser | undefined
-  seckey: MyCryptoKey | undefined
   recipient: NDKUser | undefined
   message: MessageType.Text
   nextMessage: number
@@ -37,65 +36,63 @@ const ndk = new NDK({
   ],
 })
 
-export const ChatMessage: React.FC<Props> = ({ sender, seckey, recipient, message }) => {
+export const ChatMessage: React.FC<Props> = ({ recipient, message }) => {
+  const { nostrSecretKey: senderSecretKey, nostrPubKey: senderPubKey } = useNostrProfile()
   const styles = useStyles()
   const isMounted = useRef(false)
-  const publishEvent = useCallback(
-    async (sender: secureKeyPair, recipient: secureKeyPair, text: string) => {
-      if (!isMounted.current) return
-      try {
-        const MAX_RETRIES = 2
-        let retryCount = 0
-        const connectToNostr = async () => {
-          try {
-            await ndk.connect()
-            const signer = new NDKPrivateKeySigner(sender.seckey || "")
-            if (sender.seckey && recipient.pubkey) {
-              const encryptedMessage = encrypt(sender.seckey, recipient.pubkey, text, 1)
-              const ndkEvent = new NDKEvent(ndk)
-              // eslint-disable-next-line camelcase
-              ndkEvent.created_at = Math.floor(Date.now() / 1000)
-              ndkEvent.pubkey = sender.pubkey || ""
-              ndkEvent.tags = [["p", recipient.pubkey || ""]]
-              ndkEvent.kind = 4
-              ndkEvent.content = encryptedMessage
-              await ndkEvent.sign(signer)
-              // Publish the event
-              await ndk.publish(ndkEvent).then(() => {
-                console.log("Event published!")
-                decryptedMessage = decrypt(
-                  recipient.seckey || "",
-                  sender.pubkey || "",
-                  encryptedMessage,
-                )
-              })
-            } else {
-              console.log("Waiting for senderKey and recipient to be set...")
-              throw new Error("senderKey and recipient are not set")
-            }
-          } catch (error) {
-            console.log("Error connecting to NOSTR ", error)
-            if (retryCount < MAX_RETRIES) {
-              retryCount += 1
-              console.log(`Retry attempt ${retryCount}...`)
-              await connectToNostr()
-            }
+  const publishEvent = useCallback(async (recipient: secureKeyPair, text: string) => {
+    if (!isMounted.current) return
+    try {
+      const MAX_RETRIES = 2
+      let retryCount = 0
+      const connectToNostr = async () => {
+        try {
+          await ndk.connect()
+          const signer = new NDKPrivateKeySigner(senderSecretKey || "")
+          if (senderSecretKey && recipient.pubkey) {
+            const encryptedMessage = encrypt(senderPubKey, recipient.pubkey, text, 1)
+            const ndkEvent = new NDKEvent(ndk)
+            // eslint-disable-next-line camelcase
+            ndkEvent.created_at = Math.floor(Date.now() / 1000)
+            ndkEvent.pubkey = senderPubKey || ""
+            ndkEvent.tags = [["p", recipient.pubkey || ""]]
+            ndkEvent.kind = 4
+            ndkEvent.content = encryptedMessage
+            await ndkEvent.sign(signer)
+            // Publish the event
+            await ndk.publish(ndkEvent).then(() => {
+              console.log("Event published!")
+              decryptedMessage = decrypt(
+                recipient.seckey || "",
+                senderPubKey || "",
+                encryptedMessage,
+              )
+            })
+          } else {
+            console.log("Waiting for senderKey and recipient to be set...")
+            throw new Error("senderKey and recipient are not set")
+          }
+        } catch (error) {
+          console.log("Error connecting to NOSTR ", error)
+          if (retryCount < MAX_RETRIES) {
+            retryCount += 1
+            console.log(`Retry attempt ${retryCount}...`)
+            await connectToNostr()
           }
         }
-        await connectToNostr()
-      } catch (error) {
-        console.log("Error during event publishing: ", error)
       }
-    },
-    [],
-  )
+      await connectToNostr()
+    } catch (error) {
+      console.log("Error during event publishing: ", error)
+    }
+  }, [])
 
   useEffect(() => {
     isMounted.current = true
     return () => {
       isMounted.current = false
     }
-  }, [sender, recipient])
+  }, [recipient])
 
   const retrieveEvents = useCallback(
     async (sender: secureKeyPair, recipient: secureKeyPair) => {
@@ -136,10 +133,14 @@ export const ChatMessage: React.FC<Props> = ({ sender, seckey, recipient, messag
 
   useEffect(() => {
     isMounted.current = true
-    if (message.text && seckey?.key && recipient?.hexpubkey() && sender?.hexpubkey()) {
+    if (
+      message.text &&
+      senderSecretKey &&
+      nip19.decode(senderSecretKey).data.toString()
+    ) {
       const senderSec: secureKeyPair = {
-        seckey: seckey?.key,
-        pubkey: sender?.hexpubkey(),
+        seckey: nip19.decode(senderSecretKey).data.toString(),
+        pubkey: nip19.decode(senderPubKey).data.toString(),
       }
       const recipientSec: secureKeyPair = {
         seckey: "39c34c3f2600a36d582cf9fca1bfffc102f0532d4c1ba74a2d1aa5afcb061c31",
@@ -147,14 +148,14 @@ export const ChatMessage: React.FC<Props> = ({ sender, seckey, recipient, messag
       }
       // retrieveEvents(senderSec, recipientSec)
       console.log("Publishing event...")
-      publishEvent(senderSec, recipientSec, message.text)
+      publishEvent(recipientSec, message.text)
     } else {
       console.log("Waiting for event to load...")
     }
     return () => {
       isMounted.current = false
     }
-  }, [message.text, seckey?.key, recipient?.hexpubkey(), sender?.hexpubkey()])
+  }, [message.text, senderSecretKey, senderPubKey])
 
   return (
     <View style={styles.container}>

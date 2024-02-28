@@ -575,7 +575,7 @@ export const PrimaryNavigator = () => {
             <ContactsIcon {...testProps("Contacts")} color={color} />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Chat"
         component={ChatNavigator}
@@ -584,7 +584,7 @@ export const PrimaryNavigator = () => {
           title: LL.ChatScreen.title(),
           tabBarIcon: ({ color }) => <ChatIcon color={color} />,
         }}
-      /> */}
+      />
       <Tab.Screen
         name="Map"
         component={MapScreen}

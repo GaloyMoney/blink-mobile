@@ -3,7 +3,7 @@ import { SearchBar } from "@rneui/base"
 import { ListItem, makeStyles, useTheme } from "@rneui/themed"
 import * as React from "react"
 import { useCallback, useMemo, useState } from "react"
-import { ActivityIndicator, Text, View } from "react-native"
+import { ActivityIndicator, Text, View, Image } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 
@@ -17,6 +17,7 @@ import { useContactsQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
+import useNostrProfile from "@app/hooks/use-nostr-profile"
 
 gql`
   query contacts {
@@ -38,12 +39,15 @@ export const ChatScreen: React.FC = () => {
     theme: { colors },
   } = useTheme()
 
+  const { fetchNostrUser } = useNostrProfile()
   const navigation = useNavigation<StackNavigationProp<ChatStackParamList, "chatList">>()
 
   const isAuthed = useIsAuthed()
 
   const [matchingContacts, setMatchingContacts] = useState<Contact[]>([])
+  const [nostrProfiles, setNostrProfiles] = useState<NostrProfile[]>([])
   const [searchText, setSearchText] = useState("")
+  const [refreshing, setRefreshing] = useState(false)
   const { LL } = useI18nContext()
   const { loading, data, error } = useContactsQuery({
     skip: !isAuthed,
@@ -69,24 +73,56 @@ export const ChatScreen: React.FC = () => {
 
   // This implementation of search will cause a match if any word in the search text
   // matches the contacts name or prettyName.
-  const updateMatchingContacts = useCallback(
-    (newSearchText: string) => {
+  const updateSearchResults = useCallback(
+    async (newSearchText: string) => {
+      setRefreshing(true)
       setSearchText(newSearchText)
-      if (newSearchText.length > 0) {
-        const searchWordArray = newSearchText
-          .split(" ")
-          .filter((text) => text.trim().length > 0)
-        const matchingContacts = contacts.filter((contact) =>
-          searchWordArray.some((word) => wordMatchesContact(word, contact)),
-        )
-        setMatchingContacts(matchingContacts)
-      } else {
-        setMatchingContacts(contacts)
+      setNostrProfiles([])
+      setMatchingContacts([])
+      if (newSearchText.startsWith("npub1") && newSearchText.length == 63) {
+        try {
+          let nostrProfile = await fetchNostrUser(newSearchText as `npub1${string}`)
+          setNostrProfiles(nostrProfile ? [nostrProfile] : [])
+        } catch (e) {
+          console.log("Error fetching nostr profile", e)
+        }
+        setRefreshing(false)
+        return
+      }
+      setMatchingContacts([])
+      setNostrProfiles([])
+      try {
+        if (newSearchText.length > 0) {
+          const searchWordArray = newSearchText
+            .split(" ")
+            .filter((text) => text.trim().length > 0)
+          const matchingContacts = contacts.filter((contact) =>
+            searchWordArray.some((word) => wordMatchesContact(word, contact)),
+          )
+          setMatchingContacts(matchingContacts)
+        } else {
+          setMatchingContacts(contacts)
+        }
+      } catch (e) {
+        console.log("Error is ", e)
+      } finally {
+        setRefreshing(false)
       }
     },
     [contacts],
   )
 
+  const NostrProfilesToChat = () => {
+    return nostrProfiles.map((profile) => {
+      return {
+        id: profile.pubkey,
+        name: profile.name,
+        alias: profile.nip05,
+        username: profile.nip05,
+        picture: profile.picture,
+      }
+    })
+  }
   const wordMatchesContact = (searchWord: string, contact: Contact): boolean => {
     let contactPrettyNameMatchesSearchWord: boolean
 
@@ -114,10 +150,10 @@ export const ChatScreen: React.FC = () => {
         {...testProps(LL.common.chatSearch())}
         placeholder={LL.common.chatSearch()}
         value={searchText}
-        onChangeText={updateMatchingContacts}
+        onChangeText={updateSearchResults}
         platform="default"
         round
-        showLoading={false}
+        showLoading={refreshing}
         containerStyle={styles.searchBarContainer}
         inputContainerStyle={styles.searchBarInputContainerStyle}
         inputStyle={styles.searchBarText}
@@ -134,10 +170,10 @@ export const ChatScreen: React.FC = () => {
         {...testProps(LL.common.chatSearch())}
         placeholder={LL.common.chatSearch()}
         value={searchText}
-        onChangeText={updateMatchingContacts}
+        onChangeText={updateSearchResults}
         platform="default"
         round
-        showLoading={false}
+        showLoading={refreshing}
         containerStyle={styles.searchBarContainer}
         inputContainerStyle={styles.searchBarInputContainerStyle}
         inputStyle={styles.searchBarText}
@@ -179,22 +215,26 @@ export const ChatScreen: React.FC = () => {
       {SearchBarContent}
       <FlatList
         contentContainerStyle={styles.listContainer}
-        data={matchingContacts}
+        data={NostrProfilesToChat() as Chat[]}
         ListEmptyComponent={ListEmptyContent}
         renderItem={({ item }) => (
           <ListItem
-            key={item.username}
+            key={item.id}
             style={styles.item}
             containerStyle={styles.itemContainer}
-            onPress={() => navigation.navigate("chatDetail", { chat: item })}
+            onPress={() =>
+              navigation.navigate("chatDetail", {
+                chat: { ...item, transactionsCount: 0 },
+              })
+            }
           >
-            <Icon name={"ios-person-outline"} size={24} color={colors.primary} />
+            <Image source={{ uri: item.picture || "" }} style={styles.profilePicture} />
             <ListItem.Content>
               <ListItem.Title style={styles.itemText}>{item.alias}</ListItem.Title>
             </ListItem.Content>
           </ListItem>
         )}
-        keyExtractor={(item) => item.username}
+        keyExtractor={(item) => item.id}
       />
     </Screen>
   )
@@ -272,5 +312,11 @@ const useStyles = makeStyles(({ colors }) => ({
 
   icon: {
     color: colors.black,
+  },
+  profilePicture: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    backgroundColor: colors.black,
   },
 }))

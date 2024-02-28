@@ -18,7 +18,8 @@ import { PreviewData } from "@flyerhq/react-native-link-preview"
 import { launchImageLibrary } from "react-native-image-picker"
 import NDK, { NDKUser } from "@nostr-dev-kit/ndk"
 import { ChatMessage } from "@app/components/chat-message"
-import { MyCryptoKey } from "@app/types/crypto"
+import useNostrProfile from "@app/hooks/use-nostr-profile"
+import { getPublicKey, nip19 } from "nostr-tools"
 
 type ChatDetailProps = {
   route: RouteProp<ChatStackParamList, "chatDetail">
@@ -26,7 +27,6 @@ type ChatDetailProps = {
 
 export const ChatDetailScreen: React.FC<ChatDetailProps> = ({ route }) => {
   const { chat } = route.params
-  chat.nsec = ""
   return <ChatDetailScreenJSX chat={chat} />
 }
 
@@ -51,8 +51,6 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
   const { LL } = useI18nContext()
   const [messages, setMessages] = React.useState<MessageType.Any[]>([])
   const [userProfile, setUserProfile] = React.useState<NDKUser>()
-  const [senderProfile, setSenderProfile] = React.useState<NDKUser>()
-  const [senderNsec, setSenderNsec] = React.useState<MyCryptoKey>()
 
   React.useEffect(() => {
     let isMounted = true
@@ -64,14 +62,7 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
         "wss://nostr.mom",
       ],
     })
-    const nostrSender = ndk.getUser({
-      npub: "npub1u6c0pgwxmymtxac284n29wytuj27t5gjgag67e2784msgd0rrv8qhflash",
-    })
-    const nostrSenderNsec = {
-      extractable: false,
-      type: "raw",
-      key: "90c3b9ef8c1d20df7b90ae1a5216361aac414c64c0dbbb4cfbedd744fe6d5a06",
-    }
+
     const nostrRecipient = ndk.getUser({
       npub: "npub1067y35l9rfxczuvm0swkq87k74ds36pawv0zak384tx9g09urpqqkflash",
     })
@@ -83,8 +74,6 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
         await nostrRecipient.fetchProfile()
         if (isMounted) {
           setUserProfile(nostrRecipient)
-          setSenderProfile(nostrSender)
-          setSenderNsec(nostrSenderNsec)
         }
       } catch (error) {
         console.log("Error connecting to NOSTR ", error)
@@ -180,8 +169,6 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
             renderTextMessage={(message, nextMessage, prevMessage) => (
               <ChatMessage
                 message={message}
-                sender={senderProfile}
-                seckey={senderNsec}
                 recipient={userProfile}
                 nextMessage={nextMessage}
                 prevMessage={prevMessage}
@@ -209,11 +196,11 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
             name={"dollar"}
             size="large"
             text={LL.HomeScreen.pay()}
-            onPress={() =>
-              navigation.navigate("sendBitcoinDestination", {
-                username: chat.username,
-              })
-            }
+            // onPress={() =>
+            //   navigation.navigate("sendBitcoinDestination", {
+            //     username: chat.name || null,
+            //   })
+            // }
           />
         </View>
       </View>
