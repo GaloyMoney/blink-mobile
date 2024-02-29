@@ -5,6 +5,7 @@ import { addDeviceToken, hasNotificationPermission } from "@app/utils/notificati
 import messaging, { FirebaseMessagingTypes } from "@react-native-firebase/messaging"
 import { useLinkTo } from "@react-navigation/native"
 import React, { useEffect } from "react"
+import { useNotifications } from "../notifications"
 
 const circlesNotificationTypes = [
   "InnerCircleGrew",
@@ -20,6 +21,7 @@ const circlesNotificationTypes = [
 export const PushNotificationComponent = (): JSX.Element => {
   const client = useApolloClient()
   const isAuthed = useIsAuthed()
+  const { notifyCard } = useNotifications()
 
   const linkTo = useLinkTo()
   const isAppLocked = useAuthenticationContext().isAppLocked
@@ -68,6 +70,17 @@ export const PushNotificationComponent = (): JSX.Element => {
       },
     )
 
+    const unsubscribeInApp = messaging().onMessage(async (remoteMessage) => {
+      notifyCard({
+        text: remoteMessage.notification?.body ?? "",
+        title: remoteMessage.notification?.title ?? "",
+        action: async () => {
+          showNotification(remoteMessage)
+        },
+        icon: "bell",
+      })
+    })
+
     // When the application is opened from a quit state.
     messaging()
       .getInitialNotification()
@@ -78,9 +91,10 @@ export const PushNotificationComponent = (): JSX.Element => {
       })
 
     return () => {
+      unsubscribeInApp()
       unsubscribeBackground()
     }
-  }, [linkTo, isAppLocked])
+  }, [linkTo, isAppLocked, notifyCard])
 
   useEffect(() => {
     ;(async () => {

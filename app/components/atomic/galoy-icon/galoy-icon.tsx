@@ -4,6 +4,7 @@ import ArrowRight from "@app/assets/icons-redesign/arrow-right.svg"
 import BackSpace from "@app/assets/icons-redesign/back-space.svg"
 import Bank from "@app/assets/icons-redesign/bank.svg"
 import Bitcoin from "@app/assets/icons-redesign/bitcoin.svg"
+import Bell from "@app/assets/icons-redesign/bell.svg"
 import Book from "@app/assets/icons-redesign/book.svg"
 import BtcBook from "@app/assets/icons-redesign/btc-book.svg"
 import CaretDown from "@app/assets/icons-redesign/caret-down.svg"
@@ -100,6 +101,7 @@ export const icons = {
   "payment-success": PaymentSuccess,
   "payment-pending": PaymentPending,
   "payment-error": PaymentError,
+  "bell": Bell,
 } as const
 
 export type IconNamesType = keyof typeof icons
