@@ -322,7 +322,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
                 ""
               }
               icons={[
-                <View key="icon-1">
+                <View key="explorer">
                   <TouchableWithoutFeedback
                     onPress={() =>
                       viewInExplorer(
@@ -340,7 +340,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
                     />
                   </TouchableWithoutFeedback>
                 </View>,
-                <View key="icon-0">
+                <View key="copy">
                   <TouchableWithoutFeedback
                     onPress={() =>
                       copyToClipboard({
@@ -380,7 +380,29 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
           }
         />
         {!isReceive && <Row entry={LL.common.fees()} value={formattedFeeText} />}
-        <Row entry={LL.common.description()} value={description} />
+        <Row
+          entry={LL.common.description()}
+          value={description}
+          icons={[
+            <View key="copy">
+              <TouchableWithoutFeedback
+                onPress={() =>
+                  copyToClipboard({
+                    content: description || "",
+                    type: LL.common.description(),
+                  })
+                }
+              >
+                <Icon
+                  name="copy-outline"
+                  size={22}
+                  color={colors.primary}
+                  style={styles.icon}
+                />
+              </TouchableWithoutFeedback>
+            </View>,
+          ]}
+        />
         {settlementVia?.__typename === "SettlementViaIntraLedger" && (
           <Row
             entry={LL.TransactionDetailScreen.paid()}
@@ -394,7 +416,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
               entry="Hash"
               value={initiationVia?.paymentHash}
               icons={[
-                <View key="icon-0">
+                <View key="copy">
                   <TouchableWithoutFeedback
                     onPress={() =>
                       copyToClipboard({
@@ -422,7 +444,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
               entry={LL.common.preimageProofOfPayment()}
               value={settlementVia?.preImage}
               icons={[
-                <View key="icon-0">
+                <View key="copy">
                   <TouchableWithoutFeedback
                     onPress={() =>
                       copyToClipboard({
@@ -448,7 +470,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
               entry={LL.common.paymentRequest()}
               value={initiationVia?.paymentRequest}
               icons={[
-                <View key="icon-1">
+                <View key="explorer">
                   <TouchableWithoutFeedback
                     onPress={() =>
                       viewInLightningDecoder(initiationVia?.paymentRequest || "")
@@ -462,7 +484,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
                     />
                   </TouchableWithoutFeedback>
                 </View>,
-                <View key="icon-0">
+                <View key="copy">
                   <TouchableWithoutFeedback
                     onPress={() =>
                       copyToClipboard({
@@ -487,7 +509,7 @@ export const TransactionDetailScreen: React.FC<Props> = ({ route }) => {
             entry="Blink Internal Id"
             value={id}
             icons={[
-              <View key="icon-0">
+              <View key="copy">
                 <TouchableWithoutFeedback
                   onPress={() =>
                     copyToClipboard({
