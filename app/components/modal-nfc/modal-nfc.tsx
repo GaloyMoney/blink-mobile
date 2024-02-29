@@ -110,10 +110,7 @@ export const ModalNfc: React.FC<{
           const payloadString = Ndef.text.decodePayload(new Uint8Array(payload))
           console.log("decodedPayloadString: " + payloadString)
 
-          if (
-            payloadString.indexOf("lnurl") !== -1 ||
-            payloadString.indexOf("LNURL") !== -1
-          ) {
+          if (payloadString.toLowerCase().includes("lnurl")) {
             return record
           }
 

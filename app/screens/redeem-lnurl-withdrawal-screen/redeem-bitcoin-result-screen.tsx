@@ -116,9 +116,12 @@ const RedeemBitcoinResultScreen: React.FC<Prop> = ({ route }) => {
 
   const submitLNURLWithdrawRequest = useCallback(
     async (generatedInvoice: LnInvoiceNoSecret) => {
-      const url = `${callback}${callback.includes("?") ? "&" : "?"}k1=${k1}&pr=${
-        generatedInvoice.paymentRequest
-      }`
+      const urlObject = new URL(callback)
+      const searchParams = urlObject.searchParams
+      searchParams.set("k1", k1)
+      searchParams.set("pr", generatedInvoice.paymentRequest)
+
+      const url = urlObject.toString()
 
       const result = await fetch(url)
 
