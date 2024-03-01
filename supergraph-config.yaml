@@ -3,7 +3,7 @@ subgraphs:
   galoy:
     routing_url: url
     schema:
-      file: ../galoy/core/api/dev/apollo-federation/supergraph.graphql
+      file: ../galoy/dev/config/apollo-federation/supergraph.graphql
   circles:
     routing_url: url
     schema:

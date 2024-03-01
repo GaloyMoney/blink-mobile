@@ -1257,7 +1257,6 @@ type Mutation
   onChainUsdPaymentSend(input: OnChainUsdPaymentSendInput!): PaymentSendPayload! @join__field(graph: GALOY)
   onChainUsdPaymentSendAsBtcDenominated(input: OnChainUsdPaymentSendAsBtcDenominatedInput!): PaymentSendPayload! @join__field(graph: GALOY)
   quizClaim(input: QuizClaimInput!): QuizClaimPayload! @join__field(graph: GALOY)
-  quizCompleted(input: QuizCompletedInput!): QuizCompletedPayload! @join__field(graph: GALOY) @deprecated(reason: "Use quizClaim instead")
   userContactUpdateAlias(input: UserContactUpdateAliasInput!): UserContactUpdateAliasPayload! @join__field(graph: GALOY) @deprecated(reason: "will be moved to AccountContact")
   userEmailDelete: UserEmailDeletePayload! @join__field(graph: GALOY)
   userEmailRegistrationInitiate(input: UserEmailRegistrationInitiateInput!): UserEmailRegistrationInitiatePayload! @join__field(graph: GALOY)
@@ -1659,19 +1658,6 @@ type QuizClaimPayload
 {
   errors: [Error!]!
   quizzes: [Quiz!]!
-}
-
-input QuizCompletedInput
-  @join__type(graph: GALOY)
-{
-  id: ID!
-}
-
-type QuizCompletedPayload
-  @join__type(graph: GALOY)
-{
-  errors: [Error!]!
-  quiz: Quiz
 }
 
 type RealtimePrice
