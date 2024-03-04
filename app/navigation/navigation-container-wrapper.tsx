@@ -96,6 +96,7 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
             Map: "map",
           },
         },
+        priceHistory: "price",
         receiveBitcoin: "receive",
         conversionDetails: "convert",
         scanningQRCode: "scan-qr",

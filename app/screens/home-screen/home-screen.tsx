@@ -28,7 +28,7 @@ import {
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { getErrorMessages } from "@app/graphql/utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation, useIsFocused } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 
@@ -116,6 +116,8 @@ export const HomeScreen: React.FC = () => {
       galoyInstance: { id: galoyInstanceId },
     },
   } = useAppConfig()
+
+  const isFocused = useIsFocused()
 
   const {
     data: dataAuthed,
@@ -351,7 +353,7 @@ export const HomeScreen: React.FC = () => {
         contentContainerStyle={styles.scrollViewContainer}
         refreshControl={
           <RefreshControl
-            refreshing={loading}
+            refreshing={loading && isFocused}
             onRefresh={refetch}
             colors={[colors.primary]} // Android refresh indicator colors
             tintColor={colors.primary} // iOS refresh indicator color
