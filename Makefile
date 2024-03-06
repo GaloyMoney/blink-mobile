@@ -24,3 +24,6 @@ tilt-up:
 
 tilt-down:
 	cd dev && tilt down
+
+emulator:
+	emulator -avd PIXEL_API_34

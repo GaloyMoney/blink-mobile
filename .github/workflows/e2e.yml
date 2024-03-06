@@ -88,8 +88,8 @@ jobs:
           sdkmanager --install 'build-tools;34.0.0' platform-tools > /dev/null
           sdkmanager --install emulator --channel=0 > /dev/null
           sdkmanager --install 'system-images;android-34;google_apis_playstore;arm64-v8a' --channel=0 > /dev/null
-          echo no | avdmanager create avd --force -n Pixel_API_34_AOSP --abi 'google_apis_playstore/arm64-v8a' --package 'system-images;android-34;google_apis_playstore;arm64-v8a' --device 'pixel_6a'
-          emulator -avd Pixel_API_34_AOSP -gpu swiftshader_indirect -no-boot-anim &
+          echo no | avdmanager create avd --force -n Pixel_API_34 --abi 'google_apis_playstore/arm64-v8a' --package 'system-images;android-34;google_apis_playstore;arm64-v8a' --device 'pixel_6a'
+          emulator -avd Pixel_API_34 -gpu swiftshader_indirect -no-boot-anim &
           adb wait-for-device
 
       - name: Run Detox Tests on Android Emulator
