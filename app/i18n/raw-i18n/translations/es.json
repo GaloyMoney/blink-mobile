@@ -2688,6 +2688,11 @@
             "title": "¡Reto de febrero!",
             "description": "+3 en tu círculo interno para tener la oportunidad de ganar una billetera hardware Seedsigner",
             "details": "Haz crecer tu círculo interno en 3 personas en enero para tener la oportunidad de ganar una billetera de hardware Seedsigner.\n\nRecordatorio: tus círculos crecen cuando envías los primeros sats a un nuevo usuario de Blink.\n\nComparte tus círculos en redes sociales con #blinkcircles para participar."
+        },
+        "marchChallenge": {
+            "title": "¡Reto de marzo!",
+            "description": "+3 círculo interior y +3 círculo exterior para tener la oportunidad de ganar $100",
+            "details": "Amplía tu círculo interno en 3 personas y tu círculo externo en 3 personas para tener la oportunidad de ganar $100.\n\nRecordatorio: tus círculos crecen cuando envías a un nuevo usuario de Blink sus primeros sats.\n\nComparte tus círculos en redes sociales con #blinkcircles para participar."
         }
     },
     "FullOnboarding": {
