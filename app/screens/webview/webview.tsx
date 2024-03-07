@@ -1,13 +1,14 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
-import { Alert, Button } from "react-native"
+import { Alert, TouchableOpacity } from "react-native"
 import { injectJs, onMessageHandler } from "react-native-webln"
 import { WebView, WebViewNavigation } from "react-native-webview"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 type WebViewDebugScreenRouteProp = RouteProp<RootStackParamList, "webView">
 
@@ -28,6 +29,10 @@ export const WebViewScreen: React.FC<Props> = ({ route }) => {
   const navigation = useNavigation()
   const [canGoBack, setCanGoBack] = React.useState<boolean>(false)
 
+  const {
+    theme: { colors, mode },
+  } = useTheme()
+
   const handleBackPress = React.useCallback(() => {
     if (webview.current && canGoBack) {
       webview.current.goBack()
@@ -45,15 +50,22 @@ export const WebViewScreen: React.FC<Props> = ({ route }) => {
   React.useEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
-        //                                  FIXME < is not the same as for other screens
-        <Button onPress={handleBackPress} title={`< ${LL.common.back()}`} />
+        <TouchableOpacity style={styles.iconContainer} onPress={handleBackPress}>
+          <GaloyIcon name="caret-left" size={20} color={colors.black} />
+        </TouchableOpacity>
       ),
     })
-  }, [navigation, handleBackPress, LL])
+  }, [navigation, handleBackPress, LL, styles.iconContainer, colors.black])
 
   const handleWebViewNavigationStateChange = (newNavState: WebViewNavigation) => {
     setCanGoBack(newNavState.canGoBack)
     newNavState.title && navigation.setOptions({ title: newNavState.title })
+  }
+
+  const injectThemeJs = () => {
+    return `
+      document.body.setAttribute("data-theme", "${mode}");
+    `
   }
 
   return (
@@ -65,6 +77,7 @@ export const WebViewScreen: React.FC<Props> = ({ route }) => {
         onLoadProgress={(e) => {
           if (!jsInjected && e.nativeEvent.progress > 0.75) {
             if (webview.current) {
+              webview.current.injectJavaScript(injectThemeJs())
               webview.current.injectJavaScript(injectJs())
               setJsInjected(true)
             } else Alert.alert("Error", "Webview not ready")
@@ -117,4 +130,7 @@ export const WebViewScreen: React.FC<Props> = ({ route }) => {
 
 const useStyles = makeStyles(({ colors }) => ({
   full: { width: "100%", height: "100%", flex: 1, backgroundColor: colors.transparent },
+  iconContainer: {
+    marginLeft: 10,
+  },
 }))
