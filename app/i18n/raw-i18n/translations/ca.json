@@ -36,7 +36,7 @@
         "skip": "Omet",
         "unlock": "Desbloqueja",
         "usePin": "Utilitza el PIN",
-        "confirmLogout": "Are you sure you'd like to log out? This will reset your cache and all local user settings"
+        "confirmLogout": "Esteu segur que vols tancar la sessió? Això restablirà la memòria cau i totes les configuracions locals d'usuari."
     },
     "PeopleScreen": {
         "title": "Gent",
@@ -1992,9 +1992,9 @@
         "youEarned": "Has guanyat",
         "registerTitle": "Necessites actualitzar el teu compte",
         "registerContent": "Registra't amb el teu número de telèfon per rebre sats",
-        "notYet": "Not yet",
-        "availableTomorrow": "This section will be available tomorrow!",
-        "motivatingBadger": "Dig your way through these lessons and earn as you learn"
+        "oneSectionADay": "Una secció al dia!",
+        "availableTomorrow": "Torna demà per continuar aprenent sobre Bitcoin!",
+        "motivatingBadger": "Fes el teu camí a través d'aquestes lliçons i guanya mentre aprens."
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Iniciar sessió / crear un compte",
@@ -2015,12 +2015,12 @@
         }
     },
     "MapScreen": {
-        "navToSettingsTitle": "Location permissions",
-        "navToSettingsText": "If you'd like to give Blink location permissions, please navigate to your settings and enable it there",
+        "navToSettingsTitle": "Permisos de ubicació",
+        "navToSettingsText": "Si vols donar permis de ubicació a Blink, si us plau, navega fins a la configuració i habilita-ho allà.",
         "payBusiness": "Pagar a aquest negoci.",
-        "openSettings": "Open settings",
+        "openSettings": "Obra la configuració",
         "title": "Mapa",
-        "error": "Oops. Something went wrong while getting your location"
+        "error": "Oops. Alguna cosa ha anat malament mentre s'obtenia la teva ubicació."
     },
     "HomeScreen": {
         "receive": "Rebre",
@@ -2156,14 +2156,14 @@
         "totalLabel": "Total:",
         "totalExceed": "El total supera el teu saldo de {balance:}",
         "maxFeeSelected": "Aquesta és la comissió màxima que se't cobrarà per aquesta transacció. Pot acabar sent inferior un cop s'hagi realitzat el pagament.",
-        "feeError": "Unable to calculate fee",
-        "invoiceAlreadyPaid": "This invoice has already been paid",
-        "somethingWentWrong": "Something went wrong",
-        "paymentAlreadyAttempted": "Payment already attempted.\n\nIf you want to send this payment again, start from scratch.",
-        "slideToConfirm": "Slide to Confirm",
-        "slideConfirming": "Confirming...",
-        "copiedDestination": "Copied destination to clipboard",
-        "lightningRecommended": "High fee! We recommend Lightning."
+        "feeError": "No s'ha pogut calcular la comissió",
+        "invoiceAlreadyPaid": "Aquesta factura ja ha estat pagada",
+        "somethingWentWrong": "Alguna cosa ha anat malament",
+        "paymentAlreadyAttempted": "Pagament ja intentat.\n\nSi vols enviar aquest pagament de nou, comença des de zero.",
+        "slideToConfirm": "Llisca per confirmar",
+        "slideConfirming": "Confirmant...",
+        "copiedDestination": "Destinació copiada al porta-retalls",
+        "lightningRecommended": "Comissió alta! Recomanem utilitzar Lightning."
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "{bankName} nom d'usuari és ara la adreça {bankName}.",
@@ -2192,10 +2192,10 @@
             "confirmButton": "Estic 100% segur"
         },
         "clipboardError": "S'ha produït un error en obtenir un valor del porta-retalls",
-        "pastedClipboardSuccess": "Pasted from clipboard"
+        "pastedClipboardSuccess": "Enganxat del porta-retalls"
     },
     "SendBitcoinScreen": {
-        "willBeSentToMempoolBy": "Transaction should be submitted to mempool",
+        "willBeSentToMempoolBy": "La transacció s'ha d'enviar a la mempool.",
         "amount": "Import",
         "amountExceed": "L'import excedeix el teu saldo {balance}",
         "amountExceedsLimit": "La quantitat supera el teu límit diari restant de {limit: string}",
@@ -2223,8 +2223,8 @@
             "content": "La comissió és més gran que el 50% de l'import enviat. Estàs segur que vols continuar?\n\nPer reduir les comissions, demana al receptor que accepti la transacció a través de Lightning.",
             "confirmButton": "Estic 100% segur"
         },
-        "copiedDestination": "Copied destination to clipboard",
-        "pendingPayment": "The payment has been sent, but hasn't confirmed yet.\n\nIt's possible the payment will not confirm, in which case the funds will be returned to your account."
+        "copiedDestination": "Destinació copiada al porta-retalls",
+        "pendingPayment": "El pagament s'ha enviat, però encara no s'ha confirmat.\n\nÉs possible que el pagament no es confirmi, en aquest cas els fons es retornaran al teu compte."
     },
     "SettingsScreen": {
         "activated": "Activat",
@@ -2308,7 +2308,7 @@
     "TotpRegistrationValidateScreen": {
         "title": "Autentificació de dos factors",
         "enter6digitCode": "Introdueix el codi de 6 dígits de l'aplicació d'autenticació per validar la teva autenticació de dos factors.",
-        "success": "Two-factor authentication has been enabled. You will now only be able to log back in with your phone or email AND your two factor authentication.\n\nDevices on this account which are not logged in with 2FA will need to log back in.\n\nOnly level 2 accounts can be recovered by customer support in the event of lost 2FA access."
+        "success": "L'autenticació de dos factors s'ha habilitat. Ara només podràs tornar a iniciar la sessió amb el teu telèfon o correu electrònic i la teva autenticació de dos factors.\n\nEls dispositius d'aquest compte que no estiguin connectats amb 2FA hauran de tornar a iniciar la sessió.\n\nNomés els comptes de nivell 2 poden ser recuperats pel suport al client en cas de pèrdua d'accés a 2FA."
     },
     "TotpLoginValidateScreen": {
         "title": "Autentificació de dos factors",
@@ -2345,12 +2345,12 @@
         "paid": "Pagat a/de",
         "received": "Has rebut",
         "spent": "Has gastat",
-        "sending": "Sending",
+        "sending": "Enviant",
         "receivingAccount": "Compte receptor",
         "sendingAccount": "Compte d'enviament",
-        "txNotBroadcast": "Your transaction is queued. It should appear in the mempool {countdown: string}.",
-        "momentarily": "momentarily",
-        "hasBeenCopiedToClipboard": "{type: string} has been copied to clipboard"
+        "txNotBroadcast": "La teva transacció està en cua. Hauria d'aparèixer a la mempool {countdown: string}.",
+        "momentarily": "momentàniament",
+        "hasBeenCopiedToClipboard": "{type: string} s'ha copiat al porta-retalls"
     },
     "TransactionLimitsScreen": {
         "receive": "Rebre",
@@ -2680,14 +2680,19 @@
             "details": "Fes créixer el teu cercle interior amb 10 persones al desembre per a tenir l'oportunitat de guanyar 100 $!\n\nPer participar, després d'aconseguir fer creixer el teu cercle amb 10 persones aquest mes, comparteix els teus cercles a les xarxes socials i etiqueta #blinkcircles.\n\nL' 1 de gener, es triaran tres persones aleatòriament per rebre 100 $!"
         },
         "januaryChallenge": {
-            "title": "January Challenge!",
-            "description": "+10 outer circle in January for a chance at $100!",
-            "details": "Grow your OUTER circle by 10 in January for a chance at $100!\n\nYour outer circle grows when people in your inner circle welcome others, so reach out and remind those you onboarded to share Blink with their friends and family.\n\nShare your circles on social with #blinkcircles to participate."
+            "title": "Desafiament de gener!",
+            "description": "+10 cercle exterior al gener per a una oportunitat de guankyar 100 $!",
+            "details": "Fes créixer el teu cercle EXTERIOR en 10 persones al gener per tenir l'oportunitat de guanyar 100 $!\n\nEl teu cercle exterior creix quan les persones del teu cercle interior conviden a altres persones, així que contacta amb ells i recorda'ls que comparteixin Blink amb els seus amics i familiars.\n\nComparteix els teus cercles a les xarxes socials amb #blinkcircles per participar."
         },
         "februaryChallenge": {
-            "title": "February Challenge!",
-            "description": "+3 inner circle for a chance to win a Seedsigner hardware wallet!",
-            "details": "Grow your inner circle by 3 in February for a chance to win a Seedsigner hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
+            "title": "Desafiament de febrer!",
+            "description": "+3 cercle interior per a tenir l'oportunitat de guanyar un Seedsigner!",
+            "details": "Fes créixer el teu cercle interior en 3 persones al febrer per tenir l'oportunitat de guanyar una cartera de hardware Seedsigner!\n\nRecordatori: els teus cercles creixen quan envies els primers sats a un nou usuari de Blink.\n\nComparteix els teus cercles a les xarxes socials amb #blinkcircles per participar."
+        },
+        "marchChallenge": {
+            "title": "Desafiament de març!",
+            "description": "+3 cercle interior i +3 cercle exterior per tenir l'oportunitat de guanyar 100 dòlars.",
+            "details": "Fes créixer el teu cercle interior en 3 persones i el teu cercle exterior en 3 persones per tenir l'oportunitat de guanyar 100 $!\n\nRecordatori: els teus cercles creixen quan envies a un nou usuari de Blink els seus primers sats.\n\nComparteix els teus cercles a les xarxes socials amb #blinkcircles per participar."
         }
     },
     "FullOnboarding": {
