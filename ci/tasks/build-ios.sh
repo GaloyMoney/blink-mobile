@@ -2,18 +2,16 @@
 
 set -eu
 
-echo $GITHUB_SSH_KEY > id_rsa
-chmod 600 id_rsa
-ssh-add ./id_rsa
-rm id_rsa
+# TODO: Remove via Nix
+HOME="/Users/m1"
+export PATH=$(cat /Users/m1/concourse/path)
+source "$HOME/.rvm/scripts/rvm"
+rvm use $(cat repo/.ruby-version)
 
 BUILD_NUMBER=$(cat build-number-ios/ios)
 export PUBLIC_VERSION=$(cat $VERSION_FILE)
 
 GIT_REF=$(cat repo/.git/ref)
-
-source "$HOME/.rvm/scripts/rvm"
-rvm use $(cat repo/.ruby-version)
 
 pushd repo
 git checkout $GIT_REF
