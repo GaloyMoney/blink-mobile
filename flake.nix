@@ -116,6 +116,10 @@
           JAVA_HOME = pkgs.jdk17.home;
 
           shellHook = ''
+            export HOST_PROJECT_PATH="$(pwd)"
+            export COMPOSE_PROJECT_NAME=galoy-quickstart
+            export GALOY_QUICKSTART_PATH="dev/vendor/galoy-quickstart"
+
             # Check if the AVD already exists
             if ! avdmanager list avd -c | grep -q Pixel_API_34; then
               # Determine ABI based on system architecture and create Pixel_API_34 Android Device
