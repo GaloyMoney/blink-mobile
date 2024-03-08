@@ -5,6 +5,7 @@ set -eu
 # TODO: Remove via Nix
 HOME="/Users/m1"
 export PATH=$(cat /Users/m1/concourse/path)
+unset ANDROID_SDK_HOME
 
 export BUILD_NUMBER=$(cat build-number-android/android)
 export PUBLIC_VERSION=$(cat $VERSION_FILE)
