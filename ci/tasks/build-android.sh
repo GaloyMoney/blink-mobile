@@ -11,9 +11,6 @@ export PUBLIC_VERSION=$(cat $VERSION_FILE)
 
 GIT_REF=$(cat repo/.git/ref)
 
-source "$HOME/.rvm/scripts/rvm"
-rvm use $(cat repo/.ruby-version)
-
 pushd repo
 git checkout $GIT_REF
 
