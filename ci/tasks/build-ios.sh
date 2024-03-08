@@ -5,8 +5,6 @@ set -eu
 # TODO: Remove via Nix
 HOME="/Users/m1"
 export PATH=$(cat /Users/m1/concourse/path)
-source "$HOME/.rvm/scripts/rvm"
-rvm use $(cat repo/.ruby-version)
 
 BUILD_NUMBER=$(cat build-number-ios/ios)
 export PUBLIC_VERSION=$(cat $VERSION_FILE)
