@@ -2,6 +2,15 @@
 
 set -eu
 
+# Make sure ssh agent is running
+eval "$(ssh-agent -s)"
+cat <<EOF > id_rsa
+$GITHUB_SSH_KEY
+EOF
+chmod 600 id_rsa
+ssh-add ./id_rsa
+rm id_rsa
+
 # TODO: Remove via Nix
 HOME="/Users/m1"
 export PATH=$(cat /Users/m1/concourse/path)
