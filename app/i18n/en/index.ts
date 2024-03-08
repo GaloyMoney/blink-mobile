@@ -67,7 +67,7 @@ const en: BaseTranslation = {
     title: "Chat with {username: string}",
   },
   ConversionDetailsScreen: {
-    title: "Convert",
+    title: "Swap",
     percentageToConvert: "% to convert",
   },
   ConversionConfirmationScreen: {

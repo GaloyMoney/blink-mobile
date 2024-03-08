@@ -3,6 +3,7 @@ import { AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"
 import {
   PhoneCodeChannelType,
   TransactionFragment,
+  Wallet,
   WalletCurrency,
 } from "@app/graphql/generated"
 import { EarnSectionType } from "@app/screens/earns-screen/sections"
@@ -45,7 +46,8 @@ export type RootStackParamList = {
   }
   conversionDetails: undefined
   conversionConfirmation: {
-    fromWalletCurrency: WalletCurrency
+    toWallet: Pick<Wallet, "id" | "walletCurrency" | "balance">
+    fromWallet: Pick<Wallet, "id" | "walletCurrency" | "balance">
     moneyAmount: MoneyAmount<WalletOrDisplayCurrency>
   }
   conversionSuccess: undefined

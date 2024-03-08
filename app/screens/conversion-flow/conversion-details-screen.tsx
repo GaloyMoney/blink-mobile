@@ -1,61 +1,55 @@
-import React, { useEffect } from "react"
+import React, { useState } from "react"
 import { Platform, TouchableOpacity, View } from "react-native"
 import { ScrollView } from "react-native-gesture-handler"
 
-import { gql } from "@apollo/client"
 import SwitchButton from "@app/assets/icons-redesign/transfer.svg"
 import { AmountInput } from "@app/components/amount-input"
 import { Screen } from "@app/components/screen"
 import {
   useConversionScreenQuery,
   useRealtimePriceQuery,
+  Wallet,
   WalletCurrency,
 } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { useConvertMoneyDetails } from "@app/screens/conversion-flow/use-convert-money-details"
 import {
   DisplayCurrency,
   lessThan,
+  MoneyAmount,
   toBtcMoneyAmount,
   toUsdMoneyAmount,
   toWalletAmount,
+  WalletOrDisplayCurrency,
 } from "@app/types/amounts"
-import { NavigationProp, useNavigation } from "@react-navigation/native"
+
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 // import Breez SDK Wallet
 import useBreezBalance from "@app/hooks/useBreezBalance"
+import { StackScreenProps } from "@react-navigation/stack"
+import { usePriceConversion } from "@app/hooks"
 
-gql`
-  query conversionScreen {
-    me {
-      id
-      defaultAccount {
-        id
-        wallets {
-          id
-          balance
-          walletCurrency
-        }
-      }
-    }
-  }
-`
+type Props = StackScreenProps<RootStackParamList, "conversionDetails">
 
-export const ConversionDetailsScreen = () => {
+export const ConversionDetailsScreen: React.FC<Props> = ({ navigation }) => {
   const {
     theme: { colors },
   } = useTheme()
-
   const styles = useStyles()
-  const navigation =
-    useNavigation<NavigationProp<RootStackParamList, "conversionDetails">>()
+  const { LL } = useI18nContext()
+  const { zeroDisplayAmount } = useDisplayCurrency()
+  const { convertMoneyAmount } = usePriceConversion()
+  const { formatDisplayAndWalletAmount } = useDisplayCurrency()
+  const [breezBalance, refreshBreezBalance] = useBreezBalance()
 
-  // forcing price refresh
+  const [fromWalletCurrency, setFromWalletCurrency] = useState<WalletCurrency>("BTC")
+  const [moneyAmount, setMoneyAmount] =
+    useState<MoneyAmount<WalletOrDisplayCurrency>>(zeroDisplayAmount)
+
   useRealtimePriceQuery({
     fetchPolicy: "network-only",
   })
@@ -65,90 +59,72 @@ export const ConversionDetailsScreen = () => {
     returnPartialData: true,
   })
 
-  const { LL } = useI18nContext()
-  const { formatDisplayAndWalletAmount } = useDisplayCurrency()
+  const _btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+  const _usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
-  // FLASH FORK: adding balance from Breez SDK
-  const [breezBalance, refreshBreezBalance] = useBreezBalance()
+  const btcBalance = toBtcMoneyAmount(breezBalance ?? NaN)
+  const usdBalance = toUsdMoneyAmount(_usdWallet?.balance ?? NaN)
 
-  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
-  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
+  // @ts-ignore: Unreachable code error
+  const convertedBTCBalance = convertMoneyAmount(btcBalance, DisplayCurrency) // @ts-ignore: Unreachable code error
+  const convertedUsdBalance = convertMoneyAmount(usdBalance, DisplayCurrency) // @ts-ignore: Unreachable code error
+  const settlementSendAmount = convertMoneyAmount(moneyAmount, fromWalletCurrency)
 
-  const {
-    fromWallet,
-    toWallet,
-    setWallets,
-    settlementSendAmount,
-    setMoneyAmount,
-    convertMoneyAmount,
-    isValidAmount,
-    moneyAmount,
-    canToggleWallet,
-    toggleWallet,
-  } = useConvertMoneyDetails(
-    btcWallet && usdWallet
-      ? { initialFromWallet: btcWallet, initialToWallet: usdWallet }
-      : undefined,
-  )
-
-  useEffect(() => {
-    if (!fromWallet && btcWallet && usdWallet) {
-      setWallets({
-        fromWallet: btcWallet,
-        toWallet: usdWallet,
-      })
-    }
-  }, [btcWallet, usdWallet, fromWallet, setWallets])
-
-  if (!data?.me?.defaultAccount || !fromWallet) {
-    // TODO: proper error handling. non possible event?
-    return <></>
-  }
-
-  const btcWalletBalance = toBtcMoneyAmount(breezBalance ?? NaN)
-  const usdWalletBalance = toUsdMoneyAmount(usdWallet?.balance ?? NaN)
-
-  const fromWalletBalance =
-    fromWallet.walletCurrency === WalletCurrency.Btc ? btcWalletBalance : usdWalletBalance
-  const toWalletBalance =
-    toWallet.walletCurrency === WalletCurrency.Btc ? btcWalletBalance : usdWalletBalance
-  const fromWalletBalanceFormatted = formatDisplayAndWalletAmount({
-    displayAmount: convertMoneyAmount(fromWalletBalance, DisplayCurrency),
-    walletAmount: fromWalletBalance,
+  const formattedBtcBalance = formatDisplayAndWalletAmount({
+    displayAmount: convertedBTCBalance,
+    walletAmount: btcBalance,
+  })
+  const formattedUsdBalance = formatDisplayAndWalletAmount({
+    displayAmount: convertedUsdBalance,
+    walletAmount: usdBalance,
   })
 
-  const toWalletBalanceFormatted = formatDisplayAndWalletAmount({
-    displayAmount: convertMoneyAmount(toWalletBalance, DisplayCurrency),
-    walletAmount: toWalletBalance,
-  })
+  const fromWalletBalance = fromWalletCurrency === "BTC" ? btcBalance : usdBalance
+
+  const isValidAmount =
+    settlementSendAmount.amount > 0 &&
+    settlementSendAmount.amount <= fromWalletBalance.amount
+
+  const canToggleWallet =
+    fromWalletCurrency === "BTC" ? usdBalance.amount > 0 : btcBalance.amount > 0
 
   let amountFieldError: string | undefined = undefined
 
   if (
     lessThan({
-      value: fromWalletBalance,
+      value: fromWalletCurrency === "BTC" ? btcBalance : usdBalance,
       lessThan: settlementSendAmount,
     })
   ) {
     amountFieldError = LL.SendBitcoinScreen.amountExceed({
-      balance: fromWalletBalanceFormatted,
+      balance: fromWalletCurrency === "BTC" ? formattedBtcBalance : formattedUsdBalance,
     })
   }
 
+  const toggleWallet = () => {
+    setFromWalletCurrency(fromWalletCurrency === "BTC" ? "USD" : "BTC")
+  }
+
   const setAmountToBalancePercentage = (percentage: number) => {
+    const fromBalance =
+      fromWalletCurrency === WalletCurrency.Btc ? btcBalance.amount : usdBalance.amount
+
     setMoneyAmount(
       toWalletAmount({
-        amount: Math.round((fromWallet.balance * percentage) / 100),
-        currency: fromWallet.walletCurrency,
+        amount: Math.round((fromBalance * percentage) / 100),
+        currency: fromWalletCurrency,
       }),
     )
   }
 
   const moveToNextScreen = () => {
-    navigation.navigate("conversionConfirmation", {
-      fromWalletCurrency: fromWallet.walletCurrency,
-      moneyAmount,
-    })
+    if (_usdWallet && _btcWallet) {
+      navigation.navigate("conversionConfirmation", {
+        toWallet: fromWalletCurrency === "BTC" ? _usdWallet : _btcWallet,
+        fromWallet: fromWalletCurrency === "BTC" ? _btcWallet : _usdWallet,
+        moneyAmount: settlementSendAmount,
+      })
+    }
   }
 
   return (
@@ -158,7 +134,7 @@ export const ConversionDetailsScreen = () => {
           <View style={styles.walletsContainer}>
             <View style={styles.fromFieldContainer}>
               <View style={styles.walletSelectorInfoContainer}>
-                {fromWallet.walletCurrency === WalletCurrency.Btc ? (
+                {fromWalletCurrency === WalletCurrency.Btc ? (
                   <Text
                     style={styles.walletCurrencyText}
                   >{`${LL.common.from()} ${LL.common.btcAccount()}`}</Text>
@@ -168,7 +144,11 @@ export const ConversionDetailsScreen = () => {
                   >{`${LL.common.from()} ${LL.common.usdAccount()}`}</Text>
                 )}
                 <View style={styles.walletSelectorBalanceContainer}>
-                  <Text>{fromWalletBalanceFormatted}</Text>
+                  <Text>
+                    {fromWalletCurrency === WalletCurrency.Btc
+                      ? formattedBtcBalance
+                      : formattedUsdBalance}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -184,17 +164,21 @@ export const ConversionDetailsScreen = () => {
             </View>
             <View style={styles.toFieldContainer}>
               <View style={styles.walletSelectorInfoContainer}>
-                {toWallet.walletCurrency === WalletCurrency.Btc ? (
-                  <Text
-                    style={styles.walletCurrencyText}
-                  >{`${LL.common.to()} ${LL.common.btcAccount()}`}</Text>
-                ) : (
+                {fromWalletCurrency === WalletCurrency.Btc ? (
                   <Text
                     style={styles.walletCurrencyText}
                   >{`${LL.common.to()} ${LL.common.usdAccount()}`}</Text>
+                ) : (
+                  <Text
+                    style={styles.walletCurrencyText}
+                  >{`${LL.common.to()} ${LL.common.btcAccount()}`}</Text>
                 )}
                 <View style={styles.walletSelectorBalanceContainer}>
-                  <Text>{toWalletBalanceFormatted}</Text>
+                  <Text>
+                    {fromWalletCurrency === WalletCurrency.Btc
+                      ? formattedUsdBalance
+                      : formattedBtcBalance}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -203,9 +187,9 @@ export const ConversionDetailsScreen = () => {
         <View style={styles.fieldContainer}>
           <AmountInput
             unitOfAccountAmount={moneyAmount}
-            walletCurrency={fromWallet.walletCurrency}
+            walletCurrency={fromWalletCurrency}
             setAmount={setMoneyAmount}
-            convertMoneyAmount={convertMoneyAmount}
+            convertMoneyAmount={convertMoneyAmount as keyof typeof convertMoneyAmount}
           />
           {amountFieldError && (
             <View style={styles.errorContainer}>

@@ -245,9 +245,8 @@ export const HomeScreen: React.FC = () => {
       icon: "qr-code" as IconNamesType,
     },
   ]
-  // TODO: add conversion button back
-  // FLASH DEBUGGING: Temporary disable conversion button until we complete the conversion flow
-  if ((!isIos || dataUnauthed?.globals?.network !== "mainnet") && false) {
+
+  if (!isIos || dataUnauthed?.globals?.network !== "mainnet") {
     buttons.unshift({
       title: LL.ConversionDetailsScreen.title(),
       target: "conversionDetails" as Target,

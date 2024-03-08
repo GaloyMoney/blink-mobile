@@ -114,7 +114,7 @@ gql`
   }
 `
 
-export const useReceiveBitcoin = (isFirstTransaction: Boolean) => {
+export const useReceiveBitcoin = (isFirstTransaction: Boolean, initPRParams = {}) => {
   const [lnNoAmountInvoiceCreate] = useLnNoAmountInvoiceCreateMutation()
   const [lnUsdInvoiceCreate] = useLnUsdInvoiceCreateMutation()
   const [lnInvoiceCreate] = useLnInvoiceCreateMutation()
@@ -207,6 +207,7 @@ export const useReceiveBitcoin = (isFirstTransaction: Boolean) => {
                 }
               : undefined,
           network: data.globals?.network,
+          ...initPRParams,
         }
       setPRCD(createPaymentRequestCreationData(initialPRParams))
     }

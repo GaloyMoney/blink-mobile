@@ -1,196 +1,174 @@
-import { GraphQLError } from "graphql"
-import React, { useState } from "react"
-import { ScrollView, Text, View } from "react-native"
+import React, { useEffect, useState } from "react"
+import { ActivityIndicator, ScrollView, Text, View } from "react-native"
 
 import { Screen } from "@app/components/screen"
 import {
-  HomeAuthedDocument,
-  PaymentSendResult,
-  useConversionScreenQuery,
-  useIntraLedgerPaymentSendMutation,
-  useIntraLedgerUsdPaymentSendMutation,
+  useAccountDefaultWalletLazyQuery,
+  useSendBitcoinDestinationQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { getErrorMessages } from "@app/graphql/utils"
 import { SATS_PER_BTC, usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { DisplayCurrency, toBtcMoneyAmount } from "@app/types/amounts"
-import { WalletDescriptor } from "@app/types/wallets"
-import { logConversionAttempt, logConversionResult } from "@app/utils/analytics"
+import {
+  logConversionAttempt,
+  logConversionResult,
+  logParseDestinationResult,
+} from "@app/utils/analytics"
 import { toastShow } from "@app/utils/toast"
 import crashlytics from "@react-native-firebase/crashlytics"
-import {
-  CommonActions,
-  NavigationProp,
-  RouteProp,
-  useNavigation,
-} from "@react-navigation/native"
+import { CommonActions } from "@react-navigation/native"
 import { makeStyles } from "@rneui/themed"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
-type Props = {
-  route: RouteProp<RootStackParamList, "conversionConfirmation">
-}
+import { useReceiveBitcoin } from "../receive-bitcoin-screen/use-receive-bitcoin"
 
-export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
+import { parseDestination } from "../send-bitcoin-screen/payment-destination"
+import { LNURL_DOMAINS } from "@app/config"
+
+import { PaymentDetail } from "../send-bitcoin-screen/payment-details"
+import { useConvert } from "./use-convert"
+import { StackScreenProps } from "@react-navigation/stack"
+import { PaymentRequestState } from "../receive-bitcoin-screen/payment/index.types"
+import { paymentEvents } from "@app/utils/breez-sdk"
+
+type Props = StackScreenProps<RootStackParamList, "conversionConfirmation">
+
+export const ConversionConfirmationScreen: React.FC<Props> = ({ navigation, route }) => {
+  const { toWallet, fromWallet, moneyAmount } = route.params
   const styles = useStyles()
-  const navigation =
-    useNavigation<NavigationProp<RootStackParamList, "conversionConfirmation">>()
-
+  const isAuthed = useIsAuthed()
+  const { LL } = useI18nContext()
   const { formatMoneyAmount, displayCurrency } = useDisplayCurrency()
   const { convertMoneyAmount } = usePriceConversion()
+  const { sendPayment } = useConvert()
 
-  const { fromWalletCurrency, moneyAmount } = route.params
+  const [loading, setLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState<string | undefined>()
-  const isAuthed = useIsAuthed()
+  const [paymentDetail, setPaymentDetail] = useState<PaymentDetail<WalletCurrency>>()
 
-  const [intraLedgerPaymentSend, { loading: intraLedgerPaymentSendLoading }] =
-    useIntraLedgerPaymentSendMutation()
-  const [intraLedgerUsdPaymentSend, { loading: intraLedgerUsdPaymentSendLoading }] =
-    useIntraLedgerUsdPaymentSendMutation()
-  const isLoading = intraLedgerPaymentSendLoading || intraLedgerUsdPaymentSendLoading
-  const { LL } = useI18nContext()
-
-  let fromWallet: WalletDescriptor<WalletCurrency>
-  let toWallet: WalletDescriptor<WalletCurrency>
-
-  const { data } = useConversionScreenQuery({
+  const [accountDefaultWalletQuery] = useAccountDefaultWalletLazyQuery({
+    fetchPolicy: "no-cache",
+  })
+  const { data } = useSendBitcoinDestinationQuery({
     fetchPolicy: "cache-first",
+    returnPartialData: true,
     skip: !isAuthed,
   })
 
-  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
-  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
-
-  if (!data?.me || !usdWallet || !btcWallet || !convertMoneyAmount) {
-    // TODO: handle errors and or provide some loading state
-    return null
+  const initPRParams = {
+    defaultWalletDescriptor: {
+      currency: toWallet?.walletCurrency,
+      id: toWallet?.id,
+    },
+    unitOfAccountAmount: moneyAmount,
   }
+  const request = useReceiveBitcoin(false, initPRParams)
 
-  if (fromWalletCurrency === WalletCurrency.Btc) {
-    fromWallet = { id: btcWallet.id, currency: WalletCurrency.Btc }
-    toWallet = { id: usdWallet.id, currency: WalletCurrency.Usd }
-  } else {
-    fromWallet = { id: usdWallet.id, currency: WalletCurrency.Usd }
-    toWallet = { id: btcWallet.id, currency: WalletCurrency.Btc }
-  }
-
-  const fromAmount = convertMoneyAmount(moneyAmount, fromWallet.currency)
-  const toAmount = convertMoneyAmount(moneyAmount, toWallet.currency)
-
-  const handlePaymentReturn = (
-    status: PaymentSendResult,
-    errorsMessage: readonly GraphQLError[] | string | undefined,
-  ) => {
-    if (status === "SUCCESS") {
-      // navigate to next screen
-      navigation.dispatch((state) => {
-        const routes = [{ name: "Primary" }, { name: "conversionSuccess" }]
-        return CommonActions.reset({
-          ...state,
-          routes,
-          index: routes.length - 1,
-        })
-      })
-      ReactNativeHapticFeedback.trigger("notificationSuccess", {
-        ignoreAndroidSystemSettings: true,
-      })
+  useEffect(() => {
+    if (request) {
+      paymentEvents.once("invoicePaid", handlePaymentSuccess)
+      return () => {
+        paymentEvents.off("invoicePaid", handlePaymentSuccess)
+      }
     }
+  }, [request])
 
-    if (typeof errorsMessage === "string") {
-      setErrorMessage(errorsMessage)
-      ReactNativeHapticFeedback.trigger("notificationError", {
-        ignoreAndroidSystemSettings: true,
+  useEffect(() => {
+    if (request?.state === "Created" && request?.info?.data?.getFullUriFn({})) {
+      preparePaymentDetail(request?.info?.data?.getFullUriFn({}))
+    }
+  }, [request?.state])
+
+  const preparePaymentDetail = async (rawInput: string) => {
+    const wallets = data?.me?.defaultAccount.wallets
+    const bitcoinNetwork = data?.globals?.network
+
+    if (!bitcoinNetwork || !wallets) return null
+    const paymentDestination: any = await parseDestination({
+      rawInput,
+      myWalletIds: wallets?.map((wallet) => wallet.id) || [],
+      bitcoinNetwork,
+      lnurlDomains: LNURL_DOMAINS,
+      accountDefaultWalletQuery,
+    })
+    logParseDestinationResult(paymentDestination)
+
+    if (paymentDestination.valid && paymentDestination) {
+      let paymentDetail = paymentDestination?.createPaymentDetail({
+        convertMoneyAmount: convertMoneyAmount,
+        sendingWalletDescriptor: {
+          id: fromWallet.id,
+          currency: fromWallet.walletCurrency,
+        },
       })
-    } else if (errorsMessage?.length) {
-      setErrorMessage(getErrorMessages(errorsMessage))
-      ReactNativeHapticFeedback.trigger("notificationError", {
-        ignoreAndroidSystemSettings: true,
-      })
+
+      if (
+        paymentDetail.sendPaymentMutation ||
+        (paymentDetail.paymentType === "lnurl" && paymentDetail.unitOfAccountAmount)
+      ) {
+        setPaymentDetail(paymentDetail)
+        setLoading(false)
+      }
     }
   }
 
   const handlePaymentError = (error: Error) => {
+    setLoading(false)
+    setErrorMessage(error.message)
     toastShow({ message: error.message })
+    ReactNativeHapticFeedback.trigger("notificationError", {
+      ignoreAndroidSystemSettings: true,
+    })
+  }
+
+  const handlePaymentSuccess = () => {
+    setLoading(false)
+    navigation.dispatch((state) => {
+      const routes = [{ name: "Primary" }, { name: "conversionSuccess" }]
+      return CommonActions.reset({
+        ...state,
+        routes,
+        index: routes.length - 1,
+      })
+    })
+
+    ReactNativeHapticFeedback.trigger("notificationSuccess", {
+      ignoreAndroidSystemSettings: true,
+    })
   }
 
   const payWallet = async () => {
-    if (fromWallet.currency === WalletCurrency.Btc) {
+    if (paymentDetail && sendPayment) {
       try {
         logConversionAttempt({
-          sendingWallet: fromWallet.currency,
-          receivingWallet: toWallet.currency,
+          sendingWallet: fromWallet.walletCurrency,
+          receivingWallet: toWallet.walletCurrency,
         })
-        const { data, errors } = await intraLedgerPaymentSend({
-          variables: {
-            input: {
-              walletId: fromWallet?.id,
-              recipientWalletId: toWallet?.id,
-              amount: fromAmount.amount,
-            },
-          },
-          refetchQueries: [HomeAuthedDocument],
-        })
-
-        const status = data?.intraLedgerPaymentSend.status
-
-        if (!status) {
-          throw new Error("Conversion failed")
-        }
-
+        setLoading(true)
+        const { status, errorsMessage } = await sendPayment(
+          paymentDetail?.sendPaymentMutation,
+          paymentDetail?.destination,
+          paymentDetail?.settlementAmount,
+          paymentDetail?.memo,
+        )
         logConversionResult({
-          sendingWallet: fromWallet.currency,
-          receivingWallet: toWallet.currency,
+          sendingWallet: fromWallet.walletCurrency,
+          receivingWallet: toWallet.walletCurrency,
           paymentStatus: status,
         })
-        handlePaymentReturn(
-          status,
-          errors || data?.intraLedgerPaymentSend.errors[0]?.message,
-        )
-      } catch (err) {
-        if (err instanceof Error) {
-          crashlytics().recordError(err)
-          handlePaymentError(err)
+        if (status === "SUCCESS") {
+          handlePaymentSuccess()
+        } else if (status === "PENDING") {
+        } else if (status === "ALREADY_PAID") {
+          throw new Error("Invoice is already paid")
+        } else {
+          throw new Error(errorsMessage || "Something went wrong")
         }
-      }
-    }
-    if (fromWallet.currency === WalletCurrency.Usd) {
-      try {
-        logConversionAttempt({
-          sendingWallet: fromWallet.currency,
-          receivingWallet: toWallet.currency,
-        })
-        const { data, errors } = await intraLedgerUsdPaymentSend({
-          variables: {
-            input: {
-              walletId: fromWallet?.id,
-              recipientWalletId: toWallet?.id,
-              amount: fromAmount.amount,
-            },
-          },
-          refetchQueries: [HomeAuthedDocument],
-        })
-
-        const status = data?.intraLedgerUsdPaymentSend.status
-
-        if (!status) {
-          throw new Error("Conversion failed")
-        }
-
-        logConversionResult({
-          sendingWallet: fromWallet.currency,
-          receivingWallet: toWallet.currency,
-          paymentStatus: status,
-        })
-        handlePaymentReturn(
-          status,
-          errors || data?.intraLedgerUsdPaymentSend.errors[0]?.message,
-        )
       } catch (err) {
         if (err instanceof Error) {
           crashlytics().recordError(err)
@@ -199,6 +177,12 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
       }
     }
   }
+
+  // @ts-ignore: Unreachable code error
+  const fromAmount = convertMoneyAmount(moneyAmount, fromWallet.walletCurrency) // @ts-ignore: Unreachable code error
+  const toAmount = convertMoneyAmount(moneyAmount, toWallet.walletCurrency) // @ts-ignore: Unreachable code error
+  const convertingAmount = convertMoneyAmount(moneyAmount, DisplayCurrency) // @ts-ignore: Unreachable code error
+  const rate = convertMoneyAmount(toBtcMoneyAmount(Number(SATS_PER_BTC)), DisplayCurrency)
 
   return (
     <Screen>
@@ -210,10 +194,10 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
             </Text>
             <Text style={styles.conversionInfoFieldValue}>
               {formatMoneyAmount({ moneyAmount: fromAmount })}
-              {displayCurrency !== fromWallet.currency &&
-              displayCurrency !== toWallet.currency
+              {displayCurrency !== fromWallet.walletCurrency &&
+              displayCurrency !== toWallet.walletCurrency
                 ? ` - ${formatMoneyAmount({
-                    moneyAmount: convertMoneyAmount(moneyAmount, DisplayCurrency),
+                    moneyAmount: convertingAmount,
                   })}`
                 : ""}
             </Text>
@@ -229,7 +213,7 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
               {LL.ConversionConfirmationScreen.receivingAccount()}
             </Text>
             <Text style={styles.conversionInfoFieldValue}>
-              {toWallet.currency === WalletCurrency.Btc
+              {toWallet.walletCurrency === WalletCurrency.Btc
                 ? LL.common.btcAccount()
                 : LL.common.usdAccount()}
             </Text>
@@ -238,10 +222,7 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
             <Text style={styles.conversionInfoFieldTitle}>{LL.common.rate()}</Text>
             <Text style={styles.conversionInfoFieldValue}>
               {formatMoneyAmount({
-                moneyAmount: convertMoneyAmount(
-                  toBtcMoneyAmount(Number(SATS_PER_BTC)),
-                  DisplayCurrency,
-                ),
+                moneyAmount: rate,
                 isApproximate: true,
               })}{" "}
               / 1 BTC
@@ -257,10 +238,15 @@ export const ConversionConfirmationScreen: React.FC<Props> = ({ route }) => {
       <GaloyPrimaryButton
         title={LL.common.convert()}
         containerStyle={styles.buttonContainer}
-        disabled={isLoading}
+        disabled={loading}
         onPress={payWallet}
-        loading={isLoading}
+        loading={loading}
       />
+      {loading && (
+        <View style={styles.loading}>
+          <ActivityIndicator size={"large"} color={"#60aa55"} />
+        </View>
+      )}
     </Screen>
   )
 }
@@ -291,5 +277,14 @@ const useStyles = makeStyles(({ colors }) => ({
   errorText: {
     color: colors.error,
     textAlign: "center",
+  },
+  loading: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
   },
 }))
