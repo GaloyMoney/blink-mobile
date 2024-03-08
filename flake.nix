@@ -123,7 +123,7 @@
             # Check if the AVD already exists
             if ! avdmanager list avd -c | grep -q Pixel_API_34; then
               # Determine ABI based on system architecture and create Pixel_API_34 Android Device
-              if [ "${pkgs.stdenv.targetPlatform.system}" = "aarch64-darwin" ]; then ARCH="arm64-v8a"; else ARCH="x86-64"; fi
+              if [ "${pkgs.stdenv.targetPlatform.system}" = "aarch64-darwin" ]; then ARCH="arm64-v8a"; else ARCH="x86_64"; fi
               echo no | avdmanager create avd --force -n Pixel_API_34 --abi "google_apis_playstore/$ARCH" --package "system-images;android-34;google_apis_playstore;$ARCH" --device 'pixel_6a'
             fi
 
