@@ -26,4 +26,4 @@ tilt-down:
 	cd dev && tilt down
 
 emulator:
-	emulator -avd PIXEL_API_34
+	emulator -avd Pixel_API_34
