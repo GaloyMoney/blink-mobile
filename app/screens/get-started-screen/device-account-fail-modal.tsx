@@ -1,8 +1,9 @@
+import * as React from "react"
+
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import CustomModal from "@app/components/custom-modal/custom-modal"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import * as React from "react"
 import { Text, makeStyles } from "@rneui/themed"
-import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 export type DeviceAccountFailModalProps = {
   isVisible: boolean

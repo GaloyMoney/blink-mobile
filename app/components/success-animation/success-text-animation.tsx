@@ -1,5 +1,6 @@
 import React from "react"
 import Animated, { ZoomInEasyUp } from "react-native-reanimated"
+
 import { ANIMATION_DELAY, ANIMATION_DURATION } from "./config"
 
 export const CompletedTextAnimation = ({ children }: { children: React.ReactNode }) => {

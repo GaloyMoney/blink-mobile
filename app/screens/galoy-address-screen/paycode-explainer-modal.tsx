@@ -5,6 +5,7 @@ import Modal from "react-native-modal"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
+
 const useStyles = makeStyles(({ colors }) => ({
   modalView: {
     backgroundColor: colors.white,

@@ -1,5 +1,7 @@
-import { createTheme } from "@rneui/themed"
 import { StyleProp, TextStyle } from "react-native"
+
+import { createTheme } from "@rneui/themed"
+
 import { light, dark } from "./colors"
 
 const theme = createTheme({

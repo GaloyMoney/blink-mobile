@@ -1,7 +1,9 @@
 import React from "react"
+
 import { MockedProvider } from "@apollo/client/testing"
-import { createCache } from "../../graphql/cache"
+
 import { StoryScreen } from "../../../.storybook/views"
+import { createCache } from "../../graphql/cache"
 import {
   CaptchaCreateChallengeDocument,
   CaptchaRequestAuthCodeDocument,

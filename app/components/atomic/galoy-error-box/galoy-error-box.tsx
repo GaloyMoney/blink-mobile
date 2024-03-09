@@ -1,6 +1,8 @@
-import { makeStyles, Text, useTheme } from "@rneui/themed"
 import React from "react"
 import { View } from "react-native"
+
+import { makeStyles, Text, useTheme } from "@rneui/themed"
+
 import { GaloyIcon } from "../galoy-icon"
 
 type GaloyErrorBoxProps = {

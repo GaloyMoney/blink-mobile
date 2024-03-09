@@ -2,7 +2,9 @@ import {
   AccountDefaultWalletLazyQueryHookResult,
   WalletCurrency,
 } from "@app/graphql/generated"
+import { ZeroBtcMoneyAmount } from "@app/types/amounts"
 import { IntraledgerPaymentDestination } from "@galoymoney/client"
+
 import { createIntraledgerPaymentDetails } from "../payment-details"
 import {
   CreatePaymentDetailParams,
@@ -11,7 +13,6 @@ import {
   ParseDestinationResult,
   PaymentDestination,
 } from "./index.types"
-import { ZeroBtcMoneyAmount } from "@app/types/amounts"
 
 export type ResolveIntraledgerDestinationParams = {
   parsedIntraledgerDestination: IntraledgerPaymentDestination

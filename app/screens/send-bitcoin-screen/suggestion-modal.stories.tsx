@@ -1,12 +1,14 @@
-import { MockedProvider } from "@apollo/client/testing"
-import { Meta } from "@storybook/react"
 import React from "react"
+
+import { MockedProvider } from "@apollo/client/testing"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { Meta } from "@storybook/react"
+
 import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
-import { SuggestionModal } from "./suggestion-modal"
-import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
+import { SuggestionModal } from "./suggestion-modal"
 
 export default {
   title: "SuggestionModal",

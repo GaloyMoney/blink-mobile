@@ -1,7 +1,8 @@
+import React, { PropsWithChildren, useState } from "react"
+
 import { gql, useApolloClient } from "@apollo/client"
 import { HomeAuthedDocument, useMyLnUpdatesSubscription } from "@app/graphql/generated"
 import { LnUpdateHashPaidProvider } from "@app/graphql/ln-update-context"
-import React, { PropsWithChildren, useState } from "react"
 
 gql`
   subscription myLnUpdates {

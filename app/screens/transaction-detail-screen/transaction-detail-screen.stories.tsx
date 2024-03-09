@@ -1,10 +1,12 @@
 import * as React from "react"
+
 import { MockedProvider } from "@apollo/client/testing"
+import { Meta } from "@storybook/react"
+
 import { createCache } from "../../graphql/cache"
 import mocks from "../../graphql/mocks"
-import { TransactionDetailScreen } from "./transaction-detail-screen"
-import { Meta } from "@storybook/react"
 import { PersistentStateProvider } from "../../store/persistent-state"
+import { TransactionDetailScreen } from "./transaction-detail-screen"
 
 export default {
   title: "Transaction Detail",

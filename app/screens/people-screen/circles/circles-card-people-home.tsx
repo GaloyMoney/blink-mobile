@@ -1,16 +1,16 @@
+import { useCallback, useEffect, useState } from "react"
 import { ActivityIndicator, View } from "react-native"
+import { useCountUp } from "use-count-up"
 
-import { makeStyles, Text } from "@rneui/themed"
-import { useFocusEffect, useNavigation } from "@react-navigation/native"
-import { PeopleStackParamList } from "@app/navigation/stack-param-lists"
-import { StackNavigationProp } from "@react-navigation/stack"
+import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
+import { getcBackValue } from "@app/components/circle"
+import { PressableCard } from "@app/components/pressable-card"
 import { useCirclesQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
-import { PressableCard } from "@app/components/pressable-card"
-import { useCountUp } from "use-count-up"
-import { getcBackValue } from "@app/components/circle"
-import { useCallback, useEffect, useState } from "react"
+import { PeopleStackParamList } from "@app/navigation/stack-param-lists"
+import { useFocusEffect, useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { makeStyles, Text } from "@rneui/themed"
 
 export const CirclesCardPeopleHome = () => {
   const styles = useStyles()

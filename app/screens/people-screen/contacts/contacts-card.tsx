@@ -1,25 +1,24 @@
+import { useMemo } from "react"
 import { ActivityIndicator, View } from "react-native"
 
-import { makeStyles, Text } from "@rneui/themed"
-import { toastShow } from "@app/utils/toast"
-
 import { gql } from "@apollo/client"
+import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
+import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import {
   ContactsCardQuery,
   UserContact,
   useContactsCardQuery,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { useMemo } from "react"
-import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
-import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
-import { useNavigation } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import {
   PeopleStackParamList,
   RootStackParamList,
 } from "@app/navigation/stack-param-lists"
-import { useI18nContext } from "@app/i18n/i18n-react"
+import { toastShow } from "@app/utils/toast"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { makeStyles, Text } from "@rneui/themed"
 
 gql`
   query ContactsCard {

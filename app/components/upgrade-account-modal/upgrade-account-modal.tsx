@@ -1,14 +1,15 @@
+import * as React from "react"
+import { View } from "react-native"
+import { LocalizedString } from "typesafe-i18n"
+
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import CustomModal from "@app/components/custom-modal/custom-modal"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { PhoneLoginInitiateType } from "@app/screens/phone-auth-screen"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import * as React from "react"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
-import { GaloyIcon } from "@app/components/atomic/galoy-icon"
-import { LocalizedString } from "typesafe-i18n"
-import { View } from "react-native"
-import { PhoneLoginInitiateType } from "@app/screens/phone-auth-screen"
 
 export type UpgradeAccountModalProps = {
   isVisible: boolean

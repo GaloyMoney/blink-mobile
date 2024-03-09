@@ -1,15 +1,17 @@
-import { View } from "react-native"
-import { Text, makeStyles, useTheme } from "@rneui/themed"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { GaloyIcon } from "../atomic/galoy-icon"
 import { useEffect, useState } from "react"
-import { MarchChallengeModal } from "./modal"
-import { PressableCard } from "../pressable-card"
+import { View } from "react-native"
+
+import { useI18nContext } from "@app/i18n/i18n-react"
 import {
   APR_1_2024_12_AM_UTC_MINUS_6,
   MAR_1_2024_12_AM_UTC_MINUS_6,
   getTimeLeft,
 } from "@app/utils/date"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
+
+import { GaloyIcon } from "../atomic/galoy-icon"
+import { PressableCard } from "../pressable-card"
+import { MarchChallengeModal } from "./modal"
 
 export const MarchChallengeCard: React.FC = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false)

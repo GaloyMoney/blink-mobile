@@ -1,6 +1,6 @@
 import { WalletCurrency } from "@app/graphql/generated"
-import { BtcWalletDescriptor, WalletDescriptor } from "@app/types/wallets"
 import { MoneyAmount, WalletAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
+import { BtcWalletDescriptor, WalletDescriptor } from "@app/types/wallets"
 
 import {
   InvoiceType,

@@ -1,9 +1,11 @@
 import * as React from "react"
-import { StoryScreen } from "../../../.storybook/views"
+
 import { MockedProvider } from "@apollo/client/testing"
+
+import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
-import { FullOnboardingFlowScreen } from "./full-onboarding-flow"
 import { FullOnboardingScreenDocument } from "../../graphql/generated"
+import { FullOnboardingFlowScreen } from "./full-onboarding-flow"
 
 export default {
   title: "Full onboarding screen",

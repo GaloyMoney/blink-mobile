@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
-import appCheck from "@react-native-firebase/app-check"
 import Config from "react-native-config"
+
+import appCheck from "@react-native-firebase/app-check"
 
 const rnfbProvider = appCheck().newReactNativeFirebaseAppCheckProvider()
 rnfbProvider.configure({

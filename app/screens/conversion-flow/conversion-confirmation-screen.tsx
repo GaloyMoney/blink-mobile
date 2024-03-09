@@ -1,7 +1,10 @@
 import { GraphQLError } from "graphql"
 import React, { useState } from "react"
 import { Text, View } from "react-native"
+import { ScrollView } from "react-native-gesture-handler"
+import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { Screen } from "@app/components/screen"
 import {
   HomeAuthedDocument,
@@ -13,6 +16,7 @@ import {
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { getErrorMessages } from "@app/graphql/utils"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { SATS_PER_BTC, usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -29,10 +33,6 @@ import {
   useNavigation,
 } from "@react-navigation/native"
 import { makeStyles } from "@rneui/themed"
-import ReactNativeHapticFeedback from "react-native-haptic-feedback"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
-import { ScrollView } from "react-native-gesture-handler"
 
 type Props = {
   route: RouteProp<RootStackParamList, "conversionConfirmation">

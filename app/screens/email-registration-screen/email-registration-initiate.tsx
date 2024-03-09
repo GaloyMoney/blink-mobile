@@ -1,17 +1,19 @@
+import * as React from "react"
+import { Alert, View } from "react-native"
+import validator from "validator"
+
 import { gql } from "@apollo/client"
+import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { useUserEmailRegistrationInitiateMutation } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { testProps } from "@app/utils/testProps"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Input, Text, makeStyles } from "@rneui/themed"
-import * as React from "react"
-import { Alert, View } from "react-native"
+
 import { Screen } from "../../components/screen"
-import validator from "validator"
-import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { testProps } from "@app/utils/testProps"
 
 const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {

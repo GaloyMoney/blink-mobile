@@ -1,14 +1,16 @@
-import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { Alert, TouchableOpacity } from "react-native"
 import { injectJs, onMessageHandler } from "react-native-webln"
 import { WebView, WebViewNavigation } from "react-native-webview"
+
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { RouteProp, useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { makeStyles, useTheme } from "@rneui/themed"
+
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
-import { RouteProp, useNavigation } from "@react-navigation/native"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { makeStyles, useTheme } from "@rneui/themed"
-import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 type WebViewDebugScreenRouteProp = RouteProp<RootStackParamList, "webView">
 

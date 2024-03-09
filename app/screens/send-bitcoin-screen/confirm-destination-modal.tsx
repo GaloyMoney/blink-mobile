@@ -1,8 +1,12 @@
+import React, { Dispatch, useCallback, useState } from "react"
+import { View, TouchableOpacity } from "react-native"
+
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+import CustomModal from "@app/components/custom-modal/custom-modal"
 import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { CheckBox, Text, makeStyles, useTheme } from "@rneui/themed"
-import React, { Dispatch, useCallback, useState } from "react"
-import { View, TouchableOpacity } from "react-native"
+
 import { testProps } from "../../utils/testProps"
 import {
   DestinationState,
@@ -10,8 +14,6 @@ import {
   SendBitcoinDestinationAction,
   SendBitcoinDestinationState,
 } from "./send-bitcoin-reducer"
-import CustomModal from "@app/components/custom-modal/custom-modal"
-import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 export type ConfirmDestinationModalProps = {
   destinationState: SendBitcoinDestinationState

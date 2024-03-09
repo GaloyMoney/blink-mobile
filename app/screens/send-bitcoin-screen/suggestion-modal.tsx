@@ -1,13 +1,15 @@
 import * as React from "react"
-import { makeStyles, useTheme } from "@rneui/themed"
 import { View, TextInput } from "react-native"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { testProps } from "../../utils/testProps"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import CustomModal from "../../components/custom-modal/custom-modal"
-import { useFeedbackSubmitMutation } from "@app/graphql/generated"
+
 import { gql } from "@apollo/client"
+import { useFeedbackSubmitMutation } from "@app/graphql/generated"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { makeStyles, useTheme } from "@rneui/themed"
+
+import CustomModal from "../../components/custom-modal/custom-modal"
+import { testProps } from "../../utils/testProps"
 
 gql`
   mutation feedbackSubmit($input: FeedbackSubmitInput!) {

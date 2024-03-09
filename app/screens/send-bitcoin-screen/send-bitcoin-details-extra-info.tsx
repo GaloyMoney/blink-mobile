@@ -1,16 +1,17 @@
 import React, { useState } from "react"
-import { AmountInvalidReason, AmountStatus } from "./payment-details"
-import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
-import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
-import { Text, makeStyles } from "@rneui/themed"
-import { AccountLevel } from "@app/graphql/level-context"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
+import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
+import { AccountLevel } from "@app/graphql/level-context"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { Text, makeStyles } from "@rneui/themed"
+
+import { AmountInvalidReason, AmountStatus } from "./payment-details"
 
 export type SendBitcoinDetailsExtraInfoProps = {
   errorMessage?: string

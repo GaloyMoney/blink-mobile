@@ -1,4 +1,5 @@
 import * as React from "react"
+
 import { WalletCurrency } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -10,8 +11,9 @@ import {
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
 import { testProps } from "@app/utils/testProps"
-import { AmountInputModal } from "./amount-input-modal"
+
 import { AmountInputButton } from "./amount-input-button"
+import { AmountInputModal } from "./amount-input-modal"
 
 export type AmountInputProps = {
   unitOfAccountAmount?: MoneyAmount<WalletOrDisplayCurrency>

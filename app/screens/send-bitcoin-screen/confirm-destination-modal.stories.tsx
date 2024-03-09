@@ -1,14 +1,15 @@
-import { MockedProvider } from "@apollo/client/testing"
-import { Meta } from "@storybook/react"
 import React from "react"
+
+import { MockedProvider } from "@apollo/client/testing"
+import { createIntraLedgerDestination } from "@app/screens/send-bitcoin-screen/payment-destination"
+import { Meta } from "@storybook/react"
+
 import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
-import { ConfirmDestinationModal } from "./confirm-destination-modal"
 import mocks from "../../graphql/mocks"
+import { ConfirmDestinationModal } from "./confirm-destination-modal"
 import { DestinationState } from "./send-bitcoin-reducer"
-
-import { createIntraLedgerDestination } from "@app/screens/send-bitcoin-screen/payment-destination"
 
 export default {
   title: "ConfirmDestinationModal",

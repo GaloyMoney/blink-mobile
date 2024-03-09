@@ -1,7 +1,7 @@
-import { toUsdMoneyAmount } from "@app/types/amounts"
 import { Invoice } from "@app/screens/receive-bitcoin-screen/payment/index.types"
-
 import { createPaymentRequestCreationData } from "@app/screens/receive-bitcoin-screen/payment/payment-request-creation-data"
+import { toUsdMoneyAmount } from "@app/types/amounts"
+
 import { btcWalletDescriptor, defaultParams, usdWalletDescriptor } from "./helpers"
 
 describe("create payment request creation data", () => {

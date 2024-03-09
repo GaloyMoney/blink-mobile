@@ -1,8 +1,10 @@
-import { TranslationFunctions } from "@app/i18n/i18n-types"
 import { LocalizedString } from "typesafe-i18n"
-import { EarnSectionType, earnSections } from "./sections"
-import { QuizQuestion, QuizQuestionContent, QuizSectionContent } from "./earns-section"
+
 import { Quiz } from "@app/graphql/generated"
+import { TranslationFunctions } from "@app/i18n/i18n-types"
+
+import { QuizQuestion, QuizQuestionContent, QuizSectionContent } from "./earns-section"
+import { EarnSectionType, earnSections } from "./sections"
 
 export const getCardsFromSection = ({
   section,

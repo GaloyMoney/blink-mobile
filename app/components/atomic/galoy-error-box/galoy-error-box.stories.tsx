@@ -1,8 +1,10 @@
-import { GaloyErrorBox } from "./galoy-error-box"
-import { StoryScreen, UseCase } from "../../../../.storybook/views"
 import React from "react"
-import { Meta } from "@storybook/react"
 import { View } from "react-native"
+
+import { Meta } from "@storybook/react"
+
+import { StoryScreen, UseCase } from "../../../../.storybook/views"
+import { GaloyErrorBox } from "./galoy-error-box"
 
 export default {
   title: "Galoy Error Box",

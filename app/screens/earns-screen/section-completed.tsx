@@ -1,15 +1,17 @@
 import * as React from "react"
 import { Text, View } from "react-native"
-import { Button } from "@rneui/base"
-import { CloseCross } from "../../components/close-cross"
-import { Screen } from "../../components/screen"
-import BadgerShovelBitcoin from "./badger-shovel-01.svg"
-import { MountainHeader } from "../../components/mountain-header"
-import type { RootStackParamList } from "../../navigation/stack-param-lists"
+
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { useI18nContext } from "@app/i18n/i18n-react"
+import { Button } from "@rneui/base"
 import { makeStyles, useTheme } from "@rneui/themed"
+
+import { CloseCross } from "../../components/close-cross"
+import { MountainHeader } from "../../components/mountain-header"
+import { Screen } from "../../components/screen"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
+import BadgerShovelBitcoin from "./badger-shovel-01.svg"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomView: {

@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useMemo } from "react"
 import { RefreshControl, View, Alert } from "react-native"
 import {
   ScrollView,
@@ -11,8 +12,12 @@ import { LocalizedString } from "typesafe-i18n"
 
 import { gql } from "@apollo/client"
 import { AppUpdate } from "@app/components/app-update/app-update"
+import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { icons } from "@app/components/atomic/galoy-icon"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { NotificationCard } from "@app/components/notifications"
+import { SetDefaultAccountModal } from "@app/components/set-default-account-modal"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import {
@@ -27,24 +32,19 @@ import {
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { getErrorMessages } from "@app/graphql/utils"
+import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { isIos } from "@app/utils/helper"
 import { useNavigation, useIsFocused } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 
-import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import { SetDefaultAccountModal } from "@app/components/set-default-account-modal"
-import { useAppConfig } from "@app/hooks"
-import { isIos } from "@app/utils/helper"
-import { useMemo } from "react"
 import { BalanceHeader } from "../../components/balance-header"
 import { Screen } from "../../components/screen"
 import { MemoizedTransactionItem } from "../../components/transaction-item"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { testProps } from "../../utils/testProps"
 import { PhoneLoginInitiateType } from "../phone-auth-screen"
-import { NotificationCard } from "@app/components/notifications"
 
 const TransactionCountToTriggerSetDefaultAccountModal = 1
 

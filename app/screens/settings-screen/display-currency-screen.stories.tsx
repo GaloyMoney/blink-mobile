@@ -1,11 +1,13 @@
 import * as React from "react"
-import { StoryScreen } from "../../../.storybook/views"
-import { DisplayCurrencyScreen } from "./display-currency-screen"
-import { Meta } from "@storybook/react"
-import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
+
 import { MockedProvider } from "@apollo/client/testing"
+import { Meta } from "@storybook/react"
+
+import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
+import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import mocks from "../../graphql/mocks"
+import { DisplayCurrencyScreen } from "./display-currency-screen"
 
 export default {
   title: "DisplayCurrency Screen",

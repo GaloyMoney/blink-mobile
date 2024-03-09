@@ -1,5 +1,8 @@
-import { GraphQLWsLink } from "@apollo/client/link/subscriptions"
+import { AsyncStorageWrapper, CachePersistor } from "apollo3-cache-persist"
 import { createClient } from "graphql-ws"
+import jsSha256 from "js-sha256"
+import React, { PropsWithChildren, useCallback, useEffect, useRef, useState } from "react"
+import DeviceInfo from "react-native-device-info"
 
 import {
   ApolloClient,
@@ -9,37 +12,30 @@ import {
   NormalizedCacheObject,
   split,
 } from "@apollo/client"
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import DeviceInfo from "react-native-device-info"
-
+import { NetworkError } from "@apollo/client/errors"
 import { setContext } from "@apollo/client/link/context"
-import { RetryLink } from "@apollo/client/link/retry"
-import { getMainDefinition } from "@apollo/client/utilities"
-
+import { onError } from "@apollo/client/link/error"
 import { createPersistedQueryLink } from "@apollo/client/link/persisted-queries"
+import { RetryLink } from "@apollo/client/link/retry"
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions"
+import { getMainDefinition } from "@apollo/client/utilities"
+import { SCHEMA_VERSION_KEY } from "@app/config"
 import { useAppConfig } from "@app/hooks"
-import { AsyncStorageWrapper, CachePersistor } from "apollo3-cache-persist"
-import jsSha256 from "js-sha256"
-import React, { PropsWithChildren, useCallback, useEffect, useRef, useState } from "react"
-import { createCache } from "./cache"
-
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { getAppCheckToken } from "@app/screens/get-started-screen/use-device-token"
+import { getLanguageFromString, getLocaleFromLanguage } from "@app/utils/locale-detector"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+
 import { isIos } from "../utils/helper"
 import { loadString, saveString } from "../utils/storage"
 import { AnalyticsContainer } from "./analytics"
+import { createCache } from "./cache"
 import { useLanguageQuery, useRealtimePriceQuery } from "./generated"
-import { IsAuthedContextProvider, useIsAuthed } from "./is-authed-context"
-import { NetworkErrorContextProvider } from "./network-error-context"
-
-import { onError } from "@apollo/client/link/error"
-
-import { getLanguageFromString, getLocaleFromLanguage } from "@app/utils/locale-detector"
-import { MessagingContainer } from "./messaging"
-import { SCHEMA_VERSION_KEY } from "@app/config"
-import { NetworkError } from "@apollo/client/errors"
-import { LevelContainer } from "./level-component"
-import { getAppCheckToken } from "@app/screens/get-started-screen/use-device-token"
 import { HideAmountContainer } from "./hide-amount-component"
+import { IsAuthedContextProvider, useIsAuthed } from "./is-authed-context"
+import { LevelContainer } from "./level-component"
+import { MessagingContainer } from "./messaging"
+import { NetworkErrorContextProvider } from "./network-error-context"
 
 const noRetryOperations = [
   "intraLedgerPaymentSend",

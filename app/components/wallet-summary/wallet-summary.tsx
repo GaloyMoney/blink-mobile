@@ -1,11 +1,13 @@
+import React, { FunctionComponent } from "react"
+import { View } from "react-native"
+
 import { WalletCurrency } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { WalletAmount } from "@app/types/amounts"
-import React, { FunctionComponent } from "react"
-import { View } from "react-native"
-import { CurrencyTag } from "../currency-tag"
 import { Text, makeStyles } from "@rneui/themed"
+
+import { CurrencyTag } from "../currency-tag"
 
 type WalletSummaryProps = {
   settlementAmount: WalletAmount<WalletCurrency>

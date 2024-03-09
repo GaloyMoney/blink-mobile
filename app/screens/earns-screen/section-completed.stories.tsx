@@ -1,8 +1,10 @@
-import { SectionCompleted } from "./section-completed"
-import { Meta } from "@storybook/react"
 import React from "react"
-import { StoryScreen } from "../../../.storybook/views"
+
 import { MockedProvider } from "@apollo/client/testing"
+import { Meta } from "@storybook/react"
+
+import { StoryScreen } from "../../../.storybook/views"
+import { SectionCompleted } from "./section-completed"
 
 const route = {
   key: "SectionCompleted",

@@ -1,3 +1,5 @@
+// sort-imports-ignore
+
 import { WalletCurrency } from "@app/graphql/generated"
 import {
   PaymentDetail,
@@ -44,6 +46,7 @@ jest.mock("@app/screens/send-bitcoin-screen/payment-details", () => {
     createIntraledgerPaymentDetails: mockCreateIntraledgerPaymentDetail,
   }
 })
+
 import { createOnchainDestination } from "@app/screens/send-bitcoin-screen/payment-destination"
 import { defaultPaymentDetailParams } from "./helpers"
 import { ZeroBtcMoneyAmount, toBtcMoneyAmount } from "@app/types/amounts"

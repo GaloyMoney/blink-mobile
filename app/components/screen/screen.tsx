@@ -1,11 +1,12 @@
 import * as React from "react"
 import { KeyboardAvoidingView, StatusBar, View, SafeAreaView } from "react-native"
-
-import { ScreenProps } from "./screen.props"
-import { isNonScrolling, offsets, presets } from "./screen.presets"
-import { isIos } from "../../utils/helper"
-import { useTheme } from "@rneui/themed"
 import { ScrollView } from "react-native-gesture-handler"
+
+import { useTheme } from "@rneui/themed"
+
+import { isIos } from "../../utils/helper"
+import { isNonScrolling, offsets, presets } from "./screen.presets"
+import { ScreenProps } from "./screen.props"
 
 function ScreenWithoutScrolling(props: ScreenProps) {
   const {

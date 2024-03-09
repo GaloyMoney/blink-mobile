@@ -1,22 +1,21 @@
-import { StackNavigationProp } from "@react-navigation/stack"
-import { SearchBar } from "@rneui/base"
-import { ListItem, makeStyles, useTheme } from "@rneui/themed"
 import * as React from "react"
 import { useCallback, useMemo, useState } from "react"
 import { ActivityIndicator, Text, View } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 
-import { Screen } from "@app/components/screen"
-import { PeopleStackParamList } from "@app/navigation/stack-param-lists"
-import { testProps } from "@app/utils/testProps"
-import { toastShow } from "@app/utils/toast"
-
 import { gql } from "@apollo/client"
+import { Screen } from "@app/components/screen"
 import { UserContact, useContactsQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { PeopleStackParamList } from "@app/navigation/stack-param-lists"
+import { testProps } from "@app/utils/testProps"
+import { toastShow } from "@app/utils/toast"
 import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { SearchBar } from "@rneui/base"
+import { ListItem, makeStyles, useTheme } from "@rneui/themed"
 
 gql`
   query contacts {

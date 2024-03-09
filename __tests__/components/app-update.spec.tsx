@@ -1,5 +1,6 @@
-import { isUpdateAvailableOrRequired } from "@app/components/app-update/app-update.logic"
 import { Platform } from "react-native"
+
+import { isUpdateAvailableOrRequired } from "@app/components/app-update/app-update.logic"
 
 const mobileVersions = [
   {

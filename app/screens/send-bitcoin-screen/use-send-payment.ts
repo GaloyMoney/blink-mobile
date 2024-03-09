@@ -1,3 +1,7 @@
+import { useMemo, useState } from "react"
+import { v4 as uuidv4 } from "uuid"
+
+import { gql } from "@apollo/client"
 import {
   HomeAuthedDocument,
   PaymentSendResult,
@@ -11,11 +15,9 @@ import {
   useOnChainUsdPaymentSendAsBtcDenominatedMutation,
   useOnChainUsdPaymentSendMutation,
 } from "@app/graphql/generated"
-import { useMemo, useState } from "react"
-import { PaymentSendExtraInfo, SendPaymentMutation } from "./payment-details/index.types"
-import { gql } from "@apollo/client"
 import { getErrorMessages } from "@app/graphql/utils"
-import { v4 as uuidv4 } from "uuid"
+
+import { PaymentSendExtraInfo, SendPaymentMutation } from "./payment-details/index.types"
 
 export type PaymentSendCompletedStatus = "SUCCESS" | "PENDING"
 

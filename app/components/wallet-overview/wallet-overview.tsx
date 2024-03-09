@@ -4,17 +4,17 @@ import { Pressable, View } from "react-native"
 
 import { gql } from "@apollo/client"
 import { useWalletOverviewScreenQuery, WalletCurrency } from "@app/graphql/generated"
+import { useHideAmount } from "@app/graphql/hide-amount-context"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
+import { testProps } from "@app/utils/testProps"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 
 import { GaloyCurrencyBubble } from "../atomic/galoy-currency-bubble"
 import { GaloyIcon } from "../atomic/galoy-icon"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { testProps } from "@app/utils/testProps"
-import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
-import { useHideAmount } from "@app/graphql/hide-amount-context"
 
 const Loader = () => {
   const styles = useStyles()

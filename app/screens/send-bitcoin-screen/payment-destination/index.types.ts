@@ -1,8 +1,11 @@
+import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
+
 import {
   AccountDefaultWalletLazyQueryHookResult,
   Network,
   WalletCurrency,
 } from "@app/graphql/generated"
+import { WalletDescriptor } from "@app/types/wallets"
 import {
   IntraledgerPaymentDestination,
   LightningPaymentDestination,
@@ -11,9 +14,8 @@ import {
   ParsedPaymentDestination,
   PaymentType,
 } from "@galoymoney/client"
+
 import { ConvertMoneyAmount, PaymentDetail } from "../payment-details"
-import { WalletDescriptor } from "@app/types/wallets"
-import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 
 export type ParseDestinationResult = Destination | InvalidDestination
 

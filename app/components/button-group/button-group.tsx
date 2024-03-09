@@ -1,8 +1,9 @@
 import React from "react"
 import { StyleProp, TouchableWithoutFeedback, View, ViewStyle } from "react-native"
-import { Text, makeStyles } from "@rneui/themed"
 import Icon from "react-native-vector-icons/Ionicons"
+
 import { testProps } from "@app/utils/testProps"
+import { Text, makeStyles } from "@rneui/themed"
 
 type ButtonForButtonGroupProps = {
   id: string

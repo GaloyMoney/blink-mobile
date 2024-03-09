@@ -1,8 +1,10 @@
 import React from "react"
-import Clipboard from "@react-native-clipboard/clipboard"
-import { toastShow } from "@app/utils/toast"
-import { GaloySecondaryButton } from "../atomic/galoy-secondary-button"
+
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { toastShow } from "@app/utils/toast"
+import Clipboard from "@react-native-clipboard/clipboard"
+
+import { GaloySecondaryButton } from "../atomic/galoy-secondary-button"
 
 type Props = {
   secret: string

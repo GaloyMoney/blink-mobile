@@ -1,15 +1,20 @@
 import React, { useCallback, useEffect, useMemo, useReducer, useState } from "react"
 import { ActivityIndicator, TouchableOpacity, View } from "react-native"
+import { FlatList } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
-import { Screen } from "@app/components/screen"
+
 import { gql } from "@apollo/client"
 import ScanIcon from "@app/assets/icons/scan.svg"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { Screen } from "@app/components/screen"
+import { LNURL_DOMAINS } from "@app/config"
 import {
   UserContact,
   useAccountDefaultWalletLazyQuery,
   useRealtimePriceQuery,
   useSendBitcoinDestinationQuery,
 } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { logParseDestinationResult } from "@app/utils/analytics"
@@ -17,14 +22,11 @@ import { toastShow } from "@app/utils/toast"
 import { PaymentType } from "@galoymoney/client"
 import Clipboard from "@react-native-clipboard/clipboard"
 import crashlytics from "@react-native-firebase/crashlytics"
+import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { SearchBar } from "@rneui/base"
-import { FlatList } from "react-native-gesture-handler"
-
-import { LNURL_DOMAINS } from "@app/config"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { RouteProp, useNavigation } from "@react-navigation/native"
 import { makeStyles, useTheme, Text, ListItem } from "@rneui/themed"
+
 import { testProps } from "../../utils/testProps"
 import { ConfirmDestinationModal } from "./confirm-destination-modal"
 import { DestinationInformation } from "./destination-information"
@@ -39,7 +41,6 @@ import {
   sendBitcoinDestinationReducer,
   SendBitcoinDestinationState,
 } from "./send-bitcoin-reducer"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 gql`
   query sendBitcoinDestination {

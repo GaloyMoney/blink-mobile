@@ -1,4 +1,6 @@
 /* eslint-disable jest/no-disabled-tests */
+import jimp from "jimp"
+import jsQR from "jsqr"
 
 import { i18nObject } from "../app/i18n/i18n-util"
 import { loadLocale } from "../app/i18n/i18n-util.sync"
@@ -16,9 +18,6 @@ import {
   waitTillOnHomeScreen,
   scrollUp,
 } from "./utils"
-
-import jimp from "jimp"
-import jsQR from "jsqr"
 
 loadLocale("en")
 const LL = i18nObject("en")

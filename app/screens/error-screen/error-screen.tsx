@@ -2,9 +2,11 @@ import React, { useEffect } from "react"
 import { Alert, View } from "react-native"
 import { getReadableVersion } from "react-native-device-info"
 
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import ContactModal, {
   SupportChannels,
 } from "@app/components/contact-modal/contact-modal"
+import { Screen } from "@app/components/screen"
 import { useAppConfig } from "@app/hooks"
 import useLogout from "@app/hooks/use-logout"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -13,8 +15,6 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { makeStyles, Text } from "@rneui/themed"
 
 import HoneyBadgerShovel from "./honey-badger-shovel-01.svg"
-import { Screen } from "@app/components/screen"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 export const ErrorScreen = ({
   error,

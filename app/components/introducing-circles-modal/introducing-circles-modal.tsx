@@ -2,15 +2,15 @@ import React, { useEffect } from "react"
 import { View } from "react-native"
 import Modal from "react-native-modal"
 
+import { useApolloClient } from "@apollo/client"
+import { setIntroducingCirclesModalShown } from "@app/graphql/client-only-query"
+import { useIntroducingCirclesModalShownQuery } from "@app/graphql/generated"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { makeStyles, useTheme, Text } from "@rneui/themed"
 
-import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
 import { GaloyIcon } from "../atomic/galoy-icon"
 import { GaloyIconButton } from "../atomic/galoy-icon-button"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { setIntroducingCirclesModalShown } from "@app/graphql/client-only-query"
-import { useApolloClient } from "@apollo/client"
-import { useIntroducingCirclesModalShownQuery } from "@app/graphql/generated"
+import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
 
 type Props = {
   isVisible: boolean

@@ -1,10 +1,11 @@
+import { i18nObject } from "@app/i18n/i18n-util"
+import { loadLocale } from "@app/i18n/i18n-util.sync"
 import {
   formatTimeToMempool,
   timeToMempool,
 } from "@app/screens/transaction-detail-screen/format-time"
+
 import { parseTimer } from "../app/utils/timer"
-import { loadLocale } from "@app/i18n/i18n-util.sync"
-import { i18nObject } from "@app/i18n/i18n-util"
 
 describe("parseTimer", () => {
   it("parse time when is more than 1 minute", () => {

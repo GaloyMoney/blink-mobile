@@ -1,3 +1,5 @@
+import fetch from "cross-fetch"
+
 import {
   ApolloClient,
   InMemoryCache,
@@ -6,6 +8,8 @@ import {
   gql,
   ApolloLink,
 } from "@apollo/client"
+import { RetryLink } from "@apollo/client/link/retry"
+
 import {
   ContactsDocument,
   ContactsQuery,
@@ -28,9 +32,6 @@ import {
   UserEmailDeleteMutation,
   UserEmailDeleteDocument,
 } from "../../app/graphql/generated"
-import { RetryLink } from "@apollo/client/link/retry"
-
-import fetch from "cross-fetch"
 
 type Config = {
   network: string

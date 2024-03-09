@@ -1,11 +1,13 @@
-import { loadJson, saveJson } from "@app/utils/storage"
 import { createContext, useContext, PropsWithChildren } from "react"
+import * as React from "react"
+
+import { loadJson, saveJson } from "@app/utils/storage"
+
 import {
   defaultPersistentState,
   migrateAndGetPersistentState,
   PersistentState,
 } from "./state-migrations"
-import * as React from "react"
 
 const PERSISTENT_STATE_KEY = "persistentState"
 

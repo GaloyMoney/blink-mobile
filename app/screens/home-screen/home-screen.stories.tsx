@@ -1,11 +1,13 @@
 import React from "react"
-import { HomeScreen } from "./home-screen"
-import { StoryScreen } from "../../../.storybook/views"
-import { Meta } from "@storybook/react"
+
 import { MockedProvider } from "@apollo/client/testing"
+import { Meta } from "@storybook/react"
+
+import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import mocks from "../../graphql/mocks"
+import { HomeScreen } from "./home-screen"
 
 export default {
   title: "Home Screen",

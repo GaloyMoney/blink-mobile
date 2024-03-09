@@ -1,23 +1,20 @@
-import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
+import { getReadableVersion } from "react-native-device-info"
+import { ScrollView } from "react-native-gesture-handler"
+import InAppReview from "react-native-in-app-review"
 import Share from "react-native-share"
 
-import { Screen } from "../../components/screen"
-import { VersionComponent } from "../../components/version"
-import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import KeyStoreWrapper from "../../utils/storage/secureStorage"
-
+import { gql } from "@apollo/client"
 import ContactModal, {
   SupportChannels,
 } from "@app/components/contact-modal/contact-modal"
-import crashlytics from "@react-native-firebase/crashlytics"
-
-import { gql } from "@apollo/client"
+import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
 import {
   useSettingsScreenQuery,
   useWalletCsvTransactionsLazyQuery,
 } from "@app/graphql/generated"
 import { AccountLevel, useLevel } from "@app/graphql/level-context"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { useAppConfig } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -26,16 +23,17 @@ import { getLanguageFromString } from "@app/utils/locale-detector"
 import { getLightningAddress } from "@app/utils/pay-links"
 import { toastShow } from "@app/utils/toast"
 import Clipboard from "@react-native-clipboard/clipboard"
+import crashlytics from "@react-native-firebase/crashlytics"
 import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { useTheme } from "@rneui/themed"
-import { getReadableVersion } from "react-native-device-info"
-import InAppReview from "react-native-in-app-review"
 
-import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
-import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+import { Screen } from "../../components/screen"
+import { VersionComponent } from "../../components/version"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
+import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import { SettingsRow } from "./settings-row"
 import { useShowWarningSecureAccount } from "./show-warning-secure-account"
-import { ScrollView } from "react-native-gesture-handler"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {

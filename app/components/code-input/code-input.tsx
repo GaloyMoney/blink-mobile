@@ -1,10 +1,12 @@
+import * as React from "react"
+import { useState } from "react"
+import { ActivityIndicator, View } from "react-native"
+
 import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { testProps } from "@app/utils/testProps"
 import { useTheme } from "@react-navigation/native"
 import { Input, Text, makeStyles } from "@rneui/themed"
-import * as React from "react"
-import { useState } from "react"
-import { ActivityIndicator, View } from "react-native"
+
 import { Screen } from "../screen"
 
 const useStyles = makeStyles(({ colors }) => ({

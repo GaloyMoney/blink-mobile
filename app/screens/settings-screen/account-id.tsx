@@ -1,11 +1,12 @@
-import { useAccountScreenQuery } from "@app/graphql/generated"
-import { View } from "react-native"
-import { Text, makeStyles } from "@rneui/themed"
 import { useCallback } from "react"
-import Clipboard from "@react-native-clipboard/clipboard"
-import { toastShow } from "@app/utils/toast"
-import { useI18nContext } from "@app/i18n/i18n-react"
+import { View } from "react-native"
+
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
+import { useAccountScreenQuery } from "@app/graphql/generated"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { toastShow } from "@app/utils/toast"
+import Clipboard from "@react-native-clipboard/clipboard"
+import { Text, makeStyles } from "@rneui/themed"
 
 export const AccountId: React.FC = () => {
   const { data } = useAccountScreenQuery()

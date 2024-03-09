@@ -1,6 +1,7 @@
+import * as RNLocalize from "react-native-localize"
+
 import { Locales } from "@app/i18n/i18n-types"
 import { locales } from "@app/i18n/i18n-util"
-import * as RNLocalize from "react-native-localize"
 
 export const matchOsLocaleToSupportedLocale = (
   localesFromOs: ReturnType<typeof RNLocalize.getLocales>,

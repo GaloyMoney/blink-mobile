@@ -1,12 +1,14 @@
+import * as React from "react"
+
 import { gql } from "@apollo/client"
+import { MenuSelect, MenuSelectItem } from "@app/components/menu-select"
 import { useLanguageQuery, useUserUpdateLanguageMutation } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { LocaleToTranslateLanguageSelector } from "@app/i18n/mapping"
 import { getLanguageFromString, Languages } from "@app/utils/locale-detector"
-import * as React from "react"
+
 import { Screen } from "../../components/screen"
-import { MenuSelect, MenuSelectItem } from "@app/components/menu-select"
 
 gql`
   query language {

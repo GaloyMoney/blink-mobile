@@ -1,3 +1,6 @@
+import * as React from "react"
+import { ActivityIndicator, SectionList, Text, View } from "react-native"
+
 import { gql } from "@apollo/client"
 import { Screen } from "@app/components/screen"
 import { useTransactionListForDefaultAccountQuery } from "@app/graphql/generated"
@@ -6,8 +9,7 @@ import { groupTransactionsByDate } from "@app/graphql/transactions"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { makeStyles, useTheme } from "@rneui/themed"
-import * as React from "react"
-import { ActivityIndicator, SectionList, Text, View } from "react-native"
+
 import { MemoizedTransactionItem } from "../../components/transaction-item"
 import { toastShow } from "../../utils/toast"
 

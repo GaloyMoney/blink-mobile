@@ -1,11 +1,13 @@
+import React from "react"
+
 import { MockedProvider } from "@apollo/client/testing"
 import { Meta } from "@storybook/react"
-import React from "react"
+
 import { StoryScreen } from "../../../.storybook/views"
-import { createCache } from "../../graphql/cache"
-import { GetStartedScreen } from "./get-started-screen"
-import mocks from "../../graphql/mocks"
 import { FeatureFlagContext } from "../../config/feature-flags-context"
+import { createCache } from "../../graphql/cache"
+import mocks from "../../graphql/mocks"
+import { GetStartedScreen } from "./get-started-screen"
 
 export default {
   title: "Get started screen",

@@ -1,12 +1,14 @@
 import * as React from "react"
-import { StoryScreen } from "../../../.storybook/views"
+
+import { MockedProvider } from "@apollo/client/testing"
 import { Meta } from "@storybook/react"
+
+import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { AccountScreenDocument } from "../../graphql/generated"
+import { AccountLevel, LevelContextProvider } from "../../graphql/level-context"
 import mocks from "../../graphql/mocks"
 import { AccountScreen } from "./account-screen"
-import { MockedProvider } from "@apollo/client/testing"
-import { AccountLevel, LevelContextProvider } from "../../graphql/level-context"
 
 const mocksLevelOne = [
   ...mocks,

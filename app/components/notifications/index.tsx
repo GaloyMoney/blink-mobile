@@ -1,7 +1,9 @@
 import React, { useState, createContext, useContext, useCallback, useMemo } from "react"
+
 import { Text, makeStyles, useTheme } from "@rneui/themed"
-import CustomModal from "../custom-modal/custom-modal"
+
 import { GaloyIcon, IconNamesType } from "../atomic/galoy-icon"
+import CustomModal from "../custom-modal/custom-modal"
 import { NotificationCardUI } from "./notification-card-ui"
 
 type NotifyModalArgs = {

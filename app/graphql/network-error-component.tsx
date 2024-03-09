@@ -1,11 +1,13 @@
+import React, { useState } from "react"
+import { Alert } from "react-native"
+
 import useLogout from "@app/hooks/use-logout"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { toastShow } from "@app/utils/toast"
-import React, { useState } from "react"
-import { NetworkErrorCode } from "./error-code"
-import { Alert } from "react-native"
-import { useNetworkError } from "./network-error-context"
 import { CommonActions, useNavigation } from "@react-navigation/native"
+
+import { NetworkErrorCode } from "./error-code"
+import { useNetworkError } from "./network-error-context"
 
 export const NetworkErrorComponent: React.FC = () => {
   const navigation = useNavigation()

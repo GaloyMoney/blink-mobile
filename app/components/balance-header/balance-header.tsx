@@ -4,19 +4,18 @@ import { TouchableOpacity, View } from "react-native"
 
 import { gql } from "@apollo/client"
 import { useBalanceHeaderQuery } from "@app/graphql/generated"
+import { useHideAmount } from "@app/graphql/hide-amount-context"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { makeStyles, Text } from "@rneui/themed"
-
 import {
   DisplayCurrency,
   addMoneyAmounts,
   toBtcMoneyAmount,
   toUsdMoneyAmount,
 } from "@app/types/amounts"
-import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
-import { useHideAmount } from "@app/graphql/hide-amount-context"
+import { makeStyles, Text } from "@rneui/themed"
 
 const Loader = () => {
   const styles = useStyles()

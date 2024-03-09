@@ -1,8 +1,9 @@
 import * as React from "react"
-import { ThemeMode, ThemeProvider } from "@rneui/themed"
-import { useColorSchemeQuery } from "@app/graphql/generated"
 import { Appearance } from "react-native"
+
+import { useColorSchemeQuery } from "@app/graphql/generated"
 import theme from "@app/rne-theme/theme"
+import { ThemeMode, ThemeProvider } from "@rneui/themed"
 
 export const GaloyThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,

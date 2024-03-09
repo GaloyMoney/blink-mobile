@@ -1,12 +1,12 @@
-import { renderHook } from "@testing-library/react-hooks"
-
-import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { MockedProvider } from "@apollo/client/testing"
 import { PropsWithChildren } from "react"
 import * as React from "react"
-import { IsAuthedContextProvider } from "@app/graphql/is-authed-context"
-import { CurrencyListDocument, RealtimePriceDocument } from "@app/graphql/generated"
 import { act } from "react-test-renderer"
+
+import { MockedProvider } from "@apollo/client/testing"
+import { CurrencyListDocument, RealtimePriceDocument } from "@app/graphql/generated"
+import { IsAuthedContextProvider } from "@app/graphql/is-authed-context"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { renderHook } from "@testing-library/react-hooks"
 
 const mocksNgn = [
   {

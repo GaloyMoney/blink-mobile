@@ -1,11 +1,13 @@
+import React from "react"
+
 import { MockedProvider } from "@apollo/client/testing"
+import { ZeroBtcMoneyAmount } from "@app/types/amounts"
 import { PaymentType } from "@galoymoney/client"
 import { Meta } from "@storybook/react"
-import React from "react"
+
 import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
-import SendBitcoinDetailsScreen from "./send-bitcoin-details-screen"
 import mocks from "../../graphql/mocks"
 import {
   DestinationDirection,
@@ -13,7 +15,7 @@ import {
   ResolvedIntraledgerPaymentDestination,
 } from "./payment-destination/index.types"
 import { createIntraledgerPaymentDetails } from "./payment-details"
-import { ZeroBtcMoneyAmount } from "@app/types/amounts"
+import SendBitcoinDetailsScreen from "./send-bitcoin-details-screen"
 
 export default {
   title: "SendBitcoinDetailsScreen",

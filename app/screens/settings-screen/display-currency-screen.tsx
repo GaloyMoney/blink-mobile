@@ -1,4 +1,10 @@
+import * as React from "react"
+import { useCallback } from "react"
+import { ActivityIndicator, View } from "react-native"
+import Icon from "react-native-vector-icons/Ionicons"
+
 import { gql } from "@apollo/client"
+import { MenuSelect, MenuSelectItem } from "@app/components/menu-select"
 import {
   Currency,
   RealtimePriceDocument,
@@ -10,12 +16,8 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
 import { makeStyles, SearchBar, Text } from "@rneui/themed"
-import * as React from "react"
-import { useCallback } from "react"
-import { ActivityIndicator, View } from "react-native"
-import Icon from "react-native-vector-icons/Ionicons"
+
 import { Screen } from "../../components/screen"
-import { MenuSelect, MenuSelectItem } from "@app/components/menu-select"
 
 gql`
   mutation accountUpdateDisplayCurrency($input: AccountUpdateDisplayCurrencyInput!) {

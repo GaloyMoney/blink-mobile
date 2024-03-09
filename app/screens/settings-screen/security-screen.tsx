@@ -1,13 +1,15 @@
-import { RouteProp, useFocusEffect } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
 import { useState } from "react"
 import { Switch, View } from "react-native"
 
 import { useApolloClient } from "@apollo/client"
+import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 import { useHideBalanceQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { RouteProp, useFocusEffect } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { Text, makeStyles } from "@rneui/themed"
+
 import { Screen } from "../../components/screen"
 import {
   saveHiddenBalanceToolTip,
@@ -18,7 +20,6 @@ import BiometricWrapper from "../../utils/biometricAuthentication"
 import { PinScreenPurpose } from "../../utils/enum"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
 import { toastShow } from "../../utils/toast"
-import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 
 const useStyles = makeStyles(() => ({
   container: {

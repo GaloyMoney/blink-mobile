@@ -1,6 +1,8 @@
-import { useApolloClient } from "@apollo/client"
 import { useEffect } from "react"
+
+import { useApolloClient } from "@apollo/client"
 import messaging from "@react-native-firebase/messaging"
+
 import { HomeAuthedDocument } from "./generated"
 
 // refetch when we receive an OS notification

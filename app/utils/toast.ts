@@ -1,6 +1,8 @@
 import Toast from "react-native-toast-message"
-import { i18nObject } from "@app/i18n/i18n-util"
+
 import { TranslationFunctions } from "@app/i18n/i18n-types"
+import { i18nObject } from "@app/i18n/i18n-util"
+
 import { logToastShown } from "./analytics"
 
 export const toastShow = ({

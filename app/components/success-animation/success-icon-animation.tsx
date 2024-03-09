@@ -1,5 +1,6 @@
 import React from "react"
 import Animated, { PinwheelIn } from "react-native-reanimated"
+
 import { ANIMATION_DELAY, ANIMATION_DURATION } from "./config"
 
 export const SuccessIconAnimation = ({ children }: { children: React.ReactNode }) => {

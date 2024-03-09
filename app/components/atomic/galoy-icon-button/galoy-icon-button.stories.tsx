@@ -1,7 +1,8 @@
 import React from "react"
+import { StyleSheet, Text, View } from "react-native"
+
 import { Story, UseCase } from "../../../../.storybook/views"
 import { GaloyEditButton, GaloyIconButton } from "./galoy-icon-button"
-import { StyleSheet, Text, View } from "react-native"
 
 const styles = StyleSheet.create({
   row: {

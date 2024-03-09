@@ -8,9 +8,9 @@ import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import mocks from "../../graphql/mocks"
-import CustomModal, { CustomModalProps } from "./custom-modal"
 import { GaloyIcon } from "../atomic/galoy-icon"
 import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
+import CustomModal, { CustomModalProps } from "./custom-modal"
 
 const useStyles = makeStyles(({ colors }) => ({
   modalBodyText: {

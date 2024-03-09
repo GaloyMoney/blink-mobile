@@ -3,13 +3,13 @@ import { Linking, View } from "react-native"
 import Modal from "react-native-modal"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { useCirclesCard } from "@app/screens/people-screen/circles/use-circles-card"
 import { makeStyles, useTheme, Text } from "@rneui/themed"
 
-import { GaloyIconButton } from "../atomic/galoy-icon-button"
-import { GaloyToast } from "../galoy-toast"
 import { GaloyIcon } from "../atomic/galoy-icon"
-import { useCirclesCard } from "@app/screens/people-screen/circles/use-circles-card"
+import { GaloyIconButton } from "../atomic/galoy-icon-button"
 import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
+import { GaloyToast } from "../galoy-toast"
 
 const CHALLENGE_PAGE = "blink.sv/circles"
 const CHALLENGE_PAGE_URL = "https://www.blink.sv/circles"

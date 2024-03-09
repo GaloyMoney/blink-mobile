@@ -1,3 +1,5 @@
+import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
+
 import { WalletCurrency } from "@app/graphql/generated"
 import {
   BtcMoneyAmount,
@@ -8,7 +10,7 @@ import {
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
 import { PaymentType } from "@galoymoney/client"
-import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
+
 import {
   ConvertMoneyAmount,
   SetInvoice,
