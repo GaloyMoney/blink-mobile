@@ -57,7 +57,7 @@
     "e2e:test": "detox test --configuration"
   },
   "dependencies": {
-    "@apollo/client": "3.9.0-alpha.5",
+    "@apollo/client": "^3.9.6",
     "@bitcoinerlab/secp256k1": "^1.0.5",
     "@formatjs/intl-getcanonicallocales": "^2.3.0",
     "@formatjs/intl-locale": "^3.4.3",
