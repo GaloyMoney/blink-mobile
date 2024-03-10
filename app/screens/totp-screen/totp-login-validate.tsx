@@ -1,12 +1,13 @@
+import axios, { isAxiosError } from "axios"
+import React, { useCallback, useState } from "react"
+
 import { CodeInput } from "@app/components/code-input"
 import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import analytics from "@react-native-firebase/analytics"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import axios, { isAxiosError } from "axios"
-import React, { useCallback, useState } from "react"
-import analytics from "@react-native-firebase/analytics"
 
 type Props = {
   route: RouteProp<RootStackParamList, "totpLoginValidate">

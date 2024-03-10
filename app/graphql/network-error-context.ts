@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react"
+
 import { NetworkError } from "@apollo/client/errors"
 
 type NetworkErrorState = {

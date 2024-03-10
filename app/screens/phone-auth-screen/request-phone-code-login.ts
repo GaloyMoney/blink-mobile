@@ -1,3 +1,11 @@
+import axios, { isAxiosError } from "axios"
+import parsePhoneNumber, {
+  AsYouType,
+  CountryCode,
+  getCountryCallingCode,
+} from "libphonenumber-js/mobile"
+import { useEffect, useMemo, useState } from "react"
+
 import { gql } from "@apollo/client"
 import {
   PhoneCodeChannelType,
@@ -5,13 +13,10 @@ import {
   useSupportedCountriesQuery,
 } from "@app/graphql/generated"
 import { useAppConfig, useGeetestCaptcha } from "@app/hooks"
+import useDeviceLocation from "@app/hooks/use-device-location"
 import { logRequestAuthCode } from "@app/utils/analytics"
-import parsePhoneNumber, {
-  AsYouType,
-  CountryCode,
-  getCountryCallingCode,
-} from "libphonenumber-js/mobile"
-import { useEffect, useMemo, useState } from "react"
+
+import useAppCheckToken from "../get-started-screen/use-device-token"
 
 export const RequestPhoneCodeStatus = {
   LoadingCountryCode: "LoadingCountryCode",
@@ -29,10 +34,6 @@ export const ErrorType = {
   RequestCodeError: "RequestCodeError",
   UnsupportedCountryError: "UnsupportedCountryError",
 } as const
-
-import axios, { isAxiosError } from "axios"
-import useAppCheckToken from "../get-started-screen/use-device-token"
-import useDeviceLocation from "@app/hooks/use-device-location"
 
 type ErrorType = (typeof ErrorType)[keyof typeof ErrorType]
 

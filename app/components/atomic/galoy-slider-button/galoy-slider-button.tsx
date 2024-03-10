@@ -13,8 +13,10 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
-import { GaloyIcon } from "../galoy-icon"
+
 import { Text, makeStyles, useTheme } from "@rneui/themed"
+
+import { GaloyIcon } from "../galoy-icon"
 
 const BUTTON_WIDTH = Dimensions.get("screen").width - 40
 const SWIPE_RANGE = BUTTON_WIDTH - 50

@@ -1,10 +1,5 @@
 import * as React from "react"
-import { useI18nContext } from "@app/i18n/i18n-react"
-
 import { View } from "react-native"
-import { makeStyles, Switch, Text } from "@rneui/themed"
-
-import { Screen } from "../../components/screen"
 
 import { gql } from "@apollo/client"
 import {
@@ -21,6 +16,10 @@ import {
   useNotificationSettingsQuery,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { makeStyles, Switch, Text } from "@rneui/themed"
+
+import { Screen } from "../../components/screen"
 
 gql`
   query notificationSettings {

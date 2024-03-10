@@ -1,8 +1,8 @@
 import React from "react"
 import { View } from "react-native"
 
-import { MenuSelectItemProps } from "./menu-select-item"
 import { Item } from "./item"
+import { MenuSelectItemProps } from "./menu-select-item"
 
 export type MenuSelectProps = {
   value: string

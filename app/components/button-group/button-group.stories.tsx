@@ -1,6 +1,7 @@
 import * as React from "react"
-import { Story, UseCase } from "../../../.storybook/views"
+
 import { ButtonGroup } from "."
+import { Story, UseCase } from "../../../.storybook/views"
 
 export default {
   title: "ButtonGroup",

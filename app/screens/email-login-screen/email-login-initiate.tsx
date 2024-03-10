@@ -1,17 +1,19 @@
-import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { useNavigation } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { Input, Text, makeStyles } from "@rneui/themed"
 import axios, { isAxiosError } from "axios"
 import * as React from "react"
 import { View } from "react-native"
 import validator from "validator"
-import { Screen } from "../../components/screen"
+
+import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { useAppConfig } from "@app/hooks"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { testProps } from "@app/utils/testProps"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { Input, Text, makeStyles } from "@rneui/themed"
+
+import { Screen } from "../../components/screen"
 
 const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {

@@ -1,4 +1,3 @@
-import { makeStyles } from "@rneui/themed"
 import * as React from "react"
 import { View } from "react-native"
 import Animated, {
@@ -6,6 +5,8 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from "react-native-reanimated"
+
+import { makeStyles } from "@rneui/themed"
 
 const useStyles = makeStyles(({ colors }) => ({
   container: {

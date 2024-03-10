@@ -1,12 +1,14 @@
 import * as React from "react"
+
 import { MockedProvider } from "@apollo/client/testing"
+import { Meta } from "@storybook/react"
+
 import { createCache } from "../../graphql/cache"
 import mocks from "../../graphql/mocks"
-import { AuthenticationScreen } from "./authentication-screen"
-import { Meta } from "@storybook/react"
 import { AuthenticationContextProvider } from "../../navigation/navigation-container-wrapper"
-import { AuthenticationScreenPurpose } from "../../utils/enum"
 import { PersistentStateProvider } from "../../store/persistent-state"
+import { AuthenticationScreenPurpose } from "../../utils/enum"
+import { AuthenticationScreen } from "./authentication-screen"
 
 export default {
   title: "Authentication Screen",

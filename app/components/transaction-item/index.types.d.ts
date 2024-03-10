@@ -1,5 +1,6 @@
 // FIXME: remove when @apollo/client expose DeepPartial
 import type { Primitive } from "@apollo/client/utilities/types/Primitive.js"
+
 type DeepPartialPrimitive = Primitive | Date | RegExp
 export type DeepPartial<T> = T extends DeepPartialPrimitive
   ? T

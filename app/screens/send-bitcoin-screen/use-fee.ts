@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
-import { WalletAmount } from "@app/types/amounts"
-import crashlytics from "@react-native-firebase/crashlytics"
+
+import { gql } from "@apollo/client"
 import {
   WalletCurrency,
   useLnInvoiceFeeProbeMutation,
@@ -11,7 +11,9 @@ import {
   useOnChainUsdTxFeeAsBtcDenominatedLazyQuery,
   useOnChainUsdTxFeeLazyQuery,
 } from "@app/graphql/generated"
-import { gql } from "@apollo/client"
+import { WalletAmount } from "@app/types/amounts"
+import crashlytics from "@react-native-firebase/crashlytics"
+
 import { GetFee } from "./payment-details/index.types"
 
 type FeeType =

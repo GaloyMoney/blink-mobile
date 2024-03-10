@@ -1,12 +1,14 @@
-import { renderHook } from "@testing-library/react-hooks"
+// sort-imports-ignore
+
+import { useRealtimePriceQuery } from "@app/graphql/generated"
 
 type MockUseRealtimePriceResponse = Pick<ReturnType<typeof useRealtimePriceQuery>, "data">
 const mockUseRealtimePriceQuery = jest.fn<
   MockUseRealtimePriceResponse,
   Parameters<typeof useRealtimePriceQuery>
 >()
+
 import { usePriceConversion } from "@app/hooks/use-price-conversion"
-import { useRealtimePriceQuery } from "@app/graphql/generated"
 import {
   BtcMoneyAmount,
   DisplayAmount,
@@ -15,6 +17,7 @@ import {
   toUsdMoneyAmount,
   UsdMoneyAmount,
 } from "@app/types/amounts"
+import { renderHook } from "@testing-library/react-hooks"
 
 jest.mock("@app/graphql/generated", () => {
   return {

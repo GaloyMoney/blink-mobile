@@ -1,4 +1,19 @@
+import * as React from "react"
+import { Alert, Dimensions, Linking, Pressable, StyleSheet, View } from "react-native"
+import { launchImageLibrary } from "react-native-image-picker"
+import Svg, { Circle } from "react-native-svg"
+import Icon from "react-native-vector-icons/Ionicons"
+import {
+  Camera,
+  CameraRuntimeError,
+  useCameraDevice,
+  useCameraPermission,
+  useCodeScanner,
+} from "react-native-vision-camera"
+import RNQRGenerator from "rn-qr-generator"
+
 import { gql } from "@apollo/client"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { LNURL_DOMAINS } from "@app/config"
 import {
   useAccountDefaultWalletLazyQuery,
@@ -14,24 +29,11 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
-import * as React from "react"
-import { Alert, Dimensions, Linking, Pressable, StyleSheet, View } from "react-native"
-import { launchImageLibrary } from "react-native-image-picker"
-import Svg, { Circle } from "react-native-svg"
-import Icon from "react-native-vector-icons/Ionicons"
-import {
-  Camera,
-  CameraRuntimeError,
-  useCameraDevice,
-  useCameraPermission,
-  useCodeScanner,
-} from "react-native-vision-camera"
-import RNQRGenerator from "rn-qr-generator"
+
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { parseDestination } from "./payment-destination"
 import { DestinationDirection } from "./payment-destination/index.types"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 const { width: screenWidth } = Dimensions.get("window")
 const { height: screenHeight } = Dimensions.get("window")

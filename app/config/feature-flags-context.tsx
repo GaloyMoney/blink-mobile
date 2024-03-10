@@ -1,7 +1,8 @@
 import React, { useState, createContext, useContext, useEffect } from "react"
-import remoteConfigInstance from "@react-native-firebase/remote-config"
-import { useAppConfig } from "@app/hooks"
+
 import { useLevel } from "@app/graphql/level-context"
+import { useAppConfig } from "@app/hooks"
+import remoteConfigInstance from "@react-native-firebase/remote-config"
 
 const DeviceAccountEnabledKey = "deviceAccountEnabledRestAuth"
 

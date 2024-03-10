@@ -1,6 +1,6 @@
-import { readTranslationFromDisk } from "typesafe-i18n/exporter"
 import fs from "fs"
 import { BaseTranslation } from "typesafe-i18n"
+import { readTranslationFromDisk } from "typesafe-i18n/exporter"
 
 const DEFAULT_RAW_EXPORT_PATH = `${__dirname}/../app/i18n/raw-i18n`
 

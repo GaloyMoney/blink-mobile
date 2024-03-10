@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Image, Linking, View } from "react-native"
+import { ScrollView } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -8,7 +9,6 @@ import { makeStyles, useTheme, Text } from "@rneui/themed"
 import StablesatsImage from "../../assets/images/stable-sats.png"
 import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
 import { GaloySecondaryButton } from "../atomic/galoy-secondary-button"
-import { ScrollView } from "react-native-gesture-handler"
 
 const useStyles = makeStyles(({ colors }) => ({
   imageContainer: {

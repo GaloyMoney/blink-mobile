@@ -1,8 +1,10 @@
 import { WalletCurrency } from "@app/graphql/generated"
+import { ZeroBtcMoneyAmount, toBtcMoneyAmount } from "@app/types/amounts"
 import {
   InvalidLightningDestinationReason,
   LightningPaymentDestination,
 } from "@galoymoney/client"
+
 import {
   createAmountLightningPaymentDetails,
   createNoAmountLightningPaymentDetails,
@@ -14,7 +16,6 @@ import {
   ParseDestinationResult,
   PaymentDestination,
 } from "./index.types"
-import { ZeroBtcMoneyAmount, toBtcMoneyAmount } from "@app/types/amounts"
 
 export const resolveLightningDestination = (
   parsedLightningDestination: LightningPaymentDestination,

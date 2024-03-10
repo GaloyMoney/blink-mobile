@@ -1,7 +1,3 @@
-import { MapMarker } from "@app/graphql/generated"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { isIos } from "@app/utils/helper"
-import { Text, makeStyles } from "@rneui/themed"
 import { useEffect, useRef } from "react"
 import { Dimensions, View } from "react-native"
 import {
@@ -10,6 +6,11 @@ import {
   MapMarker as MapMarkerType,
   Marker,
 } from "react-native-maps"
+
+import { MapMarker } from "@app/graphql/generated"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { isIos } from "@app/utils/helper"
+import { Text, makeStyles } from "@rneui/themed"
 
 /*
   In order to increase performance, markers are initially rendered without content in the callout.

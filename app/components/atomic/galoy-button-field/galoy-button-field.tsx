@@ -1,6 +1,8 @@
-import { useTheme, Text, makeStyles } from "@rneui/themed"
 import React from "react"
 import { Pressable, PressableProps, StyleProp, View, ViewStyle } from "react-native"
+
+import { useTheme, Text, makeStyles } from "@rneui/themed"
+
 import { GaloyIcon } from "../galoy-icon"
 
 export type GaloyButtonFieldProps = {

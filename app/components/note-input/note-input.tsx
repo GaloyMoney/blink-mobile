@@ -1,10 +1,10 @@
 import React from "react"
-
-import { makeStyles, useTheme } from "@rneui/themed"
 import { View, TextInput, StyleProp, ViewStyle } from "react-native"
 
-import { testProps } from "@app/utils/testProps"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { testProps } from "@app/utils/testProps"
+import { makeStyles, useTheme } from "@rneui/themed"
+
 import { GaloyIcon } from "../atomic/galoy-icon"
 
 export type NoteInputProps = {

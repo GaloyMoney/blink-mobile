@@ -1,3 +1,7 @@
+import * as React from "react"
+import { useCallback, useEffect, useState } from "react"
+import { ActivityIndicator, Alert, View } from "react-native"
+
 import { gql } from "@apollo/client"
 import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { GaloyInfo } from "@app/components/atomic/galoy-info"
@@ -14,9 +18,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Input, Text, makeStyles, useTheme } from "@rneui/themed"
-import * as React from "react"
-import { useCallback, useEffect, useState } from "react"
-import { ActivityIndicator, Alert, View } from "react-native"
+
 import { Screen } from "../../components/screen"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { parseTimer } from "../../utils/timer"

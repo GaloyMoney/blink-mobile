@@ -1,8 +1,10 @@
-import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import React from "react"
-import { usePriceConversion } from "../../hooks/use-price-conversion"
+
 import { Wallet } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
+
+import { usePriceConversion } from "../../hooks/use-price-conversion"
 
 type WalletFragment = Pick<Wallet, "id" | "balance" | "walletCurrency">
 

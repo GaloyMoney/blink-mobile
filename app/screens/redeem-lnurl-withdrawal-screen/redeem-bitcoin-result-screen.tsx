@@ -1,25 +1,24 @@
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { StackNavigationProp } from "@react-navigation/stack"
+import fetch from "cross-fetch"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { ActivityIndicator, View } from "react-native"
 
+import { useApolloClient } from "@apollo/client"
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+import { Screen } from "@app/components/screen"
 import {
   HomeAuthedDocument,
   useLnInvoiceCreateMutation,
   WalletCurrency,
 } from "@app/graphql/generated"
-import { useI18nContext } from "@app/i18n/i18n-react"
-
-import { GaloyIcon } from "@app/components/atomic/galoy-icon"
-import fetch from "cross-fetch"
-import { testProps } from "../../utils/testProps"
-
-import { useApolloClient } from "@apollo/client"
-import { Screen } from "@app/components/screen"
 import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { RouteProp, useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
+
+import { testProps } from "../../utils/testProps"
 import { withMyLnUpdateSub } from "../receive-bitcoin-screen/my-ln-updates-sub"
 import { LnInvoiceNoSecret } from "../receive-bitcoin-screen/payment/index.types"
 

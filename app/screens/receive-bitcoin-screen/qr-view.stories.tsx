@@ -1,7 +1,8 @@
 import * as React from "react"
+
 import { Story, UseCase } from "../../../.storybook/views"
-import { QRView } from "./qr-view"
 import { Invoice } from "./payment/index.types"
+import { QRView } from "./qr-view"
 
 export default {
   title: "QRView",

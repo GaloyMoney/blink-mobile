@@ -8,26 +8,24 @@ import {
   useWindowDimensions,
 } from "react-native"
 import Modal from "react-native-modal"
-import Clipboard from "@react-native-clipboard/clipboard"
+import QRCode from "react-native-qrcode-svg"
+import Icon from "react-native-vector-icons/Ionicons"
 
+import { gql } from "@apollo/client"
+import Logo from "@app/assets/logo/blink-logo-icon.png"
+import { getInviteLink } from "@app/config/appinfo"
+import { useInviteQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { PeopleStackParamList } from "@app/navigation/stack-param-lists"
+import { toastShow } from "@app/utils/toast"
+import Clipboard from "@react-native-clipboard/clipboard"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { makeStyles, useTheme, Text } from "@rneui/themed"
 
 import { GaloyIconButton } from "../atomic/galoy-icon-button"
-import { gql } from "@apollo/client"
-import { useInviteQuery } from "@app/graphql/generated"
-
-import QRCode from "react-native-qrcode-svg"
-import Logo from "@app/assets/logo/blink-logo-icon.png"
-
-import { getInviteLink } from "@app/config/appinfo"
-import Icon from "react-native-vector-icons/Ionicons"
-import crashlytics from "@react-native-firebase/crashlytics"
-import { toastShow } from "@app/utils/toast"
 import { GaloyToast } from "../galoy-toast"
-import { useNavigation } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { PeopleStackParamList } from "@app/navigation/stack-param-lists"
 import { PressableCard } from "../pressable-card"
 
 type Props = {

@@ -1,16 +1,21 @@
-import { useAppConfig } from "@app/hooks"
-import { useEffect, useMemo, useState } from "react"
 import parsePhoneNumber, {
   AsYouType,
   CountryCode,
   getCountryCallingCode,
 } from "libphonenumber-js/mobile"
+import { useEffect, useMemo, useState } from "react"
+
 import { gql } from "@apollo/client"
 import {
   PhoneCodeChannelType,
   useSupportedCountriesQuery,
   useUserPhoneRegistrationInitiateMutation,
 } from "@app/graphql/generated"
+import { useAppConfig } from "@app/hooks"
+import useDeviceLocation from "@app/hooks/use-device-location"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 
 export const RequestPhoneCodeStatus = {
   LoadingCountryCode: "LoadingCountryCode",
@@ -26,11 +31,6 @@ export const ErrorType = {
   RequestCodeError: "RequestCodeError",
   UnsupportedCountryError: "UnsupportedCountryError",
 } as const
-
-import { useNavigation } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import useDeviceLocation from "@app/hooks/use-device-location"
 
 type ErrorType = (typeof ErrorType)[keyof typeof ErrorType]
 

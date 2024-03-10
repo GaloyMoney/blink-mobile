@@ -1,9 +1,10 @@
+import React from "react"
+import { View } from "react-native"
+
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import CustomModal from "@app/components/custom-modal/custom-modal"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
-import React from "react"
-import { View } from "react-native"
 
 export type ConfirmFeesModalProps = {
   isVisible: boolean

@@ -1,4 +1,8 @@
+import { CountryCode } from "libphonenumber-js/mobile"
+import { Region } from "react-native-maps"
+
 import { ApolloClient, gql } from "@apollo/client"
+
 import {
   BetaDocument,
   BetaQuery,
@@ -20,8 +24,6 @@ import {
   RegionDocument,
   RegionQuery,
 } from "./generated"
-import { CountryCode } from "libphonenumber-js/mobile"
-import { Region } from "react-native-maps"
 
 export default gql`
   query hideBalance {

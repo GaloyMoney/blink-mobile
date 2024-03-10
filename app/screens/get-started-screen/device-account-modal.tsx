@@ -1,27 +1,29 @@
+import * as React from "react"
+import { useEffect } from "react"
+import { View } from "react-native"
+import * as Keychain from "react-native-keychain"
+import { generateSecureRandom } from "react-native-securerandom"
+import { LocalizedString } from "typesafe-i18n"
+import { v4 as uuidv4 } from "uuid"
+
+import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import CustomModal from "@app/components/custom-modal/custom-modal"
 import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { useNavigation } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
-import * as React from "react"
-import { Text, makeStyles, useTheme } from "@rneui/themed"
-import { GaloyIcon } from "@app/components/atomic/galoy-icon"
-import { View } from "react-native"
-import { LocalizedString } from "typesafe-i18n"
-import { DeviceAccountFailModal } from "./device-account-fail-modal"
-import { useEffect } from "react"
 import {
   logAttemptCreateDeviceAccount,
   logCreateDeviceAccountFailure,
   logCreatedDeviceAccount,
 } from "@app/utils/analytics"
-import * as Keychain from "react-native-keychain"
 import analytics from "@react-native-firebase/analytics"
-import { v4 as uuidv4 } from "uuid"
-import { generateSecureRandom } from "react-native-securerandom"
 import crashlytics from "@react-native-firebase/crashlytics"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
+
 import { PhoneLoginInitiateType } from "../phone-auth-screen"
+import { DeviceAccountFailModal } from "./device-account-fail-modal"
 
 const generateSecureRandomUUID = async () => {
   const randomBytes = await generateSecureRandom(16) // Generate 16 random bytes

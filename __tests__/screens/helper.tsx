@@ -1,17 +1,17 @@
-import { MockedProvider } from "@apollo/client/testing"
 import React, { PropsWithChildren } from "react"
+
+import { MockedProvider } from "@apollo/client/testing"
+import mocks from "@app/graphql/mocks"
+import TypesafeI18n from "@app/i18n/i18n-react"
+import theme from "@app/rne-theme/theme"
+import { detectDefaultLocale } from "@app/utils/locale-detector"
+import { NavigationContainer } from "@react-navigation/native"
+import { createStackNavigator } from "@react-navigation/stack"
+import { ThemeProvider } from "@rneui/themed"
+
 import { StoryScreen } from "../../.storybook/views"
 import { createCache } from "../../app/graphql/cache"
 import { IsAuthedContextProvider } from "../../app/graphql/is-authed-context"
-
-import theme from "@app/rne-theme/theme"
-import { NavigationContainer } from "@react-navigation/native"
-import { ThemeProvider } from "@rneui/themed"
-
-import mocks from "@app/graphql/mocks"
-import { createStackNavigator } from "@react-navigation/stack"
-import TypesafeI18n from "@app/i18n/i18n-react"
-import { detectDefaultLocale } from "@app/utils/locale-detector"
 
 const Stack = createStackNavigator()
 

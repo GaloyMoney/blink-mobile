@@ -1,18 +1,15 @@
+import { useState } from "react"
 import { Alert, Share, View } from "react-native"
 
-import { makeStyles, Text } from "@rneui/themed"
-import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
-
-import { useState } from "react"
-
 import { gql } from "@apollo/client"
-import { useInviteQuery } from "@app/graphql/generated"
-
-import crashlytics from "@react-native-firebase/crashlytics"
+import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { InviteModal } from "@app/components/invite-modal"
-import { getInviteLink } from "@app/config/appinfo"
-import { useI18nContext } from "@app/i18n/i18n-react"
 import { PressableCard } from "@app/components/pressable-card"
+import { getInviteLink } from "@app/config/appinfo"
+import { useInviteQuery } from "@app/graphql/generated"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { makeStyles, Text } from "@rneui/themed"
 
 gql`
   query invite {

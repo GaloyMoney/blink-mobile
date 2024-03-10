@@ -9,7 +9,6 @@ import { PricePoint, useBtcPriceListQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
 import { Button } from "@rneui/base"
-
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 
 const multiple = (currentUnit: string) => {

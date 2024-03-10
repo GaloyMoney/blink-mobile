@@ -1,6 +1,8 @@
 import { GraphQLError } from "graphql"
-import { GraphQlApplicationError } from "./generated"
+
 import { ApolloError } from "@apollo/client"
+
+import { GraphQlApplicationError } from "./generated"
 
 type ErrorInput =
   | readonly GraphQLError[]

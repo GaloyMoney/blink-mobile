@@ -1,6 +1,8 @@
 import React from "react"
-import { GaloyButtonField } from "."
+
 import { Meta } from "@storybook/react"
+
+import { GaloyButtonField } from "."
 import { Story, UseCase } from "../../../../.storybook/views"
 
 export default {

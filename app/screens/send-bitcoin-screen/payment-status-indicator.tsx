@@ -1,7 +1,7 @@
 import * as React from "react"
 
-import { useI18nContext } from "@app/i18n/i18n-react"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { Text, makeStyles } from "@rneui/themed"
 
 type Props = {

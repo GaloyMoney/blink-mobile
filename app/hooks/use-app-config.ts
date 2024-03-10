@@ -1,6 +1,7 @@
+import { useCallback, useMemo } from "react"
+
 import { GaloyInstance, resolveGaloyInstanceOrDefault } from "@app/config"
 import { usePersistentStateContext } from "@app/store/persistent-state"
-import { useCallback, useMemo } from "react"
 
 export const useAppConfig = () => {
   const { persistentState, updateState } = usePersistentStateContext()

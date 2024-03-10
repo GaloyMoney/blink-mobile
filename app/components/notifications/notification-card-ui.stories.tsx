@@ -1,12 +1,12 @@
 import React from "react"
+import { View } from "react-native"
 
 import { MockedProvider } from "@apollo/client/testing"
+import { makeStyles } from "@rneui/themed"
 
 import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import mocks from "../../graphql/mocks"
-import { View } from "react-native"
-import { makeStyles } from "@rneui/themed"
 import { NotificationCardUI } from "./notification-card-ui"
 
 export default {

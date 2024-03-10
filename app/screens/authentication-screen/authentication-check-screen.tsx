@@ -1,20 +1,19 @@
 import * as React from "react"
 import { useEffect } from "react"
 
-import { Screen } from "../../components/screen"
-import KeyStoreWrapper from "../../utils/storage/secureStorage"
-import BiometricWrapper from "../../utils/biometricAuthentication"
-import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
-import type { RootStackParamList } from "../../navigation/stack-param-lists"
-import { StackNavigationProp } from "@react-navigation/stack"
-
-import AppLogoLightMode from "../../assets/logo/app-logo-light.svg"
-import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
-import { makeStyles, useTheme } from "@rneui/themed"
-
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useAuthenticationContext } from "@app/navigation/navigation-container-wrapper"
 import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { makeStyles, useTheme } from "@rneui/themed"
+
+import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
+import AppLogoLightMode from "../../assets/logo/app-logo-light.svg"
+import { Screen } from "../../components/screen"
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
+import BiometricWrapper from "../../utils/biometricAuthentication"
+import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
+import KeyStoreWrapper from "../../utils/storage/secureStorage"
 
 export const AuthenticationCheckScreen: React.FC = () => {
   const styles = useStyles()

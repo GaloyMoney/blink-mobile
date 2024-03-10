@@ -5,6 +5,7 @@
  * PaymentRequest - Generated quotation which contains the finalized invoice data
  * Invoice - (not specific to LN) The quoted invoice that contains invoice type specific data
  */
+import { GraphQLError } from "graphql"
 
 import {
   GraphQlApplicationError,
@@ -17,15 +18,14 @@ import {
   OnChainAddressCurrentMutationHookResult,
   Network,
 } from "@app/graphql/generated"
+import { ConvertMoneyAmount } from "@app/screens/send-bitcoin-screen/payment-details"
 import {
   BtcMoneyAmount,
   MoneyAmount,
   WalletAmount,
   WalletOrDisplayCurrency,
 } from "@app/types/amounts"
-import { ConvertMoneyAmount } from "@app/screens/send-bitcoin-screen/payment-details"
 import { BtcWalletDescriptor, WalletDescriptor } from "@app/types/wallets"
-import { GraphQLError } from "graphql"
 
 // ------------------------ COMMONS ------------------------
 

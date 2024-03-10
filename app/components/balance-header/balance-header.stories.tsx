@@ -1,11 +1,13 @@
+import React from "react"
+
 import { MockedProvider } from "@apollo/client/testing"
 import { Meta } from "@storybook/react"
-import React from "react"
+
 import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
-import { BalanceHeader } from "./balance-header"
 import mocks from "../../graphql/mocks"
+import { BalanceHeader } from "./balance-header"
 
 export default {
   title: "Balance Header",

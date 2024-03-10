@@ -1,3 +1,7 @@
+import React, { useState } from "react"
+import { ActivityIndicator, TouchableOpacity, View } from "react-native"
+import ReactNativeHapticFeedback from "react-native-haptic-feedback"
+
 import { gql } from "@apollo/client"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import GaloySliderButton from "@app/components/atomic/galoy-slider-button/galoy-slider-button"
@@ -31,9 +35,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { CommonActions, RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
-import React, { useState } from "react"
-import { ActivityIndicator, TouchableOpacity, View } from "react-native"
-import ReactNativeHapticFeedback from "react-native-haptic-feedback"
+
 import { testProps } from "../../utils/testProps"
 import useFee from "./use-fee"
 import { useSendPayment } from "./use-send-payment"

@@ -1,5 +1,6 @@
-import { decodeInvoiceString, Network as NetworkLibGaloy } from "@galoymoney/client"
 import { Network } from "@app/graphql/generated"
+import { decodeInvoiceString, Network as NetworkLibGaloy } from "@galoymoney/client"
+
 import { Invoice, GetFullUriInput } from "./index.types"
 
 const prefixByType = {

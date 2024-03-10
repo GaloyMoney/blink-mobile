@@ -1,10 +1,12 @@
 import * as React from "react"
+import { View } from "react-native"
+
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { Input, makeStyles, Text, useTheme } from "@rneui/themed"
-import { View } from "react-native"
+
+import { GaloyErrorBox } from "../atomic/galoy-error-box"
 import { GaloyIconButton } from "../atomic/galoy-icon-button"
 import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
-import { GaloyErrorBox } from "../atomic/galoy-error-box"
 import { CurrencyKeyboard } from "../currency-keyboard"
 import { Key } from "./number-pad-reducer"
 

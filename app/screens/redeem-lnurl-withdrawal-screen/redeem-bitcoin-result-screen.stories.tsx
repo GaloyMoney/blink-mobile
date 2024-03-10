@@ -1,11 +1,13 @@
 import * as React from "react"
+
 import { MockedProvider } from "@apollo/client/testing"
+import { Meta } from "@storybook/react"
+
+import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
+import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 import mocks from "../../graphql/mocks"
 import RedeemBitcoinResultScreen from "./redeem-bitcoin-result-screen"
-import { Meta } from "@storybook/react"
-import { StoryScreen } from "../../../.storybook/views"
-import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
 
 export default {
   title: "Redeem bitcoin Result",

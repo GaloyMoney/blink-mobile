@@ -1,9 +1,11 @@
 import * as React from "react"
-import { StoryScreen } from "../../../.storybook/views"
-import { ThemeScreen } from "./theme-screen"
-import { Meta } from "@storybook/react"
+
 import { MockedProvider } from "@apollo/client/testing"
+import { Meta } from "@storybook/react"
+
+import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
+import { ThemeScreen } from "./theme-screen"
 
 export default {
   title: "Theme Screen",

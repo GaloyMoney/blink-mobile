@@ -1,11 +1,11 @@
 import { View } from "react-native"
 
-import { makeStyles, Text } from "@rneui/themed"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
-
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { useCirclesCard } from "./use-circles-card"
 import { PressableCard } from "@app/components/pressable-card"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { makeStyles, Text } from "@rneui/themed"
+
+import { useCirclesCard } from "./use-circles-card"
 
 export const ShareCircles = () => {
   const styles = useStyles()

@@ -1,6 +1,7 @@
-import { makeStyles, Text, useTheme } from "@rneui/themed"
 import React from "react"
 import { Pressable, PressableProps, StyleProp, View, ViewStyle } from "react-native"
+
+import { makeStyles, Text, useTheme } from "@rneui/themed"
 
 export type GaloyTertiaryButtonProps = {
   outline?: boolean

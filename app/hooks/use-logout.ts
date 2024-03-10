@@ -1,13 +1,15 @@
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import { SCHEMA_VERSION_KEY } from "@app/config"
-import KeyStoreWrapper from "../utils/storage/secureStorage"
-import crashlytics from "@react-native-firebase/crashlytics"
-import { logLogout } from "@app/utils/analytics"
 import { useCallback } from "react"
-import { usePersistentStateContext } from "@app/store/persistent-state"
+
 import { gql } from "@apollo/client"
+import { SCHEMA_VERSION_KEY } from "@app/config"
 import { useUserLogoutMutation } from "@app/graphql/generated"
+import { usePersistentStateContext } from "@app/store/persistent-state"
+import { logLogout } from "@app/utils/analytics"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import crashlytics from "@react-native-firebase/crashlytics"
 import messaging from "@react-native-firebase/messaging"
+
+import KeyStoreWrapper from "../utils/storage/secureStorage"
 
 gql`
   mutation userLogout($input: UserLogoutInput!) {

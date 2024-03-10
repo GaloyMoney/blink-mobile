@@ -1,13 +1,15 @@
 import React from "react"
-import { Meta } from "@storybook/react"
+
 import { MockedProvider } from "@apollo/client/testing"
-import { createCache } from "../../graphql/cache"
+import { Meta } from "@storybook/react"
+
 import { StoryScreen } from "../../../.storybook/views"
-import { PhoneLoginNavigator } from "../../navigation/root-navigator"
+import { createCache } from "../../graphql/cache"
 import {
   CaptchaCreateChallengeDocument,
   CaptchaRequestAuthCodeDocument,
 } from "../../graphql/generated"
+import { PhoneLoginNavigator } from "../../navigation/root-navigator"
 
 const mocks = [
   {

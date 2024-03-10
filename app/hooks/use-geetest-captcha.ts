@@ -1,10 +1,11 @@
+import { useCallback, useEffect, useRef, useState } from "react"
+import { EventSubscription, NativeEventEmitter, NativeModules } from "react-native"
+
 import { gql } from "@apollo/client"
 import { useCaptchaCreateChallengeMutation } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { logStartCaptcha } from "@app/utils/analytics"
 import GeetestModule from "@galoymoney/react-native-geetest-module"
-import { useCallback, useEffect, useRef, useState } from "react"
-import { EventSubscription, NativeEventEmitter, NativeModules } from "react-native"
 
 type GeetestValidationData = {
   geetestChallenge: string

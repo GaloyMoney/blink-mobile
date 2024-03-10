@@ -1,4 +1,6 @@
-import { createLnurlPaymentDetails } from "@app/screens/send-bitcoin-screen/payment-details"
+import { LNURLPayParams, LNURLResponse, LNURLWithdrawParams, getParams } from "js-lnurl"
+import { requestPayServiceParams } from "lnurl-pay"
+import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
 import { createMock } from "ts-auto-mock"
 
 import {
@@ -6,12 +8,11 @@ import {
   resolveLnurlDestination,
 } from "@app/screens/send-bitcoin-screen/payment-destination"
 import { DestinationDirection } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
+import { createLnurlPaymentDetails } from "@app/screens/send-bitcoin-screen/payment-details"
 import { ZeroBtcMoneyAmount } from "@app/types/amounts"
 import { PaymentType } from "@galoymoney/client"
-import { LNURLPayParams, LNURLResponse, LNURLWithdrawParams, getParams } from "js-lnurl"
-import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
+
 import { defaultPaymentDetailParams } from "./helpers"
-import { requestPayServiceParams } from "lnurl-pay"
 
 jest.mock("lnurl-pay", () => {
   return {

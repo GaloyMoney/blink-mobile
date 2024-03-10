@@ -1,3 +1,7 @@
+import React, { useEffect, useState } from "react"
+import { ActivityIndicator, Alert, Linking, View } from "react-native"
+import InAppBrowser from "react-native-inappbrowser-reborn"
+
 import { gql } from "@apollo/client"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { ContactSupportButton } from "@app/components/contact-support-button/contact-support-button"
@@ -11,9 +15,6 @@ import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import { Input, Text, makeStyles, useTheme } from "@rneui/themed"
-import React, { useEffect, useState } from "react"
-import { ActivityIndicator, Alert, Linking, View } from "react-native"
-import InAppBrowser from "react-native-inappbrowser-reborn"
 
 gql`
   mutation onboardingFlowStart($input: OnboardingFlowStartInput!) {

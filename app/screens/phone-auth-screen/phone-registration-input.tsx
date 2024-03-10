@@ -1,3 +1,7 @@
+import {
+  CountryCode as PhoneNumberCountryCode,
+  getCountryCallingCode,
+} from "libphonenumber-js/mobile"
 import * as React from "react"
 import { ActivityIndicator, View } from "react-native"
 import CountryPicker, {
@@ -6,25 +10,23 @@ import CountryPicker, {
   DEFAULT_THEME,
   Flag,
 } from "react-native-country-picker-modal"
-import {
-  CountryCode as PhoneNumberCountryCode,
-  getCountryCallingCode,
-} from "libphonenumber-js/mobile"
+import { TouchableOpacity } from "react-native-gesture-handler"
+
+import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
+import { GaloyInfo } from "@app/components/atomic/galoy-info"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { ContactSupportButton } from "@app/components/contact-support-button/contact-support-button"
+import { PhoneCodeChannelType } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { makeStyles, useTheme, Text, Input } from "@rneui/themed"
+
 import { Screen } from "../../components/screen"
 import {
   ErrorType,
   RequestPhoneCodeStatus,
   useRequestPhoneCodeRegistration,
 } from "./request-phone-code-registration"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
-import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
-import { PhoneCodeChannelType } from "@app/graphql/generated"
-import { TouchableOpacity } from "react-native-gesture-handler"
-import { GaloyInfo } from "@app/components/atomic/galoy-info"
 
 const DEFAULT_COUNTRY_CODE = "SV"
 const PLACEHOLDER_PHONE_NUMBER = "123-456-7890"

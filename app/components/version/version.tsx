@@ -1,12 +1,14 @@
-import { useNavigation } from "@react-navigation/native"
 import * as React from "react"
 import { Pressable } from "react-native"
 import DeviceInfo from "react-native-device-info"
-import type { StackNavigationProp } from "@react-navigation/stack"
-import type { RootStackParamList } from "../../navigation/stack-param-lists"
+
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { testProps } from "../../utils/testProps"
+import { useNavigation } from "@react-navigation/native"
+import type { StackNavigationProp } from "@react-navigation/stack"
 import { Text, makeStyles } from "@rneui/themed"
+
+import type { RootStackParamList } from "../../navigation/stack-param-lists"
+import { testProps } from "../../utils/testProps"
 
 const useStyles = makeStyles(({ colors }) => ({
   version: {

@@ -5,12 +5,14 @@ import { ScrollView } from "react-native-gesture-handler"
 import { gql } from "@apollo/client"
 import SwitchButton from "@app/assets/icons-redesign/transfer.svg"
 import { AmountInput } from "@app/components/amount-input"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { Screen } from "@app/components/screen"
 import {
   useConversionScreenQuery,
   useRealtimePriceQuery,
   WalletCurrency,
 } from "@app/graphql/generated"
+import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -24,8 +26,6 @@ import {
 } from "@app/types/amounts"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 
 gql`
   query conversionScreen {

@@ -1,6 +1,8 @@
-import { CustomIcon } from "@app/components/custom-icon"
 import React from "react"
+
+import { CustomIcon } from "@app/components/custom-icon"
 import { Divider, Icon, ListItem, Text, makeStyles, useTheme } from "@rneui/themed"
+
 import { testProps } from "../../utils/testProps"
 
 const useStyles = makeStyles(({ colors }) => ({
