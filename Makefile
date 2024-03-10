@@ -24,3 +24,6 @@ tilt-up:
 
 tilt-down:
 	cd dev && tilt down
+
+emulator:
+	emulator -avd Pixel_API_34 -gpu swiftshader
