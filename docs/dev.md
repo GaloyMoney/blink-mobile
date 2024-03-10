@@ -69,7 +69,7 @@ tmux new-session -d -s mySession 'yarn start' \; split-window -h 'sleep 3 && yar
 To run the application on iOS:
 
 1. **Xcode and Simulator Setup**:
-   - Make sure you have Xcode (and preferrably on a version that direnv didn't complain to you about). If you don't you can download it using the `xcodes` CLI [see step](#xcode-and-simulator-setup-using-xcodes).
+   - Make sure you have Xcode (and preferably on a version that direnv didn't complain to you about). If you don't you can download it using the `xcodes` CLI [see step](#xcode-and-simulator-setup-using-xcodes).
    - Make sure you have an XCode Simulator Runtime. You probably have it if you had XCode installed previously but you can verify it by running `open -a simulator`. If it fails, you probably don't have it and you can download it using `xcodes` as well [see step](#xcode-and-simulator-setup-using-xcodes).
 
 1. **Start the Metro Development Server**:
