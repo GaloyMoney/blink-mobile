@@ -24,9 +24,9 @@ import {
   toUsdMoneyAmount,
   toWalletAmount,
 } from "@app/types/amounts"
+import { testProps } from "@app/utils/testProps"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
-import { testProps } from "@app/utils/testProps"
 
 gql`
   query conversionScreen {

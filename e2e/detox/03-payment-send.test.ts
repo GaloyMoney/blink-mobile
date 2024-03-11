@@ -1,17 +1,15 @@
 import "detox"
 
-import { timeout, BOB_USERNAME, ALICE_TOKEN } from "./utils/config"
-
 import { i18nObject } from "../../app/i18n/i18n-util"
 import { loadLocale } from "../../app/i18n/i18n-util.sync"
-
-import { addAmount, tap, verifyTextPresent, sleep, slideSlider } from "./utils/controls"
-import { setLocalAndLoginWithAccessToken, waitForHomeScreen } from "./utils/common-flows"
 import {
   getExternalLNNoAmountInvoice,
   getLnInvoiceForBob,
   getOnchainAddress,
 } from "./utils/commandline"
+import { setLocalAndLoginWithAccessToken, waitForHomeScreen } from "./utils/common-flows"
+import { timeout, BOB_USERNAME, ALICE_TOKEN } from "./utils/config"
+import { addAmount, tap, verifyTextPresent, sleep, slideSlider } from "./utils/controls"
 
 loadLocale("en")
 const LL = i18nObject("en")
@@ -22,7 +20,7 @@ beforeAll(async () => {
   await setLocalAndLoginWithAccessToken(ALICE_TOKEN, LL)
 })
 
-describe("Intraledger using Username - BTC Amount", () => {
+describe("Send: Intraledger using Username - BTC Amount", () => {
   it("send btc to bob using his username", async () => {
     await tap(by.id(LL.HomeScreen.send()))
 
@@ -67,7 +65,7 @@ describe("Intraledger using Username - BTC Amount", () => {
   })
 })
 
-describe("Intraledger using Username - USD Amount", () => {
+describe("Send: Intraledger using Username - USD Amount", () => {
   it("send btc to bob using his username", async () => {
     await tap(by.id(LL.HomeScreen.send()))
 
@@ -115,7 +113,7 @@ describe("Intraledger using Username - USD Amount", () => {
   })
 })
 
-describe("Intraledger using LN Invoice", () => {
+describe("Send: Intraledger using LN Invoice", () => {
   it("send btc to bob using his ln invoice", async () => {
     await tap(by.id(LL.HomeScreen.send()))
 
@@ -156,7 +154,7 @@ describe("Intraledger using LN Invoice", () => {
   })
 })
 
-describe("Send to External LN Invoice", () => {
+describe("Send: to External LN Invoice", () => {
   it("send btc to an external invoice taken from lnd-outside-1", async () => {
     await tap(by.id(LL.HomeScreen.send()))
 
@@ -192,7 +190,7 @@ describe("Send to External LN Invoice", () => {
   })
 })
 
-describe("Send to Onchain Address", () => {
+describe("Send: to Onchain Address", () => {
   it("send btc to an onchain address from bitcoind", async () => {
     await tap(by.id(LL.HomeScreen.send()))
 

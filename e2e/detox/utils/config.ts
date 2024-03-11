@@ -1,5 +1,6 @@
-import path from "path"
 import { config } from "dotenv"
+import path from "path"
+
 config({ path: path.join(__dirname, "../../../dev/.env.tmp.ci") })
 
 if (!process.env.ALICE_PHONE || !process.env.BOB_PHONE) {

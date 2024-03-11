@@ -11,6 +11,7 @@ import {
 } from "@app/components/success-animation"
 import { setFeedbackModalShown } from "@app/graphql/client-only-query"
 import { useFeedbackModalShownQuery } from "@app/graphql/generated"
+import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { logAppFeedback } from "@app/utils/analytics"
@@ -25,7 +26,6 @@ import {
 } from "../transaction-detail-screen/format-time"
 import { SuggestionModal } from "./suggestion-modal"
 import { PaymentSendCompletedStatus } from "./use-send-payment"
-import { useAppConfig } from "@app/hooks"
 
 type Props = {
   route: RouteProp<RootStackParamList, "sendBitcoinCompleted">

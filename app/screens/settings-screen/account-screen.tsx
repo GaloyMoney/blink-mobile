@@ -24,6 +24,7 @@ import useLogout from "@app/hooks/use-logout"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
+import { testProps } from "@app/utils/testProps"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
@@ -31,7 +32,6 @@ import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { AccountId } from "./account-id"
 import { SettingsRow } from "./settings-row"
 import { useShowWarningSecureAccount } from "./show-warning-secure-account"
-import { testProps } from "@app/utils/testProps"
 
 gql`
   query accountScreen {

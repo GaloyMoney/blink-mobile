@@ -14,8 +14,8 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated"
 
-import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { testProps } from "@app/utils/testProps"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 
 import { GaloyIcon } from "../galoy-icon"
 

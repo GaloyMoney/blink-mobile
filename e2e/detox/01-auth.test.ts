@@ -1,15 +1,12 @@
 import "detox"
 
-import { timeout, ALICE_PHONE, ALICE_EMAIL, otp } from "./utils/config"
-
 import { TranslationFunctions } from "../../app/i18n/i18n-types"
 import { i18nObject } from "../../app/i18n/i18n-util"
 import { loadLocale } from "../../app/i18n/i18n-util.sync"
-
 import { getKratosCode } from "./utils/commandline"
-
-import { tap } from "./utils/controls"
 import { waitForAccountScreen } from "./utils/common-flows"
+import { timeout, ALICE_PHONE, ALICE_EMAIL, otp } from "./utils/config"
+import { tap } from "./utils/controls"
 
 export const setLocalEnvironment = async () => {
   const buildBtn = element(by.id("logo-button"))

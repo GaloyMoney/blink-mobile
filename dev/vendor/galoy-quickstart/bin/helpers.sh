@@ -145,21 +145,13 @@ login_user() {
 }
 
 receive_onchain() {
-  token_name="${1:alice}"
+ token_name="alice"
+ btc_wallet_name="$token_name.btc_wallet_id"
+ amount="0.01"
 
-  btc_wallet_name="$token_name.btc_wallet_id"
-  usd_wallet_name="$token_name.usd_wallet_id"
-
-  amount="0.01"
-
-  wallet_id=$(read_value $btc_wallet_name)
-  if [[ "$2" == "usd" ]]; then
-      wallet_id=$(read_value $usd_wallet_name)
-  fi
-  
   variables=$(
     jq -n \
-    --arg wallet_id "$wallet_id" \
+    --arg wallet_id "$(read_value $btc_wallet_name)" \
     '{input: {walletId: $wallet_id}}'
   )
 

@@ -15,8 +15,8 @@ import {
   toBtcMoneyAmount,
   toUsdMoneyAmount,
 } from "@app/types/amounts"
-import { makeStyles, Text } from "@rneui/themed"
 import { testProps } from "@app/utils/testProps"
+import { makeStyles, Text } from "@rneui/themed"
 
 const Loader = () => {
   const styles = useStyles()

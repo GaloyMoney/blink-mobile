@@ -52,18 +52,19 @@ jobs:
         uses: nick-fields/retry@v3
         with:
           timeout_minutes: 10
-          retry_wait_seconds: 15
-          max_attempts: 5
+          retry_wait_seconds: 30
+          max_attempts: 8
           command: cd dev && tilt ci
 
       # Tests on iOS Simulator
       - name: Run Detox Tests on iOS Simulator
         uses: nick-fields/retry@v3
         with:
-          timeout_minutes: 10
-          max_attempts: 5
+          timeout_minutes: 12
+          max_attempts: 3
           command: |
             rm -rf ios-recordings || true
+            make reset-e2e
             yarn e2e:test ios.sim.debug -d --take-screenshots all --record-videos all --record-logs all --artifacts-location ios-recordings
 
       - run: killall Simulator
@@ -85,10 +86,11 @@ jobs:
       - name: Run Detox Tests on Android Emulator
         uses: nick-fields/retry@v3
         with:
-          timeout_minutes: 10
-          max_attempts: 5
+          timeout_minutes: 12
+          max_attempts: 3
           command: |
             rm -rf android-recordings || true
+            make reset-e2e
             yarn e2e:test android.emu.debug -d --take-screenshots all --record-videos all --record-logs all --artifacts-location android-recordings
 
       - name: Kill Android Emulator
@@ -113,5 +115,4 @@ jobs:
         continue-on-error: true
         run: |
           cd dev && tilt down || true
-          docker volume prune -af || true
-          docker rm -f $(docker ps -aq)
+          docker rm -f $(docker ps -aq) || true

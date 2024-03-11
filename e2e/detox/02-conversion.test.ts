@@ -1,12 +1,10 @@
 import "detox"
 
-import { timeout, ALICE_USERNAME, ALICE_TOKEN } from "./utils/config"
-
 import { i18nObject } from "../../app/i18n/i18n-util"
 import { loadLocale } from "../../app/i18n/i18n-util.sync"
-
-import { tap, verifyTextPresent } from "./utils/controls"
 import { waitForHomeScreen, setLocalAndLoginWithAccessToken } from "./utils/common-flows"
+import { timeout, ALICE_USERNAME, ALICE_TOKEN } from "./utils/config"
+import { tap, verifyTextPresent } from "./utils/controls"
 
 describe("Intraledger Flow", () => {
   loadLocale("en")

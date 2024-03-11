@@ -1,5 +1,5 @@
-import path from "path"
 import { exec } from "child_process"
+import path from "path"
 
 const REPO_ROOT = path.join(__dirname, "../../..")
 
