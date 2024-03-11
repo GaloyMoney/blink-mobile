@@ -417,7 +417,7 @@ export const AccountScreen = () => {
     {
       category: LL.AccountScreen.accountLevel(),
       id: "level",
-      icon: "ios-flash",
+      icon: "flash",
       subTitleText: currentLevel,
       enabled: false,
       greyed: true,
@@ -501,7 +501,7 @@ export const AccountScreen = () => {
     accountSettingsList.push({
       category: LL.AccountScreen.logOutAndDeleteLocalData(),
       id: "logout",
-      icon: "ios-log-out",
+      icon: "log-out",
       action: logoutAlert,
       enabled: true,
       greyed: false,

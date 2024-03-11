@@ -347,7 +347,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
           >
             <View style={styles.iconContainer}>
               {/* we could Paste from "FontAwesome" but as svg*/}
-              <Icon name="ios-clipboard-outline" color={colors.primary} size={22} />
+              <Icon name="clipboard-outline" color={colors.primary} size={22} />
             </View>
           </TouchableWithoutFeedback>
         </View>

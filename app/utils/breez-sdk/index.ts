@@ -149,12 +149,12 @@ let breezSDKInitializing: Promise<void | boolean> | null = null
 
 export const initializeBreezSDK = async (): Promise<boolean> => {
   if (breezSDKInitialized) {
-    console.log("BreezSDK already initialized")
+    // console.log("BreezSDK already initialized")
     return false
   }
 
   if (breezSDKInitializing !== null) {
-    console.log("BreezSDK initialization in progress")
+    // console.log("BreezSDK initialization in progress")
     return breezSDKInitializing as Promise<boolean>
   }
 
@@ -162,7 +162,7 @@ export const initializeBreezSDK = async (): Promise<boolean> => {
     try {
       await retry(connectToSDK, 5000, 3)
       breezSDKInitialized = true
-      console.log("BreezSDK initialized")
+      // console.log("BreezSDK initialized")
       return true
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
