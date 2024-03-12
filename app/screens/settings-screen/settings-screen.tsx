@@ -318,14 +318,14 @@ export const SettingsScreen: React.FC = () => {
       enabled: isAtLeastLevelZero,
       greyed: !isAtLeastLevelZero,
     },
-    {
-      category: LL.common.csvExport(),
-      icon: "download",
-      id: "csv",
-      action: fetchCsvTransactions,
-      enabled: isAtLeastLevelZero && !loadingCsvTransactions,
-      greyed: !isAtLeastLevelZero || loadingCsvTransactions,
-    },
+    // {
+    //   category: LL.common.csvExport(),
+    //   icon: "download",
+    //   id: "csv",
+    //   action: fetchCsvTransactions,
+    //   enabled: isAtLeastLevelZero && !loadingCsvTransactions,
+    //   greyed: !isAtLeastLevelZero || loadingCsvTransactions,
+    // },
     {
       category: `${LL.SettingsScreen.theme()}`,
       icon: "contrast-outline",
