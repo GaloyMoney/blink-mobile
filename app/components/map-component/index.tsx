@@ -7,7 +7,6 @@ import { PermissionStatus, RESULTS, request } from "react-native-permissions"
 import { useApolloClient } from "@apollo/client"
 import { updateMapLastCoords } from "@app/graphql/client-only-query"
 import { BusinessMapMarkersQuery, MapMarker } from "@app/graphql/generated"
-import { LOCATION_PERMISSION, getUserRegion } from "@app/screens/map-screen/map-screen"
 import { isIOS } from "@rneui/base"
 import { makeStyles, useTheme } from "@rneui/themed"
 
@@ -15,6 +14,7 @@ import MapMarkerComponent from "../map-marker-component"
 import LocationButtonCopy from "./location-button-copy"
 import MapStyles from "./map-styles.json"
 import { OpenSettingsElement, OpenSettingsModal } from "./open-settings-modal"
+import { LOCATION_PERMISSION, getUserRegion } from "@app/screens/map-screen/functions"
 
 type Props = {
   data?: BusinessMapMarkersQuery
