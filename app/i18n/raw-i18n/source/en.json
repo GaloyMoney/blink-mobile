@@ -887,7 +887,7 @@
                             "Gas prices might fluctuate for a variety of reasons, but this particular scenario doesn't have much to do with it. Try again!"
                         ],
                         "question": "What is a potential outcome of banks issuing more paper notes than they held deposits",
-                        "text": "Banks sometimes issued more paper notes than they had deposits, which could cause problems in the economy. If people started to doubt the solvency of a bank, they might rush to withdraw their money all at once before others do. This is called a bank run.\n\nThe sudden loss of deposits from the bank run could reveal that the bank was using too much leverage through Fractional Reserve Banking. This could cause a lack of liquidity and bring the whole financial system to a stop.\n",
+                        "text": "Banks sometimes issued more paper notes than they had deposits, which could cause problems in the economy. If people started to doubt the solvency of a bank, they might rush to withdraw their money all at once before others do. This is called a bank run.\n\nThe sudden loss of deposits from the bank run could reveal that the bank was using too much leverage through Fractional Reserve Banking. In this case people wouldn't be able to take their hard earned money off the bank.\n",
                         "title": "Problems of Fractional Reserve Banking"
                     },
                     "modernCentralBanking": {
