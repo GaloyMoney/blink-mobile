@@ -1,33 +1,44 @@
-import { Screen } from "@app/components/screen"
-import { WalletCurrency } from "@app/graphql/generated"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { requestNotificationPermission } from "@app/utils/notifications"
-import { RouteProp, useIsFocused, useNavigation } from "@react-navigation/native"
 import React, { useEffect } from "react"
-import { TouchableOpacity, View } from "react-native"
-import { testProps } from "../../utils/testProps"
-import { withMyLnUpdateSub } from "./my-ln-updates-sub"
+import { Share, TouchableOpacity, View } from "react-native"
+import { RouteProp, useIsFocused, useNavigation } from "@react-navigation/native"
+import Clipboard from "@react-native-clipboard/clipboard"
+import Icon from "react-native-vector-icons/Ionicons"
+import { useI18nContext } from "@app/i18n/i18n-react"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
-import { ButtonGroup } from "@app/components/button-group"
 import { useReceiveBitcoin } from "./use-receive-bitcoin"
-import { Invoice, InvoiceType, PaymentRequestState } from "./payment/index.types"
+import { useAppSelector } from "@app/store/redux"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+
+// components
+import { Screen } from "@app/components/screen"
 import { QRView } from "./qr-view"
+import { ButtonGroup } from "@app/components/button-group"
 import { AmountInput } from "@app/components/amount-input"
 import { NoteInput } from "@app/components/note-input"
-import Icon from "react-native-vector-icons/Ionicons"
 import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
 import { GaloyCurrencyBubble } from "@app/components/atomic/galoy-currency-bubble"
+import { withMyLnUpdateSub } from "./my-ln-updates-sub"
 
-// Breez SDK
+// gql
+import { WalletCurrency, useAccountDefaultWalletQuery } from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+
+// breez-sdk
 import { paymentEvents } from "@app/utils/breez-sdk"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
+
+// utils
+import { requestNotificationPermission } from "@app/utils/notifications"
+import { testProps } from "../../utils/testProps"
+
+// types
+import { Invoice, InvoiceType, PaymentRequestState } from "./payment/index.types"
 
 type Props = {
   route: RouteProp<RootStackParamList, "receiveBitcoin">
 }
 
 const ReceiveScreen = ({ route }: Props) => {
+  const { userData } = useAppSelector((state) => state.user)
   const {
     theme: { colors },
   } = useTheme()
@@ -44,6 +55,12 @@ const ReceiveScreen = ({ route }: Props) => {
   const [currentWallet, setCurrentWallet] = React.useState(
     request?.receivingWalletDescriptor.currency,
   )
+
+  // query
+  const { data, loading, error } = useAccountDefaultWalletQuery({
+    variables: { username: userData.username },
+  })
+
   // notification permission
   useEffect(() => {
     let timeout: NodeJS.Timeout
@@ -139,6 +156,32 @@ const ReceiveScreen = ({ route }: Props) => {
 
   const isReady = request.state !== PaymentRequestState.Loading
 
+  const lnurlp = data?.accountDefaultWallet.lnurlp || ""
+  const useLnurlp =
+    request.type === "PayCode" &&
+    request.receivingWalletDescriptor.currency === "USD" &&
+    Boolean(lnurlp)
+
+  const handleCopy = () => {
+    if (useLnurlp) {
+      Clipboard.setString(lnurlp)
+    } else {
+      if (request.copyToClipboard) {
+        request.copyToClipboard()
+      }
+    }
+  }
+
+  const handleShare = async () => {
+    if (useLnurlp) {
+      const result = await Share.share({ message: lnurlp })
+    } else {
+      if (request.share) {
+        request.share()
+      }
+    }
+  }
+
   return (
     <>
       <Screen
@@ -180,21 +223,23 @@ const ReceiveScreen = ({ route }: Props) => {
         )}
         <QRView
           type={request.info?.data?.invoiceType || Invoice.OnChain}
-          getFullUri={request.info?.data?.getFullUriFn}
-          loading={request.state === PaymentRequestState.Loading}
+          getFullUri={useLnurlp ? lnurlp : request.info?.data?.getFullUriFn}
+          loading={useLnurlp ? loading : request.state === PaymentRequestState.Loading}
           completed={
             updatedPaymentState === PaymentRequestState.Paid ||
             request.state === PaymentRequestState.Paid
           }
           err={
-            request.state === PaymentRequestState.Error ? LL.ReceiveScreen.error() : ""
+            request.state === PaymentRequestState.Error || (useLnurlp && error)
+              ? LL.ReceiveScreen.error()
+              : ""
           }
           style={styles.qrView}
           expired={request.state === PaymentRequestState.Expired}
           regenerateInvoiceFn={request.regenerateInvoice}
-          copyToClipboard={request.copyToClipboard}
+          copyToClipboard={handleCopy}
           isPayCode={request.type === Invoice.PayCode}
-          canUsePayCode={request.canUsePaycode}
+          canUsePayCode={useLnurlp || request.canUsePaycode}
           toggleIsSetLightningAddressModalVisible={
             request.toggleIsSetLightningAddressModalVisible
           }
@@ -208,7 +253,7 @@ const ReceiveScreen = ({ route }: Props) => {
                 <View style={styles.copyInvoiceContainer}>
                   <TouchableOpacity
                     {...testProps(LL.ReceiveScreen.copyInvoice())}
-                    onPress={request.copyToClipboard}
+                    onPress={handleCopy}
                   >
                     <Text {...testProps("Copy Invoice")} color={colors.grey2}>
                       <Icon color={colors.grey2} name="copy-outline" />
@@ -239,7 +284,7 @@ const ReceiveScreen = ({ route }: Props) => {
                 <View style={styles.shareInvoiceContainer}>
                   <TouchableOpacity
                     {...testProps(LL.ReceiveScreen.shareInvoice())}
-                    onPress={request.share}
+                    onPress={handleShare}
                   >
                     <Text {...testProps("Share Invoice")} color={colors.grey2}>
                       <Icon color={colors.grey2} name="share-outline" />
@@ -252,11 +297,13 @@ const ReceiveScreen = ({ route }: Props) => {
             )}
         </View>
 
-        <TouchableOpacity onPress={request.copyToClipboard}>
+        <TouchableOpacity onPress={handleCopy}>
           <View style={styles.extraDetails}>
             {request.readablePaymentRequest && (
               <Text {...testProps("readable-payment-request")}>
-                {request.readablePaymentRequest}
+                {useLnurlp
+                  ? `${lnurlp.slice(0, 10)}..${lnurlp.slice(-10)}`
+                  : request.readablePaymentRequest}
               </Text>
             )}
           </View>

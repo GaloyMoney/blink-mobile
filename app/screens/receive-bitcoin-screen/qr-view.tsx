@@ -49,7 +49,7 @@ const configByType = {
 
 type Props = {
   type: InvoiceType
-  getFullUri: GetFullUriFn | undefined
+  getFullUri: GetFullUriFn | string | undefined
   loading: boolean
   completed: boolean
   err: string
@@ -148,7 +148,12 @@ export const QRView: React.FC<Props> = ({
     }
 
     if (displayingQR && getFullUri) {
-      const uri = getFullUri({ uppercase: true })
+      let uri = ""
+      if (typeof getFullUri === "string") {
+        uri = getFullUri
+      } else {
+        uri = getFullUri({ uppercase: true })
+      }
       return (
         <View style={[styles.container, style]}>
           <QRCode

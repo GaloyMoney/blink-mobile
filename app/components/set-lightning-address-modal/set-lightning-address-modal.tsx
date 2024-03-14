@@ -12,6 +12,10 @@ import {
   MyUserIdQuery,
 } from "../../graphql/generated"
 
+// store
+import { useAppDispatch } from "@app/store/redux"
+import { updateUserData } from "@app/store/redux/slices/userSlice"
+
 gql`
   mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
     userUpdateUsername(input: $input) {
@@ -38,6 +42,7 @@ export const SetLightningAddressModal = ({
   isVisible,
   toggleModal,
 }: SetLightningAddressModalProps) => {
+  const dispatch = useAppDispatch()
   const [error, setError] = useState<SetAddressError | undefined>()
   const [lnAddress, setLnAddress] = useState("")
 
@@ -96,6 +101,7 @@ export const SetLightningAddressModal = ({
       return
     }
 
+    dispatch(updateUserData({ username: lnAddress }))
     toggleModal()
   }
 
