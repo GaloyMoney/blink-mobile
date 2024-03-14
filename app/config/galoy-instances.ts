@@ -80,7 +80,7 @@ export const GALOY_INSTANCES: readonly GaloyInstance[] = [
     graphqlUri: "https://api.staging.flashapp.me/graphql",
     graphqlWsUri: "wss://ws.staging.flashapp.me/graphql",
     authUrl: "https://api.staging.flashapp.me",
-    posUrl: "http://staging.flashapp.me:3000",
+    posUrl: "http://pay.staging.flashapp.me",
     lnAddressHostname: "staging.flashapp.me",
     blockExplorer: "https://mempool.space/signet/tx/",
   },
