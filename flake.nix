@@ -143,6 +143,9 @@
             if [[ $(uname) == "Darwin" ]]; then
               echo "export NODE_BINARY=\"$(which node)\"" > ios/.xcode.env.local
             fi
+
+            # Fix clang for XCode builds
+            export PATH=$(echo $PATH | tr ':' '\n' | grep -v clang | paste -sd ':' -)
           '';
         };
       }
