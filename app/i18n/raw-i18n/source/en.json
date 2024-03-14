@@ -394,7 +394,7 @@
                         "feedback": [
                             "Correct. In fact, the Bitcoin network has never once been hacked. Answer the next question to learn more!",
                             "Nice try, but wrong. The bitcoin network is safe and secure — 24 hours a day, 365 days a year.",
-                            "Icorrect. Although bitcoin is indeed “open source” software — or available to the public for free — is still extremely secure."
+                            "Incorrect. Although bitcoin is indeed “open source” software — or available to the public for free — is still extremely secure."
                         ],
                         "question": "Is the Bitcoin network secure?",
                         "text": "The bitcoin network is worth well over $100 billion today. Accordingly, the network must be very secure — so that money is never stolen. \n\nBitcoin is known as the world’s first cryptocurrency. \n\nThe “crypto” part of the name comes from cryptography. Simply put, cryptography protects information through very complex math functions. \n\nMost people do not realize — but Bitcoin is actually the most secure computer network in the world ! \n\n(you may have heard about bitcoin “hacks” — which we will debunk in the next quiz)",
