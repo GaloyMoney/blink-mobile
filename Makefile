@@ -26,4 +26,4 @@ tilt-down:
 	cd dev && tilt down
 
 emulator:
-	emulator -avd Pixel_API_34 -gpu swiftshader
+	emulator -avd Pixel_API_34 -gpu swiftshader -wipe-data -no-boot-anim
