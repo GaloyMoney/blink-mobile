@@ -3,7 +3,7 @@ import * as React from "react"
 // eslint-disable-next-line react-native/split-platform-components
 import { Alert, Dimensions } from "react-native"
 import { Region, MapMarker as MapMarkerType } from "react-native-maps"
-import { check, PERMISSIONS, PermissionStatus, RESULTS } from "react-native-permissions"
+import { check, PermissionStatus, RESULTS } from "react-native-permissions"
 
 import { gql } from "@apollo/client"
 import MapComponent from "@app/components/map-component"
@@ -15,7 +15,6 @@ import {
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import useDeviceLocation from "@app/hooks/use-device-location"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { isIos } from "@app/utils/helper"
 import Geolocation from "@react-native-community/geolocation"
 import { useFocusEffect } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -25,6 +24,7 @@ import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { toastShow } from "../../utils/toast"
 import { PhoneLoginInitiateType } from "../phone-auth-screen"
+import { LOCATION_PERMISSION, getUserRegion } from "./functions"
 
 const EL_ZONTE_COORDS = {
   latitude: 13.496743,
@@ -32,10 +32,6 @@ const EL_ZONTE_COORDS = {
   latitudeDelta: 0.02,
   longitudeDelta: 0.02,
 }
-
-export const LOCATION_PERMISSION = isIos
-  ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
-  : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
 
 // essentially calculates zoom for location being set based on country
 const { height, width } = Dimensions.get("window")
@@ -52,30 +48,6 @@ Geolocation.setRNConfiguration({
   authorizationLevel: "whenInUse",
   locationProvider: "auto",
 })
-
-export const getUserRegion = (callback: (region?: Region) => void) => {
-  try {
-    Geolocation.getCurrentPosition(
-      (data: GeolocationPosition) => {
-        if (data) {
-          const region: Region = {
-            latitude: data.coords.latitude,
-            longitude: data.coords.longitude,
-            latitudeDelta: 0.02,
-            longitudeDelta: 0.02,
-          }
-          callback(region)
-        }
-      },
-      () => {
-        callback(undefined)
-      },
-      { timeout: 5000 },
-    )
-  } catch (e) {
-    callback(undefined)
-  }
-}
 
 gql`
   query businessMapMarkers {

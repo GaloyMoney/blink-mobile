@@ -7,7 +7,7 @@ import { PermissionStatus, RESULTS, request } from "react-native-permissions"
 import { useApolloClient } from "@apollo/client"
 import { updateMapLastCoords } from "@app/graphql/client-only-query"
 import { BusinessMapMarkersQuery, MapMarker } from "@app/graphql/generated"
-import { LOCATION_PERMISSION, getUserRegion } from "@app/screens/map-screen/map-screen"
+import { LOCATION_PERMISSION, getUserRegion } from "@app/screens/map-screen/functions"
 import { isIOS } from "@rneui/base"
 import { makeStyles, useTheme } from "@rneui/themed"
 
