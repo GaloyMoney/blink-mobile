@@ -1,10 +1,9 @@
 import "react-native-get-random-values"
 import * as React from "react"
-import { Image, View } from "react-native"
+import { ActivityIndicator, Image, View } from "react-native"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { CloseCross } from "../../components/close-cross"
 import { Screen } from "../../components/screen"
 import type {
   ChatStackParamList,
@@ -16,10 +15,9 @@ import { isIos } from "@app/utils/helper"
 import { Chat, MessageType, defaultTheme } from "@flyerhq/react-native-chat-ui"
 import { PreviewData } from "@flyerhq/react-native-link-preview"
 import { launchImageLibrary } from "react-native-image-picker"
-import NDK, { NDKUser } from "@nostr-dev-kit/ndk"
 import { ChatMessage } from "@app/components/chat-message"
 import useNostrProfile from "@app/hooks/use-nostr-profile"
-import { getPublicKey, nip19 } from "nostr-tools"
+import Icon from "react-native-vector-icons/Ionicons"
 
 type ChatDetailProps = {
   route: RouteProp<ChatStackParamList, "chatDetail">
@@ -46,48 +44,37 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
   const {
     theme: { colors },
   } = useTheme()
+  const { sendMessage, fetchMessagesWith, nostrPubKey, subscribeToMessages } =
+    useNostrProfile()
   const styles = useStyles()
+  const { name, username, picture } = chat
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Primary">>()
   const { LL } = useI18nContext()
   const [messages, setMessages] = React.useState<MessageType.Any[]>([])
-  const [userProfile, setUserProfile] = React.useState<NDKUser>()
+  const [initialized, setInitialized] = React.useState(false)
 
   React.useEffect(() => {
     let isMounted = true
-    const ndk = new NDK({
-      explicitRelayUrls: [
-        "wss://nos.lol",
-        "wss://no.str.cr",
-        "wss://purplepag.es",
-        "wss://nostr.mom",
-      ],
-    })
-
-    const nostrRecipient = ndk.getUser({
-      npub: "npub1067y35l9rfxczuvm0swkq87k74ds36pawv0zak384tx9g09urpqqkflash",
-    })
-
-    const connectToNostr = async () => {
-      try {
-        await ndk.connect()
-        console.log("Connected to NOSTR")
-        await nostrRecipient.fetchProfile()
-        if (isMounted) {
-          setUserProfile(nostrRecipient)
-        }
-      } catch (error) {
-        console.log("Error connecting to NOSTR ", error)
+    async function initialize() {
+      if (!initialized) {
+        let messageHistory = await fetchMessagesWith(chat.id as `npub1${string}`)
+        console.log("messages", messages)
+        setMessages([...messageHistory, ...messages] as MessageType.Text[])
+        setInitialized(true)
       }
+      //subscribeToMessages(chat.id as `npub1${string}`, addMessage)
     }
-    connectToNostr()
+    initialize()
+
     return () => {
       isMounted = false
     }
   }, [])
 
-  const user = { id: userProfile?.npub || "" }
+  const user = { id: nostrPubKey }
 
   const addMessage = (message: MessageType.Any) => {
+    console.log("new meesssage", message, "old messages", messages)
     setMessages([message, ...messages])
   }
 
@@ -127,14 +114,14 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
     message: MessageType.Text
     previewData: PreviewData
   }) => {
-    setMessages(
-      messages.map<MessageType.Any>((m) =>
-        m.id === message.id ? { ...m, previewData } : m,
-      ),
-    )
+    // setMessages(
+    //   messages.map<MessageType.Any>((m) =>
+    //     m.id === message.id ? { ...m, previewData } : m,
+    //   ),
+    // )
   }
 
-  const handleSendPress = (message: MessageType.PartialText) => {
+  const handleSendPress = async (message: MessageType.PartialText) => {
     const textMessage: MessageType.Text = {
       author: user,
       createdAt: Date.now(),
@@ -142,22 +129,35 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
       text: message.text,
       type: "text",
     }
+    await sendMessage(chat.id, message.text)
     addMessage(textMessage)
   }
 
   return (
     <Screen unsafe>
       <View style={styles.aliasView}>
-        <Image
-          source={
-            userProfile?.profile?.image
-              ? { uri: userProfile?.profile?.image }
-              : require("../../assets/logo/blink-logo-icon.png")
-          }
-          style={styles.userPic}
+        <Icon
+          name="arrow-back-outline"
+          onPress={navigation.goBack}
+          style={styles.backButton}
         />
-        <Text type="p1">{userProfile?.profile?.name || chat.username}</Text>
+        <Text type="p1">{name || username}</Text>
+        <View style={{ display: "flex", flexDirection: "row" }}>
+          <GaloyIconButton
+            name={"lightning"}
+            size="large"
+            //text={LL.HomeScreen.pay()}
+            style={{ marginRight: 5 }}
+            onPress={() =>
+              navigation.navigate("sendBitcoinDestination", {
+                username: chat.lud16,
+              })
+            }
+          />
+          <Image source={{ uri: picture || "" }} style={styles.userPic} />
+        </View>
       </View>
+      {!initialized && <ActivityIndicator />}
       <View style={styles.chatBodyContainer}>
         <View style={styles.chatView}>
           <Chat
@@ -165,11 +165,21 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
             onAttachmentPress={handleImageSelection}
             onPreviewDataFetched={handlePreviewDataFetched}
             onSendPress={handleSendPress}
+            l10nOverride={{
+              emptyChatPlaceholder: initialized
+                ? isIos
+                  ? "No messages here yet"
+                  : "..."
+                : isIos
+                ? "Fetching Messages..."
+                : "...",
+            }}
+            showUserAvatars={true}
             user={user}
             renderTextMessage={(message, nextMessage, prevMessage) => (
               <ChatMessage
                 message={message}
-                recipient={userProfile}
+                recipientId={chat.id as `npub1${string}`}
                 nextMessage={nextMessage}
                 prevMessage={prevMessage}
               />
@@ -191,20 +201,7 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
             }}
           />
         </View>
-        <View style={styles.actionsContainer}>
-          <GaloyIconButton
-            name={"dollar"}
-            size="large"
-            text={LL.HomeScreen.pay()}
-            // onPress={() =>
-            //   navigation.navigate("sendBitcoinDestination", {
-            //     username: chat.name || null,
-            //   })
-            // }
-          />
-        </View>
       </View>
-      <CloseCross color={colors.black} onPress={navigation.goBack} />
     </Screen>
   )
 }
@@ -214,7 +211,12 @@ const useStyles = makeStyles(({ colors }) => ({
     margin: 12,
   },
   aliasView: {
+    display: "flex",
+    flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
+    paddingRight: 10,
+    paddingLeft: 10,
     paddingBottom: 6,
     paddingTop: isIos ? 40 : 10,
   },
@@ -230,10 +232,11 @@ const useStyles = makeStyles(({ colors }) => ({
   userPic: {
     borderRadius: 50,
     height: 50,
-    width: 125,
-    borderStyle: "solid",
+    width: 50,
     borderWidth: 1,
     borderColor: colors.green,
-    marginTop: 10,
+  },
+  backButton: {
+    fontSize: 26,
   },
 }))

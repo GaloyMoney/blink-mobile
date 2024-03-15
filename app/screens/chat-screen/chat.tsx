@@ -39,7 +39,7 @@ export const ChatScreen: React.FC = () => {
     theme: { colors },
   } = useTheme()
 
-  const { fetchNostrUser } = useNostrProfile()
+  const { fetchNostrUser, retrieveMessagedUsers } = useNostrProfile()
   const navigation = useNavigation<StackNavigationProp<ChatStackParamList, "chatList">>()
 
   const isAuthed = useIsAuthed()
@@ -48,6 +48,7 @@ export const ChatScreen: React.FC = () => {
   const [nostrProfiles, setNostrProfiles] = useState<NostrProfile[]>([])
   const [searchText, setSearchText] = useState("")
   const [refreshing, setRefreshing] = useState(false)
+  const [initialized, setInitialized] = useState(false)
   const { LL } = useI18nContext()
   const { loading, data, error } = useContactsQuery({
     skip: !isAuthed,
@@ -60,7 +61,7 @@ export const ChatScreen: React.FC = () => {
 
   const contacts: Contact[] = useMemo(() => {
     return data?.me?.contacts.slice() ?? []
-  }, [data])
+  }, [])
 
   const reset = useCallback(() => {
     setSearchText("")
@@ -68,7 +69,13 @@ export const ChatScreen: React.FC = () => {
   }, [contacts])
 
   React.useEffect(() => {
-    setMatchingContacts(contacts)
+    async function initialize() {
+      setMatchingContacts(contacts)
+      let messagedUsers = await retrieveMessagedUsers()
+      setNostrProfiles(messagedUsers)
+      setInitialized(true)
+    }
+    initialize()
   }, [contacts])
 
   // This implementation of search will cause a match if any word in the search text
@@ -77,7 +84,6 @@ export const ChatScreen: React.FC = () => {
     async (newSearchText: string) => {
       setRefreshing(true)
       setSearchText(newSearchText)
-      setNostrProfiles([])
       setMatchingContacts([])
       if (newSearchText.startsWith("npub1") && newSearchText.length == 63) {
         try {
@@ -120,6 +126,7 @@ export const ChatScreen: React.FC = () => {
         alias: profile.nip05,
         username: profile.nip05,
         picture: profile.picture,
+        lud16: profile.lud16,
       }
     })
   }
@@ -193,7 +200,7 @@ export const ChatScreen: React.FC = () => {
         <Text style={styles.emptyListText}>{LL.ChatScreen.noChatsYet()}</Text>
       </View>
     )
-  } else if (loading) {
+  } else if (loading || !initialized) {
     ListEmptyContent = (
       <View style={styles.activityIndicatorContainer}>
         <ActivityIndicator size="large" color={colors.primary} />
@@ -230,7 +237,9 @@ export const ChatScreen: React.FC = () => {
           >
             <Image source={{ uri: item.picture || "" }} style={styles.profilePicture} />
             <ListItem.Content>
-              <ListItem.Title style={styles.itemText}>{item.alias}</ListItem.Title>
+              <ListItem.Title style={styles.itemText}>
+                {item.alias || item.username || item.name || item.id}
+              </ListItem.Title>
             </ListItem.Content>
           </ListItem>
         )}

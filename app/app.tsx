@@ -36,6 +36,7 @@ import "./utils/logs"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { Provider } from "react-redux"
 import { store } from "./store/redux"
+import PolyfillCrypto from "react-native-webview-crypto"
 
 // FIXME should we only load the currently used local?
 // this would help to make the app load faster
@@ -51,6 +52,7 @@ loadAllLocales()
 export const App = () => (
   /* eslint-disable-next-line react-native/no-inline-styles */
   <GestureHandlerRootView style={{ flex: 1 }}>
+    <PolyfillCrypto />
     <PersistentStateProvider>
       <Provider store={store}>
         <TypesafeI18n locale={detectDefaultLocale()}>

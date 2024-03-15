@@ -3,6 +3,7 @@ type Chat = {
   readonly name: string
   readonly username: string
   readonly alias?: string | null
+  lud16: string
   picture: string | null
   readonly transactionsCount: number | null
 }
@@ -12,4 +13,5 @@ type NostrProfile = {
   name: string
   nip05: string
   picture: string
+  lud16: string
 }
