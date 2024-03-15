@@ -49,13 +49,12 @@ jobs:
 
       # Start Tilt
       - name: Tilt CI
-        run: |
-          cd dev
-          for i in {1..5}; do
-            echo "Tilt CI attempt $i"
-            tilt ci && exit 0 || sleep 15
-          done
-          exit 1
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 10
+          retry_wait_seconds: 15
+          max_attempts: 5
+          command: cd dev && tilt ci
 
       # Tests on iOS Simulator
       - name: Run Detox Tests on iOS Simulator
@@ -114,5 +113,5 @@ jobs:
         continue-on-error: true
         run: |
           cd dev && tilt down || true
+          docker volume prune -af || true
           docker rm -f $(docker ps -aq)
-          docker volume prune -af
