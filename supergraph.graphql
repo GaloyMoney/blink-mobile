@@ -775,6 +775,15 @@ type LnInvoice implements Invoice
   satoshis: SatAmount!
 }
 
+input LnInvoiceCancelInput
+  @join__type(graph: GALOY)
+{
+  paymentHash: PaymentHash!
+
+  """Wallet ID for a wallet associated with the current account."""
+  walletId: WalletId!
+}
+
 input LnInvoiceCreateInput
   @join__type(graph: GALOY)
 {
@@ -1169,6 +1178,9 @@ type Mutation
 
   """Sends a payment to a lightning address."""
   lnAddressPaymentSend(input: LnAddressPaymentSendInput!): PaymentSendPayload! @join__field(graph: GALOY)
+
+  """Cancel an unpaid lightning invoice for an associated wallet."""
+  lnInvoiceCancel(input: LnInvoiceCancelInput!): SuccessPayload! @join__field(graph: GALOY)
 
   """
   Returns a lightning invoice for an associated wallet.
@@ -2134,6 +2146,7 @@ enum UserNotificationCategory
   PAYMENTS @join__enumValue(graph: GALOY)
   BALANCE @join__enumValue(graph: GALOY)
   ADMIN_NOTIFICATION @join__enumValue(graph: GALOY)
+  MARKETING @join__enumValue(graph: GALOY)
 }
 
 enum UserNotificationChannel
