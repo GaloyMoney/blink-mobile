@@ -22,6 +22,10 @@ git checkout $GIT_REF
 
 nix develop -c yarn install
 
+pushd ios
+bundle install
+popd
+
 # Kill existing Metro
 lsof -ti:8080,8081 | xargs kill || true
 tmpfile=$(mktemp /tmp/wwdr-cert.cer.XXXXXXXXX) || true
