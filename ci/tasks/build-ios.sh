@@ -24,7 +24,7 @@ nix develop -c yarn install
 
 # Kill existing Metro
 lsof -ti:8080,8081 | xargs kill || true
-tmpfile=$(mktemp /tmp/wwdr-cert.cer) || true
+tmpfile=$(mktemp /tmp/wwdr-cert.cer.XXXXXXXXX) || true
 curl -f -o $tmpfile https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer && security import $tmpfile ~/Library/Keychains/login.keychain-db || true
 
 sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $PUBLIC_VERSION;/g" ios/GaloyApp.xcodeproj/project.pbxproj
