@@ -16,7 +16,7 @@ nix develop -c yarn install
 echo $ANDROID_KEYSTORE | base64 -d > android/app/release.keystore
 
 sed -i'' -e "s/versionCode .*$/versionCode $BUILD_NUMBER/g" android/app/build.gradle
-nix develop -c sh -c 'cd ios && fastlane ios build --verbose'
+nix develop -c sh -c 'cd android && fastlane android build --verbose'
 popd
 
 mkdir -p artifacts/android/app/build/outputs
