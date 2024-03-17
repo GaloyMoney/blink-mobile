@@ -23,7 +23,7 @@ git checkout $GIT_REF
 nix develop -c yarn install
 
 pushd ios
-bundle install
+nix develop -c bundle install
 popd
 
 # Kill existing Metro

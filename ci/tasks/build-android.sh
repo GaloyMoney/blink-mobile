@@ -14,7 +14,7 @@ git checkout $GIT_REF
 nix develop -c yarn install
 
 pushd android
-bundle install
+nix develop -c bundle install
 popd
 
 echo $ANDROID_KEYSTORE | base64 -d > android/app/release.keystore
