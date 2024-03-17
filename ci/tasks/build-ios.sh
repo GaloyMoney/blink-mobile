@@ -25,10 +25,8 @@ nix develop -c yarn install
 tmpfile=$(mktemp /tmp/wwdr-cert.cer) || true
 curl -f -o $tmpfile https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer && security import $tmpfile ~/Library/Keychains/login.keychain-db || true
 
-pushd ios
-sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $PUBLIC_VERSION;/g" GaloyApp.xcodeproj/project.pbxproj
-nix develop -c fastlane ios build
-popd
+sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $PUBLIC_VERSION;/g" ios/GaloyApp.xcodeproj/project.pbxproj
+nix develop -c "cd ios && fastlane ios build --verbose"
 popd
 
 mkdir -p artifacts/ios
