@@ -22,11 +22,15 @@ git checkout $GIT_REF
 
 nix develop -c yarn install
 
+# Kill existing Metro
+lsof -ti:8080,8081 | xargs kill || true
 tmpfile=$(mktemp /tmp/wwdr-cert.cer) || true
 curl -f -o $tmpfile https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer && security import $tmpfile ~/Library/Keychains/login.keychain-db || true
 
 sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $PUBLIC_VERSION;/g" ios/GaloyApp.xcodeproj/project.pbxproj
-nix develop -c "cd ios && fastlane ios build --verbose"
+nix develop -c sh -c 'cd ios && fastlane ios build --verbose'
+# Kill spawned Metro
+lsof -ti:8080,8081 | xargs kill || true
 popd
 
 mkdir -p artifacts/ios
