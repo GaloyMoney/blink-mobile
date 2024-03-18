@@ -1,3 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useBusinessMapMarkersQuery } from "@app/graphql/generated"
+import {
+  ApolloClient,
+  InMemoryCache,
+  createHttpLink,
+  gql,
+  useQuery,
+} from "@apollo/client"
 import { useFocusEffect } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import * as React from "react"
@@ -6,10 +15,10 @@ import { useCallback } from "react"
 import { PermissionsAndroid, Text, View } from "react-native"
 import { Button } from "@rneui/base"
 import MapView, {
-  Callout,
-  CalloutSubview,
-  MapMarkerProps,
   Marker,
+  Callout,
+  // CalloutSubview,
+  MapMarkerProps,
 } from "react-native-maps"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
@@ -17,10 +26,18 @@ import { isIos } from "../../utils/helper"
 import { toastShow } from "../../utils/toast"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { useBusinessMapMarkersQuery } from "@app/graphql/generated"
-import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { makeStyles, useTheme } from "@rneui/themed"
+
+const httpLink = createHttpLink({
+  uri: "https://api.blink.sv/graphql",
+  // Add any required headers here
+})
+
+const blinkClient = new ApolloClient({
+  link: httpLink,
+  cache: new InMemoryCache(),
+})
 
 const useStyles = makeStyles(({ colors }) => ({
   android: { marginTop: 18 },
@@ -44,7 +61,7 @@ type Props = {
   navigation: StackNavigationProp<RootStackParamList, "Primary">
 }
 
-gql`
+const BUSINESS_MAP_MARKERS_QUERY = gql`
   query businessMapMarkers {
     businessMapMarkers {
       username
@@ -60,31 +77,50 @@ gql`
 `
 
 export const MapScreen: React.FC<Props> = ({ navigation }) => {
-  const {
-    theme: { colors },
-  } = useTheme()
+  const { colors } = useTheme().theme
   const styles = useStyles()
   const isAuthed = useIsAuthed()
-
-  const [isRefreshed, setIsRefreshed] = React.useState(false)
-  const { data, error, refetch } = useBusinessMapMarkersQuery({
-    notifyOnNetworkStatusChange: true,
-    fetchPolicy: "cache-and-network",
-  })
   const { LL } = useI18nContext()
 
-  useFocusEffect(() => {
-    if (!isRefreshed) {
-      setIsRefreshed(true)
-      refetch()
-    }
+  const { data: blinkData, error: blinkError } = useQuery(BUSINESS_MAP_MARKERS_QUERY, {
+    client: blinkClient, // Use the custom Apollo client
+    fetchPolicy: "cache-and-network",
   })
 
-  if (error) {
-    toastShow({ message: error.message })
+  // Query using generated hook
+  const {
+    data: flashData,
+    error: flashError,
+    refetch,
+  } = useBusinessMapMarkersQuery({
+    fetchPolicy: "cache-and-network",
+  })
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch()
+    }, [refetch]),
+  )
+
+  // Handle errors from both queries
+  if (blinkError || flashError) {
+    const errorMessage = blinkError?.message || flashError?.message
+    if (errorMessage) {
+      toastShow({ message: errorMessage })
+    }
   }
 
-  const maps = data?.businessMapMarkers ?? []
+  // Merge data from both queries
+  const maps = [
+    ...(blinkData?.businessMapMarkers?.map((item: any) => ({
+      ...item,
+      source: "blink",
+    })) ?? []),
+    ...(flashData?.businessMapMarkers?.map((item: any) => ({
+      ...item,
+      source: "flash",
+    })) ?? []),
+  ]
 
   const requestLocationPermission = useCallback(() => {
     const asyncRequestLocationPermission = async () => {
@@ -119,22 +155,21 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   useFocusEffect(requestLocationPermission)
 
   const markers: ReturnType<React.FC<MapMarkerProps>>[] = []
-  maps.forEach((item) => {
+  maps.forEach((item: any) => {
     if (item) {
+      const key = item.username + item.mapInfo.title
       const onPress = () => {
+        const domain = item.source === "blink" ? "@blink.sv" : "@flashapp.me"
+        const usernameWithDomain = `${item.username}${domain}`
         if (isAuthed && item?.username) {
-          navigation.navigate("sendBitcoinDestination", { username: item.username })
+          navigation.navigate("sendBitcoinDestination", { username: usernameWithDomain })
         } else {
           navigation.navigate("phoneFlow")
         }
       }
 
       markers.push(
-        <Marker
-          coordinate={item.mapInfo.coordinates}
-          key={item.username}
-          pinColor={colors._orange}
-        >
+        <Marker coordinate={item.mapInfo.coordinates} key={key} pinColor={colors._orange}>
           <Callout
             // alphaHitTest
             // tooltip
@@ -142,19 +177,11 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
           >
             <View style={styles.customView}>
               <Text style={styles.title}>{item.mapInfo.title}</Text>
-              {Boolean(item.username) && !isIos && (
-                <Button
-                  containerStyle={styles.android}
-                  title={LL.MapScreen.payBusiness()}
-                />
-              )}
-              {isIos && (
-                <CalloutSubview onPress={() => (item.username ? onPress() : null)}>
-                  {Boolean(item.username) && (
-                    <Button style={styles.ios} title={LL.MapScreen.payBusiness()} />
-                  )}
-                </CalloutSubview>
-              )}
+              <Button
+                containerStyle={isIos ? styles.ios : styles.android}
+                title={LL.MapScreen.payBusiness()}
+                onPress={onPress}
+              />
             </View>
           </Callout>
         </Marker>,

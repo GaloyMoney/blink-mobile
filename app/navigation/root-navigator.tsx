@@ -563,7 +563,7 @@ export const PrimaryNavigator = () => {
           headerShown: false,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Contacts"
         component={ContactNavigator}
         options={{
@@ -575,7 +575,7 @@ export const PrimaryNavigator = () => {
             <ContactsIcon {...testProps("Contacts")} color={color} />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Chat"
         component={ChatNavigator}
