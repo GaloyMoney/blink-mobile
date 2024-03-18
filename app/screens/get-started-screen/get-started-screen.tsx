@@ -11,7 +11,8 @@ import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 // hooks
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useAppConfig, useCreateAccount } from "@app/hooks"
+import { useAppConfig } from "@app/hooks"
+import { useCreateAccount } from "@app/hooks/useCreateAccount"
 
 // assets
 import AppLogoLightMode from "../../assets/logo/app-logo-light.svg"

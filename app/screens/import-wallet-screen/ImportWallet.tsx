@@ -9,7 +9,7 @@ import * as bip39 from "bip39"
 // hooks
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useCreateAccount } from "@app/hooks"
+import { useCreateAccount } from "@app/hooks/useCreateAccount"
 
 // utils
 import { disconnectToSDK, initializeBreezSDK } from "@app/utils/breez-sdk"
