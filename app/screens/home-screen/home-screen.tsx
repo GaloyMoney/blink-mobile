@@ -7,14 +7,12 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useFocusEffect, useNavigation } from "@react-navigation/native"
-import { useAppConfig, usePriceConversion } from "@app/hooks"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 
 // components
 import { AppUpdate } from "@app/components/app-update/app-update"
 import { icons } from "@app/components/atomic/galoy-icon"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
-import { StableSatsModal } from "@app/components/stablesats-modal"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
@@ -47,7 +45,12 @@ import { formatPaymentsBreezSDK } from "@app/hooks/useBreezPayments"
 import { breezSDKInitialized, listPaymentsBreezSDK } from "@app/utils/breez-sdk"
 import { toBtcMoneyAmount } from "@app/types/amounts"
 import useBreezBalance from "@app/hooks/useBreezBalance"
+
+// hooks
+import { useAppConfig, usePriceConversion, useRedeem } from "@app/hooks"
 import useNostrProfile from "@app/hooks/use-nostr-profile"
+
+// store
 import { useAppDispatch } from "@app/store/redux"
 import { setUserData } from "@app/store/redux/slices/userSlice"
 
@@ -55,6 +58,7 @@ const TransactionCountToTriggerSetDefaultAccountModal = 1
 
 export const HomeScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const dispatch = useAppDispatch()
   const {
     appConfig: {
       galoyInstance: { id: galoyInstanceId },
@@ -69,7 +73,7 @@ export const HomeScreen: React.FC = () => {
   const { convertMoneyAmount } = usePriceConversion()
   const [breezBalance, refreshBreezBalance] = useBreezBalance()
   const { nostrSecretKey } = useNostrProfile()
-  const dispatch = useAppDispatch()
+  const { pendingSwap, checkInProgressSwap } = useRedeem()
 
   // queries
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
@@ -99,9 +103,7 @@ export const HomeScreen: React.FC = () => {
 
   const [defaultAccountModalVisible, setDefaultAccountModalVisible] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
-  const [isStablesatModalVisible, setIsStablesatModalVisible] = useState(false)
   const [isContentVisible, setIsContentVisible] = useState(false)
-  const [refreshTriggered, setRefreshTriggered] = useState(false)
   const [breezTransactions, setBreezTransactions] = useState<Payment[]>([])
   const [mergedTransactions, setMergedTransactions] = useState<TransactionFragment[]>([])
 
@@ -124,6 +126,7 @@ export const HomeScreen: React.FC = () => {
     React.useCallback(() => {
       if (breezSDKInitialized) {
         fetchPaymentsBreez()
+        refreshBreezBalance()
       }
     }, [breezSDKInitialized, loadingAuthed]),
   )
@@ -186,8 +189,9 @@ export const HomeScreen: React.FC = () => {
       refetchRealtimePrice()
       refetchAuthed()
       refetchUnauthed()
-      setRefreshTriggered(true)
-      setTimeout(() => setRefreshTriggered(false), 1000)
+      fetchPaymentsBreez()
+      checkInProgressSwap()
+      refreshBreezBalance()
     }
   }, [isAuthed, refetchAuthed, refetchRealtimePrice, refetchUnauthed])
 
@@ -285,10 +289,6 @@ export const HomeScreen: React.FC = () => {
   return (
     <Screen>
       {AccountCreationNeededModal}
-      <StableSatsModal
-        isVisible={isStablesatModalVisible}
-        setIsVisible={setIsStablesatModalVisible}
-      />
       <View style={[styles.header, styles.container]}>
         <GaloyIconButton
           onPress={() => navigation.navigate("priceHistory")}
@@ -321,13 +321,16 @@ export const HomeScreen: React.FC = () => {
         }
       >
         <WalletOverview
-          refreshTriggered={refreshTriggered}
           isContentVisible={isContentVisible}
           setIsContentVisible={setIsContentVisible}
           loading={loading}
-          setIsStablesatModalVisible={setIsStablesatModalVisible}
           breezBalance={breezBalance}
-          refreshBreezBalance={refreshBreezBalance}
+          pendingBalance={
+            pendingSwap && pendingSwap?.channelOpeningFees
+              ? pendingSwap?.unconfirmedSats -
+                pendingSwap?.channelOpeningFees?.minMsat / 1000
+              : null
+          }
         />
         {error && (
           <View style={styles.marginButtonContainer}>

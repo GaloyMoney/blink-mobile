@@ -55,6 +55,10 @@ type PersistentState_7 = {
   galoyInstance: GaloyInstanceInput
   galoyAuthToken: string
   hasInitializedBreezSDK: boolean
+  btcBalance?: string
+  usdBalance?: string
+  convertedBtcBalance?: string
+  convertedUsdBalance?: string
 }
 
 type JwtPayload = {

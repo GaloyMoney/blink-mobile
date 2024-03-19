@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useState } from "react"
+import { useFocusEffect } from "@react-navigation/native"
 import { StackScreenProps } from "@react-navigation/stack"
 import styled from "styled-components/native"
 import { Icon } from "@rneui/themed"
@@ -37,9 +38,11 @@ const BackupOptions: React.FC<Props> = ({ navigation }) => {
     skip: !isAtLeastLevelZero,
   })
 
-  useEffect(() => {
-    checkBackupCompleted()
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      checkBackupCompleted()
+    }, []),
+  )
 
   const checkBackupCompleted = async () => {
     const res = await loadJson("backupCompleted")

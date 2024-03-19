@@ -58,7 +58,7 @@ const ReceiveScreen = ({ route }: Props) => {
 
   // query
   const { data, loading, error } = useAccountDefaultWalletQuery({
-    variables: { username: userData.username },
+    variables: { username: userData?.username },
   })
 
   // notification permission

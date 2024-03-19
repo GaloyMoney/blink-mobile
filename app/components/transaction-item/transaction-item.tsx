@@ -52,7 +52,7 @@ export const useDescriptionDisplay = ({
     case "SettlementViaLn":
       if (isReceive) {
         return `Pay to Flash Wallet User${
-          userData.username ? ": " + userData.username : ""
+          userData?.username ? ": " + userData?.username : ""
         }`
       } else {
         return "Send"

@@ -1,30 +1,20 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
-import {
-  Pressable,
-  View,
-  // Alert
-} from "react-native"
-import { StackNavigationProp } from "@react-navigation/stack" // import this at the top
+import { Pressable, View } from "react-native"
 
-import { gql } from "@apollo/client"
 import { useWalletOverviewScreenQuery, WalletCurrency } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
-import { makeStyles, Text, useTheme } from "@rneui/themed"
+import { makeStyles, Text } from "@rneui/themed"
 
 import { GaloyCurrencyBubble } from "../atomic/galoy-currency-bubble"
 import { GaloyIcon } from "../atomic/galoy-icon"
 import HideableArea from "../hideable-area/hideable-area"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
-
-// import Breez SDK Wallet
-// import { addLogListenerBreezSDK } from "@app/utils/breez-sdk/index"
-import { useIsFocused } from "@react-navigation/native"
+import { getUsdWallet } from "@app/graphql/wallets-utils"
+import { usePersistentStateContext } from "@app/store/persistent-state"
 
 const Loader = () => {
   const styles = useStyles()
@@ -43,122 +33,100 @@ const Loader = () => {
   )
 }
 
-gql`
-  query walletOverviewScreen {
-    me {
-      id
-      defaultAccount {
-        id
-        wallets {
-          id
-          balance
-          walletCurrency
-        }
-      }
-    }
-  }
-`
-
 type Props = {
   loading: boolean
   isContentVisible: boolean
   setIsContentVisible: React.Dispatch<React.SetStateAction<boolean>>
-  setIsStablesatModalVisible: (value: boolean) => void
-  navigation?: StackNavigationProp<RootStackParamList, "conversionDetails">
-  refreshTriggered: boolean
   breezBalance: number | null
-  refreshBreezBalance: () => void
+  pendingBalance: number | null
 }
 
 const WalletOverview: React.FC<Props> = ({
   loading,
   isContentVisible,
   setIsContentVisible,
-  setIsStablesatModalVisible,
-  // navigation,
-  refreshTriggered,
   breezBalance,
-  refreshBreezBalance,
+  pendingBalance,
 }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isGaloyWalletVisible, setIsGaloyWalletVisible] = React.useState(false)
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
-  const {
-    theme: { colors },
-  } = useTheme()
   const styles = useStyles()
-  const { data } = useWalletOverviewScreenQuery({ skip: !isAuthed })
-
+  const { persistentState, updateState } = usePersistentStateContext()
   const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
     useDisplayCurrency()
-  const isFocused = useIsFocused()
-  React.useLayoutEffect(() => {
-    // refresh balance when screen is focused or refresh is triggered
-    if (refreshTriggered || isFocused) {
-      refreshBreezBalance()
-      // bsdk.executeDevCommandBreezSDK("listfunds")
-      // addLogListenerBreezSDK()
+
+  const { data } = useWalletOverviewScreenQuery({ skip: !isAuthed })
+
+  const [btcBalance, setBtcBalance] = useState<string | undefined>(
+    persistentState?.btcBalance || "0",
+  )
+  const [usdBalance, setUsdBalance] = useState<string | undefined>(
+    persistentState?.usdBalance || "0",
+  )
+  const [convertedBtcBalance, setConvertedBtcBalance] = useState<string | undefined>(
+    persistentState?.convertedBtcBalance || undefined,
+  )
+  const [convertedUsdBalance, setConvertedUsdBalance] = useState<string | undefined>(
+    persistentState?.convertedUsdBalance || undefined,
+  )
+
+  useEffect(() => {
+    if (
+      persistentState.btcBalance !== btcBalance ||
+      persistentState.usdBalance !== usdBalance ||
+      persistentState.convertedBtcBalance !== convertedBtcBalance ||
+      persistentState.convertedUsdBalance !== convertedUsdBalance
+    ) {
+      updateState((state) => {
+        if (state)
+          return {
+            ...state,
+            btcBalance,
+            usdBalance,
+            convertedBtcBalance,
+            convertedUsdBalance,
+          }
+        return undefined
+      })
     }
-    // wait for 10 seconds and then refresh again
-    const _timeout = setTimeout(() => {
-      refreshBreezBalance()
-    }, 10000)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refreshTriggered, isFocused])
+  }, [btcBalance, usdBalance, convertedBtcBalance, convertedUsdBalance])
 
-  let btcInDisplayCurrencyFormatted: string | undefined = "$-0.01"
-  let usdInDisplayCurrencyFormatted: string | undefined = "$-0.01"
-  let extBtcInDisplayCurrencyFormatted: string | undefined = "$-0.01"
-  let extUsdInDisplayCurrencyFormatted: string | undefined = "$-0.01"
-  let btcInUnderlyingCurrency: string | undefined = "-1 sat"
-  let usdInUnderlyingCurrency: string | undefined = undefined
-  let extBtcInUnderlyingCurrency: string | undefined = "-1 sat"
-  let extUsdInUnderlyingCurrency: string | undefined = undefined
+  useEffect(() => {
+    if (isAuthed) formatBalance()
+  }, [isAuthed, data?.me?.defaultAccount?.wallets, pendingBalance, breezBalance])
 
-  if (isAuthed) {
-    const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
-    const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
+  const formatBalance = () => {
     const extUsdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
-
-    const btcWalletBalance = toBtcMoneyAmount(btcWallet?.balance ?? NaN)
-
-    const usdWalletBalance = toUsdMoneyAmount(usdWallet?.balance ?? NaN)
-
-    const extBtcWalletBalance = toBtcMoneyAmount(breezBalance ?? NaN)
+    const extBtcWalletBalance = toBtcMoneyAmount(
+      pendingBalance ? pendingBalance : breezBalance ?? NaN,
+    )
 
     const extUsdWalletBalance = toUsdMoneyAmount(extUsdWallet?.balance ?? NaN)
 
-    btcInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
-      moneyAmount: btcWalletBalance,
-      isApproximate: true,
-    })
-
-    usdInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
-      moneyAmount: usdWalletBalance,
-      isApproximate: displayCurrency !== WalletCurrency.Usd,
-    })
-
-    extBtcInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
-      moneyAmount: extBtcWalletBalance,
-      isApproximate: true,
-    })
-
-    extUsdInDisplayCurrencyFormatted = moneyAmountToDisplayCurrencyString({
-      moneyAmount: extUsdWalletBalance,
-      isApproximate: displayCurrency !== WalletCurrency.Usd,
-    })
-
-    btcInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: btcWalletBalance })
+    setBtcBalance(
+      moneyAmountToDisplayCurrencyString({
+        moneyAmount: extBtcWalletBalance,
+        isApproximate: true,
+      }),
+    )
+    setUsdBalance(
+      moneyAmountToDisplayCurrencyString({
+        moneyAmount: extUsdWalletBalance,
+        isApproximate: displayCurrency !== WalletCurrency.Usd,
+      }),
+    )
+    setConvertedBtcBalance(
+      formatMoneyAmount({
+        moneyAmount: extBtcWalletBalance,
+      }),
+    )
 
     if (displayCurrency !== WalletCurrency.Usd) {
-      usdInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: usdWalletBalance })
-    }
-
-    extBtcInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: extBtcWalletBalance })
-
-    if (displayCurrency !== WalletCurrency.Usd) {
-      extUsdInUnderlyingCurrency = formatMoneyAmount({ moneyAmount: extUsdWalletBalance })
+      setConvertedUsdBalance(
+        formatMoneyAmount({
+          moneyAmount: extUsdWalletBalance,
+        }),
+      )
     }
   }
 
@@ -182,36 +150,19 @@ const WalletOverview: React.FC<Props> = ({
         <View style={styles.currency}>
           <GaloyCurrencyBubble currency="USD" />
           <Text type="p1">Cash (USD)</Text>
-          {/* <Pressable
-            onPress={() => {
-              if (navigation) {
-                navigation.navigate("conversionDetails")
-              } else {
-                Alert.alert(
-                  "Business Account Required",
-                  "Please sign up for a Business Account to access the Cash Out Screen.",
-                )
-              }
-            }}
-          >
-            <GaloyIcon color={colors.green} name="bank" size={18} />
-          </Pressable> */}
         </View>
         {loading ? (
           <Loader />
         ) : (
           <View style={styles.hideableArea}>
             <HideableArea isContentVisible={isContentVisible}>
-              {extUsdInUnderlyingCurrency ? (
+              {convertedUsdBalance ? (
                 <Text type="p1" bold>
-                  {extUsdInUnderlyingCurrency}
+                  {convertedUsdBalance}
                 </Text>
               ) : null}
-              <Text
-                type={extUsdInUnderlyingCurrency ? "p3" : "p1"}
-                bold={!extUsdInUnderlyingCurrency}
-              >
-                {extUsdInDisplayCurrencyFormatted}
+              <Text type={convertedUsdBalance ? "p3" : "p1"} bold={!convertedUsdBalance}>
+                {usdBalance}
               </Text>
             </HideableArea>
           </View>
@@ -230,81 +181,23 @@ const WalletOverview: React.FC<Props> = ({
         ) : (
           <View style={styles.hideableArea}>
             <HideableArea isContentVisible={isContentVisible}>
-              {extBtcInUnderlyingCurrency ? (
-                <Text type="p1" bold>
-                  {extBtcInUnderlyingCurrency}
+              {convertedBtcBalance ? (
+                <Text type="p1" bold color={pendingBalance ? "orange" : undefined}>
+                  {convertedBtcBalance}
                 </Text>
               ) : null}
               <Text
-                type={extBtcInUnderlyingCurrency ? "p3" : "p1"}
-                bold={!extBtcInUnderlyingCurrency}
+                type={convertedBtcBalance ? "p3" : "p1"}
+                bold={!convertedBtcBalance}
+                color={pendingBalance ? "orange" : undefined}
               >
-                {extBtcInDisplayCurrencyFormatted}
+                {btcBalance}
               </Text>
             </HideableArea>
           </View>
         )}
       </View>
       {/* End of Breez SDK Wallet overview */}
-      {isGaloyWalletVisible ? (
-        <View>
-          <View style={styles.separator}></View>
-          <View style={styles.displayTextView}>
-            <View style={styles.currency}>
-              <GaloyCurrencyBubble currency="BTC" />
-              <Text type="p1">Bitcoin</Text>
-            </View>
-            {loading ? (
-              <Loader />
-            ) : (
-              <View style={styles.hideableArea}>
-                <HideableArea isContentVisible={isContentVisible}>
-                  {btcInUnderlyingCurrency ? (
-                    <Text type="p1" bold>
-                      {btcInUnderlyingCurrency}
-                    </Text>
-                  ) : null}
-                  <Text
-                    type={btcInUnderlyingCurrency ? "p3" : "p1"}
-                    bold={!btcInUnderlyingCurrency}
-                  >
-                    {btcInDisplayCurrencyFormatted}
-                  </Text>
-                </HideableArea>
-              </View>
-            )}
-          </View>
-          <View style={styles.separator}></View>
-          <View style={styles.displayTextView}>
-            <View style={styles.currency}>
-              <GaloyCurrencyBubble currency="USD" />
-              <Text type="p1">StableSats</Text>
-              <Pressable onPress={() => setIsStablesatModalVisible(true)}>
-                <GaloyIcon color={colors.grey1} name="question" size={18} />
-              </Pressable>
-            </View>
-            {loading ? (
-              <Loader />
-            ) : (
-              <View style={styles.hideableArea}>
-                <HideableArea isContentVisible={isContentVisible}>
-                  {usdInUnderlyingCurrency ? (
-                    <Text type="p1" bold>
-                      {usdInUnderlyingCurrency}
-                    </Text>
-                  ) : null}
-                  <Text
-                    type={usdInUnderlyingCurrency ? "p3" : "p1"}
-                    bold={!usdInUnderlyingCurrency}
-                  >
-                    {usdInDisplayCurrencyFormatted}
-                  </Text>
-                </HideableArea>
-              </View>
-            )}
-          </View>
-        </View>
-      ) : null}
     </View>
   )
 }

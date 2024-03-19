@@ -10,7 +10,7 @@ const useBreezBalance = (): [number | null, () => void] => {
     const initializeAndFetchBalance = async () => {
       await initializeBreezSDK()
       const nodeState = await nodeInfo()
-      const balance = nodeState.channelsBalanceMsat + nodeState.onchainBalanceMsat
+      const balance = nodeState.channelsBalanceMsat
       // console.log("Total balance", balance)
       // console.log("On Chain Balance", nodeState.onchainBalanceMsat)
       // console.log("Channel Balance", nodeState.channelsBalanceMsat)

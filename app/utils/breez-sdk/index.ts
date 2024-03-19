@@ -428,4 +428,24 @@ export const executeDevCommandBreezSDK = async (command: string): Promise<void> 
   }
 }
 
-// export * from "./eventListener"
+export const prepareRedeem = async (toAddress: string) => {
+  try {
+    const recommendedFees = await recommendedFeesBreezSDK()
+    const satPerVbyte = recommendedFees.fastestFee
+    console.log("satPerVbyte", satPerVbyte)
+    const prepareRedeemOnchainFundsResp = await sdk.prepareRedeemOnchainFunds({
+      toAddress,
+      satPerVbyte,
+    })
+    console.log("PREPARE REDEEM>>>>>>>>>>>>:", prepareRedeemOnchainFundsResp)
+    if (prepareRedeemOnchainFundsResp) {
+      const redeemOnchainFundsResp = await sdk.redeemOnchainFunds({
+        toAddress,
+        satPerVbyte,
+      })
+      console.log("REDEEM>>>>>>>>>>>>>", redeemOnchainFundsResp)
+    }
+  } catch (err) {
+    console.error("REDEEM ERROR", err)
+  }
+}
