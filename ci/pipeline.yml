@@ -168,8 +168,7 @@ jobs:
     - get: repo
       trigger: true
       passed:
-      - test-unit
-      - check-code
+      - dev-build-android
     - get: pipeline-tasks
     - get: build-number-ios
   - task: build
@@ -214,32 +213,6 @@ jobs:
         bucket: #@ data.values.build_artifacts_bucket_name
         json_key: #@ data.values.build_artifacts_bucket_creds
 
-- name: e2e-test-android
-  serial: true
-  plan:
-  - in_parallel:
-    - get: built-dev-apk
-      trigger: true
-    - get: repo
-      passed: ["dev-build-android"]
-      trigger: true
-    - get: bundled-deps
-      passed: ["test-unit"]
-    - get: pipeline-tasks
-
-- name: e2e-test-ios
-  serial: true
-  plan:
-  - in_parallel:
-    - get: built-dev-ipa
-      trigger: true
-    - get: repo
-      passed: ["dev-build-ios"]
-      trigger: true
-    - get: bundled-deps
-      passed: ["test-unit"]
-    - get: pipeline-tasks
-
 - name: prerelease
   serial: true
   plan:
@@ -247,13 +220,11 @@ jobs:
     - get: daily
       trigger: true
     - get: repo
-      passed: ["e2e-test-android", "e2e-test-ios"]
+      passed: ["dev-build-ios"]
       params:
         fetch_tags: true
     - get: built-dev-ipa
-      passed: [ e2e-test-ios ]
     - get: built-dev-apk
-      passed: [ e2e-test-android ]
     - get: pipeline-tasks
     - get: testflight-version
   - task: choose-commit-prerelease
@@ -372,7 +343,7 @@ jobs:
   plan:
   - in_parallel:
     - get: repo
-      passed: ["prerelease"]
+      passed: ["prod-build-android"]
     - get: pipeline-tasks
     - get: build-number-ios
     - get: built-dev-ipa
