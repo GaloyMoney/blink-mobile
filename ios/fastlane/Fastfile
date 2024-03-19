@@ -43,7 +43,7 @@ platform :ios do
       default_keychain: true,
       unlock: true,
       timeout: 3600,
-      lock_when_sleeps: true
+      lock_when_sleeps: false
     )
     
     app_store_connect_api_key(
