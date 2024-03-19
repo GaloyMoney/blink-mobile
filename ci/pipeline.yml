@@ -32,8 +32,6 @@ groups:
   - install-deps
   - dev-build-android
   - dev-build-ios
-  - e2e-test-android
-  - e2e-test-ios
   - prerelease
   - prod-build-android
   - prod-build-ios
@@ -45,10 +43,8 @@ groups:
   - install-deps
   - dev-build-android
   - dev-build-ios
-- name: e2e-builds
+- name: prod-builds
   jobs:
-  - e2e-test-android
-  - e2e-test-ios
   - prerelease
   - prod-build-android
   - prod-build-ios
@@ -316,6 +312,7 @@ jobs:
       params:
         VERSION_FILE: testflight-version/version
         ANDROID_KEYSTORE: #@ data.values.android_keystore
+        LANG: en_US.UTF-8
   - task: upload-to-gcs
     config:
       platform: linux
@@ -393,6 +390,7 @@ jobs:
         APPSTORE_API_KEY: #@ data.values.appstore_api_key
         APPSTORE_API_KEY_ID: #@ data.values.appstore_api_key_id
         APPSTORE_ISSUER_ID: #@ data.values.appstore_issuer_id
+        LANG: en_US.UTF-8
   - task: upload-to-gcs
     config:
       platform: linux

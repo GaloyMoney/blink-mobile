@@ -25,6 +25,7 @@ pushd repo
 git checkout $GIT_REF
 
 nix develop -c yarn install
+nix develop -c sh -c 'cd ios && bundle install'
 
 lsof -ti:8080,8081 | xargs kill -9 || true
 (nix develop -c yarn start) &

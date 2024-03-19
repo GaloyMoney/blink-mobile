@@ -15,37 +15,37 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios beta
+### ios build
 
 ```sh
-[bundle exec] fastlane ios beta
+[bundle exec] fastlane ios build
 ```
 
-Push a new beta build to TestFlight
+Build Releasable IPA
 
-### ios browserstack
+### ios app_store_upload
 
 ```sh
-[bundle exec] fastlane ios browserstack
+[bundle exec] fastlane ios app_store_upload
 ```
 
-End to end testing on browserstack
+Upload to App Store TestFlight
 
-### ios increment
+### ios promote_to_beta
 
 ```sh
-[bundle exec] fastlane ios increment
+[bundle exec] fastlane ios promote_to_beta
 ```
 
-increment path version
+Promote Testflight build to Beta
 
-### ios build_ipa
+### ios promote_to_public
 
 ```sh
-[bundle exec] fastlane ios build_ipa
+[bundle exec] fastlane ios promote_to_public
 ```
 
-build ipa
+Promote Beta build to Public
 
 ### ios build_e2e
 
@@ -54,6 +54,14 @@ build ipa
 ```
 
 Build for end to end tests
+
+### ios browserstack
+
+```sh
+[bundle exec] fastlane ios browserstack
+```
+
+End to end testing on browserstack
 
 ----
 
