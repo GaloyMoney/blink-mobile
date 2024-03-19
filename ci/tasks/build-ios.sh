@@ -12,6 +12,9 @@ chmod 600 id_rsa
 ssh-add ./id_rsa
 rm id_rsa
 
+tmpfile=$(mktemp /tmp/wwdr-cert.cer.XXXXXXXXX) || true
+curl -f -o $tmpfile https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer && security import $tmpfile ~/Library/Keychains/login.keychain-db || true
+
 BUILD_NUMBER=$(cat build-number-ios/ios)
 export PUBLIC_VERSION=$(cat $VERSION_FILE)
 
