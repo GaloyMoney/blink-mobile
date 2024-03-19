@@ -169,6 +169,7 @@ jobs:
     - get: build-number-ios
   - task: build
     tags: [ mac-m1 ]
+    privileged: true
     config:
       platform: darwin
       inputs:
