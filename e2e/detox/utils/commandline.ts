@@ -65,3 +65,37 @@ export const getLnInvoiceForBob = async (): Promise<string> =>
       },
     )
   })
+
+export const sendLnPaymentFromBob = async ({
+  paymentRequest,
+  amount,
+}: {
+  paymentRequest: string
+  amount: number
+}): Promise<JSON> =>
+  new Promise((resolve, reject) => {
+    exec(
+      `source ${REPO_ROOT}/dev/vendor/galoy-quickstart/bin/helpers.sh
+      source ${REPO_ROOT}/dev/vendor/galoy-quickstart/dev/helpers/cli.sh
+
+      cd ${REPO_ROOT}/dev
+
+      variables=$(
+        jq -n \
+        --arg wallet_id "$(read_value 'bob.usd_wallet_id')" \
+        --arg payment_request "${paymentRequest}" \
+        --arg amount "${amount}" \
+        '{input: {walletId: $wallet_id, paymentRequest: $payment_request, amount: $amount}}'
+      )
+      exec_graphql "bob" 'ln-no-amount-usd-invoice-payment-send' "$variables"
+      graphql_output
+    `,
+      { encoding: "utf-8" },
+      (_, output, __) => {
+        const jsonOutput = JSON.parse(output)
+        if (jsonOutput.data.lnNoAmountUsdInvoicePaymentSend.status === "SUCCESS")
+          return resolve(jsonOutput)
+        reject(new Error("LN Payment from Bob was not successful"))
+      },
+    )
+  })
