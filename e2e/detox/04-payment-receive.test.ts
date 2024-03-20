@@ -4,10 +4,10 @@ import jsQR from "jsqr"
 
 import { i18nObject } from "../../app/i18n/i18n-util"
 import { loadLocale } from "../../app/i18n/i18n-util.sync"
-import { sendLnPaymentFromBob } from "./utils/commandline"
+import { sendBtcTo, sendLnPaymentFromBob } from "./utils/commandline"
 import { setLocalAndLoginWithAccessToken, waitForHomeScreen } from "./utils/common-flows"
 import { timeout, ALICE_TOKEN } from "./utils/config"
-import { tap, sleep, verifyTextPresent, addAmount } from "./utils/controls"
+import { tap, sleep, addAmount } from "./utils/controls"
 
 const decodeQRCode = async (imgPath: string): Promise<string> => {
   const image = await jimp.read(imgPath)
@@ -22,7 +22,7 @@ const decodeQRCode = async (imgPath: string): Promise<string> => {
   const qrCode = jsQR(clampedArray, width, height)
 
   if (qrCode) {
-    return qrCode.data // This is the decoded text from the QR code
+    return qrCode.data
   }
   throw new Error("QR code could not be decoded.")
 }
@@ -41,7 +41,7 @@ beforeAll(async () => {
 })
 
 describe("Receive: LN BTC Amountless", () => {
-  it("receive ln btc amountless", async () => {
+  it("receive", async () => {
     await tap(by.id(LL.HomeScreen.receive()))
 
     const amountInput = element(by.id("Amount Input Button"))
@@ -58,17 +58,19 @@ describe("Receive: LN BTC Amountless", () => {
     const paymentRequest = await decodeQRCode(imgPath)
 
     await sendLnPaymentFromBob({ paymentRequest, amount: 2 })
+
+    await tap(by.id("Back"))
+    await waitForHomeScreen(LL)
   })
 })
 
 describe("Receive: LN BTC $0.02 Amount", () => {
-  it("receive ln btc amountless", async () => {
+  it("receive", async () => {
     await tap(by.id(LL.HomeScreen.receive()))
 
     const amountInput = element(by.id("Amount Input Button"))
     await waitFor(amountInput).toBeVisible().withTimeout(timeout)
 
-    await element(by.id("receive-screen")).scroll(400, "down", NaN, 0.85)
     await addAmount("0.02", LL)
 
     const readablePaymentRequest = element(by.id("readable-payment-request"))
@@ -81,18 +83,22 @@ describe("Receive: LN BTC $0.02 Amount", () => {
     const imgPath = await qrCode.takeScreenshot("qr-code")
     const paymentRequest = await decodeQRCode(imgPath)
 
-    await sendLnPaymentFromBob({ paymentRequest, amount: 2 })
+    await sendLnPaymentFromBob({ paymentRequest })
+
+    await tap(by.id("Back"))
+    await waitForHomeScreen(LL)
   })
 })
 
 describe("Receive: LN Stablesats Amountless", () => {
-  it("receive ln btc amountless", async () => {
+  it("receive", async () => {
     await tap(by.id(LL.HomeScreen.receive()))
 
     const amountInput = element(by.id("Amount Input Button"))
     await waitFor(amountInput).toBeVisible().withTimeout(timeout)
 
     await tap(by.id("Stablesats"))
+    await sleep(1000)
 
     const readablePaymentRequest = element(by.id("readable-payment-request"))
     await waitFor(readablePaymentRequest)
@@ -105,19 +111,23 @@ describe("Receive: LN Stablesats Amountless", () => {
     const paymentRequest = await decodeQRCode(imgPath)
 
     await sendLnPaymentFromBob({ paymentRequest, amount: 2 })
+
+    await tap(by.id("Back"))
+    await waitForHomeScreen(LL)
   })
 })
 
 describe("Receive: LN Stablesats $0.02 Amount", () => {
-  it("receive ln btc amountless", async () => {
+  it("receive", async () => {
     await tap(by.id(LL.HomeScreen.receive()))
 
     const amountInput = element(by.id("Amount Input Button"))
     await waitFor(amountInput).toBeVisible().withTimeout(timeout)
 
     await tap(by.id("Stablesats"))
+    await sleep(1000)
 
-    await element(by.id("receive-screen")).scroll(400, "down", NaN, 0.85)
+    // await element(by.id("receive-screen")).scroll(400, "down", NaN, 0.85)
     await addAmount("0.02", LL)
 
     const readablePaymentRequest = element(by.id("readable-payment-request"))
@@ -130,11 +140,59 @@ describe("Receive: LN Stablesats $0.02 Amount", () => {
     const imgPath = await qrCode.takeScreenshot("qr-code")
     const paymentRequest = await decodeQRCode(imgPath)
 
-    await sendLnPaymentFromBob({ paymentRequest, amount: 2 })
+    await sendLnPaymentFromBob({ paymentRequest })
+
+    await tap(by.id("Back"))
+    await waitForHomeScreen(LL)
   })
 })
 
-// describe("Receive: Onchain BTC", () => {})
-// describe("Receive: Onchain Stablesats", () => {})
+describe("Receive: Onchain BTC", () => {
+  it("receive", async () => {
+    await tap(by.id(LL.HomeScreen.receive()))
 
-// describe("Receive: Paycode", () => {})
+    const amountInput = element(by.id("Amount Input Button"))
+    await waitFor(amountInput).toBeVisible().withTimeout(timeout)
+
+    await tap(by.id("Onchain"), 30)
+    await sleep(500)
+    await tap(by.id("Bitcoin"))
+    await sleep(500)
+
+    const qrCode = element(by.id("QR-Code"))
+    await waitFor(qrCode).toBeVisible().withTimeout(timeout)
+    const imgPath = await qrCode.takeScreenshot("qr-code")
+    const addressQR = await decodeQRCode(imgPath)
+    const address = addressQR.split(":")[1].split("?")[0]
+
+    await sendBtcTo({ address })
+
+    await tap(by.id("Back"))
+    await waitForHomeScreen(LL)
+  })
+})
+
+describe("Receive: Onchain Stablesats", () => {
+  it("receive", async () => {
+    await tap(by.id(LL.HomeScreen.receive()))
+
+    const amountInput = element(by.id("Amount Input Button"))
+    await waitFor(amountInput).toBeVisible().withTimeout(timeout)
+
+    await tap(by.id("Onchain"), 30)
+    await sleep(500)
+    await tap(by.id("Stablesats"))
+    await sleep(500)
+
+    const qrCode = element(by.id("QR-Code"))
+    await waitFor(qrCode).toBeVisible().withTimeout(timeout)
+    const imgPath = await qrCode.takeScreenshot("qr-code")
+    const addressQR = await decodeQRCode(imgPath)
+    const address = addressQR.split(":")[1].split("?")[0]
+
+    await sendBtcTo({ address })
+
+    await tap(by.id("Back"))
+    await waitForHomeScreen(LL)
+  })
+})

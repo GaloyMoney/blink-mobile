@@ -1,9 +1,11 @@
 import { TranslationFunctions } from "../../../app/i18n/i18n-types"
 import { timeout } from "./config"
 
-export const tap = async (match: Detox.NativeMatcher) => {
+export const tap = async (match: Detox.NativeMatcher, timeoutMultiplier = 1) => {
   const el = element(match)
-  await waitFor(el).toBeVisible().withTimeout(timeout)
+  await waitFor(el)
+    .toBeVisible()
+    .withTimeout(timeout * timeoutMultiplier)
   await el.tap()
 }
 

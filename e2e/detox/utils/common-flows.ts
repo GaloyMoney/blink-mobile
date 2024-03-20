@@ -51,7 +51,7 @@ export const setLocalAndLoginWithAccessToken = async (
   await waitFor(localInstanceText)
     .toBeVisible()
     .whileElement(developerScreenSV)
-    .scroll(400, "up", NaN, 0.85)
+    .scroll(100, "up", NaN, 0.85)
 
   await tap(by.id("Back"))
 
