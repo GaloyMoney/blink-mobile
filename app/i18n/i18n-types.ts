@@ -7282,6 +7282,26 @@ type RootTranslation = {
 				 */
 				description: string
 			}
+			Marketing: {
+				/**
+				 * F​e​a​t​u​r​e​s​ ​a​n​d​ ​u​p​d​a​t​e​s
+				 */
+				title: string
+				/**
+				 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​b​o​u​t​ ​n​e​w​ ​f​e​a​t​u​r​e​s​ ​a​n​d​ ​u​p​d​a​t​e​s​.
+				 */
+				description: string
+			}
+			Price: {
+				/**
+				 * P​r​i​c​e​ ​c​h​a​n​g​e​s
+				 */
+				title: string
+				/**
+				 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​b​o​u​t​ ​t​h​e​ ​p​r​i​c​e​ ​o​f​ ​B​i​t​c​o​i​n​.
+				 */
+				description: string
+			}
 		}
 	}
 	AccountScreen: {
@@ -16096,6 +16116,26 @@ export type TranslationFunctions = {
 				title: () => LocalizedString
 				/**
 				 * Notifications related to sending and receiving payments.
+				 */
+				description: () => LocalizedString
+			}
+			Marketing: {
+				/**
+				 * Features and updates
+				 */
+				title: () => LocalizedString
+				/**
+				 * Notifications about new features and updates.
+				 */
+				description: () => LocalizedString
+			}
+			Price: {
+				/**
+				 * Price changes
+				 */
+				title: () => LocalizedString
+				/**
+				 * Notifications about the price of Bitcoin.
 				 */
 				description: () => LocalizedString
 			}
