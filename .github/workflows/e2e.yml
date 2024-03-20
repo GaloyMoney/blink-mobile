@@ -55,6 +55,11 @@ jobs:
           retry_wait_seconds: 30
           max_attempts: 8
           command: cd dev && tilt ci
+      - name: Tilt Server
+        run: |
+          lsof -ti:10350 | xargs kill -9 || true
+          make tilt-up &
+          echo "TILT_SERVER_PID=$!" >> $GITHUB_ENV
 
       # Tests on iOS Simulator
       - name: Run Detox Tests on iOS Simulator
@@ -114,5 +119,7 @@ jobs:
         if: always()
         continue-on-error: true
         run: |
+          kill $TILT_SERVER_PID || true
+          lsof -ti:10350 | xargs kill -9 || true
           cd dev && tilt down || true
           docker rm -f $(docker ps -aq) || true
