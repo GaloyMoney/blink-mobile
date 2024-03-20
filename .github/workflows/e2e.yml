@@ -12,6 +12,7 @@ jobs:
   e2e:
     name: E2E Tests
     runs-on: self-hosted
+    timeout-minutes: 45
 
     steps:
       - uses: actions/checkout@v2
@@ -63,14 +64,9 @@ jobs:
 
       # Tests on iOS Simulator
       - name: Run Detox Tests on iOS Simulator
-        uses: nick-fields/retry@v3
-        with:
-          timeout_minutes: 20
-          max_attempts: 5
-          command: |
-            rm -rf ios-recordings || true
-            make reset-e2e
-            yarn e2e:test ios.sim.debug -d --take-screenshots all --record-videos all --record-logs all --artifacts-location ios-recordings
+        run: |
+          make reset-e2e
+          yarn e2e:test ios.sim.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location ios-recordings
 
       - run: killall Simulator
         if: always()
@@ -89,14 +85,9 @@ jobs:
           adb wait-for-device
 
       - name: Run Detox Tests on Android Emulator
-        uses: nick-fields/retry@v3
-        with:
-          timeout_minutes: 20
-          max_attempts: 5
-          command: |
-            rm -rf android-recordings || true
-            make reset-e2e
-            yarn e2e:test android.emu.debug -d --take-screenshots all --record-videos all --record-logs all --artifacts-location android-recordings
+        run: |
+          make reset-e2e
+          yarn e2e:test android.emu.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location android-recordings
 
       - name: Kill Android Emulator
         if: always()
@@ -115,7 +106,7 @@ jobs:
         continue-on-error: true
         run: kill $METRO_PID
 
-      - name: Destroy backend
+      - name: Cleanup
         if: always()
         continue-on-error: true
         run: |
