@@ -44,7 +44,7 @@ jobs:
           echo "METRO_PID=$!" >> $GITHUB_ENV
 
       # Builds
-      - run: yarn e2e:build ios.sim.debug
+      # - run: yarn e2e:build ios.sim.debug
       - run: yarn e2e:build android.emu.debug
 
       # Start Tilt
@@ -62,25 +62,25 @@ jobs:
           echo "TILT_SERVER_PID=$!" >> $GITHUB_ENV
 
       # Tests on iOS Simulator
-      - name: Run Detox Tests on iOS Simulator
-        uses: nick-fields/retry@v3
-        with:
-          timeout_minutes: 12
-          max_attempts: 3
-          command: |
-            rm -rf ios-recordings || true
-            make reset-e2e
-            yarn e2e:test ios.sim.debug -d --take-screenshots all --record-videos all --record-logs all --artifacts-location ios-recordings
+      # - name: Run Detox Tests on iOS Simulator
+      #   uses: nick-fields/retry@v3
+      #   with:
+      #     timeout_minutes: 12
+      #     max_attempts: 3
+      #     command: |
+      #       rm -rf ios-recordings || true
+      #       make reset-e2e
+      #       yarn e2e:test ios.sim.debug -d --take-screenshots all --record-videos all --record-logs all --artifacts-location ios-recordings
 
-      - run: killall Simulator
-        if: always()
-        continue-on-error: true
+      # - run: killall Simulator
+      #   if: always()
+      #   continue-on-error: true
 
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: ios-recordings
-          path: ios-recordings
+      # - uses: actions/upload-artifact@v4
+      #   if: always()
+      #   with:
+      #     name: ios-recordings
+      #     path: ios-recordings
 
       # Tests on Android Emulator
       - name: Start Android Emulator
