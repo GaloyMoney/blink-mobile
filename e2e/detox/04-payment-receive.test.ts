@@ -68,6 +68,7 @@ describe("Receive: LN BTC $0.02 Amount", () => {
     const amountInput = element(by.id("Amount Input Button"))
     await waitFor(amountInput).toBeVisible().withTimeout(timeout)
 
+    await element(by.id("receive-screen")).scroll(400, "down", NaN, 0.85)
     await addAmount("0.02", LL)
 
     const readablePaymentRequest = element(by.id("readable-payment-request"))
@@ -115,6 +116,8 @@ describe("Receive: LN Stablesats $0.02 Amount", () => {
     await waitFor(amountInput).toBeVisible().withTimeout(timeout)
 
     await tap(by.id("Stablesats"))
+
+    await element(by.id("receive-screen")).scroll(400, "down", NaN, 0.85)
     await addAmount("0.02", LL)
 
     const readablePaymentRequest = element(by.id("readable-payment-request"))
