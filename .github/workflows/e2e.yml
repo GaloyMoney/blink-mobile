@@ -99,10 +99,11 @@ jobs:
         if: always()
         continue-on-error: true
         run: |
+          kill $METRO_PID || true
           kill $TILT_SERVER_PID || true
-          lsof -ti:10350 | xargs kill -9 || true
           cd dev && tilt down || true
           docker rm -f $(docker ps -aq) || true
+          lsof -ti:10350,8080,8081 | xargs kill -9 || true
 
   e2e-ios:
     name: iOS
@@ -179,16 +180,12 @@ jobs:
           path: ios-recordings
 
       # Cleanup
-      - name: Terminate Metro
-        if: always()
-        continue-on-error: true
-        run: kill $METRO_PID
-
       - name: Cleanup
         if: always()
         continue-on-error: true
         run: |
+          kill $METRO_PID || true
           kill $TILT_SERVER_PID || true
-          lsof -ti:10350 | xargs kill -9 || true
           cd dev && tilt down || true
           docker rm -f $(docker ps -aq) || true
+          lsof -ti:10350,8080,8081 | xargs kill -9 || true

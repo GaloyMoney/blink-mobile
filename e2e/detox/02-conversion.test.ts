@@ -50,7 +50,8 @@ describe("Intraledger Flow", () => {
     const tx2 = element(by.id("transaction-by-index-1"))
     await waitFor(tx2)
       .toBeVisible()
-      .withTimeout(timeout * 10)
+      .whileElement(by.id("home-screen"))
+      .scroll(400, "down", NaN, 0.85)
     await tx2.tap()
 
     await verifyTextPresent("To Local User")
