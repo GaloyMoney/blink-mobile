@@ -37,7 +37,6 @@ platform :ios do
       name: keychain_name,
       password: keychain_password,
       default_keychain: true,
-      require_create: true,
       unlock: true,
       timeout: 3600,
       lock_when_sleeps: false

@@ -24,14 +24,23 @@ source:
   repository: #@ release_pipeline_image()
 #@ end
 
+#@ def claim_lock():
+put: mobile-concourse-lock
+params: { claim: mobile-concourse }
+#@ end
+
+#@ def release_lock():
+put: mobile-concourse-lock
+params: { release: mobile-concourse-lock }
+#@ end
+
 groups:
 - name: all
   jobs:
   - test-unit
   - check-code
   - install-deps
-  - dev-build-android
-  - dev-build-ios
+  - dev-build
   - prerelease
   - prod-build-android
   - prod-build-ios
@@ -41,8 +50,7 @@ groups:
   - test-unit
   - check-code
   - install-deps
-  - dev-build-android
-  - dev-build-ios
+  - dev-build
 - name: prod-builds
   jobs:
   - prerelease
@@ -121,10 +129,10 @@ jobs:
     - get: pipeline-tasks
     - get: build-number-android
     - get: build-number-ios
-  - put: mobile-concourse-lock
-    params: { claim: mobile-concourse }
+  - #@ claim_lock()
   - task: build
     tags: [ mac-m1 ]
+    ensure: #@ release_lock()
     config:
       platform: darwin
       inputs:
@@ -164,7 +172,6 @@ jobs:
         GCS_DIRECTORY: dev
         bucket: #@ data.values.build_artifacts_bucket_name
         json_key: #@ data.values.build_artifacts_bucket_creds
-  - { put: mobile-concourse-lock, params: { release: mobile-concourse-lock }}
 
 - name: prerelease
   serial: true

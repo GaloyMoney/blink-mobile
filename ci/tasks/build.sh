@@ -25,7 +25,7 @@ nix develop -c sh -c 'cd ios && bundle install'
 
 lsof -ti:8080,8081 | xargs kill -9 || true
 (nix develop -c yarn start) &
-until lsof -ti:8080,8081; do sleep 1; echo "waiting for metro to come up..." ;done
+until lsof -ti:8080,8081; do sleep 1; echo "waiting for metro to come up..." ; done
 
 # Android Build
 export BUILD_NUMBER=$(cat ${CI_ROOT}/build-number-android/android)
