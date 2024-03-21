@@ -151,6 +151,7 @@ jobs:
       run:
         path: pipeline-tasks/ci/tasks/upload-to-gcs.sh
       params:
+        CI: true
         INPUTS: android/app/build/outputs/*
         VERSION_FILE: repo/.git/ref
         GCS_DIRECTORY: dev/android
@@ -185,6 +186,7 @@ jobs:
           - "-c"
           - "arch -arm64 pipeline-tasks/ci/tasks/build-ios.sh"
       params:
+        CI: true
         VERSION_FILE: repo/.git/ref
         MATCH_PASSWORD: #@ data.values.fastlane_match_password
         MATCH_KEYCHAIN_PASSWORD: #@ data.values.fastlane_match_keychain_password
@@ -311,6 +313,7 @@ jobs:
           - "-c"
           - "arch -arm64 pipeline-tasks/ci/tasks/build-android.sh"
       params:
+        CI: true
         VERSION_FILE: testflight-version/version
         ANDROID_KEYSTORE: #@ data.values.android_keystore
         LANG: en_US.UTF-8
@@ -384,6 +387,7 @@ jobs:
           - "-c"
           - "arch -arm64 pipeline-tasks/ci/tasks/build-ios.sh"
       params:
+        CI: true
         VERSION_FILE: testflight-version/version
         MATCH_PASSWORD: #@ data.values.fastlane_match_password
         MATCH_KEYCHAIN_PASSWORD: #@ data.values.fastlane_match_keychain_password
