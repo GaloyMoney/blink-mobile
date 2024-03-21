@@ -234,6 +234,11 @@ export const HomeScreen: React.FC = () => {
 
   const buttons = [
     {
+      title: LL.ConversionDetailsScreen.title(),
+      target: "conversionDetails" as Target,
+      icon: "transfer" as IconNamesType,
+    },
+    {
       title: LL.HomeScreen.receive(),
       target: "receiveBitcoin" as Target,
       icon: "receive" as IconNamesType,
@@ -249,14 +254,6 @@ export const HomeScreen: React.FC = () => {
       icon: "qr-code" as IconNamesType,
     },
   ]
-
-  if (!isIos || dataUnauthed?.globals?.network !== "mainnet") {
-    buttons.unshift({
-      title: LL.ConversionDetailsScreen.title(),
-      target: "conversionDetails" as Target,
-      icon: "transfer" as IconNamesType,
-    })
-  }
 
   const AccountCreationNeededModal = (
     <Modal
@@ -467,7 +464,7 @@ const useStyles = makeStyles(({ colors }) => ({
   header: {
     flexDirection: "row",
     alignItems: "center",
-    height: 120,
+    marginVertical: 20,
   },
   error: {
     alignSelf: "center",

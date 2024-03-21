@@ -18,7 +18,7 @@ export type GaloyIconButtonProps = {
 const sizeMapping = {
   small: 16,
   medium: 24,
-  large: 36,
+  large: 48,
 }
 
 export const GaloyIconButton = ({
@@ -94,7 +94,7 @@ export const GaloyIconButton = ({
       marginTop: 8,
       opacity: disabled ? 0.7 : 1,
       textAlign: "center",
-      fontSize: 11,
+      fontSize: 18,
     }
   }
 

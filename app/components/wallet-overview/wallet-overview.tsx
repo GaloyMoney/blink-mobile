@@ -15,6 +15,9 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
 import { getUsdWallet } from "@app/graphql/wallets-utils"
 import { usePersistentStateContext } from "@app/store/persistent-state"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 
 const Loader = () => {
   const styles = useStyles()
@@ -48,6 +51,8 @@ const WalletOverview: React.FC<Props> = ({
   breezBalance,
   pendingBalance,
 }) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
   const styles = useStyles()
@@ -146,57 +151,76 @@ const WalletOverview: React.FC<Props> = ({
       </View>
       {/* Start of IBEX Wallet overview */}
       <View style={styles.separator}></View>
-      <View style={styles.displayTextView}>
-        <View style={styles.currency}>
-          <GaloyCurrencyBubble currency="USD" />
-          <Text type="p1">Cash (USD)</Text>
-        </View>
-        {loading ? (
-          <Loader />
-        ) : (
-          <View style={styles.hideableArea}>
-            <HideableArea isContentVisible={isContentVisible}>
-              {convertedUsdBalance ? (
-                <Text type="p1" bold>
-                  {convertedUsdBalance}
-                </Text>
-              ) : null}
-              <Text type={convertedUsdBalance ? "p3" : "p1"} bold={!convertedUsdBalance}>
-                {usdBalance}
-              </Text>
-            </HideableArea>
+      <Pressable
+        onPress={() =>
+          navigation.navigate("TransactionHistoryTabs", {
+            initialRouteName: "USDTransactionHistory",
+          })
+        }
+      >
+        <View style={styles.displayTextView}>
+          <View style={styles.currency}>
+            <GaloyCurrencyBubble currency="USD" />
+            <Text type="p1">Cash (USD)</Text>
           </View>
-        )}
-      </View>
+          {loading ? (
+            <Loader />
+          ) : (
+            <View style={styles.hideableArea}>
+              <HideableArea isContentVisible={isContentVisible}>
+                {convertedUsdBalance ? (
+                  <Text type="p1" bold>
+                    {convertedUsdBalance}
+                  </Text>
+                ) : null}
+                <Text
+                  type={convertedUsdBalance ? "p3" : "p1"}
+                  bold={!convertedUsdBalance}
+                >
+                  {usdBalance}
+                </Text>
+              </HideableArea>
+            </View>
+          )}
+        </View>
+      </Pressable>
       {/* End of IBEX Wallet overview */}
       {/* Start of Breez SDK Wallet overview */}
       <View style={styles.separator}></View>
-      <View style={styles.displayTextView}>
-        <View style={styles.currency}>
-          <GaloyCurrencyBubble currency="BTC" />
-          <Text type="p1">Bitcoin</Text>
-        </View>
-        {loading ? (
-          <Loader />
-        ) : (
-          <View style={styles.hideableArea}>
-            <HideableArea isContentVisible={isContentVisible}>
-              {convertedBtcBalance ? (
-                <Text type="p1" bold color={pendingBalance ? "orange" : undefined}>
-                  {convertedBtcBalance}
-                </Text>
-              ) : null}
-              <Text
-                type={convertedBtcBalance ? "p3" : "p1"}
-                bold={!convertedBtcBalance}
-                color={pendingBalance ? "orange" : undefined}
-              >
-                {btcBalance}
-              </Text>
-            </HideableArea>
+      <Pressable
+        onPress={() =>
+          navigation.navigate("TransactionHistoryTabs", {
+            initialRouteName: "BTCTransactionHistory",
+          })
+        }
+      >
+        <View style={styles.displayTextView}>
+          <View style={styles.currency}>
+            <GaloyCurrencyBubble currency="BTC" />
+            <Text type="p1">Bitcoin</Text>
           </View>
-        )}
-      </View>
+          {loading ? (
+            <Loader />
+          ) : (
+            <View style={styles.hideableArea}>
+              <HideableArea isContentVisible={isContentVisible}>
+                {convertedBtcBalance ? (
+                  <Text type="p1" bold color={pendingBalance ? "orange" : undefined}>
+                    {convertedBtcBalance}
+                  </Text>
+                ) : null}
+                <Text
+                  type={convertedBtcBalance ? "p3" : "p1"}
+                  bold={!convertedBtcBalance}
+                  color={pendingBalance ? "orange" : undefined}
+                >
+                  {btcBalance}
+                </Text>
+              </HideableArea>
+            </View>
+          )}
+        </View>
+      </Pressable>
       {/* End of Breez SDK Wallet overview */}
     </View>
   )

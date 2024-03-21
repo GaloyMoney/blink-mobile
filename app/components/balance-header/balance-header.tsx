@@ -1,22 +1,116 @@
 import * as React from "react"
+import styled from "styled-components/native"
 import ContentLoader, { Rect } from "react-content-loader/native"
-import { TouchableOpacity, View } from "react-native"
+import { makeStyles } from "@rneui/themed"
 
-import { gql } from "@apollo/client"
+// gql
 import { useBalanceHeaderQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { getUsdWallet } from "@app/graphql/wallets-utils"
+
+// hooks
 import { usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { makeStyles, Text } from "@rneui/themed"
 
-import HideableArea from "../hideable-area/hideable-area"
+// utils
 import {
   DisplayCurrency,
   addMoneyAmounts,
   toBtcMoneyAmount,
   toUsdMoneyAmount,
 } from "@app/types/amounts"
-import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+
+type Props = {
+  loading?: boolean
+  isContentVisible: boolean
+  setIsContentVisible: React.Dispatch<React.SetStateAction<boolean>>
+  breezBalance: number | null
+  walletType?: "btc" | "usd"
+  smallText?: boolean
+}
+
+export const BalanceHeader: React.FC<Props> = ({
+  loading,
+  isContentVisible,
+  setIsContentVisible,
+  breezBalance,
+  walletType,
+  smallText,
+}) => {
+  const isAuthed = useIsAuthed()
+  const { formatMoneyAmount } = useDisplayCurrency()
+  const { convertMoneyAmount } = usePriceConversion()
+
+  // TODO: use suspense for this component with the apollo suspense hook (in beta)
+  // so there is no need to pass loading from parent?
+  const { data } = useBalanceHeaderQuery({ skip: !isAuthed })
+
+  // TODO: check that there are 2 wallets.
+  // otherwise fail (account with more/less 2 wallets will not be working with the current mobile app)
+  // some tests accounts have only 1 wallet
+
+  let balanceInDisplayCurrency = "$0.00"
+
+  if (isAuthed) {
+    const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
+
+    const usdWalletBalance = toUsdMoneyAmount(usdWallet?.balance)
+    const btcWalletBalance = toBtcMoneyAmount(breezBalance ?? NaN)
+
+    const btcBalanceInDisplayCurrency =
+      convertMoneyAmount && convertMoneyAmount(btcWalletBalance, DisplayCurrency)
+
+    const usdBalanceInDisplayCurrency =
+      convertMoneyAmount && convertMoneyAmount(usdWalletBalance, DisplayCurrency)
+
+    if (usdBalanceInDisplayCurrency && btcBalanceInDisplayCurrency) {
+      balanceInDisplayCurrency = formatMoneyAmount({
+        moneyAmount: addMoneyAmounts({
+          a: walletType === "btc" ? toUsdMoneyAmount(0) : usdBalanceInDisplayCurrency,
+          b: walletType === "usd" ? toBtcMoneyAmount(0) : btcBalanceInDisplayCurrency,
+        }),
+      })
+    }
+  }
+
+  if (!isContentVisible) {
+    return (
+      <Wrapper
+        smallText={smallText}
+        onPress={() => setIsContentVisible(!isContentVisible)}
+        activeOpacity={0.5}
+      >
+        {loading ? (
+          <Loader />
+        ) : (
+          <Text smallText={smallText}>{balanceInDisplayCurrency}</Text>
+        )}
+      </Wrapper>
+    )
+  } else {
+    return (
+      <Wrapper
+        smallText={smallText}
+        onPress={() => setIsContentVisible(!isContentVisible)}
+        activeOpacity={0.5}
+      >
+        <Text smallText={smallText}>****</Text>
+      </Wrapper>
+    )
+  }
+}
+
+const Wrapper = styled.TouchableOpacity<{ smallText?: boolean }>`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: ${({ smallText }) => (smallText ? 0 : "4px")};
+`
+
+const Text = styled.Text<{ smallText?: boolean }>`
+  font-size: ${({ smallText }) => (smallText ? "22px" : "32px")};
+  color: #000;
+`
 
 const Loader = () => {
   const styles = useStyles()
@@ -33,145 +127,11 @@ const Loader = () => {
   )
 }
 
-gql`
-  query balanceHeader {
-    me {
-      id
-      defaultAccount {
-        id
-        wallets {
-          id
-          balance
-          walletCurrency
-        }
-      }
-    }
-  }
-`
-
-type Props = {
-  loading: boolean
-  isContentVisible: boolean
-  setIsContentVisible: React.Dispatch<React.SetStateAction<boolean>>
-  breezBalance: number | null
-}
-
-export const BalanceHeader: React.FC<Props> = ({
-  loading,
-  isContentVisible,
-  setIsContentVisible,
-  breezBalance,
-}) => {
-  const styles = useStyles()
-
-  const isAuthed = useIsAuthed()
-  const { formatMoneyAmount } = useDisplayCurrency()
-  const { convertMoneyAmount } = usePriceConversion()
-
-  // TODO: use suspense for this component with the apollo suspense hook (in beta)
-  // so there is no need to pass loading from parent?
-  const { data } = useBalanceHeaderQuery({ skip: !isAuthed })
-
-  // TODO: check that there are 2 wallets.
-  // otherwise fail (account with more/less 2 wallets will not be working with the current mobile app)
-  // some tests accounts have only 1 wallet
-
-  let balanceInDisplayCurrency = "$0.00"
-
-  if (isAuthed) {
-    const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
-    const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
-
-    const usdWalletBalance = toUsdMoneyAmount(usdWallet?.balance)
-
-    // const btcWalletBalance = toBtcMoneyAmount(btcWallet?.balance)
-    // add Breez SDK Balance
-    const btcWalletBalance = toBtcMoneyAmount(breezBalance ?? NaN)
-
-    const btcBalanceInDisplayCurrency =
-      convertMoneyAmount && convertMoneyAmount(btcWalletBalance, DisplayCurrency)
-
-    const usdBalanceInDisplayCurrency =
-      convertMoneyAmount && convertMoneyAmount(usdWalletBalance, DisplayCurrency)
-
-    if (usdBalanceInDisplayCurrency && btcBalanceInDisplayCurrency) {
-      balanceInDisplayCurrency = formatMoneyAmount({
-        moneyAmount: addMoneyAmounts({
-          a: usdBalanceInDisplayCurrency,
-          b: btcBalanceInDisplayCurrency,
-        }),
-      })
-    }
-  }
-
-  const toggleIsContentVisible = () => {
-    setIsContentVisible((prevState) => !prevState)
-  }
-
-  return (
-    <View style={styles.balanceHeaderContainer}>
-      <HideableArea
-        isContentVisible={isContentVisible}
-        hiddenContent={
-          <TouchableOpacity
-            onPress={toggleIsContentVisible}
-            style={styles.hiddenBalanceTouchableOpacity}
-          >
-            <Text style={styles.balanceHiddenText}>****</Text>
-          </TouchableOpacity>
-        }
-      >
-        <View style={styles.balancesContainer}>
-          <TouchableOpacity onPress={toggleIsContentVisible}>
-            <View style={styles.marginBottom}>
-              {loading ? (
-                <Loader />
-              ) : (
-                <Text style={styles.primaryBalanceText}>{balanceInDisplayCurrency}</Text>
-              )}
-            </View>
-          </TouchableOpacity>
-        </View>
-      </HideableArea>
-    </View>
-  )
-}
-
 const useStyles = makeStyles(({ colors }) => ({
-  balanceHeaderContainer: {
-    flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  balancesContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  headerText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  marginBottom: {
-    marginBottom: 4,
-  },
-  hiddenBalanceTouchableOpacity: {
-    alignItems: "center",
-    flexGrow: 1,
-    justifyContent: "center",
-  },
-  primaryBalanceText: {
-    fontSize: 32,
-  },
   loaderBackground: {
     color: colors.loaderBackground,
   },
   loaderForefound: {
     color: colors.loaderForeground,
-  },
-  balanceHiddenText: {
-    fontSize: 32,
-    fontWeight: "bold",
   },
 }))
