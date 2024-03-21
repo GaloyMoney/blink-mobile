@@ -9,4 +9,5 @@ gcloud auth activate-service-account --key-file key.json
 
 pushd artifacts
 
-gsutil cp -r $INPUTS gs://$bucket/galoy-mobile/$GCS_DIRECTORY/galoy-mobile-$(date +%s)-v${version}/
+gsutil cp -r android/app/build/outputs/* gs://$bucket/galoy-mobile/$GCS_DIRECTORY/android/galoy-mobile-$(date +%s)-v${version}/
+gsutil cp -r ios/Blink.ipa gs://$bucket/galoy-mobile/$GCS_DIRECTORY/ios/galoy-mobile-$(date +%s)-v${version}/
