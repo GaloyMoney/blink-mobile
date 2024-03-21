@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { Share, TouchableOpacity, View } from "react-native"
 import { RouteProp, useIsFocused, useNavigation } from "@react-navigation/native"
 import Clipboard from "@react-native-clipboard/clipboard"
@@ -8,6 +8,7 @@ import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { useReceiveBitcoin } from "./use-receive-bitcoin"
 import { useAppSelector } from "@app/store/redux"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import nfcManager from "react-native-nfc-manager"
 
 // components
 import { Screen } from "@app/components/screen"
@@ -18,6 +19,8 @@ import { NoteInput } from "@app/components/note-input"
 import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
 import { GaloyCurrencyBubble } from "@app/components/atomic/galoy-currency-bubble"
 import { withMyLnUpdateSub } from "./my-ln-updates-sub"
+import { CustomIcon } from "@app/components/custom-icon"
+import { ModalNfc } from "@app/components/modal-nfc"
 
 // gql
 import { WalletCurrency, useAccountDefaultWalletQuery } from "@app/graphql/generated"
@@ -52,7 +55,8 @@ const ReceiveScreen = ({ route }: Props) => {
   const isFirstTransaction = route.params.transactionLength === 0
   const request = useReceiveBitcoin(isFirstTransaction)
 
-  const [currentWallet, setCurrentWallet] = React.useState(
+  const [displayReceiveNfc, setDisplayReceiveNfc] = useState(false)
+  const [currentWallet, setCurrentWallet] = useState(
     request?.receivingWalletDescriptor.currency,
   )
 
@@ -61,7 +65,33 @@ const ReceiveScreen = ({ route }: Props) => {
     variables: { username: userData?.username },
   })
 
-  // notification permission
+  const nfcText = LL.ReceiveScreen.nfc()
+  useEffect(() => {
+    ;(async () => {
+      if (
+        request?.type === "Lightning" &&
+        request?.state === "Created" &&
+        (await nfcManager.isSupported())
+      ) {
+        navigation.setOptions({
+          headerRight: () => (
+            <TouchableOpacity
+              style={styles.nfcIcon}
+              onPress={() => setDisplayReceiveNfc(true)}
+            >
+              <Text type="p2">{nfcText}</Text>
+              <CustomIcon name="nfc" color={colors.black} />
+            </TouchableOpacity>
+          ),
+        })
+      } else {
+        navigation.setOptions({ headerRight: () => <></> })
+      }
+    })()
+    // Disable exhaustive-deps because styles.nfcIcon was causing an infinite loop
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nfcText, colors.black, navigation, request?.state, request?.type])
+
   useEffect(() => {
     let timeout: NodeJS.Timeout
     if (isAuthed && isFocused) {
@@ -360,6 +390,12 @@ const ReceiveScreen = ({ route }: Props) => {
           isVisible={request.isSetLightningAddressModalVisible}
           toggleModal={request.toggleIsSetLightningAddressModalVisible}
         />
+        <ModalNfc
+          isActive={displayReceiveNfc}
+          setIsActive={setDisplayReceiveNfc}
+          settlementAmount={request.settlementAmount}
+          receiveViaNFC={request.receiveViaNFC}
+        />
       </Screen>
     </>
   )
@@ -443,6 +479,16 @@ const useStyles = makeStyles(({ colors }) => ({
     fontSize: 12,
     color: colors.warning,
     marginBottom: 10,
+  },
+  nfcIcon: {
+    marginTop: -1,
+    marginRight: 14,
+    padding: 8,
+    display: "flex",
+    flexDirection: "row",
+    columnGap: 4,
+    backgroundColor: colors.grey5,
+    borderRadius: 4,
   },
 }))
 

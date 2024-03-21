@@ -480,6 +480,8 @@
         "title": "Casa"
     },
     "ReceiveScreen": {
+        "nfc": "NFC",
+        "enterAmountFirst": "Please enter an amount first",
         "activateNotifications": "Vols activar les notificacions per ser avisat quan arribi el pagament?",
         "copyClipboard": "La factura ha estat copiada al porta-retalls",
         "copyClipboardBitcoin": "L'adreça bitcoin ha estat copiada al porta-retalls",

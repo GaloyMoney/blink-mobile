@@ -480,6 +480,8 @@
         "title": "Rumah"
     },
     "ReceiveScreen": {
+        "nfc": "NFC",
+        "enterAmountFirst": "Please enter an amount first",
         "activateNotifications": "Anda nak aktifkan notifikasi jika terima bayaran?",
         "copyClipboard": "Invois telah disalin pada clipboard",
         "copyClipboardBitcoin": "Alamat bitcoin telah disalin ke dalam clipboard",

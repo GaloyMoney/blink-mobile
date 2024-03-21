@@ -490,6 +490,8 @@
         "title": "Ev"
     },
     "ReceiveScreen": {
+        "nfc": "NFC",
+        "enterAmountFirst": "Please enter an amount first",
         "activateNotifications": "Ödeme geldiğinde haberdar olmak için bildirimleri açmak istiyor musunuz?",
         "copyClipboard": "Fatura panoya kopyalandı",
         "copyClipboardBitcoin": "Bitcoin adresi panoya kopyalandı",

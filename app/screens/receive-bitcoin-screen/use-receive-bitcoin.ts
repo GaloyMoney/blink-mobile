@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from "react"
 import {
   BaseCreatePaymentRequestCreationDataParams,
   Invoice,
@@ -36,6 +36,8 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { Alert, Share } from "react-native"
 import { TranslationFunctions } from "@app/i18n/i18n-types"
 import { BtcWalletDescriptor } from "@app/types/wallets"
+import { ReceiveDestination } from "../send-bitcoin-screen/payment-destination/index.types"
+import fetch from "cross-fetch"
 
 gql`
   query paymentRequest {
@@ -374,6 +376,37 @@ export const useReceiveBitcoin = (isFirstTransaction: Boolean, initPRParams = {}
     }
   }, [pr, LL])
 
+  const receiveViaNFC = useCallback(
+    async (destination: ReceiveDestination) => {
+      if (pr?.info?.data?.invoiceType !== "Lightning" || !pr.info.data.paymentRequest) {
+        Alert.alert(LL.RedeemBitcoinScreen.error())
+        return
+      }
+
+      const { callback, k1 } = destination.validDestination
+
+      const urlObject = new URL(callback)
+      const searchParams = urlObject.searchParams
+      searchParams.set("k1", k1)
+      searchParams.set("pr", pr.info.data.paymentRequest)
+
+      const url = urlObject.toString()
+
+      const result = await fetch(url)
+      if (result.ok) {
+        const lnurlResponse = await result.json()
+        if (lnurlResponse?.status?.toLowerCase() !== "ok") {
+          console.error(lnurlResponse, "error with redeeming")
+          Alert.alert(LL.RedeemBitcoinScreen.redeemingError(), lnurlResponse.reason)
+        }
+      } else {
+        console.error(result.text(), "error with submitting withdrawalRequest")
+        Alert.alert(LL.RedeemBitcoinScreen.submissionError())
+      }
+    },
+    [LL.RedeemBitcoinScreen, pr],
+  )
+
   if (!prcd) return null
 
   const setType = (type: InvoiceType) => {
@@ -495,5 +528,6 @@ export const useReceiveBitcoin = (isFirstTransaction: Boolean, initPRParams = {}
     isSetLightningAddressModalVisible,
     toggleIsSetLightningAddressModalVisible,
     readablePaymentRequest,
+    receiveViaNFC,
   }
 }

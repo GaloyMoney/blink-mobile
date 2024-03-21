@@ -490,6 +490,8 @@
         "title": "Αρχική Σελίδα "
     },
     "ReceiveScreen": {
+        "nfc": "NFC",
+        "enterAmountFirst": "Please enter an amount first",
         "activateNotifications": "Θέλετε να ενεργοποιήσετε τις ειδοποιήσεις για να ενημερώνεστε όταν ολοκληρωθεί η πληρωμή;",
         "copyClipboard": "Το τιμολόγιο αντιγράφηκε στο πρόχειρο",
         "copyClipboardBitcoin": "Η διεύθυνση Bitcoin έχει αντιγραφεί στο πρόχειρο",

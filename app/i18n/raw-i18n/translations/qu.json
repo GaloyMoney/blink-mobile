@@ -480,6 +480,8 @@
         "title": "Ayllu"
     },
     "ReceiveScreen": {
+        "nfc": "NFC",
+        "enterAmountFirst": "Please enter an amount first",
         "activateNotifications": "¿Imaynataqmi notificaciones tukuyta kani, qhipa rurasqan kani kashanmi?",
         "copyClipboard": "Kawsayniyta qillqa churayta rikusqa",
         "copyClipboardBitcoin": "Bitcoin kaniyta churayta rikusqa",

@@ -1,28 +1,30 @@
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { Text, makeStyles, useTheme } from "@rneui/themed"
 import * as React from "react"
 import { Alert, Pressable, View } from "react-native"
 import Modal from "react-native-modal"
 import NfcManager, { Ndef, NdefRecord, NfcTech } from "react-native-nfc-manager"
 import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from "react-native-vector-icons/Ionicons"
-import { GaloySecondaryButton } from "../atomic/galoy-secondary-button"
-import { parseDestination } from "@app/screens/send-bitcoin-screen/payment-destination"
-import { logParseDestinationResult } from "@app/utils/analytics"
-import {
-  DestinationDirection,
-  ReceiveDestination,
-} from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
+
+import { LNURL_DOMAINS } from "@app/config"
 import {
   WalletCurrency,
   useAccountDefaultWalletLazyQuery,
   useScanningQrCodeScreenQuery,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { LNURL_DOMAINS } from "@app/config"
-import { isIOS } from "@rneui/base"
-import { WalletAmount, toUsdMoneyAmount } from "@app/types/amounts"
 import { usePriceConversion } from "@app/hooks"
+import { useI18nContext } from "@app/i18n/i18n-react"
+import { parseDestination } from "@app/screens/send-bitcoin-screen/payment-destination"
+import {
+  DestinationDirection,
+  ReceiveDestination,
+} from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
+import { WalletAmount, toUsdMoneyAmount } from "@app/types/amounts"
+import { logParseDestinationResult } from "@app/utils/analytics"
+import { isIOS } from "@rneui/base"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
+
+import { GaloySecondaryButton } from "../atomic/galoy-secondary-button"
 
 export const ModalNfc: React.FC<{
   isActive: boolean
@@ -110,10 +112,7 @@ export const ModalNfc: React.FC<{
           const payloadString = Ndef.text.decodePayload(new Uint8Array(payload))
           console.log("decodedPayloadString: " + payloadString)
 
-          if (
-            payloadString.indexOf("lnurl") !== -1 ||
-            payloadString.indexOf("LNURL") !== -1
-          ) {
+          if (payloadString.toLowerCase().includes("lnurl")) {
             return record
           }
 

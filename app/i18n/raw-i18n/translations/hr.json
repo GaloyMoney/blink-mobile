@@ -480,6 +480,8 @@
         "title": "Doma"
     },
     "ReceiveScreen": {
+        "nfc": "NFC",
+        "enterAmountFirst": "Please enter an amount first",
         "activateNotifications": "Želite li aktivirati obavijesti kako biste bili obaviješteni kada uplata stigne?",
         "copyClipboard": "Faktura je kopirana u međuspremnik",
         "copyClipboardBitcoin": "Bitcoin adresa je kopirana u međuspremnik",

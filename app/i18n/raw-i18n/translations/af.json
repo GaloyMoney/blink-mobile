@@ -490,6 +490,8 @@
         "title": "Tuis"
     },
     "ReceiveScreen": {
+        "nfc": "NFC",
+        "enterAmountFirst": "Please enter an amount first",
         "activateNotifications": "Wil jy kennisgewings aktiveer en kennisgewings ontvang wanneer die betaling arriveer het? ",
         "copyClipboard": "Faktuur is na die knipbord oorgedra",
         "copyClipboardBitcoin": "Bitcoin-adres is na die knipbord oorgedra",

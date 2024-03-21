@@ -490,6 +490,8 @@
         "title": "Ընդհանուր"
     },
     "ReceiveScreen": {
+        "nfc": "NFC",
+        "enterAmountFirst": "Please enter an amount first",
         "activateNotifications": "Դուք ցանկանու՞մ եք ուտել ակտիվացնել ծանուցումները, որպեսզի տեղեկացվեք վճարման կատարման մասին։ ",
         "copyClipboard": "Վճարման հարցումը պատճենվել է ժամանակավոր շտեմարանում",
         "copyClipboardBitcoin": "Բիթքոյնի հասցեն պատճենվել է ժամանակավոր շտեմարանում",

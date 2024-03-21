@@ -480,6 +480,8 @@
         "title": "Home"
     },
     "ReceiveScreen": {
+        "nfc": "NFC",
+        "enterAmountFirst": "Please enter an amount first",
         "activateNotifications": "Deseja ativar as notificações para ser avisado quando o pagamento chegar?",
         "copyClipboard": "A fatura foi copiada na área de transferência",
         "copyClipboardBitcoin": "O endereço Bitcoin foi copiado na área de transferência",

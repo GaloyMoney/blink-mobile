@@ -480,6 +480,8 @@
         "title": "Nhà"
     },
     "ReceiveScreen": {
+        "nfc": "NFC",
+        "enterAmountFirst": "Please enter an amount first",
         "activateNotifications": "Bạn có muốn kích hoạt thông báo để được thông báo khi nhận được thanh toán không?",
         "copyClipboard": "Hóa đơn đã được sao chép vào bộ nhớ tạm",
         "copyClipboardBitcoin": "Địa chỉ bitcoin đã được sao chép vào bộ nhớ tạm",

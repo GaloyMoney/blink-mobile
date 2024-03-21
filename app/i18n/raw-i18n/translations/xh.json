@@ -480,6 +480,8 @@
         "title": "Ekhaya"
     },
     "ReceiveScreen": {
+        "nfc": "NFC",
+        "enterAmountFirst": "Please enter an amount first",
         "activateNotifications": "Ngaba uyafuna ukwenza izaziso zisebenze xa intlawulo ifikile?",
         "copyClipboard": "I-invoyisi ikhutshelwe kwibhodi eqhotyoshwayo",
         "copyClipboardBitcoin": "Idilesi yeBitcoin ikhutshelwe kwibhodi eqhotyoshwayo",

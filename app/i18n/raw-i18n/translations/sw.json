@@ -480,6 +480,8 @@
         "title": "Nyumbani"
     },
     "ReceiveScreen": {
+        "nfc": "NFC",
+        "enterAmountFirst": "Please enter an amount first",
         "activateNotifications": "Je, ungependa kuwezesha arifa ili uarifiwe malipo yanapofika?",
         "copyClipboard": "Ankara imenakiliwa kwenye ubao wa kunakili",
         "copyClipboardBitcoin": "Anwani ya Bitcoin imenakiliwa kwenye ubao wa kunakili",

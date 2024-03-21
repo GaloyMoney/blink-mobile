@@ -480,6 +480,8 @@
         "title": "Почетна"
     },
     "ReceiveScreen": {
+        "nfc": "NFC",
+        "enterAmountFirst": "Please enter an amount first",
         "activateNotifications": "Да ли желите да активирате нотификације да бисте били обавештени када уплата пристигне?",
         "copyClipboard": "Рачун је копиран у клипборд",
         "copyClipboardBitcoin": "Биткоин адреса је копирана у клипборд",
