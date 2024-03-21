@@ -1,6 +1,7 @@
 #@data/values
 ---
 git_uri: git@github.com:GaloyMoney/galoy-mobile.git
+concourse_locks_git_uri: git@github.com:GaloyMoney/concourse-locks.git
 
 git_mobile_deployments_uri: git@github.com:GaloyMoney/galoy-mobile-deployments.git
 git_version_branch: main
