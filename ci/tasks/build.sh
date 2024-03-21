@@ -13,6 +13,9 @@ $GITHUB_SSH_KEY
 EOF
 chmod 600 id_rsa && ssh-add ./id_rsa && rm id_rsa
 
+tmpfile=$(mktemp /tmp/wwdr-cert.cer.XXXXXXXXX) || true
+curl -f -o $tmpfile https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer && security import $tmpfile ~/Library/Keychains/login.keychain-db || true
+
 # Checkout correct commit
 GIT_REF=$(cat repo/.git/ref)
 

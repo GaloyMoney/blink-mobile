@@ -42,20 +42,7 @@ groups:
   - install-deps
   - dev-build
   - prerelease
-  - prod-build-android
-  - prod-build-ios
-  - build-pipeline-image
-- name: development
-  jobs:
-  - test-unit
-  - check-code
-  - install-deps
-  - dev-build
-- name: prod-builds
-  jobs:
-  - prerelease
-  - prod-build-android
-  - prod-build-ios
+  - prod-build
 - name: image
   jobs:
   - build-pipeline-image
@@ -187,7 +174,7 @@ jobs:
     - get: built-dev-apk
     - get: pipeline-tasks
     - get: testflight-version
-  - task: choose-commit-prerelease
+  - task: check-same-commit
     config:
       platform: linux
       image_resource: #@ release_task_image_config()
@@ -226,137 +213,79 @@ jobs:
       params:
         file: testflight-version/version
 
-- name: prod-build-android
+- name: prod-build
   serial: true
   plan:
   - in_parallel:
     - get: repo
       passed: ["prerelease"]
     - get: build-number-android
+    - get: build-number-ios
     - get: pipeline-tasks
     - get: built-dev-apk
       passed: [ "prerelease" ]
       trigger: true
-    - get: testflight-version
-      passed: [ "prerelease" ]
-  - task: bump-and-commit-build-number
-    config:
-      platform: linux
-      image_resource: #@ task_image_config()
-      inputs:
-      - name: pipeline-tasks
-      - name: build-number-android
-        path: build-number
-      - name: testflight-version
-        path: version
-      outputs:
-      - name: build-number-android
-        path: build-number
-      run:
-        path: pipeline-tasks/ci/tasks/bump-and-commit-build-number.sh
-      params:
-        PLATFORM: android
-  - task: build
-    tags: [ mac-m1 ]
-    config:
-      platform: darwin
-      inputs:
-      - name: repo
-      - name: pipeline-tasks
-      - name: build-number-android
-      - name: testflight-version
-      outputs:
-      - name: repo
-      - name: artifacts
-      run:
-        path: /bin/sh
-        args:
-          - "-c"
-          - "arch -arm64 pipeline-tasks/ci/tasks/build-android.sh"
-      params:
-        CI: true
-        VERSION_FILE: testflight-version/version
-        ANDROID_KEYSTORE: #@ data.values.android_keystore
-        LANG: en_US.UTF-8
-  - task: upload-to-gcs
-    config:
-      platform: linux
-      image_resource: #@ task_image_config()
-      inputs:
-      - name: repo
-      - name: artifacts
-      - name: pipeline-tasks
-      - name: testflight-version
-      run:
-        path: pipeline-tasks/ci/tasks/upload-to-gcs.sh
-      params:
-        INPUTS: android/app/build/outputs/*
-        GCS_DIRECTORY: prod/android
-        VERSION_FILE: testflight-version/version
-        bucket: #@ data.values.build_artifacts_bucket_name
-        json_key: #@ data.values.build_artifacts_bucket_creds
-  - put: build-number-android
-    params:
-      repository: build-number-android
-      rebase: true
-
-- name: prod-build-ios
-  serial: true
-  plan:
-  - in_parallel:
-    - get: repo
-      passed: ["prod-build-android"]
-    - get: pipeline-tasks
-    - get: build-number-ios
     - get: built-dev-ipa
       passed: [ "prerelease" ]
       trigger: true
     - get: testflight-version
       passed: [ "prerelease" ]
+  - task: check-same-commit
+    config:
+      platform: linux
+      image_resource: #@ release_task_image_config()
+      inputs:
+      - name: repo
+      - name: pipeline-tasks
+      - name: built-dev-ipa
+      - name: built-dev-apk
+      outputs:
+      - name: repo
+      - name: artifacts
+      run:
+        path: pipeline-tasks/ci/tasks/choose-commit-prerelease.sh
   - task: bump-and-commit-build-number
     config:
       platform: linux
       image_resource: #@ task_image_config()
       inputs:
       - name: pipeline-tasks
+      - name: build-number-android
       - name: build-number-ios
-        path: build-number
       - name: testflight-version
-        path: version
       outputs:
+      - name: build-number-android
       - name: build-number-ios
-        path: build-number
       run:
         path: pipeline-tasks/ci/tasks/bump-and-commit-build-number.sh
-      params:
-        PLATFORM: ios
+  - #@ claim_lock()
   - task: build
     tags: [ mac-m1 ]
+    ensure: #@ release_lock()
     config:
       platform: darwin
       inputs:
       - name: repo
       - name: pipeline-tasks
+      - name: build-number-android
       - name: build-number-ios
-      - name: testflight-version
       outputs:
       - name: repo
       - name: artifacts
       run:
         path: /bin/sh
-        args:
-          - "-c"
-          - "arch -arm64 pipeline-tasks/ci/tasks/build-ios.sh"
+        args: [ "-c", "arch -arm64 pipeline-tasks/ci/tasks/build.sh" ]
       params:
         CI: true
-        VERSION_FILE: testflight-version/version
+        VERSION_FILE: repo/.git/ref
+        LANG: en_US.UTF-8
+        ANDROID_KEYSTORE: #@ data.values.android_keystore
         MATCH_PASSWORD: #@ data.values.fastlane_match_password
         MATCH_KEYCHAIN_PASSWORD: #@ data.values.fastlane_match_keychain_password
         GITHUB_SSH_KEY: #@ data.values.github_private_key
         APPSTORE_API_KEY: #@ data.values.appstore_api_key
         APPSTORE_API_KEY_ID: #@ data.values.appstore_api_key_id
         APPSTORE_ISSUER_ID: #@ data.values.appstore_issuer_id
-        LANG: en_US.UTF-8
   - task: upload-to-gcs
     config:
       platform: linux
@@ -369,11 +298,14 @@ jobs:
       run:
         path: pipeline-tasks/ci/tasks/upload-to-gcs.sh
       params:
-        INPUTS: ios/Blink.ipa
-        GCS_DIRECTORY: prod/ios
         VERSION_FILE: testflight-version/version
+        GCS_DIRECTORY: prod
         bucket: #@ data.values.build_artifacts_bucket_name
         json_key: #@ data.values.build_artifacts_bucket_creds
+  - put: build-number-android
+    params:
+      repository: build-number-android
+      rebase: true
   - put: build-number-ios
     params:
       repository: build-number-ios

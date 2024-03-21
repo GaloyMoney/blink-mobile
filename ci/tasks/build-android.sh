@@ -11,7 +11,6 @@ GIT_REF=$(cat repo/.git/ref)
 pushd repo
 git checkout $GIT_REF
 
-
 sed -i'' -e "s/versionCode .*$/versionCode $BUILD_NUMBER/g" android/app/build.gradle
 nix develop -c sh -c 'cd android && bundle exec fastlane android build --verbose'
 
