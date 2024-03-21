@@ -10,13 +10,7 @@ GIT_REF=$(cat repo/.git/ref)
 
 pushd repo
 git checkout $GIT_REF
-echo $ANDROID_KEYSTORE | base64 -d > android/app/release.keystore
 
-nix develop -c yarn install
-nix develop -c sh -c 'cd android && bundle install'
-
-lsof -ti:8080,8081 | xargs kill -9 || true
-(nix develop -c yarn start) &
 
 sed -i'' -e "s/versionCode .*$/versionCode $BUILD_NUMBER/g" android/app/build.gradle
 nix develop -c sh -c 'cd android && bundle exec fastlane android build --verbose'
