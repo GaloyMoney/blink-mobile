@@ -278,7 +278,7 @@ jobs:
         args: [ "-c", "arch -arm64 pipeline-tasks/ci/tasks/build.sh" ]
       params:
         CI: true
-        VERSION_FILE: repo/.git/ref
+        VERSION_FILE: testflight-version/version
         LANG: en_US.UTF-8
         ANDROID_KEYSTORE: #@ data.values.android_keystore
         MATCH_PASSWORD: #@ data.values.fastlane_match_password
