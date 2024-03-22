@@ -28,7 +28,8 @@ echo "-------------------------------"
 
 if [[ $(cat artifacts/gh-release-notes.md | wc -l) == "0" ]]; then
   echo "Nothing to Release"
-  exit 1
+  echo "(Overriding for this release cut) -- testing by @sandipndev"
+  # exit 1
 fi
 
 # ------------ BUMP VERSION ------------

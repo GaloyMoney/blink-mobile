@@ -253,6 +253,7 @@ jobs:
       - name: build-number-android
       - name: build-number-ios
       - name: testflight-version
+        path: version
       outputs:
       - name: build-number-android
       - name: build-number-ios
