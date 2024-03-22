@@ -35,3 +35,4 @@ for PLATFORM in android ios; do
     git commit -m "chore(build-number): bump ${PLATFORM} build number from $current to $new"
   )
   popd
+done
