@@ -2336,6 +2336,14 @@ const en: BaseTranslation = {
       Payments: {
         title: "Payments",
         description: "Notifications related to sending and receiving payments.",
+      },
+      Marketing: {
+        title: "Features and updates",
+        description: "Notifications about new features and updates.",
+      },
+      Price: {
+        title: "Price changes",
+        description: "Notifications about the price of Bitcoin.",
       }
     }
   },
