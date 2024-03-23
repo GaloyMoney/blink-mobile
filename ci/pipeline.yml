@@ -270,6 +270,7 @@ jobs:
       - name: pipeline-tasks
       - name: build-number-android
       - name: build-number-ios
+      - name: testflight-version
       outputs:
       - name: repo
       - name: artifacts
