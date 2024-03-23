@@ -88,7 +88,7 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
               uncheckedIcon={"square-outline"}
               onPress={() => setConfirmationEnabled(!confirmationEnabled)}
             />
-            <Text type={"p2"} style={styles.checkBoxText}>
+            <Text testID="address-is-right" type={"p2"} style={styles.checkBoxText}>
               {LL.SendBitcoinDestinationScreen.confirmUsernameModal.checkBox({
                 lnAddress,
               })}

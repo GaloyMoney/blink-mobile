@@ -63,6 +63,7 @@ type Props = {
   isFirst?: boolean
   isLast?: boolean
   isOnHomeScreen?: boolean
+  testId?: string
 }
 
 const TransactionItem: React.FC<Props> = ({
@@ -71,6 +72,7 @@ const TransactionItem: React.FC<Props> = ({
   isFirst = false,
   isLast = false,
   isOnHomeScreen = false,
+  testId = "transaction-item",
 }) => {
   const styles = useStyles({
     isFirst,
@@ -146,7 +148,7 @@ const TransactionItem: React.FC<Props> = ({
 
   return (
     <ListItem
-      {...testProps("transaction-item")}
+      {...testProps(testId)}
       containerStyle={styles.container}
       onPress={() =>
         navigation.navigate("transactionDetail", {

@@ -66,7 +66,6 @@
             vendir
             jq
             ytt
-            llvm
             fastlane
 
             # Overlays
@@ -77,8 +76,8 @@
           ++ lib.optionals stdenv.isDarwin [
             pkgsStable.cocoapods
             watchman
-            darwin.apple_sdk.frameworks.SystemConfiguration
             xcodes
+            darwin.apple_sdk.frameworks.SystemConfiguration
           ];
       in {
         packages = {
@@ -129,7 +128,7 @@
 
             XCODE_VERSION="15.3"
             XCODE_BUILD="15E204a" # When updating xcode version, get it by running xcodes installed
-            if [[ $(uname) == "Darwin" ]]; then
+            if [[ $(uname) == "Darwin" ]] && [ -z "$CI" ]; then
               if ! xcodes installed | grep "$XCODE_VERSION ($XCODE_BUILD) (Selected)" -q; then
                 echo -e "\e[1;33m================================================\e[0m"
                 echo -e "\e[1;33mXCode $XCODE_VERSION was not found or is not selected\e[0m"

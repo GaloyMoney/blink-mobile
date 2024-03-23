@@ -14,6 +14,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated"
 
+import { testProps } from "@app/utils/testProps"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 
 import { GaloyIcon } from "../galoy-icon"
@@ -105,6 +106,7 @@ const GaloySliderButton = ({
         <PanGestureHandler
           enabled={!isLoading && !disabled}
           onGestureEvent={animatedGestureHandler}
+          {...testProps("slider")}
         >
           <Animated.View
             style={[
