@@ -13,6 +13,25 @@ tilt(
     subcmd = "down",
 )
 
+# This should eventually be removed by refactoring config setup in core/api
+export_file(
+    name = "dummy_env",
+    src = "core-bundle/dummy-env.json",
+    visibility = ["PUBLIC"],
+)
+
+export_file(
+    name = "serve_env",
+    src = "core-bundle/serve-env.json",
+    visibility = ["PUBLIC"],
+)
+
+export_file(
+    name = "integration_env",
+    src = "core-bundle/integration-env.json",
+    visibility = ["PUBLIC"],
+)
+
 python_bootstrap_binary(
     name = "healthcheck",
     main = "healthcheck.py",
@@ -52,15 +71,14 @@ dev_update_file(
   out = "config/apollo-federation/supergraph.graphql"
 )
 
-dev_update_file(
-  name = "update-core-supergraph",
-  generated = ":supergraph",
-  out = "../core/api/dev/apollo-federation/supergraph.graphql"
-)
-
 sh_binary(
   name = "update-schemas",
   main = "bin/update-schemas.sh",
+)
+
+sh_binary(
+  name = "codegen",
+  main = "bin/codegen.sh",
 )
 
 sh_binary(
@@ -74,8 +92,8 @@ sh_binary(
 )
 
 sh_binary(
-  name = "init-user",
-  main = "bin/init-user.sh",
+  name = "init-test-user",
+  main = "bin/init-test-user.sh",
 )
 
 sh_binary(

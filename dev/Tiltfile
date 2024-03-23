@@ -33,19 +33,28 @@ dc_resource('otel-agent', labels = ["otel"])
 dc_resource('quickstart-test', labels = ['quickstart'], auto_init=False)
 
 local_resource(
-  name='init-setup',
+  name='dev-ln-setup',
   labels = ['dev-setup'],
-  cmd='bin/setup.sh',
+  cmd='bin/dev-ln-setup.sh',
   resource_deps = galoy_services + [
     "init-lightning"
   ]
 )
 
 local_resource(
-  name='blocks',
+  name='dev-setup',
   labels = ['dev-setup'],
-  serve_cmd='bin/blocks.sh',
+  cmd='bin/dev-setup.sh',
   resource_deps = [
-    "init-setup"
+    "dev-ln-setup"
+  ]
+)
+
+local_resource(
+  name='one-block-every-5s',
+  labels = ['dev-setup'],
+  serve_cmd='bin/one-block-every-5s.sh',
+  resource_deps = [
+    "dev-setup"
   ]
 )

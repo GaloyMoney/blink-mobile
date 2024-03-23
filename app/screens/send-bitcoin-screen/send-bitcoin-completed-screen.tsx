@@ -11,6 +11,7 @@ import {
 } from "@app/components/success-animation"
 import { setFeedbackModalShown } from "@app/graphql/client-only-query"
 import { useFeedbackModalShownQuery } from "@app/graphql/generated"
+import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { logAppFeedback } from "@app/utils/analytics"
@@ -66,7 +67,13 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
     InAppReview.RequestInAppReview()
   }
 
+  const { appConfig } = useAppConfig()
+
   const requestFeedback = useCallback(() => {
+    if (!appConfig || appConfig.galoyInstance.id === "Local") {
+      return
+    }
+
     if (InAppReview.isAvailable()) {
       Alert.alert(
         "",
@@ -88,7 +95,7 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
       )
       setFeedbackModalShown(client, true)
     }
-  }, [LL, client])
+  }, [LL, client, appConfig])
 
   const FEEDBACK_DELAY = 3000
   const CALLBACK_DELAY = 3000

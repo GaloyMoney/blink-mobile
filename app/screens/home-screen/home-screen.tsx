@@ -254,6 +254,7 @@ export const HomeScreen: React.FC = () => {
                     subtitle
                     isOnHomeScreen={true}
                     isLast={index === array.length - 1}
+                    testId={`transaction-by-index-${index}`}
                   />
                 ),
             )}
@@ -350,6 +351,7 @@ export const HomeScreen: React.FC = () => {
         />
       </View>
       <ScrollView
+        {...testProps("home-screen")}
         contentContainerStyle={styles.scrollViewContainer}
         refreshControl={
           <RefreshControl

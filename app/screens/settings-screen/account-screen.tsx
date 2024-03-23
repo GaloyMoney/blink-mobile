@@ -24,6 +24,7 @@ import useLogout from "@app/hooks/use-logout"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
+import { testProps } from "@app/utils/testProps"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
@@ -592,6 +593,7 @@ export const AccountScreen = () => {
       preset="scroll"
       keyboardShouldPersistTaps="handled"
       keyboardOffset="navigationHeader"
+      {...testProps("account-screen-scroll-view")}
     >
       <AccountId />
       {accountSettingsList.map((setting) => (

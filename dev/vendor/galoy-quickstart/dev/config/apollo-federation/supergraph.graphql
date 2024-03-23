@@ -182,6 +182,7 @@ type ApiKey
   lastUsedAt: Timestamp
   expiresAt: Timestamp
   readOnly: Boolean!
+  scopes: [Scope!]!
 }
 
 input ApiKeyCreateInput
@@ -189,7 +190,7 @@ input ApiKeyCreateInput
 {
   name: String!
   expireInDays: Int
-  readOnly: Boolean! = false
+  scopes: [Scope!]! = [READ, WRITE]
 }
 
 type ApiKeyCreatePayload
@@ -209,6 +210,12 @@ type ApiKeyRevokePayload
   @join__type(graph: API_KEYS)
 {
   apiKey: ApiKey!
+}
+
+type Authorization
+  @join__type(graph: PUBLIC)
+{
+  scopes: [Scope!]!
 }
 
 """An Opaque Bearer token"""
@@ -292,6 +299,7 @@ type BTCWallet implements Wallet
     last: Int
   ): TransactionConnection
   transactionsByPaymentHash(paymentHash: PaymentHash!): [Transaction!]!
+  transactionsByPaymentRequest(paymentRequest: LnPaymentRequest!): [Transaction!]!
   walletCurrency: WalletCurrency!
 }
 
@@ -749,6 +757,15 @@ type LnInvoice implements Invoice
   satoshis: SatAmount!
 }
 
+input LnInvoiceCancelInput
+  @join__type(graph: PUBLIC)
+{
+  paymentHash: PaymentHash!
+
+  """Wallet ID for a wallet associated with the current account."""
+  walletId: WalletId!
+}
+
 input LnInvoiceCreateInput
   @join__type(graph: PUBLIC)
 {
@@ -811,6 +828,26 @@ input LnInvoicePaymentInput
   walletId: WalletId!
 }
 
+type LnInvoicePaymentStatus
+  @join__type(graph: PUBLIC)
+{
+  paymentHash: PaymentHash
+  paymentRequest: LnPaymentRequest
+  status: InvoicePaymentStatus
+}
+
+input LnInvoicePaymentStatusByHashInput
+  @join__type(graph: PUBLIC)
+{
+  paymentHash: PaymentHash!
+}
+
+input LnInvoicePaymentStatusByPaymentRequestInput
+  @join__type(graph: PUBLIC)
+{
+  paymentRequest: LnPaymentRequest!
+}
+
 input LnInvoicePaymentStatusInput
   @join__type(graph: PUBLIC)
 {
@@ -821,6 +858,8 @@ type LnInvoicePaymentStatusPayload
   @join__type(graph: PUBLIC)
 {
   errors: [Error!]!
+  paymentHash: PaymentHash
+  paymentRequest: LnPaymentRequest
   status: InvoicePaymentStatus
 }
 
@@ -1035,6 +1074,40 @@ type MapMarker
 scalar Memo
   @join__type(graph: PUBLIC)
 
+type Merchant
+  @join__type(graph: PUBLIC)
+{
+  """
+  GPS coordinates for the merchant that can be used to place the related business on a map
+  """
+  coordinates: Coordinates!
+  createdAt: Timestamp!
+  id: ID!
+  title: String!
+
+  """The username of the merchant"""
+  username: Username!
+
+  """Whether the merchant has been validated"""
+  validated: Boolean!
+}
+
+input MerchantMapSuggestInput
+  @join__type(graph: PUBLIC)
+{
+  latitude: Float!
+  longitude: Float!
+  title: String!
+  username: Username!
+}
+
+type MerchantPayload
+  @join__type(graph: PUBLIC)
+{
+  errors: [Error!]!
+  merchant: Merchant
+}
+
 """(Positive) amount of minutes"""
 scalar Minutes
   @join__type(graph: PUBLIC)
@@ -1088,6 +1161,9 @@ type Mutation
 
   """Sends a payment to a lightning address."""
   lnAddressPaymentSend(input: LnAddressPaymentSendInput!): PaymentSendPayload! @join__field(graph: PUBLIC)
+
+  """Cancel an unpaid lightning invoice for an associated wallet."""
+  lnInvoiceCancel(input: LnInvoiceCancelInput!): SuccessPayload! @join__field(graph: PUBLIC)
 
   """
   Returns a lightning invoice for an associated wallet.
@@ -1168,6 +1244,7 @@ type Mutation
 
   """Sends a payment to a lightning address."""
   lnurlPaymentSend(input: LnurlPaymentSendInput!): PaymentSendPayload! @join__field(graph: PUBLIC)
+  merchantMapSuggest(input: MerchantMapSuggestInput!): MerchantPayload! @join__field(graph: PUBLIC)
   onChainAddressCreate(input: OnChainAddressCreateInput!): OnChainAddressPayload! @join__field(graph: PUBLIC)
   onChainAddressCurrent(input: OnChainAddressCurrentInput!): OnChainAddressPayload! @join__field(graph: PUBLIC)
   onChainPaymentSend(input: OnChainPaymentSendInput!): PaymentSendPayload! @join__field(graph: PUBLIC)
@@ -1175,7 +1252,6 @@ type Mutation
   onChainUsdPaymentSend(input: OnChainUsdPaymentSendInput!): PaymentSendPayload! @join__field(graph: PUBLIC)
   onChainUsdPaymentSendAsBtcDenominated(input: OnChainUsdPaymentSendAsBtcDenominatedInput!): PaymentSendPayload! @join__field(graph: PUBLIC)
   quizClaim(input: QuizClaimInput!): QuizClaimPayload! @join__field(graph: PUBLIC)
-  quizCompleted(input: QuizCompletedInput!): QuizCompletedPayload! @join__field(graph: PUBLIC) @deprecated(reason: "Use quizClaim instead")
   userContactUpdateAlias(input: UserContactUpdateAliasInput!): UserContactUpdateAliasPayload! @join__field(graph: PUBLIC) @deprecated(reason: "will be moved to AccountContact")
   userEmailDelete: UserEmailDeletePayload! @join__field(graph: PUBLIC)
   userEmailRegistrationInitiate(input: UserEmailRegistrationInitiateInput!): UserEmailRegistrationInitiatePayload! @join__field(graph: PUBLIC)
@@ -1506,11 +1582,16 @@ type Query
   @join__type(graph: PUBLIC)
 {
   accountDefaultWallet(username: Username!, walletCurrency: WalletCurrency): PublicWallet! @join__field(graph: PUBLIC)
+
+  """Retrieve the list of scopes permitted for the user's token or API key"""
+  authorization: Authorization! @join__field(graph: PUBLIC)
   btcPriceList(range: PriceGraphRange!): [PricePoint] @join__field(graph: PUBLIC)
   businessMapMarkers: [MapMarker!]! @join__field(graph: PUBLIC)
   currencyList: [Currency!]! @join__field(graph: PUBLIC)
   globals: Globals @join__field(graph: PUBLIC)
-  lnInvoicePaymentStatus(input: LnInvoicePaymentStatusInput!): LnInvoicePaymentStatusPayload! @join__field(graph: PUBLIC)
+  lnInvoicePaymentStatus(input: LnInvoicePaymentStatusInput!): LnInvoicePaymentStatusPayload! @join__field(graph: PUBLIC) @deprecated(reason: "Deprecated in favor of lnInvoicePaymentStatusByPaymentRequest")
+  lnInvoicePaymentStatusByHash(input: LnInvoicePaymentStatusByHashInput!): LnInvoicePaymentStatus! @join__field(graph: PUBLIC)
+  lnInvoicePaymentStatusByPaymentRequest(input: LnInvoicePaymentStatusByPaymentRequestInput!): LnInvoicePaymentStatus! @join__field(graph: PUBLIC)
   me: User @join__field(graph: PUBLIC)
   mobileVersions: [MobileVersions] @join__field(graph: PUBLIC)
   onChainTxFee(address: OnChainAddress!, amount: SatAmount!, speed: PayoutSpeed! = FAST, walletId: WalletId!): OnChainTxFee! @join__field(graph: PUBLIC)
@@ -1544,19 +1625,6 @@ type QuizClaimPayload
 {
   errors: [Error!]!
   quizzes: [Quiz!]!
-}
-
-input QuizCompletedInput
-  @join__type(graph: PUBLIC)
-{
-  id: ID!
-}
-
-type QuizCompletedPayload
-  @join__type(graph: PUBLIC)
-{
-  errors: [Error!]!
-  quiz: Quiz
 }
 
 type RealtimePrice
@@ -1601,6 +1669,15 @@ type SatAmountPayload
 {
   amount: SatAmount
   errors: [Error!]!
+}
+
+enum Scope
+  @join__type(graph: API_KEYS)
+  @join__type(graph: PUBLIC)
+{
+  READ @join__enumValue(graph: API_KEYS) @join__enumValue(graph: PUBLIC)
+  WRITE @join__enumValue(graph: API_KEYS) @join__enumValue(graph: PUBLIC)
+  RECEIVE @join__enumValue(graph: API_KEYS) @join__enumValue(graph: PUBLIC)
 }
 
 """(Positive) amount of seconds"""
@@ -1653,7 +1730,9 @@ scalar SignedDisplayMajorAmount
 type Subscription
   @join__type(graph: PUBLIC)
 {
-  lnInvoicePaymentStatus(input: LnInvoicePaymentStatusInput!): LnInvoicePaymentStatusPayload!
+  lnInvoicePaymentStatus(input: LnInvoicePaymentStatusInput!): LnInvoicePaymentStatusPayload! @deprecated(reason: "Deprecated in favor of lnInvoicePaymentStatusByPaymentRequest")
+  lnInvoicePaymentStatusByHash(input: LnInvoicePaymentStatusByHashInput!): LnInvoicePaymentStatusPayload!
+  lnInvoicePaymentStatusByPaymentRequest(input: LnInvoicePaymentStatusByPaymentRequestInput!): LnInvoicePaymentStatusPayload!
   myUpdates: MyUpdatesPayload!
   price(input: PriceInput!): PricePayload!
 
@@ -1844,6 +1923,7 @@ type UsdWallet implements Wallet
     last: Int
   ): TransactionConnection
   transactionsByPaymentHash(paymentHash: PaymentHash!): [Transaction!]!
+  transactionsByPaymentRequest(paymentRequest: LnPaymentRequest!): [Transaction!]!
   walletCurrency: WalletCurrency!
 }
 
@@ -2025,6 +2105,7 @@ enum UserNotificationCategory
   PAYMENTS @join__enumValue(graph: NOTIFICATIONS)
   BALANCE @join__enumValue(graph: NOTIFICATIONS)
   ADMIN_NOTIFICATION @join__enumValue(graph: NOTIFICATIONS)
+  MARKETING @join__enumValue(graph: NOTIFICATIONS)
 }
 
 enum UserNotificationChannel
@@ -2240,6 +2321,12 @@ interface Wallet
   transactionsByPaymentHash(
     """The payment hash of the lightning invoice paid in this transaction."""
     paymentHash: PaymentHash!
+  ): [Transaction!]!
+
+  """Returns the transactions that include this paymentRequest."""
+  transactionsByPaymentRequest(
+    """Lightning invoice paid in this transaction."""
+    paymentRequest: LnPaymentRequest!
   ): [Transaction!]!
   walletCurrency: WalletCurrency!
 }

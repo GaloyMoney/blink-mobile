@@ -63,6 +63,7 @@ function ScreenWithScrolling(props: ScreenProps) {
       />
       <Wrapper style={[preset.outer, backgroundStyle]}>
         <ScrollView
+          {...props}
           style={[preset.outer, backgroundStyle]}
           contentContainerStyle={[preset.inner, style]}
           keyboardShouldPersistTaps={props.keyboardShouldPersistTaps}
