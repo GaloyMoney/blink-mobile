@@ -2820,6 +2820,11 @@ const en: BaseTranslation = {
       title: "March Challenge!",
       description: "+3 inner circle and +3 outer circle for a chance to win $100",
       details: "Grow your inner circle by 3 and your outer circle by 3 for a chance at winning $100!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
+    },
+    aprilChallenge: {
+      title: "April Challenge!",
+      description: "Grow your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet.",
+      details: "During the halving month, expand your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
     }
   },
   FullOnboarding: {
