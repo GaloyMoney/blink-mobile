@@ -2262,6 +2262,14 @@
             "Payments": {
                 "title": "Ödemeler",
                 "description": "Ödeme almak ve gördermekle alakalı bildirimler."
+            },
+            "Marketing": {
+                "title": "Features and updates",
+                "description": "Notifications about new features and updates."
+            },
+            "Price": {
+                "title": "Price changes",
+                "description": "Notifications about the price of Bitcoin."
             }
         }
     },
@@ -2688,6 +2696,16 @@
             "title": "Şubat Meydan Okuması!",
             "description": "Seedsigner soğuk cüzdanı kazanmak için iç çevrenize 3 kişi katın!",
             "details": "Seedsigner soğuk cüzdanı kazanma şansı için Şubat ayında yakın çevrenizi 3 kişi büyütün!\n\nHatırlatma: Yeni bir Blink kullanıcısına ilk satlerini gönderdiğinizde çemberleriniz büyür.\n\nKatılmak için çevrelerinizi #blinkcircles etiketiyle sosyal medyada paylaşın."
+        },
+        "marchChallenge": {
+            "title": "March Challenge!",
+            "description": "+3 inner circle and +3 outer circle for a chance to win $100",
+            "details": "Grow your inner circle by 3 and your outer circle by 3 for a chance at winning $100!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
+        },
+        "aprilChallenge": {
+            "title": "April Challenge!",
+            "description": "Grow your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet.",
+            "details": "During the halving month, expand your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
         }
     },
     "FullOnboarding": {

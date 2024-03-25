@@ -557,7 +557,7 @@
                             "Sajnálom, ez nem jó válasz! Bár az arany lehet bőségesebb a gyémántoknál, ez nem az a fő ok, amiért jobban fungibilisnek számít. Legközelebb jobb szerencsét!"
                         ],
                         "question": "Mi az a fő ok, amiért az arany jobban fungibilis (helyettesíthető), mint a gyémánt",
-                        "text": "\n\"Fungibilitás\" azt jelenti, hogy egy valuta egy egysége cserélhető egy másik ugyanolyan valutaegységgel. Ez egy fontos tulajdonsága egy jó értéktárolónak.\n\nAz arany egy nagyon jól cserélhető értéktároló, hiszen megolvasztva az arany uncia gyakorlatilag megkülönböztethetetlen bármely másikól. A fiat valuták viszont nem mindig teljesen cserélhetőek, mivel kibocsátó intézményeik különböző címleteket más módon kezelhetnek.\n\nMint az arany, úgy a bitcoin egységei is fungibilisek, de ezzel kapcsolatban van néhány részlet. Későbbi fejezetekben kifejtjük.",
+                        "text": "\n\"Fungibilitás\" azt jelenti, hogy egy valuta egy egysége cserélhető egy másik ugyanolyan valutaegységgel. Ez egy fontos tulajdonsága egy jó értéktárolónak.\n\nAz arany egy nagyon jól cserélhető értéktároló, hiszen megolvasztva az arany uncia gyakorlatilag megkülönböztethetetlen bármely másikól. A fiat valuták viszont nem mindig teljesen cserélhetőek, mivel kibocsátó intézményeik különböző címleteket más módon kezelhetnek.\n\nMint az arany, úgy a bitcoin egységei is fungibilisek, de ezzel kapcsolatban van néhány részlet. Későbbi fejezetekben kifejtjük.\n",
                         "title": "Egy példánynak cserélhetőnek kell lennie egy másik azonos mennyiságü példánnyra"
                     },
                     "verifiability": {
@@ -1992,8 +1992,8 @@
         "youEarned": "Kerestél",
         "registerTitle": "A magasabb szintű számlára kell váltanod",
         "registerContent": "Regisztrálj a telefonszámoddal, hogy sat-okat fogadhass",
-        "notYet": "Még nem",
-        "availableTomorrow": "Az a rész holnaptól lesz elérhető!",
+        "oneSectionADay": "One section a day!",
+        "availableTomorrow": "Come back tomorrow to continue learning about Bitcoin!",
         "motivatingBadger": "Haladj végig ezeken a leckéken, és keress a tanulás során"
     },
     "GetStartedScreen": {
@@ -2262,6 +2262,14 @@
             "Payments": {
                 "title": "Fizetések",
                 "description": "Fizetések küldésével és fogadásával kapcsolatos értesítések."
+            },
+            "Marketing": {
+                "title": "Features and updates",
+                "description": "Notifications about new features and updates."
+            },
+            "Price": {
+                "title": "Price changes",
+                "description": "Notifications about the price of Bitcoin."
             }
         }
     },
@@ -2688,6 +2696,16 @@
             "title": "Februári kihívás!",
             "description": "Növeld 3-al a belső köröd, hogy Seedsigner hardver tárcát nyerhess!",
             "details": "Növeld belső körödet 3-mal februárban, hogy esélyed legyen nyerni egy Seedsigner hardver tárcát!\n\nEmlékeztető: a körök akkor növekednek, amikor egy új Blink felhasználónak küldöd az első satoshiját.\n\nOszd meg körödet a közösségi médiában a #blinkcircles hashtaggel a részvételhez."
+        },
+        "marchChallenge": {
+            "title": "March Challenge!",
+            "description": "+3 inner circle and +3 outer circle for a chance to win $100",
+            "details": "Grow your inner circle by 3 and your outer circle by 3 for a chance at winning $100!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
+        },
+        "aprilChallenge": {
+            "title": "April Challenge!",
+            "description": "Grow your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet.",
+            "details": "During the halving month, expand your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
         }
     },
     "FullOnboarding": {
