@@ -587,7 +587,8 @@
         "totalLabel": "Totaal:",
         "totalExceed": "Die totaal is meer as jou saldo van {balance: string}",
         "maxFeeSelected": "Hierdie is die maksimum fooi wat jy sal betaal vir hierdie transaksie. Dit mag dalk minder wees as die betaling voltooi is.",
-        "feeError": "Kon nie fooi bereken nie"
+        "feeError": "Kon nie fooi bereken nie",
+        "breezFeeText": "There may be a small fee for routing"
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "{bankName: string} gebruikersname is nou {bankName: string} adresse. ",

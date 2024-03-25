@@ -551,7 +551,8 @@
         "totalLabel": "Iyonke",
         "totalExceed": "Iyonke igqithile kwibhalansi yakho {balance: }",
         "maxFeeSelected": "Lo ngowona mrhumo uphezulu oza kubizwa ngawo kule ntengiselwano. Inokuphela incinci xa intlawulo yenziwe.",
-        "feeError": "Ayiphumelelanga ukubala umrhumo"
+        "feeError": "Ayiphumelelanga ukubala umrhumo",
+        "breezFeeText": "There may be a small fee for routing"
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "bankName:} amagama abasebenzisi ngoku {bankName: string} iidilesi.",

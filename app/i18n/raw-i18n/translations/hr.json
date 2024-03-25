@@ -551,7 +551,8 @@
         "totalLabel": "Ukupno:",
         "totalExceed": "Ukupno premašuje vaš saldo od {balance: string}",
         "maxFeeSelected": "Ovo je najveća naknada koja će vam biti naplaćena za ovu transakciju. Nakon izvršenja plaćanja može ispasti manje.",
-        "feeError": "Neuspješno izračunavanje naknade"
+        "feeError": "Neuspješno izračunavanje naknade",
+        "breezFeeText": "There may be a small fee for routing"
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "{bankName: string} korisnička imena sada su {bankName: string} adrese.",

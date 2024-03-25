@@ -587,7 +587,8 @@
         "totalLabel": "Ընդհանուր գումար․",
         "totalExceed": "Ընդհանուր գումարը գերազանցում է {balance: string}ի Ձեր հաշվեկշիռը",
         "maxFeeSelected": "Սա առավելագույն վճարն է, որը Ձեզանից կգանձվի այս գործառնության համար: Վճարումը կատարելուց հետո այն կարող է նվազել։ ",
-        "feeError": "Չհաջողվեց հաշվել վճարը"
+        "feeError": "Չհաջողվեց հաշվել վճարը",
+        "breezFeeText": "There may be a small fee for routing"
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "{bankName: string} օգտանունները հիմա {bankName: string} հասցեներն են։ ",

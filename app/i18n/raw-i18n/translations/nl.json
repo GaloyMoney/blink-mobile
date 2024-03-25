@@ -553,7 +553,8 @@
         "totalLabel": "Totaal:",
         "totalExceed": "Totaal overschrijdt uw saldo van {balance: string}",
         "maxFeeSelected": "Dit zijn de maximale kosten die voor deze transactie in rekening worden gebracht. Het kan uiteindelijk minder zijn zodra de betaling is gedaan.",
-        "feeError": "Het berekenen van de kosten is mislukt"
+        "feeError": "Het berekenen van de kosten is mislukt",
+        "breezFeeText": "There may be a small fee for routing"
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "{bankName: string} gebruikersnamen zijn nu {bankName: string} adressen.",

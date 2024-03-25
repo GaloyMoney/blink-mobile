@@ -551,7 +551,8 @@
         "totalLabel": "Suma:",
         "totalExceed": "Kaniyta rikuyta munanpi, kaniyta rikuyta munanpi ch'usaq kayniyta rikuy munanpi kawsayniyta qillqata sutichinaqinmi. Chaynamanta kaniyta rikuyta munanpi, {balance: string} kawsayniyta qillqata sutichinaqinmi ch'usaq kayniyta rikuy munanpi ch'usaqta munanpi kawsayniyta qillqata sutichinaqinmi.",
         "maxFeeSelected": "Chaynamanta kaniyta rikuyta munanpi, kaniyta rikuyta munanpi ch'usaq kayniyta rikuy munanpi kawsayniyta qillqata sutichinaqinmi. Kaniytaikuyta munanpi kawsayniyta qillqata sutichinaqinmi chaypi ch'usaq kayniyta rikuy munanpi ch'usaqta munanpi kawsayniyta qillqata sutichinaqinmi.",
-        "feeError": "Chaynamanta kaniyta rikuyta munanpi, ch'usaq kayniyta rikuyta munanpi ch'usaqta munanpi kawsayniyta qillqata sutichinaqin."
+        "feeError": "Chaynamanta kaniyta rikuyta munanpi, ch'usaq kayniyta rikuyta munanpi ch'usaqta munanpi kawsayniyta qillqata sutichinaqin.",
+        "breezFeeText": "There may be a small fee for routing"
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "{bankName: string} kaniyta yachanakuyta sutichinaqinmi, {bankName: string} kawsayniyta qillqata sutichinaqinmi kaniyta rikuyta munanpi.",

@@ -587,7 +587,8 @@
         "totalLabel": "Σύνολο:",
         "totalExceed": "Το συνολικό ποσό υπερβαίνει το υπόλοιπό σας {balance: string}",
         "maxFeeSelected": "Αυτή είναι τα περισσότερα τέλη που θα χρεωθείτε για αυτή τη συναλλαγή. Μπορεί να είναι λιγότερα όταν πραγματοποιηθεί η πληρωμή.",
-        "feeError": "Απέτυχε ο υπολογισμός των τελών"
+        "feeError": "Απέτυχε ο υπολογισμός των τελών",
+        "breezFeeText": "There may be a small fee for routing"
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "Τα ονόματα χρηστών {bankName: string} είναι τώρα διευθύνσεις {bankName: string}.",

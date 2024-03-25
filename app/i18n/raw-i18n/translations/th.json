@@ -551,7 +551,8 @@
         "totalLabel": "ยอดรวม:",
         "totalExceed": "ยอดเงินรวมของคุณเกินกว่า {balance: string}",
         "maxFeeSelected": "นี่คือค่าธรรมเนียมสูงสุดที่จะถูกเรียกเก็บในธุรกรรมนี้ได้ มันอาจน้อยกว่านี้เมื่อมีการทำธุรกรรมกันจริงๆ",
-        "feeError": "การคำนวณค่าธรรมเนียมล้มเหลว"
+        "feeError": "การคำนวณค่าธรรมเนียมล้มเหลว",
+        "breezFeeText": "There may be a small fee for routing"
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "ชื่อผู้ใช้{bankName: string} เป็นแอดเดรส{bankName: string}ของคุณในขณะนี้",

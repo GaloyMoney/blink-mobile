@@ -5610,6 +5610,7 @@ export type TranslationFunctions = {
 		 * Failed to calculate fee
 		 */
 		feeError: () => LocalizedString
+		breezFeeText: () => LocalizedString
 	}
 	SendBitcoinDestinationScreen: {
 		/**

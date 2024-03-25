@@ -14,6 +14,8 @@ export const getErrorMessages = (error: ErrorInput): string => {
   if (error instanceof ApolloError) {
     if (error.graphQLErrors && error.graphQLErrors.length > 0) {
       return error.graphQLErrors.map(({ message }) => message).join("\n ")
+    } else if (error.message === "Network request failed") {
+      return "Wallet is offline"
     }
     return error.message
   }

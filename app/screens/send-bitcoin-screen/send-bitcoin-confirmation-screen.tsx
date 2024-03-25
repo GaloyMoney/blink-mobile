@@ -349,18 +349,24 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           <Text style={styles.fieldTitleText}>
             {LL.SendBitcoinConfirmationScreen.feeLabel()}
           </Text>
-          <View style={styles.fieldBackground}>
-            {fee.status === "loading" && <ActivityIndicator />}
-            {fee.status === "set" && (
-              <Text {...testProps("Successful Fee")}>{feeDisplayText}</Text>
-            )}
-            {fee.status === "error" && Boolean(fee.amount) && (
-              <Text>{feeDisplayText} *</Text>
-            )}
-            {fee.status === "error" && !fee.amount && (
-              <Text>{LL.SendBitcoinConfirmationScreen.feeError()}</Text>
-            )}
-          </View>
+          {paymentDetail.sendingWalletDescriptor.currency === "BTC" ? (
+            <View style={styles.fieldBackground}>
+              <Text>{LL.SendBitcoinConfirmationScreen.breezFeeText()}</Text>
+            </View>
+          ) : (
+            <View style={styles.fieldBackground}>
+              {fee.status === "loading" && <ActivityIndicator />}
+              {fee.status === "set" && (
+                <Text {...testProps("Successful Fee")}>{feeDisplayText}</Text>
+              )}
+              {fee.status === "error" && Boolean(fee.amount) && (
+                <Text>{feeDisplayText} *</Text>
+              )}
+              {fee.status === "error" && !fee.amount && (
+                <Text>{LL.SendBitcoinConfirmationScreen.feeError()}</Text>
+              )}
+            </View>
+          )}
           {fee.status === "error" && Boolean(fee.amount) && (
             <Text style={styles.maxFeeWarningText}>
               {"*" + LL.SendBitcoinConfirmationScreen.maxFeeSelected()}

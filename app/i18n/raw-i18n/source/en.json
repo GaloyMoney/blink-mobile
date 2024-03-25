@@ -601,7 +601,8 @@
         "totalLabel": "Total:",
         "totalExceed": "Total exceeds your balance of {balance: string}",
         "maxFeeSelected": "This is the maximum fee you will be charged for this transaction.  It may end up being less once the payment has been made.",
-        "feeError": "Failed to calculate fee"
+        "feeError": "Failed to calculate fee",
+        "breezFeeText": "There may be a small fee for routing"
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "{bankName: string} usernames are now {bankName: string} addresses.",

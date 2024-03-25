@@ -11,12 +11,13 @@ import {
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useLevel } from "@app/graphql/level-context"
-import { usePriceConversion } from "@app/hooks"
+import { useAppConfig, usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import {
   DisplayCurrency,
+  greaterThan,
   MoneyAmount,
   toBtcMoneyAmount,
   toUsdMoneyAmount,
@@ -106,6 +107,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "sendBitcoinDetails">>()
 
+  const { appConfig } = useAppConfig()
   const { currentLevel } = useLevel()
 
   const { data } = useSendBitcoinDetailsScreenQuery({
@@ -119,7 +121,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const [isLoadingLnurl, setIsLoadingLnurl] = useState(false)
 
   const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
-  const { zeroDisplayAmount } = useDisplayCurrency()
+  const { zeroDisplayAmount, formatMoneyAmount } = useDisplayCurrency()
 
   const defaultWallet = getDefaultWallet(
     data?.me?.defaultAccount?.wallets,
@@ -413,6 +415,33 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     )
   }
 
+  let maxAmountErr = ""
+  if (appConfig.galoyInstance.name === "Staging") {
+    const maxAmountInPrimaryCurrency = convertMoneyAmount(
+      {
+        amount: 500,
+        currency: "DisplayCurrency",
+        currencyCode: "USD",
+      },
+      paymentDetail.sendingWalletDescriptor.currency,
+    )
+
+    if (
+      maxAmountInPrimaryCurrency &&
+      greaterThan({
+        value: convertMoneyAmount(
+          paymentDetail.settlementAmount,
+          maxAmountInPrimaryCurrency.currency,
+        ),
+        greaterThan: maxAmountInPrimaryCurrency,
+      })
+    ) {
+      maxAmountErr = LL.AmountInputScreen.maxAmountExceeded({
+        maxAmount: formatMoneyAmount({ moneyAmount: maxAmountInPrimaryCurrency }),
+      })
+    }
+  }
+
   return (
     <Screen
       preset="scroll"
@@ -496,7 +525,17 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
               walletCurrency={sendingWalletDescriptor.currency}
               canSetAmount={paymentDetail.canSetAmount}
               isSendingMax={paymentDetail.isSendingMax}
-              maxAmount={lnurlParams?.max ? toBtcMoneyAmount(lnurlParams.max) : undefined}
+              maxAmount={
+                appConfig.galoyInstance.name === "Staging"
+                  ? {
+                      amount: 500,
+                      currency: "DisplayCurrency",
+                      currencyCode: "USD",
+                    }
+                  : lnurlParams?.max
+                  ? toBtcMoneyAmount(lnurlParams.max)
+                  : undefined
+              }
               minAmount={lnurlParams?.min ? toBtcMoneyAmount(lnurlParams.min) : undefined}
             />
           </View>
@@ -512,7 +551,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           />
         </View>
         <SendBitcoinDetailsExtraInfo
-          errorMessage={asyncErrorMessage}
+          errorMessage={asyncErrorMessage || maxAmountErr}
           amountStatus={amountStatus}
           currentLevel={currentLevel}
         />
@@ -520,7 +559,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           <GaloyPrimaryButton
             onPress={goToNextScreen || undefined}
             loading={isLoadingLnurl}
-            disabled={!goToNextScreen || !amountStatus.validAmount}
+            disabled={!goToNextScreen || !amountStatus.validAmount || !!maxAmountErr}
             title={LL.common.next()}
           />
         </View>

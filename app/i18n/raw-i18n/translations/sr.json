@@ -551,7 +551,8 @@
         "totalLabel": "Укупно:",
         "totalExceed": "Укупан износ прелази ваше стање од {balance: string}",
         "maxFeeSelected": "Ово је максимална накнада која ће вам бити наплаћена за ову трансакцију. Може се испоставити да је мања након што је плаћање извршено.",
-        "feeError": "Неуспешно рачунање накнаде"
+        "feeError": "Неуспешно рачунање накнаде",
+        "breezFeeText": "There may be a small fee for routing"
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "{bankName: string} корисничка имена су сада {bankName: string} адресе.",

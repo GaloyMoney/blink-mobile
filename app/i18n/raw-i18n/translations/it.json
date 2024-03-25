@@ -551,7 +551,8 @@
         "totalLabel": "Totale:",
         "totalExceed": "Il totale supera il saldo {balance: string}",
         "maxFeeSelected": "Questa è la commissione massima che ti verrà addebitata per questa transazione. Una volta effettuato il pagamento, il costo potrebbe risultare inferiore.",
-        "feeError": "Impossibile calcolare la fee"
+        "feeError": "Impossibile calcolare la fee",
+        "breezFeeText": "There may be a small fee for routing"
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "Gli username {bankName: string} sono ora indirizzi {bankName: string}.",

@@ -551,7 +551,8 @@
         "totalLabel": "المجموع :",
         "totalExceed": "الإجمالي أكبر من ميزانيتك التي تبلغ {balance}",
         "maxFeeSelected": "هذا هو الحد الأقصى للرسوم التي ستُقتضى منك لهذه المعاملة. قد تكون أقل من ذلك عند إتمام الدفع.",
-        "feeError": "فشل في حساب العمولة"
+        "feeError": "فشل في حساب العمولة",
+        "breezFeeText": "There may be a small fee for routing"
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "أسماء المستخدمين في {bankName} أصبحت عناوين في {bankName}",

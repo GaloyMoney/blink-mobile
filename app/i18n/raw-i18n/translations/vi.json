@@ -551,7 +551,8 @@
         "totalLabel": "Tổng cộng:",
         "totalExceed": "Tổng vượt quá số dư của bạn là {balance: string}",
         "maxFeeSelected": "Đây là mức phí tối đa bạn sẽ phải trả cho giao dịch này. Nó có thể sẽ ít hơn sau khi thanh toán được thực hiện.",
-        "feeError": "Không thể tính phí"
+        "feeError": "Không thể tính phí",
+        "breezFeeText": "There may be a small fee for routing"
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "Tên người dùng {bankName: string} hiện là địa chỉ {bankName: string}.",

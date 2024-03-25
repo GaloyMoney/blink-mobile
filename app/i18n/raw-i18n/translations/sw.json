@@ -551,7 +551,8 @@
         "totalLabel": "Jumla:",
         "totalExceed": "Jumla imezidi baki lako la {balance: string}",
         "maxFeeSelected": "Hii ndio ada ya juu zaidi ambayo unawezalipishwa kwa malipo haya. Inaweza kuishia kuwa kidogo malipo yatakapofanyika.",
-        "feeError": "Imeshindwa kuhesabu ada"
+        "feeError": "Imeshindwa kuhesabu ada",
+        "breezFeeText": "There may be a small fee for routing"
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "{bankName: string} majina ya watumiaji sasa ni anwani za {bankName: string} ",

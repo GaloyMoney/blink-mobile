@@ -551,7 +551,8 @@
         "totalLabel": "Total:",
         "totalExceed": "El total supera el teu saldo de {balance:}",
         "maxFeeSelected": "Aquesta és la comissió màxima que se't cobrarà per aquesta transacció. Pot acabar sent inferior un cop s'hagi realitzat el pagament.",
-        "feeError": "No s'ha pogut calcular la comissió"
+        "feeError": "No s'ha pogut calcular la comissió",
+        "breezFeeText": "There may be a small fee for routing"
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "{bankName} nom d'usuari és ara la adreça {bankName}.",

@@ -585,7 +585,8 @@
         "totalLabel": "Celkem:",
         "totalExceed": "Celková částka přesahuje váš zůstatek ve výši {balance}",
         "maxFeeSelected": "Jedná se o maximální poplatek, který vám bude za tuto transakci účtován. Po provedení platby může být nakonec nižší.",
-        "feeError": "Nepodařilo se vypočítat poplatek"
+        "feeError": "Nepodařilo se vypočítat poplatek",
+        "breezFeeText": "There may be a small fee for routing"
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "Uživatelská jména {bankName} jsou nyní adresy {bankName}.",
