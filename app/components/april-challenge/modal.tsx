@@ -20,7 +20,7 @@ type Props = {
   setIsVisible: (isVisible: boolean) => void
 }
 
-export const FebruaryChallengeModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
+export const AprilChallengeModal: React.FC<Props> = ({ isVisible, setIsVisible }) => {
   const { LL } = useI18nContext()
 
   const {
@@ -52,10 +52,10 @@ export const FebruaryChallengeModal: React.FC<Props> = ({ isVisible, setIsVisibl
           />
           <GaloyIcon style={styles.top} name="rank" size={40} color={colors.primary} />
           <Text type="h1" bold>
-            {LL.Circles.februaryChallenge.title()}
+            {LL.Circles.aprilChallenge.title()}
           </Text>
           <Text type="p1" style={styles.details}>
-            {LL.Circles.februaryChallenge.details()}
+            {LL.Circles.aprilChallenge.details()}
           </Text>
           {ShareImg}
           <GaloyPrimaryButton onPress={share} title={LL.Circles.shareCircles()} />

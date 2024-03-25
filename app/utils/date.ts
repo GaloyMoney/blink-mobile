@@ -18,6 +18,10 @@ export const APR_1_2024_12_AM_UTC_MINUS_6 = new Date(
   Date.UTC(2024, 3, 1, 6, 0, 0),
 ).getTime()
 
+export const MAY_1_2024_12_AM_UTC_MINUS_6 = new Date(
+  Date.UTC(2024, 4, 1, 6, 0, 0),
+).getTime()
+
 const secondsToDDMMSS = (totalSeconds: number) => {
   if (totalSeconds < 0) return ""
 
