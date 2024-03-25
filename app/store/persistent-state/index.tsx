@@ -14,14 +14,14 @@ const PERSISTENT_STATE_KEY = "persistentState"
 
 const loadPersistentState = async (): Promise<PersistentState> => {
   const data = await loadJson(PERSISTENT_STATE_KEY)
-  const secureData = await KeyStoreWrapper.getSecurePersitentState()
+  const secureData = await KeyStoreWrapper.getSecurePersistentState()
   return migrateAndGetPersistentState({ ...data, ...secureData })
 }
 
 const savePersistentState = async (state: PersistentState) => {
   const { galoyAuthToken, ...data } = state
   saveJson(PERSISTENT_STATE_KEY, data)
-  KeyStoreWrapper.setSecurePersitentState({ galoyAuthToken })
+  KeyStoreWrapper.setSecurePersistentState({ galoyAuthToken })
 }
 
 // TODO: should not be exported

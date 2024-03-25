@@ -8,7 +8,7 @@ export default class KeyStoreWrapper {
   private static readonly PIN_ATTEMPTS = "pinAttempts"
   private static readonly SECURE_STATE = "secureState"
 
-  public static async getSecurePersitentState(): Promise<
+  public static async getSecurePersistentState(): Promise<
     SecurePersistentState | Record<string, never>
   > {
     try {
@@ -19,7 +19,7 @@ export default class KeyStoreWrapper {
     }
   }
 
-  public static async setSecurePersitentState(
+  public static async setSecurePersistentState(
     state: SecurePersistentState,
   ): Promise<boolean> {
     try {
@@ -32,7 +32,7 @@ export default class KeyStoreWrapper {
     }
   }
 
-  public static async removeSecurePersitentState(): Promise<boolean> {
+  public static async removeSecurePersistentState(): Promise<boolean> {
     try {
       await RNSecureKeyStore.remove(KeyStoreWrapper.SECURE_STATE)
       return true
