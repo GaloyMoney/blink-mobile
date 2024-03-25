@@ -4163,40 +4163,40 @@
   resolved "https://registry.npmjs.org/@react-native-community/slider/-/slider-4.4.3.tgz#9b9dc639b88f5bfda72bd72a9dff55cbf9f777ed"
   integrity sha512-WdjvGtqJfqcCiLwtbzie53Z/H6w6dIfRHhlW832D89ySAdE5DxLAsqRhDOG0eacuAxxEB+T9sGCkVMD0fa3aBg==
 
-"@react-native-firebase/analytics@^18.6.0":
-  version "18.6.2"
-  resolved "https://registry.npmjs.org/@react-native-firebase/analytics/-/analytics-18.6.2.tgz#4594cdd2d1b410b1dd6a86659b42d0c1b2f3e178"
-  integrity sha512-SDvQvAq7NZZixG/gpzgdy4++bjCHlSXytg4gWXxfVZQSquY3K/wiGFxelAvHjYQRvJ9CAuZw7jvq/RbJ3wT4zg==
+"@react-native-firebase/analytics@^19.1.0":
+  version "19.1.0"
+  resolved "https://registry.npmjs.org/@react-native-firebase/analytics/-/analytics-19.1.0.tgz#2e6a76fcdac61b0b3fdc7a8d3721536621fc4810"
+  integrity sha512-p6ZwpbYJRN6yCd1i0gjICyUbtxaVGINMiL4OxTJxpWaKZFGn5+qLe+p948Zww7Wnw4IiuZoUhM7K9YXOjqFYqw==
 
-"@react-native-firebase/app-check@^18.6.0":
-  version "18.6.2"
-  resolved "https://registry.npmjs.org/@react-native-firebase/app-check/-/app-check-18.6.2.tgz#17a27c8f77f7444d660c34a306e27416737ea9be"
-  integrity sha512-T5Et2bx6cwHkdiw7YA26yCCWcp9oUfhnKIYEhZO5HXDbngo9hAoO73/XQ+V2ADqwh7fr1pDn4pPn3ew0BFlb0Q==
+"@react-native-firebase/app-check@^19.1.0":
+  version "19.1.0"
+  resolved "https://registry.npmjs.org/@react-native-firebase/app-check/-/app-check-19.1.0.tgz#558967f0a1ac78163ee3088ea7d86bb3e887ab98"
+  integrity sha512-izbIN9/skShGOBz1mikhMTYGoEso4onbsV9fFh2e6pFzeqsZZHmkBMytLfohiHquc5HbcZVBjGb6178AMbNQew==
 
-"@react-native-firebase/app@^18.6.0":
-  version "18.6.2"
-  resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-18.6.2.tgz#c6ad83c86574e4e91fcef0ac2c1a10fa95dc6ae5"
-  integrity sha512-0hZ/4itfn5kxoUZsZfrpyTh4FDh4jFU/5svYaSAldPK3+xRmi1BSSx9PVzWt7vyw1Bi5ep/oLq/6sFaoqk5FFw==
+"@react-native-firebase/app@^19.1.0":
+  version "19.1.0"
+  resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-19.1.0.tgz#46eaff1d7303da9fa305a641d4c8623ba7b80435"
+  integrity sha512-xR4Ui0p6Xe2OXAs/Q4XN79nSqtupKu1ZwlGbYiUrvXsYwtwNlU1Pk8WvIhpXUP5/jXsSNZr8NeGrfCbb9m9NLQ==
   dependencies:
     opencollective-postinstall "^2.0.3"
     superstruct "^0.6.2"
 
-"@react-native-firebase/crashlytics@^18.6.0":
-  version "18.6.2"
-  resolved "https://registry.npmjs.org/@react-native-firebase/crashlytics/-/crashlytics-18.6.2.tgz#7bda5c6ab9e2531e6e09cca7347cc9443f0a832a"
-  integrity sha512-Wo7uuPKHx4eQg8MS/JnKZK7k90tIxmAyz8RonrqgQYBG2GO2NguNHZsZqo3VP9XlpHW0lImdq5J0BWBwL4+a3w==
+"@react-native-firebase/crashlytics@^19.1.0":
+  version "19.1.0"
+  resolved "https://registry.npmjs.org/@react-native-firebase/crashlytics/-/crashlytics-19.1.0.tgz#44aeecb7a20a82e312d9e0c5eaf9946d2ad2782c"
+  integrity sha512-q+rNjYWvmlR53y5x8+qe0fxozjFb6RyhM3Jwcc/WB4ZaUbiiBdtWf2DJ3VhGVgBq3qosTYjEGMVfifqD5o3LhA==
   dependencies:
     stacktrace-js "^2.0.2"
 
-"@react-native-firebase/messaging@^18.6.0":
-  version "18.6.2"
-  resolved "https://registry.npmjs.org/@react-native-firebase/messaging/-/messaging-18.6.2.tgz#1a52635293e1fbd413c64289be0cfa1c8a329073"
-  integrity sha512-xGkv9tBjRaSqN6iGRC2euDiZVlraXVva4s/UQNbz5JBehTiStRP2lsRfGKiWuSWMMQgeKR0abRBgJLor8/OfwA==
+"@react-native-firebase/messaging@^19.1.0":
+  version "19.1.0"
+  resolved "https://registry.npmjs.org/@react-native-firebase/messaging/-/messaging-19.1.0.tgz#aee9489c894e48bb12bea8f076d9e3c485064af0"
+  integrity sha512-Jao9WdzNMdPQ7SmYAyFLnzFaU/ybbC3idrS4JGM0TByJzEKUv3jAG/lvXdGW6D8FfFWICiJ7oEFESdiBq1ugXw==
 
-"@react-native-firebase/remote-config@^18.6.0":
-  version "18.6.2"
-  resolved "https://registry.npmjs.org/@react-native-firebase/remote-config/-/remote-config-18.6.2.tgz#b633e0d4ffb2a7f03aaa03b7677ad3f699f3512e"
-  integrity sha512-FiePyHHkK4Se9lAxtw03yR1oN4FiOSDo92BcH2SBBp+a+rx0+h2c7lSxFMzA0wyGj1VHHPH7gStF0iIsppr9hQ==
+"@react-native-firebase/remote-config@^19.1.0":
+  version "19.1.0"
+  resolved "https://registry.npmjs.org/@react-native-firebase/remote-config/-/remote-config-19.1.0.tgz#8f9711c06cd5c1eb6b68fab3312d272d981d07e6"
+  integrity sha512-gB4kV7s4/8Xca3s0Hs0S0TiNlg6zQnSwdKF8hnQGudOAIi1EhiUrNGQ5ybtKkGIh6TX7LC8Ev9jUgkIaNvo8Zw==
 
 "@react-native/assets-registry@^0.72.0":
   version "0.72.0"
