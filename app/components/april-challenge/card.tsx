@@ -3,17 +3,17 @@ import { View } from "react-native"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
 import {
-  MAR_1_2024_12_AM_UTC_MINUS_6,
-  FEB_1_2024_12_AM_UTC_MINUS_6,
+  MAY_1_2024_12_AM_UTC_MINUS_6,
+  APR_1_2024_12_AM_UTC_MINUS_6,
   getTimeLeft,
 } from "@app/utils/date"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 
 import { GaloyIcon } from "../atomic/galoy-icon"
 import { PressableCard } from "../pressable-card"
-import { FebruaryChallengeModal } from "./modal"
+import { AprilChallengeModal } from "./modal"
 
-export const FebruaryChallengeCard: React.FC = () => {
+export const AprilChallengeCard: React.FC = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const openModal = () => setModalIsOpen(true)
 
@@ -25,20 +25,20 @@ export const FebruaryChallengeCard: React.FC = () => {
 
   const [countDown, setCountDown] = useState(
     getTimeLeft({
-      after: FEB_1_2024_12_AM_UTC_MINUS_6,
-      until: MAR_1_2024_12_AM_UTC_MINUS_6,
+      after: APR_1_2024_12_AM_UTC_MINUS_6,
+      until: MAY_1_2024_12_AM_UTC_MINUS_6,
     }),
   )
 
   useEffect(() => {
     const dateNow = Date.now()
-    if (dateNow > MAR_1_2024_12_AM_UTC_MINUS_6) return
+    if (dateNow > MAY_1_2024_12_AM_UTC_MINUS_6) return
 
     const t = setInterval(() => {
       setCountDown(
         getTimeLeft({
-          after: FEB_1_2024_12_AM_UTC_MINUS_6,
-          until: MAR_1_2024_12_AM_UTC_MINUS_6,
+          after: APR_1_2024_12_AM_UTC_MINUS_6,
+          until: MAY_1_2024_12_AM_UTC_MINUS_6,
         }),
       )
     }, 1000)
@@ -48,23 +48,23 @@ export const FebruaryChallengeCard: React.FC = () => {
 
   const currentTime = Date.now()
   if (
-    currentTime > MAR_1_2024_12_AM_UTC_MINUS_6 ||
-    currentTime < FEB_1_2024_12_AM_UTC_MINUS_6
+    currentTime > MAY_1_2024_12_AM_UTC_MINUS_6 ||
+    currentTime < APR_1_2024_12_AM_UTC_MINUS_6
   )
     return <></>
 
   return (
     <PressableCard onPress={openModal}>
-      <FebruaryChallengeModal isVisible={modalIsOpen} setIsVisible={setModalIsOpen} />
+      <AprilChallengeModal isVisible={modalIsOpen} setIsVisible={setModalIsOpen} />
       <View style={styles.card}>
         <View style={styles.textContainer}>
           <View style={styles.beside}>
             <Text type="p1" bold>
-              {LL.Circles.februaryChallenge.title()}
+              {LL.Circles.aprilChallenge.title()}
             </Text>
             <Text color={colors.grey3}>{countDown}</Text>
           </View>
-          <Text type="p2">{LL.Circles.februaryChallenge.description()}</Text>
+          <Text type="p2">{LL.Circles.aprilChallenge.description()}</Text>
         </View>
         <View>
           <GaloyIcon color={colors.primary} size={28} name="rank" />
