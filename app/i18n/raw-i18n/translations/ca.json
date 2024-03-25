@@ -2262,6 +2262,14 @@
             "Payments": {
                 "title": "Pagaments",
                 "description": "Notificacions relacionades amb enviar i rebre pagaments"
+            },
+            "Marketing": {
+                "title": "Features and updates",
+                "description": "Notifications about new features and updates."
+            },
+            "Price": {
+                "title": "Price changes",
+                "description": "Notifications about the price of Bitcoin."
             }
         }
     },
@@ -2693,6 +2701,11 @@
             "title": "Desafiament de març!",
             "description": "+3 cercle interior i +3 cercle exterior per tenir l'oportunitat de guanyar 100 dòlars.",
             "details": "Fes créixer el teu cercle interior en 3 persones i el teu cercle exterior en 3 persones per tenir l'oportunitat de guanyar 100 $!\n\nRecordatori: els teus cercles creixen quan envies a un nou usuari de Blink els seus primers sats.\n\nComparteix els teus cercles a les xarxes socials amb #blinkcircles per participar."
+        },
+        "aprilChallenge": {
+            "title": "April Challenge!",
+            "description": "Grow your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet.",
+            "details": "During the halving month, expand your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
         }
     },
     "FullOnboarding": {
