@@ -27,7 +27,7 @@ import { CommonActions, RouteProp, useNavigation } from "@react-navigation/nativ
 import { StackNavigationProp } from "@react-navigation/stack"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import React, { useEffect, useMemo, useState } from "react"
-import { ActivityIndicator, View } from "react-native"
+import { ActivityIndicator, View, StyleSheet } from "react-native"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 import { testProps } from "../../utils/testProps"
 import useFee, { FeeType } from "./use-fee"
@@ -39,6 +39,7 @@ import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 // Breez SDK
 import useBreezBalance from "@app/hooks/useBreezBalance"
 import { fetchReverseSwapFeesBreezSDK } from "@app/utils/breez-sdk"
+import Video from "react-native-video"
 
 gql`
   query sendBitcoinConfirmationScreen {
@@ -59,6 +60,7 @@ gql`
 type Props = { route: RouteProp<RootStackParamList, "sendBitcoinConfirmation"> }
 
 const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
+  const [isAnimating, setIsAnimating] = useState(false)
   const {
     theme: { colors },
   } = useTheme()
@@ -173,6 +175,8 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     }
 
     return async () => {
+      console.log("Starting animation and sending payment")
+      setIsAnimating(true) // Start the animation
       try {
         logPaymentAttempt({
           paymentType: paymentDetail.paymentType,
@@ -217,6 +221,9 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
           crashlytics().recordError(err)
           setPaymentError(err.message || err.toString())
         }
+      } finally {
+        console.log("Stopping animation")
+        setIsAnimating(false) // Stop the animation regardless of payment outcome
       }
     }
   }, [
@@ -274,6 +281,24 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
 
   return (
     <Screen preset="scroll" style={styles.screenStyle} keyboardOffset="navigationHeader">
+      {isAnimating && (
+        <View style={styles.overlay}>
+          <Video
+            source={require("@app/assets/videos/flash-send.mp4")}
+            style={styles.backgroundVideo}
+            rate={2.0}
+            volume={1.0}
+            muted={false}
+            resizeMode="cover"
+            repeat={true}
+            playInBackground={false}
+            playWhenInactive={false}
+            ignoreSilentSwitch="ignore"
+            onEnd={() => setIsAnimating(false)}
+          />
+          <View style={styles.semiTransparentOverlay} />
+        </View>
+      )}
       <View style={styles.sendBitcoinConfirmationContainer}>
         <View style={styles.fieldContainer}>
           <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
@@ -494,5 +519,23 @@ const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
     padding: 20,
     flexGrow: 1,
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0, 0, 0, 0.8)", // 50% Background transparency
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1000, // Ensures the view is on top
+  },
+  backgroundVideo: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  semiTransparentOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // This creates the semi-transparent effect
   },
 }))
