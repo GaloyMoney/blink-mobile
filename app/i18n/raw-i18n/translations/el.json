@@ -2262,6 +2262,14 @@
             "Payments": {
                 "title": "Πληρωμές",
                 "description": "Ειδοποιήσεις σχετικά με την αποστολή και τη λήψη πληρωμών."
+            },
+            "Marketing": {
+                "title": "Features and updates",
+                "description": "Notifications about new features and updates."
+            },
+            "Price": {
+                "title": "Price changes",
+                "description": "Notifications about the price of Bitcoin."
             }
         }
     },
@@ -2693,6 +2701,11 @@
             "title": "Πρόκληση Μαρτίου!",
             "description": "+3 άτομα στον εσωτερικό και +3 άτομα στον εξωτερικό κύκλο επαφών σας για να έχετε μια ευκαιρία να κερδίσετε $100!",
             "details": "Μεγαλώστε τον εσωτερικό κύκλο επαφών σας κατά 3 άτομα στον εσωτερικό και 3 άτομα στον εξωτερικό κύκλο επαφών σας για να έχετε μια ευκαιρία να κερδίσετε $100\n\nΥπενθύμιση: οι κύκλοι σας αυξάνονται όταν στέλνετε σε έναν νέο χρήστη του Blink τα πρώτα του sats.\n\nΜοιραστείτε τους κύκλους σας στα κοινωνικά δίκτυα με το #blinkcircles για να συμμετάσχετε."
+        },
+        "aprilChallenge": {
+            "title": "April Challenge!",
+            "description": "Grow your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet.",
+            "details": "During the halving month, expand your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
         }
     },
     "FullOnboarding": {
