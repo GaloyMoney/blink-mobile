@@ -1,6 +1,7 @@
 import React from "react"
 import { StyleProp, View, ViewStyle } from "react-native"
 
+import ArrowLeft from "@app/assets/icons-redesign/arrow-left.svg"
 import ArrowRight from "@app/assets/icons-redesign/arrow-right.svg"
 import BackSpace from "@app/assets/icons-redesign/back-space.svg"
 import Bank from "@app/assets/icons-redesign/bank.svg"
@@ -54,6 +55,7 @@ import { makeStyles, useTheme } from "@rneui/themed"
 
 export const icons = {
   "arrow-right": ArrowRight,
+  "arrow-left": ArrowLeft,
   "back-space": BackSpace,
   "bank": Bank,
   "bitcoin": Bitcoin,
