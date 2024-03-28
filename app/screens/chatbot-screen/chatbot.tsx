@@ -1,6 +1,7 @@
 import { useState, useRef } from "react"
 import {
   ActivityIndicator,
+  Alert,
   FlatList,
   Keyboard,
   TouchableHighlight,
@@ -55,7 +56,7 @@ gql`
   }
 `
 
-export const ConversationScreen = () => {
+export const ChatBotScreen = () => {
   const styles = useStyles()
   const { theme } = useTheme()
 
@@ -102,13 +103,10 @@ export const ConversationScreen = () => {
       await supportChatMessageAdd({
         variables: { input: { message: input } },
         update: (cache, { data }) => {
-          // If mutation didn't return any data, return early
           if (!data || !data.supportChatMessageAdd.supportMessage) return
 
-          // Add the new message to the chat array
           const newMessages = data.supportChatMessageAdd.supportMessage
 
-          // Write the updated chats back to the cache
           cache.writeQuery({
             query: SupportChatDocument,
             data: {
@@ -120,10 +118,18 @@ export const ConversationScreen = () => {
         },
       })
     } catch (err) {
+      // TODO: translation
+      Alert.alert("Error", "An error occurred while sending the message")
       console.log("error: ", err)
     } finally {
       setPendingInput("")
       setTimeout(() => {
+        // TODO: improve code clarity
+        // supportChatMaybeInput should be the "cache" version prior to the table update
+        // and length will increase by 1 after the update
+        // so I think supportChatMaybeInput.length - 1
+        // is actually mapping to supportChatMaybeInput.length - 2
+        // when consideing the new message
         const indexBeforeLast = supportChatMaybeInput.length - 1
         if (indexBeforeLast >= 0) {
           flatListRef.current?.scrollToIndex({ index: indexBeforeLast, animated: true })
@@ -136,12 +142,13 @@ export const ConversationScreen = () => {
     setInput(v)
   }
 
+  // TODO: make it work
   async function clearChat() {
     if (loading) return
-    // setOpenaiResponse([])
     setInput("")
   }
 
+  // FIXME: this is not working
   async function showClipboardActionsheet(text: string) {
     console.log("showClipboardActionsheet", text)
 

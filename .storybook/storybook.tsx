@@ -22,7 +22,7 @@ RNBootSplash.hide({ fade: true })
 const StorybookUI = getStorybookUI({
   enableWebsockets: true,
   onDeviceUI: true,
-  initialSelection: { kind: "Conversation Screen", name: "Default" },
+  initialSelection: { kind: "ChatBot Screen", name: "Default" },
   shouldPersistSelection: false,
 })
 

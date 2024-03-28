@@ -7,7 +7,7 @@ import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
 import { SupportChatDocument } from "../../graphql/generated"
 import { IsAuthedContextProvider } from "../../graphql/is-authed-context"
-import { ConversationScreen } from "./conversation"
+import { ChatBotScreen } from "./chatbot"
 
 const mockEmpty = [
   {
@@ -61,15 +61,15 @@ const mockShort = [
 ]
 
 export default {
-  title: "Conversation Screen",
-  component: ConversationScreen,
+  title: "ChatBot Screen",
+  component: ChatBotScreen,
   decorators: [(Story) => <StoryScreen>{Story()}</StoryScreen>],
-} as Meta<typeof ConversationScreen>
+} as Meta<typeof ChatBotScreen>
 
 export const Empty = () => (
   <MockedProvider mocks={mockEmpty} cache={createCache()}>
     <IsAuthedContextProvider value={true}>
-      <ConversationScreen />
+      <ChatBotScreen />
     </IsAuthedContextProvider>
   </MockedProvider>
 )
@@ -77,7 +77,7 @@ export const Empty = () => (
 export const Default = () => (
   <MockedProvider mocks={mockShort} cache={createCache()}>
     <IsAuthedContextProvider value={true}>
-      <ConversationScreen />
+      <ChatBotScreen />
     </IsAuthedContextProvider>
   </MockedProvider>
 )

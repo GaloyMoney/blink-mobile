@@ -88,7 +88,6 @@ export const SettingsScreen: React.FC = () => {
     skip: !isAtLeastLevelZero,
   })
 
-  // get beta flag
   const betaQuery = useBetaQuery()
   const beta = betaQuery.data?.beta ?? false
 
