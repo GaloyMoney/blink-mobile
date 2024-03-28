@@ -2705,6 +2705,7 @@ const en: BaseTranslation = {
     faq: "FAQ",
     enjoyingApp: "Enjoying the app?",
     statusPage: "Status Page",
+    chatbot: "Chatbot",
     telegram: "Telegram",
     mattermost: "Mattermost",
     thankYouText: "Thank you for the feedback, would you like to suggest an improvement?",

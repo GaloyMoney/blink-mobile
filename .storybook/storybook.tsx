@@ -20,9 +20,9 @@ import { NotificationsProvider } from "../app/components/notifications"
 RNBootSplash.hide({ fade: true })
 
 const StorybookUI = getStorybookUI({
-  enableWebsockets: true, // for @storybook/react-native-server
+  enableWebsockets: true,
   onDeviceUI: true,
-  initialSelection: { kind: "Notification Card UI", name: "Default" },
+  initialSelection: { kind: "ChatBot Screen", name: "Default" },
   shouldPersistSelection: false,
 })
 

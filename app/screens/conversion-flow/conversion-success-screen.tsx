@@ -13,20 +13,6 @@ import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Text, makeStyles } from "@rneui/themed"
 
-const useStyles = makeStyles(() => ({
-  successText: {
-    marginTop: 20,
-  },
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  screen: {
-    flexGrow: 1,
-  },
-}))
-
 export const ConversionSuccessScreen = () => {
   const styles = useStyles()
 
@@ -55,3 +41,17 @@ export const ConversionSuccessScreen = () => {
     </Screen>
   )
 }
+
+const useStyles = makeStyles(() => ({
+  successText: {
+    marginTop: 20,
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  screen: {
+    flexGrow: 1,
+  },
+}))

@@ -8460,6 +8460,10 @@ type RootTranslation = {
 		 */
 		statusPage: string
 		/**
+		 * C​h​a​t​b​o​t
+		 */
+		chatbot: string
+		/**
 		 * T​e​l​e​g​r​a​m
 		 */
 		telegram: string
@@ -17292,6 +17296,10 @@ export type TranslationFunctions = {
 		 * Status Page
 		 */
 		statusPage: () => LocalizedString
+		/**
+		 * Chatbot
+		 */
+		chatbot: () => LocalizedString
 		/**
 		 * Telegram
 		 */
