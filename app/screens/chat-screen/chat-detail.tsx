@@ -44,34 +44,41 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
   const {
     theme: { colors },
   } = useTheme()
-  const { sendMessage, fetchMessagesWith, nostrPubKey, subscribeToMessages } =
+  const { sendMessage, fetchMessagesWith, nostrPubKey, fetchNostrPubKey } =
     useNostrProfile()
   const styles = useStyles()
   const { name, username, picture } = chat
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Primary">>()
   const { LL } = useI18nContext()
   const [messages, setMessages] = React.useState<MessageType.Any[]>([])
+  const [userId, setUserId] = React.useState<string>("")
   const [initialized, setInitialized] = React.useState(false)
 
   React.useEffect(() => {
     let isMounted = true
+    let interval: NodeJS.Timeout
     async function initialize() {
       if (!initialized) {
-        let messageHistory = await fetchMessagesWith(chat.id as `npub1${string}`)
-        console.log("messages", messages)
-        setMessages([...messageHistory, ...messages] as MessageType.Text[])
+        interval = setInterval(async () => {
+          let messageHistory = await fetchMessagesWith(chat.id as `npub1${string}`)
+          if (messageHistory.length > messages.length) {
+            setMessages(messageHistory as MessageType.Text[])
+          }
+        }, 10000)
+        setUserId(await fetchNostrPubKey())
         setInitialized(true)
+        return () => clearInterval(interval)
       }
-      //subscribeToMessages(chat.id as `npub1${string}`, addMessage)
     }
     initialize()
 
     return () => {
       isMounted = false
+      clearInterval(interval)
     }
   }, [])
 
-  const user = { id: nostrPubKey }
+  const user = { id: nostrPubKey || userId }
 
   const addMessage = (message: MessageType.Any) => {
     console.log("new meesssage", message, "old messages", messages)
@@ -107,25 +114,11 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
     )
   }
 
-  const handlePreviewDataFetched = ({
-    message,
-    previewData,
-  }: {
-    message: MessageType.Text
-    previewData: PreviewData
-  }) => {
-    // setMessages(
-    //   messages.map<MessageType.Any>((m) =>
-    //     m.id === message.id ? { ...m, previewData } : m,
-    //   ),
-    // )
-  }
-
   const handleSendPress = async (message: MessageType.PartialText) => {
     const textMessage: MessageType.Text = {
       author: user,
       createdAt: Date.now(),
-      id: uuidv4(),
+      id: user.id,
       text: message.text,
       type: "text",
     }
@@ -154,7 +147,14 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
               })
             }
           />
-          <Image source={{ uri: picture || "" }} style={styles.userPic} />
+          <Image
+            source={{
+              uri:
+                picture ||
+                "https://pfp.nostr.build/520649f789e06c2a3912765c0081584951e91e3b5f3366d2ae08501162a5083b.jpg",
+            }}
+            style={styles.userPic}
+          />
         </View>
       </View>
       {!initialized && <ActivityIndicator />}
@@ -163,7 +163,7 @@ export const ChatDetailScreenJSX: React.FC<ChatDetailScreenProps> = ({ chat }) =
           <Chat
             messages={messages}
             onAttachmentPress={handleImageSelection}
-            onPreviewDataFetched={handlePreviewDataFetched}
+            onPreviewDataFetched={() => {}}
             onSendPress={handleSendPress}
             l10nOverride={{
               emptyChatPlaceholder: initialized

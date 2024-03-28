@@ -18,6 +18,8 @@ import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import useNostrProfile from "@app/hooks/use-nostr-profile"
+import { nip05 } from "nostr-tools"
+import { nip19 } from "nostr-tools"
 
 gql`
   query contacts {
@@ -46,6 +48,7 @@ export const ChatScreen: React.FC = () => {
 
   const [matchingContacts, setMatchingContacts] = useState<Contact[]>([])
   const [nostrProfiles, setNostrProfiles] = useState<NostrProfile[]>([])
+  const [messagedUsers, setMessagedUsers] = useState<NostrProfile[]>([])
   const [searchText, setSearchText] = useState("")
   const [refreshing, setRefreshing] = useState(false)
   const [initialized, setInitialized] = useState(false)
@@ -66,17 +69,25 @@ export const ChatScreen: React.FC = () => {
   const reset = useCallback(() => {
     setSearchText("")
     setMatchingContacts(contacts)
+    setNostrProfiles(messagedUsers)
   }, [contacts])
 
   React.useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", async () => {
+      setInitialized(false)
+      initialize()
+    })
     async function initialize() {
+      console.log("Initializing chat screen use effect")
       setMatchingContacts(contacts)
       let messagedUsers = await retrieveMessagedUsers()
+      setMessagedUsers(messagedUsers)
       setNostrProfiles(messagedUsers)
       setInitialized(true)
     }
     initialize()
-  }, [contacts])
+    return unsubscribe
+  }, [])
 
   // This implementation of search will cause a match if any word in the search text
   // matches the contacts name or prettyName.
@@ -85,6 +96,18 @@ export const ChatScreen: React.FC = () => {
       setRefreshing(true)
       setSearchText(newSearchText)
       setMatchingContacts([])
+      const aliasPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
+      if (newSearchText.match(aliasPattern)) {
+        let nostrUser = await nip05.queryProfile(newSearchText.toLowerCase())
+        if (nostrUser) {
+          let nostrUserProfile = await fetchNostrUser(nip19.npubEncode(nostrUser.pubkey))
+          if (nostrUserProfile) {
+            setNostrProfiles([nostrUserProfile])
+            setRefreshing(false)
+            return
+          }
+        }
+      }
       if (newSearchText.startsWith("npub1") && newSearchText.length == 63) {
         try {
           let nostrProfile = await fetchNostrUser(newSearchText as `npub1${string}`)
@@ -96,7 +119,7 @@ export const ChatScreen: React.FC = () => {
         return
       }
       setMatchingContacts([])
-      setNostrProfiles([])
+      setNostrProfiles(messagedUsers)
       try {
         if (newSearchText.length > 0) {
           const searchWordArray = newSearchText
@@ -235,10 +258,17 @@ export const ChatScreen: React.FC = () => {
               })
             }
           >
-            <Image source={{ uri: item.picture || "" }} style={styles.profilePicture} />
+            <Image
+              source={{
+                uri:
+                  item.picture ||
+                  "https://pfp.nostr.build/520649f789e06c2a3912765c0081584951e91e3b5f3366d2ae08501162a5083b.jpg",
+              }}
+              style={styles.profilePicture}
+            />
             <ListItem.Content>
               <ListItem.Title style={styles.itemText}>
-                {item.alias || item.username || item.name || item.id}
+                {item.alias || item.username || item.name || item.lud16 || item.id}
               </ListItem.Title>
             </ListItem.Content>
           </ListItem>
