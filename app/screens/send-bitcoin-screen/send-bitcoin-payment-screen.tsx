@@ -58,35 +58,29 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
   > | null>(null)
 
   useEffect(() => {
-    route.params
-      .sendPayment()
-      .then((data) => {
-        setPaymentResult(data)
-        return data
+    ;(async () => {
+      const data = await route.params.sendPayment()
+      setPaymentResult(data)
+      logPaymentResult({
+        paymentStatus: data.status,
+        paymentType: route.params.paymentDetail.paymentType,
+        sendingWallet: route.params.sendingWallet,
       })
-      .then(({ status }) =>
-        logPaymentResult({
-          paymentStatus: status,
-          paymentType: route.params.paymentType,
-          sendingWallet: route.params.sendingWallet,
-        }),
-      )
+    })()
   }, [route.params])
 
   const [textViewPosition] = useState(new Animated.Value(Dimensions.get("window").height))
   useEffect(() => {
     if (["ONCHAIN_SUCCESS", "ERRORED", "LN_SUCCESS"].includes(paymentAnimationState)) {
       // Animate text view to slide up from the bottom
-      setTimeout(
-        () =>
-          Animated.timing(textViewPosition, {
-            toValue: 0,
-            duration: 500,
-            easing: Easing.in(Easing.ease),
-            useNativeDriver: false,
-          }).start(),
-        2000,
-      )
+      setTimeout(() => {
+        Animated.timing(textViewPosition, {
+          toValue: 0,
+          duration: 500,
+          easing: Easing.in(Easing.ease),
+          useNativeDriver: false, // top animation doesn't run natively
+        }).start()
+      }, 2000)
     }
   }, [paymentAnimationState, textViewPosition])
 
@@ -138,7 +132,7 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
         } else setPaymentAnimationState("ERRORED")
       }, calculateDuration(35))
     }
-  }, [paymentResult, paymentAnimationState, route.params.paymentType])
+  }, [paymentResult, paymentAnimationState, route.params.paymentDetail.paymentType])
 
   // Should not be able to go back until the payment has been sent
   useEffect(() => {

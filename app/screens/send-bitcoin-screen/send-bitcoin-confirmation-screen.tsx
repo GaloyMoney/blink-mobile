@@ -144,7 +144,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
             name: "sendBitcoinPayment",
             params: {
               sendPayment,
-              paymentType: paymentDetail.paymentType,
+              paymentDetail,
               sendingWallet: sendingWalletDescriptor.currency,
             },
           },
@@ -204,12 +204,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
         //   setPaymentError(err.message || err.toString())
       }
     }
-  }, [
-    navigation,
-    paymentDetail.paymentType,
-    sendPayment,
-    sendingWalletDescriptor.currency,
-  ])
+  }, [navigation, paymentDetail, sendPayment, sendingWalletDescriptor.currency])
 
   let validAmount = true
   let invalidAmountErrorMessage = ""

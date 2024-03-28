@@ -43,7 +43,7 @@ export type RootStackParamList = {
   }
   sendBitcoinPayment: {
     sendPayment: SendPayment
-    paymentType: PaymentType
+    paymentDetail: PaymentDetail<WalletCurrency>
     sendingWallet: WalletCurrency
   }
   sendBitcoinDetails: {
