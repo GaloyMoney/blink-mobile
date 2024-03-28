@@ -6576,6 +6576,7 @@ export type SendBitcoinDestinationQueryResult = Apollo.QueryResult<
   SendBitcoinDestinationQuery,
   SendBitcoinDestinationQueryVariables
 >
+
 export const AccountDefaultWalletDocument = gql`
   query accountDefaultWallet($username: Username!) {
     accountDefaultWallet(username: $username) {
@@ -8918,6 +8919,7 @@ export const WalletsDocument = gql`
         wallets {
           walletCurrency
           id
+          lnurlp
         }
       }
     }

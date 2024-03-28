@@ -25,7 +25,7 @@ import { CustomIcon } from "@app/components/custom-icon"
 import { ModalNfc } from "@app/components/modal-nfc"
 
 // gql
-import { WalletCurrency, useAccountDefaultWalletQuery } from "@app/graphql/generated"
+import { WalletCurrency, useWalletsQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 
 // breez-sdk
@@ -71,9 +71,9 @@ const ReceiveScreen = ({ route }: Props) => {
   )
 
   // query
-  const { data, loading, error } = useAccountDefaultWalletQuery({
-    variables: { username: userData?.username },
-  })
+  const { data, loading, error } = useWalletsQuery()
+  const wallets: any = data?.me?.defaultAccount.wallets
+  const usdWallet = wallets?.find((el: any) => el.walletCurrency === WalletCurrency.Usd)
 
   const nfcText = LL.ReceiveScreen.nfc()
   useEffect(() => {
@@ -204,11 +204,12 @@ const ReceiveScreen = ({ route }: Props) => {
 
   const isReady = request.state !== PaymentRequestState.Loading
 
-  const lnurlp = data?.accountDefaultWallet.lnurlp || ""
+  const lnurlp = usdWallet?.lnurlp || ""
   const useLnurlp =
     request.type === "PayCode" &&
     request.receivingWalletDescriptor.currency === "USD" &&
-    Boolean(lnurlp)
+    Boolean(lnurlp) &&
+    Boolean(userData.username)
 
   const handleCopy = () => {
     if (useLnurlp) {
