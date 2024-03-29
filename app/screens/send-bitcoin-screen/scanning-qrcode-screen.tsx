@@ -161,8 +161,8 @@ export const ScanningQRCodeScreen: React.FC = () => {
               ],
             )
           : Alert.alert(
-              "Open Link",
-              `${data.toString()}\n\nAre you sure you want to open this link?`,
+              LL.ScanningQRCodeScreen.openLinkTitle(),
+              `${data.toString()}\n\n${LL.ScanningQRCodeScreen.confirmOpenLink()}`,
               [
                 {
                   text: LL.common.No(),
