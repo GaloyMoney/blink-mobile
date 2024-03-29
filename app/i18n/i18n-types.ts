@@ -6745,6 +6745,14 @@ type RootTranslation = {
 		 */
 		invalidTitle: string
 		/**
+		 * O​p​e​n​ ​L​i​n​k
+		 */
+		openLinkTitle: string
+		/**
+		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​o​p​e​n​ ​t​h​i​s​ ​l​i​n​k​?
+		 */
+		confirmOpenLink: string
+		/**
 		 * W​e​ ​c​o​u​l​d​ ​n​o​t​ ​f​i​n​d​ ​a​ ​Q​R​ ​c​o​d​e​ ​i​n​ ​t​h​e​ ​i​m​a​g​e
 		 */
 		noQrCode: string
@@ -15624,6 +15632,14 @@ export type TranslationFunctions = {
 		 * Invalid QR Code
 		 */
 		invalidTitle: () => LocalizedString
+		/**
+		 * Open Link
+		 */
+		openLinkTitle: () => LocalizedString
+		/**
+		 * Are you sure you want to open this link?
+		 */
+		confirmOpenLink: () => LocalizedString
 		/**
 		 * We could not find a QR code in the image
 		 */
