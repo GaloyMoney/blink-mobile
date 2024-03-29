@@ -48,7 +48,7 @@ const ContactModal: React.FC<Props> = ({
     theme: { colors },
   } = useTheme()
 
-  const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
   const contactOptionList = [
     {
@@ -56,7 +56,7 @@ const ContactModal: React.FC<Props> = ({
       name: LL.support.chatbot(),
       icon: <Icon name={"chatbubbles-outline"} type="ionicon" />,
       action: () => {
-        navigate("chatbot")
+        navigation.navigate("chatbot")
         toggleModal()
       },
     },
