@@ -2,6 +2,8 @@
 /* eslint-disable */
 import type { BaseTranslation as BaseTranslationType, LocalizedString, RequiredParams } from 'typesafe-i18n'
 
+import type { String } from './custom-types'
+
 export type BaseTranslation = BaseTranslationType
 export type BaseLocale = 'en'
 
@@ -7162,6 +7164,32 @@ type RootTranslation = {
 	​I​t​'​s​ ​p​o​s​s​i​b​l​e​ ​t​h​e​ ​p​a​y​m​e​n​t​ ​w​i​l​l​ ​n​o​t​ ​c​o​n​f​i​r​m​,​ ​i​n​ ​w​h​i​c​h​ ​c​a​s​e​ ​t​h​e​ ​f​u​n​d​s​ ​w​i​l​l​ ​b​e​ ​r​e​t​u​r​n​e​d​ ​t​o​ ​y​o​u​r​ ​a​c​c​o​u​n​t​.
 		 */
 		pendingPayment: string
+	}
+	SendBitcoinPaymentScreen: {
+		/**
+		 * Y​o​u​ ​s​e​n​t​ ​{​a​m​o​u​n​t​}​
+	​t​o​
+	​{​a​d​d​r​e​s​s​}
+		 * @param {String} address
+		 * @param {String} amount
+		 */
+		sent: RequiredParams<'address' | 'amount'>
+		/**
+		 * Y​o​u​'​r​e​ ​s​e​n​d​i​n​g​ ​{​a​m​o​u​n​t​}​
+	​t​o​
+	​{​a​d​d​r​e​s​s​}
+		 * @param {String} address
+		 * @param {String} amount
+		 */
+		sending: RequiredParams<'address' | 'amount'>
+		/**
+		 * O​h​ ​n​o​.​.​.
+		 */
+		error: string
+		/**
+		 * D​e​t​a​i​l​s
+		 */
+		details: string
 	}
 	SettingsScreen: {
 		/**
@@ -16151,6 +16179,28 @@ export type TranslationFunctions = {
 	It's possible the payment will not confirm, in which case the funds will be returned to your account.
 		 */
 		pendingPayment: () => LocalizedString
+	}
+	SendBitcoinPaymentScreen: {
+		/**
+		 * You sent {amount}
+	to
+	{address}
+		 */
+		sent: (arg: { address: String, amount: String }) => LocalizedString
+		/**
+		 * You're sending {amount}
+	to
+	{address}
+		 */
+		sending: (arg: { address: String, amount: String }) => LocalizedString
+		/**
+		 * Oh no...
+		 */
+		error: () => LocalizedString
+		/**
+		 * Details
+		 */
+		details: () => LocalizedString
 	}
 	SettingsScreen: {
 		/**

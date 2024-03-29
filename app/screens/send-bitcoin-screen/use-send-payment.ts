@@ -25,6 +25,9 @@ export type SendPayment = () => Promise<{
   status: PaymentSendResult | null | undefined
   errorsMessage?: string
   extraInfo?: PaymentSendExtraInfo
+  transaction?: {
+    id: string
+  }
 }>
 
 type UseSendPaymentResult = {
@@ -40,6 +43,9 @@ gql`
         message
       }
       status
+      transaction {
+        id
+      }
     }
   }
 
@@ -49,6 +55,9 @@ gql`
         message
       }
       status
+      transaction {
+        id
+      }
     }
   }
 
@@ -58,6 +67,9 @@ gql`
         message
       }
       status
+      transaction {
+        id
+      }
     }
   }
 
@@ -67,6 +79,9 @@ gql`
         message
       }
       status
+      transaction {
+        id
+      }
     }
   }
 
@@ -76,12 +91,16 @@ gql`
         message
       }
       status
+      transaction {
+        id
+      }
     }
   }
 
   mutation onChainPaymentSend($input: OnChainPaymentSendInput!) {
     onChainPaymentSend(input: $input) {
       transaction {
+        id
         settlementVia {
           ... on SettlementViaOnChain {
             arrivalInMempoolEstimatedAt
@@ -101,6 +120,9 @@ gql`
         message
       }
       status
+      transaction {
+        id
+      }
     }
   }
 
@@ -110,6 +132,9 @@ gql`
         message
       }
       status
+      transaction {
+        id
+      }
     }
   }
 
@@ -121,6 +146,9 @@ gql`
         message
       }
       status
+      transaction {
+        id
+      }
     }
   }
 `

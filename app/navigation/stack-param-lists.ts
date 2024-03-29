@@ -12,7 +12,6 @@ import {
 } from "@app/screens/send-bitcoin-screen/use-send-payment"
 import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
-import { PaymentType } from "@galoymoney/client"
 import { NavigatorScreenParams } from "@react-navigation/native"
 
 import { AuthenticationScreenPurpose, PinScreenPurpose } from "../utils/enum"

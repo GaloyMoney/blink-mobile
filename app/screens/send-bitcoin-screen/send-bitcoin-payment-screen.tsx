@@ -1,5 +1,5 @@
 import LottieView from "lottie-react-native"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Animated, BackHandler, Dimensions, Easing, View } from "react-native"
 
 import erroredLoop from "@app/assets/animations/Error Pulse Loop.json"
@@ -11,12 +11,18 @@ import onchainSuccess from "@app/assets/animations/On Chain Success.json"
 import sendingLoop from "@app/assets/animations/Sending Loop.json"
 import sendingStart from "@app/assets/animations/Sending Start.json"
 import sendingTransition from "@app/assets/animations/Sending Transition.json"
+import LogoDarkMode from "@app/assets/logo/app-logo-dark.svg"
+import LogoLightMode from "@app/assets/logo/blink-logo-light.svg"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
+import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 import { Screen } from "@app/components/screen"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { logPaymentResult } from "@app/utils/analytics"
 import { RouteProp } from "@react-navigation/native"
-import { Text, makeStyles } from "@rneui/themed"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 
 import {
   formatTimeToMempool,
@@ -46,6 +52,10 @@ const calculateDuration = (frameCount: number) => (frameCount / 30) * 1000
 const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
   const { LL, locale } = useI18nContext()
 
+  const {
+    theme: { mode },
+  } = useTheme()
+
   const styles = useStyles()
   const [paymentAnimationState, setPaymentAnimationState] =
     useState<PaymentAnimationState>("START")
@@ -69,6 +79,8 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
     })()
   }, [route.params])
 
+  const fadeAnim = useRef(new Animated.Value(0)).current
+
   const [textViewPosition] = useState(new Animated.Value(Dimensions.get("window").height))
   useEffect(() => {
     if (["ONCHAIN_SUCCESS", "ERRORED", "LN_SUCCESS"].includes(paymentAnimationState)) {
@@ -81,19 +93,54 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
           useNativeDriver: false, // top animation doesn't run natively
         }).start()
       }, 2000)
+
+      setTimeout(() => {
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 500,
+          easing: Easing.in(Easing.ease),
+          useNativeDriver: false, // Add this to use native driver for better performance
+        }).start()
+      }, 2500)
     }
-  }, [paymentAnimationState, textViewPosition])
+  }, [fadeAnim, paymentAnimationState, textViewPosition])
+
+  const { formatMoneyAmount } = useDisplayCurrency()
 
   useEffect(() => {
     if (!paymentResult) return
+    console.log("HERE 0: ", paymentResult)
 
     const { status, errorsMessage, extraInfo } = paymentResult
     const arrivalAtMempoolEstimate = extraInfo?.arrivalAtMempoolEstimate
 
     if (status === "SUCCESS" || status === "PENDING") {
       switch (processStatus({ arrivalAtMempoolEstimate, status })) {
-        case "SUCCESS":
-          return setPaymentSuccess(LL.SendBitcoinScreen.success())
+        case "SUCCESS": {
+          const paymentDetail = route.params.paymentDetail
+          const address = paymentDetail.destination
+
+          const formattedDisplayAmount = formatMoneyAmount({
+            moneyAmount: paymentDetail.unitOfAccountAmount,
+          })
+
+          const secondaryAmount =
+            paymentDetail.settlementAmount.currency ===
+            paymentDetail.unitOfAccountAmount.currency
+              ? undefined
+              : formatMoneyAmount({ moneyAmount: paymentDetail.settlementAmount })
+
+          const amount = `${formattedDisplayAmount}${
+            secondaryAmount && " (" + secondaryAmount + ")"
+          }`
+
+          return setPaymentSuccess(
+            LL.SendBitcoinPaymentScreen.sent({
+              address,
+              amount,
+            }),
+          )
+        }
         case "QUEUED":
           return setPaymentSuccess(
             LL.TransactionDetailScreen.txNotBroadcast({
@@ -114,7 +161,7 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
         errorsMessage || LL.SendBitcoinConfirmationScreen.somethingWentWrong(),
       )
     }
-  }, [paymentResult, LL, locale])
+  }, [paymentResult, LL, locale, route.params.paymentDetail, formatMoneyAmount])
 
   // --- ANIMATION CONTROLLER ---
   useEffect(() => {
@@ -154,6 +201,8 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
     }
   }
 
+  const Logo = mode === "dark" ? LogoDarkMode : LogoLightMode
+
   return (
     <Screen>
       <View style={styles.animView}>
@@ -172,8 +221,29 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
         ))}
       </View>
       <Animated.View style={[styles.txInfo, { top: textViewPosition }]}>
-        {paymentSuccess && <Text type="h2">{paymentSuccess}</Text>}
-        {paymentError && <Text type="h2">{paymentError}</Text>}
+        {paymentSuccess && (
+          <Text type="h1" style={styles.center}>
+            {paymentSuccess}
+          </Text>
+        )}
+        {paymentError && <Text type="h1">{paymentError}</Text>}
+      </Animated.View>
+      <Animated.View
+        style={[
+          styles.staticContent,
+          {
+            opacity: fadeAnim,
+          },
+        ]}
+      >
+        <Logo height={60} />
+        <View>
+          <GaloySecondaryButton
+            containerStyle={styles.bottomSpacing}
+            title={LL.SendBitcoinPaymentScreen.details()}
+          />
+          <GaloyPrimaryButton title={LL.HomeScreen.title()} />
+        </View>
       </Animated.View>
     </Screen>
   )
@@ -222,6 +292,25 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     height: "100%",
     marginTop: 10,
+    paddingHorizontal: 50,
+  },
+  center: {
+    textAlign: "center",
+    lineHeight: 35,
+  },
+  staticContent: {
+    position: "absolute",
+    top: 0,
+    zIndex: 10,
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    justifyContent: "space-between",
+    alignContent: "center",
+    padding: 20,
+  },
+  bottomSpacing: {
+    marginBottom: 12,
   },
 }))
 

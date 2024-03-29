@@ -2228,6 +2228,12 @@
         "copiedDestination": "Copied destination to clipboard",
         "pendingPayment": "The payment has been sent, but hasn't confirmed yet.\n\nIt's possible the payment will not confirm, in which case the funds will be returned to your account."
     },
+    "SendBitcoinPaymentScreen": {
+        "sent": "You sent {amount: String}\nto\n{address: String}",
+        "sending": "You're sending {amount: String}\nto\n{address: String}",
+        "error": "Oh no...",
+        "details": "Details"
+    },
     "SettingsScreen": {
         "setByOs": "Set by OS",
         "pos": "Point of Sale",
