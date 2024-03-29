@@ -468,7 +468,7 @@ const en: BaseTranslation = {
   GetStartedScreen: {
     logInCreateAccount: "Log in / create account",
     quickStart: "Start",
-    restoreWallet: "Restore Wallet",
+    restoreWallet: "Import Wallet",
     exploreWalletInstead: "Explore wallet instead",
     setupBusinessAccount: "Setup business account",
     createAccount: "Create new account",
@@ -808,8 +808,8 @@ const en: BaseTranslation = {
     revealRecoveryPhrase: "Reveal Recovery Phrase",
     revealRecoveryPhraseDesc: "Use your recovery phrase to import Bitcoin Wallet",
     phone: "Phone",
-    phoneDesc: "Backup USD Wallet using phone number",
-    usePhoneNumber: "Use yourNumber phone number to import USD Wallet",
+    phoneDesc: "Backup Cash Wallet using phone number",
+    usePhoneNumber: "Use your phone number to import Cash Wallet",
 		done: "Done",
 	},
   BackupStart: {
@@ -848,15 +848,15 @@ const en: BaseTranslation = {
     done: "Done"
   },
   ImportWalletOptions: {		
-		loginOptions: "Login options",
+		loginOptions: "Import options",
 		importOptions: "Import wallet options",
     recoveryPhrase: "Recovery Phrase",
     importBTCWallet: "Import Bitcoin Wallet using recovery phrase",
     phone: "Phone",
-    importUsingPhone: "Import USD Wallet using phone number",
+    importUsingPhone: "Import or Create your Cash Wallet using phone number",
     email: "Email",
-    importUsingEmail: "Import USD Wallet using email address",
-		login: "Login",
+    importUsingEmail: "Import your Cash Wallet using email address",
+		login: "Import/Create",
     done: "Done",
 	},
   ImportWallet: {		
