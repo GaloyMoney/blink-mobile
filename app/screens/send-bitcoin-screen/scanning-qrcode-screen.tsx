@@ -104,7 +104,19 @@ export const ScanningQRCodeScreen: React.FC = () => {
   }, [hasPermission, requestPermission])
 
   const loadInBrowser = (url: string) => {
-    Linking.openURL(url).catch((err) => console.error("Couldn't load page", err))
+    Linking.openURL(url).catch((err) => Alert.alert(err.toString()))
+  }
+
+  function isValidHttpUrl(input: string) {
+    let url
+
+    try {
+      url = new URL(input)
+    } catch (_) {
+      return false
+    }
+
+    return url.protocol === "http:" || url.protocol === "https:"
   }
 
   const processInvoice = React.useMemo(() => {
@@ -147,8 +159,9 @@ export const ScanningQRCodeScreen: React.FC = () => {
           })
           return
         }
-        destination.invalidReason === "InvoiceExpired"
-          ? Alert.alert(
+        switch (destination.invalidReason) {
+          case "InvoiceExpired":
+            Alert.alert(
               LL.ScanningQRCodeScreen.invalidTitle(),
               LL.ScanningQRCodeScreen.expiredContent({
                 found: data.toString(),
@@ -160,23 +173,56 @@ export const ScanningQRCodeScreen: React.FC = () => {
                 },
               ],
             )
-          : Alert.alert(
-              LL.ScanningQRCodeScreen.openLinkTitle(),
-              `${data.toString()}\n\n${LL.ScanningQRCodeScreen.confirmOpenLink()}`,
+            break
+          case "UnknownDestination":
+            if (isValidHttpUrl(data.toString())) {
+              Alert.alert(
+                LL.ScanningQRCodeScreen.openLinkTitle(),
+                `${data.toString()}\n\n${LL.ScanningQRCodeScreen.confirmOpenLink()}`,
+                [
+                  {
+                    text: LL.common.No(),
+                    onPress: () => setPending(false),
+                  },
+                  {
+                    text: LL.common.yes(),
+                    onPress: () => {
+                      setPending(false)
+                      loadInBrowser(data.toString())
+                    },
+                  },
+                ],
+              )
+            } else {
+              Alert.alert(
+                LL.ScanningQRCodeScreen.invalidTitle(),
+                LL.ScanningQRCodeScreen.invalidContent({
+                  found: data.toString(),
+                }),
+                [
+                  {
+                    text: LL.common.ok(),
+                    onPress: () => setPending(false),
+                  },
+                ],
+              )
+            }
+            break
+          default:
+            Alert.alert(
+              LL.ScanningQRCodeScreen.invalidTitle(),
+              LL.ScanningQRCodeScreen.invalidContent({
+                found: data.toString(),
+              }),
               [
                 {
-                  text: LL.common.No(),
+                  text: LL.common.ok(),
                   onPress: () => setPending(false),
-                },
-                {
-                  text: LL.common.yes(),
-                  onPress: () => {
-                    setPending(false)
-                    loadInBrowser(data.toString())
-                  },
                 },
               ],
             )
+            break
+        }
       } catch (err: unknown) {
         if (err instanceof Error) {
           crashlytics().recordError(err)
