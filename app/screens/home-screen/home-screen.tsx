@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react"
-import { RefreshControl, ScrollView, View } from "react-native"
+import { ActivityIndicator, RefreshControl, ScrollView, View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -106,6 +106,7 @@ export const HomeScreen: React.FC = () => {
   const [isContentVisible, setIsContentVisible] = useState(false)
   const [breezTransactions, setBreezTransactions] = useState<Payment[]>([])
   const [mergedTransactions, setMergedTransactions] = useState<TransactionFragment[]>([])
+  const [transactionLoading, setTransactionLoading] = useState(false)
 
   const isBalanceVisible = hideBalance ?? false
   const loading = (loadingAuthed || loadingPrice || loadingUnauthed) && isAuthed
@@ -132,6 +133,7 @@ export const HomeScreen: React.FC = () => {
   )
 
   const fetchPaymentsBreez = async () => {
+    setTransactionLoading(true)
     const payments = await listPaymentsBreezSDK()
     mergeTransactions(payments)
 
@@ -166,6 +168,7 @@ export const HomeScreen: React.FC = () => {
     }
 
     setMergedTransactions(mergedTransactions.slice(0, 5))
+    setTransactionLoading(false)
   }
 
   const formatBreezTransactions = async (txs: Payment[]) => {
@@ -296,7 +299,7 @@ export const HomeScreen: React.FC = () => {
         <BalanceHeader
           isContentVisible={isContentVisible}
           setIsContentVisible={setIsContentVisible}
-          loading={loading}
+          loading={false}
           breezBalance={breezBalance}
         />
         <GaloyIconButton
@@ -320,7 +323,7 @@ export const HomeScreen: React.FC = () => {
         <WalletOverview
           isContentVisible={isContentVisible}
           setIsContentVisible={setIsContentVisible}
-          loading={loading}
+          loading={false}
           breezBalance={breezBalance}
           pendingBalance={
             pendingSwap && pendingSwap?.channelOpeningFees
@@ -384,7 +387,13 @@ export const HomeScreen: React.FC = () => {
               }
             })}
           </>
-        ) : null}
+        ) : (
+          <ActivityIndicator
+            animating={transactionLoading}
+            size="large"
+            color={colors.primary}
+          />
+        )}
         <AppUpdate />
         <SetDefaultAccountModal
           isVisible={defaultAccountModalVisible}
