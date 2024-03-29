@@ -505,7 +505,7 @@ const en: BaseTranslation = {
     send: "Send",
     pay: "Pay",
     title: "Home",
-    scan: "Scan",
+    scan: "Scan QR",
     updateAvailable: "An update is available.\nTap to update now",
     useLightning: "We use the Lightning Network.",
     myAccounts: "My Accounts",

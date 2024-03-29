@@ -40,7 +40,7 @@ export const useDescriptionDisplay = ({
   }
 
   const { memo, direction, settlementVia } = tx
-  if (memo) {
+  if (memo && !memo.includes("Pay to Flash Wallet User")) {
     return memo
   }
 
@@ -51,11 +51,9 @@ export const useDescriptionDisplay = ({
       return "OnChain Payment"
     case "SettlementViaLn":
       if (isReceive) {
-        return `Pay to Flash Wallet User${
-          userData?.username ? ": " + userData?.username : ""
-        }`
+        return `Received`
       } else {
-        return "Send"
+        return "Sent"
       }
     case "SettlementViaIntraLedger":
       return isReceive

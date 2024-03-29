@@ -449,7 +449,7 @@
         "receive": "Primi",
         "send": "Šalji",
         "title": "Doma",
-        "scan": "Scan",
+        "scan": "Scan QR",
         "updateAvailable": "Ažuriranje je dostupno.\nDodirnite za ažuriranje sada",
         "useLightning": "Koristimo Lightning Network.",
         "myAccounts": "Moji računi"
