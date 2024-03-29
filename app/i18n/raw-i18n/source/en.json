@@ -2123,6 +2123,8 @@
         "invalidContent": "We found:\n\n{found: string}\n\nThis is not a valid Bitcoin address or Lightning invoice",
         "expiredContent": "We found:\n\n{found: string}\n\nThis invoice has expired",
         "invalidTitle": "Invalid QR Code",
+        "openLinkTitle": "Open Link",
+        "confirmOpenLink": "Are you sure you want to open this link?",
         "noQrCode": "We could not find a QR code in the image",
         "title": "Scan QR",
         "permissionCamera": "We need permission to use your camera",
