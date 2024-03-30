@@ -52,8 +52,8 @@ export const App = () => (
         <GaloyClient>
           <GaloyThemeProvider>
             <FeatureFlagContextProvider>
-              <ErrorBoundary FallbackComponent={ErrorScreen}>
-                <NavigationContainerWrapper>
+              <NavigationContainerWrapper>
+                <ErrorBoundary FallbackComponent={ErrorScreen}>
                   <RootSiblingParent>
                     <NotificationsProvider>
                       <AppStateWrapper />
@@ -63,8 +63,8 @@ export const App = () => (
                     </NotificationsProvider>
                     <GaloyToast />
                   </RootSiblingParent>
-                </NavigationContainerWrapper>
-              </ErrorBoundary>
+                </ErrorBoundary>
+              </NavigationContainerWrapper>
             </FeatureFlagContextProvider>
           </GaloyThemeProvider>
         </GaloyClient>
