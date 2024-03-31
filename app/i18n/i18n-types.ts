@@ -7175,15 +7175,8 @@ type RootTranslation = {
 		 */
 		sent: RequiredParams<'address' | 'amount'>
 		/**
-		 * Y​o​u​'​r​e​ ​s​e​n​d​i​n​g​ ​{​a​m​o​u​n​t​}​
-	​t​o​
-	​{​a​d​d​r​e​s​s​}
-		 * @param {String} address
-		 * @param {String} amount
-		 */
-		sending: RequiredParams<'address' | 'amount'>
-		/**
-		 * O​h​ ​n​o​.​.​.
+		 * S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​!​
+	​Y​o​u​r​ ​p​a​y​m​e​n​t​ ​w​a​s​ ​n​o​t​ ​s​e​n​t​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​.
 		 */
 		error: string
 		/**
@@ -16188,13 +16181,8 @@ export type TranslationFunctions = {
 		 */
 		sent: (arg: { address: String, amount: String }) => LocalizedString
 		/**
-		 * You're sending {amount}
-	to
-	{address}
-		 */
-		sending: (arg: { address: String, amount: String }) => LocalizedString
-		/**
-		 * Oh no...
+		 * Something went wrong!
+	Your payment was not sent, please try again.
 		 */
 		error: () => LocalizedString
 		/**

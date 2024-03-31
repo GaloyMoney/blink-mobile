@@ -2301,8 +2301,7 @@ const en: BaseTranslation = {
   },
   SendBitcoinPaymentScreen: {
     sent: "You sent {amount: String}\nto\n{address: String}",
-    sending: "You're sending {amount: String}\nto\n{address: String}",
-    error: "Oh no...",
+    error: "Something went wrong!\nYour payment was not sent, please try again.",
     details: "Details",
   },
   SettingsScreen: {

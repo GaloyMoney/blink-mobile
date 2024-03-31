@@ -175,9 +175,7 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
       ReactNativeHapticFeedback.trigger("notificationError", {
         ignoreAndroidSystemSettings: true,
       })
-      return setPaymentError(
-        errorsMessage || LL.SendBitcoinConfirmationScreen.somethingWentWrong(),
-      )
+      return setPaymentError(errorsMessage || LL.SendBitcoinPaymentScreen.error())
     }
   }, [paymentResult, LL, locale, route.params.paymentDetail, formatMoneyAmount])
 
@@ -264,7 +262,11 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
             {paymentSuccess}
           </Text>
         )}
-        {paymentError && <Text type="h1">{paymentError}</Text>}
+        {paymentError && (
+          <Text type="h1" style={styles.center}>
+            {paymentError}
+          </Text>
+        )}
       </Animated.View>
       <Animated.View
         style={[
