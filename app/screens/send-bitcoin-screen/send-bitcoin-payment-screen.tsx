@@ -89,7 +89,7 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
       // Animate text view to slide up from the bottom
       setTimeout(() => {
         Animated.timing(textViewPosition, {
-          toValue: 0,
+          toValue: 10,
           duration: 500,
           easing: Easing.in(Easing.ease),
           useNativeDriver: false, // top animation doesn't run natively
@@ -119,7 +119,13 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
       switch (processStatus({ arrivalAtMempoolEstimate, status })) {
         case "SUCCESS": {
           const paymentDetail = route.params.paymentDetail
-          const address = paymentDetail.destination
+          let address = paymentDetail.destination
+
+          if (paymentDetail.paymentType === "lightning") {
+            address = `${address.slice(0, 10)}..${address.slice(-10)}`
+          } else if (paymentDetail.paymentType === "onchain") {
+            address = `${address.slice(0, 6)}..${address.slice(-6)}`
+          }
 
           const formattedDisplayAmount = formatMoneyAmount({
             moneyAmount: paymentDetail.unitOfAccountAmount,
@@ -204,6 +210,26 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
 
   const Logo = mode === "dark" ? LogoDarkMode : LogoLightMode
 
+  const onPressHome = () =>
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Primary" }],
+    })
+  const onPressTransactionDetails = () =>
+    navigation.reset({
+      routes: [
+        {
+          name: "Primary",
+        },
+        {
+          name: "transactionDetail",
+          params: {
+            txid: paymentResult?.transaction?.id,
+          },
+        },
+      ],
+    })
+
   return (
     <Screen>
       <View style={styles.animView}>
@@ -243,32 +269,10 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
             <GaloySecondaryButton
               containerStyle={styles.bottomSpacing}
               title={LL.SendBitcoinPaymentScreen.details()}
-              onPress={() =>
-                navigation.reset({
-                  routes: [
-                    {
-                      name: "Primary",
-                    },
-                    {
-                      name: "transactionDetail",
-                      params: {
-                        txid: paymentResult?.transaction?.id,
-                      },
-                    },
-                  ],
-                })
-              }
+              onPress={onPressTransactionDetails}
             />
           )}
-          <GaloyPrimaryButton
-            onPress={() =>
-              navigation.reset({
-                index: 0,
-                routes: [{ name: "Primary" }],
-              })
-            }
-            title={LL.HomeScreen.title()}
-          />
+          <GaloyPrimaryButton onPress={onPressHome} title={LL.HomeScreen.title()} />
         </View>
       </Animated.View>
     </Screen>
@@ -333,7 +337,8 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     justifyContent: "space-between",
     alignContent: "center",
-    padding: 20,
+    padding: 12,
+    paddingTop: 16,
   },
   bottomSpacing: {
     marginBottom: 12,
