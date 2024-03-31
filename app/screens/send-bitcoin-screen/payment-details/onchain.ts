@@ -64,6 +64,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
       return {
         status: data?.onChainPaymentSendAll.status,
         errors: data?.onChainPaymentSendAll.errors,
+        transaction: data?.onChainPaymentSendAll.transaction,
       }
     }
 
@@ -148,6 +149,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
               ? data.onChainPaymentSend.transaction.settlementVia
                   .arrivalInMempoolEstimatedAt
               : undefined,
+          transaction: data?.onChainPaymentSend.transaction,
         },
       }
     }

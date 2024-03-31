@@ -25,9 +25,7 @@ export type SendPayment = () => Promise<{
   status: PaymentSendResult | null | undefined
   errorsMessage?: string
   extraInfo?: PaymentSendExtraInfo
-  transaction?: {
-    id: string
-  }
+  transaction: { id: string } | null | undefined
 }>
 
 type UseSendPaymentResult = {
@@ -219,7 +217,7 @@ export const useSendPayment = (
     return sendPaymentMutation && !hasAttemptedSend
       ? async () => {
           setHasAttemptedSend(true)
-          const { status, errors, extraInfo } = await sendPaymentMutation({
+          const { status, errors, extraInfo, transaction } = await sendPaymentMutation({
             intraLedgerPaymentSend,
             intraLedgerUsdPaymentSend,
             lnInvoicePaymentSend,
@@ -237,7 +235,7 @@ export const useSendPayment = (
           if (status === PaymentSendResult.Failure) {
             setHasAttemptedSend(false)
           }
-          return { status, errorsMessage, extraInfo }
+          return { status, errorsMessage, extraInfo, transaction }
         }
       : undefined
   }, [

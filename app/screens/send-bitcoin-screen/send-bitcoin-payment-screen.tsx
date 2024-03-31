@@ -15,13 +15,13 @@ import LogoDarkMode from "@app/assets/logo/app-logo-dark.svg"
 import LogoLightMode from "@app/assets/logo/blink-logo-light.svg"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
-import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
 import { Screen } from "@app/components/screen"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { logPaymentResult } from "@app/utils/analytics"
-import { RouteProp } from "@react-navigation/native"
+import { RouteProp, useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 
 import {
@@ -55,6 +55,8 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
   const {
     theme: { mode },
   } = useTheme()
+  const navigation =
+    useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinPayment">>()
 
   const styles = useStyles()
   const [paymentAnimationState, setPaymentAnimationState] =
@@ -242,7 +244,15 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
             containerStyle={styles.bottomSpacing}
             title={LL.SendBitcoinPaymentScreen.details()}
           />
-          <GaloyPrimaryButton title={LL.HomeScreen.title()} />
+          <GaloyPrimaryButton
+            onPress={() =>
+              navigation.reset({
+                index: 0,
+                routes: [{ name: "Primary" }],
+              })
+            }
+            title={LL.HomeScreen.title()}
+          />
         </View>
       </Animated.View>
     </Screen>

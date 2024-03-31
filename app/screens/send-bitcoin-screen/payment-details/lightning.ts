@@ -105,6 +105,7 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
       return {
         status: data?.lnNoAmountInvoicePaymentSend.status,
         errors: data?.lnNoAmountInvoicePaymentSend.errors,
+        transaction: data?.lnNoAmountInvoicePaymentSend.transaction,
       }
     }
 
@@ -159,6 +160,7 @@ export const createNoAmountLightningPaymentDetails = <T extends WalletCurrency>(
       return {
         status: data?.lnNoAmountUsdInvoicePaymentSend.status,
         errors: data?.lnNoAmountUsdInvoicePaymentSend.errors,
+        transaction: data?.lnNoAmountUsdInvoicePaymentSend.transaction,
       }
     }
 
@@ -254,6 +256,7 @@ export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
     return {
       status: data?.lnInvoicePaymentSend.status,
       errors: data?.lnInvoicePaymentSend.errors,
+      transaction: data?.lnInvoicePaymentSend.transaction,
     }
   }
 
