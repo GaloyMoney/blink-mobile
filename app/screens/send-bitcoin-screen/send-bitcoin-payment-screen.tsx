@@ -111,7 +111,6 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
 
   useEffect(() => {
     if (!paymentResult) return
-    console.log("HERE 0: ", paymentResult)
 
     const { status, errorsMessage, extraInfo } = paymentResult
     const arrivalAtMempoolEstimate = extraInfo?.arrivalAtMempoolEstimate
@@ -240,10 +239,27 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
       >
         <Logo height={60} />
         <View>
-          <GaloySecondaryButton
-            containerStyle={styles.bottomSpacing}
-            title={LL.SendBitcoinPaymentScreen.details()}
-          />
+          {paymentResult?.transaction?.id && (
+            <GaloySecondaryButton
+              containerStyle={styles.bottomSpacing}
+              title={LL.SendBitcoinPaymentScreen.details()}
+              onPress={() =>
+                navigation.reset({
+                  routes: [
+                    {
+                      name: "Primary",
+                    },
+                    {
+                      name: "transactionDetail",
+                      params: {
+                        txid: paymentResult?.transaction?.id,
+                      },
+                    },
+                  ],
+                })
+              }
+            />
+          )}
           <GaloyPrimaryButton
             onPress={() =>
               navigation.reset({
