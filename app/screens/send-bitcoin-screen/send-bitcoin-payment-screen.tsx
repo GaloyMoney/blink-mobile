@@ -1,6 +1,7 @@
 import LottieView from "lottie-react-native"
 import React, { useEffect, useRef, useState } from "react"
 import { Animated, BackHandler, Dimensions, Easing, View } from "react-native"
+import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 
 import erroredLoop from "@app/assets/animations/Error Pulse Loop.json"
 import errored from "@app/assets/animations/Error.json"
@@ -116,6 +117,10 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
     const arrivalAtMempoolEstimate = extraInfo?.arrivalAtMempoolEstimate
 
     if (status === "SUCCESS" || status === "PENDING") {
+      ReactNativeHapticFeedback.trigger("notificationSuccess", {
+        ignoreAndroidSystemSettings: true,
+      })
+
       switch (processStatus({ arrivalAtMempoolEstimate, status })) {
         case "SUCCESS": {
           const paymentDetail = route.params.paymentDetail
@@ -162,8 +167,14 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
           return setPaymentSuccess(LL.SendBitcoinScreen.pendingPayment())
       }
     } else if (status === "ALREADY_PAID") {
+      ReactNativeHapticFeedback.trigger("notificationError", {
+        ignoreAndroidSystemSettings: true,
+      })
       return setPaymentError(LL.SendBitcoinConfirmationScreen.invoiceAlreadyPaid())
     } else {
+      ReactNativeHapticFeedback.trigger("notificationError", {
+        ignoreAndroidSystemSettings: true,
+      })
       return setPaymentError(
         errorsMessage || LL.SendBitcoinConfirmationScreen.somethingWentWrong(),
       )
