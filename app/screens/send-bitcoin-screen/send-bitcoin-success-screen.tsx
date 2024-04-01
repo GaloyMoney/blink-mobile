@@ -79,14 +79,14 @@ const SendBitcoinSuccessScreen = () => {
   const FEEDBACK_DELAY = 3000
   const CALLBACK_DELAY = 3000
   useEffect(() => {
-    if (!feedbackModalShown) {
-      const feedbackTimeout = setTimeout(() => {
-        requestFeedback()
-      }, FEEDBACK_DELAY)
-      return () => {
-        clearTimeout(feedbackTimeout)
-      }
-    }
+    // if (!feedbackModalShown) {
+    //   const feedbackTimeout = setTimeout(() => {
+    //     requestFeedback()
+    //   }, FEEDBACK_DELAY)
+    //   return () => {
+    //     clearTimeout(feedbackTimeout)
+    //   }
+    // }
     if (!showSuggestionModal) {
       const navigateToHomeTimeout = setTimeout(navigation.popToTop, CALLBACK_DELAY)
       return () => clearTimeout(navigateToHomeTimeout)

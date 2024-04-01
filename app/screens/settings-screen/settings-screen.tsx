@@ -323,19 +323,24 @@ export const SettingsScreen: React.FC = () => {
       action: () => navigation.navigate("theme"),
       enabled: true,
       greyed: false,
-      styleDivider: true,
+      // styleDivider: true,
     },
     {
       category: LL.support.contactUs(),
       icon: "help-circle",
       id: "contact-us",
       action: () => {
-        setHiddenContactMethods([SupportChannels.Telegram, SupportChannels.Mattermost])
+        setHiddenContactMethods([
+          SupportChannels.Telegram,
+          SupportChannels.Mattermost,
+          SupportChannels.StatusPage,
+          SupportChannels.WhatsApp,
+        ])
         toggleIsContactModalVisible()
       },
       enabled: true,
       greyed: false,
-      styleDivider: true,
+      // styleDivider: true,
     },
     {
       category: LL.support.joinTheCommunity(),
@@ -346,24 +351,25 @@ export const SettingsScreen: React.FC = () => {
           SupportChannels.Email,
           SupportChannels.StatusPage,
           SupportChannels.WhatsApp,
+          SupportChannels.Mattermost,
         ])
 
         toggleIsContactModalVisible()
       },
       enabled: true,
       greyed: false,
-      styleDivider: true,
+      // styleDivider: true,
     },
-    {
-      category: LL.SettingsScreen.rateUs({
-        storeName: isIos ? "App Store" : "Play Store",
-      }),
-      id: "leave-feedback",
-      icon: "star",
-      action: rateUs,
-      enabled: true,
-      greyed: false,
-    },
+    // {
+    //   category: LL.SettingsScreen.rateUs({
+    //     storeName: isIos ? "App Store" : "Play Store",
+    //   }),
+    //   id: "leave-feedback",
+    //   icon: "star",
+    //   action: rateUs,
+    //   enabled: true,
+    //   greyed: false,
+    // },
   ]
 
   return (

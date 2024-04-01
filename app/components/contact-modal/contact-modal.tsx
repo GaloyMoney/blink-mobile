@@ -52,7 +52,7 @@ const ContactModal: React.FC<Props> = ({
   }
 
   // TODO: extract in Instance
-  const openTelegramAction = () => Linking.openURL(`https://t.me/blinkbtc`)
+  const openTelegramAction = () => Linking.openURL(`https://t.me/+TsqkMBTyU9o0ZTlh`)
 
   const openMattermostAction = () => Linking.openURL(`https://chat.galoy.io`)
 
