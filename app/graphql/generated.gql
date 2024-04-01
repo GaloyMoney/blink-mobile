@@ -1468,27 +1468,6 @@ query setDefaultWalletScreen {
   }
 }
 
-query settingsScreen {
-  me {
-    id
-    phone
-    username
-    language
-    defaultAccount {
-      id
-      defaultWalletId
-      wallets {
-        id
-        balance
-        walletCurrency
-        __typename
-      }
-      __typename
-    }
-    __typename
-  }
-}
-
 query supportChat {
   me {
     id

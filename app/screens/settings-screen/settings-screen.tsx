@@ -1,11 +1,7 @@
 import { ScrollView } from "react-native-gesture-handler"
 
 import { gql } from "@apollo/client"
-import ContactModal, {
-  SupportChannels,
-} from "@app/components/contact-modal/contact-modal"
 import { Screen } from "@app/components/screen"
-import { SetLightningAddressModal } from "@app/components/set-lightning-address-modal"
 import { VersionComponent } from "@app/components/version"
 import { AccountLevel, useLevel } from "@app/graphql/level-context"
 import { useI18nContext } from "@app/i18n/i18n-react"

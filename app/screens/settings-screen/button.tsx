@@ -1,3 +1,4 @@
+import { testProps } from "@app/utils/testProps"
 import { Button, Skeleton, makeStyles } from "@rneui/themed"
 
 type Props = {
@@ -15,6 +16,7 @@ export const SettingsButton: React.FC<Props> = ({ title, onPress, variant, loadi
   return (
     <Button
       title={title}
+      {...testProps(title)}
       onPress={onPress}
       titleStyle={styles.titleStyle}
       containerStyle={styles.containerStyle}

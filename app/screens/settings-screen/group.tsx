@@ -17,7 +17,7 @@ export const SettingsGroup: React.FC<{
   return (
     <View>
       {name && (
-        <Text {...testProps(name)} type="p2" bold>
+        <Text {...testProps(name + "-group")} type="p2" bold>
           {name}
         </Text>
       )}
