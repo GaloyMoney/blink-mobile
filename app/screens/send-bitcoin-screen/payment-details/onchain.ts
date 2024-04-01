@@ -151,6 +151,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
               : undefined,
           transaction: data?.onChainPaymentSend.transaction,
         },
+        transaction: data?.onChainPaymentSend.transaction,
       }
     }
 
@@ -205,6 +206,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
         return {
           status: data?.onChainUsdPaymentSend.status,
           errors: data?.onChainUsdPaymentSend.errors,
+          transaction: data?.onChainUsdPaymentSend.transaction,
         }
       }
 
@@ -245,6 +247,7 @@ export const createNoAmountOnchainPaymentDetails = <T extends WalletCurrency>(
         return {
           status: data?.onChainUsdPaymentSendAsBtcDenominated.status,
           errors: data?.onChainUsdPaymentSendAsBtcDenominated.errors,
+          transaction: data?.onChainUsdPaymentSendAsBtcDenominated.transaction,
         }
       }
 
@@ -387,6 +390,7 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
       return {
         status: data?.onChainPaymentSend.status,
         errors: data?.onChainPaymentSend.errors,
+        transaction: data?.onChainPaymentSend.transaction,
       }
     }
 
@@ -435,6 +439,7 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
       return {
         status: data?.onChainUsdPaymentSendAsBtcDenominated.status,
         errors: data?.onChainUsdPaymentSendAsBtcDenominated.errors,
+        transaction: data?.onChainUsdPaymentSendAsBtcDenominated.transaction,
       }
     }
 

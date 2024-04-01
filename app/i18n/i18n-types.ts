@@ -2,8 +2,6 @@
 /* eslint-disable */
 import type { BaseTranslation as BaseTranslationType, LocalizedString, RequiredParams } from 'typesafe-i18n'
 
-import type { String } from './custom-types'
-
 export type BaseTranslation = BaseTranslationType
 export type BaseLocale = 'en'
 
@@ -7170,8 +7168,8 @@ type RootTranslation = {
 		 * Y​o​u​ ​s​e​n​t​ ​{​a​m​o​u​n​t​}​
 	​t​o​
 	​{​a​d​d​r​e​s​s​}
-		 * @param {String} address
-		 * @param {String} amount
+		 * @param {string} address
+		 * @param {string} amount
 		 */
 		sent: RequiredParams<'address' | 'amount'>
 		/**
@@ -16179,7 +16177,7 @@ export type TranslationFunctions = {
 	to
 	{address}
 		 */
-		sent: (arg: { address: String, amount: String }) => LocalizedString
+		sent: (arg: { address: string, amount: string }) => LocalizedString
 		/**
 		 * Something went wrong!
 	Your payment was not sent, please try again.

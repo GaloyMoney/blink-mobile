@@ -2300,7 +2300,7 @@ const en: BaseTranslation = {
     pendingPayment: "The payment has been sent, but hasn't confirmed yet.\n\nIt's possible the payment will not confirm, in which case the funds will be returned to your account.",
   },
   SendBitcoinPaymentScreen: {
-    sent: "You sent {amount: String}\nto\n{address: String}",
+    sent: "You sent {amount: string}\nto\n{address: string}",
     error: "Something went wrong!\nYour payment was not sent, please try again.",
     details: "Details",
   },
