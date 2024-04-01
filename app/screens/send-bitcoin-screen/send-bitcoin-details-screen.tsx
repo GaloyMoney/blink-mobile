@@ -41,6 +41,7 @@ import { getBtcWallet, getDefaultWallet, getUsdWallet } from "@app/graphql/walle
 import { NoteInput } from "@app/components/note-input"
 // import Breez SDK Wallet
 import useBreezBalance from "@app/hooks/useBreezBalance"
+import { useAppSelector } from "@app/store/redux"
 
 gql`
   query sendBitcoinDetailsScreen {
@@ -99,6 +100,7 @@ type Props = {
 }
 
 const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
+  const { btcWalletEnabled } = useAppSelector((state) => state.settings)
   const {
     theme: { colors },
   } = useTheme()
@@ -240,7 +242,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   })
 
   const toggleModal = () => {
-    setIsModalVisible(!isModalVisible)
+    if (btcWalletEnabled) setIsModalVisible(!isModalVisible)
   }
 
   const chooseWallet = (wallet: Pick<Wallet, "id" | "walletCurrency">) => {
@@ -497,9 +499,11 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                 <View />
               </View>
 
-              <View style={styles.pickWalletIcon}>
-                <Icon name={"chevron-down"} size={24} color={colors.black} />
-              </View>
+              {btcWalletEnabled && (
+                <View style={styles.pickWalletIcon}>
+                  <Icon name={"chevron-down"} size={24} color={colors.black} />
+                </View>
+              )}
             </View>
           </TouchableWithoutFeedback>
           {ChooseWalletModal}

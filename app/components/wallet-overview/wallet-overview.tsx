@@ -18,6 +18,7 @@ import { usePersistentStateContext } from "@app/store/persistent-state"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { useAppSelector } from "@app/store/redux"
 
 const Loader = () => {
   const styles = useStyles()
@@ -52,6 +53,7 @@ const WalletOverview: React.FC<Props> = ({
   pendingBalance,
 }) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const { btcWalletEnabled } = useAppSelector((state) => state.settings)
 
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
@@ -186,41 +188,46 @@ const WalletOverview: React.FC<Props> = ({
       </Pressable>
       {/* End of IBEX Wallet overview */}
       {/* Start of Breez SDK Wallet overview */}
-      <View style={styles.separator}></View>
-      <Pressable
-        onPress={() =>
-          navigation.navigate("TransactionHistoryTabs", {
-            initialRouteName: "BTCTransactionHistory",
-          })
-        }
-      >
-        <View style={styles.displayTextView}>
-          <View style={styles.currency}>
-            <GaloyCurrencyBubble currency="BTC" />
-            <Text type="p1">Bitcoin</Text>
-          </View>
-          {loading ? (
-            <Loader />
-          ) : (
-            <View style={styles.hideableArea}>
-              <HideableArea isContentVisible={isContentVisible}>
-                {convertedBtcBalance ? (
-                  <Text type="p1" bold color={pendingBalance ? "orange" : undefined}>
-                    {convertedBtcBalance}
-                  </Text>
-                ) : null}
-                <Text
-                  type={convertedBtcBalance ? "p3" : "p1"}
-                  bold={!convertedBtcBalance}
-                  color={pendingBalance ? "orange" : undefined}
-                >
-                  {btcBalance}
-                </Text>
-              </HideableArea>
+      {btcWalletEnabled && (
+        <>
+          <View style={styles.separator}></View>
+          <Pressable
+            onPress={() =>
+              navigation.navigate("TransactionHistoryTabs", {
+                initialRouteName: "BTCTransactionHistory",
+              })
+            }
+          >
+            <View style={styles.displayTextView}>
+              <View style={styles.currency}>
+                <GaloyCurrencyBubble currency="BTC" />
+                <Text type="p1">Bitcoin</Text>
+              </View>
+              {loading ? (
+                <Loader />
+              ) : (
+                <View style={styles.hideableArea}>
+                  <HideableArea isContentVisible={isContentVisible}>
+                    {convertedBtcBalance ? (
+                      <Text type="p1" bold color={pendingBalance ? "orange" : undefined}>
+                        {convertedBtcBalance}
+                      </Text>
+                    ) : null}
+                    <Text
+                      type={convertedBtcBalance ? "p3" : "p1"}
+                      bold={!convertedBtcBalance}
+                      color={pendingBalance ? "orange" : undefined}
+                    >
+                      {btcBalance}
+                    </Text>
+                  </HideableArea>
+                </View>
+              )}
             </View>
-          )}
-        </View>
-      </Pressable>
+          </Pressable>
+        </>
+      )}
+
       {/* End of Breez SDK Wallet overview */}
     </View>
   )

@@ -6,6 +6,8 @@ import {
   PersistentState,
 } from "./state-migrations"
 import * as React from "react"
+import { useAppDispatch } from "../redux"
+import { getSettingsData } from "../redux/slices/settingsSlice"
 // import { initializeBreezSDK } from "@app/utils/breez-sdk/index"
 
 const PERSISTENT_STATE_KEY = "persistentState"
@@ -34,6 +36,7 @@ export const PersistentStateContext = createContext<PersistentStateContextType |
 )
 
 export const PersistentStateProvider: React.FC<PropsWithChildren> = ({ children }) => {
+  const dispatch = useAppDispatch()
   const [persistentState, setPersistentState] = React.useState<
     PersistentState | undefined
   >(undefined)
@@ -51,6 +54,7 @@ export const PersistentStateProvider: React.FC<PropsWithChildren> = ({ children 
 
       const loadedState = await loadPersistentState()
       setPersistentState(loadedState)
+      dispatch(getSettingsData())
     })()
   }, [])
 

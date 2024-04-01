@@ -754,6 +754,7 @@ const en: BaseTranslation = {
     importWallet: "Import Wallet",
     showSeedPhrase: "Reveal recovery phrase",
     showNostrSecret: "Reveal Nostr secret",
+    enableBtcWallet: "Enable Bitcoin wallet",
   },
   AccountScreen: {
     accountLevel: "Account Level",

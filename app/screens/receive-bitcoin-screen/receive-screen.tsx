@@ -50,6 +50,7 @@ type Props = {
 }
 
 const ReceiveScreen = ({ route }: Props) => {
+  const { btcWalletEnabled } = useAppSelector((state) => state.settings)
   const { userData } = useAppSelector((state) => state.user)
   const {
     theme: { colors },
@@ -231,6 +232,28 @@ const ReceiveScreen = ({ route }: Props) => {
     }
   }
 
+  const buttons: any[] = [
+    {
+      id: WalletCurrency.Usd,
+      text: LL.ReceiveScreen.stablesats(),
+      icon: {
+        selected: <GaloyCurrencyBubble currency="USD" iconSize={16} />,
+        normal: <GaloyCurrencyBubble currency="USD" iconSize={16} highlighted={false} />,
+      },
+    },
+  ]
+
+  if (btcWalletEnabled) {
+    buttons.unshift({
+      id: WalletCurrency.Btc,
+      text: LL.ReceiveScreen.bitcoin(),
+      icon: {
+        selected: <GaloyCurrencyBubble currency="BTC" iconSize={16} />,
+        normal: <GaloyCurrencyBubble currency="BTC" iconSize={16} highlighted={false} />,
+      },
+    })
+  }
+
   return (
     <>
       <Screen
@@ -241,28 +264,7 @@ const ReceiveScreen = ({ route }: Props) => {
       >
         <ButtonGroup
           selectedId={request.receivingWalletDescriptor.currency}
-          buttons={[
-            {
-              id: WalletCurrency.Btc,
-              text: LL.ReceiveScreen.bitcoin(),
-              icon: {
-                selected: <GaloyCurrencyBubble currency="BTC" iconSize={16} />,
-                normal: (
-                  <GaloyCurrencyBubble currency="BTC" iconSize={16} highlighted={false} />
-                ),
-              },
-            },
-            {
-              id: WalletCurrency.Usd,
-              text: LL.ReceiveScreen.stablesats(),
-              icon: {
-                selected: <GaloyCurrencyBubble currency="USD" iconSize={16} />,
-                normal: (
-                  <GaloyCurrencyBubble currency="USD" iconSize={16} highlighted={false} />
-                ),
-              },
-            },
-          ]}
+          buttons={buttons}
           onPress={(id) => isReady && request.setReceivingWallet(id as WalletCurrency)}
           style={styles.receivingWalletPicker}
           disabled={!request.canSetReceivingWalletDescriptor}

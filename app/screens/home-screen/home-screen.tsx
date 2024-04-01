@@ -51,7 +51,7 @@ import { useAppConfig, usePriceConversion, useRedeem } from "@app/hooks"
 import useNostrProfile from "@app/hooks/use-nostr-profile"
 
 // store
-import { useAppDispatch } from "@app/store/redux"
+import { useAppDispatch, useAppSelector } from "@app/store/redux"
 import { setUserData } from "@app/store/redux/slices/userSlice"
 
 const TransactionCountToTriggerSetDefaultAccountModal = 1
@@ -59,6 +59,7 @@ const TransactionCountToTriggerSetDefaultAccountModal = 1
 export const HomeScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const dispatch = useAppDispatch()
+  const { btcWalletEnabled } = useAppSelector((state) => state.settings)
   const {
     appConfig: {
       galoyInstance: { id: galoyInstanceId },
@@ -237,11 +238,6 @@ export const HomeScreen: React.FC = () => {
 
   const buttons = [
     {
-      title: LL.ConversionDetailsScreen.title(),
-      target: "conversionDetails" as Target,
-      icon: "transfer" as IconNamesType,
-    },
-    {
       title: LL.HomeScreen.receive(),
       target: "receiveBitcoin" as Target,
       icon: "receive" as IconNamesType,
@@ -257,6 +253,18 @@ export const HomeScreen: React.FC = () => {
       icon: "qr-code" as IconNamesType,
     },
   ]
+
+  if (btcWalletEnabled) {
+    buttons.unshift({
+      title: LL.ConversionDetailsScreen.title(),
+      target: "conversionDetails" as Target,
+      icon: "transfer" as IconNamesType,
+    })
+  }
+
+  const transactions = btcWalletEnabled
+    ? mergedTransactions
+    : transactionsEdges.map((el) => el.node).slice(0, 5)
 
   const AccountCreationNeededModal = (
     <Modal
@@ -350,7 +358,7 @@ export const HomeScreen: React.FC = () => {
           ))}
         </View>
 
-        {mergedTransactions.length > 0 && !loadingAuthed ? (
+        {transactions.length > 0 && !loadingAuthed ? (
           <>
             <TouchableWithoutFeedback
               style={styles.recentTransaction}
@@ -360,7 +368,7 @@ export const HomeScreen: React.FC = () => {
                 {LL.TransactionScreen.title()}
               </Text>
             </TouchableWithoutFeedback>
-            {mergedTransactions.map((item, index) => {
+            {transactions.map((item, index) => {
               if (item.settlementCurrency === "BTC") {
                 return (
                   <BreezTransactionItem
@@ -389,7 +397,7 @@ export const HomeScreen: React.FC = () => {
           </>
         ) : (
           <ActivityIndicator
-            animating={transactionLoading}
+            animating={btcWalletEnabled ? transactionLoading : loadingAuthed}
             size="large"
             color={colors.primary}
           />

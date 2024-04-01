@@ -14,6 +14,7 @@ import { BalanceHeader } from "@app/components/balance-header"
 // hooks
 import { useI18nContext } from "@app/i18n/i18n-react"
 import useBreezBalance from "@app/hooks/useBreezBalance"
+import { useAppSelector } from "@app/store/redux"
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -21,6 +22,7 @@ type Props = StackScreenProps<RootStackParamList, "TransactionHistoryTabs">
 
 export const TransactionHistoryTabs: React.FC<Props> = ({ navigation, route }) => {
   const initialRouteName = route.params?.initialRouteName
+  const { btcWalletEnabled } = useAppSelector((state) => state.settings)
   const { LL } = useI18nContext()
   const [breezBalance] = useBreezBalance()
   const [isContentVisible, setIsContentVisible] = React.useState(false)
@@ -36,7 +38,7 @@ export const TransactionHistoryTabs: React.FC<Props> = ({ navigation, route }) =
             isContentVisible={isContentVisible}
             setIsContentVisible={setIsContentVisible}
             breezBalance={breezBalance}
-            walletType={activeWallet}
+            walletType={btcWalletEnabled ? activeWallet : "usd"}
             smallText
           />
         </HeaderRight>
@@ -52,19 +54,21 @@ export const TransactionHistoryTabs: React.FC<Props> = ({ navigation, route }) =
         tabBarIndicatorStyle: { backgroundColor: "#60aa55" },
       }}
     >
-      <Tab.Screen
-        name="BTCTransactionHistory"
-        component={BTCTransactionHistory}
-        options={{ title: LL.TransactionHistoryTabs.titleBTC() }}
-        listeners={({ navigation }) => ({
-          swipeEnd: (e) => {
-            setActiveWallet("btc")
-          },
-          tabPress: (e) => {
-            setActiveWallet("btc")
-          },
-        })}
-      />
+      {btcWalletEnabled && (
+        <Tab.Screen
+          name="BTCTransactionHistory"
+          component={BTCTransactionHistory}
+          options={{ title: LL.TransactionHistoryTabs.titleBTC() }}
+          listeners={({ navigation }) => ({
+            swipeEnd: (e) => {
+              setActiveWallet("btc")
+            },
+            tabPress: (e) => {
+              setActiveWallet("btc")
+            },
+          })}
+        />
+      )}
 
       <Tab.Screen
         name="USDTransactionHistory"

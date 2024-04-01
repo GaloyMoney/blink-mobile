@@ -10,6 +10,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useFeatureFlags } from "@app/config/feature-flags-context"
 import useAppCheckToken from "../get-started-screen/use-device-token"
+import { useAppSelector } from "@app/store/redux"
 
 // types
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -24,6 +25,7 @@ type Props = StackScreenProps<RootStackParamList, "ImportWalletOptions">
 const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
   const insideApp = route.params?.insideApp
   const bottom = useSafeAreaInsets().bottom
+  const { btcWalletEnabled } = useAppSelector((state) => state.settings)
   const { LL } = useI18nContext()
   const { saveToken } = useAppConfig()
   const { deviceAccountEnabled } = useFeatureFlags()
@@ -108,21 +110,23 @@ const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
             : LL.ImportWalletOptions.loginOptions()}
         </Title>
 
-        <Btn onPress={onImportBTCWallet} disabled={BTCWalletImported}>
-          <Icon
-            type="ionicon"
-            name={BTCWalletImported ? "checkmark-circle" : "checkmark-circle-outline"}
-            color={BTCWalletImported ? "#60aa55" : "#999"}
-            size={40}
-          />
-          <BtnTextWrapper>
-            <BtnTitle>{LL.ImportWalletOptions.recoveryPhrase()}</BtnTitle>
-            <BtnDesc>{LL.ImportWalletOptions.importBTCWallet()}</BtnDesc>
-          </BtnTextWrapper>
-          {!BTCWalletImported && (
-            <Icon type="ionicon" name={"chevron-forward"} size={20} />
-          )}
-        </Btn>
+        {btcWalletEnabled && (
+          <Btn onPress={onImportBTCWallet} disabled={BTCWalletImported}>
+            <Icon
+              type="ionicon"
+              name={BTCWalletImported ? "checkmark-circle" : "checkmark-circle-outline"}
+              color={BTCWalletImported ? "#60aa55" : "#999"}
+              size={40}
+            />
+            <BtnTextWrapper>
+              <BtnTitle>{LL.ImportWalletOptions.recoveryPhrase()}</BtnTitle>
+              <BtnDesc>{LL.ImportWalletOptions.importBTCWallet()}</BtnDesc>
+            </BtnTextWrapper>
+            {!BTCWalletImported && (
+              <Icon type="ionicon" name={"chevron-forward"} size={20} />
+            )}
+          </Btn>
+        )}
         <Btn onPress={onLoginWithPhone} disabled={USDWalletImported}>
           <Icon
             type="ionicon"

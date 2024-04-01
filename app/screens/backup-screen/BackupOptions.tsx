@@ -7,6 +7,7 @@ import { Icon } from "@rneui/themed"
 // hooks
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { useAppSelector } from "@app/store/redux"
 
 // components
 import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
@@ -28,6 +29,7 @@ type Props = StackScreenProps<RootStackParamList, "BackupOptions">
 
 const BackupOptions: React.FC<Props> = ({ navigation }) => {
   const bottom = useSafeAreaInsets().bottom
+  const { btcWalletEnabled } = useAppSelector((state) => state.settings)
   const { LL } = useI18nContext()
   const { isAtLeastLevelZero } = useLevel()
   const [backupIsCompleted, setBackupIsCompleted] = React.useState(false)
@@ -78,27 +80,29 @@ const BackupOptions: React.FC<Props> = ({ navigation }) => {
     <Wrapper>
       <Container>
         <Title>{LL.BackupOptions.title()}</Title>
-        <Btn onPress={onBackupBTCWallet}>
-          <Icon
-            type="ionicon"
-            name={backupIsCompleted ? "checkmark-circle" : "checkmark-circle-outline"}
-            color={backupIsCompleted ? "#60aa55" : "#999"}
-            size={40}
-          />
-          <BtnTextWrapper>
-            <BtnTitle>
-              {backupIsCompleted
-                ? LL.BackupOptions.revealRecoveryPhrase()
-                : LL.BackupOptions.recoveryPhrase()}
-            </BtnTitle>
-            <BtnDesc>
-              {backupIsCompleted
-                ? LL.BackupOptions.revealRecoveryPhraseDesc()
-                : LL.BackupOptions.recoveryPhraseDesc()}
-            </BtnDesc>
-          </BtnTextWrapper>
-          <Icon type="ionicon" name={"chevron-forward"} size={20} />
-        </Btn>
+        {btcWalletEnabled && (
+          <Btn onPress={onBackupBTCWallet}>
+            <Icon
+              type="ionicon"
+              name={backupIsCompleted ? "checkmark-circle" : "checkmark-circle-outline"}
+              color={backupIsCompleted ? "#60aa55" : "#999"}
+              size={40}
+            />
+            <BtnTextWrapper>
+              <BtnTitle>
+                {backupIsCompleted
+                  ? LL.BackupOptions.revealRecoveryPhrase()
+                  : LL.BackupOptions.recoveryPhrase()}
+              </BtnTitle>
+              <BtnDesc>
+                {backupIsCompleted
+                  ? LL.BackupOptions.revealRecoveryPhraseDesc()
+                  : LL.BackupOptions.recoveryPhraseDesc()}
+              </BtnDesc>
+            </BtnTextWrapper>
+            <Icon type="ionicon" name={"chevron-forward"} size={20} />
+          </Btn>
+        )}
         <Btn onPress={onBackupUSDWallet} disabled={!!data?.me?.phone}>
           <Icon
             type="ionicon"
