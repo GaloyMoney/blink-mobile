@@ -11,7 +11,7 @@ concurrency:
 jobs:
   e2e-android:
     name: Android
-    runs-on: self-hosted
+    runs-on: self-hosted-mac
     timeout-minutes: 45
 
     steps:
@@ -107,7 +107,7 @@ jobs:
 
   e2e-ios:
     name: iOS
-    runs-on: self-hosted
+    runs-on: self-hosted-mac
     timeout-minutes: 45
 
     steps:
