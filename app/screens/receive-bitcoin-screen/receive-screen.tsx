@@ -397,7 +397,7 @@ const ReceiveScreen = ({ route }: Props) => {
           maxAmount={
             appConfig.galoyInstance.name === "Staging"
               ? {
-                  amount: 500,
+                  amount: 2500,
                   currency: "DisplayCurrency",
                   currencyCode: "USD",
                 }
