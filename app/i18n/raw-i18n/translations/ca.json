@@ -2123,6 +2123,8 @@
         "invalidContent": "Hem trobat:\n\n{found}\n\nAquesta no és una adreça Bitcoin vàlida o una factura Lightning",
         "expiredContent": "Hem trobat:\n\n{found}\n\nAquesta factura ha caducat",
         "invalidTitle": "Codi QR no vàlid",
+        "openLinkTitle": "Obrir l'enllaç",
+        "confirmOpenLink": "Estàs segur que vols obrir aquest enllaç?",
         "noQrCode": "No hem trobat cap codi QR a la imatge",
         "title": "Escanejar el codi QR",
         "permissionCamera": "Necessitem permis per utilitzar la càmera",
@@ -2264,12 +2266,12 @@
                 "description": "Notificacions relacionades amb enviar i rebre pagaments"
             },
             "Marketing": {
-                "title": "Features and updates",
-                "description": "Notifications about new features and updates."
+                "title": "Característiques i actualitzacions",
+                "description": "Notificacions de les noves característiques i actualitzacions."
             },
             "Price": {
-                "title": "Price changes",
-                "description": "Notifications about the price of Bitcoin."
+                "title": "Canvis de preu",
+                "description": "Notificacions sobre el preu de Bitcoin."
             }
         }
     },
@@ -2599,6 +2601,7 @@
         "faq": "FAQ",
         "enjoyingApp": "Gaudint de l'aplicació?",
         "statusPage": "Pàgina d'estat",
+        "chatbot": "Bot de xat",
         "telegram": "Telegram",
         "mattermost": "Mattermost",
         "thankYouText": "Gràcies pels comentaris, vols suggerir una millora?",
@@ -2703,9 +2706,9 @@
             "details": "Fes créixer el teu cercle interior en 3 persones i el teu cercle exterior en 3 persones per tenir l'oportunitat de guanyar 100 $!\n\nRecordatori: els teus cercles creixen quan envies a un nou usuari de Blink els seus primers sats.\n\nComparteix els teus cercles a les xarxes socials amb #blinkcircles per participar."
         },
         "aprilChallenge": {
-            "title": "April Challenge!",
-            "description": "Grow your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet.",
-            "details": "During the halving month, expand your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
+            "title": "Repte d'abril!",
+            "description": "Augmenta el teu cercle interior en 12 persones i el teu cercle exterior en 3 persones per a poder guanyar una cartera Bitbox02.",
+            "details": "Durant el mes del \"halving\", amplia el teu cercle interior en 12 persones i el cercle exterior en 3 persones per poder guanyar una cartera de Bitbox02!\n\nRecorda: els teus circles creixen quan envies a un usuari nou de Blink els seus primers sats.\n\nComparteix els teus cercles a les xarxes socials amb l'etiqueta #blinkcircles per poder participar."
         }
     },
     "FullOnboarding": {
