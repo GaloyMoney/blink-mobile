@@ -2123,6 +2123,8 @@
         "invalidContent": "Encontramos lo siguiente:\n\n{found: string}\n\nEsto no es una dirección Bitcoin o factura Lightning válida",
         "expiredContent": "Hemos encontrado:\n\n{found}\n\nEsta factura ha caducado",
         "invalidTitle": "Código QR inválido",
+        "openLinkTitle": "Abrir enlace",
+        "confirmOpenLink": "Estás seguro de que quieres abrir este enlace?",
         "noQrCode": "No pudimos encontrar un código QR en la imagen",
         "title": "Escanear QR",
         "permissionCamera": "Necesitamos permiso para usar su cámara.",
@@ -2264,12 +2266,12 @@
                 "description": "Notificaciones relacionadas con el envío y recepción de pagos."
             },
             "Marketing": {
-                "title": "Features and updates",
-                "description": "Notifications about new features and updates."
+                "title": "Funciones y actualizaciones",
+                "description": "Notificaciones sobre nuevas funciones y actualizaciones."
             },
             "Price": {
-                "title": "Price changes",
-                "description": "Notifications about the price of Bitcoin."
+                "title": "Cambios de precio",
+                "description": "Notificaciones sobre el precio de Bitcoin."
             }
         }
     },
@@ -2599,6 +2601,7 @@
         "faq": "Preguntas Frecuentes - FAQ",
         "enjoyingApp": "¿Disfrutas de la aplicación?",
         "statusPage": "Página de Estado",
+        "chatbot": "Chatbot",
         "telegram": "Telegram",
         "mattermost": "Mattermost",
         "thankYouText": "Gracias por tus comentarios, ¿te gustaría sugerir una mejora?",
