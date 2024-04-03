@@ -755,6 +755,7 @@ const en: BaseTranslation = {
     showSeedPhrase: "Reveal recovery phrase",
     showNostrSecret: "Reveal Nostr secret",
     enableBtcWallet: "Enable Bitcoin wallet",
+    disableBtcWallet: "Disable Bitcoin wallet",
   },
   AccountScreen: {
     accountLevel: "Account Level",
@@ -1179,6 +1180,7 @@ const en: BaseTranslation = {
     deleteAccountError:
       "Something went wrong. Contact {email: string} for further assistance.",
     bye: "Bye!",
+    disableBtcWallet: "By disabling your BTC wallet you will not lose access to your funds, but the wallet will be hidden. You can enable the BTC wallet again at any time. Are you sure you want to proceed?"
   },
   lnurl: {
     overLimit: "You can't send more than max amount",

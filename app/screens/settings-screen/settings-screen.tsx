@@ -40,6 +40,9 @@ import { ShowNostrSecret } from "./show-nostr-secret"
 import { useAppDispatch, useAppSelector } from "@app/store/redux"
 import { updateSettings } from "@app/store/redux/slices/settingsSlice"
 import { save } from "@app/utils/storage"
+import { Alert } from "react-native"
+import useBreezBalance from "@app/hooks/useBreezBalance"
+import { toBtcMoneyAmount } from "@app/types/amounts"
 
 gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
@@ -75,6 +78,8 @@ export const SettingsScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "settings">>()
   const dispatch = useAppDispatch()
   const { btcWalletEnabled } = useAppSelector((state) => state.settings)
+  const { moneyAmountToDisplayCurrencyString } = useDisplayCurrency()
+  const [breezBalance] = useBreezBalance()
   const {
     theme: { colors },
   } = useTheme()
@@ -181,6 +186,41 @@ export const SettingsScreen: React.FC = () => {
     })
   }
 
+  const toggleBtcWallet = () => {
+    if (btcWalletEnabled) {
+      if (breezBalance && breezBalance > 0) {
+        const btcWalletBalance = toBtcMoneyAmount(breezBalance || 0)
+        const convertedBalance =
+          moneyAmountToDisplayCurrencyString({
+            moneyAmount: btcWalletBalance,
+            isApproximate: true,
+          }) || "0"
+        const btcBalanceWarning = LL.AccountScreen.btcBalanceWarning({
+          balance: convertedBalance,
+        })
+
+        const fullMessage = btcBalanceWarning + "\n" + LL.support.disableBtcWallet()
+
+        Alert.alert(LL.common.warning(), fullMessage, [
+          { text: LL.common.cancel(), onPress: () => {} },
+          {
+            text: LL.common.yes(),
+            onPress: async () => {
+              dispatch(updateSettings({ btcWalletEnabled: false }))
+              save("btcWalletEnabled", false)
+            },
+          },
+        ])
+      } else {
+        dispatch(updateSettings({ btcWalletEnabled: false }))
+        save("btcWalletEnabled", false)
+      }
+    } else {
+      dispatch(updateSettings({ btcWalletEnabled: true }))
+      save("btcWalletEnabled", true)
+    }
+  }
+
   const contactMessageBody = LL.support.defaultSupportMessage({
     os: isIos ? "iOS" : "Android",
     version: getReadableVersion(),
@@ -260,16 +300,14 @@ export const SettingsScreen: React.FC = () => {
       chevron: true,
     },
     {
-      category: LL.SettingsScreen.enableBtcWallet(),
+      category: btcWalletEnabled
+        ? LL.SettingsScreen.disableBtcWallet()
+        : LL.SettingsScreen.enableBtcWallet(),
       icon: "logo-bitcoin",
       id: "enableBtcWallet",
-      action: () => {
-        dispatch(updateSettings({ btcWalletEnabled: true }))
-        save("btcWalletEnabled", true)
-      },
-      enabled: btcWalletEnabled ? false : true,
-      chevron: btcWalletEnabled ? false : true,
-      greyed: btcWalletEnabled ? true : false,
+      action: toggleBtcWallet,
+      enabled: true,
+      chevron: true,
     },
     {
       category: LL.SettingsScreen.backup(),

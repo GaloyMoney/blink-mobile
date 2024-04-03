@@ -1013,7 +1013,8 @@
         "deleteAccountConfirmation": "Your account has been written for deletion.\n\nWhen the probation period related to regulatory requirement is over, the remaining data related to your account will be permanently deleted.",
         "deleteAccountFromPhone": "Hey there!, please delete my account. My phone number is {phoneNumber: string}.",
         "deleteAccountError": "Something went wrong. Contact {email: string} for further assistance.",
-        "bye": "Bye!"
+        "bye": "Bye!",
+        "disableBtcWallet": "By disabling your BTC wallet you will not lose access to your funds, but the wallet will be hidden. You can enable the BTC wallet again at any time. Are you sure you want to proceed?"
     },
     "lnurl": {
         "overLimit": "You can't send more than max amount",

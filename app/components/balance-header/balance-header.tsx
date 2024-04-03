@@ -1,7 +1,7 @@
 import * as React from "react"
 import styled from "styled-components/native"
 import ContentLoader, { Rect } from "react-content-loader/native"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, Text } from "@rneui/themed"
 
 // gql
 import { useBalanceHeaderQuery } from "@app/graphql/generated"
@@ -83,7 +83,7 @@ export const BalanceHeader: React.FC<Props> = ({
         {loading ? (
           <Loader />
         ) : (
-          <Text smallText={smallText}>{balanceInDisplayCurrency}</Text>
+          <StyledText smallText={smallText}>{balanceInDisplayCurrency}</StyledText>
         )}
       </Wrapper>
     )
@@ -94,7 +94,7 @@ export const BalanceHeader: React.FC<Props> = ({
         onPress={() => setIsContentVisible(!isContentVisible)}
         activeOpacity={0.5}
       >
-        <Text smallText={smallText}>****</Text>
+        <StyledText smallText={smallText}>****</StyledText>
       </Wrapper>
     )
   }
@@ -107,9 +107,8 @@ const Wrapper = styled.TouchableOpacity<{ smallText?: boolean }>`
   margin-bottom: ${({ smallText }) => (smallText ? 0 : "4px")};
 `
 
-const Text = styled.Text<{ smallText?: boolean }>`
+const StyledText = styled(Text)<{ smallText?: boolean }>`
   font-size: ${({ smallText }) => (smallText ? "22px" : "32px")};
-  color: #000;
 `
 
 const Loader = () => {

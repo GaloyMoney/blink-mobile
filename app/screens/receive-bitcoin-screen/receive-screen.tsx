@@ -63,6 +63,7 @@ const ReceiveScreen = ({ route }: Props) => {
   const isAuthed = useIsAuthed()
   const isFocused = useIsFocused()
 
+  const lnAddressHostname = appConfig.galoyInstance.lnAddressHostname
   const isFirstTransaction = route.params.transactionLength === 0
   const request = useReceiveBitcoin(isFirstTransaction)
 
@@ -213,8 +214,8 @@ const ReceiveScreen = ({ route }: Props) => {
     Boolean(userData.username)
 
   const handleCopy = () => {
-    if (useLnurlp) {
-      Clipboard.setString(lnurlp)
+    if (request.type === "PayCode") {
+      Clipboard.setString(`${request.username}@${lnAddressHostname}`)
     } else {
       if (request.copyToClipboard) {
         request.copyToClipboard()
@@ -352,9 +353,7 @@ const ReceiveScreen = ({ route }: Props) => {
           <View style={styles.extraDetails}>
             {request.readablePaymentRequest && (
               <Text {...testProps("readable-payment-request")}>
-                {useLnurlp
-                  ? `${lnurlp.slice(0, 10)}..${lnurlp.slice(-10)}`
-                  : request.readablePaymentRequest}
+                {request.readablePaymentRequest}
               </Text>
             )}
           </View>
