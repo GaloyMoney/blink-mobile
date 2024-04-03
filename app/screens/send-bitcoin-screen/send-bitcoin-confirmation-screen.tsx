@@ -190,14 +190,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
         })
 
         if (status === "SUCCESS" || status === "PENDING") {
-          navigation.dispatch((state) => {
-            const routes = [{ name: "Primary" }, { name: "sendBitcoinSuccess" }]
-            return CommonActions.reset({
-              ...state,
-              routes,
-              index: routes.length - 1,
-            })
-          })
+          navigation.navigate("sendBitcoinSuccess")
           ReactNativeHapticFeedback.trigger("notificationSuccess", {
             ignoreAndroidSystemSettings: true,
           })
