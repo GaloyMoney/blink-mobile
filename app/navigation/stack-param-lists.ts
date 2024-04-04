@@ -6,10 +6,7 @@ import {
   ReceiveDestination,
 } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
 import { PaymentDetail } from "@app/screens/send-bitcoin-screen/payment-details/index.types"
-import {
-  PaymentSendCompletedStatus,
-  SendPayment,
-} from "@app/screens/send-bitcoin-screen/use-send-payment"
+import { PaymentSendCompletedStatus } from "@app/screens/send-bitcoin-screen/use-send-payment"
 import { DisplayCurrency, MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { WalletDescriptor } from "@app/types/wallets"
 import { NavigatorScreenParams } from "@react-navigation/native"
@@ -40,15 +37,13 @@ export type RootStackParamList = {
     payment?: string
     username?: string
   }
-  sendBitcoinPayment: {
-    sendPayment: SendPayment
-    paymentDetail: PaymentDetail<WalletCurrency>
-    sendingWallet: WalletCurrency
-  }
   sendBitcoinDetails: {
     paymentDestination: PaymentDestination
   }
   sendBitcoinConfirmation: {
+    paymentDetail: PaymentDetail<WalletCurrency>
+  }
+  sendBitcoinPayment: {
     paymentDetail: PaymentDetail<WalletCurrency>
   }
   conversionDetails: undefined

@@ -3,15 +3,15 @@ import React, { useEffect, useRef, useState } from "react"
 import { Animated, BackHandler, Dimensions, Easing, View } from "react-native"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 
-import erroredLoop from "@app/assets/animations/Error Pulse Loop.json"
-import errored from "@app/assets/animations/Error.json"
-import lnSuccessLoop from "@app/assets/animations/Lightning Pulse Loop.json"
-import lnSuccess from "@app/assets/animations/Lightning Success.json"
-import onchainSuccessLoop from "@app/assets/animations/On Chain Pulse Loop.json"
-import onchainSuccess from "@app/assets/animations/On Chain Success.json"
-import sendingLoop from "@app/assets/animations/Sending Loop.json"
-import sendingStart from "@app/assets/animations/Sending Start.json"
-import sendingTransition from "@app/assets/animations/Sending Transition.json"
+import errored from "@app/assets/animations/error.json"
+import erroredLoop from "@app/assets/animations/error_pulse_loop.json"
+import lnSuccessLoop from "@app/assets/animations/lightning_pulse_loop.json"
+import lnSuccess from "@app/assets/animations/lightning_success.json"
+import onchainSuccessLoop from "@app/assets/animations/onchain_pulse_loop.json"
+import onchainSuccess from "@app/assets/animations/onchain_success.json"
+import sendingLoop from "@app/assets/animations/send_loop.json"
+import sendingStart from "@app/assets/animations/send_start.json"
+import sendingTransition from "@app/assets/animations/send_transition.json"
 import LogoDarkMode from "@app/assets/logo/app-logo-dark.svg"
 import LogoLightMode from "@app/assets/logo/blink-logo-light.svg"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
@@ -21,6 +21,7 @@ import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { logPaymentResult } from "@app/utils/analytics"
+import crashlytics from "@react-native-firebase/crashlytics"
 import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
@@ -29,7 +30,11 @@ import {
   formatTimeToMempool,
   timeToMempool,
 } from "../transaction-detail-screen/format-time"
-import { SendPayment, PaymentSendCompletedStatus } from "./use-send-payment"
+import {
+  SendPayment,
+  PaymentSendCompletedStatus,
+  useSendPayment,
+} from "./use-send-payment"
 
 const animationMap = {
   START: sendingStart,
@@ -53,6 +58,9 @@ const calculateDuration = (frameCount: number) => (frameCount / 30) * 1000
 const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
   const { LL, locale } = useI18nContext()
 
+  const { paymentDetail } = route.params
+  const { sendPayment } = useSendPayment(paymentDetail.sendPaymentMutation)
+
   const {
     theme: { mode },
   } = useTheme()
@@ -71,16 +79,38 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
   > | null>(null)
 
   useEffect(() => {
+    if (!sendPayment) return
     ;(async () => {
-      const data = await route.params.sendPayment()
-      setPaymentResult(data)
-      logPaymentResult({
-        paymentStatus: data.status,
-        paymentType: route.params.paymentDetail.paymentType,
-        sendingWallet: route.params.sendingWallet,
-      })
+      try {
+        const data = await sendPayment()
+        setPaymentResult(data)
+        logPaymentResult({
+          paymentStatus: data.status,
+          paymentType: route.params.paymentDetail.paymentType,
+          sendingWallet: route.params.paymentDetail.sendingWalletDescriptor.currency,
+        })
+      } catch (err) {
+        if (err instanceof Error) {
+          crashlytics().recordError(err)
+
+          const indempotencyErrorPattern = /409: Conflict/i
+          if (indempotencyErrorPattern.test(err.message)) {
+            return setPaymentResult({
+              status: "ALREADY_PAID",
+              errorsMessage: LL.SendBitcoinConfirmationScreen.paymentAlreadyAttempted(),
+              transaction: null,
+            })
+          }
+
+          return setPaymentResult({
+            status: "FAILURE",
+            errorsMessage: err.message,
+            transaction: null,
+          })
+        }
+      }
     })()
-  }, [route.params])
+  }, [LL.SendBitcoinConfirmationScreen, route.params, sendPayment])
 
   const fadeAnim = useRef(new Animated.Value(0)).current
 
