@@ -2,7 +2,7 @@
     "GaloyAddressScreen": {
         "title": "Funa okusasula nga okozesa:",
         "buttonTitle": "Teeketeeka endagiriro yo",
-        "yourAddress": "Eyiyo {bankName: string} endagiriro",
+        "yourAddress": "Endagiriro yo eya {bankName: string}",
         "notAbleToChange": "Tojja kusobola kukyusa {bankName: string} yo endagiriro ng'emaze okuteekebwawo.",
         "addressNotAvailable": "Eno {bankName: string} endagiriro yatwaliddwa.",
         "somethingWentWrong": "Waliwo ekikyamu ekibadewo. Tukusaba oddemu ogezeeko oluvannyuma.",
