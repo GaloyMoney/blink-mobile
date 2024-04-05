@@ -83,6 +83,7 @@ export type SendPaymentMutation = (
   status: PaymentSendResult | null | undefined
   errors?: readonly GraphQlApplicationError[]
   extraInfo?: PaymentSendExtraInfo
+  transaction: { id: string } | null | undefined
 }>
 
 export type PaymentSendExtraInfo = {
