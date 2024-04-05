@@ -173,7 +173,7 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
               : formatMoneyAmount({ moneyAmount: paymentDetail.settlementAmount })
 
           const amount = `${formattedDisplayAmount}${
-            secondaryAmount && " (" + secondaryAmount + ")"
+            secondaryAmount ? " (" + secondaryAmount + ")" : ""
           }`
 
           return setPaymentSuccess(
