@@ -58,7 +58,7 @@ export const SettingsRow: React.FC<Props> = ({
       {...testProps(title)}
     >
       <View style={[styles.container, styles.spacing]}>
-        <View style={[styles.container, styles.spacing]}>
+        <View style={[styles.container, styles.spacing, styles.internalContainer]}>
           <Icon name={leftIcon} type="ionicon" />
           <View>
             <View style={styles.sidetoside}>
@@ -66,7 +66,11 @@ export const SettingsRow: React.FC<Props> = ({
               <Text>{extraComponentBesideTitle}</Text>
             </View>
             {subtitle && (
-              <Text type={subtitleShorter ? "p4" : "p3"} ellipsizeMode="tail">
+              <Text
+                type={subtitleShorter ? "p4" : "p3"}
+                ellipsizeMode="tail"
+                numberOfLines={1}
+              >
                 {subtitle}
               </Text>
             )}
@@ -112,6 +116,11 @@ const useStyles = makeStyles(
       flexDirection: "row",
       alignItems: "center",
       columnGap: 5,
+    },
+    internalContainer: {
+      flex: 2,
+      justifyContent: "flex-start",
+      paddingRight: 16,
     },
   }),
 )
