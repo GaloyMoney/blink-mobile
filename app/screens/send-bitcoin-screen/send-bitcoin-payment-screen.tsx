@@ -270,54 +270,56 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
     })
 
   return (
-    <Screen>
-      <View style={styles.animView}>
-        {Object.entries(animationMap).map(([state, source]) => (
-          <LottieView
-            key={state}
-            style={[styles.animView, paymentAnimationState !== state && styles.hidden]}
-            source={source}
-            autoPlay={paymentAnimationState === state}
-            loop={state.includes("LOOP")}
-            speed={state === "START" || state === "LOOP" ? 1.5 : 1}
-            onAnimationFinish={() =>
-              paymentAnimationState === state && handleAnimationFinish()
-            }
-          />
-        ))}
-      </View>
-      <Animated.View style={[styles.txInfo, { top: textViewPosition }]}>
-        {paymentSuccess && (
-          <Text type="h1" style={styles.center}>
-            {paymentSuccess}
-          </Text>
-        )}
-        {paymentError && (
-          <Text type="h1" style={styles.center}>
-            {paymentError}
-          </Text>
-        )}
-      </Animated.View>
-      <Animated.View
-        style={[
-          styles.staticContent,
-          {
-            opacity: fadeAnim,
-          },
-        ]}
-      >
-        <Logo height={60} />
-        <View>
-          {paymentResult?.transaction?.id && (
-            <GaloySecondaryButton
-              containerStyle={styles.bottomSpacing}
-              title={LL.SendBitcoinPaymentScreen.details()}
-              onPress={onPressTransactionDetails}
+    <Screen keyboardOffset="navigationHeader" keyboardShouldPersistTaps="handled">
+      <View style={styles.screenStyle}>
+        <View style={styles.animView}>
+          {Object.entries(animationMap).map(([state, source]) => (
+            <LottieView
+              key={state}
+              style={[styles.animView, paymentAnimationState !== state && styles.hidden]}
+              source={source}
+              autoPlay={paymentAnimationState === state}
+              loop={state.includes("LOOP")}
+              speed={state === "START" || state === "LOOP" ? 1.5 : 1}
+              onAnimationFinish={() =>
+                paymentAnimationState === state && handleAnimationFinish()
+              }
             />
-          )}
-          <GaloyPrimaryButton onPress={onPressHome} title={LL.HomeScreen.title()} />
+          ))}
         </View>
-      </Animated.View>
+        <Animated.View style={[styles.txInfo, { top: textViewPosition }]}>
+          {paymentSuccess && (
+            <Text type="h1" style={styles.center}>
+              {paymentSuccess}
+            </Text>
+          )}
+          {paymentError && (
+            <Text type="h1" style={styles.center}>
+              {paymentError}
+            </Text>
+          )}
+        </Animated.View>
+        <Animated.View
+          style={[
+            styles.staticContent,
+            {
+              opacity: fadeAnim,
+            },
+          ]}
+        >
+          <Logo height={60} />
+          <View>
+            {paymentResult?.transaction?.id && (
+              <GaloySecondaryButton
+                containerStyle={styles.bottomSpacing}
+                title={LL.SendBitcoinPaymentScreen.details()}
+                onPress={onPressTransactionDetails}
+              />
+            )}
+            <GaloyPrimaryButton onPress={onPressHome} title={LL.HomeScreen.title()} />
+          </View>
+        </Animated.View>
+      </View>
     </Screen>
   )
 }
@@ -364,7 +366,7 @@ const useStyles = makeStyles(() => ({
     alignItems: "center",
     justifyContent: "center",
     height: "100%",
-    marginTop: 10,
+    marginTop: 30,
     paddingHorizontal: 50,
   },
   center: {
@@ -385,6 +387,11 @@ const useStyles = makeStyles(() => ({
   },
   bottomSpacing: {
     marginBottom: 12,
+  },
+  screenStyle: {
+    position: "relative",
+    width: "100%",
+    height: "100%",
   },
 }))
 
