@@ -7184,6 +7184,14 @@ type RootTranslation = {
 	}
 	SettingsScreen: {
 		/**
+		 * P​r​i​n​t​a​b​l​e​ ​S​t​a​t​i​c​ ​Q​R​ ​C​o​d​e
+		 */
+		staticQr: string
+		/**
+		 * Y​o​u​r​ ​s​t​a​t​i​c​ ​Q​R​ ​c​o​d​e​ ​l​i​n​k​ ​h​a​s​ ​b​e​e​n​ ​c​o​p​i​e​d
+		 */
+		staticQrCopied: string
+		/**
 		 * S​e​t​ ​b​y​ ​O​S
 		 */
 		setByOs: string
@@ -8109,6 +8117,10 @@ type RootTranslation = {
 		 * P​r​e​f​e​r​e​n​c​e​s
 		 */
 		preferences: string
+		/**
+		 * O​n​-​D​e​v​i​c​e​ ​S​e​c​u​r​i​t​y
+		 */
+		onDeviceSecurity: string
 		/**
 		 * S​e​c​u​r​i​t​y​ ​a​n​d​ ​P​r​i​v​a​c​y
 		 */
@@ -16190,6 +16202,14 @@ export type TranslationFunctions = {
 	}
 	SettingsScreen: {
 		/**
+		 * Printable Static QR Code
+		 */
+		staticQr: () => LocalizedString
+		/**
+		 * Your static QR code link has been copied
+		 */
+		staticQrCopied: () => LocalizedString
+		/**
 		 * Set by OS
 		 */
 		setByOs: () => LocalizedString
@@ -17094,6 +17114,10 @@ export type TranslationFunctions = {
 		 * Preferences
 		 */
 		preferences: () => LocalizedString
+		/**
+		 * On-Device Security
+		 */
+		onDeviceSecurity: () => LocalizedString
 		/**
 		 * Security and Privacy
 		 */

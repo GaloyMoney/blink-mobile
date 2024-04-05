@@ -6,7 +6,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 
 import { SettingsRow } from "../row"
 
-export const SecuritySetting: React.FC = () => {
+export const OnDeviceSecuritySetting: React.FC = () => {
   const { LL } = useI18nContext()
   const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>()
 
@@ -22,7 +22,7 @@ export const SecuritySetting: React.FC = () => {
 
   return (
     <SettingsRow
-      title={LL.common.security()}
+      title={LL.common.onDeviceSecurity()}
       leftIcon="shield-half-outline"
       action={securityAction}
     />
