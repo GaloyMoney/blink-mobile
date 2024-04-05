@@ -2299,6 +2299,11 @@ const en: BaseTranslation = {
     copiedDestination: "Copied destination to clipboard",
     pendingPayment: "The payment has been sent, but hasn't confirmed yet.\n\nIt's possible the payment will not confirm, in which case the funds will be returned to your account.",
   },
+  SendBitcoinPaymentScreen: {
+    sent: "You sent {amount: string}\nto\n{address: string}",
+    error: "Something went wrong!\nYour payment was not sent, please try again.",
+    details: "Details",
+  },
   SettingsScreen: {
     setByOs: "Set by OS",
     pos: "Point of Sale",
