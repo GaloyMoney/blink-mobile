@@ -3,7 +3,7 @@ import { timeout } from "./config"
 import { tap } from "./controls"
 
 export const waitForAccountScreen = async (LL: TranslationFunctions) => {
-  const el = element(by.id(LL.AccountScreen.yourAccountId()))
+  const el = element(by.text(LL.AccountScreen.accountId()))
   await waitFor(el)
     .toBeVisible()
     .withTimeout(timeout * 3)
