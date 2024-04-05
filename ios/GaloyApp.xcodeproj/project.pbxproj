@@ -20,10 +20,41 @@
 		BD157A9851974C298EB06CB7 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		BFD1E05462E2DE8ADB6856A2 /* libPods-GaloyApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BF3F16B9970ED9E2ACFEC81 /* libPods-GaloyApp.a */; };
 		C426C81D58C8450C878B6086 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		C43A7DCA2BC03583005BCE4E /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43A7DC92BC03583005BCE4E /* WidgetKit.framework */; };
+		C43A7DCC2BC03583005BCE4E /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43A7DCB2BC03583005BCE4E /* SwiftUI.framework */; };
+		C43A7DCF2BC03583005BCE4E /* BitcoinPriceWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A7DCE2BC03583005BCE4E /* BitcoinPriceWidgetBundle.swift */; };
+		C43A7DD12BC03583005BCE4E /* BitcoinPriceWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A7DD02BC03583005BCE4E /* BitcoinPriceWidget.swift */; };
+		C43A7DD32BC03583005BCE4E /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A7DD22BC03583005BCE4E /* AppIntent.swift */; };
+		C43A7DD52BC03584005BCE4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C43A7DD42BC03584005BCE4E /* Assets.xcassets */; };
+		C43A7DD92BC03584005BCE4E /* BitcoinPriceWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C43A7DC82BC03583005BCE4E /* BitcoinPriceWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C61EE0AD23C530E30054100C /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C61EE0AC23C530E30054100C /* AuthenticationServices.framework */; };
 		C6E810012333FDA500D41794 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C6E810002333FDA400D41794 /* GoogleService-Info.plist */; };
 		F1D71F3628CE5C9A00636277 /* AppDelegate.h in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FAF1A68108700A75B9A /* AppDelegate.h */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C43A7DD72BC03584005BCE4E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C43A7DC72BC03583005BCE4E;
+			remoteInfo = BitcoinPriceWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C43A7DDA2BC03584005BCE4E /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C43A7DD92BC03584005BCE4E /* BitcoinPriceWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
@@ -40,6 +71,14 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = GaloyApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8AC0ED6E611CE036AF25AD7E /* Pods-GaloyApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GaloyApp.debug.xcconfig"; path = "Target Support Files/Pods-GaloyApp/Pods-GaloyApp.debug.xcconfig"; sourceTree = "<group>"; };
 		915C987F56157E0E6B925113 /* Pods-GaloyApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GaloyApp.release.xcconfig"; path = "Target Support Files/Pods-GaloyApp/Pods-GaloyApp.release.xcconfig"; sourceTree = "<group>"; };
+		C43A7DC82BC03583005BCE4E /* BitcoinPriceWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BitcoinPriceWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C43A7DC92BC03583005BCE4E /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		C43A7DCB2BC03583005BCE4E /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		C43A7DCE2BC03583005BCE4E /* BitcoinPriceWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinPriceWidgetBundle.swift; sourceTree = "<group>"; };
+		C43A7DD02BC03583005BCE4E /* BitcoinPriceWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinPriceWidget.swift; sourceTree = "<group>"; };
+		C43A7DD22BC03583005BCE4E /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
+		C43A7DD42BC03584005BCE4E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C43A7DD62BC03584005BCE4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C61EE0AB23C52FBA0054100C /* GaloyApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = GaloyApp.entitlements; path = GaloyApp/GaloyApp.entitlements; sourceTree = "<group>"; };
 		C61EE0AC23C530E30054100C /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		C63A9181296313BE00B54FDB /* hermes.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = hermes.xcframework; path = "Pods/hermes-engine/destroot/Library/Frameworks/universal/hermes.xcframework"; sourceTree = "<group>"; };
@@ -58,6 +97,15 @@
 			files = (
 				C61EE0AD23C530E30054100C /* AuthenticationServices.framework in Frameworks */,
 				BFD1E05462E2DE8ADB6856A2 /* libPods-GaloyApp.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C43A7DC52BC03583005BCE4E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C43A7DCC2BC03583005BCE4E /* SwiftUI.framework in Frameworks */,
+				C43A7DCA2BC03583005BCE4E /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,6 +137,8 @@
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				7BF3F16B9970ED9E2ACFEC81 /* libPods-GaloyApp.a */,
+				C43A7DC92BC03583005BCE4E /* WidgetKit.framework */,
+				C43A7DCB2BC03583005BCE4E /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -125,6 +175,7 @@
 				C69AA16B232DD68A00606E11 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* GaloyApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
+				C43A7DCD2BC03583005BCE4E /* BitcoinPriceWidget */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				52DBFAFEE2028D1D4AE01CB9 /* Pods */,
@@ -140,8 +191,21 @@
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* Blink.app */,
+				C43A7DC82BC03583005BCE4E /* BitcoinPriceWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		C43A7DCD2BC03583005BCE4E /* BitcoinPriceWidget */ = {
+			isa = PBXGroup;
+			children = (
+				C43A7DCE2BC03583005BCE4E /* BitcoinPriceWidgetBundle.swift */,
+				C43A7DD02BC03583005BCE4E /* BitcoinPriceWidget.swift */,
+				C43A7DD22BC03583005BCE4E /* AppIntent.swift */,
+				C43A7DD42BC03584005BCE4E /* Assets.xcassets */,
+				C43A7DD62BC03584005BCE4E /* Info.plist */,
+			);
+			path = BitcoinPriceWidget;
 			sourceTree = "<group>";
 		};
 		C69AA16B232DD68A00606E11 /* Fonts */ = {
@@ -162,6 +226,7 @@
 			buildPhases = (
 				73C18070769F015CC89943A2 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
+				C43A7DDA2BC03584005BCE4E /* Embed Foundation Extensions */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
@@ -175,11 +240,29 @@
 			buildRules = (
 			);
 			dependencies = (
+				C43A7DD82BC03584005BCE4E /* PBXTargetDependency */,
 			);
 			name = GaloyApp;
 			productName = GaloyApp;
 			productReference = 13B07F961A680F5B00A75B9A /* Blink.app */;
 			productType = "com.apple.product-type.application";
+		};
+		C43A7DC72BC03583005BCE4E /* BitcoinPriceWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C43A7DDD2BC03584005BCE4E /* Build configuration list for PBXNativeTarget "BitcoinPriceWidgetExtension" */;
+			buildPhases = (
+				C43A7DC42BC03583005BCE4E /* Sources */,
+				C43A7DC52BC03583005BCE4E /* Frameworks */,
+				C43A7DC62BC03583005BCE4E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BitcoinPriceWidgetExtension;
+			productName = BitcoinPriceWidgetExtension;
+			productReference = C43A7DC82BC03583005BCE4E /* BitcoinPriceWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -187,6 +270,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = "Galoy Inc";
 				TargetAttributes = {
@@ -194,6 +278,11 @@
 						DevelopmentTeam = AYPCPV46WW;
 						LastSwiftMigration = 1140;
 						ProvisioningStyle = Manual;
+					};
+					C43A7DC72BC03583005BCE4E = {
+						CreatedOnToolsVersion = 15.3;
+						DevelopmentTeam = AYPCPV46WW;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -211,6 +300,7 @@
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* GaloyApp */,
+				C43A7DC72BC03583005BCE4E /* BitcoinPriceWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -231,6 +321,14 @@
 				94D9F3C84EB547D68D41C50F /* (null) in Resources */,
 				C426C81D58C8450C878B6086 /* (null) in Resources */,
 				AEBBD0A1234A4C5490A44CC1 /* DMSans-Bold.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C43A7DC62BC03583005BCE4E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C43A7DD52BC03584005BCE4E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,13 +538,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C43A7DC42BC03583005BCE4E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C43A7DD12BC03583005BCE4E /* BitcoinPriceWidget.swift in Sources */,
+				C43A7DCF2BC03583005BCE4E /* BitcoinPriceWidgetBundle.swift in Sources */,
+				C43A7DD32BC03583005BCE4E /* AppIntent.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C43A7DD82BC03584005BCE4E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C43A7DC72BC03583005BCE4E /* BitcoinPriceWidgetExtension */;
+			targetProxy = C43A7DD72BC03584005BCE4E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8AC0ED6E611CE036AF25AD7E /* Pods-GaloyApp.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = GaloyApp/GaloyAppDebug.entitlements;
@@ -484,6 +601,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 915C987F56157E0E6B925113 /* Pods-GaloyApp.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = GaloyApp/GaloyApp.entitlements;
@@ -653,6 +771,90 @@
 			};
 			name = Release;
 		};
+		C43A7DDB2BC03584005BCE4E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = AYPCPV46WW;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BitcoinPriceWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = BitcoinPriceWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Galoy Inc. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = io.galoy.bitcoinbeach.BitcoinPriceWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C43A7DDC2BC03584005BCE4E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = AYPCPV46WW;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BitcoinPriceWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = BitcoinPriceWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Galoy Inc. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = io.galoy.bitcoinbeach.BitcoinPriceWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -670,6 +872,15 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C43A7DDD2BC03584005BCE4E /* Build configuration list for PBXNativeTarget "BitcoinPriceWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C43A7DDB2BC03584005BCE4E /* Debug */,
+				C43A7DDC2BC03584005BCE4E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
