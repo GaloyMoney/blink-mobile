@@ -33,6 +33,8 @@ import {
   useSendPayment,
 } from "./use-send-payment"
 
+const MIN_ANIMATION_TIME_MS = 1500
+
 const animationMap = {
   START: sendingStart,
   LOOP: sendingLoop,
@@ -205,20 +207,32 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
   }, [paymentResult, LL, locale, route.params.paymentDetail, formatMoneyAmount])
 
   // --- ANIMATION CONTROLLER ---
+  const startTime = useRef(Date.now())
   useEffect(() => {
     if (paymentResult && paymentAnimationState === "LOOP") {
-      setPaymentAnimationState("TRANSITION")
-      setTimeout(() => {
-        if (paymentResult.status === "SUCCESS" || paymentResult.status === "PENDING") {
-          const { status, extraInfo } = paymentResult
-          const arrivalAtMempoolEstimate = extraInfo?.arrivalAtMempoolEstimate
-          setPaymentAnimationState(
-            processStatus({ arrivalAtMempoolEstimate, status }) === "QUEUED"
-              ? "ONCHAIN_SUCCESS"
-              : "LN_SUCCESS",
-          )
-        } else setPaymentAnimationState("ERRORED")
-      }, calculateDuration(35))
+      const handleUpdate = () => {
+        setPaymentAnimationState("TRANSITION")
+        setTimeout(() => {
+          if (paymentResult.status === "SUCCESS" || paymentResult.status === "PENDING") {
+            const { status, extraInfo } = paymentResult
+            const arrivalAtMempoolEstimate = extraInfo?.arrivalAtMempoolEstimate
+            setPaymentAnimationState(
+              processStatus({ arrivalAtMempoolEstimate, status }) === "QUEUED"
+                ? "ONCHAIN_SUCCESS"
+                : "LN_SUCCESS",
+            )
+          } else setPaymentAnimationState("ERRORED")
+        }, calculateDuration(35))
+      }
+
+      // Even a fews has not passed, show the loop animation and
+      // wait there for MIN_ANIMATION_TIME_MS so everything feels reactive
+      const timeElapsed = Date.now() - startTime.current
+      if (timeElapsed < MIN_ANIMATION_TIME_MS) {
+        const t = setTimeout(() => handleUpdate(), MIN_ANIMATION_TIME_MS - timeElapsed)
+        return () => clearTimeout(t)
+      }
+      handleUpdate()
     }
   }, [paymentResult, paymentAnimationState, route.params.paymentDetail.paymentType])
 
@@ -268,7 +282,7 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
               style={[styles.animView, paymentAnimationState !== state && styles.hidden]}
               source={source}
               autoPlay={paymentAnimationState === state}
-              loop={state.includes("LOOP")}
+              loop={state === "LOOP"}
               speed={state === "START" || state === "LOOP" ? 1.5 : 1}
               onAnimationFinish={() =>
                 paymentAnimationState === state && handleAnimationFinish()
@@ -297,16 +311,18 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
           ]}
         >
           <Logo height={60} />
-          <View>
-            {paymentResult?.transaction?.id && (
-              <GaloySecondaryButton
-                containerStyle={styles.bottomSpacing}
-                title={LL.SendBitcoinPaymentScreen.details()}
-                onPress={onPressTransactionDetails}
-              />
-            )}
-            <GaloyPrimaryButton onPress={onPressHome} title={LL.HomeScreen.title()} />
-          </View>
+          {finalStates.includes(paymentAnimationState) && (
+            <View>
+              {paymentResult?.transaction?.id && (
+                <GaloySecondaryButton
+                  containerStyle={styles.bottomSpacing}
+                  title={LL.SendBitcoinPaymentScreen.details()}
+                  onPress={onPressTransactionDetails}
+                />
+              )}
+              <GaloyPrimaryButton onPress={onPressHome} title={LL.HomeScreen.title()} />
+            </View>
+          )}
         </Animated.View>
       </View>
     </Screen>
