@@ -74,8 +74,8 @@ describe("Login/Register Flow", () => {
 
   it("add an email", async () => {
     await tap(by.id("menu"))
-    await tap(by.text(LL.common.account()))
-    await tap(by.text(LL.AccountScreen.emailAuthentication()))
+    await tap(by.id(LL.common.account()))
+    await tap(by.id(LL.AccountScreen.tapToAddEmail()))
 
     const emailInput = element(by.id(LL.EmailRegistrationInitiateScreen.placeholder()))
     await waitFor(emailInput).toBeVisible().withTimeout(timeout)
@@ -130,7 +130,7 @@ describe("Login/Register Flow", () => {
 
   it("verify we are in the same account as we started with", async () => {
     await tap(by.id("menu"))
-    await tap(by.text(LL.common.account()))
+    await tap(by.id(LL.common.account()))
 
     const phoneNumber = element(by.text(ALICE_PHONE))
     await waitFor(phoneNumber).toBeVisible().withTimeout(timeout)
