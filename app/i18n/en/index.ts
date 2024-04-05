@@ -2305,6 +2305,8 @@ const en: BaseTranslation = {
     details: "Details",
   },
   SettingsScreen: {
+    staticQr: "Printable Static QR Code",
+    staticQrCopied: "Your static QR code link has been copied",
     setByOs: "Set by OS",
     pos: "Point of Sale",
     posCopied: "Your point of sale link has been copied",
@@ -2609,6 +2611,7 @@ const en: BaseTranslation = {
     enabled: "Enabled",
     notifications: "Notifications",
     preferences: "Preferences",
+    onDeviceSecurity: "On-Device Security",
     securityAndPrivacy: "Security and Privacy",
     advanced: "Advanced",
     community: "Community",

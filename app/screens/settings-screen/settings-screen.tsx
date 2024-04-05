@@ -13,6 +13,7 @@ import { DefaultWallet } from "./settings/account-default-wallet"
 import { AccountLevelSetting } from "./settings/account-level"
 import { AccountLNAddress } from "./settings/account-ln-address"
 import { AccountPOS } from "./settings/account-pos"
+import { AccountStaticQR } from "./settings/account-static-qr"
 import { TxLimits } from "./settings/account-tx-limits"
 import { ExportCsvSetting } from "./settings/advanced-export-csv"
 import { JoinCommunitySetting } from "./settings/community-join"
@@ -21,7 +22,8 @@ import { CurrencySetting } from "./settings/preferences-currency"
 import { LanguageSetting } from "./settings/preferences-language"
 import { ThemeSetting } from "./settings/preferences-theme"
 import { NotificationSetting } from "./settings/sp-notifications"
-import { SecuritySetting } from "./settings/sp-security"
+import { OnDeviceSecuritySetting } from "./settings/sp-security"
+import { TotpSetting } from "./totp"
 
 // All queries in settings have to be set here so that the server is not hit with
 // multiple requests for each query
@@ -59,7 +61,8 @@ export const SettingsScreen: React.FC = () => {
   const { currentLevel } = useLevel()
 
   const items = {
-    account: [AccountLevelSetting, TxLimits, AccountLNAddress, AccountPOS],
+    account: [AccountLevelSetting, TxLimits],
+    waysToGetPaid: [AccountLNAddress, AccountPOS, AccountStaticQR],
     preferences: [
       NotificationSetting,
       DefaultWallet,
@@ -67,7 +70,7 @@ export const SettingsScreen: React.FC = () => {
       CurrencySetting,
       ThemeSetting,
     ],
-    securityAndPrivacy: [SecuritySetting],
+    securityAndPrivacy: [TotpSetting, OnDeviceSecuritySetting],
     advanced: [ExportCsvSetting],
     community: [NeedHelpSetting, JoinCommunitySetting],
   }
@@ -77,6 +80,10 @@ export const SettingsScreen: React.FC = () => {
       <ScrollView contentContainerStyle={styles.outer}>
         {currentLevel === AccountLevel.NonAuth && <AccountBanner />}
         <SettingsGroup name={LL.common.account()} items={items.account} />
+        <SettingsGroup
+          name={LL.SettingsScreen.addressScreen()}
+          items={items.waysToGetPaid}
+        />
         <SettingsGroup name={LL.common.preferences()} items={items.preferences} />
         <SettingsGroup
           name={LL.common.securityAndPrivacy()}
