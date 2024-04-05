@@ -43,11 +43,11 @@ struct BitcoinPriceWidgetEntryView : View {
 
     var body: some View {
         VStack {
-            Text("Time:")
-            Text(entry.date, style: .time)
-
-            Text("Favorite Emoji:")
-            Text(entry.configuration.favoriteEmoji)
+            Text("Price:")
+            Text("$67.99")
+//
+//            Text("Favorite Emoji:")
+//            Text(entry.configuration.favoriteEmoji)
         }
     }
 }
@@ -60,6 +60,8 @@ struct BitcoinPriceWidget: Widget {
             BitcoinPriceWidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
+        .configurationDisplayName("Bitcoin Price")
+        .description("Shows price of bitcoin as reported by Blink servers")
     }
 }
 
