@@ -4,10 +4,7 @@ import { Animated, BackHandler, Dimensions, Easing, View } from "react-native"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 
 import errored from "@app/assets/animations/error.json"
-import erroredLoop from "@app/assets/animations/error_pulse_loop.json"
-import lnSuccessLoop from "@app/assets/animations/lightning_pulse_loop.json"
 import lnSuccess from "@app/assets/animations/lightning_success.json"
-import onchainSuccessLoop from "@app/assets/animations/onchain_pulse_loop.json"
 import onchainSuccess from "@app/assets/animations/onchain_success.json"
 import sendingLoop from "@app/assets/animations/send_loop.json"
 import sendingStart from "@app/assets/animations/send_start.json"
@@ -41,13 +38,11 @@ const animationMap = {
   LOOP: sendingLoop,
   TRANSITION: sendingTransition,
   LN_SUCCESS: lnSuccess,
-  LN_SUCCESS_LOOP: lnSuccessLoop,
   ONCHAIN_SUCCESS: onchainSuccess,
-  ONCHAIN_SUCCESS_LOOP: onchainSuccessLoop,
   ERRORED: errored,
-  ERRORED_LOOP: erroredLoop,
 }
 type PaymentAnimationState = keyof typeof animationMap
+const finalStates: PaymentAnimationState[] = ["LN_SUCCESS", "ONCHAIN_SUCCESS", "ERRORED"]
 
 type Props = {
   route: RouteProp<RootStackParamList, "sendBitcoinPayment">
@@ -229,7 +224,7 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
 
   // Should not be able to go back until the payment has been sent
   useEffect(() => {
-    if (paymentAnimationState.includes("_LOOP")) return
+    if (finalStates.includes(paymentAnimationState)) return
     const backHandler = BackHandler.addEventListener("hardwareBackPress", () => true)
     return () => backHandler.remove()
   }, [paymentAnimationState])
@@ -238,12 +233,6 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
   const handleAnimationFinish = () => {
     if (paymentAnimationState === "START") {
       setPaymentAnimationState("LOOP")
-    } else if (paymentAnimationState === "ONCHAIN_SUCCESS") {
-      setPaymentAnimationState("ONCHAIN_SUCCESS_LOOP")
-    } else if (paymentAnimationState === "LN_SUCCESS") {
-      setPaymentAnimationState("LN_SUCCESS_LOOP")
-    } else if (paymentAnimationState === "ERRORED") {
-      setPaymentAnimationState("ERRORED_LOOP")
     }
   }
 
