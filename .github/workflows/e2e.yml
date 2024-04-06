@@ -98,22 +98,27 @@ jobs:
         with:
           path: android-recordings
           predefinedAcl: publicRead
+          glob: "**/*.mp4"
+          headers: |-
+            content-type: video/mp4
           destination: galoy-mobile-recordings/android-recordings/${{ github.run_id }}
       - name: Append Direct Links to GitHub Actions Summary
         run: |
           # Define the base URL for the uploaded files in the GCS bucket
-          BASE_URL="https://storage.googleapis.com/galoy-mobile-recordings/android-recordings/${{ github.run_id }}"
+          BASE_URL="https://storage.googleapis.com/galoy-mobile-recordings/android-recordings/${{ github.run_id }}/android-recordings"
           echo "## Android Recordings" >> $GITHUB_STEP_SUMMARY
 
-          find android-recordings -type f | while read file; do
+          find android-recordings -type f -name "*.mp4" | while read file; do
             # Extract the relative path of the file within the android-recordings folder
             RELATIVE_PATH="${file#android-recordings/}"
 
             # Construct the direct URL for the file
             FILE_URL="${BASE_URL}/${RELATIVE_PATH}"
 
+            TEST_NAME=$(echo "$RELATIVE_PATH" | sed -E 's|.*/(.*)/test\.mp4|\1|')
+
             # Append the URL to the GitHub Actions summary
-            echo "- $FILE_URL" >> $GITHUB_STEP_SUMMARY
+            echo "- $TEST_NAME [Recording](<$FILE_URL>)" >> $GITHUB_STEP_SUMMARY
           done
 
       # Cleanup
@@ -215,22 +220,27 @@ jobs:
         with:
           path: ios-recordings
           predefinedAcl: publicRead
+          glob: "**/*.mp4"
+          headers: |-
+            content-type: video/mp4
           destination: galoy-mobile-recordings/ios-recordings/${{ github.run_id }}
       - name: Append Direct Links to GitHub Actions Summary
         run: |
           # Define the base URL for the uploaded files in the GCS bucket
-          BASE_URL="https://storage.googleapis.com/galoy-mobile-recordings/ios-recordings/${{ github.run_id }}"
+          BASE_URL="https://storage.googleapis.com/galoy-mobile-recordings/ios-recordings/${{ github.run_id }}/ios-recordings"
           echo "## iOS Recordings" >> $GITHUB_STEP_SUMMARY
 
-          find ios-recordings -type f | while read file; do
+          find ios-recordings -type f -name "*.mp4" | while read file; do
             # Extract the relative path of the file within the ios-recordings folder
             RELATIVE_PATH="${file#ios-recordings/}"
 
             # Construct the direct URL for the file
             FILE_URL="${BASE_URL}/${RELATIVE_PATH}"
 
+            TEST_NAME=$(echo "$RELATIVE_PATH" | sed -E 's|.*/(.*)/test\.mp4|\1|')
+
             # Append the URL to the GitHub Actions summary
-            echo "- $FILE_URL" >> $GITHUB_STEP_SUMMARY
+            echo "- $TEST_NAME [Recording](<$FILE_URL>)" >> $GITHUB_STEP_SUMMARY
           done
 
       # Cleanup
