@@ -16,6 +16,11 @@ declare module "*.json" {
   export default content
 }
 
+declare module "*.lottie" {
+  const content: string
+  export default content
+}
+
 declare module "react-native-walkthrough-tooltip" {
   export interface TooltipProps {
     children: React.ReactNode
