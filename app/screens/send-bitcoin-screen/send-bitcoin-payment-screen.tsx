@@ -4,10 +4,7 @@ import { Animated, BackHandler, Dimensions, Easing, View } from "react-native"
 import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 
 import errored from "@app/assets/animations/error.json"
-import erroredLoop from "@app/assets/animations/error_pulse_loop.json"
-import lnSuccessLoop from "@app/assets/animations/lightning_pulse_loop.json"
 import lnSuccess from "@app/assets/animations/lightning_success.json"
-import onchainSuccessLoop from "@app/assets/animations/onchain_pulse_loop.json"
 import onchainSuccess from "@app/assets/animations/onchain_success.json"
 import sendingLoop from "@app/assets/animations/send_loop.json"
 import sendingStart from "@app/assets/animations/send_start.json"
@@ -36,18 +33,18 @@ import {
   useSendPayment,
 } from "./use-send-payment"
 
+const MIN_ANIMATION_TIME_MS = 1500
+
 const animationMap = {
   START: sendingStart,
   LOOP: sendingLoop,
   TRANSITION: sendingTransition,
   LN_SUCCESS: lnSuccess,
-  LN_SUCCESS_LOOP: lnSuccessLoop,
   ONCHAIN_SUCCESS: onchainSuccess,
-  ONCHAIN_SUCCESS_LOOP: onchainSuccessLoop,
   ERRORED: errored,
-  ERRORED_LOOP: erroredLoop,
 }
 type PaymentAnimationState = keyof typeof animationMap
+const finalStates: PaymentAnimationState[] = ["LN_SUCCESS", "ONCHAIN_SUCCESS", "ERRORED"]
 
 type Props = {
   route: RouteProp<RootStackParamList, "sendBitcoinPayment">
@@ -210,26 +207,38 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
   }, [paymentResult, LL, locale, route.params.paymentDetail, formatMoneyAmount])
 
   // --- ANIMATION CONTROLLER ---
+  const startTime = useRef(Date.now())
   useEffect(() => {
     if (paymentResult && paymentAnimationState === "LOOP") {
-      setPaymentAnimationState("TRANSITION")
-      setTimeout(() => {
-        if (paymentResult.status === "SUCCESS" || paymentResult.status === "PENDING") {
-          const { status, extraInfo } = paymentResult
-          const arrivalAtMempoolEstimate = extraInfo?.arrivalAtMempoolEstimate
-          setPaymentAnimationState(
-            processStatus({ arrivalAtMempoolEstimate, status }) === "QUEUED"
-              ? "ONCHAIN_SUCCESS"
-              : "LN_SUCCESS",
-          )
-        } else setPaymentAnimationState("ERRORED")
-      }, calculateDuration(35))
+      const handleUpdate = () => {
+        setPaymentAnimationState("TRANSITION")
+        setTimeout(() => {
+          if (paymentResult.status === "SUCCESS" || paymentResult.status === "PENDING") {
+            const { status, extraInfo } = paymentResult
+            const arrivalAtMempoolEstimate = extraInfo?.arrivalAtMempoolEstimate
+            setPaymentAnimationState(
+              processStatus({ arrivalAtMempoolEstimate, status }) === "QUEUED"
+                ? "ONCHAIN_SUCCESS"
+                : "LN_SUCCESS",
+            )
+          } else setPaymentAnimationState("ERRORED")
+        }, calculateDuration(35))
+      }
+
+      // Even a fews has not passed, show the loop animation and
+      // wait there for MIN_ANIMATION_TIME_MS so everything feels reactive
+      const timeElapsed = Date.now() - startTime.current
+      if (timeElapsed < MIN_ANIMATION_TIME_MS) {
+        const t = setTimeout(() => handleUpdate(), MIN_ANIMATION_TIME_MS - timeElapsed)
+        return () => clearTimeout(t)
+      }
+      handleUpdate()
     }
   }, [paymentResult, paymentAnimationState, route.params.paymentDetail.paymentType])
 
   // Should not be able to go back until the payment has been sent
   useEffect(() => {
-    if (paymentAnimationState.includes("_LOOP")) return
+    if (finalStates.includes(paymentAnimationState)) return
     const backHandler = BackHandler.addEventListener("hardwareBackPress", () => true)
     return () => backHandler.remove()
   }, [paymentAnimationState])
@@ -238,12 +247,6 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
   const handleAnimationFinish = () => {
     if (paymentAnimationState === "START") {
       setPaymentAnimationState("LOOP")
-    } else if (paymentAnimationState === "ONCHAIN_SUCCESS") {
-      setPaymentAnimationState("ONCHAIN_SUCCESS_LOOP")
-    } else if (paymentAnimationState === "LN_SUCCESS") {
-      setPaymentAnimationState("LN_SUCCESS_LOOP")
-    } else if (paymentAnimationState === "ERRORED") {
-      setPaymentAnimationState("ERRORED_LOOP")
     }
   }
 
@@ -279,7 +282,7 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
               style={[styles.animView, paymentAnimationState !== state && styles.hidden]}
               source={source}
               autoPlay={paymentAnimationState === state}
-              loop={state.includes("LOOP")}
+              loop={state === "LOOP"}
               speed={state === "START" || state === "LOOP" ? 1.5 : 1}
               onAnimationFinish={() =>
                 paymentAnimationState === state && handleAnimationFinish()
@@ -308,16 +311,18 @@ const SendBitcoinPaymentScreen: React.FC<Props> = ({ route }) => {
           ]}
         >
           <Logo height={60} />
-          <View>
-            {paymentResult?.transaction?.id && (
-              <GaloySecondaryButton
-                containerStyle={styles.bottomSpacing}
-                title={LL.SendBitcoinPaymentScreen.details()}
-                onPress={onPressTransactionDetails}
-              />
-            )}
-            <GaloyPrimaryButton onPress={onPressHome} title={LL.HomeScreen.title()} />
-          </View>
+          {finalStates.includes(paymentAnimationState) && (
+            <View>
+              {paymentResult?.transaction?.id && (
+                <GaloySecondaryButton
+                  containerStyle={styles.bottomSpacing}
+                  title={LL.SendBitcoinPaymentScreen.details()}
+                  onPress={onPressTransactionDetails}
+                />
+              )}
+              <GaloyPrimaryButton onPress={onPressHome} title={LL.HomeScreen.title()} />
+            </View>
+          )}
         </Animated.View>
       </View>
     </Screen>
