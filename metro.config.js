@@ -23,7 +23,7 @@ const config = {
     }),
   },
   resolver: {
-    assetExts: assetExts.filter((ext) => ext !== "svg"),
+    assetExts: [...assetExts.filter((ext) => ext !== "svg"), "lottie"],
     sourceExts: [...sourceExts, "svg", "cjs", "json"],
 
     // unclear those 2 below are needed
