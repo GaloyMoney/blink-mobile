@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { StackScreenProps } from "@react-navigation/stack"
 import styled from "styled-components/native"
-import { Icon } from "@rneui/themed"
+import { Icon, useTheme, useThemeMode } from "@rneui/themed"
 import * as Keychain from "react-native-keychain"
 
 // hooks
@@ -23,6 +23,9 @@ const KEYCHAIN_MNEMONIC_KEY = "mnemonic_key"
 type Props = StackScreenProps<RootStackParamList, "ImportWalletOptions">
 
 const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
+  const { theme } = useTheme()
+  const { mode } = useThemeMode()
+  const colors = theme.colors
   const insideApp = route.params?.insideApp
   const bottom = useSafeAreaInsets().bottom
   const { btcWalletEnabled } = useAppSelector((state) => state.settings)
@@ -102,9 +105,9 @@ const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
   }
 
   return (
-    <Wrapper>
+    <Wrapper style={{ backgroundColor: colors.white }}>
       <Container>
-        <Title>
+        <Title style={{ color: colors.black }}>
           {insideApp
             ? LL.ImportWalletOptions.importOptions()
             : LL.ImportWalletOptions.loginOptions()}
@@ -119,7 +122,9 @@ const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
               size={40}
             />
             <BtnTextWrapper>
-              <BtnTitle>{LL.ImportWalletOptions.recoveryPhrase()}</BtnTitle>
+              <BtnTitle style={{ color: colors.black }}>
+                {LL.ImportWalletOptions.recoveryPhrase()}
+              </BtnTitle>
               <BtnDesc>{LL.ImportWalletOptions.importBTCWallet()}</BtnDesc>
             </BtnTextWrapper>
             {!BTCWalletImported && (
@@ -139,7 +144,9 @@ const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
             size={40}
           />
           <BtnTextWrapper>
-            <BtnTitle>{LL.ImportWalletOptions.phone()}</BtnTitle>
+            <BtnTitle style={{ color: colors.black }}>
+              {LL.ImportWalletOptions.phone()}
+            </BtnTitle>
             <BtnDesc>{LL.ImportWalletOptions.importUsingPhone()}</BtnDesc>
           </BtnTextWrapper>
           {!USDWalletImported && (
@@ -158,7 +165,9 @@ const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
             size={40}
           />
           <BtnTextWrapper>
-            <BtnTitle>{LL.ImportWalletOptions.email()}</BtnTitle>
+            <BtnTitle style={{ color: colors.black }}>
+              {LL.ImportWalletOptions.email()}
+            </BtnTitle>
             <BtnDesc>{LL.ImportWalletOptions.importUsingEmail()}</BtnDesc>
           </BtnTextWrapper>
           {!USDWalletImported && (
@@ -170,8 +179,16 @@ const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
         disabled={!BTCWalletImported && !USDWalletImported}
         bottom={bottom}
         onPress={onLogin}
+        style={{
+          backgroundColor:
+            !BTCWalletImported && !USDWalletImported
+              ? mode === "dark"
+                ? "#5b5b5b"
+                : "#DEDEDE"
+              : "#60aa55",
+        }}
       >
-        <MainBtnTitle>
+        <MainBtnTitle style={{ color: colors.white }}>
           {insideApp ? LL.ImportWalletOptions.done() : LL.ImportWalletOptions.login()}
         </MainBtnTitle>
       </MainBtn>
@@ -183,7 +200,6 @@ export default ImportWalletOptions
 
 const Wrapper = styled.View`
   flex: 1;
-  background-color: #fff;
   justify-content: space-between;
   padding-horizontal: 20px;
 `
@@ -193,7 +209,6 @@ const Container = styled.View``
 const Title = styled.Text`
   font-size: 21px;
   font-weight: 600;
-  color: #000;
   text-align: center;
   margin-bottom: 30px;
 `
@@ -215,7 +230,6 @@ const BtnTextWrapper = styled.View`
 
 const BtnTitle = styled.Text`
   font-size: 18px;
-  color: #000;
 `
 
 const BtnDesc = styled.Text`
@@ -230,7 +244,6 @@ const MainBtn = styled.TouchableOpacity<{
   align-items: center;
   justify-content: center;
   border-radius: 5px;
-  background-color: ${({ disabled }) => (disabled ? "#DEDEDE" : "#60aa55")};
   margin-bottom: ${({ bottom }) => bottom || 10}px;
   padding-vertical: 14px;
 `
@@ -238,5 +251,4 @@ const MainBtn = styled.TouchableOpacity<{
 const MainBtnTitle = styled.Text`
   font-size: 18px;
   font-weight: 600;
-  color: #fff;
 `

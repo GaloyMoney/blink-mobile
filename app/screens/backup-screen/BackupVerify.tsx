@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import * as Keychain from "react-native-keychain"
+import { useTheme, useThemeMode } from "@rneui/themed"
 
 type Props = StackScreenProps<RootStackParamList, "BackupVerify">
 
@@ -16,6 +17,9 @@ type ShuffledPhraseType = {
 }
 
 const BackupVerify: React.FC<Props> = ({ navigation }) => {
+  const { theme } = useTheme()
+  const { mode } = useThemeMode()
+  const colors = theme.colors
   const { LL } = useI18nContext()
   const bottom = useSafeAreaInsets().bottom
   const [selectOrder, setSelectOrder] = useState(0)
@@ -94,10 +98,14 @@ const BackupVerify: React.FC<Props> = ({ navigation }) => {
       <SeedPhrase
         onPress={() => onSelect(item, index)}
         disabled={wrongSelect || item.selectedInOrder}
+        style={{ backgroundColor: mode === "dark" ? "#5b5b5b" : "#ededed" }}
         marginRight={index % 2 === 0}
       >
-        <SeedPhraseNum selectedInOrder={item.selectedInOrder}>
-          <Text>
+        <SeedPhraseNum
+          style={{ borderRightColor: colors.white }}
+          selectedInOrder={item.selectedInOrder}
+        >
+          <Text style={{ color: colors.black }}>
             {item.selectedInOrder !== undefined
               ? item.selectedInOrder
                 ? item.order + 1
@@ -106,16 +114,16 @@ const BackupVerify: React.FC<Props> = ({ navigation }) => {
           </Text>
         </SeedPhraseNum>
         <SeedPhraseText>
-          <Text>{item.key}</Text>
+          <Text style={{ color: colors.black }}>{item.key}</Text>
         </SeedPhraseText>
       </SeedPhrase>
     )
   }
 
   return (
-    <Wrapper>
+    <Wrapper style={{ backgroundColor: colors.white }}>
       <Container>
-        <Title>
+        <Title style={{ color: colors.black }}>
           {selectOrder === 12 && !wrongSelect
             ? LL.BackupVerify.correctTitle()
             : wrongSelect
@@ -136,15 +144,27 @@ const BackupVerify: React.FC<Props> = ({ navigation }) => {
           isOutline={true}
           bottom={25}
           onPress={() => shuffleSeedPhrase(shuffledSeedPhrase)}
+          style={{ backgroundColor: colors.white }}
         >
-          <BtnTitle isOutline={true}>{LL.BackupVerify.tryAgain()}</BtnTitle>
+          <BtnTitle style={{ color: colors.black }}>
+            {LL.BackupVerify.tryAgain()}
+          </BtnTitle>
         </Btn>
         <Btn
           bottom={bottom}
           disabled={!(selectOrder === 12 && !wrongSelect)}
           onPress={onContinue}
+          style={{
+            backgroundColor: !(selectOrder === 12 && !wrongSelect)
+              ? mode === "dark"
+                ? "#5b5b5b"
+                : "#DEDEDE"
+              : "#60aa55",
+          }}
         >
-          <BtnTitle>{LL.BackupVerify.continue()}</BtnTitle>
+          <BtnTitle style={{ color: colors.white }}>
+            {LL.BackupVerify.continue()}
+          </BtnTitle>
         </Btn>
       </ButtonsWrapper>
     </Wrapper>
@@ -155,7 +175,6 @@ export default BackupVerify
 
 const Wrapper = styled.View`
   flex: 1;
-  background-color: #fff;
   justify-content: space-between;
 `
 
@@ -166,12 +185,10 @@ const Container = styled.ScrollView`
 const Title = styled.Text`
   font-size: 21px;
   font-weight: 600;
-  color: #000;
   text-align: center;
 `
 
 const SeedPhrase = styled.TouchableOpacity<{ marginRight: boolean }>`
-  background-color: #ededed;
   flex: 1;
   flex-direction: row;
   align-items: center;
@@ -182,9 +199,11 @@ const SeedPhrase = styled.TouchableOpacity<{ marginRight: boolean }>`
 `
 const SeedPhraseNum = styled.View<{ selectedInOrder?: boolean }>`
   width: 50px;
+  height: 100%;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
   border-right-width: 2px;
-  border-right-color: #fff;
   padding-left: 5px;
   background-color: ${({ selectedInOrder }) =>
     selectedInOrder === undefined
@@ -192,7 +211,6 @@ const SeedPhraseNum = styled.View<{ selectedInOrder?: boolean }>`
       : selectedInOrder
       ? "#34C571"
       : "#EB5757"};
-  padding-vertical: 14px;
 `
 
 const SeedPhraseText = styled.View`
@@ -204,7 +222,6 @@ const SeedPhraseText = styled.View`
 const Text = styled.Text`
   font-size: 18px;
   font-weight: 600;
-  color: #000;
 `
 
 const ButtonsWrapper = styled.View`
@@ -214,21 +231,17 @@ const ButtonsWrapper = styled.View`
 
 const Btn = styled.TouchableOpacity<{
   isOutline?: boolean
-  disabled?: boolean
   bottom: number
 }>`
   align-items: center;
   justify-content: center;
   border-radius: 5px;
-  background-color: ${({ isOutline, disabled }) =>
-    isOutline ? "#fff" : disabled ? "#DEDEDE" : "#60aa55"};
   border: ${({ isOutline }) => (isOutline ? 1 : 0)}px solid #bbb;
   margin-bottom: ${({ bottom }) => bottom || 10}px;
   padding-vertical: 14px;
 `
 
-const BtnTitle = styled.Text<{ isOutline?: boolean }>`
+const BtnTitle = styled.Text`
   font-size: 18px;
   font-weight: 600;
-  color: ${({ isOutline }) => (isOutline ? "#000" : "#fff")};
 `

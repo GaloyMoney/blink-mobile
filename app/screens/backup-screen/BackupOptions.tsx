@@ -8,6 +8,7 @@ import { Icon } from "@rneui/themed"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useAppSelector } from "@app/store/redux"
+import { useTheme } from "@rneui/themed"
 
 // components
 import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
@@ -28,6 +29,8 @@ import { useLevel } from "@app/graphql/level-context"
 type Props = StackScreenProps<RootStackParamList, "BackupOptions">
 
 const BackupOptions: React.FC<Props> = ({ navigation }) => {
+  const { theme } = useTheme()
+  const colors = theme.colors
   const bottom = useSafeAreaInsets().bottom
   const { btcWalletEnabled } = useAppSelector((state) => state.settings)
   const { LL } = useI18nContext()
@@ -77,9 +80,9 @@ const BackupOptions: React.FC<Props> = ({ navigation }) => {
   }
 
   return (
-    <Wrapper>
+    <Wrapper style={{ backgroundColor: colors.white }}>
       <Container>
-        <Title>{LL.BackupOptions.title()}</Title>
+        <Title style={{ color: colors.black }}>{LL.BackupOptions.title()}</Title>
         {btcWalletEnabled && (
           <Btn onPress={onBackupBTCWallet}>
             <Icon
@@ -89,7 +92,7 @@ const BackupOptions: React.FC<Props> = ({ navigation }) => {
               size={40}
             />
             <BtnTextWrapper>
-              <BtnTitle>
+              <BtnTitle style={{ color: colors.black }}>
                 {backupIsCompleted
                   ? LL.BackupOptions.revealRecoveryPhrase()
                   : LL.BackupOptions.recoveryPhrase()}
@@ -111,7 +114,9 @@ const BackupOptions: React.FC<Props> = ({ navigation }) => {
             size={40}
           />
           <BtnTextWrapper>
-            <BtnTitle>{LL.BackupOptions.phone()}</BtnTitle>
+            <BtnTitle style={{ color: colors.black }}>
+              {LL.BackupOptions.phone()}
+            </BtnTitle>
             <BtnDesc>
               {!!data?.me?.phone
                 ? LL.BackupOptions.usePhoneNumber().replace("yourNumber", data?.me?.phone)
@@ -122,7 +127,9 @@ const BackupOptions: React.FC<Props> = ({ navigation }) => {
         </Btn>
       </Container>
       <MainBtn bottom={bottom} onPress={() => navigation.goBack()}>
-        <MainBtnTitle>{LL.BackupOptions.done()}</MainBtnTitle>
+        <MainBtnTitle style={{ color: colors.white }}>
+          {LL.BackupOptions.done()}
+        </MainBtnTitle>
       </MainBtn>
       <UpgradeAccountModal
         isVisible={upgradeAccountModalVisible}
@@ -136,7 +143,6 @@ export default BackupOptions
 
 const Wrapper = styled.View`
   flex: 1;
-  background-color: #fff;
   justify-content: space-between;
   padding-horizontal: 20px;
 `
@@ -146,7 +152,6 @@ const Container = styled.View``
 const Title = styled.Text`
   font-size: 21px;
   font-weight: 600;
-  color: #000;
   text-align: center;
   margin-bottom: 30px;
 `
@@ -168,7 +173,6 @@ const BtnTextWrapper = styled.View`
 
 const BtnTitle = styled.Text`
   font-size: 18px;
-  color: #000;
 `
 
 const BtnDesc = styled.Text`
@@ -191,5 +195,4 @@ const MainBtn = styled.TouchableOpacity<{
 const MainBtnTitle = styled.Text`
   font-size: 18px;
   font-weight: 600;
-  color: #fff;
 `

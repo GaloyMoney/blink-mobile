@@ -10,6 +10,7 @@ import * as bip39 from "bip39"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useCreateAccount } from "@app/hooks/useCreateAccount"
+import { useTheme, useThemeMode } from "@rneui/themed"
 
 // utils
 import { disconnectToSDK, initializeBreezSDK } from "@app/utils/breez-sdk"
@@ -26,6 +27,9 @@ const KEYCHAIN_MNEMONIC_KEY = "mnemonic_key"
 
 const ImportWallet: React.FC<Props> = ({ navigation, route }) => {
   const insideApp = route.params?.insideApp
+  const { theme } = useTheme()
+  const { mode } = useThemeMode()
+  const colors = theme.colors
   const { LL } = useI18nContext()
   const bottom = useSafeAreaInsets().bottom
   const inputRef = useRef<TextInput[]>([])
@@ -70,9 +74,12 @@ const ImportWallet: React.FC<Props> = ({ navigation, route }) => {
     index: number
   }) => {
     return (
-      <SeedPhrase marginRight={index % 2 === 0}>
-        <SeedPhraseNum>
-          <Text>{index + 1}</Text>
+      <SeedPhrase
+        style={{ backgroundColor: mode === "dark" ? "#5b5b5b" : "#ededed" }}
+        marginRight={index % 2 === 0}
+      >
+        <SeedPhraseNum style={{ borderRightColor: colors.white }}>
+          <Text style={{ color: colors.black }}>{index + 1}</Text>
         </SeedPhraseNum>
         <SeedPhraseText>
           <Input
@@ -94,16 +101,19 @@ const ImportWallet: React.FC<Props> = ({ navigation, route }) => {
               }
             }}
             returnKeyType={index === 11 ? "done" : "next"}
+            style={{ color: colors.black }}
           />
         </SeedPhraseText>
       </SeedPhrase>
     )
   }
 
+  const disabled = inputSeedPhrase.findIndex((el) => el === "") !== -1
+
   return (
-    <Wrapper>
+    <Wrapper style={{ backgroundColor: colors.white }}>
       <Container>
-        <Title>
+        <Title style={{ color: colors.black }}>
           {insideApp ? LL.ImportWallet.importTitle() : LL.ImportWallet.title()}
         </Title>
         <Description>{LL.ImportWallet.description()}</Description>
@@ -116,15 +126,22 @@ const ImportWallet: React.FC<Props> = ({ navigation, route }) => {
           style={{ marginVertical: 25 }}
         />
       </Container>
-      <ButtonsWrapper>
-        <Btn
-          bottom={bottom}
-          disabled={inputSeedPhrase.findIndex((el) => el === "") !== -1}
-          onPress={onComplete}
-        >
-          <BtnTitle>{LL.ImportWallet.complete()}</BtnTitle>
-        </Btn>
-      </ButtonsWrapper>
+
+      <Btn
+        bottom={bottom}
+        disabled={disabled}
+        onPress={onComplete}
+        style={{
+          backgroundColor: disabled
+            ? mode === "dark"
+              ? "#5b5b5b"
+              : "#DEDEDE"
+            : "#60aa55",
+        }}
+      >
+        <BtnTitle style={{ color: colors.white }}>{LL.ImportWallet.complete()}</BtnTitle>
+      </Btn>
+
       {loading && (
         <LoadingWrapper>
           <ActivityIndicator size={"large"} color={"#60aa55"} />
@@ -138,7 +155,6 @@ export default ImportWallet
 
 const Wrapper = styled.View`
   flex: 1;
-  background-color: #fff;
   justify-content: space-between;
 `
 
@@ -149,7 +165,6 @@ const Container = styled.ScrollView`
 const Title = styled.Text`
   font-size: 21px;
   font-weight: 600;
-  color: #000;
   text-align: center;
   margin-bottom: 10px;
 `
@@ -162,7 +177,6 @@ const Description = styled.Text`
 `
 
 const SeedPhrase = styled.View<{ marginRight: boolean }>`
-  background-color: #ededed;
   flex: 1;
   flex-direction: row;
   align-items: center;
@@ -177,7 +191,6 @@ const SeedPhraseNum = styled.View<{ selectedInOrder?: boolean }>`
   align-items: center;
   justify-content: center;
   border-right-width: 2px;
-  border-right-color: #fff;
 `
 
 const SeedPhraseText = styled.View`
@@ -188,7 +201,6 @@ const SeedPhraseText = styled.View`
 const Text = styled.Text`
   font-size: 18px;
   font-weight: 600;
-  color: #000;
 `
 
 const Input = styled.TextInput`
@@ -196,34 +208,24 @@ const Input = styled.TextInput`
   height: 46px;
   font-size: 18px;
   font-weight: 600;
-  color: #000;
   padding-horizontal: 5px;
 `
 
-const ButtonsWrapper = styled.View`
-  padding-top: 10px;
-  padding-horizontal: 20px;
-`
-
 const Btn = styled.TouchableOpacity<{
-  isOutline?: boolean
-  disabled?: boolean
   bottom: number
 }>`
   align-items: center;
   justify-content: center;
   border-radius: 5px;
-  background-color: ${({ isOutline, disabled }) =>
-    isOutline ? "#fff" : disabled ? "#DEDEDE" : "#60aa55"};
-  border: ${({ isOutline }) => (isOutline ? 1 : 0)}px solid #bbb;
   margin-bottom: ${({ bottom }) => bottom || 10}px;
+  margin-top: 10px;
+  margin-horizontal: 20px;
   padding-vertical: 14px;
 `
 
-const BtnTitle = styled.Text<{ isOutline?: boolean }>`
+const BtnTitle = styled.Text`
   font-size: 18px;
   font-weight: 600;
-  color: ${({ isOutline }) => (isOutline ? "#000" : "#fff")};
 `
 
 const LoadingWrapper = styled.View`

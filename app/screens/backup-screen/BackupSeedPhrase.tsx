@@ -6,10 +6,14 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import * as Keychain from "react-native-keychain"
+import { useTheme, useThemeMode } from "@rneui/themed"
 
 type Props = StackScreenProps<RootStackParamList, "BackupSeedPhrase">
 
 const BackupSeedPhrase: React.FC<Props> = ({ navigation }) => {
+  const { theme } = useTheme()
+  const { mode } = useThemeMode()
+  const colors = theme.colors
   const { LL } = useI18nContext()
   const bottom = useSafeAreaInsets().bottom
   const [seedPhrase, setSeedPhrase] = useState<string[]>([])
@@ -31,21 +35,24 @@ const BackupSeedPhrase: React.FC<Props> = ({ navigation }) => {
 
   const renderItemHandler = ({ item, index }: { item: string; index: number }) => {
     return (
-      <SeedPhrase marginRight={index % 2 === 0}>
-        <SeedPhraseNum>
-          <Text>{index + 1}</Text>
+      <SeedPhrase
+        marginRight={index % 2 === 0}
+        style={{ backgroundColor: mode === "dark" ? "#5b5b5b" : "#ededed" }}
+      >
+        <SeedPhraseNum style={{ borderRightColor: colors.white }}>
+          <Text style={{ color: colors.black }}>{index + 1}</Text>
         </SeedPhraseNum>
         <SeedPhraseText>
-          <Text>{item}</Text>
+          <Text style={{ color: colors.black }}>{item}</Text>
         </SeedPhraseText>
       </SeedPhrase>
     )
   }
 
   return (
-    <Wrapper>
+    <Wrapper style={{ backgroundColor: colors.white }}>
       <Container>
-        <Title>{LL.BackupSeedPhrase.title()}</Title>
+        <Title style={{ color: colors.black }}>{LL.BackupSeedPhrase.title()}</Title>
         <Description>{LL.BackupSeedPhrase.description()}</Description>
         <FlatList
           data={seedPhrase}
@@ -66,7 +73,9 @@ const BackupSeedPhrase: React.FC<Props> = ({ navigation }) => {
           </BtnTitle>
         </Btn> */}
         <Btn bottom={bottom} onPress={onVerify}>
-          <BtnTitle>{LL.BackupSeedPhrase.verify()}</BtnTitle>
+          <BtnTitle style={{ color: colors.white }}>
+            {LL.BackupSeedPhrase.verify()}
+          </BtnTitle>
         </Btn>
       </ButtonsWrapper>
     </Wrapper>
@@ -77,7 +86,6 @@ export default BackupSeedPhrase
 
 const Wrapper = styled.View`
   flex: 1;
-  background-color: #fff;
   justify-content: space-between;
 `
 
@@ -88,7 +96,6 @@ const Container = styled.ScrollView`
 const Title = styled.Text`
   font-size: 21px;
   font-weight: 600;
-  color: #000;
   text-align: center;
   margin-bottom: 10px;
 `
@@ -101,7 +108,6 @@ const Description = styled.Text`
 `
 
 const SeedPhrase = styled.View<{ marginRight: boolean }>`
-  background-color: #ededed;
   flex: 1;
   flex-direction: row;
   align-items: center;
@@ -113,7 +119,6 @@ const SeedPhraseNum = styled.View`
   width: 50px;
   align-items: center;
   border-right-width: 2px;
-  border-right-color: #fff;
   padding-left: 5px;
   padding-vertical: 14px;
 `
@@ -126,7 +131,6 @@ const SeedPhraseText = styled.View`
 const Text = styled.Text`
   font-size: 18px;
   font-weight: 600;
-  color: #000;
 `
 
 const ButtonsWrapper = styled.View`

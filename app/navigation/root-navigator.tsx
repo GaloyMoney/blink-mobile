@@ -429,9 +429,6 @@ export const RootStack = () => {
         screenOptions={{
           title: "",
           headerShadowVisible: false,
-          headerStyle: { backgroundColor: "#fff" },
-          headerBackTitleStyle: { color: "#000" },
-          headerTintColor: "#000",
         }}
       >
         <RootNavigator.Screen name="BackupOptions" component={BackupOptions} />

@@ -4,6 +4,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { StackScreenProps } from "@react-navigation/stack"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { useTheme } from "@rneui/themed"
 
 // utils
 import { save } from "@app/utils/storage"
@@ -14,6 +15,8 @@ import CircleCheck from "@app/assets/icons/circleCheck.png"
 type Props = StackScreenProps<RootStackParamList, "BackupComplete">
 
 const BackupComplete: React.FC<Props> = ({ navigation }) => {
+  const { theme } = useTheme()
+  const colors = theme.colors
   const { LL } = useI18nContext()
   const bottom = useSafeAreaInsets().bottom
 
@@ -23,14 +26,16 @@ const BackupComplete: React.FC<Props> = ({ navigation }) => {
   }
 
   return (
-    <Wrapper>
+    <Wrapper style={{ backgroundColor: colors.white }}>
       <Container>
         <Image source={CircleCheck} />
-        <Title>{LL.BackupComplete.title()}</Title>
+        <Title style={{ color: colors.black }}>{LL.BackupComplete.title()}</Title>
         <Description>{LL.BackupComplete.description()}</Description>
       </Container>
       <Btn bottom={bottom} onPress={onContinue}>
-        <BtnTitle>{LL.BackupComplete.complete()}</BtnTitle>
+        <BtnTitle style={{ color: colors.white }}>
+          {LL.BackupComplete.complete()}
+        </BtnTitle>
       </Btn>
     </Wrapper>
   )
@@ -40,7 +45,6 @@ export default BackupComplete
 
 const Wrapper = styled.View`
   flex: 1;
-  background-color: #fff;
   justify-content: space-between;
   padding-horizontal: 20px;
 `
@@ -59,7 +63,6 @@ const Image = styled.Image`
 const Title = styled.Text`
   font-size: 21px;
   font-weight: 600;
-  color: #000;
   text-align: center;
   margin-bottom: 10px;
 `
@@ -83,5 +86,4 @@ const Btn = styled.TouchableOpacity<{ bottom: number }>`
 const BtnTitle = styled.Text`
   font-size: 18px;
   font-weight: 600;
-  color: #fff;
 `
