@@ -4,7 +4,7 @@ import { TranslationFunctions } from "../../app/i18n/i18n-types"
 import { i18nObject } from "../../app/i18n/i18n-util"
 import { loadLocale } from "../../app/i18n/i18n-util.sync"
 import { getKratosCode } from "./utils/commandline"
-import { waitForAccountScreen } from "./utils/common-flows"
+import { waitForAccountScreen, waitForSettingsScreen } from "./utils/common-flows"
 import { timeout, ALICE_PHONE, ALICE_EMAIL, otp } from "./utils/config"
 import { tap } from "./utils/controls"
 
@@ -74,7 +74,6 @@ describe("Login/Register Flow", () => {
 
   it("add an email", async () => {
     await tap(by.id("menu"))
-    await tap(by.id(LL.common.account()))
     await tap(by.id(LL.AccountScreen.tapToAddEmail()))
 
     const emailInput = element(by.id(LL.EmailRegistrationInitiateScreen.placeholder()))
@@ -94,6 +93,8 @@ describe("Login/Register Flow", () => {
   })
 
   it("logout", async () => {
+    await waitForSettingsScreen(LL)
+    await tap(by.id(LL.common.account()))
     await waitForAccountScreen(LL)
 
     const logoutBtn = element(by.id(LL.AccountScreen.logOutAndDeleteLocalData()))
@@ -130,7 +131,6 @@ describe("Login/Register Flow", () => {
 
   it("verify we are in the same account as we started with", async () => {
     await tap(by.id("menu"))
-    await tap(by.id(LL.common.account()))
 
     const phoneNumber = element(by.text(ALICE_PHONE))
     await waitFor(phoneNumber).toBeVisible().withTimeout(timeout)
