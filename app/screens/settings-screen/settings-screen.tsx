@@ -8,6 +8,8 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { makeStyles } from "@rneui/themed"
 
 import { AccountBanner } from "./account/banner"
+import { EmailSetting } from "./account/settings/email"
+import { PhoneSetting } from "./account/settings/phone"
 import { SettingsGroup } from "./group"
 import { DefaultWallet } from "./settings/account-default-wallet"
 import { AccountLevelSetting } from "./settings/account-level"
@@ -58,10 +60,11 @@ export const SettingsScreen: React.FC = () => {
   const styles = useStyles()
   const { LL } = useI18nContext()
 
-  const { currentLevel } = useLevel()
+  const { currentLevel, isAtLeastLevelOne } = useLevel()
 
   const items = {
     account: [AccountLevelSetting, TxLimits],
+    loginMethods: [EmailSetting, PhoneSetting],
     waysToGetPaid: [AccountLNAddress, AccountPOS, AccountStaticQR],
     preferences: [
       NotificationSetting,
@@ -80,6 +83,12 @@ export const SettingsScreen: React.FC = () => {
       <ScrollView contentContainerStyle={styles.outer}>
         {currentLevel === AccountLevel.NonAuth && <AccountBanner />}
         <SettingsGroup name={LL.common.account()} items={items.account} />
+        {isAtLeastLevelOne && (
+          <SettingsGroup
+            name={LL.AccountScreen.loginMethods()}
+            items={items.loginMethods}
+          />
+        )}
         <SettingsGroup
           name={LL.SettingsScreen.addressScreen()}
           items={items.waysToGetPaid}
