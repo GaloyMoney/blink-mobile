@@ -2,6 +2,13 @@ import { TranslationFunctions } from "../../../app/i18n/i18n-types"
 import { timeout } from "./config"
 import { tap } from "./controls"
 
+export const waitForSettingsScreen = async (LL: TranslationFunctions) => {
+  const el = element(by.text(LL.SettingsScreen.addressScreen()))
+  await waitFor(el)
+    .toBeVisible()
+    .withTimeout(timeout * 3)
+}
+
 export const waitForAccountScreen = async (LL: TranslationFunctions) => {
   const el = element(by.text(LL.AccountScreen.accountId()))
   await waitFor(el)
