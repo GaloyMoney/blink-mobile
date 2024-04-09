@@ -103,6 +103,7 @@ jobs:
             content-type: video/mp4
           destination: galoy-mobile-recordings/android-recordings/${{ github.run_id }}
       - name: Append Direct Links to GitHub Actions Summary
+        if: always()
         run: |
           # Define the base URL for the uploaded files in the GCS bucket
           BASE_URL="https://storage.googleapis.com/galoy-mobile-recordings/android-recordings/${{ github.run_id }}/android-recordings"
@@ -225,6 +226,7 @@ jobs:
             content-type: video/mp4
           destination: galoy-mobile-recordings/ios-recordings/${{ github.run_id }}
       - name: Append Direct Links to GitHub Actions Summary
+        if: always()
         run: |
           # Define the base URL for the uploaded files in the GCS bucket
           BASE_URL="https://storage.googleapis.com/galoy-mobile-recordings/ios-recordings/${{ github.run_id }}/ios-recordings"
