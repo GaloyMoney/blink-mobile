@@ -17,6 +17,7 @@ import { AccountLNAddress } from "./settings/account-ln-address"
 import { AccountPOS } from "./settings/account-pos"
 import { AccountStaticQR } from "./settings/account-static-qr"
 import { TxLimits } from "./settings/account-tx-limits"
+import { ApiAccessSetting } from "./settings/advanced-api-access"
 import { ExportCsvSetting } from "./settings/advanced-export-csv"
 import { JoinCommunitySetting } from "./settings/community-join"
 import { NeedHelpSetting } from "./settings/community-need-help"
@@ -74,7 +75,7 @@ export const SettingsScreen: React.FC = () => {
       ThemeSetting,
     ],
     securityAndPrivacy: [TotpSetting, OnDeviceSecuritySetting],
-    advanced: [ExportCsvSetting],
+    advanced: [ExportCsvSetting, ApiAccessSetting],
     community: [NeedHelpSetting, JoinCommunitySetting],
   }
 

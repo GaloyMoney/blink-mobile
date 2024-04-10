@@ -7177,6 +7177,10 @@ type RootTranslation = {
 		 */
 		setByOs: string
 		/**
+		 * A​P​I​ ​A​c​c​e​s​s
+		 */
+		apiAcess: string
+		/**
 		 * P​o​i​n​t​ ​o​f​ ​S​a​l​e
 		 */
 		pos: string
@@ -16177,6 +16181,10 @@ export type TranslationFunctions = {
 		 * Set by OS
 		 */
 		setByOs: () => LocalizedString
+		/**
+		 * API Access
+		 */
+		apiAcess: () => LocalizedString
 		/**
 		 * Point of Sale
 		 */
