@@ -7163,25 +7163,6 @@ type RootTranslation = {
 		 */
 		pendingPayment: string
 	}
-	SendBitcoinPaymentScreen: {
-		/**
-		 * Y​o​u​ ​s​e​n​t​ ​{​a​m​o​u​n​t​}​
-	​t​o​
-	​{​a​d​d​r​e​s​s​}
-		 * @param {string} address
-		 * @param {string} amount
-		 */
-		sent: RequiredParams<'address' | 'amount'>
-		/**
-		 * S​o​m​e​t​h​i​n​g​ ​w​e​n​t​ ​w​r​o​n​g​!​
-	​Y​o​u​r​ ​p​a​y​m​e​n​t​ ​w​a​s​ ​n​o​t​ ​s​e​n​t​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​.
-		 */
-		error: string
-		/**
-		 * D​e​t​a​i​l​s
-		 */
-		details: string
-	}
 	SettingsScreen: {
 		/**
 		 * P​r​i​n​t​a​b​l​e​ ​S​t​a​t​i​c​ ​Q​R​ ​C​o​d​e
@@ -16182,23 +16163,6 @@ export type TranslationFunctions = {
 	It's possible the payment will not confirm, in which case the funds will be returned to your account.
 		 */
 		pendingPayment: () => LocalizedString
-	}
-	SendBitcoinPaymentScreen: {
-		/**
-		 * You sent {amount}
-	to
-	{address}
-		 */
-		sent: (arg: { address: string, amount: string }) => LocalizedString
-		/**
-		 * Something went wrong!
-	Your payment was not sent, please try again.
-		 */
-		error: () => LocalizedString
-		/**
-		 * Details
-		 */
-		details: () => LocalizedString
 	}
 	SettingsScreen: {
 		/**

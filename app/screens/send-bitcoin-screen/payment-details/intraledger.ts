@@ -71,7 +71,6 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
       return {
         status: data?.intraLedgerPaymentSend.status,
         errors: data?.intraLedgerPaymentSend.errors,
-        transaction: data?.intraLedgerPaymentSend.transaction,
       }
     }
 
@@ -100,7 +99,6 @@ export const createIntraledgerPaymentDetails = <T extends WalletCurrency>(
       return {
         status: data?.intraLedgerUsdPaymentSend.status,
         errors: data?.intraLedgerUsdPaymentSend.errors,
-        transaction: data?.intraLedgerUsdPaymentSend.transaction,
       }
     }
 
