@@ -17,6 +17,7 @@
 		3E3C92C2FC91412D8DFDE94D /* BuildFile in Resources */ = {isa = PBXBuildFile; };
 		560415592C5B4119B9F91553 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		86FB60FC2BC40BBC0088C78C /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 86FB60FB2BC40BBC0088C78C /* PrivacyInfo.xcprivacy */; };
 		922869E2611560E0BABDD066 /* libPods-LNFlash.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F675C724C850DCE831172994 /* libPods-LNFlash.a */; };
 		94D9F3C84EB547D68D41C50F /* BuildFile in Resources */ = {isa = PBXBuildFile; };
 		AEBBD0A1234A4C5490A44CC1 /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C8483F4C3424986AEBE74CC /* DMSans-Bold.ttf */; };
@@ -41,6 +42,7 @@
 		6C8483F4C3424986AEBE74CC /* DMSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Bold.ttf"; path = "../app/assets/fonts/DMSans-Bold.ttf"; sourceTree = "<group>"; };
 		7AEBB8413DDBF7790E0C4740 /* Pods-LNFlash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LNFlash.release.xcconfig"; path = "Target Support Files/Pods-LNFlash/Pods-LNFlash.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = LNFlash/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		86FB60FB2BC40BBC0088C78C /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		94E193B1EFB2B72C3B0CF52C /* Pods-LNFlash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LNFlash.debug.xcconfig"; path = "Target Support Files/Pods-LNFlash/Pods-LNFlash.debug.xcconfig"; sourceTree = "<group>"; };
 		C61EE0AB23C52FBA0054100C /* LNFlash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = LNFlash.entitlements; path = LNFlash/LNFlash.entitlements; sourceTree = "<group>"; };
 		C61EE0AC23C530E30054100C /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
@@ -123,6 +125,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				86FB60FB2BC40BBC0088C78C /* PrivacyInfo.xcprivacy */,
 				0147E0DC2BAE64B90071CDF2 /* coins.mp3 */,
 				13B07FAE1A68108700A75B9A /* LNFlash */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -215,6 +218,7 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				0D25368529E5EE4B00037874 /* BootSplash.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				86FB60FC2BC40BBC0088C78C /* PrivacyInfo.xcprivacy in Resources */,
 				0147E0DD2BAE64B90071CDF2 /* coins.mp3 in Resources */,
 				560415592C5B4119B9F91553 /* BuildFile in Resources */,
 				3E3C92C2FC91412D8DFDE94D /* BuildFile in Resources */,
