@@ -486,6 +486,17 @@ export type Currency = {
   readonly symbol: Scalars['String']['output'];
 };
 
+export type CurrencyConversionEstimation = {
+  readonly __typename: 'CurrencyConversionEstimation';
+  /** Amount in satoshis. */
+  readonly btcSatAmount: Scalars['SatAmount']['output'];
+  readonly id: Scalars['ID']['output'];
+  /** Unix timestamp (number of seconds elapsed since January 1, 1970 00:00:00 UTC) */
+  readonly timestamp: Scalars['Timestamp']['output'];
+  /** Amount in USD cents. */
+  readonly usdCentAmount: Scalars['CentAmount']['output'];
+};
+
 export type DepositFeesInformation = {
   readonly __typename: 'DepositFeesInformation';
   readonly minBankFee: Scalars['String']['output'];
@@ -1588,6 +1599,8 @@ export type Query = {
   readonly businessMapMarkers: ReadonlyArray<MapMarker>;
   readonly colorScheme: Scalars['String']['output'];
   readonly countryCode: Scalars['String']['output'];
+  /** Returns an estimated conversion rate for the given amount and currency */
+  readonly currencyConversionEstimation: CurrencyConversionEstimation;
   readonly currencyList: ReadonlyArray<Currency>;
   readonly feedbackModalShown: Scalars['Boolean']['output'];
   readonly globals?: Maybe<Globals>;
@@ -1624,6 +1637,12 @@ export type QueryAccountDefaultWalletArgs = {
 
 export type QueryBtcPriceListArgs = {
   range: PriceGraphRange;
+};
+
+
+export type QueryCurrencyConversionEstimationArgs = {
+  amount: Scalars['Float']['input'];
+  currency: Scalars['DisplayCurrency']['input'];
 };
 
 
@@ -7347,6 +7366,7 @@ export type ResolversTypes = {
   Country: ResolverTypeWrapper<Country>;
   CountryCode: ResolverTypeWrapper<Scalars['CountryCode']['output']>;
   Currency: ResolverTypeWrapper<Currency>;
+  CurrencyConversionEstimation: ResolverTypeWrapper<CurrencyConversionEstimation>;
   DepositFeesInformation: ResolverTypeWrapper<DepositFeesInformation>;
   DeviceNotificationTokenCreateInput: DeviceNotificationTokenCreateInput;
   DisplayCurrency: ResolverTypeWrapper<Scalars['DisplayCurrency']['output']>;
@@ -7574,6 +7594,7 @@ export type ResolversParentTypes = {
   Country: Country;
   CountryCode: Scalars['CountryCode']['output'];
   Currency: Currency;
+  CurrencyConversionEstimation: CurrencyConversionEstimation;
   DepositFeesInformation: DepositFeesInformation;
   DeviceNotificationTokenCreateInput: DeviceNotificationTokenCreateInput;
   DisplayCurrency: Scalars['DisplayCurrency']['output'];
@@ -7962,6 +7983,14 @@ export type CurrencyResolvers<ContextType = any, ParentType extends ResolversPar
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   symbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CurrencyConversionEstimationResolvers<ContextType = any, ParentType extends ResolversParentTypes['CurrencyConversionEstimation'] = ResolversParentTypes['CurrencyConversionEstimation']> = {
+  btcSatAmount?: Resolver<ResolversTypes['SatAmount'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  usdCentAmount?: Resolver<ResolversTypes['CentAmount'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -8443,6 +8472,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   businessMapMarkers?: Resolver<ReadonlyArray<ResolversTypes['MapMarker']>, ParentType, ContextType>;
   colorScheme?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   countryCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  currencyConversionEstimation?: Resolver<ResolversTypes['CurrencyConversionEstimation'], ParentType, ContextType, RequireFields<QueryCurrencyConversionEstimationArgs, 'amount' | 'currency'>>;
   currencyList?: Resolver<ReadonlyArray<ResolversTypes['Currency']>, ParentType, ContextType>;
   feedbackModalShown?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   globals?: Resolver<Maybe<ResolversTypes['Globals']>, ParentType, ContextType>;
@@ -8820,6 +8850,7 @@ export type Resolvers<ContextType = any> = {
   Country?: CountryResolvers<ContextType>;
   CountryCode?: GraphQLScalarType;
   Currency?: CurrencyResolvers<ContextType>;
+  CurrencyConversionEstimation?: CurrencyConversionEstimationResolvers<ContextType>;
   DepositFeesInformation?: DepositFeesInformationResolvers<ContextType>;
   DisplayCurrency?: GraphQLScalarType;
   Email?: EmailResolvers<ContextType>;
