@@ -115,7 +115,6 @@
           JAVA_HOME = pkgs.jdk17.home;
 
           shellHook = ''
-            export REPO_ROOT="$(pwd)"
             export HOST_PROJECT_PATH="$(pwd)"
             export COMPOSE_PROJECT_NAME=galoy-quickstart
             export GALOY_QUICKSTART_PATH="dev/vendor/galoy-quickstart"

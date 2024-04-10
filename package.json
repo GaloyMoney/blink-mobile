@@ -96,7 +96,6 @@
     "lnurl-pay": "^3.0.1",
     "lodash.debounce": "^4.0.8",
     "lodash.merge": "^4.6.2",
-    "lottie-react-native": "^6.5.1",
     "node-libs-react-native": "^1.2.1",
     "react": "18.2.0",
     "react-content-loader": "^6.2.0",
