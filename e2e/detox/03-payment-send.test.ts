@@ -44,9 +44,9 @@ describe("Send: Intraledger using Username - BTC Amount", () => {
     await tap(by.id(LL.common.next()))
 
     await slideSlider()
-    await sleep(5000)
+    await sleep(3000)
 
-    await tap(by.id(LL.HomeScreen.title()))
+    await tap(by.id(LL.common.back()))
     await waitForHomeScreen(LL)
   })
 
@@ -73,11 +73,7 @@ describe("Send: Intraledger using Username - USD Amount", () => {
     await waitFor(usernameInput).toBeVisible().withTimeout(timeout)
     await usernameInput.clearText()
     await usernameInput.typeText(BOB_USERNAME)
-
-    // some bug
-    await device.disableSynchronization()
     await tap(by.id(LL.common.next()))
-    await device.enableSynchronization()
 
     try {
       await tap(by.id("address-is-right"))
@@ -96,9 +92,9 @@ describe("Send: Intraledger using Username - USD Amount", () => {
     await tap(by.id(LL.common.next()))
 
     await slideSlider()
-    await sleep(5000)
+    await sleep(3000)
 
-    await tap(by.id(LL.HomeScreen.title()))
+    await tap(by.id(LL.common.back()))
     await waitForHomeScreen(LL)
   })
 
@@ -137,9 +133,9 @@ describe("Send: Intraledger using LN Invoice", () => {
     await device.enableSynchronization()
 
     await slideSlider()
-    await sleep(5000)
+    await sleep(3000)
 
-    await tap(by.id(LL.HomeScreen.title()))
+    await tap(by.id(LL.common.back()))
     await waitForHomeScreen(LL)
   })
 
@@ -174,9 +170,9 @@ describe("Send: to External LN Invoice", () => {
     await tap(by.id(LL.common.next()))
 
     await slideSlider()
-    await sleep(5000)
+    await sleep(3000)
 
-    await tap(by.id(LL.HomeScreen.title()))
+    await tap(by.id(LL.common.back()))
     await waitForHomeScreen(LL)
   })
 
@@ -210,9 +206,9 @@ describe("Send: to Onchain Address", () => {
     await tap(by.id(LL.common.next()))
 
     await slideSlider()
-    await sleep(5000)
+    await sleep(3000)
 
-    await tap(by.id(LL.HomeScreen.title()))
+    await tap(by.id(LL.common.back()))
     await waitForHomeScreen(LL)
   })
 

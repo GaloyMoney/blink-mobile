@@ -486,6 +486,17 @@ export type Currency = {
   readonly symbol: Scalars['String']['output'];
 };
 
+export type CurrencyConversionEstimation = {
+  readonly __typename: 'CurrencyConversionEstimation';
+  /** Amount in satoshis. */
+  readonly btcSatAmount: Scalars['SatAmount']['output'];
+  readonly id: Scalars['ID']['output'];
+  /** Unix timestamp (number of seconds elapsed since January 1, 1970 00:00:00 UTC) */
+  readonly timestamp: Scalars['Timestamp']['output'];
+  /** Amount in USD cents. */
+  readonly usdCentAmount: Scalars['CentAmount']['output'];
+};
+
 export type DepositFeesInformation = {
   readonly __typename: 'DepositFeesInformation';
   readonly minBankFee: Scalars['String']['output'];
@@ -1588,6 +1599,8 @@ export type Query = {
   readonly businessMapMarkers: ReadonlyArray<MapMarker>;
   readonly colorScheme: Scalars['String']['output'];
   readonly countryCode: Scalars['String']['output'];
+  /** Returns an estimated conversion rate for the given amount and currency */
+  readonly currencyConversionEstimation: CurrencyConversionEstimation;
   readonly currencyList: ReadonlyArray<Currency>;
   readonly feedbackModalShown: Scalars['Boolean']['output'];
   readonly globals?: Maybe<Globals>;
@@ -1624,6 +1637,12 @@ export type QueryAccountDefaultWalletArgs = {
 
 export type QueryBtcPriceListArgs = {
   range: PriceGraphRange;
+};
+
+
+export type QueryCurrencyConversionEstimationArgs = {
+  amount: Scalars['Float']['input'];
+  currency: Scalars['DisplayCurrency']['input'];
 };
 
 
@@ -2750,63 +2769,63 @@ export type IntraLedgerPaymentSendMutationVariables = Exact<{
 }>;
 
 
-export type IntraLedgerPaymentSendMutation = { readonly __typename: 'Mutation', readonly intraLedgerPaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly transaction?: { readonly __typename: 'Transaction', readonly id: string } | null } };
+export type IntraLedgerPaymentSendMutation = { readonly __typename: 'Mutation', readonly intraLedgerPaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
 export type IntraLedgerUsdPaymentSendMutationVariables = Exact<{
   input: IntraLedgerUsdPaymentSendInput;
 }>;
 
 
-export type IntraLedgerUsdPaymentSendMutation = { readonly __typename: 'Mutation', readonly intraLedgerUsdPaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly transaction?: { readonly __typename: 'Transaction', readonly id: string } | null } };
+export type IntraLedgerUsdPaymentSendMutation = { readonly __typename: 'Mutation', readonly intraLedgerUsdPaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
 export type LnNoAmountInvoicePaymentSendMutationVariables = Exact<{
   input: LnNoAmountInvoicePaymentInput;
 }>;
 
 
-export type LnNoAmountInvoicePaymentSendMutation = { readonly __typename: 'Mutation', readonly lnNoAmountInvoicePaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly transaction?: { readonly __typename: 'Transaction', readonly id: string } | null } };
+export type LnNoAmountInvoicePaymentSendMutation = { readonly __typename: 'Mutation', readonly lnNoAmountInvoicePaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
 export type LnInvoicePaymentSendMutationVariables = Exact<{
   input: LnInvoicePaymentInput;
 }>;
 
 
-export type LnInvoicePaymentSendMutation = { readonly __typename: 'Mutation', readonly lnInvoicePaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly transaction?: { readonly __typename: 'Transaction', readonly id: string } | null } };
+export type LnInvoicePaymentSendMutation = { readonly __typename: 'Mutation', readonly lnInvoicePaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
 export type LnNoAmountUsdInvoicePaymentSendMutationVariables = Exact<{
   input: LnNoAmountUsdInvoicePaymentInput;
 }>;
 
 
-export type LnNoAmountUsdInvoicePaymentSendMutation = { readonly __typename: 'Mutation', readonly lnNoAmountUsdInvoicePaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly transaction?: { readonly __typename: 'Transaction', readonly id: string } | null } };
+export type LnNoAmountUsdInvoicePaymentSendMutation = { readonly __typename: 'Mutation', readonly lnNoAmountUsdInvoicePaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
 export type OnChainPaymentSendMutationVariables = Exact<{
   input: OnChainPaymentSendInput;
 }>;
 
 
-export type OnChainPaymentSendMutation = { readonly __typename: 'Mutation', readonly onChainPaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly transaction?: { readonly __typename: 'Transaction', readonly id: string, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger' } | { readonly __typename: 'SettlementViaLn' } | { readonly __typename: 'SettlementViaOnChain', readonly arrivalInMempoolEstimatedAt?: number | null } } | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
+export type OnChainPaymentSendMutation = { readonly __typename: 'Mutation', readonly onChainPaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly transaction?: { readonly __typename: 'Transaction', readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger' } | { readonly __typename: 'SettlementViaLn' } | { readonly __typename: 'SettlementViaOnChain', readonly arrivalInMempoolEstimatedAt?: number | null } } | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
 export type OnChainPaymentSendAllMutationVariables = Exact<{
   input: OnChainPaymentSendAllInput;
 }>;
 
 
-export type OnChainPaymentSendAllMutation = { readonly __typename: 'Mutation', readonly onChainPaymentSendAll: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly transaction?: { readonly __typename: 'Transaction', readonly id: string } | null } };
+export type OnChainPaymentSendAllMutation = { readonly __typename: 'Mutation', readonly onChainPaymentSendAll: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
 export type OnChainUsdPaymentSendMutationVariables = Exact<{
   input: OnChainUsdPaymentSendInput;
 }>;
 
 
-export type OnChainUsdPaymentSendMutation = { readonly __typename: 'Mutation', readonly onChainUsdPaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly transaction?: { readonly __typename: 'Transaction', readonly id: string } | null } };
+export type OnChainUsdPaymentSendMutation = { readonly __typename: 'Mutation', readonly onChainUsdPaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
 export type OnChainUsdPaymentSendAsBtcDenominatedMutationVariables = Exact<{
   input: OnChainUsdPaymentSendAsBtcDenominatedInput;
 }>;
 
 
-export type OnChainUsdPaymentSendAsBtcDenominatedMutation = { readonly __typename: 'Mutation', readonly onChainUsdPaymentSendAsBtcDenominated: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly transaction?: { readonly __typename: 'Transaction', readonly id: string } | null } };
+export type OnChainUsdPaymentSendAsBtcDenominatedMutation = { readonly __typename: 'Mutation', readonly onChainUsdPaymentSendAsBtcDenominated: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
 export type AccountDeleteMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -5887,9 +5906,6 @@ export const IntraLedgerPaymentSendDocument = gql`
       message
     }
     status
-    transaction {
-      id
-    }
   }
 }
     `;
@@ -5926,9 +5942,6 @@ export const IntraLedgerUsdPaymentSendDocument = gql`
       message
     }
     status
-    transaction {
-      id
-    }
   }
 }
     `;
@@ -5965,9 +5978,6 @@ export const LnNoAmountInvoicePaymentSendDocument = gql`
       message
     }
     status
-    transaction {
-      id
-    }
   }
 }
     `;
@@ -6004,9 +6014,6 @@ export const LnInvoicePaymentSendDocument = gql`
       message
     }
     status
-    transaction {
-      id
-    }
   }
 }
     `;
@@ -6043,9 +6050,6 @@ export const LnNoAmountUsdInvoicePaymentSendDocument = gql`
       message
     }
     status
-    transaction {
-      id
-    }
   }
 }
     `;
@@ -6079,7 +6083,6 @@ export const OnChainPaymentSendDocument = gql`
     mutation onChainPaymentSend($input: OnChainPaymentSendInput!) {
   onChainPaymentSend(input: $input) {
     transaction {
-      id
       settlementVia {
         ... on SettlementViaOnChain {
           arrivalInMempoolEstimatedAt
@@ -6126,9 +6129,6 @@ export const OnChainPaymentSendAllDocument = gql`
       message
     }
     status
-    transaction {
-      id
-    }
   }
 }
     `;
@@ -6165,9 +6165,6 @@ export const OnChainUsdPaymentSendDocument = gql`
       message
     }
     status
-    transaction {
-      id
-    }
   }
 }
     `;
@@ -6204,9 +6201,6 @@ export const OnChainUsdPaymentSendAsBtcDenominatedDocument = gql`
       message
     }
     status
-    transaction {
-      id
-    }
   }
 }
     `;
@@ -7372,6 +7366,7 @@ export type ResolversTypes = {
   Country: ResolverTypeWrapper<Country>;
   CountryCode: ResolverTypeWrapper<Scalars['CountryCode']['output']>;
   Currency: ResolverTypeWrapper<Currency>;
+  CurrencyConversionEstimation: ResolverTypeWrapper<CurrencyConversionEstimation>;
   DepositFeesInformation: ResolverTypeWrapper<DepositFeesInformation>;
   DeviceNotificationTokenCreateInput: DeviceNotificationTokenCreateInput;
   DisplayCurrency: ResolverTypeWrapper<Scalars['DisplayCurrency']['output']>;
@@ -7599,6 +7594,7 @@ export type ResolversParentTypes = {
   Country: Country;
   CountryCode: Scalars['CountryCode']['output'];
   Currency: Currency;
+  CurrencyConversionEstimation: CurrencyConversionEstimation;
   DepositFeesInformation: DepositFeesInformation;
   DeviceNotificationTokenCreateInput: DeviceNotificationTokenCreateInput;
   DisplayCurrency: Scalars['DisplayCurrency']['output'];
@@ -7987,6 +7983,14 @@ export type CurrencyResolvers<ContextType = any, ParentType extends ResolversPar
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   symbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CurrencyConversionEstimationResolvers<ContextType = any, ParentType extends ResolversParentTypes['CurrencyConversionEstimation'] = ResolversParentTypes['CurrencyConversionEstimation']> = {
+  btcSatAmount?: Resolver<ResolversTypes['SatAmount'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  usdCentAmount?: Resolver<ResolversTypes['CentAmount'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -8468,6 +8472,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   businessMapMarkers?: Resolver<ReadonlyArray<ResolversTypes['MapMarker']>, ParentType, ContextType>;
   colorScheme?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   countryCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  currencyConversionEstimation?: Resolver<ResolversTypes['CurrencyConversionEstimation'], ParentType, ContextType, RequireFields<QueryCurrencyConversionEstimationArgs, 'amount' | 'currency'>>;
   currencyList?: Resolver<ReadonlyArray<ResolversTypes['Currency']>, ParentType, ContextType>;
   feedbackModalShown?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   globals?: Resolver<Maybe<ResolversTypes['Globals']>, ParentType, ContextType>;
@@ -8845,6 +8850,7 @@ export type Resolvers<ContextType = any> = {
   Country?: CountryResolvers<ContextType>;
   CountryCode?: GraphQLScalarType;
   Currency?: CurrencyResolvers<ContextType>;
+  CurrencyConversionEstimation?: CurrencyConversionEstimationResolvers<ContextType>;
   DepositFeesInformation?: DepositFeesInformationResolvers<ContextType>;
   DisplayCurrency?: GraphQLScalarType;
   Email?: EmailResolvers<ContextType>;

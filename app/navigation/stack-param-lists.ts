@@ -43,9 +43,6 @@ export type RootStackParamList = {
   sendBitcoinConfirmation: {
     paymentDetail: PaymentDetail<WalletCurrency>
   }
-  sendBitcoinPayment: {
-    paymentDetail: PaymentDetail<WalletCurrency>
-  }
   conversionDetails: undefined
   conversionConfirmation: {
     fromWalletCurrency: WalletCurrency
