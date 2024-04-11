@@ -1,6 +1,9 @@
 import RNSecureKeyStore, { ACCESSIBLE } from "react-native-secure-key-store"
 
-import { SecurePersistentState } from "@app/store/persistent-state/state-migrations"
+import {
+  defaultSecureStorageState,
+  SecureStorageState,
+} from "@app/store/persistent-state/state-migrations"
 
 export default class KeyStoreWrapper {
   private static readonly IS_BIOMETRICS_ENABLED = "isBiometricsEnabled"
@@ -8,20 +11,16 @@ export default class KeyStoreWrapper {
   private static readonly PIN_ATTEMPTS = "pinAttempts"
   private static readonly SECURE_STATE = "secureState"
 
-  public static async getSecurePersistentState(): Promise<
-    SecurePersistentState | Record<string, never>
-  > {
+  public static async getSecureStorageState(): Promise<SecureStorageState> {
     try {
       const data = await RNSecureKeyStore.get(KeyStoreWrapper.SECURE_STATE)
       return JSON.parse(data)
     } catch {
-      return {}
+      return defaultSecureStorageState
     }
   }
 
-  public static async setSecurePersistentState(
-    state: SecurePersistentState,
-  ): Promise<boolean> {
+  public static async setSecureStorageState(state: SecureStorageState): Promise<boolean> {
     try {
       await RNSecureKeyStore.set(KeyStoreWrapper.SECURE_STATE, JSON.stringify(state), {
         accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
@@ -32,7 +31,7 @@ export default class KeyStoreWrapper {
     }
   }
 
-  public static async removeSecurePersistentState(): Promise<boolean> {
+  public static async removeSecureStorageState(): Promise<boolean> {
     try {
       await RNSecureKeyStore.remove(KeyStoreWrapper.SECURE_STATE)
       return true
