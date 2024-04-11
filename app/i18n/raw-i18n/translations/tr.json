@@ -2,14 +2,14 @@
     "GaloyAddressScreen": {
         "title": "Şunu kullanarak ödeme alın:",
         "buttonTitle": "Adresinizi belirleyin",
-        "yourAddress": "Senin {bankName: string} adresin",
+        "yourLightningAddress": "Senin Lightning adresin",
         "notAbleToChange": "Adresin ayarlandıktan sonra {bankName: string} bir daha değiştirilemeyecek.",
         "addressNotAvailable": "Bu {bankName: string} adres zaten alınmış.",
         "somethingWentWrong": "Bir hata oluştu. Lütfen tekrar deneyin.",
         "merchantTitle": "Tüccarlar için",
         "yourCashRegister": "Lightning Yazar Kasanız",
         "yourPaycode": "Ödeme kodun",
-        "copiedAddressToClipboard": "Adres {bankName: string} panoya kopyalandı",
+        "copiedLightningAddressToClipboard": "Lightning adresini panoya kopyala",
         "copiedPaycodeToClipboard": "Ödeme kodun panoya kopyalandı",
         "copiedCashRegisterLinkToClipboard": "Yazar Kasa Bağlantısı panoya kopyalandı",
         "howToUseIt": "Nasıl kullanılır?",
@@ -2123,6 +2123,8 @@
         "invalidContent": "Şunu bulduk:\n\n{found: string}\n\nBu geçerli bir Bitcoin adresi ya da Lightning faturası değil",
         "expiredContent": "Şunu bulduk:\n\n{found: string}\n\nBu faturanın süresi dolmuş",
         "invalidTitle": "Geçersiz QR kodu",
+        "openLinkTitle": "Bağlantıyı aç",
+        "confirmOpenLink": "Bu bağlantıyı açmak istediğinizden emin misiniz?",
         "noQrCode": "Görselde QR kodu bulamadık",
         "title": "QR Kodunu Tara",
         "permissionCamera": "Kameranızı kullanmak için izniniz gerekiyor",
@@ -2227,6 +2229,13 @@
         "pendingPayment": "Ödeme gönderildi, ancak henüz onaylanmadı.\n\nÖdemenin onaylanmaması mümkündür, bu durumda para hesabınıza iade edilecektir."
     },
     "SettingsScreen": {
+        "staticQr": "Basılabilir Statik QR Kodu",
+        "staticQrCopied": "Statik QR kod bağlantınız kopyalandı",
+        "setByOs": "İşletim sistemi tarafından ayarlandı",
+        "apiAcess": "API Erişimi",
+        "pos": "Satış Noktası",
+        "posCopied": "Satış noktası bağlantınız kopyalandı",
+        "setYourLightningAddress": "Lightning Adresinizi Ayarlayın",
         "activated": "Aktive edildi",
         "addressScreen": "Ödeme alma yolları",
         "tapUserName": "Kullanıcı adını ayarlamak için tıkla",
@@ -2264,16 +2273,25 @@
                 "description": "Ödeme almak ve gördermekle alakalı bildirimler."
             },
             "Marketing": {
-                "title": "Features and updates",
-                "description": "Notifications about new features and updates."
+                "title": "Özellikler ve güncellemeler",
+                "description": "Yeni özellikler ve güncellemeler hakkında bildirimler."
             },
             "Price": {
-                "title": "Price changes",
-                "description": "Notifications about the price of Bitcoin."
+                "title": "Fiyat değişiklikleri",
+                "description": "Bitcoin fiyatı hakkında bildirimler."
             }
         }
     },
     "AccountScreen": {
+        "fundsMoreThan5Dollars": "Hesabınızda 5 dolardan fazla para var",
+        "itsATrialAccount": "Deneme hesaplarının işlem limitleri azaltılmıştır ve kurtarma yöntemi yoktur. Telefonunuzu kaybederseniz veya uygulamayı kaldırırsanız, paranız kurtarılamaz.",
+        "accountBeingDeleted": "Hesabınız siliniyor, lütfen bekleyiniz...",
+        "dangerZone": "Tehlikeli Bölge",
+        "phoneDeletedSuccessfully": "Telefon başarılı bir şekilde silindi",
+        "phoneNumber": "Telefon Numarası",
+        "tapToAddPhoneNumber": "Telefon numarası eklemek için dokunun",
+        "loginMethods": "Giriş Yöntemleri",
+        "level": "Seviye {level: string}",
         "accountLevel": "Hesap Seviyesi",
         "upgrade": "Hesabını güncelle",
         "logOutAndDeleteLocalData": "Çıkış yap ve yerel tüm dosyaları sil",
@@ -2286,6 +2304,11 @@
         "btcBalanceWarning": "Bitcoin bakiyeniz {balance: string}.",
         "secureYourAccount": "Hesabınızı korumak almak için kaydolun",
         "tapToAdd": "Eklemek için dokunun",
+        "tapToAddEmail": "E-posta eklemek için dokunun",
+        "unverifiedEmail": "E-posta (Doğrulanmadı)",
+        "email": "E-posta",
+        "emailDeletedSuccessfully": "E-posta başarıyla silindi",
+        "unverifiedEmailAdvice": "Doğrulanmamış e-postalar giriş yapmak için kullanılamaz. E-posta adresinizi yeniden doğrulamalısınız.",
         "deleteEmailPromptTitle": "E-posta'yı sil",
         "deleteEmailPromptContent": "E-posta adresinizi silmek istediğinizden emin misiniz? Sadece telefon numaranızla tekrar giriş yapabileceksiniz.",
         "deletePhonePromptTitle": "Telefonu sil",
@@ -2307,6 +2330,7 @@
         "totpDeleteAlertContent": "İki aşamalı doğrulamanızı silmek istediğinize emin misiniz?",
         "copiedAccountId": "Hesap kimliğiniz panoya kopyalandı",
         "yourAccountId": "Hesap Kimliğiniz",
+        "accountId": "Hesap Kimliği",
         "copy": "Kopyala"
     },
     "TotpRegistrationInitiateScreen": {
@@ -2335,7 +2359,9 @@
         "info": "Blink'i kullanmak için tercih ettiğiniz temayı seçin veya sistem ayarlarınızla senkronize kalmasını sağlayın.",
         "system": "Sistem ayarlarını kullan",
         "light": "Açık modu kullan",
-        "dark": "Karanlık modu kullan"
+        "dark": "Karanlık modu kullan",
+        "setToDark": "Karanlık Mod",
+        "setToLight": "Aydınlık tema"
     },
     "Languages": {
         "DEFAULT": "Varsayılan (OS)"
@@ -2393,6 +2419,7 @@
     },
     "SetAddressModal": {
         "title": "{bankName: string} adresini belirle",
+        "setLightningAddress": " Lightning adresini ayarla",
         "Errors": {
             "tooShort": "Adres en azından 3 karakter uzunluğunda olabilir",
             "tooLong": "Adres en fazla 50 karakter uzunluğunda olabilir",
@@ -2474,7 +2501,16 @@
         "success": "E-posta {email: string} başarıyla onaylandı"
     },
     "common": {
+        "enabled": "Etkin",
+        "notifications": "Bildirimler",
+        "preferences": "Tercihleriniz",
+        "onDeviceSecurity": "Cihaz İçi Güvenlik",
+        "securityAndPrivacy": "Güvenlik ve Gizlilik",
+        "advanced": "İleri Seviye",
+        "community": "Topluluk",
         "account": "Hesap",
+        "trialAccount": "Deneme Hesabı",
+        "blinkUser": "Blink Kullanıcısı",
         "transactionLimits": "İşlem Limitleri",
         "activateWallet": "Cüzdanı aktive et",
         "amountRequired": "Miktar girmeniz gerekli",
@@ -2599,6 +2635,7 @@
         "faq": "SSS",
         "enjoyingApp": "Uygulamayı beğendiniz mi?",
         "statusPage": "Durum Sayfası",
+        "chatbot": "Sohbet Botu",
         "telegram": "Telegram",
         "mattermost": "Mattermost",
         "thankYouText": "Geri bildiriminiz için teşekkür ederiz, bir iyileştirme önermek ister misiniz?",
@@ -2698,14 +2735,14 @@
             "details": "Seedsigner soğuk cüzdanı kazanma şansı için Şubat ayında yakın çevrenizi 3 kişi büyütün!\n\nHatırlatma: Yeni bir Blink kullanıcısına ilk satlerini gönderdiğinizde çemberleriniz büyür.\n\nKatılmak için çevrelerinizi #blinkcircles etiketiyle sosyal medyada paylaşın."
         },
         "marchChallenge": {
-            "title": "March Challenge!",
-            "description": "+3 inner circle and +3 outer circle for a chance to win $100",
-            "details": "Grow your inner circle by 3 and your outer circle by 3 for a chance at winning $100!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
+            "title": "Mart Meydan Okuması!",
+            "description": "100 $ kazanma şansı için +3 yakın çevre ve +3 uzak çevre",
+            "details": "$100 kazanma şansı için yakın çevrenizi 3 ve uzak çevrenizi 3 büyütün!\n\nHatırlatma: Yeni bir Blink kullanıcısına ilk atışlarını gönderdiğinizde çevreniz genişler.\n\nKatılmak için çevrelerinizi #blinkcircles etiketiyle sosyal medyada paylaşın."
         },
         "aprilChallenge": {
-            "title": "April Challenge!",
-            "description": "Grow your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet.",
-            "details": "During the halving month, expand your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
+            "title": "Nisan Meydan Okuması!",
+            "description": "Bitbox02 donanım cüzdanı kazanma şansı için yakın çevrenizi 12 ve uzak çevrenizi 3 kişi ile genişletin.",
+            "details": "Yarılanma ayı boyunca, bir Bitbox02 donanım cüzdanı kazanma şansı için yakın çevrenizi 12 ve uzak çevrenizi 3 kişiyle genişletin!\n\nHatırlatma: Yeni bir Blink kullanıcısına ilk satlerini gönderdiğinizde çevreniz genişler.\n\nKatılmak için çevrelerinizi #blinkcircles etiketiyle sosyal medyada paylaşın."
         }
     },
     "FullOnboarding": {
