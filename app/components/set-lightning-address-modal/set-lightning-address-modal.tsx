@@ -204,8 +204,10 @@ export const SetLightningAddressModalUI = ({
               placeholder={"SatoshiNakamoto"}
               placeholderTextColor={colors.grey3}
             />
-            <Text type={"p1"}>{`@${lnAddressHostname}`}</Text>
           </View>
+          <Text style={{ textAlign: "center" }} type={"p1"}>{`${
+            lnAddress || "___"
+          }@${lnAddressHostname}`}</Text>
           {errorMessage && <GaloyErrorBox errorMessage={errorMessage} />}
           <Text type={"p1"} style={styles.centerAlign}>
             {LL.SetAddressModal.receiveMoney({ bankName })}
