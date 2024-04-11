@@ -5,6 +5,7 @@ import LearnIcon from "@app/assets/icons/learn.svg"
 import MapIcon from "@app/assets/icons/map.svg"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { ChatBotScreen } from "@app/screens/chatbot-screen/chatbot"
 import {
   ConversionConfirmationScreen,
   ConversionDetailsScreen,
@@ -37,7 +38,7 @@ import SendBitcoinCompletedScreen from "@app/screens/send-bitcoin-screen/send-bi
 import SendBitcoinConfirmationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-confirmation-screen"
 import SendBitcoinDestinationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
 import SendBitcoinDetailsScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-details-screen"
-import { AccountScreen } from "@app/screens/settings-screen/account-screen"
+import { AccountScreen } from "@app/screens/settings-screen/account"
 import { DefaultWalletScreen } from "@app/screens/settings-screen/default-wallet"
 import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
 import { NotificationSettingsScreen } from "@app/screens/settings-screen/notifications-screen"
@@ -407,6 +408,13 @@ export const RootStack = () => {
         component={FullOnboardingFlowScreen}
         options={{
           title: LL.FullOnboarding.title(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="chatbot"
+        component={ChatBotScreen}
+        options={{
+          title: LL.support.chatbot(),
         }}
       />
     </RootNavigator.Navigator>

@@ -96,7 +96,7 @@ export const CodeInput: React.FC<Props> = ({
         </View>
 
         <Input
-          {...testProps(placeholder)}
+          {...testProps("code-input")}
           placeholder={placeholder}
           containerStyle={styles.inputComponentContainerStyle}
           inputContainerStyle={styles.inputContainerStyle}

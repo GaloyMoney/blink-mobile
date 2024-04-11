@@ -15,6 +15,7 @@ import {
   toBtcMoneyAmount,
   toUsdMoneyAmount,
 } from "@app/types/amounts"
+import { testProps } from "@app/utils/testProps"
 import { makeStyles, Text } from "@rneui/themed"
 
 const Loader = () => {
@@ -96,7 +97,7 @@ export const BalanceHeader: React.FC<Props> = ({ loading }) => {
   }
 
   return (
-    <View style={styles.balanceHeaderContainer}>
+    <View {...testProps("balance-header")} style={styles.balanceHeaderContainer}>
       {hideAmount ? (
         <TouchableOpacity
           onPress={switchMemoryHideAmount}

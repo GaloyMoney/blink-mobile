@@ -29,6 +29,7 @@ import {
   useHomeAuthedQuery,
   useHomeUnauthedQuery,
   useRealtimePriceQuery,
+  useSettingsScreenQuery,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { getErrorMessages } from "@app/graphql/utils"
@@ -153,7 +154,15 @@ export const HomeScreen: React.FC = () => {
     nextFetchPolicy: "cache-and-network",
   })
 
-  const loading = loadingAuthed || loadingPrice || loadingUnauthed
+  // keep settings info cached and ignore network call if it's already cached
+  const { loading: loadingSettings } = useSettingsScreenQuery({
+    skip: !isAuthed,
+    fetchPolicy: "cache-first",
+    // this enables offline mode use-case
+    nextFetchPolicy: "cache-and-network",
+  })
+
+  const loading = loadingAuthed || loadingPrice || loadingUnauthed || loadingSettings
 
   const refetch = React.useCallback(() => {
     if (isAuthed) {
@@ -254,6 +263,7 @@ export const HomeScreen: React.FC = () => {
                     subtitle
                     isOnHomeScreen={true}
                     isLast={index === array.length - 1}
+                    testId={`transaction-by-index-${index}`}
                   />
                 ),
             )}
@@ -350,6 +360,7 @@ export const HomeScreen: React.FC = () => {
         />
       </View>
       <ScrollView
+        {...testProps("home-screen")}
         contentContainerStyle={styles.scrollViewContainer}
         refreshControl={
           <RefreshControl

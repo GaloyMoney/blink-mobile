@@ -7,6 +7,8 @@ services:
     ports:
     - 50051:50051
     - 9464:9464
+    volumes:
+      - ${HOST_PROJECT_PATH:-.}/config/price.yml:/var/yaml/custom.yaml
   price-history:
     image: us.gcr.io/galoy-org/price-history:edge
     ports:
@@ -44,6 +46,11 @@ services:
     - POSTGRES_USER=galoy-price-usr
     - POSTGRES_PASSWORD=galoy-price-pwd
     - POSTGRES_DB=galoy-price-history
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 5s
+      timeout: 30s
+      retries: 5
   api-keys-pg:
     image: postgres:14.1
     environment:
@@ -157,13 +164,13 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes
       - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
   mongodb:
-    image: mongo:7.0.2
+    image: mongo:7.0.6
     ports:
       - "27017:27017"
     environment:
       - MONGO_INITDB_DATABASE=galoy
   lnd1:
-    image: lightninglabs/lnd:v0.17.3-beta
+    image: lightninglabs/lnd:v0.17.4-beta
     ports:
       - "10009:10009"
     volumes:
@@ -183,7 +190,7 @@ services:
         cp /root/.lnd/admin.macaroon /root/.lnd/data/chain/bitcoin/regtest/admin.macaroon
         /bin/lnd
   lnd2:
-    image: lightninglabs/lnd:v0.17.3-beta
+    image: lightninglabs/lnd:v0.17.4-beta
     ports:
       - "10010:10009"
     volumes:
@@ -203,7 +210,7 @@ services:
         cp /root/.lnd/admin.macaroon /root/.lnd/data/chain/bitcoin/regtest/admin.macaroon
         /bin/lnd
   lnd-outside-1:
-    image: lightninglabs/lnd:v0.17.3-beta
+    image: lightninglabs/lnd:v0.17.4-beta
     ports:
       - "10012:10009"
     volumes:
@@ -223,7 +230,7 @@ services:
         /bin/lnd
     depends_on: [bitcoind]
   lnd-outside-2:
-    image: lightninglabs/lnd:v0.17.3-beta
+    image: lightninglabs/lnd:v0.17.4-beta
     ports:
       - "10013:10009"
     volumes:

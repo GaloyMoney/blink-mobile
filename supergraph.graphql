@@ -212,6 +212,12 @@ type ApiKeyRevokePayload
   apiKey: ApiKey!
 }
 
+type Authorization
+  @join__type(graph: GALOY)
+{
+  scopes: [Scope!]!
+}
+
 """An Opaque Bearer token"""
 scalar AuthToken
   @join__type(graph: GALOY)
@@ -1269,6 +1275,7 @@ type Mutation
   onChainUsdPaymentSend(input: OnChainUsdPaymentSendInput!): PaymentSendPayload! @join__field(graph: GALOY)
   onChainUsdPaymentSendAsBtcDenominated(input: OnChainUsdPaymentSendAsBtcDenominatedInput!): PaymentSendPayload! @join__field(graph: GALOY)
   quizClaim(input: QuizClaimInput!): QuizClaimPayload! @join__field(graph: GALOY)
+  supportChatMessageAdd(input: SupportChatMessageAddInput!): SupportChatMessageAddPayload! @join__field(graph: GALOY)
   userContactUpdateAlias(input: UserContactUpdateAliasInput!): UserContactUpdateAliasPayload! @join__field(graph: GALOY) @deprecated(reason: "will be moved to AccountContact")
   userEmailDelete: UserEmailDeletePayload! @join__field(graph: GALOY)
   userEmailRegistrationInitiate(input: UserEmailRegistrationInitiateInput!): UserEmailRegistrationInitiatePayload! @join__field(graph: GALOY)
@@ -1630,6 +1637,9 @@ type Query
 {
   welcomeLeaderboard(input: WelcomeLeaderboardInput!): Leaderboard! @join__field(graph: CIRCLES)
   accountDefaultWallet(username: Username!, walletCurrency: WalletCurrency): PublicWallet! @join__field(graph: GALOY)
+
+  """Retrieve the list of scopes permitted for the user's token or API key"""
+  authorization: Authorization! @join__field(graph: GALOY)
   btcPriceList(range: PriceGraphRange!): [PricePoint] @join__field(graph: GALOY)
   businessMapMarkers: [MapMarker!]! @join__field(graph: GALOY)
   currencyList: [Currency!]! @join__field(graph: GALOY)
@@ -1643,7 +1653,9 @@ type Query
   onChainUsdTxFee(address: OnChainAddress!, amount: CentAmount!, speed: PayoutSpeed! = FAST, walletId: WalletId!): OnChainUsdTxFee! @join__field(graph: GALOY)
   onChainUsdTxFeeAsBtcDenominated(address: OnChainAddress!, amount: SatAmount!, speed: PayoutSpeed! = FAST, walletId: WalletId!): OnChainUsdTxFee! @join__field(graph: GALOY)
 
-  """Returns 1 Sat and 1 Usd Cent price for the given currency"""
+  """
+  Returns 1 Sat and 1 Usd Cent price for the given currency in minor unit
+  """
   realtimePrice(currency: DisplayCurrency = "USD"): RealtimePrice! @join__field(graph: GALOY)
   userDefaultWalletId(username: Username!): WalletId! @join__field(graph: GALOY) @deprecated(reason: "will be migrated to AccountDefaultWalletId")
   usernameAvailable(username: Username!): Boolean @join__field(graph: GALOY)
@@ -1676,7 +1688,8 @@ type RealtimePrice
   @join__type(graph: GALOY)
 {
   btcSatPrice: PriceOfOneSatInMinorUnit!
-  denominatorCurrency: DisplayCurrency!
+  denominatorCurrency: DisplayCurrency! @deprecated(reason: "Deprecated in favor of denominatorCurrencyDetails")
+  denominatorCurrencyDetails: Currency!
   id: ID!
 
   """
@@ -1789,6 +1802,35 @@ type SuccessPayload
 {
   errors: [Error!]!
   success: Boolean
+}
+
+input SupportChatMessageAddInput
+  @join__type(graph: GALOY)
+{
+  message: String!
+}
+
+type SupportChatMessageAddPayload
+  @join__type(graph: GALOY)
+{
+  errors: [Error!]!
+  supportMessage: [SupportMessage]
+}
+
+type SupportMessage
+  @join__type(graph: GALOY)
+{
+  id: ID!
+  message: String!
+  role: SupportRole!
+  timestamp: Timestamp!
+}
+
+enum SupportRole
+  @join__type(graph: GALOY)
+{
+  ASSISTANT @join__enumValue(graph: GALOY)
+  USER @join__enumValue(graph: GALOY)
 }
 
 """
@@ -2002,6 +2044,7 @@ type User
 
   """Phone number with international calling code."""
   phone: Phone
+  supportChat: [SupportMessage!]!
 
   """Whether TOTP is enabled for this user."""
   totpEnabled: Boolean!
@@ -2144,9 +2187,10 @@ enum UserNotificationCategory
 {
   CIRCLES @join__enumValue(graph: GALOY)
   PAYMENTS @join__enumValue(graph: GALOY)
-  BALANCE @join__enumValue(graph: GALOY)
   ADMIN_NOTIFICATION @join__enumValue(graph: GALOY)
   MARKETING @join__enumValue(graph: GALOY)
+  PRICE @join__enumValue(graph: GALOY)
+  SECURITY @join__enumValue(graph: GALOY)
 }
 
 enum UserNotificationChannel

@@ -117,6 +117,8 @@ gql`
 const NotificationCategories = {
   Circles: "Circles",
   Payments: "Payments",
+  Price: "Price",
+  Marketing: "Marketing",
 } as const
 
 type NotificationCategoryType =

@@ -2123,6 +2123,8 @@
         "invalidContent": "Encontramos lo siguiente:\n\n{found: string}\n\nEsto no es una dirección Bitcoin o factura Lightning válida",
         "expiredContent": "Hemos encontrado:\n\n{found}\n\nEsta factura ha caducado",
         "invalidTitle": "Código QR inválido",
+        "openLinkTitle": "Abrir enlace",
+        "confirmOpenLink": "Estás seguro de que quieres abrir este enlace?",
         "noQrCode": "No pudimos encontrar un código QR en la imagen",
         "title": "Escanear QR",
         "permissionCamera": "Necesitamos permiso para usar su cámara.",
@@ -2262,6 +2264,14 @@
             "Payments": {
                 "title": "Pagos",
                 "description": "Notificaciones relacionadas con el envío y recepción de pagos."
+            },
+            "Marketing": {
+                "title": "Funciones y actualizaciones",
+                "description": "Notificaciones sobre nuevas funciones y actualizaciones."
+            },
+            "Price": {
+                "title": "Cambios de precio",
+                "description": "Notificaciones sobre el precio de Bitcoin."
             }
         }
     },
@@ -2591,6 +2601,7 @@
         "faq": "Preguntas Frecuentes - FAQ",
         "enjoyingApp": "¿Disfrutas de la aplicación?",
         "statusPage": "Página de Estado",
+        "chatbot": "Chatbot",
         "telegram": "Telegram",
         "mattermost": "Mattermost",
         "thankYouText": "Gracias por tus comentarios, ¿te gustaría sugerir una mejora?",
@@ -2693,6 +2704,11 @@
             "title": "¡Reto de marzo!",
             "description": "+3 círculo interior y +3 círculo exterior para tener la oportunidad de ganar $100",
             "details": "Amplía tu círculo interno en 3 personas y tu círculo externo en 3 personas para tener la oportunidad de ganar $100.\n\nRecordatorio: tus círculos crecen cuando envías a un nuevo usuario de Blink sus primeros sats.\n\nComparte tus círculos en redes sociales con #blinkcircles para participar."
+        },
+        "aprilChallenge": {
+            "title": "Reto de abril!",
+            "description": "Amplia en 12 tu círculo interno y en 3 tu círculo externo para tener la oportunidad de ganar una Bitbox02 hardware wallet.",
+            "details": "En el mes del Halving, amplía tu Círculo Interior en 12 y aumenta tu Círculo Exterior en 3 para tener la oportunidad de ganar una Bitbox02 hardware wallet.\n\nRecordatorio: Tus círculos crecen cuando envías a un nuevo usuario de Blink sus primeros sats.\n\nComparte tus círculos en las redes sociales con el hashtag #blinkcircles para participar."
         }
     },
     "FullOnboarding": {

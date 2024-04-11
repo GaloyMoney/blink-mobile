@@ -2262,6 +2262,14 @@
             "Payments": {
                 "title": "Pagamentos",
                 "description": "Notificações relacionadas ao envio e recebimento de pagamentos."
+            },
+            "Marketing": {
+                "title": "Features and updates",
+                "description": "Notifications about new features and updates."
+            },
+            "Price": {
+                "title": "Price changes",
+                "description": "Notifications about the price of Bitcoin."
             }
         }
     },
@@ -2693,6 +2701,11 @@
             "title": "Desafio de março!",
             "description": "+3 círculo interno e +3 círculo externo para ter a chance de ganhar $100",
             "details": "Aumente seu círculo interno em 3 e seu círculo externo em 3 para ter a chance de ganhar $100!\n\nLembrete: seus círculos crescem quando você envia sats para um novo usuário do Blink.\n\nCompartilhe seus círculos nas redes sociais com #blinkcircles para participar."
+        },
+        "aprilChallenge": {
+            "title": "April Challenge!",
+            "description": "Grow your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet.",
+            "details": "During the halving month, expand your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
         }
     },
     "FullOnboarding": {

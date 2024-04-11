@@ -4,7 +4,10 @@ import ReactNativeModal from "react-native-modal"
 
 import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "@app/config"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { openWhatsApp } from "@app/utils/external"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { Icon, ListItem, makeStyles, useTheme } from "@rneui/themed"
 
 import TelegramOutline from "./telegram.svg"
@@ -16,6 +19,7 @@ export const SupportChannels = {
   StatusPage: "statusPage",
   Mattermost: "mattermost",
   Faq: "faq",
+  Chatbot: "chatbot",
 } as const
 
 export type SupportChannels = (typeof SupportChannels)[keyof typeof SupportChannels]
@@ -44,7 +48,18 @@ const ContactModal: React.FC<Props> = ({
     theme: { colors },
   } = useTheme()
 
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+
   const contactOptionList = [
+    {
+      id: SupportChannels.Chatbot,
+      name: LL.support.chatbot(),
+      icon: <Icon name={"chatbubbles-outline"} type="ionicon" />,
+      action: () => {
+        navigation.navigate("chatbot")
+        toggleModal()
+      },
+    },
     {
       id: SupportChannels.StatusPage,
       name: LL.support.statusPage(),
@@ -108,8 +123,8 @@ const ContactModal: React.FC<Props> = ({
   return (
     <ReactNativeModal
       isVisible={isVisible}
-      backdropOpacity={0.3}
-      backdropColor={colors.grey3}
+      backdropOpacity={0.8}
+      backdropColor={colors.white}
       onBackdropPress={toggleModal}
       style={styles.modal}
     >
@@ -148,7 +163,7 @@ const useStyles = makeStyles(({ colors }) => ({
     marginHorizontal: 0,
   },
   listItemContainer: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.grey5,
   },
   listItemTitle: {
     color: colors.black,

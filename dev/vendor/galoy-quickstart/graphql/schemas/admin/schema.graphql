@@ -31,19 +31,6 @@ input AccountUpdateStatusInput {
   status: AccountStatus!
 }
 
-input AdminPushNotificationSendInput {
-  accountId: String!
-  body: String!
-  data: Object
-  notificationCategory: NotificationCategory
-  title: String!
-}
-
-type AdminPushNotificationSendPayload {
-  errors: [Error!]!
-  success: Boolean
-}
-
 """
 Accounts are core to the Galoy architecture. they have users, and own wallets
 """
@@ -51,26 +38,11 @@ type AuditedAccount {
   createdAt: Timestamp!
   id: ID!
   level: AccountLevel!
+  merchants: [Merchant!]!
   owner: AuditedUser!
   status: AccountStatus!
   username: Username
   wallets: [Wallet!]!
-}
-
-type AuditedMerchant {
-  """
-  GPS coordinates for the merchant that can be used to place the related business on a map
-  """
-  coordinates: Coordinates
-  createdAt: Timestamp!
-  id: ID!
-  title: String!
-
-  """The username of the merchant"""
-  username: Username!
-
-  """Whether the merchant has been validated"""
-  validated: Boolean!
 }
 
 type AuditedUser {
@@ -149,23 +121,24 @@ type BTCWallet implements Wallet {
     last: Int
   ): TransactionConnection
   transactionsByPaymentHash(paymentHash: PaymentHash!): [Transaction!]!
+  transactionsByPaymentRequest(paymentRequest: LnPaymentRequest!): [Transaction!]!
   walletCurrency: WalletCurrency!
-}
-
-input BusinessDeleteMapInfoInput {
-  username: Username!
-}
-
-input BusinessUpdateMapInfoInput {
-  latitude: Float!
-  longitude: Float!
-  title: String!
-  username: Username!
 }
 
 type Coordinates {
   latitude: Float!
   longitude: Float!
+}
+
+"""A CCA2 country code (ex US, FR, etc)"""
+scalar CountryCode
+
+enum DeepLink {
+  CIRCLES
+  EARN
+  MAP
+  PEOPLE
+  PRICE
 }
 
 """Display currency of an account"""
@@ -291,26 +264,59 @@ enum LnPaymentStatus {
 
 scalar LnPubkey
 
+input LocalizedPushContentInput {
+  body: String!
+  language: Language!
+  title: String!
+}
+
+input MarketingNotificationTriggerInput {
+  deepLink: DeepLink
+  localizedPushContents: [LocalizedPushContentInput!]!
+  phoneCountryCodesFilter: [CountryCode!]
+  userIdsFilter: [ID!]
+}
+
 """Text field in a lightning payment transaction"""
 scalar Memo
 
+type Merchant {
+  """
+  GPS coordinates for the merchant that can be used to place the related business on a map
+  """
+  coordinates: Coordinates!
+  createdAt: Timestamp!
+  id: ID!
+  title: String!
+
+  """The username of the merchant"""
+  username: Username!
+
+  """Whether the merchant has been validated"""
+  validated: Boolean!
+}
+
+input MerchantMapDeleteInput {
+  id: ID!
+}
+
+input MerchantMapValidateInput {
+  id: ID!
+}
+
 type MerchantPayload {
   errors: [Error!]!
-  merchant: AuditedMerchant
+  merchant: Merchant
 }
 
 type Mutation {
   accountUpdateLevel(input: AccountUpdateLevelInput!): AccountDetailPayload!
   accountUpdateStatus(input: AccountUpdateStatusInput!): AccountDetailPayload!
-  adminPushNotificationSend(input: AdminPushNotificationSendInput!): AdminPushNotificationSendPayload!
-  businessDeleteMapInfo(input: BusinessDeleteMapInfoInput!): AccountDetailPayload!
-  businessUpdateMapInfo(input: BusinessUpdateMapInfoInput!): MerchantPayload!
+  marketingNotificationTrigger(input: MarketingNotificationTriggerInput!): SuccessPayload!
+  merchantMapDelete(input: MerchantMapDeleteInput!): MerchantPayload!
+  merchantMapValidate(input: MerchantMapValidateInput!): MerchantPayload!
   userUpdatePhone(input: UserUpdatePhoneInput!): AccountDetailPayload!
 }
-
-scalar NotificationCategory
-
-scalar Object
 
 """An address for an on-chain bitcoin destination"""
 scalar OnChainAddress
@@ -360,11 +366,14 @@ type Query {
   accountDetailsByUserPhone(phone: Phone!): AuditedAccount!
   accountDetailsByUsername(username: Username!): AuditedAccount!
   allLevels: [AccountLevel!]!
+  filteredUserCount(phoneCountryCodesFilter: [CountryCode!], userIdsFilter: [ID!]): Int!
   lightningInvoice(hash: PaymentHash!): LightningInvoice!
   lightningPayment(hash: PaymentHash!): LightningPayment!
   listWalletIds(walletCurrency: WalletCurrency!): [WalletId!]!
+  merchantsPendingApproval: [Merchant!]!
   transactionById(id: ID!): Transaction
   transactionsByHash(hash: PaymentHash!): [Transaction]
+  transactionsByPaymentRequest(paymentRequest: LnPaymentRequest!): [Transaction]
   wallet(walletId: WalletId!): Wallet!
 }
 
@@ -405,6 +414,11 @@ scalar SignedAmount
 A string amount (of a currency) that can be negative (e.g. in a transaction)
 """
 scalar SignedDisplayMajorAmount
+
+type SuccessPayload {
+  errors: [Error!]!
+  success: Boolean
+}
 
 """
 Timestamp field, serialized as Unix time (the number of seconds since the Unix epoch)
@@ -536,6 +550,7 @@ type UsdWallet implements Wallet {
     last: Int
   ): TransactionConnection
   transactionsByPaymentHash(paymentHash: PaymentHash!): [Transaction!]!
+  transactionsByPaymentRequest(paymentRequest: LnPaymentRequest!): [Transaction!]!
   walletCurrency: WalletCurrency!
 }
 
@@ -640,6 +655,12 @@ interface Wallet {
   transactionsByPaymentHash(
     """The payment hash of the lightning invoice paid in this transaction."""
     paymentHash: PaymentHash!
+  ): [Transaction!]!
+
+  """Returns the transactions that include this paymentRequest."""
+  transactionsByPaymentRequest(
+    """Lightning invoice paid in this transaction."""
+    paymentRequest: LnPaymentRequest!
   ): [Transaction!]!
   walletCurrency: WalletCurrency!
 }

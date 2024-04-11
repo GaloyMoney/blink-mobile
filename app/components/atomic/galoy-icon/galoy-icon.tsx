@@ -1,6 +1,7 @@
 import React from "react"
 import { StyleProp, View, ViewStyle } from "react-native"
 
+import ArrowLeft from "@app/assets/icons-redesign/arrow-left.svg"
 import ArrowRight from "@app/assets/icons-redesign/arrow-right.svg"
 import BackSpace from "@app/assets/icons-redesign/back-space.svg"
 import Bank from "@app/assets/icons-redesign/bank.svg"
@@ -50,10 +51,12 @@ import Warning from "@app/assets/icons-redesign/warning.svg"
 import Note from "@app/assets/icons/note.svg"
 import People from "@app/assets/icons/people.svg"
 import Rank from "@app/assets/icons/rank.svg"
+import Refresh from "@app/assets/icons/refresh.svg"
 import { makeStyles, useTheme } from "@rneui/themed"
 
 export const icons = {
   "arrow-right": ArrowRight,
+  "arrow-left": ArrowLeft,
   "back-space": BackSpace,
   "bank": Bank,
   "bitcoin": Bitcoin,
@@ -102,6 +105,7 @@ export const icons = {
   "payment-pending": PaymentPending,
   "payment-error": PaymentError,
   "bell": Bell,
+  "refresh": Refresh,
 } as const
 
 export type IconNamesType = keyof typeof icons

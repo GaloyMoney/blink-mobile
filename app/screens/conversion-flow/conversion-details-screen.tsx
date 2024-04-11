@@ -24,6 +24,7 @@ import {
   toUsdMoneyAmount,
   toWalletAmount,
 } from "@app/types/amounts"
+import { testProps } from "@app/utils/testProps"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 
@@ -216,24 +217,28 @@ export const ConversionDetailsScreen = () => {
           <View style={styles.percentageContainer}>
             <View style={styles.percentageFieldContainer}>
               <TouchableOpacity
+                {...testProps("convert-25%")}
                 style={styles.percentageField}
                 onPress={() => setAmountToBalancePercentage(25)}
               >
                 <Text>25%</Text>
               </TouchableOpacity>
               <TouchableOpacity
+                {...testProps("convert-50%")}
                 style={styles.percentageField}
                 onPress={() => setAmountToBalancePercentage(50)}
               >
                 <Text>50%</Text>
               </TouchableOpacity>
               <TouchableOpacity
+                {...testProps("convert-75%")}
                 style={styles.percentageField}
                 onPress={() => setAmountToBalancePercentage(75)}
               >
                 <Text>75%</Text>
               </TouchableOpacity>
               <TouchableOpacity
+                {...testProps("convert-100%")}
                 style={styles.percentageField}
                 onPress={() => setAmountToBalancePercentage(100)}
               >

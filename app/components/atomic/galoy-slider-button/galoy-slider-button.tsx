@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { ActivityIndicator, Dimensions, View } from "react-native"
+import { ActivityIndicator, Dimensions, View, I18nManager } from "react-native"
 import { PanGestureHandler } from "react-native-gesture-handler"
 import Animated, {
   Extrapolate,
@@ -14,12 +14,14 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated"
 
+import { testProps } from "@app/utils/testProps"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 
 import { GaloyIcon } from "../galoy-icon"
 
 const BUTTON_WIDTH = Dimensions.get("screen").width - 40
 const SWIPE_RANGE = BUTTON_WIDTH - 50
+const isRTL = I18nManager.isRTL
 
 type SwipeButtonPropsType = {
   onSwipe: () => void
@@ -52,7 +54,7 @@ const GaloySliderButton = ({
 
   const animatedGestureHandler = useAnimatedGestureHandler({
     onActive: (e) => {
-      const newValue = e.translationX
+      const newValue = Math.abs(e.translationX)
 
       if (newValue >= 0 && newValue <= SWIPE_RANGE) {
         X.value = newValue
@@ -69,34 +71,37 @@ const GaloySliderButton = ({
 
   const AnimatedStyles = {
     swipeButton: useAnimatedStyle(() => {
+      const translateX = interpolate(
+        X.value,
+        [20, BUTTON_WIDTH],
+        [0, BUTTON_WIDTH],
+        Extrapolation.CLAMP,
+      )
+
       return {
         transform: [
           {
-            translateX: interpolate(
-              X.value,
-              [20, BUTTON_WIDTH],
-              [0, BUTTON_WIDTH],
-              Extrapolation.CLAMP,
-            ),
+            translateX: isRTL ? -translateX : translateX,
           },
         ],
       }
-    }, [X]),
+    }, [X, isRTL]),
     swipeText: useAnimatedStyle(() => {
+      const translateX = interpolate(
+        X.value,
+        [20, SWIPE_RANGE],
+        [0, BUTTON_WIDTH / 3],
+        Extrapolate.CLAMP,
+      )
       return {
         opacity: interpolate(X.value, [0, BUTTON_WIDTH / 4], [1, 0], Extrapolate.CLAMP),
         transform: [
           {
-            translateX: interpolate(
-              X.value,
-              [20, SWIPE_RANGE],
-              [0, BUTTON_WIDTH / 3],
-              Extrapolate.CLAMP,
-            ),
+            translateX: isRTL ? -translateX : translateX,
           },
         ],
       }
-    }, [X]),
+    }, [X, isRTL]),
   }
 
   return (
@@ -105,6 +110,7 @@ const GaloySliderButton = ({
         <PanGestureHandler
           enabled={!isLoading && !disabled}
           onGestureEvent={animatedGestureHandler}
+          {...testProps("slider")}
         >
           <Animated.View
             style={[
@@ -114,7 +120,11 @@ const GaloySliderButton = ({
             ]}
             exiting={FadeOut.duration(400)}
           >
-            <GaloyIcon size={30} name="arrow-right" color="white" />
+            {isRTL ? (
+              <GaloyIcon size={30} name="arrow-left" color="white" />
+            ) : (
+              <GaloyIcon size={30} name="arrow-right" color="white" />
+            )}
           </Animated.View>
         </PanGestureHandler>
       )}

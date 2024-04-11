@@ -5,8 +5,8 @@ import { ScrollView } from "react-native-gesture-handler"
 import { gql } from "@apollo/client"
 import LogoDarkMode from "@app/assets/logo/app-logo-dark.svg"
 import LogoLightMode from "@app/assets/logo/blink-logo-light.svg"
+import { AprilChallengeCard } from "@app/components/april-challenge"
 import { Circle, CircleRef } from "@app/components/circle"
-import { FebruaryChallengeCard } from "@app/components/february-challenge"
 import { IntroducingCirclesModal } from "@app/components/introducing-circles-modal"
 import { MarchChallengeCard } from "@app/components/march-challenge"
 import { useCirclesQuery } from "@app/graphql/generated"
@@ -153,8 +153,8 @@ export const CirclesDashboardScreen: React.FC = () => {
             </Text>
           </View>
         )}
-        <FebruaryChallengeCard />
         <MarchChallengeCard />
+        <AprilChallengeCard />
         {isLonely ? <InviteFriendsCard /> : <ShareCircles />}
       </ScrollView>
     </Screen>

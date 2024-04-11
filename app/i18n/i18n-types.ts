@@ -46,10 +46,9 @@ type RootTranslation = {
 		 */
 		buttonTitle: string
 		/**
-		 * Y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s
-		 * @param {string} bankName
+		 * Y​o​u​r​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s
 		 */
-		yourAddress: RequiredParams<'bankName'>
+		yourLightningAddress: string
 		/**
 		 * Y​o​u​ ​w​o​n​'​t​ ​b​e​ ​a​b​l​e​ ​t​o​ ​c​h​a​n​g​e​ ​y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​ ​a​f​t​e​r​ ​i​t​'​s​ ​s​e​t​.
 		 * @param {string} bankName
@@ -77,10 +76,9 @@ type RootTranslation = {
 		 */
 		yourPaycode: string
 		/**
-		 * C​o​p​i​e​d​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​ ​t​o​ ​c​l​i​p​b​o​a​r​d
-		 * @param {string} bankName
+		 * C​o​p​i​e​d​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s​ ​t​o​ ​c​l​i​p​b​o​a​r​d
 		 */
-		copiedAddressToClipboard: RequiredParams<'bankName'>
+		copiedLightningAddressToClipboard: string
 		/**
 		 * C​o​p​i​e​d​ ​P​a​y​c​o​d​e​ ​t​o​ ​c​l​i​p​b​o​a​r​d
 		 */
@@ -6745,6 +6743,14 @@ type RootTranslation = {
 		 */
 		invalidTitle: string
 		/**
+		 * O​p​e​n​ ​L​i​n​k
+		 */
+		openLinkTitle: string
+		/**
+		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​o​p​e​n​ ​t​h​i​s​ ​l​i​n​k​?
+		 */
+		confirmOpenLink: string
+		/**
 		 * W​e​ ​c​o​u​l​d​ ​n​o​t​ ​f​i​n​d​ ​a​ ​Q​R​ ​c​o​d​e​ ​i​n​ ​t​h​e​ ​i​m​a​g​e
 		 */
 		noQrCode: string
@@ -7159,6 +7165,34 @@ type RootTranslation = {
 	}
 	SettingsScreen: {
 		/**
+		 * P​r​i​n​t​a​b​l​e​ ​S​t​a​t​i​c​ ​Q​R​ ​C​o​d​e
+		 */
+		staticQr: string
+		/**
+		 * Y​o​u​r​ ​s​t​a​t​i​c​ ​Q​R​ ​c​o​d​e​ ​l​i​n​k​ ​h​a​s​ ​b​e​e​n​ ​c​o​p​i​e​d
+		 */
+		staticQrCopied: string
+		/**
+		 * S​e​t​ ​b​y​ ​O​S
+		 */
+		setByOs: string
+		/**
+		 * A​P​I​ ​A​c​c​e​s​s
+		 */
+		apiAcess: string
+		/**
+		 * P​o​i​n​t​ ​o​f​ ​S​a​l​e
+		 */
+		pos: string
+		/**
+		 * Y​o​u​r​ ​p​o​i​n​t​ ​o​f​ ​s​a​l​e​ ​l​i​n​k​ ​h​a​s​ ​b​e​e​n​ ​c​o​p​i​e​d
+		 */
+		posCopied: string
+		/**
+		 * S​e​t​ ​Y​o​u​r​ ​L​i​g​h​t​n​i​n​g​ ​A​d​d​r​e​s​s
+		 */
+		setYourLightningAddress: string
+		/**
 		 * A​c​t​i​v​a​t​e​d
 		 */
 		activated: string
@@ -7282,9 +7316,66 @@ type RootTranslation = {
 				 */
 				description: string
 			}
+			Marketing: {
+				/**
+				 * F​e​a​t​u​r​e​s​ ​a​n​d​ ​u​p​d​a​t​e​s
+				 */
+				title: string
+				/**
+				 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​b​o​u​t​ ​n​e​w​ ​f​e​a​t​u​r​e​s​ ​a​n​d​ ​u​p​d​a​t​e​s​.
+				 */
+				description: string
+			}
+			Price: {
+				/**
+				 * P​r​i​c​e​ ​c​h​a​n​g​e​s
+				 */
+				title: string
+				/**
+				 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​b​o​u​t​ ​t​h​e​ ​p​r​i​c​e​ ​o​f​ ​B​i​t​c​o​i​n​.
+				 */
+				description: string
+			}
 		}
 	}
 	AccountScreen: {
+		/**
+		 * Y​o​u​r​ ​a​c​c​o​u​n​t​ ​h​a​s​ ​m​o​r​e​ ​t​h​a​n​ ​$​5
+		 */
+		fundsMoreThan5Dollars: string
+		/**
+		 * T​r​i​a​l​ ​a​c​c​o​u​n​t​s​ ​h​a​v​e​ ​r​e​d​u​c​e​d​ ​t​r​a​n​s​a​c​t​i​o​n​ ​l​i​m​i​t​s​ ​a​n​d​ ​n​o​ ​r​e​c​o​v​e​r​y​ ​m​e​t​h​o​d​.​ ​I​f​ ​y​o​u​ ​l​o​s​e​ ​y​o​u​r​ ​p​h​o​n​e​ ​o​r​ ​u​n​i​n​s​t​a​l​l​ ​t​h​e​ ​a​p​p​,​ ​y​o​u​r​ ​f​u​n​d​s​ ​w​i​l​l​ ​b​e​ ​u​n​r​e​c​o​v​e​r​a​b​l​e​.
+		 */
+		itsATrialAccount: string
+		/**
+		 * Y​o​u​r​ ​a​c​c​o​u​n​t​ ​i​s​ ​b​e​i​n​g​ ​d​e​l​e​t​e​d​,​ ​p​l​e​a​s​e​ ​w​a​i​t​.​.​.
+		 */
+		accountBeingDeleted: string
+		/**
+		 * D​a​n​g​e​r​ ​Z​o​n​e
+		 */
+		dangerZone: string
+		/**
+		 * P​h​o​n​e​ ​d​e​l​e​t​e​d​ ​s​u​c​c​e​s​s​f​u​l​l​y
+		 */
+		phoneDeletedSuccessfully: string
+		/**
+		 * P​h​o​n​e​ ​N​u​m​b​e​r
+		 */
+		phoneNumber: string
+		/**
+		 * T​a​p​ ​t​o​ ​a​d​d​ ​p​h​o​n​e​ ​n​u​m​b​e​r
+		 */
+		tapToAddPhoneNumber: string
+		/**
+		 * L​o​g​i​n​ ​M​e​t​h​o​d​s
+		 */
+		loginMethods: string
+		/**
+		 * L​e​v​e​l​ ​{​l​e​v​e​l​}
+		 * @param {string} level
+		 */
+		level: RequiredParams<'level'>
 		/**
 		 * A​c​c​o​u​n​t​ ​L​e​v​e​l
 		 */
@@ -7342,6 +7433,26 @@ type RootTranslation = {
 		 * T​a​p​ ​t​o​ ​a​d​d
 		 */
 		tapToAdd: string
+		/**
+		 * T​a​p​ ​t​o​ ​a​d​d​ ​e​m​a​i​l
+		 */
+		tapToAddEmail: string
+		/**
+		 * E​m​a​i​l​ ​(​U​n​v​e​r​i​f​i​e​d​)
+		 */
+		unverifiedEmail: string
+		/**
+		 * E​m​a​i​l
+		 */
+		email: string
+		/**
+		 * E​m​a​i​l​ ​d​e​l​e​t​e​d​ ​s​u​c​c​e​s​s​f​u​l​l​y
+		 */
+		emailDeletedSuccessfully: string
+		/**
+		 * U​n​v​e​r​i​f​i​e​d​ ​e​m​a​i​l​s​ ​c​a​n​'​t​ ​b​e​ ​u​s​e​d​ ​t​o​ ​l​o​g​i​n​.​ ​Y​o​u​ ​s​h​o​u​l​d​ ​r​e​-​v​e​r​i​f​y​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​.
+		 */
+		unverifiedEmailAdvice: string
 		/**
 		 * D​e​l​e​t​e​ ​e​m​a​i​l
 		 */
@@ -7426,6 +7537,10 @@ type RootTranslation = {
 		 * Y​o​u​r​ ​A​c​c​o​u​n​t​ ​I​D
 		 */
 		yourAccountId: string
+		/**
+		 * A​c​c​o​u​n​t​ ​I​D
+		 */
+		accountId: string
 		/**
 		 * C​o​p​y
 		 */
@@ -7514,6 +7629,14 @@ type RootTranslation = {
 		 * U​s​e​ ​D​a​r​k​ ​M​o​d​e
 		 */
 		dark: string
+		/**
+		 * D​a​r​k​ ​M​o​d​e
+		 */
+		setToDark: string
+		/**
+		 * L​i​g​h​t​ ​M​o​d​e
+		 */
+		setToLight: string
 	}
 	Languages: {
 		/**
@@ -7694,6 +7817,10 @@ type RootTranslation = {
 		 * @param {string} bankName
 		 */
 		title: RequiredParams<'bankName'>
+		/**
+		 * S​e​t​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s
+		 */
+		setLightningAddress: string
 		Errors: {
 			/**
 			 * A​d​d​r​e​s​s​ ​m​u​s​t​ ​b​e​ ​a​t​ ​l​e​a​s​t​ ​3​ ​c​h​a​r​a​c​t​e​r​s​ ​l​o​n​g
@@ -7964,9 +8091,45 @@ type RootTranslation = {
 	}
 	common: {
 		/**
+		 * E​n​a​b​l​e​d
+		 */
+		enabled: string
+		/**
+		 * N​o​t​i​f​i​c​a​t​i​o​n​s
+		 */
+		notifications: string
+		/**
+		 * P​r​e​f​e​r​e​n​c​e​s
+		 */
+		preferences: string
+		/**
+		 * O​n​-​D​e​v​i​c​e​ ​S​e​c​u​r​i​t​y
+		 */
+		onDeviceSecurity: string
+		/**
+		 * S​e​c​u​r​i​t​y​ ​a​n​d​ ​P​r​i​v​a​c​y
+		 */
+		securityAndPrivacy: string
+		/**
+		 * A​d​v​a​n​c​e​d
+		 */
+		advanced: string
+		/**
+		 * C​o​m​m​u​n​i​t​y
+		 */
+		community: string
+		/**
 		 * A​c​c​o​u​n​t
 		 */
 		account: string
+		/**
+		 * T​r​i​a​l​ ​A​c​c​o​u​n​t
+		 */
+		trialAccount: string
+		/**
+		 * B​l​i​n​k​ ​U​s​e​r
+		 */
+		blinkUser: string
 		/**
 		 * T​r​a​n​s​a​c​t​i​o​n​ ​L​i​m​i​t​s
 		 */
@@ -8440,6 +8603,10 @@ type RootTranslation = {
 		 */
 		statusPage: string
 		/**
+		 * C​h​a​t​b​o​t
+		 */
+		chatbot: string
+		/**
 		 * T​e​l​e​g​r​a​m
 		 */
 		telegram: string
@@ -8822,6 +8989,24 @@ type RootTranslation = {
 			 */
 			details: string
 		}
+		aprilChallenge: {
+			/**
+			 * A​p​r​i​l​ ​C​h​a​l​l​e​n​g​e​!
+			 */
+			title: string
+			/**
+			 * G​r​o​w​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​1​2​ ​a​n​d​ ​y​o​u​r​ ​o​u​t​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​3​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​t​o​ ​w​i​n​ ​a​ ​B​i​t​b​o​x​0​2​ ​h​a​r​d​w​a​r​e​ ​w​a​l​l​e​t​.
+			 */
+			description: string
+			/**
+			 * D​u​r​i​n​g​ ​t​h​e​ ​h​a​l​v​i​n​g​ ​m​o​n​t​h​,​ ​e​x​p​a​n​d​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​1​2​ ​a​n​d​ ​y​o​u​r​ ​o​u​t​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​3​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​t​o​ ​w​i​n​ ​a​ ​B​i​t​b​o​x​0​2​ ​h​a​r​d​w​a​r​e​ ​w​a​l​l​e​t​!​
+		​
+		​R​e​m​i​n​d​e​r​:​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​g​r​o​w​ ​w​h​e​n​ ​y​o​u​ ​s​e​n​d​ ​a​ ​n​e​w​ ​B​l​i​n​k​ ​u​s​e​r​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s​.​
+		​
+		​S​h​a​r​e​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​o​n​ ​s​o​c​i​a​l​ ​w​i​t​h​ ​#​b​l​i​n​k​c​i​r​c​l​e​s​ ​t​o​ ​p​a​r​t​i​c​i​p​a​t​e​.
+			 */
+			details: string
+		}
 	}
 	FullOnboarding: {
 		/**
@@ -8906,9 +9091,9 @@ export type TranslationFunctions = {
 		 */
 		buttonTitle: () => LocalizedString
 		/**
-		 * Your {bankName} address
+		 * Your Lightning address
 		 */
-		yourAddress: (arg: { bankName: string }) => LocalizedString
+		yourLightningAddress: () => LocalizedString
 		/**
 		 * You won't be able to change your {bankName} address after it's set.
 		 */
@@ -8934,9 +9119,9 @@ export type TranslationFunctions = {
 		 */
 		yourPaycode: () => LocalizedString
 		/**
-		 * Copied {bankName} address to clipboard
+		 * Copied Lightning address to clipboard
 		 */
-		copiedAddressToClipboard: (arg: { bankName: string }) => LocalizedString
+		copiedLightningAddressToClipboard: () => LocalizedString
 		/**
 		 * Copied Paycode to clipboard
 		 */
@@ -15583,6 +15768,14 @@ export type TranslationFunctions = {
 		 */
 		invalidTitle: () => LocalizedString
 		/**
+		 * Open Link
+		 */
+		openLinkTitle: () => LocalizedString
+		/**
+		 * Are you sure you want to open this link?
+		 */
+		confirmOpenLink: () => LocalizedString
+		/**
 		 * We could not find a QR code in the image
 		 */
 		noQrCode: () => LocalizedString
@@ -15977,6 +16170,34 @@ export type TranslationFunctions = {
 	}
 	SettingsScreen: {
 		/**
+		 * Printable Static QR Code
+		 */
+		staticQr: () => LocalizedString
+		/**
+		 * Your static QR code link has been copied
+		 */
+		staticQrCopied: () => LocalizedString
+		/**
+		 * Set by OS
+		 */
+		setByOs: () => LocalizedString
+		/**
+		 * API Access
+		 */
+		apiAcess: () => LocalizedString
+		/**
+		 * Point of Sale
+		 */
+		pos: () => LocalizedString
+		/**
+		 * Your point of sale link has been copied
+		 */
+		posCopied: () => LocalizedString
+		/**
+		 * Set Your Lightning Address
+		 */
+		setYourLightningAddress: () => LocalizedString
+		/**
 		 * Activated
 		 */
 		activated: () => LocalizedString
@@ -16099,9 +16320,65 @@ export type TranslationFunctions = {
 				 */
 				description: () => LocalizedString
 			}
+			Marketing: {
+				/**
+				 * Features and updates
+				 */
+				title: () => LocalizedString
+				/**
+				 * Notifications about new features and updates.
+				 */
+				description: () => LocalizedString
+			}
+			Price: {
+				/**
+				 * Price changes
+				 */
+				title: () => LocalizedString
+				/**
+				 * Notifications about the price of Bitcoin.
+				 */
+				description: () => LocalizedString
+			}
 		}
 	}
 	AccountScreen: {
+		/**
+		 * Your account has more than $5
+		 */
+		fundsMoreThan5Dollars: () => LocalizedString
+		/**
+		 * Trial accounts have reduced transaction limits and no recovery method. If you lose your phone or uninstall the app, your funds will be unrecoverable.
+		 */
+		itsATrialAccount: () => LocalizedString
+		/**
+		 * Your account is being deleted, please wait...
+		 */
+		accountBeingDeleted: () => LocalizedString
+		/**
+		 * Danger Zone
+		 */
+		dangerZone: () => LocalizedString
+		/**
+		 * Phone deleted successfully
+		 */
+		phoneDeletedSuccessfully: () => LocalizedString
+		/**
+		 * Phone Number
+		 */
+		phoneNumber: () => LocalizedString
+		/**
+		 * Tap to add phone number
+		 */
+		tapToAddPhoneNumber: () => LocalizedString
+		/**
+		 * Login Methods
+		 */
+		loginMethods: () => LocalizedString
+		/**
+		 * Level {level}
+		 */
+		level: (arg: { level: string }) => LocalizedString
 		/**
 		 * Account Level
 		 */
@@ -16153,6 +16430,26 @@ export type TranslationFunctions = {
 		 * Tap to add
 		 */
 		tapToAdd: () => LocalizedString
+		/**
+		 * Tap to add email
+		 */
+		tapToAddEmail: () => LocalizedString
+		/**
+		 * Email (Unverified)
+		 */
+		unverifiedEmail: () => LocalizedString
+		/**
+		 * Email
+		 */
+		email: () => LocalizedString
+		/**
+		 * Email deleted successfully
+		 */
+		emailDeletedSuccessfully: () => LocalizedString
+		/**
+		 * Unverified emails can't be used to login. You should re-verify your email address.
+		 */
+		unverifiedEmailAdvice: () => LocalizedString
 		/**
 		 * Delete email
 		 */
@@ -16237,6 +16534,10 @@ export type TranslationFunctions = {
 		 * Your Account ID
 		 */
 		yourAccountId: () => LocalizedString
+		/**
+		 * Account ID
+		 */
+		accountId: () => LocalizedString
 		/**
 		 * Copy
 		 */
@@ -16325,6 +16626,14 @@ export type TranslationFunctions = {
 		 * Use Dark Mode
 		 */
 		dark: () => LocalizedString
+		/**
+		 * Dark Mode
+		 */
+		setToDark: () => LocalizedString
+		/**
+		 * Light Mode
+		 */
+		setToLight: () => LocalizedString
 	}
 	Languages: {
 		/**
@@ -16501,6 +16810,10 @@ export type TranslationFunctions = {
 		 * Set {bankName} address
 		 */
 		title: (arg: { bankName: string }) => LocalizedString
+		/**
+		 * Set Lightning address
+		 */
+		setLightningAddress: () => LocalizedString
 		Errors: {
 			/**
 			 * Address must be at least 3 characters long
@@ -16762,9 +17075,45 @@ export type TranslationFunctions = {
 	}
 	common: {
 		/**
+		 * Enabled
+		 */
+		enabled: () => LocalizedString
+		/**
+		 * Notifications
+		 */
+		notifications: () => LocalizedString
+		/**
+		 * Preferences
+		 */
+		preferences: () => LocalizedString
+		/**
+		 * On-Device Security
+		 */
+		onDeviceSecurity: () => LocalizedString
+		/**
+		 * Security and Privacy
+		 */
+		securityAndPrivacy: () => LocalizedString
+		/**
+		 * Advanced
+		 */
+		advanced: () => LocalizedString
+		/**
+		 * Community
+		 */
+		community: () => LocalizedString
+		/**
 		 * Account
 		 */
 		account: () => LocalizedString
+		/**
+		 * Trial Account
+		 */
+		trialAccount: () => LocalizedString
+		/**
+		 * Blink User
+		 */
+		blinkUser: () => LocalizedString
 		/**
 		 * Transaction Limits
 		 */
@@ -17235,6 +17584,10 @@ export type TranslationFunctions = {
 		 */
 		statusPage: () => LocalizedString
 		/**
+		 * Chatbot
+		 */
+		chatbot: () => LocalizedString
+		/**
 		 * Telegram
 		 */
 		telegram: () => LocalizedString
@@ -17593,6 +17946,24 @@ export type TranslationFunctions = {
 			description: () => LocalizedString
 			/**
 			 * Grow your inner circle by 3 and your outer circle by 3 for a chance at winning $100!
+	
+		Reminder: your circles grow when you send a new Blink user their first sats.
+	
+		Share your circles on social with #blinkcircles to participate.
+			 */
+			details: () => LocalizedString
+		}
+		aprilChallenge: {
+			/**
+			 * April Challenge!
+			 */
+			title: () => LocalizedString
+			/**
+			 * Grow your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet.
+			 */
+			description: () => LocalizedString
+			/**
+			 * During the halving month, expand your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet!
 	
 		Reminder: your circles grow when you send a new Blink user their first sats.
 	

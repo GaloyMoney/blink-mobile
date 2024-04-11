@@ -6,7 +6,7 @@ const en: BaseTranslation = {
   GaloyAddressScreen: {
     title: "Receive payment by using:",
     buttonTitle: "Set your address",
-    yourAddress: "Your {bankName: string} address",
+    yourLightningAddress: "Your Lightning address",
     notAbleToChange:
       "You won't be able to change your {bankName: string} address after it's set.",
     addressNotAvailable: "This {bankName: string} address is already taken.",
@@ -14,7 +14,7 @@ const en: BaseTranslation = {
     merchantTitle: "For merchants",
     yourCashRegister: "Your Lightning Cash Register",
     yourPaycode: "Your Paycode",
-    copiedAddressToClipboard: "Copied {bankName: string} address to clipboard",
+    copiedLightningAddressToClipboard: "Copied Lightning address to clipboard",
     copiedPaycodeToClipboard: "Copied Paycode to clipboard",
     copiedCashRegisterLinkToClipboard: "Copied Cash Register Link to clipboard",
     howToUseIt: "How to use it?",
@@ -2173,6 +2173,8 @@ const en: BaseTranslation = {
       "We found:\n\n{found: string}\n\nThis is not a valid Bitcoin address or Lightning invoice",
     expiredContent: "We found:\n\n{found: string}\n\nThis invoice has expired",
     invalidTitle: "Invalid QR Code",
+    openLinkTitle: "Open Link",
+    confirmOpenLink: "Are you sure you want to open this link?",
     noQrCode: "We could not find a QR code in the image",
     title: "Scan QR",
     permissionCamera: "We need permission to use your camera",
@@ -2298,6 +2300,13 @@ const en: BaseTranslation = {
     pendingPayment: "The payment has been sent, but hasn't confirmed yet.\n\nIt's possible the payment will not confirm, in which case the funds will be returned to your account.",
   },
   SettingsScreen: {
+    staticQr: "Printable Static QR Code",
+    staticQrCopied: "Your static QR code link has been copied",
+    setByOs: "Set by OS",
+    apiAcess: "API Access",
+    pos: "Point of Sale",
+    posCopied: "Your point of sale link has been copied",
+    setYourLightningAddress: "Set Your Lightning Address",
     activated: "Activated",
     addressScreen: "Ways to get paid",
     tapUserName: "Tap to set username",
@@ -2336,10 +2345,27 @@ const en: BaseTranslation = {
       Payments: {
         title: "Payments",
         description: "Notifications related to sending and receiving payments.",
+      },
+      Marketing: {
+        title: "Features and updates",
+        description: "Notifications about new features and updates.",
+      },
+      Price: {
+        title: "Price changes",
+        description: "Notifications about the price of Bitcoin.",
       }
     }
   },
   AccountScreen: {
+    fundsMoreThan5Dollars: "Your account has more than $5",
+    itsATrialAccount: "Trial accounts have reduced transaction limits and no recovery method. If you lose your phone or uninstall the app, your funds will be unrecoverable.",
+    accountBeingDeleted: "Your account is being deleted, please wait...",
+    dangerZone: "Danger Zone",
+    phoneDeletedSuccessfully: "Phone deleted successfully",
+    phoneNumber: "Phone Number",
+    tapToAddPhoneNumber: "Tap to add phone number",
+    loginMethods: "Login Methods",
+    level: "Level {level: string}",
     accountLevel: "Account Level",
     upgrade: "Upgrade your account",
     logOutAndDeleteLocalData: "Log out and clear all local data",
@@ -2355,6 +2381,11 @@ const en: BaseTranslation = {
     btcBalanceWarning: "You have a bitcoin balance of {balance: string}.",
     secureYourAccount: "Register to secure your account",
     tapToAdd: "Tap to add",
+    tapToAddEmail: "Tap to add email",
+    unverifiedEmail: "Email (Unverified)",
+    email: "Email",
+    emailDeletedSuccessfully: "Email deleted successfully",
+    unverifiedEmailAdvice: "Unverified emails can't be used to login. You should re-verify your email address.",
     deleteEmailPromptTitle: "Delete email",
     deleteEmailPromptContent:
       "Are you sure you want to delete your email address? you will only be able to log back in with your phone number.",
@@ -2380,6 +2411,7 @@ const en: BaseTranslation = {
       "Are you sure you want to delete your two-factor authentication?",
     copiedAccountId: "Copied your account ID to clipboard",
     yourAccountId: "Your Account ID",
+    accountId: "Account ID",
     copy: "Copy"
   },
   TotpRegistrationInitiateScreen: {
@@ -2415,6 +2447,8 @@ const en: BaseTranslation = {
     system: "Use System setting",
     light: "Use Light Mode",
     dark: "Use Dark Mode",
+    setToDark: "Dark Mode",
+    setToLight: "Light Mode",
   },
   Languages: {
     DEFAULT: "Default (OS)",
@@ -2475,6 +2509,7 @@ const en: BaseTranslation = {
   },
   SetAddressModal: {
     title: "Set {bankName: string} address",
+    setLightningAddress: "Set Lightning address",
     Errors: {
       tooShort: "Address must be at least 3 characters long",
       tooLong: "Address must be at most 50 characters long",
@@ -2569,7 +2604,16 @@ const en: BaseTranslation = {
     success: "Email {email: string} confirmed successfully",
   },
   common: {
+    enabled: "Enabled",
+    notifications: "Notifications",
+    preferences: "Preferences",
+    onDeviceSecurity: "On-Device Security",
+    securityAndPrivacy: "Security and Privacy",
+    advanced: "Advanced",
+    community: "Community",
     account: "Account",
+    trialAccount: "Trial Account",
+    blinkUser: "Blink User",
     transactionLimits: "Transaction Limits",
     activateWallet: "Activate Wallet",
     amountRequired: "Amount is required",
@@ -2697,6 +2741,7 @@ const en: BaseTranslation = {
     faq: "FAQ",
     enjoyingApp: "Enjoying the app?",
     statusPage: "Status Page",
+    chatbot: "Chatbot",
     telegram: "Telegram",
     mattermost: "Mattermost",
     thankYouText: "Thank you for the feedback, would you like to suggest an improvement?",
@@ -2812,6 +2857,11 @@ const en: BaseTranslation = {
       title: "March Challenge!",
       description: "+3 inner circle and +3 outer circle for a chance to win $100",
       details: "Grow your inner circle by 3 and your outer circle by 3 for a chance at winning $100!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
+    },
+    aprilChallenge: {
+      title: "April Challenge!",
+      description: "Grow your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet.",
+      details: "During the halving month, expand your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
     }
   },
   FullOnboarding: {

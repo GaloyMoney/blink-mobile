@@ -98,7 +98,7 @@ services:
     - POSTGRES_PASSWORD=secret
     - POSTGRES_DB=hydra
   galoy:
-    image: us.gcr.io/galoy-org/galoy-api@sha256:c707ddebb0e6e8e79bd1c7dd58b7483064c77609e9eb30fd0a5c59f1d6206af3
+    image: us.gcr.io/galoy-org/galoy-api@sha256:949763b555858318808b9bc7fee2e33fa2deb7252a2c0eed1e7a9ad65193f021
     environment:
     - HELMREVISION=dev
     - NETWORK=regtest
@@ -161,7 +161,7 @@ services:
         aliases:
         - bats-tests
   trigger:
-    image: us.gcr.io/galoy-org/galoy-api-trigger@sha256:8c6224c7478ec509bdda00ec61cdcd68c964bffd6c8aebfbbc66ea396579f6a3
+    image: us.gcr.io/galoy-org/galoy-api-trigger@sha256:8cd1c54070a2b27086391f372f0fb87fee9c35b7bc4a4ed6775f09b82b27c99c
     environment:
     - HELMREVISION=dev
     - NETWORK=regtest
@@ -213,14 +213,18 @@ services:
     - bria
     - mongodb
   notifications:
-    image: us.gcr.io/galoy-org/galoy-notifications@sha256:a580eceec5260d6c06221b03f5e1e45c7545b6eb380961c9285206011d1b96bd
+    image: us.gcr.io/galoy-org/galoy-notifications@sha256:d86095c8470a4ce551fbe65d507d333983c5f201ddfa27a733eb4d3758c4682d
     environment:
     - PG_CON=postgres://user:password@notifications-pg:5432/pg
     - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-agent:4318
+    - NOTIFICATIONS_CONFIG=/config/notifications/notifications.yml
     ports:
     - 6685:6685
-    links:
-    - notifications-pg:notifications-pg
+    volumes:
+    - ${HOST_PROJECT_PATH:-.}/${GALOY_QUICKSTART_PATH:-vendor/galoy-quickstart}/dev/config/notifications/notifications.yml:/config/notifications/notifications.yml
+    - ${HOST_PROJECT_PATH:-.}/${GALOY_QUICKSTART_PATH:-vendor/galoy-quickstart}/dev/config/notifications/fake_service_account.json:/app/notifications/config/notifications/fake_service_account.json
+    depends_on:
+    - notifications-pg
   notifications-pg:
     image: postgres:14.1
     environment:
@@ -244,13 +248,13 @@ services:
     - ALLOW_EMPTY_PASSWORD=yes
     - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
   mongodb:
-    image: mongo:7.0.2
+    image: mongo:7.0.6
     ports:
     - 27017:27017
     environment:
     - MONGO_INITDB_DATABASE=galoy
   mongodb-migrate:
-    image: us.gcr.io/galoy-org/galoy-api-migrate@sha256:a0862f9b08eebab72e17fadf8ad9b7292b984428e982eb8fea21a81edadcefd1
+    image: us.gcr.io/galoy-org/galoy-api-migrate@sha256:63fbc734fbd6a7c545a81375736614bf751d8052da50391a979448d64f555718
     depends_on:
     - mongodb
     environment:
@@ -260,6 +264,8 @@ services:
     ports:
     - 50051:50051
     - 9464:9464
+    volumes:
+    - ${HOST_PROJECT_PATH:-.}/${GALOY_QUICKSTART_PATH:-vendor/galoy-quickstart}/dev/config/price.yml:/var/yaml/custom.yaml
   price-history:
     image: us.gcr.io/galoy-org/price-history:edge
     ports:
@@ -297,6 +303,13 @@ services:
     - POSTGRES_USER=galoy-price-usr
     - POSTGRES_PASSWORD=galoy-price-pwd
     - POSTGRES_DB=galoy-price-history
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - pg_isready
+      interval: 5s
+      timeout: 30s
+      retries: 5
   bitcoind:
     image: lncm/bitcoind:v25.1
     ports:
@@ -317,7 +330,7 @@ services:
     - |
       bitcoind -connect=bitcoind:18444
   lnd1:
-    image: lightninglabs/lnd:v0.17.3-beta
+    image: lightninglabs/lnd:v0.17.4-beta
     ports:
     - 10009:10009
     volumes:
@@ -340,7 +353,7 @@ services:
       cp /root/.lnd/admin.macaroon /root/.lnd/data/chain/bitcoin/regtest/admin.macaroon
       /bin/lnd
   lnd-outside-1:
-    image: lightninglabs/lnd:v0.17.3-beta
+    image: lightninglabs/lnd:v0.17.4-beta
     ports:
     - 10012:10009
     volumes:
