@@ -34,7 +34,7 @@ const useLogout = () => {
         await KeyStoreWrapper.removeIsBiometricsEnabled()
         await KeyStoreWrapper.removePin()
         await KeyStoreWrapper.removePinAttempts()
-        await KeyStoreWrapper.removeSecurePersistentState()
+        await KeyStoreWrapper.removeSecureStorageState()
 
         logLogout()
 
