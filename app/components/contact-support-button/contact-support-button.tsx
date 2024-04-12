@@ -40,7 +40,6 @@ export const ContactSupportButton = ({
           SupportChannels.Faq,
           SupportChannels.StatusPage,
           SupportChannels.Email,
-          SupportChannels.WhatsApp,
         ]}
       />
       <GaloyTertiaryButton
