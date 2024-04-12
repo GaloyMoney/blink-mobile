@@ -95,10 +95,6 @@ export const AppUpdateModal = ({
 
   const { LL } = useI18nContext()
 
-  const message = LL.AppUpdate.needToUpdateSupportMessage({
-    os: isIos ? "iOS" : "Android",
-    version: DeviceInfo.getReadableVersion(),
-  })
   const styles = useStyles()
 
   return (
