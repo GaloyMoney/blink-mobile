@@ -108,6 +108,7 @@ export const HomeScreen: React.FC = () => {
   const [breezTransactions, setBreezTransactions] = useState<Payment[]>([])
   const [mergedTransactions, setMergedTransactions] = useState<TransactionFragment[]>([])
   const [transactionLoading, setTransactionLoading] = useState(false)
+  const [refreshTriggered, setRefreshTriggered] = useState(false)
 
   const isBalanceVisible = hideBalance ?? false
   const loading = (loadingAuthed || loadingPrice || loadingUnauthed) && isAuthed
@@ -196,6 +197,8 @@ export const HomeScreen: React.FC = () => {
       fetchPaymentsBreez()
       checkInProgressSwap()
       refreshBreezBalance()
+      setRefreshTriggered(true)
+      setTimeout(() => setRefreshTriggered(false), 1000)
     }
   }, [isAuthed, refetchAuthed, refetchRealtimePrice, refetchUnauthed])
 
@@ -329,6 +332,7 @@ export const HomeScreen: React.FC = () => {
         }
       >
         <WalletOverview
+          refreshTriggered={refreshTriggered}
           isContentVisible={isContentVisible}
           setIsContentVisible={setIsContentVisible}
           loading={false}
