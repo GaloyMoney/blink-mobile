@@ -3,6 +3,7 @@ import { Linking } from "react-native"
 import ReactNativeModal from "react-native-modal"
 
 import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "@app/config"
+import { useBetaQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { openWhatsApp } from "@app/utils/external"
@@ -49,6 +50,8 @@ const ContactModal: React.FC<Props> = ({
   } = useTheme()
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+
+  const betaActivated = useBetaQuery().data?.beta ?? false
 
   const contactOptionList = [
     {
@@ -130,6 +133,7 @@ const ContactModal: React.FC<Props> = ({
     >
       {contactOptionList
         .filter((item) => supportChannels.includes(item.id))
+        .filter((item) => (item.id === SupportChannels.Chatbot ? betaActivated : true))
         .map((item) => {
           return (
             <ListItem
