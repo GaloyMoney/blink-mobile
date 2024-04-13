@@ -39,6 +39,7 @@ export const ContactSupportButton = ({
         supportChannels={[
           SupportChannels.Faq,
           SupportChannels.StatusPage,
+          SupportChannels.Chatbot,
           SupportChannels.Email,
         ]}
       />
