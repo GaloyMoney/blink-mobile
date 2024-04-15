@@ -66,3 +66,4 @@ generates:
         EndpointUrl: "string"
         NotificationCategory: "string"
         DateTime: "string"
+        TxExternalId: "string"
