@@ -25,6 +25,106 @@ it("returns default when schema is not present", async () => {
   expect(state).toEqual(defaultLocalStorageState)
 })
 
+it("migrates Blink instance from 4 to 7 ", async () => {
+  const state4 = {
+    schemaVersion: 4,
+    hasShownStableSatsWelcome: true,
+    isUsdDisabled: true,
+    galoyInstance: { id: "Main", name: "Blink" },
+    galoyAuthToken: "token",
+    isAnalyticsEnabled: false,
+  }
+
+  const state7 = {
+    schemaVersion: 7,
+    galoyInstance: { id: "Main" },
+  }
+
+  const res = await migrateAndGetLocalStorageState(state4)
+
+  expect(res).toStrictEqual(state7)
+})
+
+it("migrates Staging instance from 4 to 7 ", async () => {
+  const state4 = {
+    schemaVersion: 4,
+    hasShownStableSatsWelcome: true,
+    isUsdDisabled: true,
+    galoyInstance: { id: "Main", name: "Staging" },
+    galoyAuthToken: "token",
+    isAnalyticsEnabled: false,
+  }
+
+  const state7 = {
+    schemaVersion: 7,
+    galoyInstance: { id: "Staging" },
+  }
+
+  const res = await migrateAndGetLocalStorageState(state4)
+
+  expect(res).toStrictEqual(state7)
+})
+
+it("migrates Local instance from 4 to 7 ", async () => {
+  const state4 = {
+    schemaVersion: 4,
+    hasShownStableSatsWelcome: true,
+    isUsdDisabled: true,
+    galoyInstance: { id: "Main", name: "Local" },
+    galoyAuthToken: "token",
+    isAnalyticsEnabled: false,
+  }
+
+  const state7 = {
+    schemaVersion: 7,
+    galoyInstance: { id: "Local" },
+  }
+
+  const res = await migrateAndGetLocalStorageState(state4)
+
+  expect(res).toStrictEqual(state7)
+})
+
+it("migrates BBW instance from 4 to 7", async () => {
+  const state4 = {
+    schemaVersion: 4,
+    hasShownStableSatsWelcome: true,
+    isUsdDisabled: true,
+    galoyInstance: { id: "Main", name: "BBW" },
+    galoyAuthToken: "token",
+    isAnalyticsEnabled: false,
+  }
+
+  const state7 = {
+    schemaVersion: 7,
+    galoyInstance: { id: "Main" },
+  }
+
+  const res = await migrateAndGetLocalStorageState(state4)
+
+  expect(res).toStrictEqual(state7)
+})
+
+it("migrates Custom instance from 4 to 7", async () => {
+  const state4 = {
+    schemaVersion: 4,
+    hasShownStableSatsWelcome: true,
+    isUsdDisabled: true,
+    galoyInstance: { id: "Main", name: "Custom" },
+    galoyAuthToken: "token",
+    isAnalyticsEnabled: false,
+  }
+
+  const state7 = {
+    schemaVersion: 7,
+    galoyInstance: { id: "Custom" },
+  }
+
+  const res = await migrateAndGetLocalStorageState(state4)
+
+  expect(res).toStrictEqual(state7)
+})
+
 it("migration from 5 to 7", async () => {
   const state5 = {
     schemaVersion: 5,
@@ -32,12 +132,12 @@ it("migration from 5 to 7", async () => {
     galoyAuthToken: "myToken",
   }
 
-  const state6 = {
+  const state7 = {
     schemaVersion: 7,
     galoyInstance: { id: "Main" },
   }
 
   const res = await migrateAndGetLocalStorageState(state5)
 
-  expect(res).toStrictEqual(state6)
+  expect(res).toStrictEqual(state7)
 })
