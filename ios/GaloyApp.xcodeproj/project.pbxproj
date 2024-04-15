@@ -11,15 +11,16 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		3152A8AF830F40A7AB689E42 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		3E3C92C2FC91412D8DFDE94D /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		560415592C5B4119B9F91553 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		3152A8AF830F40A7AB689E42 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		3E3C92C2FC91412D8DFDE94D /* (null) in Resources */ = {isa = PBXBuildFile; };
+		560415592C5B4119B9F91553 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		94D9F3C84EB547D68D41C50F /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		94D9F3C84EB547D68D41C50F /* (null) in Resources */ = {isa = PBXBuildFile; };
 		AEBBD0A1234A4C5490A44CC1 /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C8483F4C3424986AEBE74CC /* DMSans-Bold.ttf */; };
-		BD157A9851974C298EB06CB7 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		BD157A9851974C298EB06CB7 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		BFD1E05462E2DE8ADB6856A2 /* libPods-GaloyApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BF3F16B9970ED9E2ACFEC81 /* libPods-GaloyApp.a */; };
-		C426C81D58C8450C878B6086 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		C41200B62BCD042900FBB850 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = C41200B52BCD042900FBB850 /* PrivacyInfo.xcprivacy */; };
+		C426C81D58C8450C878B6086 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		C61EE0AD23C530E30054100C /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C61EE0AC23C530E30054100C /* AuthenticationServices.framework */; };
 		C6E810012333FDA500D41794 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C6E810002333FDA400D41794 /* GoogleService-Info.plist */; };
 		F1D71F3628CE5C9A00636277 /* AppDelegate.h in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FAF1A68108700A75B9A /* AppDelegate.h */; };
@@ -40,6 +41,7 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = GaloyApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8AC0ED6E611CE036AF25AD7E /* Pods-GaloyApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GaloyApp.debug.xcconfig"; path = "Target Support Files/Pods-GaloyApp/Pods-GaloyApp.debug.xcconfig"; sourceTree = "<group>"; };
 		915C987F56157E0E6B925113 /* Pods-GaloyApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GaloyApp.release.xcconfig"; path = "Target Support Files/Pods-GaloyApp/Pods-GaloyApp.release.xcconfig"; sourceTree = "<group>"; };
+		C41200B52BCD042900FBB850 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		C61EE0AB23C52FBA0054100C /* GaloyApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = GaloyApp.entitlements; path = GaloyApp/GaloyApp.entitlements; sourceTree = "<group>"; };
 		C61EE0AC23C530E30054100C /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		C63A9181296313BE00B54FDB /* hermes.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = hermes.xcframework; path = "Pods/hermes-engine/destroot/Library/Frameworks/universal/hermes.xcframework"; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				C41200B52BCD042900FBB850 /* PrivacyInfo.xcprivacy */,
 				C6E810002333FDA400D41794 /* GoogleService-Info.plist */,
 				C69AA16B232DD68A00606E11 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* GaloyApp */,
@@ -224,12 +227,13 @@
 				0D25368529E5EE4B00037874 /* BootSplash.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				C6E810012333FDA500D41794 /* GoogleService-Info.plist in Resources */,
-				560415592C5B4119B9F91553 /* BuildFile in Resources */,
-				3E3C92C2FC91412D8DFDE94D /* BuildFile in Resources */,
-				BD157A9851974C298EB06CB7 /* BuildFile in Resources */,
-				3152A8AF830F40A7AB689E42 /* BuildFile in Resources */,
-				94D9F3C84EB547D68D41C50F /* BuildFile in Resources */,
-				C426C81D58C8450C878B6086 /* BuildFile in Resources */,
+				560415592C5B4119B9F91553 /* (null) in Resources */,
+				3E3C92C2FC91412D8DFDE94D /* (null) in Resources */,
+				C41200B62BCD042900FBB850 /* PrivacyInfo.xcprivacy in Resources */,
+				BD157A9851974C298EB06CB7 /* (null) in Resources */,
+				3152A8AF830F40A7AB689E42 /* (null) in Resources */,
+				94D9F3C84EB547D68D41C50F /* (null) in Resources */,
+				C426C81D58C8450C878B6086 /* (null) in Resources */,
 				AEBBD0A1234A4C5490A44CC1 /* DMSans-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -472,7 +476,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.galoy.bitcoinbeach;
 				PRODUCT_NAME = Blink;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development io.galoy.bitcoinbeach";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development io.galoy.bitcoinbeach 1706648532";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development io.galoy.bitcoinbeach";
 				SWIFT_OBJC_BRIDGING_HEADER = "GaloyApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.2;
@@ -491,6 +495,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 696;
 				DEVELOPMENT_TEAM = AYPCPV46WW;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = AYPCPV46WW;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = GaloyApp/Info.plist;
@@ -506,6 +511,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.galoy.bitcoinbeach;
 				PRODUCT_NAME = Blink;
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore io.galoy.bitcoinbeach";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore io.galoy.bitcoinbeach";
 				SWIFT_OBJC_BRIDGING_HEADER = "GaloyApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.2;
 				VERSIONING_SYSTEM = "apple-generic";
