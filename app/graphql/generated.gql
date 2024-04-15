@@ -287,6 +287,7 @@ mutation lnInvoiceCreate($input: LnInvoiceCreateInput!) {
       paymentHash
       paymentRequest
       paymentStatus
+      externalId
       satoshis
       __typename
     }
@@ -327,6 +328,7 @@ mutation lnNoAmountInvoiceCreate($input: LnNoAmountInvoiceCreateInput!) {
       paymentHash
       paymentRequest
       paymentStatus
+      externalId
       __typename
     }
     __typename
@@ -388,6 +390,7 @@ mutation lnUsdInvoiceCreate($input: LnUsdInvoiceCreateInput!) {
       paymentHash
       paymentRequest
       paymentStatus
+      externalId
       satoshis
       __typename
     }
