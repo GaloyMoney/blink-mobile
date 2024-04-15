@@ -74,6 +74,7 @@ gql`
         paymentHash
         paymentRequest
         paymentStatus
+        externalId
       }
     }
   }
@@ -88,6 +89,7 @@ gql`
         paymentHash
         paymentRequest
         paymentStatus
+        externalId
         satoshis
       }
     }
@@ -112,6 +114,7 @@ gql`
         paymentHash
         paymentRequest
         paymentStatus
+        externalId
         satoshis
       }
     }
