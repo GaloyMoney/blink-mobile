@@ -25,6 +25,46 @@ it("returns default when schema is not present", async () => {
   expect(state).toEqual(defaultLocalStorageState)
 })
 
+it("migrates instance from 3 to 7 ", async () => {
+  const state3 = {
+    schemaVersion: 3,
+    hasShownStableSatsWelcome: true,
+    isUsdDisabled: true,
+    galoyInstance: { id: "Main", name: "Blink" },
+    galoyAuthToken: "token",
+    isAnalyticsEnabled: false,
+  }
+
+  const state7 = {
+    schemaVersion: 7,
+    galoyInstance: { id: "Main" },
+  }
+
+  const res = await migrateAndGetLocalStorageState(state3)
+
+  expect(res).toStrictEqual(state7)
+})
+
+it("migrates unknown instance from 3 to 7 ", async () => {
+  const state3 = {
+    schemaVersion: 3,
+    hasShownStableSatsWelcome: true,
+    isUsdDisabled: true,
+    galoyInstance: { id: "Main", name: "Unknown" },
+    galoyAuthToken: "token",
+    isAnalyticsEnabled: false,
+  }
+
+  const state7 = {
+    schemaVersion: 7,
+    galoyInstance: { id: "Main" },
+  }
+
+  const res = await migrateAndGetLocalStorageState(state3)
+
+  expect(res).toStrictEqual(state7)
+})
+
 it("migrates Blink instance from 4 to 7 ", async () => {
   const state4 = {
     schemaVersion: 4,
@@ -117,7 +157,7 @@ it("migrates Custom instance from 4 to 7", async () => {
 
   const state7 = {
     schemaVersion: 7,
-    galoyInstance: { id: "Custom" },
+    galoyInstance: { id: "Custom", name: "Custom" },
   }
 
   const res = await migrateAndGetLocalStorageState(state4)
