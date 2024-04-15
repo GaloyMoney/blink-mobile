@@ -96,7 +96,7 @@ const useStyles = makeStyles(
       justifyContent: "space-between",
       columnGap: 16,
       backgroundColor: hovering ? colors.grey4 : undefined,
-      height: shorter ? 56 : 64,
+      minHeight: shorter ? 56 : 64,
     },
     spacing: {
       paddingHorizontal: 8,
