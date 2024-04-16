@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Alert, TouchableOpacity } from "react-native"
 import { injectJs, onMessageHandler } from "react-native-webln"
-import { WebView, WebViewNavigation } from "react-native-webview"
+import { WebView, WebViewNavigation, WebViewMessageEvent } from "react-native-webview"
 
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -76,7 +76,7 @@ export const WebViewScreen: React.FC<Props> = ({ route }) => {
         ref={webview}
         source={{ uri: url }}
         onLoadStart={() => setJsInjected(false)}
-        onLoadProgress={(e) => {
+        onLoadProgress={(e: WebViewMessageEvent) => {
           if (!jsInjected && e.nativeEvent.progress > 0.75) {
             if (webview.current) {
               webview.current.injectJavaScript(injectThemeJs())
