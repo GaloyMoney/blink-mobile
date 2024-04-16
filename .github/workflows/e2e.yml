@@ -84,7 +84,8 @@ jobs:
         continue-on-error: true
         run: |
           kill -SIGINT $EMU_RECORD
-          nix develop -c adb pull /sdcard/screenRecord.mp4 ./screenRecord.mp4
+          nix develop -c adb pull /sdcard/screenRecord.mp4 ./screenRecordUnopt.mp4
+          ffmpeg -i screenRecordUnopt.mp4 screenRecord.mp4
           nix develop -c adb emu kill
 
       - uses: actions/upload-artifact@v4
@@ -102,6 +103,7 @@ jobs:
         if: always()
         with:
           path: screenRecord.mp4
+          gzip: false
           predefinedAcl: publicRead
           headers: |-
             content-type: video/mp4
@@ -109,7 +111,7 @@ jobs:
       - name: Append Direct Links to GitHub Actions Summary
         if: always()
         run: |
-          echo "## Android Recording" >> $GITHUB_STEP_SUMMARY
+          echo "## Android Recording" > $GITHUB_STEP_SUMMARY
 
           COMPLETE_RECORDING_URL="https://storage.googleapis.com/galoy-mobile-recordings/android-recordings/${{ github.run_id }}/screenRecord.mp4"
           echo "Full Recording: [Click here](<$COMPLETE_RECORDING_URL>)" >> $GITHUB_STEP_SUMMARY
@@ -193,7 +195,13 @@ jobs:
 
       - name: Record Simulator in Background
         run: |
-          ./ci/tasks/screen-record-simulator.sh &
+          DEVICE_ID=$(xcrun simctl list devices | grep "iPhone SE (3rd generation)" | cut -d' ' -f9 | tr -d '()')
+          open -a Simulator --args -CurrentDeviceUDID $DEVICE_ID
+          while ! xcrun simctl list devices | grep "(Booted)"; do
+            sleep 1
+            echo "Waiting for Simulator device to come online..."
+          done
+          xcrun simctl io booted recordVideo screenRecord.mov &
           echo "SIM_RECORD=$!" >> $GITHUB_ENV
 
       # Tests on iOS Simulator
@@ -235,6 +243,7 @@ jobs:
         if: always()
         with:
           path: screenRecord.mp4
+          gzip: false
           predefinedAcl: publicRead
           headers: |-
             content-type: video/mp4
@@ -242,7 +251,7 @@ jobs:
       - name: Append Direct Links to GitHub Actions Summary
         if: always()
         run: |
-          echo "## iOS Recording" >> $GITHUB_STEP_SUMMARY
+          echo "## iOS Recording" > $GITHUB_STEP_SUMMARY
 
           COMPLETE_RECORDING_URL="https://storage.googleapis.com/galoy-mobile-recordings/ios-recordings/${{ github.run_id }}/screenRecord.mp4"
           echo "Full Recording: [Click here](<$COMPLETE_RECORDING_URL>)" >> $GITHUB_STEP_SUMMARY
