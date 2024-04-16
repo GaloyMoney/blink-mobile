@@ -131,7 +131,7 @@ const WalletOverview: React.FC<Props> = ({ loading, setIsStablesatModalVisible }
       <View style={styles.displayTextView}>
         <View style={styles.currency}>
           <GaloyCurrencyBubble currency="USD" />
-          <Text type="p1">Stablesats</Text>
+          <Text type="p1">Dollar</Text>
           <Pressable onPress={() => setIsStablesatModalVisible(true)}>
             <GaloyIcon color={colors.grey1} name="question" size={18} />
           </Pressable>
