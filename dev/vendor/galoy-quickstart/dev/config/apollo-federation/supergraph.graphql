@@ -468,6 +468,22 @@ type Currency
   symbol: String!
 }
 
+type CurrencyConversionEstimation
+  @join__type(graph: PUBLIC)
+{
+  """Amount in satoshis."""
+  btcSatAmount: SatAmount!
+  id: ID!
+
+  """
+  Unix timestamp (number of seconds elapsed since January 1, 1970 00:00:00 UTC)
+  """
+  timestamp: Timestamp!
+
+  """Amount in USD cents."""
+  usdCentAmount: CentAmount!
+}
+
 type DepositFeesInformation
   @join__type(graph: PUBLIC)
 {
@@ -662,6 +678,9 @@ interface Invoice
 {
   createdAt: Timestamp!
 
+  """The unique external id set for the invoice."""
+  externalId: TxExternalId!
+
   """The payment hash of the lightning invoice."""
   paymentHash: PaymentHash!
 
@@ -750,6 +769,7 @@ type LnInvoice implements Invoice
   @join__type(graph: PUBLIC)
 {
   createdAt: Timestamp!
+  externalId: TxExternalId!
   paymentHash: PaymentHash!
   paymentRequest: LnPaymentRequest!
   paymentSecret: LnPaymentSecret!
@@ -868,6 +888,7 @@ type LnNoAmountInvoice implements Invoice
   @join__type(graph: PUBLIC)
 {
   createdAt: Timestamp!
+  externalId: TxExternalId!
   paymentHash: PaymentHash!
   paymentRequest: LnPaymentRequest!
   paymentSecret: LnPaymentSecret!
@@ -1252,6 +1273,7 @@ type Mutation
   onChainUsdPaymentSend(input: OnChainUsdPaymentSendInput!): PaymentSendPayload! @join__field(graph: PUBLIC)
   onChainUsdPaymentSendAsBtcDenominated(input: OnChainUsdPaymentSendAsBtcDenominatedInput!): PaymentSendPayload! @join__field(graph: PUBLIC)
   quizClaim(input: QuizClaimInput!): QuizClaimPayload! @join__field(graph: PUBLIC)
+  supportChatMessageAdd(input: SupportChatMessageAddInput!): SupportChatMessageAddPayload! @join__field(graph: PUBLIC)
   userContactUpdateAlias(input: UserContactUpdateAliasInput!): UserContactUpdateAliasPayload! @join__field(graph: PUBLIC) @deprecated(reason: "will be moved to AccountContact")
   userEmailDelete: UserEmailDeletePayload! @join__field(graph: PUBLIC)
   userEmailRegistrationInitiate(input: UserEmailRegistrationInitiateInput!): UserEmailRegistrationInitiatePayload! @join__field(graph: PUBLIC)
@@ -1587,6 +1609,15 @@ type Query
   authorization: Authorization! @join__field(graph: PUBLIC)
   btcPriceList(range: PriceGraphRange!): [PricePoint] @join__field(graph: PUBLIC)
   businessMapMarkers: [MapMarker!]! @join__field(graph: PUBLIC)
+
+  """Returns an estimated conversion rate for the given amount and currency"""
+  currencyConversionEstimation(
+    """Amount in major unit."""
+    amount: Float!
+
+    """Currency of the amount to be converted."""
+    currency: DisplayCurrency!
+  ): CurrencyConversionEstimation! @join__field(graph: PUBLIC)
   currencyList: [Currency!]! @join__field(graph: PUBLIC)
   globals: Globals @join__field(graph: PUBLIC)
   lnInvoicePaymentStatus(input: LnInvoicePaymentStatusInput!): LnInvoicePaymentStatusPayload! @join__field(graph: PUBLIC) @deprecated(reason: "Deprecated in favor of lnInvoicePaymentStatusByPaymentRequest")
@@ -1598,7 +1629,9 @@ type Query
   onChainUsdTxFee(address: OnChainAddress!, amount: CentAmount!, speed: PayoutSpeed! = FAST, walletId: WalletId!): OnChainUsdTxFee! @join__field(graph: PUBLIC)
   onChainUsdTxFeeAsBtcDenominated(address: OnChainAddress!, amount: SatAmount!, speed: PayoutSpeed! = FAST, walletId: WalletId!): OnChainUsdTxFee! @join__field(graph: PUBLIC)
 
-  """Returns 1 Sat and 1 Usd Cent price for the given currency"""
+  """
+  Returns 1 Sat and 1 Usd Cent price for the given currency in minor unit
+  """
   realtimePrice(currency: DisplayCurrency = "USD"): RealtimePrice! @join__field(graph: PUBLIC)
   userDefaultWalletId(username: Username!): WalletId! @join__field(graph: PUBLIC) @deprecated(reason: "will be migrated to AccountDefaultWalletId")
   usernameAvailable(username: Username!): Boolean @join__field(graph: PUBLIC)
@@ -1631,7 +1664,8 @@ type RealtimePrice
   @join__type(graph: PUBLIC)
 {
   btcSatPrice: PriceOfOneSatInMinorUnit!
-  denominatorCurrency: DisplayCurrency!
+  denominatorCurrency: DisplayCurrency! @deprecated(reason: "Deprecated in favor of denominatorCurrencyDetails")
+  denominatorCurrencyDetails: Currency!
   id: ID!
 
   """
@@ -1747,6 +1781,35 @@ type SuccessPayload
   success: Boolean
 }
 
+input SupportChatMessageAddInput
+  @join__type(graph: PUBLIC)
+{
+  message: String!
+}
+
+type SupportChatMessageAddPayload
+  @join__type(graph: PUBLIC)
+{
+  errors: [Error!]!
+  supportMessage: [SupportMessage]
+}
+
+type SupportMessage
+  @join__type(graph: PUBLIC)
+{
+  id: ID!
+  message: String!
+  role: SupportRole!
+  timestamp: Timestamp!
+}
+
+enum SupportRole
+  @join__type(graph: PUBLIC)
+{
+  ASSISTANT @join__enumValue(graph: PUBLIC)
+  USER @join__enumValue(graph: PUBLIC)
+}
+
 """
 Timestamp field, serialized as Unix time (the number of seconds since the Unix epoch)
 """
@@ -1778,6 +1841,7 @@ type Transaction
 {
   createdAt: Timestamp!
   direction: TxDirection!
+  externalId: TxExternalId
   id: ID!
 
   """From which protocol the payment has been initiated."""
@@ -1830,6 +1894,12 @@ enum TxDirection
   RECEIVE @join__enumValue(graph: PUBLIC)
   SEND @join__enumValue(graph: PUBLIC)
 }
+
+"""
+An external reference id that can be optionally added for transactions.
+"""
+scalar TxExternalId
+  @join__type(graph: PUBLIC)
 
 enum TxNotificationType
   @join__type(graph: PUBLIC)
@@ -1961,6 +2031,7 @@ type User
 
   """Phone number with international calling code."""
   phone: Phone @join__field(graph: PUBLIC)
+  supportChat: [SupportMessage!]! @join__field(graph: PUBLIC)
 
   """Whether TOTP is enabled for this user."""
   totpEnabled: Boolean! @join__field(graph: PUBLIC)
@@ -2103,9 +2174,10 @@ enum UserNotificationCategory
 {
   CIRCLES @join__enumValue(graph: NOTIFICATIONS)
   PAYMENTS @join__enumValue(graph: NOTIFICATIONS)
-  BALANCE @join__enumValue(graph: NOTIFICATIONS)
   ADMIN_NOTIFICATION @join__enumValue(graph: NOTIFICATIONS)
   MARKETING @join__enumValue(graph: NOTIFICATIONS)
+  PRICE @join__enumValue(graph: NOTIFICATIONS)
+  SECURITY @join__enumValue(graph: NOTIFICATIONS)
 }
 
 enum UserNotificationChannel

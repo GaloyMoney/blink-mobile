@@ -7,7 +7,7 @@ directories:
       - path: galoy-quickstart
         git:
           url: https://github.com/GaloyMoney/galoy.git
-          ref: '0.20.126'
+          ref: '0.20.151'
         includePaths:
           - quickstart/bin/*
           - quickstart/dev/**/*

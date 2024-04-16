@@ -139,7 +139,7 @@ const ReceiveScreen = () => {
             },
             {
               id: WalletCurrency.Usd,
-              text: "Stablesats",
+              text: "Dollar",
               icon: {
                 selected: <GaloyCurrencyBubble currency="USD" iconSize={16} />,
                 normal: (
