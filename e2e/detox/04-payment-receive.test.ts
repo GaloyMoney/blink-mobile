@@ -97,7 +97,7 @@ describe("Receive: LN Stablesats Amountless", () => {
     const amountInput = element(by.id("Amount Input Button"))
     await waitFor(amountInput).toBeVisible().withTimeout(timeout)
 
-    await tap(by.id("Stablesats"))
+    await tap(by.id("Dollar"))
     await sleep(1000)
 
     const readablePaymentRequest = element(by.id("readable-payment-request"))
@@ -124,7 +124,7 @@ describe("Receive: LN Stablesats $0.02 Amount", () => {
     const amountInput = element(by.id("Amount Input Button"))
     await waitFor(amountInput).toBeVisible().withTimeout(timeout)
 
-    await tap(by.id("Stablesats"))
+    await tap(by.id("Dollar"))
     await sleep(1000)
 
     // await element(by.id("receive-screen")).scroll(400, "down", NaN, 0.85)
@@ -181,7 +181,7 @@ describe("Receive: Onchain Stablesats", () => {
 
     await tap(by.id("Onchain"), 30)
     await sleep(500)
-    await tap(by.id("Stablesats"))
+    await tap(by.id("Dollar"))
     await sleep(500)
 
     const qrCode = element(by.id("QR-Code"))
