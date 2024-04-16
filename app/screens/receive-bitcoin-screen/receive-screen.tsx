@@ -127,7 +127,7 @@ const ReceiveScreen = ({ route }: Props) => {
       case Invoice.PayCode:
         navigation.setOptions({ title: LL.ReceiveScreen.receiveViaPaycode() })
     }
-  }, [request?.type, LL.ReceiveScreen, navigation])
+  }, [request?.type])
 
   const [updatedPaymentState, setUpdatedPaymentState] = React.useState<
     string | undefined
@@ -378,6 +378,7 @@ const ReceiveScreen = ({ route }: Props) => {
           style={styles.invoiceTypePicker}
         />
         <AmountInput
+          request={request}
           unitOfAccountAmount={request.unitOfAccountAmount}
           setAmount={request.setAmount}
           canSetAmount={request.canSetAmount}

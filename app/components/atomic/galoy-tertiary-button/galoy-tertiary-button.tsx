@@ -1,6 +1,13 @@
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import React from "react"
-import { Pressable, PressableProps, StyleProp, View, ViewStyle } from "react-native"
+import {
+  Pressable,
+  PressableProps,
+  StyleProp,
+  TextStyle,
+  View,
+  ViewStyle,
+} from "react-native"
 
 export type GaloyTertiaryButtonProps = {
   outline?: boolean
@@ -8,6 +15,7 @@ export type GaloyTertiaryButtonProps = {
   containerStyle?: StyleProp<ViewStyle>
   title: string
   icon?: JSX.Element
+  titleStyle?: StyleProp<TextStyle>
 } & PressableProps
 
 export const GaloyTertiaryButton = (props: GaloyTertiaryButtonProps) => {
@@ -66,7 +74,7 @@ export const GaloyTertiaryButton = (props: GaloyTertiaryButtonProps) => {
   return (
     <Pressable {...remainingProps} style={pressableStyle} disabled={disabled}>
       <View style={styles.container}>
-        <Text color={textColor} style={styles.buttonTitleStyle}>
+        <Text color={textColor} style={[styles.buttonTitleStyle, props.titleStyle]}>
           {props.title}
         </Text>
         {icon ? icon : null}

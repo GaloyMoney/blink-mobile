@@ -205,6 +205,8 @@ export const QRView: React.FC<Props> = ({
           <GaloyTertiaryButton
             title={LL.ReceiveScreen.setUsernameButtonTitle()}
             onPress={toggleIsSetLightningAddressModalVisible}
+            containerStyle={{ backgroundColor: "#000" }}
+            titleStyle={{ color: "#fff" }}
           ></GaloyTertiaryButton>
         </View>
       )
@@ -272,6 +274,8 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   cantUsePayCodeText: {
     marginBottom: 10,
+    textAlign: "center",
+    color: "#000",
   },
 }))
 

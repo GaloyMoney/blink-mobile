@@ -3580,6 +3580,7 @@ type RootTranslation = {
 		 * T​a​p​ ​t​o​ ​s​e​t​ ​a​m​o​u​n​t
 		 */
 		tapToSetAmount: string
+		enterAmount: string
 	}
 	AppUpdate: {
 		/**
@@ -7191,6 +7192,7 @@ export type TranslationFunctions = {
 		 * Tap to set amount
 		 */
 		tapToSetAmount: () => LocalizedString
+		enterAmount: () => LocalizedString
 	}
 	AppUpdate: {
 		/**

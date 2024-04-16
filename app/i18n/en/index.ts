@@ -1200,6 +1200,7 @@ const en: BaseTranslation = {
   AmountInputButton: {
     tapToSetAmount: "Tap to set amount",
     tapToSetOnChainAmount: "Tap to set amount",
+    enterAmount: "Please enter the amount to proceed",
   },
   AppUpdate: {
     needToUpdateSupportMessage:
