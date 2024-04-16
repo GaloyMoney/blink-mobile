@@ -188,6 +188,11 @@ jobs:
           nix develop -c sh -c 'cd dev && tilt up' &
           echo "TILT_SERVER_PID=$!" >> $GITHUB_ENV
 
+      - name: Record Simulator in Background
+        run: |
+          nix develop -c sh -c './ci/tasks/screen-record-simulator.sh' &
+          echo "SIM_RECORD=$!" >> $GITHUB_ENV
+
       # Tests on iOS Simulator
       - name: Run Detox Tests on iOS Simulator
         uses: nick-fields/retry@v3
@@ -201,6 +206,13 @@ jobs:
             nix develop -c tilt wait --timeout 5m --for=condition=Ready uiresources dev-setup
             nix develop -c yarn e2e:test ios.sim.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location ios-recordings
 
+      - name: Stop Recording
+        if: always()
+        continue-on-error: true
+        run: |
+          kill $SIM_RECORD
+          ffmpeg -i screenRecord.mov screenRecord.mp4
+
       - run: killall Simulator
         if: always()
         continue-on-error: true
@@ -211,7 +223,7 @@ jobs:
           name: ios-recordings
           path: ios-recordings
 
-      # Upload recordings to GCS bucket
+      # Upload recording to GCS bucket
       - uses: "google-github-actions/auth@v2"
         if: always()
         with:
@@ -219,30 +231,28 @@ jobs:
       - uses: "google-github-actions/upload-cloud-storage@v2"
         if: always()
         with:
-          path: ios-recordings
+          path: screenRecord.mp4
           predefinedAcl: publicRead
-          glob: "**/*.mp4"
           headers: |-
             content-type: video/mp4
           destination: galoy-mobile-recordings/ios-recordings/${{ github.run_id }}
       - name: Append Direct Links to GitHub Actions Summary
         if: always()
         run: |
-          # Define the base URL for the uploaded files in the GCS bucket
-          BASE_URL="https://storage.googleapis.com/galoy-mobile-recordings/ios-recordings/${{ github.run_id }}/ios-recordings"
-          echo "## iOS Recordings" >> $GITHUB_STEP_SUMMARY
+          echo "## iOS Recording" >> $GITHUB_STEP_SUMMARY
+
+          COMPLETE_RECORDING_URL="https://storage.googleapis.com/galoy-mobile-recordings/ios-recordings/${{ github.run_id }}/screenRecord.mp4"
+          echo "Full Recording: [Click here](<$COMPLETE_RECORDING_URL>)" >> $GITHUB_STEP_SUMMARY
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Test Suite:" >> $GITHUB_STEP_SUMMARY
 
           find ios-recordings -type f -name "*.mp4" | while read file; do
-            # Extract the relative path of the file within the ios-recordings folder
             RELATIVE_PATH="${file#ios-recordings/}"
-
-            # Construct the direct URL for the file
             FILE_URL="${BASE_URL}/${RELATIVE_PATH}"
-
             TEST_NAME=$(echo "$RELATIVE_PATH" | sed -E 's|.*/(.*)/test\.mp4|\1|')
 
-            # Append the URL to the GitHub Actions summary
-            echo "- $TEST_NAME [Recording](<$FILE_URL>)" >> $GITHUB_STEP_SUMMARY
+            echo "- $TEST_NAME" >> $GITHUB_STEP_SUMMARY
           done
 
       # Cleanup
