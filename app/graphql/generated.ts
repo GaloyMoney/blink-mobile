@@ -703,6 +703,7 @@ export type LnInvoiceCreateInput = {
   readonly amount: Scalars['SatAmount']['input'];
   /** Optional invoice expiration time in minutes. */
   readonly expiresIn?: InputMaybe<Scalars['Minutes']['input']>;
+  readonly externalId?: InputMaybe<Scalars['TxExternalId']['input']>;
   /** Optional memo for the lightning invoice. */
   readonly memo?: InputMaybe<Scalars['Memo']['input']>;
   /** Wallet ID for a BTC wallet belonging to the current account. */
@@ -715,6 +716,7 @@ export type LnInvoiceCreateOnBehalfOfRecipientInput = {
   readonly descriptionHash?: InputMaybe<Scalars['Hex32Bytes']['input']>;
   /** Optional invoice expiration time in minutes. */
   readonly expiresIn?: InputMaybe<Scalars['Minutes']['input']>;
+  readonly externalId?: InputMaybe<Scalars['TxExternalId']['input']>;
   /** Optional memo for the lightning invoice. */
   readonly memo?: InputMaybe<Scalars['Memo']['input']>;
   /** Wallet ID for a BTC wallet which belongs to any account. */
@@ -781,6 +783,7 @@ export type LnNoAmountInvoice = Invoice & {
 export type LnNoAmountInvoiceCreateInput = {
   /** Optional invoice expiration time in minutes. */
   readonly expiresIn?: InputMaybe<Scalars['Minutes']['input']>;
+  readonly externalId?: InputMaybe<Scalars['TxExternalId']['input']>;
   /** Optional memo for the lightning invoice. */
   readonly memo?: InputMaybe<Scalars['Memo']['input']>;
   /** ID for either a USD or BTC wallet belonging to the account of the current user. */
@@ -790,6 +793,7 @@ export type LnNoAmountInvoiceCreateInput = {
 export type LnNoAmountInvoiceCreateOnBehalfOfRecipientInput = {
   /** Optional invoice expiration time in minutes. */
   readonly expiresIn?: InputMaybe<Scalars['Minutes']['input']>;
+  readonly externalId?: InputMaybe<Scalars['TxExternalId']['input']>;
   /** Optional memo for the lightning invoice. */
   readonly memo?: InputMaybe<Scalars['Memo']['input']>;
   /** ID for either a USD or BTC wallet which belongs to the account of any user. */
@@ -852,6 +856,7 @@ export type LnUsdInvoiceBtcDenominatedCreateOnBehalfOfRecipientInput = {
   readonly descriptionHash?: InputMaybe<Scalars['Hex32Bytes']['input']>;
   /** Optional invoice expiration time in minutes. */
   readonly expiresIn?: InputMaybe<Scalars['Minutes']['input']>;
+  readonly externalId?: InputMaybe<Scalars['TxExternalId']['input']>;
   /** Optional memo for the lightning invoice. Acts as a note to the recipient. */
   readonly memo?: InputMaybe<Scalars['Memo']['input']>;
   /** Wallet ID for a USD wallet which belongs to the account of any user. */
@@ -863,6 +868,7 @@ export type LnUsdInvoiceCreateInput = {
   readonly amount: Scalars['CentAmount']['input'];
   /** Optional invoice expiration time in minutes. */
   readonly expiresIn?: InputMaybe<Scalars['Minutes']['input']>;
+  readonly externalId?: InputMaybe<Scalars['TxExternalId']['input']>;
   /** Optional memo for the lightning invoice. */
   readonly memo?: InputMaybe<Scalars['Memo']['input']>;
   /** Wallet ID for a USD wallet belonging to the current user. */
@@ -875,6 +881,7 @@ export type LnUsdInvoiceCreateOnBehalfOfRecipientInput = {
   readonly descriptionHash?: InputMaybe<Scalars['Hex32Bytes']['input']>;
   /** Optional invoice expiration time in minutes. */
   readonly expiresIn?: InputMaybe<Scalars['Minutes']['input']>;
+  readonly externalId?: InputMaybe<Scalars['TxExternalId']['input']>;
   /** Optional memo for the lightning invoice. Acts as a note to the recipient. */
   readonly memo?: InputMaybe<Scalars['Memo']['input']>;
   /** Wallet ID for a USD wallet which belongs to the account of any user. */
@@ -3077,8 +3084,13 @@ export function useMobileUpdateLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<MobileUpdateQuery, MobileUpdateQueryVariables>(MobileUpdateDocument, options);
         }
+export function useMobileUpdateSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MobileUpdateQuery, MobileUpdateQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<MobileUpdateQuery, MobileUpdateQueryVariables>(MobileUpdateDocument, options);
+        }
 export type MobileUpdateQueryHookResult = ReturnType<typeof useMobileUpdateQuery>;
 export type MobileUpdateLazyQueryHookResult = ReturnType<typeof useMobileUpdateLazyQuery>;
+export type MobileUpdateSuspenseQueryHookResult = ReturnType<typeof useMobileUpdateSuspenseQuery>;
 export type MobileUpdateQueryResult = Apollo.QueryResult<MobileUpdateQuery, MobileUpdateQueryVariables>;
 export const BalanceHeaderDocument = gql`
     query balanceHeader {
@@ -3119,8 +3131,13 @@ export function useBalanceHeaderLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<BalanceHeaderQuery, BalanceHeaderQueryVariables>(BalanceHeaderDocument, options);
         }
+export function useBalanceHeaderSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<BalanceHeaderQuery, BalanceHeaderQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<BalanceHeaderQuery, BalanceHeaderQueryVariables>(BalanceHeaderDocument, options);
+        }
 export type BalanceHeaderQueryHookResult = ReturnType<typeof useBalanceHeaderQuery>;
 export type BalanceHeaderLazyQueryHookResult = ReturnType<typeof useBalanceHeaderLazyQuery>;
+export type BalanceHeaderSuspenseQueryHookResult = ReturnType<typeof useBalanceHeaderSuspenseQuery>;
 export type BalanceHeaderQueryResult = Apollo.QueryResult<BalanceHeaderQuery, BalanceHeaderQueryVariables>;
 export const InviteDocument = gql`
     query invite {
@@ -3154,8 +3171,13 @@ export function useInviteLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Inv
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<InviteQuery, InviteQueryVariables>(InviteDocument, options);
         }
+export function useInviteSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<InviteQuery, InviteQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<InviteQuery, InviteQueryVariables>(InviteDocument, options);
+        }
 export type InviteQueryHookResult = ReturnType<typeof useInviteQuery>;
 export type InviteLazyQueryHookResult = ReturnType<typeof useInviteLazyQuery>;
+export type InviteSuspenseQueryHookResult = ReturnType<typeof useInviteSuspenseQuery>;
 export type InviteQueryResult = Apollo.QueryResult<InviteQuery, InviteQueryVariables>;
 export const BtcPriceListDocument = gql`
     query btcPriceList($range: PriceGraphRange!) {
@@ -3186,7 +3208,7 @@ export const BtcPriceListDocument = gql`
  *   },
  * });
  */
-export function useBtcPriceListQuery(baseOptions: Apollo.QueryHookOptions<BtcPriceListQuery, BtcPriceListQueryVariables>) {
+export function useBtcPriceListQuery(baseOptions: Apollo.QueryHookOptions<BtcPriceListQuery, BtcPriceListQueryVariables> & ({ variables: BtcPriceListQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<BtcPriceListQuery, BtcPriceListQueryVariables>(BtcPriceListDocument, options);
       }
@@ -3194,8 +3216,13 @@ export function useBtcPriceListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<BtcPriceListQuery, BtcPriceListQueryVariables>(BtcPriceListDocument, options);
         }
+export function useBtcPriceListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<BtcPriceListQuery, BtcPriceListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<BtcPriceListQuery, BtcPriceListQueryVariables>(BtcPriceListDocument, options);
+        }
 export type BtcPriceListQueryHookResult = ReturnType<typeof useBtcPriceListQuery>;
 export type BtcPriceListLazyQueryHookResult = ReturnType<typeof useBtcPriceListLazyQuery>;
+export type BtcPriceListSuspenseQueryHookResult = ReturnType<typeof useBtcPriceListSuspenseQuery>;
 export type BtcPriceListQueryResult = Apollo.QueryResult<BtcPriceListQuery, BtcPriceListQueryVariables>;
 export const SetDefaultAccountModalDocument = gql`
     query setDefaultAccountModal {
@@ -3237,8 +3264,13 @@ export function useSetDefaultAccountModalLazyQuery(baseOptions?: Apollo.LazyQuer
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<SetDefaultAccountModalQuery, SetDefaultAccountModalQueryVariables>(SetDefaultAccountModalDocument, options);
         }
+export function useSetDefaultAccountModalSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SetDefaultAccountModalQuery, SetDefaultAccountModalQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SetDefaultAccountModalQuery, SetDefaultAccountModalQueryVariables>(SetDefaultAccountModalDocument, options);
+        }
 export type SetDefaultAccountModalQueryHookResult = ReturnType<typeof useSetDefaultAccountModalQuery>;
 export type SetDefaultAccountModalLazyQueryHookResult = ReturnType<typeof useSetDefaultAccountModalLazyQuery>;
+export type SetDefaultAccountModalSuspenseQueryHookResult = ReturnType<typeof useSetDefaultAccountModalSuspenseQuery>;
 export type SetDefaultAccountModalQueryResult = Apollo.QueryResult<SetDefaultAccountModalQuery, SetDefaultAccountModalQueryVariables>;
 export const UserUpdateUsernameDocument = gql`
     mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
@@ -3310,8 +3342,13 @@ export function useMyUserIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<M
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<MyUserIdQuery, MyUserIdQueryVariables>(MyUserIdDocument, options);
         }
+export function useMyUserIdSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MyUserIdQuery, MyUserIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<MyUserIdQuery, MyUserIdQueryVariables>(MyUserIdDocument, options);
+        }
 export type MyUserIdQueryHookResult = ReturnType<typeof useMyUserIdQuery>;
 export type MyUserIdLazyQueryHookResult = ReturnType<typeof useMyUserIdLazyQuery>;
+export type MyUserIdSuspenseQueryHookResult = ReturnType<typeof useMyUserIdSuspenseQuery>;
 export type MyUserIdQueryResult = Apollo.QueryResult<MyUserIdQuery, MyUserIdQueryVariables>;
 export const WalletOverviewScreenDocument = gql`
     query walletOverviewScreen {
@@ -3352,8 +3389,13 @@ export function useWalletOverviewScreenLazyQuery(baseOptions?: Apollo.LazyQueryH
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<WalletOverviewScreenQuery, WalletOverviewScreenQueryVariables>(WalletOverviewScreenDocument, options);
         }
+export function useWalletOverviewScreenSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<WalletOverviewScreenQuery, WalletOverviewScreenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<WalletOverviewScreenQuery, WalletOverviewScreenQueryVariables>(WalletOverviewScreenDocument, options);
+        }
 export type WalletOverviewScreenQueryHookResult = ReturnType<typeof useWalletOverviewScreenQuery>;
 export type WalletOverviewScreenLazyQueryHookResult = ReturnType<typeof useWalletOverviewScreenLazyQuery>;
+export type WalletOverviewScreenSuspenseQueryHookResult = ReturnType<typeof useWalletOverviewScreenSuspenseQuery>;
 export type WalletOverviewScreenQueryResult = Apollo.QueryResult<WalletOverviewScreenQuery, WalletOverviewScreenQueryVariables>;
 export const AnalyticsDocument = gql`
     query analytics {
@@ -3390,8 +3432,13 @@ export function useAnalyticsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<AnalyticsQuery, AnalyticsQueryVariables>(AnalyticsDocument, options);
         }
+export function useAnalyticsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AnalyticsQuery, AnalyticsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<AnalyticsQuery, AnalyticsQueryVariables>(AnalyticsDocument, options);
+        }
 export type AnalyticsQueryHookResult = ReturnType<typeof useAnalyticsQuery>;
 export type AnalyticsLazyQueryHookResult = ReturnType<typeof useAnalyticsLazyQuery>;
+export type AnalyticsSuspenseQueryHookResult = ReturnType<typeof useAnalyticsSuspenseQuery>;
 export type AnalyticsQueryResult = Apollo.QueryResult<AnalyticsQuery, AnalyticsQueryVariables>;
 export const RealtimePriceDocument = gql`
     query realtimePrice {
@@ -3440,8 +3487,13 @@ export function useRealtimePriceLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<RealtimePriceQuery, RealtimePriceQueryVariables>(RealtimePriceDocument, options);
         }
+export function useRealtimePriceSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<RealtimePriceQuery, RealtimePriceQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<RealtimePriceQuery, RealtimePriceQueryVariables>(RealtimePriceDocument, options);
+        }
 export type RealtimePriceQueryHookResult = ReturnType<typeof useRealtimePriceQuery>;
 export type RealtimePriceLazyQueryHookResult = ReturnType<typeof useRealtimePriceLazyQuery>;
+export type RealtimePriceSuspenseQueryHookResult = ReturnType<typeof useRealtimePriceSuspenseQuery>;
 export type RealtimePriceQueryResult = Apollo.QueryResult<RealtimePriceQuery, RealtimePriceQueryVariables>;
 export const HideBalanceDocument = gql`
     query hideBalance {
@@ -3472,8 +3524,13 @@ export function useHideBalanceLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<HideBalanceQuery, HideBalanceQueryVariables>(HideBalanceDocument, options);
         }
+export function useHideBalanceSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<HideBalanceQuery, HideBalanceQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<HideBalanceQuery, HideBalanceQueryVariables>(HideBalanceDocument, options);
+        }
 export type HideBalanceQueryHookResult = ReturnType<typeof useHideBalanceQuery>;
 export type HideBalanceLazyQueryHookResult = ReturnType<typeof useHideBalanceLazyQuery>;
+export type HideBalanceSuspenseQueryHookResult = ReturnType<typeof useHideBalanceSuspenseQuery>;
 export type HideBalanceQueryResult = Apollo.QueryResult<HideBalanceQuery, HideBalanceQueryVariables>;
 export const HiddenBalanceToolTipDocument = gql`
     query hiddenBalanceToolTip {
@@ -3504,8 +3561,13 @@ export function useHiddenBalanceToolTipLazyQuery(baseOptions?: Apollo.LazyQueryH
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<HiddenBalanceToolTipQuery, HiddenBalanceToolTipQueryVariables>(HiddenBalanceToolTipDocument, options);
         }
+export function useHiddenBalanceToolTipSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<HiddenBalanceToolTipQuery, HiddenBalanceToolTipQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<HiddenBalanceToolTipQuery, HiddenBalanceToolTipQueryVariables>(HiddenBalanceToolTipDocument, options);
+        }
 export type HiddenBalanceToolTipQueryHookResult = ReturnType<typeof useHiddenBalanceToolTipQuery>;
 export type HiddenBalanceToolTipLazyQueryHookResult = ReturnType<typeof useHiddenBalanceToolTipLazyQuery>;
+export type HiddenBalanceToolTipSuspenseQueryHookResult = ReturnType<typeof useHiddenBalanceToolTipSuspenseQuery>;
 export type HiddenBalanceToolTipQueryResult = Apollo.QueryResult<HiddenBalanceToolTipQuery, HiddenBalanceToolTipQueryVariables>;
 export const BetaDocument = gql`
     query beta {
@@ -3536,8 +3598,13 @@ export function useBetaLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BetaQ
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<BetaQuery, BetaQueryVariables>(BetaDocument, options);
         }
+export function useBetaSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<BetaQuery, BetaQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<BetaQuery, BetaQueryVariables>(BetaDocument, options);
+        }
 export type BetaQueryHookResult = ReturnType<typeof useBetaQuery>;
 export type BetaLazyQueryHookResult = ReturnType<typeof useBetaLazyQuery>;
+export type BetaSuspenseQueryHookResult = ReturnType<typeof useBetaSuspenseQuery>;
 export type BetaQueryResult = Apollo.QueryResult<BetaQuery, BetaQueryVariables>;
 export const ColorSchemeDocument = gql`
     query colorScheme {
@@ -3568,8 +3635,13 @@ export function useColorSchemeLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ColorSchemeQuery, ColorSchemeQueryVariables>(ColorSchemeDocument, options);
         }
+export function useColorSchemeSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ColorSchemeQuery, ColorSchemeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ColorSchemeQuery, ColorSchemeQueryVariables>(ColorSchemeDocument, options);
+        }
 export type ColorSchemeQueryHookResult = ReturnType<typeof useColorSchemeQuery>;
 export type ColorSchemeLazyQueryHookResult = ReturnType<typeof useColorSchemeLazyQuery>;
+export type ColorSchemeSuspenseQueryHookResult = ReturnType<typeof useColorSchemeSuspenseQuery>;
 export type ColorSchemeQueryResult = Apollo.QueryResult<ColorSchemeQuery, ColorSchemeQueryVariables>;
 export const CountryCodeDocument = gql`
     query countryCode {
@@ -3600,8 +3672,13 @@ export function useCountryCodeLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<CountryCodeQuery, CountryCodeQueryVariables>(CountryCodeDocument, options);
         }
+export function useCountryCodeSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CountryCodeQuery, CountryCodeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<CountryCodeQuery, CountryCodeQueryVariables>(CountryCodeDocument, options);
+        }
 export type CountryCodeQueryHookResult = ReturnType<typeof useCountryCodeQuery>;
 export type CountryCodeLazyQueryHookResult = ReturnType<typeof useCountryCodeLazyQuery>;
+export type CountryCodeSuspenseQueryHookResult = ReturnType<typeof useCountryCodeSuspenseQuery>;
 export type CountryCodeQueryResult = Apollo.QueryResult<CountryCodeQuery, CountryCodeQueryVariables>;
 export const RegionDocument = gql`
     query region {
@@ -3637,8 +3714,13 @@ export function useRegionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Reg
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<RegionQuery, RegionQueryVariables>(RegionDocument, options);
         }
+export function useRegionSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<RegionQuery, RegionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<RegionQuery, RegionQueryVariables>(RegionDocument, options);
+        }
 export type RegionQueryHookResult = ReturnType<typeof useRegionQuery>;
 export type RegionLazyQueryHookResult = ReturnType<typeof useRegionLazyQuery>;
+export type RegionSuspenseQueryHookResult = ReturnType<typeof useRegionSuspenseQuery>;
 export type RegionQueryResult = Apollo.QueryResult<RegionQuery, RegionQueryVariables>;
 export const FeedbackModalShownDocument = gql`
     query feedbackModalShown {
@@ -3669,8 +3751,13 @@ export function useFeedbackModalShownLazyQuery(baseOptions?: Apollo.LazyQueryHoo
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<FeedbackModalShownQuery, FeedbackModalShownQueryVariables>(FeedbackModalShownDocument, options);
         }
+export function useFeedbackModalShownSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<FeedbackModalShownQuery, FeedbackModalShownQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FeedbackModalShownQuery, FeedbackModalShownQueryVariables>(FeedbackModalShownDocument, options);
+        }
 export type FeedbackModalShownQueryHookResult = ReturnType<typeof useFeedbackModalShownQuery>;
 export type FeedbackModalShownLazyQueryHookResult = ReturnType<typeof useFeedbackModalShownLazyQuery>;
+export type FeedbackModalShownSuspenseQueryHookResult = ReturnType<typeof useFeedbackModalShownSuspenseQuery>;
 export type FeedbackModalShownQueryResult = Apollo.QueryResult<FeedbackModalShownQuery, FeedbackModalShownQueryVariables>;
 export const HasPromptedSetDefaultAccountDocument = gql`
     query hasPromptedSetDefaultAccount {
@@ -3701,8 +3788,13 @@ export function useHasPromptedSetDefaultAccountLazyQuery(baseOptions?: Apollo.La
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<HasPromptedSetDefaultAccountQuery, HasPromptedSetDefaultAccountQueryVariables>(HasPromptedSetDefaultAccountDocument, options);
         }
+export function useHasPromptedSetDefaultAccountSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<HasPromptedSetDefaultAccountQuery, HasPromptedSetDefaultAccountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<HasPromptedSetDefaultAccountQuery, HasPromptedSetDefaultAccountQueryVariables>(HasPromptedSetDefaultAccountDocument, options);
+        }
 export type HasPromptedSetDefaultAccountQueryHookResult = ReturnType<typeof useHasPromptedSetDefaultAccountQuery>;
 export type HasPromptedSetDefaultAccountLazyQueryHookResult = ReturnType<typeof useHasPromptedSetDefaultAccountLazyQuery>;
+export type HasPromptedSetDefaultAccountSuspenseQueryHookResult = ReturnType<typeof useHasPromptedSetDefaultAccountSuspenseQuery>;
 export type HasPromptedSetDefaultAccountQueryResult = Apollo.QueryResult<HasPromptedSetDefaultAccountQuery, HasPromptedSetDefaultAccountQueryVariables>;
 export const IntroducingCirclesModalShownDocument = gql`
     query introducingCirclesModalShown {
@@ -3733,8 +3825,13 @@ export function useIntroducingCirclesModalShownLazyQuery(baseOptions?: Apollo.La
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<IntroducingCirclesModalShownQuery, IntroducingCirclesModalShownQueryVariables>(IntroducingCirclesModalShownDocument, options);
         }
+export function useIntroducingCirclesModalShownSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<IntroducingCirclesModalShownQuery, IntroducingCirclesModalShownQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<IntroducingCirclesModalShownQuery, IntroducingCirclesModalShownQueryVariables>(IntroducingCirclesModalShownDocument, options);
+        }
 export type IntroducingCirclesModalShownQueryHookResult = ReturnType<typeof useIntroducingCirclesModalShownQuery>;
 export type IntroducingCirclesModalShownLazyQueryHookResult = ReturnType<typeof useIntroducingCirclesModalShownLazyQuery>;
+export type IntroducingCirclesModalShownSuspenseQueryHookResult = ReturnType<typeof useIntroducingCirclesModalShownSuspenseQuery>;
 export type IntroducingCirclesModalShownQueryResult = Apollo.QueryResult<IntroducingCirclesModalShownQuery, IntroducingCirclesModalShownQueryVariables>;
 export const InnerCircleValueDocument = gql`
     query innerCircleValue {
@@ -3765,8 +3862,13 @@ export function useInnerCircleValueLazyQuery(baseOptions?: Apollo.LazyQueryHookO
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<InnerCircleValueQuery, InnerCircleValueQueryVariables>(InnerCircleValueDocument, options);
         }
+export function useInnerCircleValueSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<InnerCircleValueQuery, InnerCircleValueQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<InnerCircleValueQuery, InnerCircleValueQueryVariables>(InnerCircleValueDocument, options);
+        }
 export type InnerCircleValueQueryHookResult = ReturnType<typeof useInnerCircleValueQuery>;
 export type InnerCircleValueLazyQueryHookResult = ReturnType<typeof useInnerCircleValueLazyQuery>;
+export type InnerCircleValueSuspenseQueryHookResult = ReturnType<typeof useInnerCircleValueSuspenseQuery>;
 export type InnerCircleValueQueryResult = Apollo.QueryResult<InnerCircleValueQuery, InnerCircleValueQueryVariables>;
 export const NetworkDocument = gql`
     query network {
@@ -3799,8 +3901,13 @@ export function useNetworkLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ne
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<NetworkQuery, NetworkQueryVariables>(NetworkDocument, options);
         }
+export function useNetworkSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<NetworkQuery, NetworkQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<NetworkQuery, NetworkQueryVariables>(NetworkDocument, options);
+        }
 export type NetworkQueryHookResult = ReturnType<typeof useNetworkQuery>;
 export type NetworkLazyQueryHookResult = ReturnType<typeof useNetworkLazyQuery>;
+export type NetworkSuspenseQueryHookResult = ReturnType<typeof useNetworkSuspenseQuery>;
 export type NetworkQueryResult = Apollo.QueryResult<NetworkQuery, NetworkQueryVariables>;
 export const LevelDocument = gql`
     query level {
@@ -3837,8 +3944,13 @@ export function useLevelLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Leve
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<LevelQuery, LevelQueryVariables>(LevelDocument, options);
         }
+export function useLevelSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<LevelQuery, LevelQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<LevelQuery, LevelQueryVariables>(LevelDocument, options);
+        }
 export type LevelQueryHookResult = ReturnType<typeof useLevelQuery>;
 export type LevelLazyQueryHookResult = ReturnType<typeof useLevelLazyQuery>;
+export type LevelSuspenseQueryHookResult = ReturnType<typeof useLevelSuspenseQuery>;
 export type LevelQueryResult = Apollo.QueryResult<LevelQuery, LevelQueryVariables>;
 export const DisplayCurrencyDocument = gql`
     query displayCurrency {
@@ -3875,8 +3987,13 @@ export function useDisplayCurrencyLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<DisplayCurrencyQuery, DisplayCurrencyQueryVariables>(DisplayCurrencyDocument, options);
         }
+export function useDisplayCurrencySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<DisplayCurrencyQuery, DisplayCurrencyQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<DisplayCurrencyQuery, DisplayCurrencyQueryVariables>(DisplayCurrencyDocument, options);
+        }
 export type DisplayCurrencyQueryHookResult = ReturnType<typeof useDisplayCurrencyQuery>;
 export type DisplayCurrencyLazyQueryHookResult = ReturnType<typeof useDisplayCurrencyLazyQuery>;
+export type DisplayCurrencySuspenseQueryHookResult = ReturnType<typeof useDisplayCurrencySuspenseQuery>;
 export type DisplayCurrencyQueryResult = Apollo.QueryResult<DisplayCurrencyQuery, DisplayCurrencyQueryVariables>;
 export const CurrencyListDocument = gql`
     query currencyList {
@@ -3914,8 +4031,13 @@ export function useCurrencyListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<CurrencyListQuery, CurrencyListQueryVariables>(CurrencyListDocument, options);
         }
+export function useCurrencyListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CurrencyListQuery, CurrencyListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<CurrencyListQuery, CurrencyListQueryVariables>(CurrencyListDocument, options);
+        }
 export type CurrencyListQueryHookResult = ReturnType<typeof useCurrencyListQuery>;
 export type CurrencyListLazyQueryHookResult = ReturnType<typeof useCurrencyListLazyQuery>;
+export type CurrencyListSuspenseQueryHookResult = ReturnType<typeof useCurrencyListSuspenseQuery>;
 export type CurrencyListQueryResult = Apollo.QueryResult<CurrencyListQuery, CurrencyListQueryVariables>;
 export const CaptchaCreateChallengeDocument = gql`
     mutation captchaCreateChallenge {
@@ -4027,8 +4149,13 @@ export function useSupportChatLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<SupportChatQuery, SupportChatQueryVariables>(SupportChatDocument, options);
         }
+export function useSupportChatSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SupportChatQuery, SupportChatQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SupportChatQuery, SupportChatQueryVariables>(SupportChatDocument, options);
+        }
 export type SupportChatQueryHookResult = ReturnType<typeof useSupportChatQuery>;
 export type SupportChatLazyQueryHookResult = ReturnType<typeof useSupportChatLazyQuery>;
+export type SupportChatSuspenseQueryHookResult = ReturnType<typeof useSupportChatSuspenseQuery>;
 export type SupportChatQueryResult = Apollo.QueryResult<SupportChatQuery, SupportChatQueryVariables>;
 export const SupportChatMessageAddDocument = gql`
     mutation supportChatMessageAdd($input: SupportChatMessageAddInput!) {
@@ -4110,8 +4237,13 @@ export function useConversionScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookO
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ConversionScreenQuery, ConversionScreenQueryVariables>(ConversionScreenDocument, options);
         }
+export function useConversionScreenSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ConversionScreenQuery, ConversionScreenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ConversionScreenQuery, ConversionScreenQueryVariables>(ConversionScreenDocument, options);
+        }
 export type ConversionScreenQueryHookResult = ReturnType<typeof useConversionScreenQuery>;
 export type ConversionScreenLazyQueryHookResult = ReturnType<typeof useConversionScreenLazyQuery>;
+export type ConversionScreenSuspenseQueryHookResult = ReturnType<typeof useConversionScreenSuspenseQuery>;
 export type ConversionScreenQueryResult = Apollo.QueryResult<ConversionScreenQuery, ConversionScreenQueryVariables>;
 export const DebugScreenDocument = gql`
     query debugScreen {
@@ -4147,8 +4279,13 @@ export function useDebugScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<DebugScreenQuery, DebugScreenQueryVariables>(DebugScreenDocument, options);
         }
+export function useDebugScreenSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<DebugScreenQuery, DebugScreenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<DebugScreenQuery, DebugScreenQueryVariables>(DebugScreenDocument, options);
+        }
 export type DebugScreenQueryHookResult = ReturnType<typeof useDebugScreenQuery>;
 export type DebugScreenLazyQueryHookResult = ReturnType<typeof useDebugScreenLazyQuery>;
+export type DebugScreenSuspenseQueryHookResult = ReturnType<typeof useDebugScreenSuspenseQuery>;
 export type DebugScreenQueryResult = Apollo.QueryResult<DebugScreenQuery, DebugScreenQueryVariables>;
 export const MyQuizQuestionsDocument = gql`
     query myQuizQuestions {
@@ -4192,8 +4329,13 @@ export function useMyQuizQuestionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<MyQuizQuestionsQuery, MyQuizQuestionsQueryVariables>(MyQuizQuestionsDocument, options);
         }
+export function useMyQuizQuestionsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MyQuizQuestionsQuery, MyQuizQuestionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<MyQuizQuestionsQuery, MyQuizQuestionsQueryVariables>(MyQuizQuestionsDocument, options);
+        }
 export type MyQuizQuestionsQueryHookResult = ReturnType<typeof useMyQuizQuestionsQuery>;
 export type MyQuizQuestionsLazyQueryHookResult = ReturnType<typeof useMyQuizQuestionsLazyQuery>;
+export type MyQuizQuestionsSuspenseQueryHookResult = ReturnType<typeof useMyQuizQuestionsSuspenseQuery>;
 export type MyQuizQuestionsQueryResult = Apollo.QueryResult<MyQuizQuestionsQuery, MyQuizQuestionsQueryVariables>;
 export const QuizClaimDocument = gql`
     mutation quizClaim($input: QuizClaimInput!) {
@@ -4392,8 +4534,13 @@ export function useFullOnboardingScreenLazyQuery(baseOptions?: Apollo.LazyQueryH
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<FullOnboardingScreenQuery, FullOnboardingScreenQueryVariables>(FullOnboardingScreenDocument, options);
         }
+export function useFullOnboardingScreenSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<FullOnboardingScreenQuery, FullOnboardingScreenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FullOnboardingScreenQuery, FullOnboardingScreenQueryVariables>(FullOnboardingScreenDocument, options);
+        }
 export type FullOnboardingScreenQueryHookResult = ReturnType<typeof useFullOnboardingScreenQuery>;
 export type FullOnboardingScreenLazyQueryHookResult = ReturnType<typeof useFullOnboardingScreenLazyQuery>;
+export type FullOnboardingScreenSuspenseQueryHookResult = ReturnType<typeof useFullOnboardingScreenSuspenseQuery>;
 export type FullOnboardingScreenQueryResult = Apollo.QueryResult<FullOnboardingScreenQuery, FullOnboardingScreenQueryVariables>;
 export const AddressScreenDocument = gql`
     query addressScreen {
@@ -4427,8 +4574,13 @@ export function useAddressScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<AddressScreenQuery, AddressScreenQueryVariables>(AddressScreenDocument, options);
         }
+export function useAddressScreenSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AddressScreenQuery, AddressScreenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<AddressScreenQuery, AddressScreenQueryVariables>(AddressScreenDocument, options);
+        }
 export type AddressScreenQueryHookResult = ReturnType<typeof useAddressScreenQuery>;
 export type AddressScreenLazyQueryHookResult = ReturnType<typeof useAddressScreenLazyQuery>;
+export type AddressScreenSuspenseQueryHookResult = ReturnType<typeof useAddressScreenSuspenseQuery>;
 export type AddressScreenQueryResult = Apollo.QueryResult<AddressScreenQuery, AddressScreenQueryVariables>;
 export const HomeAuthedDocument = gql`
     query homeAuthed {
@@ -4485,8 +4637,13 @@ export function useHomeAuthedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<HomeAuthedQuery, HomeAuthedQueryVariables>(HomeAuthedDocument, options);
         }
+export function useHomeAuthedSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<HomeAuthedQuery, HomeAuthedQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<HomeAuthedQuery, HomeAuthedQueryVariables>(HomeAuthedDocument, options);
+        }
 export type HomeAuthedQueryHookResult = ReturnType<typeof useHomeAuthedQuery>;
 export type HomeAuthedLazyQueryHookResult = ReturnType<typeof useHomeAuthedLazyQuery>;
+export type HomeAuthedSuspenseQueryHookResult = ReturnType<typeof useHomeAuthedSuspenseQuery>;
 export type HomeAuthedQueryResult = Apollo.QueryResult<HomeAuthedQuery, HomeAuthedQueryVariables>;
 export const HomeUnauthedDocument = gql`
     query homeUnauthed {
@@ -4526,8 +4683,13 @@ export function useHomeUnauthedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<HomeUnauthedQuery, HomeUnauthedQueryVariables>(HomeUnauthedDocument, options);
         }
+export function useHomeUnauthedSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<HomeUnauthedQuery, HomeUnauthedQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<HomeUnauthedQuery, HomeUnauthedQueryVariables>(HomeUnauthedDocument, options);
+        }
 export type HomeUnauthedQueryHookResult = ReturnType<typeof useHomeUnauthedQuery>;
 export type HomeUnauthedLazyQueryHookResult = ReturnType<typeof useHomeUnauthedLazyQuery>;
+export type HomeUnauthedSuspenseQueryHookResult = ReturnType<typeof useHomeUnauthedSuspenseQuery>;
 export type HomeUnauthedQueryResult = Apollo.QueryResult<HomeUnauthedQuery, HomeUnauthedQueryVariables>;
 export const BusinessMapMarkersDocument = gql`
     query businessMapMarkers {
@@ -4567,8 +4729,13 @@ export function useBusinessMapMarkersLazyQuery(baseOptions?: Apollo.LazyQueryHoo
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>(BusinessMapMarkersDocument, options);
         }
+export function useBusinessMapMarkersSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>(BusinessMapMarkersDocument, options);
+        }
 export type BusinessMapMarkersQueryHookResult = ReturnType<typeof useBusinessMapMarkersQuery>;
 export type BusinessMapMarkersLazyQueryHookResult = ReturnType<typeof useBusinessMapMarkersLazyQuery>;
+export type BusinessMapMarkersSuspenseQueryHookResult = ReturnType<typeof useBusinessMapMarkersSuspenseQuery>;
 export type BusinessMapMarkersQueryResult = Apollo.QueryResult<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>;
 export const CirclesDocument = gql`
     query Circles {
@@ -4617,8 +4784,13 @@ export function useCirclesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ci
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<CirclesQuery, CirclesQueryVariables>(CirclesDocument, options);
         }
+export function useCirclesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CirclesQuery, CirclesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<CirclesQuery, CirclesQueryVariables>(CirclesDocument, options);
+        }
 export type CirclesQueryHookResult = ReturnType<typeof useCirclesQuery>;
 export type CirclesLazyQueryHookResult = ReturnType<typeof useCirclesLazyQuery>;
+export type CirclesSuspenseQueryHookResult = ReturnType<typeof useCirclesSuspenseQuery>;
 export type CirclesQueryResult = Apollo.QueryResult<CirclesQuery, CirclesQueryVariables>;
 export const ContactsDocument = gql`
     query contacts {
@@ -4657,8 +4829,13 @@ export function useContactsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<C
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ContactsQuery, ContactsQueryVariables>(ContactsDocument, options);
         }
+export function useContactsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ContactsQuery, ContactsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ContactsQuery, ContactsQueryVariables>(ContactsDocument, options);
+        }
 export type ContactsQueryHookResult = ReturnType<typeof useContactsQuery>;
 export type ContactsLazyQueryHookResult = ReturnType<typeof useContactsLazyQuery>;
+export type ContactsSuspenseQueryHookResult = ReturnType<typeof useContactsSuspenseQuery>;
 export type ContactsQueryResult = Apollo.QueryResult<ContactsQuery, ContactsQueryVariables>;
 export const TransactionListForContactDocument = gql`
     query transactionListForContact($username: Username!, $first: Int, $after: String, $last: Int, $before: String) {
@@ -4693,7 +4870,7 @@ export const TransactionListForContactDocument = gql`
  *   },
  * });
  */
-export function useTransactionListForContactQuery(baseOptions: Apollo.QueryHookOptions<TransactionListForContactQuery, TransactionListForContactQueryVariables>) {
+export function useTransactionListForContactQuery(baseOptions: Apollo.QueryHookOptions<TransactionListForContactQuery, TransactionListForContactQueryVariables> & ({ variables: TransactionListForContactQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<TransactionListForContactQuery, TransactionListForContactQueryVariables>(TransactionListForContactDocument, options);
       }
@@ -4701,8 +4878,13 @@ export function useTransactionListForContactLazyQuery(baseOptions?: Apollo.LazyQ
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TransactionListForContactQuery, TransactionListForContactQueryVariables>(TransactionListForContactDocument, options);
         }
+export function useTransactionListForContactSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TransactionListForContactQuery, TransactionListForContactQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TransactionListForContactQuery, TransactionListForContactQueryVariables>(TransactionListForContactDocument, options);
+        }
 export type TransactionListForContactQueryHookResult = ReturnType<typeof useTransactionListForContactQuery>;
 export type TransactionListForContactLazyQueryHookResult = ReturnType<typeof useTransactionListForContactLazyQuery>;
+export type TransactionListForContactSuspenseQueryHookResult = ReturnType<typeof useTransactionListForContactSuspenseQuery>;
 export type TransactionListForContactQueryResult = Apollo.QueryResult<TransactionListForContactQuery, TransactionListForContactQueryVariables>;
 export const ContactsCardDocument = gql`
     query ContactsCard {
@@ -4741,8 +4923,13 @@ export function useContactsCardLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ContactsCardQuery, ContactsCardQueryVariables>(ContactsCardDocument, options);
         }
+export function useContactsCardSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ContactsCardQuery, ContactsCardQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ContactsCardQuery, ContactsCardQueryVariables>(ContactsCardDocument, options);
+        }
 export type ContactsCardQueryHookResult = ReturnType<typeof useContactsCardQuery>;
 export type ContactsCardLazyQueryHookResult = ReturnType<typeof useContactsCardLazyQuery>;
+export type ContactsCardSuspenseQueryHookResult = ReturnType<typeof useContactsCardSuspenseQuery>;
 export type ContactsCardQueryResult = Apollo.QueryResult<ContactsCardQuery, ContactsCardQueryVariables>;
 export const UserContactUpdateAliasDocument = gql`
     mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
@@ -4974,8 +5161,13 @@ export function useSupportedCountriesLazyQuery(baseOptions?: Apollo.LazyQueryHoo
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<SupportedCountriesQuery, SupportedCountriesQueryVariables>(SupportedCountriesDocument, options);
         }
+export function useSupportedCountriesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SupportedCountriesQuery, SupportedCountriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SupportedCountriesQuery, SupportedCountriesQueryVariables>(SupportedCountriesDocument, options);
+        }
 export type SupportedCountriesQueryHookResult = ReturnType<typeof useSupportedCountriesQuery>;
 export type SupportedCountriesLazyQueryHookResult = ReturnType<typeof useSupportedCountriesLazyQuery>;
+export type SupportedCountriesSuspenseQueryHookResult = ReturnType<typeof useSupportedCountriesSuspenseQuery>;
 export type SupportedCountriesQueryResult = Apollo.QueryResult<SupportedCountriesQuery, SupportedCountriesQueryVariables>;
 export const UserPhoneRegistrationInitiateDocument = gql`
     mutation userPhoneRegistrationInitiate($input: UserPhoneRegistrationInitiateInput!) {
@@ -5047,8 +5239,13 @@ export function usePriceHistoryScreenLazyQuery(baseOptions?: Apollo.LazyQueryHoo
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<PriceHistoryScreenQuery, PriceHistoryScreenQueryVariables>(PriceHistoryScreenDocument, options);
         }
+export function usePriceHistoryScreenSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<PriceHistoryScreenQuery, PriceHistoryScreenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<PriceHistoryScreenQuery, PriceHistoryScreenQueryVariables>(PriceHistoryScreenDocument, options);
+        }
 export type PriceHistoryScreenQueryHookResult = ReturnType<typeof usePriceHistoryScreenQuery>;
 export type PriceHistoryScreenLazyQueryHookResult = ReturnType<typeof usePriceHistoryScreenLazyQuery>;
+export type PriceHistoryScreenSuspenseQueryHookResult = ReturnType<typeof usePriceHistoryScreenSuspenseQuery>;
 export type PriceHistoryScreenQueryResult = Apollo.QueryResult<PriceHistoryScreenQuery, PriceHistoryScreenQueryVariables>;
 export const MyLnUpdatesDocument = gql`
     subscription myLnUpdates {
@@ -5137,8 +5334,13 @@ export function usePaymentRequestLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<PaymentRequestQuery, PaymentRequestQueryVariables>(PaymentRequestDocument, options);
         }
+export function usePaymentRequestSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<PaymentRequestQuery, PaymentRequestQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<PaymentRequestQuery, PaymentRequestQueryVariables>(PaymentRequestDocument, options);
+        }
 export type PaymentRequestQueryHookResult = ReturnType<typeof usePaymentRequestQuery>;
 export type PaymentRequestLazyQueryHookResult = ReturnType<typeof usePaymentRequestLazyQuery>;
+export type PaymentRequestSuspenseQueryHookResult = ReturnType<typeof usePaymentRequestSuspenseQuery>;
 export type PaymentRequestQueryResult = Apollo.QueryResult<PaymentRequestQuery, PaymentRequestQueryVariables>;
 export const LnNoAmountInvoiceCreateDocument = gql`
     mutation lnNoAmountInvoiceCreate($input: LnNoAmountInvoiceCreateInput!) {
@@ -5348,8 +5550,13 @@ export function useScanningQrCodeScreenLazyQuery(baseOptions?: Apollo.LazyQueryH
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ScanningQrCodeScreenQuery, ScanningQrCodeScreenQueryVariables>(ScanningQrCodeScreenDocument, options);
         }
+export function useScanningQrCodeScreenSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ScanningQrCodeScreenQuery, ScanningQrCodeScreenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ScanningQrCodeScreenQuery, ScanningQrCodeScreenQueryVariables>(ScanningQrCodeScreenDocument, options);
+        }
 export type ScanningQrCodeScreenQueryHookResult = ReturnType<typeof useScanningQrCodeScreenQuery>;
 export type ScanningQrCodeScreenLazyQueryHookResult = ReturnType<typeof useScanningQrCodeScreenLazyQuery>;
+export type ScanningQrCodeScreenSuspenseQueryHookResult = ReturnType<typeof useScanningQrCodeScreenSuspenseQuery>;
 export type ScanningQrCodeScreenQueryResult = Apollo.QueryResult<ScanningQrCodeScreenQuery, ScanningQrCodeScreenQueryVariables>;
 export const SendBitcoinConfirmationScreenDocument = gql`
     query sendBitcoinConfirmationScreen {
@@ -5390,8 +5597,13 @@ export function useSendBitcoinConfirmationScreenLazyQuery(baseOptions?: Apollo.L
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<SendBitcoinConfirmationScreenQuery, SendBitcoinConfirmationScreenQueryVariables>(SendBitcoinConfirmationScreenDocument, options);
         }
+export function useSendBitcoinConfirmationScreenSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SendBitcoinConfirmationScreenQuery, SendBitcoinConfirmationScreenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SendBitcoinConfirmationScreenQuery, SendBitcoinConfirmationScreenQueryVariables>(SendBitcoinConfirmationScreenDocument, options);
+        }
 export type SendBitcoinConfirmationScreenQueryHookResult = ReturnType<typeof useSendBitcoinConfirmationScreenQuery>;
 export type SendBitcoinConfirmationScreenLazyQueryHookResult = ReturnType<typeof useSendBitcoinConfirmationScreenLazyQuery>;
+export type SendBitcoinConfirmationScreenSuspenseQueryHookResult = ReturnType<typeof useSendBitcoinConfirmationScreenSuspenseQuery>;
 export type SendBitcoinConfirmationScreenQueryResult = Apollo.QueryResult<SendBitcoinConfirmationScreenQuery, SendBitcoinConfirmationScreenQueryVariables>;
 export const SendBitcoinDestinationDocument = gql`
     query sendBitcoinDestination {
@@ -5439,8 +5651,13 @@ export function useSendBitcoinDestinationLazyQuery(baseOptions?: Apollo.LazyQuer
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<SendBitcoinDestinationQuery, SendBitcoinDestinationQueryVariables>(SendBitcoinDestinationDocument, options);
         }
+export function useSendBitcoinDestinationSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SendBitcoinDestinationQuery, SendBitcoinDestinationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SendBitcoinDestinationQuery, SendBitcoinDestinationQueryVariables>(SendBitcoinDestinationDocument, options);
+        }
 export type SendBitcoinDestinationQueryHookResult = ReturnType<typeof useSendBitcoinDestinationQuery>;
 export type SendBitcoinDestinationLazyQueryHookResult = ReturnType<typeof useSendBitcoinDestinationLazyQuery>;
+export type SendBitcoinDestinationSuspenseQueryHookResult = ReturnType<typeof useSendBitcoinDestinationSuspenseQuery>;
 export type SendBitcoinDestinationQueryResult = Apollo.QueryResult<SendBitcoinDestinationQuery, SendBitcoinDestinationQueryVariables>;
 export const AccountDefaultWalletDocument = gql`
     query accountDefaultWallet($walletCurrency: WalletCurrency, $username: Username!) {
@@ -5467,7 +5684,7 @@ export const AccountDefaultWalletDocument = gql`
  *   },
  * });
  */
-export function useAccountDefaultWalletQuery(baseOptions: Apollo.QueryHookOptions<AccountDefaultWalletQuery, AccountDefaultWalletQueryVariables>) {
+export function useAccountDefaultWalletQuery(baseOptions: Apollo.QueryHookOptions<AccountDefaultWalletQuery, AccountDefaultWalletQueryVariables> & ({ variables: AccountDefaultWalletQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<AccountDefaultWalletQuery, AccountDefaultWalletQueryVariables>(AccountDefaultWalletDocument, options);
       }
@@ -5475,8 +5692,13 @@ export function useAccountDefaultWalletLazyQuery(baseOptions?: Apollo.LazyQueryH
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<AccountDefaultWalletQuery, AccountDefaultWalletQueryVariables>(AccountDefaultWalletDocument, options);
         }
+export function useAccountDefaultWalletSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AccountDefaultWalletQuery, AccountDefaultWalletQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<AccountDefaultWalletQuery, AccountDefaultWalletQueryVariables>(AccountDefaultWalletDocument, options);
+        }
 export type AccountDefaultWalletQueryHookResult = ReturnType<typeof useAccountDefaultWalletQuery>;
 export type AccountDefaultWalletLazyQueryHookResult = ReturnType<typeof useAccountDefaultWalletLazyQuery>;
+export type AccountDefaultWalletSuspenseQueryHookResult = ReturnType<typeof useAccountDefaultWalletSuspenseQuery>;
 export type AccountDefaultWalletQueryResult = Apollo.QueryResult<AccountDefaultWalletQuery, AccountDefaultWalletQueryVariables>;
 export const SendBitcoinDetailsScreenDocument = gql`
     query sendBitcoinDetailsScreen {
@@ -5521,8 +5743,13 @@ export function useSendBitcoinDetailsScreenLazyQuery(baseOptions?: Apollo.LazyQu
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<SendBitcoinDetailsScreenQuery, SendBitcoinDetailsScreenQueryVariables>(SendBitcoinDetailsScreenDocument, options);
         }
+export function useSendBitcoinDetailsScreenSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SendBitcoinDetailsScreenQuery, SendBitcoinDetailsScreenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SendBitcoinDetailsScreenQuery, SendBitcoinDetailsScreenQueryVariables>(SendBitcoinDetailsScreenDocument, options);
+        }
 export type SendBitcoinDetailsScreenQueryHookResult = ReturnType<typeof useSendBitcoinDetailsScreenQuery>;
 export type SendBitcoinDetailsScreenLazyQueryHookResult = ReturnType<typeof useSendBitcoinDetailsScreenLazyQuery>;
+export type SendBitcoinDetailsScreenSuspenseQueryHookResult = ReturnType<typeof useSendBitcoinDetailsScreenSuspenseQuery>;
 export type SendBitcoinDetailsScreenQueryResult = Apollo.QueryResult<SendBitcoinDetailsScreenQuery, SendBitcoinDetailsScreenQueryVariables>;
 export const SendBitcoinWithdrawalLimitsDocument = gql`
     query sendBitcoinWithdrawalLimits {
@@ -5565,8 +5792,13 @@ export function useSendBitcoinWithdrawalLimitsLazyQuery(baseOptions?: Apollo.Laz
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<SendBitcoinWithdrawalLimitsQuery, SendBitcoinWithdrawalLimitsQueryVariables>(SendBitcoinWithdrawalLimitsDocument, options);
         }
+export function useSendBitcoinWithdrawalLimitsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SendBitcoinWithdrawalLimitsQuery, SendBitcoinWithdrawalLimitsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SendBitcoinWithdrawalLimitsQuery, SendBitcoinWithdrawalLimitsQueryVariables>(SendBitcoinWithdrawalLimitsDocument, options);
+        }
 export type SendBitcoinWithdrawalLimitsQueryHookResult = ReturnType<typeof useSendBitcoinWithdrawalLimitsQuery>;
 export type SendBitcoinWithdrawalLimitsLazyQueryHookResult = ReturnType<typeof useSendBitcoinWithdrawalLimitsLazyQuery>;
+export type SendBitcoinWithdrawalLimitsSuspenseQueryHookResult = ReturnType<typeof useSendBitcoinWithdrawalLimitsSuspenseQuery>;
 export type SendBitcoinWithdrawalLimitsQueryResult = Apollo.QueryResult<SendBitcoinWithdrawalLimitsQuery, SendBitcoinWithdrawalLimitsQueryVariables>;
 export const SendBitcoinInternalLimitsDocument = gql`
     query sendBitcoinInternalLimits {
@@ -5609,8 +5841,13 @@ export function useSendBitcoinInternalLimitsLazyQuery(baseOptions?: Apollo.LazyQ
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<SendBitcoinInternalLimitsQuery, SendBitcoinInternalLimitsQueryVariables>(SendBitcoinInternalLimitsDocument, options);
         }
+export function useSendBitcoinInternalLimitsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SendBitcoinInternalLimitsQuery, SendBitcoinInternalLimitsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SendBitcoinInternalLimitsQuery, SendBitcoinInternalLimitsQueryVariables>(SendBitcoinInternalLimitsDocument, options);
+        }
 export type SendBitcoinInternalLimitsQueryHookResult = ReturnType<typeof useSendBitcoinInternalLimitsQuery>;
 export type SendBitcoinInternalLimitsLazyQueryHookResult = ReturnType<typeof useSendBitcoinInternalLimitsLazyQuery>;
+export type SendBitcoinInternalLimitsSuspenseQueryHookResult = ReturnType<typeof useSendBitcoinInternalLimitsSuspenseQuery>;
 export type SendBitcoinInternalLimitsQueryResult = Apollo.QueryResult<SendBitcoinInternalLimitsQuery, SendBitcoinInternalLimitsQueryVariables>;
 export const FeedbackSubmitDocument = gql`
     mutation feedbackSubmit($input: FeedbackSubmitInput!) {
@@ -5820,7 +6057,7 @@ export const OnChainTxFeeDocument = gql`
  *   },
  * });
  */
-export function useOnChainTxFeeQuery(baseOptions: Apollo.QueryHookOptions<OnChainTxFeeQuery, OnChainTxFeeQueryVariables>) {
+export function useOnChainTxFeeQuery(baseOptions: Apollo.QueryHookOptions<OnChainTxFeeQuery, OnChainTxFeeQueryVariables> & ({ variables: OnChainTxFeeQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<OnChainTxFeeQuery, OnChainTxFeeQueryVariables>(OnChainTxFeeDocument, options);
       }
@@ -5828,8 +6065,13 @@ export function useOnChainTxFeeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<OnChainTxFeeQuery, OnChainTxFeeQueryVariables>(OnChainTxFeeDocument, options);
         }
+export function useOnChainTxFeeSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<OnChainTxFeeQuery, OnChainTxFeeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<OnChainTxFeeQuery, OnChainTxFeeQueryVariables>(OnChainTxFeeDocument, options);
+        }
 export type OnChainTxFeeQueryHookResult = ReturnType<typeof useOnChainTxFeeQuery>;
 export type OnChainTxFeeLazyQueryHookResult = ReturnType<typeof useOnChainTxFeeLazyQuery>;
+export type OnChainTxFeeSuspenseQueryHookResult = ReturnType<typeof useOnChainTxFeeSuspenseQuery>;
 export type OnChainTxFeeQueryResult = Apollo.QueryResult<OnChainTxFeeQuery, OnChainTxFeeQueryVariables>;
 export const OnChainUsdTxFeeDocument = gql`
     query onChainUsdTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: CentAmount!) {
@@ -5857,7 +6099,7 @@ export const OnChainUsdTxFeeDocument = gql`
  *   },
  * });
  */
-export function useOnChainUsdTxFeeQuery(baseOptions: Apollo.QueryHookOptions<OnChainUsdTxFeeQuery, OnChainUsdTxFeeQueryVariables>) {
+export function useOnChainUsdTxFeeQuery(baseOptions: Apollo.QueryHookOptions<OnChainUsdTxFeeQuery, OnChainUsdTxFeeQueryVariables> & ({ variables: OnChainUsdTxFeeQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<OnChainUsdTxFeeQuery, OnChainUsdTxFeeQueryVariables>(OnChainUsdTxFeeDocument, options);
       }
@@ -5865,8 +6107,13 @@ export function useOnChainUsdTxFeeLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<OnChainUsdTxFeeQuery, OnChainUsdTxFeeQueryVariables>(OnChainUsdTxFeeDocument, options);
         }
+export function useOnChainUsdTxFeeSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<OnChainUsdTxFeeQuery, OnChainUsdTxFeeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<OnChainUsdTxFeeQuery, OnChainUsdTxFeeQueryVariables>(OnChainUsdTxFeeDocument, options);
+        }
 export type OnChainUsdTxFeeQueryHookResult = ReturnType<typeof useOnChainUsdTxFeeQuery>;
 export type OnChainUsdTxFeeLazyQueryHookResult = ReturnType<typeof useOnChainUsdTxFeeLazyQuery>;
+export type OnChainUsdTxFeeSuspenseQueryHookResult = ReturnType<typeof useOnChainUsdTxFeeSuspenseQuery>;
 export type OnChainUsdTxFeeQueryResult = Apollo.QueryResult<OnChainUsdTxFeeQuery, OnChainUsdTxFeeQueryVariables>;
 export const OnChainUsdTxFeeAsBtcDenominatedDocument = gql`
     query onChainUsdTxFeeAsBtcDenominated($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!) {
@@ -5898,7 +6145,7 @@ export const OnChainUsdTxFeeAsBtcDenominatedDocument = gql`
  *   },
  * });
  */
-export function useOnChainUsdTxFeeAsBtcDenominatedQuery(baseOptions: Apollo.QueryHookOptions<OnChainUsdTxFeeAsBtcDenominatedQuery, OnChainUsdTxFeeAsBtcDenominatedQueryVariables>) {
+export function useOnChainUsdTxFeeAsBtcDenominatedQuery(baseOptions: Apollo.QueryHookOptions<OnChainUsdTxFeeAsBtcDenominatedQuery, OnChainUsdTxFeeAsBtcDenominatedQueryVariables> & ({ variables: OnChainUsdTxFeeAsBtcDenominatedQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<OnChainUsdTxFeeAsBtcDenominatedQuery, OnChainUsdTxFeeAsBtcDenominatedQueryVariables>(OnChainUsdTxFeeAsBtcDenominatedDocument, options);
       }
@@ -5906,8 +6153,13 @@ export function useOnChainUsdTxFeeAsBtcDenominatedLazyQuery(baseOptions?: Apollo
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<OnChainUsdTxFeeAsBtcDenominatedQuery, OnChainUsdTxFeeAsBtcDenominatedQueryVariables>(OnChainUsdTxFeeAsBtcDenominatedDocument, options);
         }
+export function useOnChainUsdTxFeeAsBtcDenominatedSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<OnChainUsdTxFeeAsBtcDenominatedQuery, OnChainUsdTxFeeAsBtcDenominatedQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<OnChainUsdTxFeeAsBtcDenominatedQuery, OnChainUsdTxFeeAsBtcDenominatedQueryVariables>(OnChainUsdTxFeeAsBtcDenominatedDocument, options);
+        }
 export type OnChainUsdTxFeeAsBtcDenominatedQueryHookResult = ReturnType<typeof useOnChainUsdTxFeeAsBtcDenominatedQuery>;
 export type OnChainUsdTxFeeAsBtcDenominatedLazyQueryHookResult = ReturnType<typeof useOnChainUsdTxFeeAsBtcDenominatedLazyQuery>;
+export type OnChainUsdTxFeeAsBtcDenominatedSuspenseQueryHookResult = ReturnType<typeof useOnChainUsdTxFeeAsBtcDenominatedSuspenseQuery>;
 export type OnChainUsdTxFeeAsBtcDenominatedQueryResult = Apollo.QueryResult<OnChainUsdTxFeeAsBtcDenominatedQuery, OnChainUsdTxFeeAsBtcDenominatedQueryVariables>;
 export const IntraLedgerPaymentSendDocument = gql`
     mutation intraLedgerPaymentSend($input: IntraLedgerPaymentSendInput!) {
@@ -6401,8 +6653,13 @@ export function useWarningSecureAccountLazyQuery(baseOptions?: Apollo.LazyQueryH
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<WarningSecureAccountQuery, WarningSecureAccountQueryVariables>(WarningSecureAccountDocument, options);
         }
+export function useWarningSecureAccountSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<WarningSecureAccountQuery, WarningSecureAccountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<WarningSecureAccountQuery, WarningSecureAccountQueryVariables>(WarningSecureAccountDocument, options);
+        }
 export type WarningSecureAccountQueryHookResult = ReturnType<typeof useWarningSecureAccountQuery>;
 export type WarningSecureAccountLazyQueryHookResult = ReturnType<typeof useWarningSecureAccountLazyQuery>;
+export type WarningSecureAccountSuspenseQueryHookResult = ReturnType<typeof useWarningSecureAccountSuspenseQuery>;
 export type WarningSecureAccountQueryResult = Apollo.QueryResult<WarningSecureAccountQuery, WarningSecureAccountQueryVariables>;
 export const AccountUpdateDefaultWalletIdDocument = gql`
     mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
@@ -6483,8 +6740,13 @@ export function useSetDefaultWalletScreenLazyQuery(baseOptions?: Apollo.LazyQuer
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<SetDefaultWalletScreenQuery, SetDefaultWalletScreenQueryVariables>(SetDefaultWalletScreenDocument, options);
         }
+export function useSetDefaultWalletScreenSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SetDefaultWalletScreenQuery, SetDefaultWalletScreenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SetDefaultWalletScreenQuery, SetDefaultWalletScreenQueryVariables>(SetDefaultWalletScreenDocument, options);
+        }
 export type SetDefaultWalletScreenQueryHookResult = ReturnType<typeof useSetDefaultWalletScreenQuery>;
 export type SetDefaultWalletScreenLazyQueryHookResult = ReturnType<typeof useSetDefaultWalletScreenLazyQuery>;
+export type SetDefaultWalletScreenSuspenseQueryHookResult = ReturnType<typeof useSetDefaultWalletScreenSuspenseQuery>;
 export type SetDefaultWalletScreenQueryResult = Apollo.QueryResult<SetDefaultWalletScreenQuery, SetDefaultWalletScreenQueryVariables>;
 export const AccountUpdateDisplayCurrencyDocument = gql`
     mutation accountUpdateDisplayCurrency($input: AccountUpdateDisplayCurrencyInput!) {
@@ -6557,8 +6819,13 @@ export function useLanguageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<L
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<LanguageQuery, LanguageQueryVariables>(LanguageDocument, options);
         }
+export function useLanguageSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<LanguageQuery, LanguageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<LanguageQuery, LanguageQueryVariables>(LanguageDocument, options);
+        }
 export type LanguageQueryHookResult = ReturnType<typeof useLanguageQuery>;
 export type LanguageLazyQueryHookResult = ReturnType<typeof useLanguageLazyQuery>;
+export type LanguageSuspenseQueryHookResult = ReturnType<typeof useLanguageSuspenseQuery>;
 export type LanguageQueryResult = Apollo.QueryResult<LanguageQuery, LanguageQueryVariables>;
 export const UserUpdateLanguageDocument = gql`
     mutation userUpdateLanguage($input: UserUpdateLanguageInput!) {
@@ -6639,8 +6906,13 @@ export function useNotificationSettingsLazyQuery(baseOptions?: Apollo.LazyQueryH
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<NotificationSettingsQuery, NotificationSettingsQueryVariables>(NotificationSettingsDocument, options);
         }
+export function useNotificationSettingsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<NotificationSettingsQuery, NotificationSettingsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<NotificationSettingsQuery, NotificationSettingsQueryVariables>(NotificationSettingsDocument, options);
+        }
 export type NotificationSettingsQueryHookResult = ReturnType<typeof useNotificationSettingsQuery>;
 export type NotificationSettingsLazyQueryHookResult = ReturnType<typeof useNotificationSettingsLazyQuery>;
+export type NotificationSettingsSuspenseQueryHookResult = ReturnType<typeof useNotificationSettingsSuspenseQuery>;
 export type NotificationSettingsQueryResult = Apollo.QueryResult<NotificationSettingsQuery, NotificationSettingsQueryVariables>;
 export const AccountEnableNotificationChannelDocument = gql`
     mutation accountEnableNotificationChannel($input: AccountEnableNotificationChannelInput!) {
@@ -6866,8 +7138,13 @@ export function useSettingsScreenLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<SettingsScreenQuery, SettingsScreenQueryVariables>(SettingsScreenDocument, options);
         }
+export function useSettingsScreenSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SettingsScreenQuery, SettingsScreenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SettingsScreenQuery, SettingsScreenQueryVariables>(SettingsScreenDocument, options);
+        }
 export type SettingsScreenQueryHookResult = ReturnType<typeof useSettingsScreenQuery>;
 export type SettingsScreenLazyQueryHookResult = ReturnType<typeof useSettingsScreenLazyQuery>;
+export type SettingsScreenSuspenseQueryHookResult = ReturnType<typeof useSettingsScreenSuspenseQuery>;
 export type SettingsScreenQueryResult = Apollo.QueryResult<SettingsScreenQuery, SettingsScreenQueryVariables>;
 export const ExportCsvSettingDocument = gql`
     query ExportCsvSetting($walletIds: [WalletId!]!) {
@@ -6897,7 +7174,7 @@ export const ExportCsvSettingDocument = gql`
  *   },
  * });
  */
-export function useExportCsvSettingQuery(baseOptions: Apollo.QueryHookOptions<ExportCsvSettingQuery, ExportCsvSettingQueryVariables>) {
+export function useExportCsvSettingQuery(baseOptions: Apollo.QueryHookOptions<ExportCsvSettingQuery, ExportCsvSettingQueryVariables> & ({ variables: ExportCsvSettingQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<ExportCsvSettingQuery, ExportCsvSettingQueryVariables>(ExportCsvSettingDocument, options);
       }
@@ -6905,8 +7182,13 @@ export function useExportCsvSettingLazyQuery(baseOptions?: Apollo.LazyQueryHookO
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ExportCsvSettingQuery, ExportCsvSettingQueryVariables>(ExportCsvSettingDocument, options);
         }
+export function useExportCsvSettingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ExportCsvSettingQuery, ExportCsvSettingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ExportCsvSettingQuery, ExportCsvSettingQueryVariables>(ExportCsvSettingDocument, options);
+        }
 export type ExportCsvSettingQueryHookResult = ReturnType<typeof useExportCsvSettingQuery>;
 export type ExportCsvSettingLazyQueryHookResult = ReturnType<typeof useExportCsvSettingLazyQuery>;
+export type ExportCsvSettingSuspenseQueryHookResult = ReturnType<typeof useExportCsvSettingSuspenseQuery>;
 export type ExportCsvSettingQueryResult = Apollo.QueryResult<ExportCsvSettingQuery, ExportCsvSettingQueryVariables>;
 export const UserTotpDeleteDocument = gql`
     mutation userTotpDelete {
@@ -7002,8 +7284,13 @@ export function useAccountLimitsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<AccountLimitsQuery, AccountLimitsQueryVariables>(AccountLimitsDocument, options);
         }
+export function useAccountLimitsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AccountLimitsQuery, AccountLimitsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<AccountLimitsQuery, AccountLimitsQueryVariables>(AccountLimitsDocument, options);
+        }
 export type AccountLimitsQueryHookResult = ReturnType<typeof useAccountLimitsQuery>;
 export type AccountLimitsLazyQueryHookResult = ReturnType<typeof useAccountLimitsLazyQuery>;
+export type AccountLimitsSuspenseQueryHookResult = ReturnType<typeof useAccountLimitsSuspenseQuery>;
 export type AccountLimitsQueryResult = Apollo.QueryResult<AccountLimitsQuery, AccountLimitsQueryVariables>;
 export const TotpRegistrationScreenDocument = gql`
     query totpRegistrationScreen {
@@ -7037,8 +7324,13 @@ export function useTotpRegistrationScreenLazyQuery(baseOptions?: Apollo.LazyQuer
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TotpRegistrationScreenQuery, TotpRegistrationScreenQueryVariables>(TotpRegistrationScreenDocument, options);
         }
+export function useTotpRegistrationScreenSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TotpRegistrationScreenQuery, TotpRegistrationScreenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TotpRegistrationScreenQuery, TotpRegistrationScreenQueryVariables>(TotpRegistrationScreenDocument, options);
+        }
 export type TotpRegistrationScreenQueryHookResult = ReturnType<typeof useTotpRegistrationScreenQuery>;
 export type TotpRegistrationScreenLazyQueryHookResult = ReturnType<typeof useTotpRegistrationScreenLazyQuery>;
+export type TotpRegistrationScreenSuspenseQueryHookResult = ReturnType<typeof useTotpRegistrationScreenSuspenseQuery>;
 export type TotpRegistrationScreenQueryResult = Apollo.QueryResult<TotpRegistrationScreenQuery, TotpRegistrationScreenQueryVariables>;
 export const UserTotpRegistrationInitiateDocument = gql`
     mutation userTotpRegistrationInitiate {
@@ -7165,8 +7457,13 @@ export function useTransactionListForDefaultAccountLazyQuery(baseOptions?: Apoll
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TransactionListForDefaultAccountQuery, TransactionListForDefaultAccountQueryVariables>(TransactionListForDefaultAccountDocument, options);
         }
+export function useTransactionListForDefaultAccountSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TransactionListForDefaultAccountQuery, TransactionListForDefaultAccountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TransactionListForDefaultAccountQuery, TransactionListForDefaultAccountQueryVariables>(TransactionListForDefaultAccountDocument, options);
+        }
 export type TransactionListForDefaultAccountQueryHookResult = ReturnType<typeof useTransactionListForDefaultAccountQuery>;
 export type TransactionListForDefaultAccountLazyQueryHookResult = ReturnType<typeof useTransactionListForDefaultAccountLazyQuery>;
+export type TransactionListForDefaultAccountSuspenseQueryHookResult = ReturnType<typeof useTransactionListForDefaultAccountSuspenseQuery>;
 export type TransactionListForDefaultAccountQueryResult = Apollo.QueryResult<TransactionListForDefaultAccountQuery, TransactionListForDefaultAccountQueryVariables>;
 export const DeviceNotificationTokenCreateDocument = gql`
     mutation deviceNotificationTokenCreate($input: DeviceNotificationTokenCreateInput!) {
@@ -7242,8 +7539,13 @@ export function useWalletsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Wa
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<WalletsQuery, WalletsQueryVariables>(WalletsDocument, options);
         }
+export function useWalletsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<WalletsQuery, WalletsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<WalletsQuery, WalletsQueryVariables>(WalletsDocument, options);
+        }
 export type WalletsQueryHookResult = ReturnType<typeof useWalletsQuery>;
 export type WalletsLazyQueryHookResult = ReturnType<typeof useWalletsLazyQuery>;
+export type WalletsSuspenseQueryHookResult = ReturnType<typeof useWalletsSuspenseQuery>;
 export type WalletsQueryResult = Apollo.QueryResult<WalletsQuery, WalletsQueryVariables>;
 
 
