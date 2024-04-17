@@ -62,7 +62,7 @@
     "@bitcoinerlab/secp256k1": "^1.0.5",
     "@expo/react-native-action-sheet": "^4.0.1",
     "@formatjs/intl-getcanonicallocales": "^2.3.0",
-    "@formatjs/intl-locale": "^3.4.3",
+    "@formatjs/intl-locale": "^3.4.5",
     "@formatjs/intl-relativetimeformat": "^11.2.10",
     "@galoymoney/client": "^0.2.9",
     "@galoymoney/react-native-geetest-module": "^0.1.3",
