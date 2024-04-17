@@ -2743,6 +2743,11 @@
             "title": "April Challenge!",
             "description": "Grow your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet.",
             "details": "During the halving month, expand your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
+        },
+        "mayChallenge": {
+            "title": "May Challenge!",
+            "description": "Grow your inner circle by 6 for a chance to win a set of Pizzas on your next Bitcoin Meetup.",
+            "details": "Want a Bitcoin Pizza Day Party?\n\nExpand your Inner Circle by 6 for a shot at winning a set of pizzas for your next Bitcoin Meetup. The challenge wraps up on May 15th.\n\nShare your circles on social with the hashtag #blinkcircles to participate.\n\nThe prize is $150 for pizzas."
         }
     },
     "FullOnboarding": {

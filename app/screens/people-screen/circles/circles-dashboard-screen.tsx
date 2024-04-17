@@ -8,7 +8,7 @@ import LogoLightMode from "@app/assets/logo/blink-logo-light.svg"
 import { AprilChallengeCard } from "@app/components/april-challenge"
 import { Circle, CircleRef } from "@app/components/circle"
 import { IntroducingCirclesModal } from "@app/components/introducing-circles-modal"
-import { MarchChallengeCard } from "@app/components/march-challenge"
+import { MayChallengeCard } from "@app/components/may-challenge"
 import { useCirclesQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -153,8 +153,8 @@ export const CirclesDashboardScreen: React.FC = () => {
             </Text>
           </View>
         )}
-        <MarchChallengeCard />
         <AprilChallengeCard />
+        <MayChallengeCard />
         {isLonely ? <InviteFriendsCard /> : <ShareCircles />}
       </ScrollView>
     </Screen>
