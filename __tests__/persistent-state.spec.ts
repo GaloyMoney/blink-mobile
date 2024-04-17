@@ -1,7 +1,7 @@
 import {
   defaultLocalStorageState,
   migrateAndGetLocalStorageState,
-} from "../app/store/persistent-state/state-migrations"
+} from "@app/store/persistent-state/state-migrations"
 
 it("uses default state when none is present", async () => {
   const state = await migrateAndGetLocalStorageState({})
