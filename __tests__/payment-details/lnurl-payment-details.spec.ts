@@ -239,7 +239,9 @@ describe("lnurl payment details", () => {
       currency: WalletCurrency.Btc,
       id: "newtestwallet",
     }
-    const newPaymentDetails = paymentDetails.setSendingWalletDescriptor(sendingWalletDescriptor)
+    const newPaymentDetails = paymentDetails.setSendingWalletDescriptor(
+      sendingWalletDescriptor,
+    )
     expect(newPaymentDetails.sendingWalletDescriptor).toEqual(sendingWalletDescriptor)
   })
 })

@@ -1,14 +1,13 @@
 import fs from "fs"
-import { BaseTranslation } from "typesafe-i18n"
+import path from "path"
+import { fileURLToPath } from "url"
 import { readTranslationFromDisk } from "typesafe-i18n/exporter"
 
+// Getting the directory name from the URL of the current module
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const DEFAULT_RAW_EXPORT_PATH = `${__dirname}/../app/i18n/raw-i18n`
 
-const writeToFile = async (
-  translation: BaseTranslation,
-  locale: string,
-  directory: string,
-) => {
+const writeToFile = async (translation, locale, directory) => {
   const filePath = `${directory}/${locale}.json`
   const data = JSON.stringify(translation, null, 4) + "\n"
   fs.writeFile(filePath, data, (err) => {
@@ -19,10 +18,7 @@ const writeToFile = async (
   })
 }
 
-const exportTranslationsForLocale = async (
-  locale: string,
-  directory: string,
-): Promise<boolean> => {
+const exportTranslationsForLocale = async (locale, directory) => {
   const mapping = await readTranslationFromDisk(locale)
   const translation = Array.isArray(mapping.translations)
     ? mapping.translations[0]

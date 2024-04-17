@@ -123,10 +123,13 @@ export const useDisplayCurrency = () => {
 
   const displayCurrencyDictionary = useMemo(() => {
     const currencyList = dataCurrencyList?.currencyList || []
-    return currencyList.reduce((acc, currency) => {
-      acc[currency.id] = currency
-      return acc
-    }, {} as Record<string, typeof defaultDisplayCurrency>)
+    return currencyList.reduce(
+      (acc, currency) => {
+        acc[currency.id] = currency
+        return acc
+      },
+      {} as Record<string, typeof defaultDisplayCurrency>,
+    )
   }, [dataCurrencyList?.currencyList])
 
   const displayCurrencyInfo =

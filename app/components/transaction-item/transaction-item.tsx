@@ -124,8 +124,8 @@ const TransactionItem: React.FC<Props> = ({
   const amountStyle = isPending
     ? styles.pending
     : isReceive
-    ? styles.receive
-    : styles.send
+      ? styles.receive
+      : styles.send
 
   const walletCurrency = tx.settlementCurrency as WalletCurrency
 

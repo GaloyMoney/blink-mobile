@@ -191,7 +191,7 @@ describe("no amount lightning payment details", () => {
     const paymentDetails = createNoAmountLightningPaymentDetails(defaultParams)
     const senderSpecifiedMemo = "sender memo"
     if (!paymentDetails.canSetMemo) throw new Error("Memo is unable to be set")
-    
+
     const newPaymentDetails = paymentDetails.setMemo(senderSpecifiedMemo)
     expect(newPaymentDetails.memo).toEqual(senderSpecifiedMemo)
   })
@@ -215,7 +215,9 @@ describe("no amount lightning payment details", () => {
       currency: WalletCurrency.Btc,
       id: "newtestwallet",
     }
-    const newPaymentDetails = paymentDetails.setSendingWalletDescriptor(sendingWalletDescriptor)
+    const newPaymentDetails = paymentDetails.setSendingWalletDescriptor(
+      sendingWalletDescriptor,
+    )
     expect(newPaymentDetails.sendingWalletDescriptor).toEqual(sendingWalletDescriptor)
   })
 })
