@@ -9,8 +9,6 @@ import {
   convertMoneyAmountMock,
   createGetFeeMocks,
   createSendPaymentMocks,
-  getTestSetAmount,
-  getTestSetSendingWalletDescriptor,
   testAmount,
   usdSendingWalletDescriptor,
 } from "./helpers"
@@ -54,14 +52,8 @@ const defaultParamsWithEqualMinMaxAmount = {
   lnurlParams: mockLnUrlPayServiceResponse(100 as Satoshis, 100 as Satoshis),
 }
 
-const spy = jest.spyOn(PaymentDetails, "createLnurlPaymentDetails")
-
 describe("lnurl payment details", () => {
   const { createLnurlPaymentDetails } = PaymentDetails
-
-  beforeEach(() => {
-    spy.mockClear()
-  })
 
   it("properly sets fields if min and max amount is equal", () => {
     const paymentDetails = createLnurlPaymentDetails(defaultParamsWithEqualMinMaxAmount)
@@ -229,20 +221,25 @@ describe("lnurl payment details", () => {
   })
 
   it("can set amount", () => {
-    const testSetAmount = getTestSetAmount()
-    testSetAmount({
-      defaultParams: defaultParamsWithoutInvoice,
-      spy,
-      creatorFunction: createLnurlPaymentDetails,
-    })
+    const paymentDetails = createLnurlPaymentDetails(defaultParamsWithoutInvoice)
+    const unitOfAccountAmount = {
+      amount: 100,
+      currency: WalletCurrency.Btc,
+      currencyCode: "BTC",
+    }
+    if (!paymentDetails.canSetAmount) throw new Error("Amount is unable to be set")
+    const newPaymentDetails = paymentDetails.setAmount(unitOfAccountAmount)
+
+    expect(newPaymentDetails.unitOfAccountAmount).toEqual(unitOfAccountAmount)
   })
 
   it("can set sending wallet descriptor", () => {
-    const testSetSendingWalletDescriptor = getTestSetSendingWalletDescriptor()
-    testSetSendingWalletDescriptor({
-      defaultParams: defaultParamsWithoutInvoice,
-      spy,
-      creatorFunction: createLnurlPaymentDetails,
-    })
+    const paymentDetails = createLnurlPaymentDetails(defaultParamsWithoutInvoice)
+    const sendingWalletDescriptor = {
+      currency: WalletCurrency.Btc,
+      id: "newtestwallet",
+    }
+    const newPaymentDetails = paymentDetails.setSendingWalletDescriptor(sendingWalletDescriptor)
+    expect(newPaymentDetails.sendingWalletDescriptor).toEqual(sendingWalletDescriptor)
   })
 })
