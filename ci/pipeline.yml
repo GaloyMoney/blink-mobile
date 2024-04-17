@@ -319,7 +319,6 @@ jobs:
   - get: pipeline-image-def
     trigger: true
   - task: build
-    privileged: true
     config:
       platform: linux
       image_resource:
