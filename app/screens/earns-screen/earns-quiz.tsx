@@ -283,8 +283,8 @@ export const EarnQuiz = ({ route }: Props) => {
     return recordedAnswer.indexOf(i) === -1
       ? styles.quizButtonStyle
       : i === 0
-      ? styles.quizCorrectButtonStyle
-      : styles.quizWrongButtonStyle
+        ? styles.quizCorrectButtonStyle
+        : styles.quizWrongButtonStyle
   }
 
   let j: ZeroTo2 = 0

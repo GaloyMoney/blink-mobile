@@ -610,6 +610,17 @@ type GraphQLApplicationError implements Error
 scalar Hex32Bytes
   @join__type(graph: GALOY)
 
+type InAppNotification
+  @join__type(graph: GALOY)
+{
+  id: ID!
+  title: String!
+  body: String!
+  deepLink: String
+  createdAt: Timestamp!
+  readAt: Timestamp
+}
+
 union InitiationVia
   @join__type(graph: GALOY)
   @join__unionMember(graph: GALOY, member: "InitiationViaIntraLedger")
@@ -1178,10 +1189,7 @@ type Mutation
 {
   apiKeyCreate(input: ApiKeyCreateInput!): ApiKeyCreatePayload! @join__field(graph: GALOY)
   apiKeyRevoke(input: ApiKeyRevokeInput!): ApiKeyRevokePayload! @join__field(graph: GALOY)
-  userDisableNotificationChannel(input: UserDisableNotificationChannelInput!): UserUpdateNotificationSettingsPayload! @join__field(graph: GALOY)
-  userEnableNotificationChannel(input: UserEnableNotificationChannelInput!): UserUpdateNotificationSettingsPayload! @join__field(graph: GALOY)
-  userDisableNotificationCategory(input: UserDisableNotificationCategoryInput!): UserUpdateNotificationSettingsPayload! @join__field(graph: GALOY)
-  userEnableNotificationCategory(input: UserEnableNotificationCategoryInput!): UserUpdateNotificationSettingsPayload! @join__field(graph: GALOY)
+  userInAppNotificationMarkAsRead(input: UserInAppNotificationMarkAsReadInput!): UserInAppNotificationMarkAsReadPayload! @join__field(graph: GALOY)
   accountDelete: AccountDeletePayload! @join__field(graph: GALOY)
   accountDisableNotificationCategory(input: AccountDisableNotificationCategoryInput!): AccountUpdateNotificationSettingsPayload! @join__field(graph: GALOY)
   accountDisableNotificationChannel(input: AccountDisableNotificationChannelInput!): AccountUpdateNotificationSettingsPayload! @join__field(graph: GALOY)
@@ -2061,7 +2069,7 @@ type User
 {
   id: ID!
   apiKeys: [ApiKey!]!
-  notificationSettings: UserNotificationSettings!
+  inAppNotifications(onlyUnread: Boolean): [InAppNotification!]!
 
   """
   Get single contact details.
@@ -2141,19 +2149,6 @@ type UserContactUpdateAliasPayload
   errors: [Error!]!
 }
 
-input UserDisableNotificationCategoryInput
-  @join__type(graph: GALOY)
-{
-  channel: UserNotificationChannel!
-  category: UserNotificationCategory!
-}
-
-input UserDisableNotificationChannelInput
-  @join__type(graph: GALOY)
-{
-  channel: UserNotificationChannel!
-}
-
 type UserEmailDeletePayload
   @join__type(graph: GALOY)
 {
@@ -2189,17 +2184,16 @@ type UserEmailRegistrationValidatePayload
   me: User
 }
 
-input UserEnableNotificationCategoryInput
+input UserInAppNotificationMarkAsReadInput
   @join__type(graph: GALOY)
 {
-  channel: UserNotificationChannel!
-  category: UserNotificationCategory!
+  notificationId: ID!
 }
 
-input UserEnableNotificationChannelInput
+type UserInAppNotificationMarkAsReadPayload
   @join__type(graph: GALOY)
 {
-  channel: UserNotificationChannel!
+  notification: InAppNotification!
 }
 
 input UserLoginInput
@@ -2225,36 +2219,6 @@ input UserLogoutInput
 """Unique identifier of a user"""
 scalar Username
   @join__type(graph: GALOY)
-
-enum UserNotificationCategory
-  @join__type(graph: GALOY)
-{
-  CIRCLES @join__enumValue(graph: GALOY)
-  PAYMENTS @join__enumValue(graph: GALOY)
-  ADMIN_NOTIFICATION @join__enumValue(graph: GALOY)
-  MARKETING @join__enumValue(graph: GALOY)
-  PRICE @join__enumValue(graph: GALOY)
-  SECURITY @join__enumValue(graph: GALOY)
-}
-
-enum UserNotificationChannel
-  @join__type(graph: GALOY)
-{
-  PUSH @join__enumValue(graph: GALOY)
-}
-
-type UserNotificationChannelSettings
-  @join__type(graph: GALOY)
-{
-  enabled: Boolean!
-  disabledCategories: [UserNotificationCategory!]!
-}
-
-type UserNotificationSettings
-  @join__type(graph: GALOY)
-{
-  push: UserNotificationChannelSettings!
-}
 
 type UserPhoneDeletePayload
   @join__type(graph: GALOY)
@@ -2334,12 +2298,6 @@ type UserUpdateLanguagePayload
 {
   errors: [Error!]!
   user: User
-}
-
-type UserUpdateNotificationSettingsPayload
-  @join__type(graph: GALOY)
-{
-  notificationSettings: UserNotificationSettings!
 }
 
 input UserUpdateUsernameInput

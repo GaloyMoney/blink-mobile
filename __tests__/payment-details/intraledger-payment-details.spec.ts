@@ -8,9 +8,6 @@ import {
   expectCannotGetFee,
   expectCannotSendPayment,
   expectDestinationSpecifiedMemoCannotSetMemo,
-  getTestSetAmount,
-  getTestSetMemo,
-  getTestSetSendingWalletDescriptor,
   testAmount,
   usdSendingWalletDescriptor,
   zeroAmount,
@@ -25,14 +22,8 @@ const defaultParams: PaymentDetails.CreateIntraledgerPaymentDetailsParams<Wallet
     unitOfAccountAmount: testAmount,
   }
 
-const spy = jest.spyOn(PaymentDetails, "createIntraledgerPaymentDetails")
-
 describe("intraledger payment details", () => {
   const { createIntraledgerPaymentDetails } = PaymentDetails
-
-  beforeEach(() => {
-    spy.mockClear()
-  })
 
   it("properly sets fields with all arguments provided", () => {
     const paymentDetails = createIntraledgerPaymentDetails(defaultParams)
@@ -150,29 +141,36 @@ describe("intraledger payment details", () => {
   })
 
   it("can set memo if no memo provided", () => {
-    const testSetMemo = getTestSetMemo()
-    testSetMemo({
-      defaultParams,
-      spy,
-      creatorFunction: createIntraledgerPaymentDetails,
-    })
+    const paymentDetails = createIntraledgerPaymentDetails(defaultParams)
+    const senderSpecifiedMemo = "sender memo"
+    if (!paymentDetails.canSetMemo) throw new Error("Memo is unable to be set")
+
+    const newPaymentDetails = paymentDetails.setMemo(senderSpecifiedMemo)
+    expect(newPaymentDetails.memo).toEqual(senderSpecifiedMemo)
   })
 
   it("can set amount", () => {
-    const testSetAmount = getTestSetAmount()
-    testSetAmount({
-      defaultParams,
-      spy,
-      creatorFunction: createIntraledgerPaymentDetails,
-    })
+    const paymentDetails = createIntraledgerPaymentDetails(defaultParams)
+    const unitOfAccountAmount = {
+      amount: 100,
+      currency: WalletCurrency.Btc,
+      currencyCode: "BTC",
+    }
+    if (!paymentDetails.canSetAmount) throw new Error("Amount is unable to be set")
+    const newPaymentDetails = paymentDetails.setAmount(unitOfAccountAmount)
+
+    expect(newPaymentDetails.unitOfAccountAmount).toEqual(unitOfAccountAmount)
   })
 
   it("can set sending wallet descriptor", () => {
-    const testSetSendingWalletDescriptor = getTestSetSendingWalletDescriptor()
-    testSetSendingWalletDescriptor({
-      defaultParams,
-      spy,
-      creatorFunction: createIntraledgerPaymentDetails,
-    })
+    const paymentDetails = createIntraledgerPaymentDetails(defaultParams)
+    const sendingWalletDescriptor = {
+      currency: WalletCurrency.Btc,
+      id: "newtestwallet",
+    }
+    const newPaymentDetails = paymentDetails.setSendingWalletDescriptor(
+      sendingWalletDescriptor,
+    )
+    expect(newPaymentDetails.sendingWalletDescriptor).toEqual(sendingWalletDescriptor)
   })
 })
