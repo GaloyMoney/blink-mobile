@@ -319,21 +319,26 @@ jobs:
   - get: pipeline-image-def
     trigger: true
   - task: build
-    privileged: true
     config:
       platform: linux
       image_resource:
         type: registry-image
         source:
-          repository: vito/oci-build-task
+          repository: gcr.io/kaniko-project/executor
+          tag: debug
       inputs:
       - name: pipeline-image-def
       outputs:
       - name: image
-      params:
-        CONTEXT: pipeline-image-def/ci/image
       run:
-        path: build
+        path: /kaniko/executor
+        args:
+        - --context=pipeline-image-def/ci/image
+        - --use-new-run
+        - --single-snapshot
+        - --cache=false
+        - --no-push
+        - --tar-path=image/image.tar
   - put: pipeline-image
     params:
       image: image/image.tar

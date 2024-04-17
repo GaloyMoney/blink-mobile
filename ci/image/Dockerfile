@@ -4,6 +4,7 @@ RUN apk update \
   && apk add bash curl wget tar git jq make perl-utils python3 \
   && apk add yq --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
 
+ENV CLOUDSDK_CORE_DISABLE_PROMPTS 1
 RUN curl -sSL https://sdk.cloud.google.com | bash
 ENV PATH $PATH:/root/google-cloud-sdk/bin
 
