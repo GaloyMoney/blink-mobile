@@ -39,3 +39,6 @@ e2e-ios: reset-e2e
 e2e-android: reset-e2e
 	yarn e2e:build android.emu.debug
 	yarn e2e:test android.emu.debug
+
+make audit:
+	./audit.sh
