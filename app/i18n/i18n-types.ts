@@ -9018,9 +9018,12 @@ type RootTranslation = {
 			description: string
 			/**
 			 * W​a​n​t​ ​a​ ​B​i​t​c​o​i​n​ ​P​i​z​z​a​ ​D​a​y​ ​P​a​r​t​y​?​
+		​
 		​E​x​p​a​n​d​ ​y​o​u​r​ ​I​n​n​e​r​ ​C​i​r​c​l​e​ ​b​y​ ​6​ ​f​o​r​ ​a​ ​s​h​o​t​ ​a​t​ ​w​i​n​n​i​n​g​ ​a​ ​s​e​t​ ​o​f​ ​p​i​z​z​a​s​ ​f​o​r​ ​y​o​u​r​ ​n​e​x​t​ ​B​i​t​c​o​i​n​ ​M​e​e​t​u​p​.​ ​T​h​e​ ​c​h​a​l​l​e​n​g​e​ ​w​r​a​p​s​ ​u​p​ ​o​n​ ​M​a​y​ ​1​5​t​h​.​
-		​S​h​a​r​e​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​o​n​ ​s​o​c​i​a​l​ ​w​i​t​h​ ​t​h​e​ ​h​a​s​h​t​a​g​ ​#​b​l​i​n​k​c​i​r​c​l​e​s​ ​t​o​ ​p​a​r​t​i​c​i​p​a​t​e​ ​a​n​d​ ​c​h​e​c​k​ ​o​u​t​ ​o​u​r​ ​b​l​o​g​ ​p​o​s​t​ ​a​b​o​u​t​ ​t​h​e​ ​B​i​t​c​o​i​n​ ​P​i​z​z​a​ ​D​a​y​ ​b​l​i​n​k​.​s​v​/​b​l​o​g​/​b​i​t​c​o​i​n​-​p​i​z​z​a​-​d​a​y​
-		​T​h​e​ ​p​r​i​z​e​ ​i​s​ ​$​1​5​0​ ​f​o​r​ ​p​i​z​z​a​s
+		​
+		​S​h​a​r​e​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​o​n​ ​s​o​c​i​a​l​ ​w​i​t​h​ ​t​h​e​ ​h​a​s​h​t​a​g​ ​#​b​l​i​n​k​c​i​r​c​l​e​s​ ​t​o​ ​p​a​r​t​i​c​i​p​a​t​e​.​
+		​
+		​T​h​e​ ​p​r​i​z​e​ ​i​s​ ​$​1​5​0​ ​f​o​r​ ​p​i​z​z​a​s​.
 			 */
 			details: string
 		}
@@ -17999,9 +18002,12 @@ export type TranslationFunctions = {
 			description: () => LocalizedString
 			/**
 			 * Want a Bitcoin Pizza Day Party?
+	
 		Expand your Inner Circle by 6 for a shot at winning a set of pizzas for your next Bitcoin Meetup. The challenge wraps up on May 15th.
-		Share your circles on social with the hashtag #blinkcircles to participate and check out our blog post about the Bitcoin Pizza Day blink.sv/blog/bitcoin-pizza-day
-		The prize is $150 for pizzas
+	
+		Share your circles on social with the hashtag #blinkcircles to participate.
+	
+		The prize is $150 for pizzas.
 			 */
 			details: () => LocalizedString
 		}
