@@ -166,7 +166,7 @@
     "@graphql-codegen/typescript-resolvers": "^4.0.6",
     "@graphql-inspector/cli": "^4.0.3",
     "@graphql-tools/graphql-tag-pluck": "^8.3.0",
-    "@react-native-community/datetimepicker": "^7.6.4",
+    "@react-native-community/datetimepicker": "^7.7.0",
     "@react-native-community/slider": "^4.5.2",
     "@react-native/babel-preset": "0.75.0-main",
     "@react-native/eslint-config": "^0.75.0-main",
