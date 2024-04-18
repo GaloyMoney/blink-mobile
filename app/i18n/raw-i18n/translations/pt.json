@@ -2,14 +2,14 @@
     "GaloyAddressScreen": {
         "title": "Receba pagamento usando:",
         "buttonTitle": "Configure seu endereço",
-        "yourAddress": "Seu endereço {bankName: string} ",
+        "yourLightningAddress": "Seu endereço Lightning",
         "notAbleToChange": "Não será possível alterar seu endereço {bankName: string} depois de defini-lo.",
         "addressNotAvailable": "Este endereço {bankName: string} não está mais disponível",
         "somethingWentWrong": "Algo deu errado. Por favor tente novamente mais tarde.",
         "merchantTitle": "Para comerciantes",
         "yourCashRegister": "Sua caixa registradora Lightning ",
         "yourPaycode": "Seu código de pagamento",
-        "copiedAddressToClipboard": "Endereço {bankName: string} copiado para a área de transferência",
+        "copiedLightningAddressToClipboard": "Endereço Lightning copiado para a área de transferência",
         "copiedPaycodeToClipboard": "Código de pagamento copiado para a área de transferência",
         "copiedCashRegisterLinkToClipboard": "Link da caixa registradora copiado para a área de transferência",
         "howToUseIt": "Como utilizar?",
@@ -2123,6 +2123,8 @@
         "invalidContent": "Encontramos:\n\n{found}\n\nEste não é um endereço Bitcoin válido ou fatura Lightning",
         "expiredContent": "Nós achamos:\n\n{encontrado: string}\n\nEsta fatura expirou",
         "invalidTitle": "Código QR inválido",
+        "openLinkTitle": "Abrir link",
+        "confirmOpenLink": "Tem certeza que deseja abrir este link?",
         "noQrCode": "Não foi possível encontrar um código QR na imagem",
         "title": "Escanear código QR",
         "permissionCamera": "Precisamos de permissão para usar sua câmera.",
@@ -2227,6 +2229,13 @@
         "pendingPayment": "O pagamento foi enviado, mas ainda não foi confirmado.\n\nÉ possível que o pagamento não seja confirmado, caso em que os fundos serão devolvidos à sua conta."
     },
     "SettingsScreen": {
+        "staticQr": "QR Code estático imprimível",
+        "staticQrCopied": "O link do seu QR Code estático foi copiado",
+        "setByOs": "Definido pelo sistema",
+        "apiAcess": "Acesso à API",
+        "pos": "Ponto de venda",
+        "posCopied": "O link do seu ponto de venda foi copiado",
+        "setYourLightningAddress": "Defina seu endereço Lightning",
         "activated": "Ativado",
         "addressScreen": "Formas de receber pagamentos",
         "tapUserName": "Toque para definir o nome de usuário",
@@ -2264,16 +2273,25 @@
                 "description": "Notificações relacionadas ao envio e recebimento de pagamentos."
             },
             "Marketing": {
-                "title": "Features and updates",
-                "description": "Notifications about new features and updates."
+                "title": "Recursos e atualizações",
+                "description": "Notificações sobre novos recursos e atualizações"
             },
             "Price": {
-                "title": "Price changes",
-                "description": "Notifications about the price of Bitcoin."
+                "title": "Mudança de preços",
+                "description": "Notificações sobre o preço do Bitcoin"
             }
         }
     },
     "AccountScreen": {
+        "fundsMoreThan5Dollars": "Sua conta possui mais de $5",
+        "itsATrialAccount": "Contas de teste possuem limites reduzidos de transação e não há método de recuperação. Se você perder seu celular ou desinstalar o aplicativo, seus fundos não serão recuperados.",
+        "accountBeingDeleted": "Sua conta está sendo deletada, por favor espere...",
+        "dangerZone": "Zona de perigo",
+        "phoneDeletedSuccessfully": "Telefone excluído com sucesso",
+        "phoneNumber": "Número de Telefone",
+        "tapToAddPhoneNumber": "Clique para adicionar um número de telefone",
+        "loginMethods": "Métodos de login",
+        "level": "Nível {level: string}",
         "accountLevel": "Nível da Conta",
         "upgrade": "Atualize a sua conta",
         "logOutAndDeleteLocalData": "Sair da conta e apagar toda a informação local",
@@ -2286,6 +2304,11 @@
         "btcBalanceWarning": "Seu saldo de bitcoin é de {balance: string}.",
         "secureYourAccount": "Registre-se para proteger sua conta",
         "tapToAdd": "Toque para adicionar",
+        "tapToAddEmail": "Clique para adicionar um e-mail",
+        "unverifiedEmail": "E-mail (Unverified)",
+        "email": "E-mail",
+        "emailDeletedSuccessfully": "E-mail deletado com sucesso",
+        "unverifiedEmailAdvice": "E-mails não verificados não podem ser usados para login. Você deve verificar novamente seu endereço de e-mail.",
         "deleteEmailPromptTitle": "Excluir e-mail",
         "deleteEmailPromptContent": "Você tem certeza de que deseja excluir seu endereço de e-mail? Você só poderá fazer login novamente com seu número de telefone.",
         "deletePhonePromptTitle": "Excluir telefone",
@@ -2307,6 +2330,7 @@
         "totpDeleteAlertContent": "Você tem certeza de que deseja excluir sua autenticação de dois fatores?",
         "copiedAccountId": "Copiou o ID da sua conta para a área de transferência",
         "yourAccountId": "Seu ID de conta",
+        "accountId": "ID da conta",
         "copy": "Copiar"
     },
     "TotpRegistrationInitiateScreen": {
@@ -2335,7 +2359,9 @@
         "info": "Escolha o seu tema preferido para usar na Blink, ou escolha um tema para ficar sincronizado com o seu sistema de definições.",
         "system": "Usar definições de Sistema",
         "light": "Usar Modo Claro",
-        "dark": "Usar Modo Escuro"
+        "dark": "Usar Modo Escuro",
+        "setToDark": "Modo Escuro",
+        "setToLight": "Modo claro"
     },
     "Languages": {
         "DEFAULT": "Padrão (OS)"
@@ -2393,6 +2419,7 @@
     },
     "SetAddressModal": {
         "title": "Definir endereço {bankName: string}",
+        "setLightningAddress": "Defina seu endereço Lightning",
         "Errors": {
             "tooShort": "O endereço deve ter pelo menos 3 caracteres de comprimento.",
             "tooLong": "O endereço deve ter no máximo 50 caracteres de comprimento.",
@@ -2474,7 +2501,16 @@
         "success": "Email {email: string} confirmado com sucesso"
     },
     "common": {
+        "enabled": "Habilitado",
+        "notifications": "Notificações",
+        "preferences": "Preferências",
+        "onDeviceSecurity": "Segurança no dispositivo",
+        "securityAndPrivacy": "Segurança e Privacidade",
+        "advanced": "Avançado",
+        "community": "Comunidade",
         "account": "conta",
+        "trialAccount": "Conta teste",
+        "blinkUser": "Usuário Blink",
         "transactionLimits": "Limites de transação",
         "activateWallet": "Ativar Carteira",
         "amountRequired": "O valor é obrigatório",
@@ -2599,6 +2635,7 @@
         "faq": "FAQ",
         "enjoyingApp": "Gostando do aplicativo?",
         "statusPage": "Página de status",
+        "chatbot": "Chatbot",
         "telegram": "Telegram",
         "mattermost": "Mais importante",
         "thankYouText": "Obrigado pelo feedback, gostaria de sugerir uma melhoria?",
@@ -2703,9 +2740,14 @@
             "details": "Aumente seu círculo interno em 3 e seu círculo externo em 3 para ter a chance de ganhar $100!\n\nLembrete: seus círculos crescem quando você envia sats para um novo usuário do Blink.\n\nCompartilhe seus círculos nas redes sociais com #blinkcircles para participar."
         },
         "aprilChallenge": {
-            "title": "April Challenge!",
-            "description": "Grow your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet.",
-            "details": "During the halving month, expand your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
+            "title": "Desafio de Abril",
+            "description": "Cresça seu círculo interno em 12 e seu círculo externo em 3 para ter a chance de ganhar uma hardware wallet BitBox02",
+            "details": "Durante o mês do halving, cresça seu círculo interno em 12 e seu círculo externo em 3 para ter a chance de ganhar uma hardware wallet Bitbox02!\n\nLembrete: seus círculos aumentam quando você envia a um novo usuário da Blink seus primeiros sats.\n\nCompartilhe seus círculos nas redes sociais com a hashtag #blinkcircles para participar."
+        },
+        "mayChallenge": {
+            "title": "Desafio de Maio",
+            "description": "Aumente seu círculo em 6 para ter a chance de ganhar um conjunto de pizzas no seu próximo encontro bitcoiner.",
+            "details": "Quer uma festa do Bitcoin Pizza Day?\n\nExpanda seu Círculo Interno em 6 para ter a chance de ganhar um conjunto de pizzas em seu próximo Encontro Bitcoiner. O desafio termina no dia 15 de maio.\n\nCompartilhe seus círculos nas redes sociais com a hashtag #blinkcircles para participar.\n\nO prêmio é de $150 para pizzas."
         }
     },
     "FullOnboarding": {
