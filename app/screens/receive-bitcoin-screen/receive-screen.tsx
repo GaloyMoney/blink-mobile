@@ -302,19 +302,17 @@ const ReceiveScreen = ({ route }: Props) => {
             (request.type !== Invoice.PayCode ||
               (request.type === Invoice.PayCode && request.canUsePaycode)) && (
               <>
-                <View style={styles.copyInvoiceContainer}>
-                  <TouchableOpacity
-                    {...testProps(LL.ReceiveScreen.copyInvoice())}
-                    onPress={handleCopy}
-                  >
-                    <Text {...testProps("Copy Invoice")} color={colors.grey2}>
-                      <Icon color={colors.grey2} name="copy-outline" />
-                      <Text> </Text>
-                      {LL.ReceiveScreen.copyInvoice()}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View>
+                <TouchableOpacity
+                  {...testProps(LL.ReceiveScreen.copyInvoice())}
+                  onPress={handleCopy}
+                  style={styles.copyInvoiceContainer}
+                >
+                  <Icon color={colors.grey2} name="copy-outline" />
+                  <Text {...testProps("Copy Invoice")} color={colors.grey2}>
+                    {` ${LL.ReceiveScreen.copyInvoice()}`}
+                  </Text>
+                </TouchableOpacity>
+                <View style={styles.invoiceDetails}>
                   <Text color={colors.grey2}>
                     {request.info?.data?.invoiceType === Invoice.OnChain &&
                     request.receivingWalletDescriptor.currency === WalletCurrency.Btc
@@ -333,18 +331,16 @@ const ReceiveScreen = ({ route }: Props) => {
                       : "Invoice | Valid for 1 day"}
                   </Text>
                 </View>
-                <View style={styles.shareInvoiceContainer}>
-                  <TouchableOpacity
-                    {...testProps(LL.ReceiveScreen.shareInvoice())}
-                    onPress={handleShare}
-                  >
-                    <Text {...testProps("Share Invoice")} color={colors.grey2}>
-                      <Icon color={colors.grey2} name="share-outline" />
-                      <Text> </Text>
-                      {LL.ReceiveScreen.shareInvoice()}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+                <TouchableOpacity
+                  {...testProps(LL.ReceiveScreen.shareInvoice())}
+                  onPress={handleShare}
+                  style={styles.shareInvoiceContainer}
+                >
+                  <Icon color={colors.grey2} name="share-outline" />
+                  <Text {...testProps("Share Invoice")} color={colors.grey2}>
+                    {` ${LL.ReceiveScreen.shareInvoice()}`}
+                  </Text>
+                </TouchableOpacity>
               </>
             )}
         </View>
@@ -496,13 +492,19 @@ const useStyles = makeStyles(({ colors }) => ({
     minHeight: 20,
   },
   copyInvoiceContainer: {
-    flex: 2,
-    marginLeft: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  invoiceDetails: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
   shareInvoiceContainer: {
-    flex: 2,
-    alignItems: "flex-end",
-    marginRight: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   onchainCharges: { marginTop: 10, alignItems: "center" },
   warning: {

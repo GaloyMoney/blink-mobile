@@ -381,7 +381,7 @@ export const HomeScreen: React.FC = () => {
                     subtitle
                     isOnHomeScreen={true}
                     isFirst={index === 0}
-                    isLast={index === 4}
+                    isLast={index === transactions.length - 1}
                   />
                 )
                 // eslint-disable-next-line no-else-return
@@ -393,7 +393,7 @@ export const HomeScreen: React.FC = () => {
                     subtitle
                     isOnHomeScreen={true}
                     isFirst={index === 0}
-                    isLast={index === 4}
+                    isLast={index === transactions.length - 1}
                   />
                 )
               }

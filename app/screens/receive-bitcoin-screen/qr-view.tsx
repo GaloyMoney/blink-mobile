@@ -82,6 +82,7 @@ export const QRView: React.FC<Props> = ({
   //   console.log("getFullUri", getFullUri({ uppercase: true }))
   //   console.log("isPayCode", isPayCode)
   // }
+  const { width } = useWindowDimensions()
   const {
     theme: { colors },
   } = useTheme()
@@ -139,12 +140,7 @@ export const QRView: React.FC<Props> = ({
     }
 
     const getQrSize = () => {
-      if (Platform.OS === "android") {
-        if (scale > 3) {
-          return 195
-        }
-      }
-      return size
+      return width - 80
     }
 
     if (displayingQR && getFullUri) {
@@ -247,13 +243,14 @@ const useStyles = makeStyles(({ colors }) => ({
   container: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: colors._white,
+    backgroundColor: colors.grey5,
     width: "100%",
     height: undefined,
     borderRadius: 40,
     aspectRatio: 1,
     alignSelf: "center",
     padding: 16,
+    overflow: "hidden",
   },
   containerSuccess: {
     backgroundColor: colors.white,

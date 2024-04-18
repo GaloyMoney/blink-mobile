@@ -9,9 +9,25 @@
 // It's easier just to leave it here.
 import "react-native-get-random-values"
 import { TextEncoder, TextDecoder } from "@sinonjs/text-encoding"
-import { AppRegistry, LogBox } from "react-native"
+import { AppRegistry, LogBox, TextInput, Text } from "react-native"
 import { App } from "./app/app.tsx"
 import * as React from "react"
+
+// Override Text scaling
+if (Text.defaultProps) {
+  Text.defaultProps.allowFontScaling = false
+} else {
+  Text.defaultProps = {}
+  Text.defaultProps.allowFontScaling = false
+}
+
+// Override Text scaling in input fields
+if (TextInput.defaultProps) {
+  TextInput.defaultProps.allowFontScaling = false
+} else {
+  TextInput.defaultProps = {}
+  TextInput.defaultProps.allowFontScaling = false
+}
 
 class MessageChannel {
   constructor() {
