@@ -16,6 +16,7 @@ import { useTheme } from "@rneui/themed"
 
 import { useIsAuthed } from "../graphql/is-authed-context"
 import { RootStackParamList } from "./stack-param-lists"
+import { Action, useActionsContext } from "@app/components/actions"
 
 export type AuthenticationContextType = {
   isAppLocked: boolean
@@ -32,6 +33,22 @@ export const AuthenticationContextProvider = AuthenticationContext.Provider
 
 export const useAuthenticationContext = () => React.useContext(AuthenticationContext)
 
+const processLinkForAction = (url: string): Action | null => {
+  // grab action query param
+  const urlObj = new URL(url)
+  const action = urlObj.searchParams.get("action")
+
+  switch ((action || "").toLocaleLowerCase()) {
+    case "set-ln-address":
+      return Action.SetLnAddress
+    case "set-default-wallet":
+      return Action.SetDefaultWallet
+    case "upgrade-account":
+      return Action.UpgradeAccount
+  }
+  return null
+}
+
 export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
@@ -40,6 +57,7 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
   const [urlAfterUnlockAndAuth, setUrlAfterUnlockAndAuth] = React.useState<string | null>(
     null,
   )
+  const { setActiveAction } = useActionsContext()
 
   useEffect(() => {
     if (isAuthed && !isAppLocked && urlAfterUnlockAndAuth) {
@@ -117,7 +135,10 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
     subscribe: (listener) => {
       const onReceiveURL = ({ url }: { url: string }) => {
         if (!isAppLocked && isAuthed) {
-          // Trigger actions for the incoming link
+          const maybeAction = processLinkForAction(url)
+          if (maybeAction) {
+            setActiveAction(maybeAction)
+          }
           listener(url)
         } else {
           setUrlAfterUnlockAndAuth(url)

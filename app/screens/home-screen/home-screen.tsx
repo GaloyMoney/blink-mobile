@@ -414,7 +414,10 @@ export const HomeScreen: React.FC = () => {
         <AppUpdate />
         <SetDefaultAccountModal
           isVisible={setDefaultAccountModalVisible}
-          toggleModal={toggleSetDefaultAccountModal}
+          toggleModal={() => {
+            toggleSetDefaultAccountModal()
+            navigation.navigate("receiveBitcoin")
+          }}
         />
       </ScrollView>
     </Screen>

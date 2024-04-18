@@ -51,10 +51,9 @@ export const SetDefaultAccountModal = ({
   const [usdLoading, setUsdLoading] = React.useState(false)
 
   const [accountUpdateDefaultWallet] = useAccountUpdateDefaultWalletIdMutation()
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Primary">>()
 
   const { data } = useSetDefaultAccountModalQuery({
-    fetchPolicy: "cache-only",
+    fetchPolicy: "cache-first",
   })
 
   const client = useApolloClient()
@@ -83,7 +82,6 @@ export const SetDefaultAccountModal = ({
 
     setHasPromptedSetDefaultAccount(client)
     toggleModal()
-    navigation.navigate("receiveBitcoin")
   }
 
   const onPressBtcAccount = async () => {
@@ -107,7 +105,6 @@ export const SetDefaultAccountModal = ({
 
     setHasPromptedSetDefaultAccount(client)
     toggleModal()
-    navigation.navigate("receiveBitcoin")
   }
 
   return (
