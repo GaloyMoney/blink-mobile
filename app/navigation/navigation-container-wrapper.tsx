@@ -41,8 +41,8 @@ const processLinkForAction = (url: string): Action | null => {
   switch ((action || "").toLocaleLowerCase()) {
     case "set-ln-address":
       return Action.SetLnAddress
-    case "set-default-wallet":
-      return Action.SetDefaultWallet
+    case "set-default-account":
+      return Action.SetDefaultAccount
     case "upgrade-account":
       return Action.UpgradeAccount
   }
@@ -119,8 +119,18 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
         receiveBitcoin: "receive",
         conversionDetails: "convert",
         scanningQRCode: "scan-qr",
+        chatbot: "chat",
+        totpRegistrationInitiate: "settings/2fa",
+        currency: "settings/display-currency",
+        defaultWallet: "settings/default-account",
+        language: "settings/language",
+        theme: "settings/theme",
+        security: "settings/security",
+        accountScreen: "settings/account",
+        transactionLimitsScreen: "settings/tx-limits",
+        notificationSettingsScreen: "settings/notifications",
+        emailRegistrationInitiate: "settings/email",
         settings: "settings",
-        emailRegistrationInitiate: "email/register",
         transactionDetail: {
           path: "transaction/:txid",
         },

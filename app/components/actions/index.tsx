@@ -5,7 +5,7 @@ import { UpgradeAccountModal } from "../upgrade-account-modal"
 
 export const Action = {
   SetLnAddress: "SetLnAddress",
-  SetDefaultWallet: "SetDefaultWallet",
+  SetDefaultAccount: "SetDefaultAccount",
   UpgradeAccount: "UpgradeAccount",
 } as const
 
@@ -41,7 +41,7 @@ export const ActionModals: React.FC = () => {
         toggleModal={closeModal}
       />
       <SetDefaultAccountModal
-        isVisible={activeAction === Action.SetDefaultWallet}
+        isVisible={activeAction === Action.SetDefaultAccount}
         toggleModal={closeModal}
       />
       <UpgradeAccountModal
