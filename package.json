@@ -141,7 +141,7 @@
     "react-native-vision-camera": "^3.9.2",
     "react-native-walkthrough-tooltip": "^1.6.0",
     "react-native-webln": "^0.1.11",
-    "react-native-webview": "^13.8.5",
+    "react-native-webview": "^13.8.6",
     "rn-qr-generator": "^1.4.0",
     "subscriptions-transport-ws": "^0.11.0",
     "types-ramda": "0.29.10",
