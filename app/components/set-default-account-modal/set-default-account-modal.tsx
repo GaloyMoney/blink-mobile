@@ -12,10 +12,7 @@ import {
 } from "@app/graphql/generated"
 import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { useNavigation } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 
 import { GaloyCurrencyBubble } from "../atomic/galoy-currency-bubble"
@@ -51,7 +48,6 @@ export const SetDefaultAccountModal = ({
   const [usdLoading, setUsdLoading] = React.useState(false)
 
   const [accountUpdateDefaultWallet] = useAccountUpdateDefaultWalletIdMutation()
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Primary">>()
 
   const { data } = useSetDefaultAccountModalQuery({
     fetchPolicy: "cache-only",
@@ -83,7 +79,6 @@ export const SetDefaultAccountModal = ({
 
     setHasPromptedSetDefaultAccount(client)
     toggleModal()
-    navigation.navigate("receiveBitcoin")
   }
 
   const onPressBtcAccount = async () => {
@@ -107,7 +102,6 @@ export const SetDefaultAccountModal = ({
 
     setHasPromptedSetDefaultAccount(client)
     toggleModal()
-    navigation.navigate("receiveBitcoin")
   }
 
   return (
