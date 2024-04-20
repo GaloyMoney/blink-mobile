@@ -19301,7 +19301,7 @@ prop-types@15.7.2:
     object-assign "^4.1.1"
     react-is "^16.8.1"
 
-prop-types@^15.0.0, prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.0, prop-types@^15.8.1:
+prop-types@^15.0.0, prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.0, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -19680,11 +19680,6 @@ react-error-boundary@^3.1.0:
   integrity sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==
   dependencies:
     "@babel/runtime" "^7.12.5"
-
-react-fast-compare@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
-  integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
 
 react-fast-compare@^3.2.2:
   version "3.2.2"
@@ -20091,14 +20086,6 @@ react-native-vision-camera@^3.9.2:
   version "3.9.2"
   resolved "https://registry.npmjs.org/react-native-vision-camera/-/react-native-vision-camera-3.9.2.tgz#d6656a4c0af929916d5e6b57af5adfe94ff8c65a"
   integrity sha512-watHRWbeH7CBYq/5sPj2fpZj87V8J5nGdmYO61aYsDLuJ2Pkij7anAzBf8B8oZiyoSUuYpAzX4lIIi+LjWVedA==
-
-react-native-walkthrough-tooltip@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.npmjs.org/react-native-walkthrough-tooltip/-/react-native-walkthrough-tooltip-1.6.0.tgz#a9b9196973d2fdef8f36bbcae57c93069cd9fb3e"
-  integrity sha512-8DHpcqsF+2VULYnKJCSZtllhlFUFiZcWCwOlw5RLkS451ElxPWJn9ShOFVZtkPMcwQAirq3SovumVM7Y/li0Fw==
-  dependencies:
-    prop-types "^15.6.1"
-    react-fast-compare "^2.0.4"
 
 react-native-webln@^0.1.11:
   version "0.1.11"
