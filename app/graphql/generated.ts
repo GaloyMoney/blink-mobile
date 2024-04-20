@@ -1058,6 +1058,7 @@ export type Mutation = {
   readonly onChainUsdPaymentSendAsBtcDenominated: PaymentSendPayload;
   readonly onboardingFlowStart: OnboardingFlowStartResult;
   readonly quizClaim: QuizClaimPayload;
+  readonly statefulNotificationAcknowledge: StatefulNotificationAcknowledgePayload;
   readonly supportChatMessageAdd: SupportChatMessageAddPayload;
   /** @deprecated will be moved to AccountContact */
   readonly userContactUpdateAlias: UserContactUpdateAliasPayload;
@@ -1281,6 +1282,11 @@ export type MutationOnboardingFlowStartArgs = {
 
 export type MutationQuizClaimArgs = {
   input: QuizClaimInput;
+};
+
+
+export type MutationStatefulNotificationAcknowledgeArgs = {
+  input: StatefulNotificationAcknowledgeInput;
 };
 
 
@@ -1803,6 +1809,44 @@ export type SettlementViaOnChain = {
   readonly vout?: Maybe<Scalars['Int']['output']>;
 };
 
+export type StatefulNotification = {
+  readonly __typename: 'StatefulNotification';
+  readonly acknowledgedAt?: Maybe<Scalars['Timestamp']['output']>;
+  readonly body: Scalars['String']['output'];
+  readonly createdAt: Scalars['Timestamp']['output'];
+  readonly deepLink?: Maybe<Scalars['String']['output']>;
+  readonly id: Scalars['ID']['output'];
+  readonly title: Scalars['String']['output'];
+};
+
+export type StatefulNotificationAcknowledgeInput = {
+  readonly notificationId: Scalars['ID']['input'];
+};
+
+export type StatefulNotificationAcknowledgePayload = {
+  readonly __typename: 'StatefulNotificationAcknowledgePayload';
+  readonly notification: StatefulNotification;
+};
+
+export type StatefulNotificationConnection = {
+  readonly __typename: 'StatefulNotificationConnection';
+  /** A list of edges. */
+  readonly edges: ReadonlyArray<StatefulNotificationEdge>;
+  /** A list of nodes. */
+  readonly nodes: ReadonlyArray<StatefulNotification>;
+  /** Information to aid in pagination. */
+  readonly pageInfo: PageInfo;
+};
+
+/** An edge in a connection. */
+export type StatefulNotificationEdge = {
+  readonly __typename: 'StatefulNotificationEdge';
+  /** A cursor for use in pagination */
+  readonly cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  readonly node: StatefulNotification;
+};
+
 export type Subscription = {
   readonly __typename: 'Subscription';
   /** @deprecated Deprecated in favor of lnInvoicePaymentStatusByPaymentRequest */
@@ -2055,6 +2099,7 @@ export type User = {
   readonly language: Scalars['Language']['output'];
   /** Phone number with international calling code. */
   readonly phone?: Maybe<Scalars['Phone']['output']>;
+  readonly statefulNotifications: StatefulNotificationConnection;
   readonly supportChat: ReadonlyArray<SupportMessage>;
   /** Whether TOTP is enabled for this user. */
   readonly totpEnabled: Scalars['Boolean']['output'];
@@ -2068,6 +2113,12 @@ export type User = {
 
 export type UserContactByUsernameArgs = {
   username: Scalars['Username']['input'];
+};
+
+
+export type UserStatefulNotificationsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
 };
 
 export type UserContact = {
@@ -7808,6 +7859,11 @@ export type ResolversTypes = {
   SettlementViaOnChain: ResolverTypeWrapper<SettlementViaOnChain>;
   SignedAmount: ResolverTypeWrapper<Scalars['SignedAmount']['output']>;
   SignedDisplayMajorAmount: ResolverTypeWrapper<Scalars['SignedDisplayMajorAmount']['output']>;
+  StatefulNotification: ResolverTypeWrapper<StatefulNotification>;
+  StatefulNotificationAcknowledgeInput: StatefulNotificationAcknowledgeInput;
+  StatefulNotificationAcknowledgePayload: ResolverTypeWrapper<StatefulNotificationAcknowledgePayload>;
+  StatefulNotificationConnection: ResolverTypeWrapper<StatefulNotificationConnection>;
+  StatefulNotificationEdge: ResolverTypeWrapper<StatefulNotificationEdge>;
   Subscription: ResolverTypeWrapper<{}>;
   SuccessPayload: ResolverTypeWrapper<SuccessPayload>;
   SupportChatMessageAddInput: SupportChatMessageAddInput;
@@ -8027,6 +8083,11 @@ export type ResolversParentTypes = {
   SettlementViaOnChain: SettlementViaOnChain;
   SignedAmount: Scalars['SignedAmount']['output'];
   SignedDisplayMajorAmount: Scalars['SignedDisplayMajorAmount']['output'];
+  StatefulNotification: StatefulNotification;
+  StatefulNotificationAcknowledgeInput: StatefulNotificationAcknowledgeInput;
+  StatefulNotificationAcknowledgePayload: StatefulNotificationAcknowledgePayload;
+  StatefulNotificationConnection: StatefulNotificationConnection;
+  StatefulNotificationEdge: StatefulNotificationEdge;
   Subscription: {};
   SuccessPayload: SuccessPayload;
   SupportChatMessageAddInput: SupportChatMessageAddInput;
@@ -8608,6 +8669,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   onChainUsdPaymentSendAsBtcDenominated?: Resolver<ResolversTypes['PaymentSendPayload'], ParentType, ContextType, RequireFields<MutationOnChainUsdPaymentSendAsBtcDenominatedArgs, 'input'>>;
   onboardingFlowStart?: Resolver<ResolversTypes['OnboardingFlowStartResult'], ParentType, ContextType, RequireFields<MutationOnboardingFlowStartArgs, 'input'>>;
   quizClaim?: Resolver<ResolversTypes['QuizClaimPayload'], ParentType, ContextType, RequireFields<MutationQuizClaimArgs, 'input'>>;
+  statefulNotificationAcknowledge?: Resolver<ResolversTypes['StatefulNotificationAcknowledgePayload'], ParentType, ContextType, RequireFields<MutationStatefulNotificationAcknowledgeArgs, 'input'>>;
   supportChatMessageAdd?: Resolver<ResolversTypes['SupportChatMessageAddPayload'], ParentType, ContextType, RequireFields<MutationSupportChatMessageAddArgs, 'input'>>;
   userContactUpdateAlias?: Resolver<ResolversTypes['UserContactUpdateAliasPayload'], ParentType, ContextType, RequireFields<MutationUserContactUpdateAliasArgs, 'input'>>;
   userEmailDelete?: Resolver<ResolversTypes['UserEmailDeletePayload'], ParentType, ContextType>;
@@ -8902,6 +8964,34 @@ export interface SignedDisplayMajorAmountScalarConfig extends GraphQLScalarTypeC
   name: 'SignedDisplayMajorAmount';
 }
 
+export type StatefulNotificationResolvers<ContextType = any, ParentType extends ResolversParentTypes['StatefulNotification'] = ResolversParentTypes['StatefulNotification']> = {
+  acknowledgedAt?: Resolver<Maybe<ResolversTypes['Timestamp']>, ParentType, ContextType>;
+  body?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  deepLink?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type StatefulNotificationAcknowledgePayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['StatefulNotificationAcknowledgePayload'] = ResolversParentTypes['StatefulNotificationAcknowledgePayload']> = {
+  notification?: Resolver<ResolversTypes['StatefulNotification'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type StatefulNotificationConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['StatefulNotificationConnection'] = ResolversParentTypes['StatefulNotificationConnection']> = {
+  edges?: Resolver<ReadonlyArray<ResolversTypes['StatefulNotificationEdge']>, ParentType, ContextType>;
+  nodes?: Resolver<ReadonlyArray<ResolversTypes['StatefulNotification']>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type StatefulNotificationEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['StatefulNotificationEdge'] = ResolversParentTypes['StatefulNotificationEdge']> = {
+  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  node?: Resolver<ResolversTypes['StatefulNotification'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
   lnInvoicePaymentStatus?: SubscriptionResolver<ResolversTypes['LnInvoicePaymentStatusPayload'], "lnInvoicePaymentStatus", ParentType, ContextType, RequireFields<SubscriptionLnInvoicePaymentStatusArgs, 'input'>>;
   lnInvoicePaymentStatusByHash?: SubscriptionResolver<ResolversTypes['LnInvoicePaymentStatusPayload'], "lnInvoicePaymentStatusByHash", ParentType, ContextType, RequireFields<SubscriptionLnInvoicePaymentStatusByHashArgs, 'input'>>;
@@ -9017,6 +9107,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   language?: Resolver<ResolversTypes['Language'], ParentType, ContextType>;
   phone?: Resolver<Maybe<ResolversTypes['Phone']>, ParentType, ContextType>;
+  statefulNotifications?: Resolver<ResolversTypes['StatefulNotificationConnection'], ParentType, ContextType, RequireFields<UserStatefulNotificationsArgs, 'first'>>;
   supportChat?: Resolver<ReadonlyArray<ResolversTypes['SupportMessage']>, ParentType, ContextType>;
   totpEnabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   username?: Resolver<Maybe<ResolversTypes['Username']>, ParentType, ContextType>;
@@ -9257,6 +9348,10 @@ export type Resolvers<ContextType = any> = {
   SettlementViaOnChain?: SettlementViaOnChainResolvers<ContextType>;
   SignedAmount?: GraphQLScalarType;
   SignedDisplayMajorAmount?: GraphQLScalarType;
+  StatefulNotification?: StatefulNotificationResolvers<ContextType>;
+  StatefulNotificationAcknowledgePayload?: StatefulNotificationAcknowledgePayloadResolvers<ContextType>;
+  StatefulNotificationConnection?: StatefulNotificationConnectionResolvers<ContextType>;
+  StatefulNotificationEdge?: StatefulNotificationEdgeResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
   SuccessPayload?: SuccessPayloadResolvers<ContextType>;
   SupportChatMessageAddPayload?: SupportChatMessageAddPayloadResolvers<ContextType>;
