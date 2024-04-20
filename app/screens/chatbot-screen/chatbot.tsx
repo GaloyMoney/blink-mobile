@@ -197,7 +197,7 @@ export const ChatBotScreen = () => {
   }
 
   return (
-    <Screen preset="fixed">
+    <Screen preset="fixed" keyboardOffset="navigationHeader">
       <FlatList
         ref={flatListRef}
         data={supportChatMaybeInput}
