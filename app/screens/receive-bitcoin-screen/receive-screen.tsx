@@ -11,6 +11,7 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import nfcManager from "react-native-nfc-manager"
 import Sound from "react-native-sound"
 import { useAppConfig } from "@app/hooks"
+import moment from "moment"
 
 // components
 import { Screen } from "@app/components/screen"
@@ -322,10 +323,18 @@ const ReceiveScreen = ({ route }: Props) => {
                       ? "Cash On-chain Address"
                       : request.info?.data?.invoiceType === Invoice.Lightning &&
                         request.receivingWalletDescriptor.currency === WalletCurrency.Btc
-                      ? "Bitcoin Invoice | Valid for 7 days"
+                      ? request.state === PaymentRequestState.Expired
+                        ? LL.ReceiveScreen.invoiceHasExpired()
+                        : `Bitcoin Invoice | Valid for ${moment(
+                            request.info.data.expiresAt,
+                          ).fromNow(true)}`
                       : request.info?.data?.invoiceType === Invoice.Lightning &&
                         request.receivingWalletDescriptor.currency === WalletCurrency.Usd
-                      ? "Cash Invoice | Valid for 5 minutes"
+                      ? request.state === PaymentRequestState.Expired
+                        ? LL.ReceiveScreen.invoiceHasExpired()
+                        : `Cash Invoice | Valid for ${moment(
+                            request.info.data.expiresAt,
+                          ).fromNow(true)}`
                       : request.info?.data?.invoiceType === Invoice.PayCode
                       ? "Lightning Address"
                       : "Invoice | Valid for 1 day"}
