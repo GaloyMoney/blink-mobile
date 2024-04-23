@@ -98,6 +98,7 @@ export type RootStackParamList = {
   webView: { url: string; initialTitle?: string }
   fullOnboardingFlow: undefined
   chatbot: undefined
+  notificationHistory: undefined
 }
 
 export type PeopleStackParamList = {

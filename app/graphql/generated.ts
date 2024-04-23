@@ -2616,6 +2616,20 @@ export type BusinessMapMarkersQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type BusinessMapMarkersQuery = { readonly __typename: 'Query', readonly businessMapMarkers: ReadonlyArray<{ readonly __typename: 'MapMarker', readonly username: string, readonly mapInfo: { readonly __typename: 'MapInfo', readonly title: string, readonly coordinates: { readonly __typename: 'Coordinates', readonly longitude: number, readonly latitude: number } } }> };
 
+export type StatefulNotificationsQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type StatefulNotificationsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly statefulNotifications: { readonly __typename: 'StatefulNotificationConnection', readonly nodes: ReadonlyArray<{ readonly __typename: 'StatefulNotification', readonly id: string, readonly title: string, readonly body: string, readonly deepLink?: string | null, readonly createdAt: number, readonly acknowledgedAt?: number | null }>, readonly pageInfo: { readonly __typename: 'PageInfo', readonly endCursor?: string | null, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null } } } | null };
+
+export type StatefulNotificationAcknowledgeMutationVariables = Exact<{
+  input: StatefulNotificationAcknowledgeInput;
+}>;
+
+
+export type StatefulNotificationAcknowledgeMutation = { readonly __typename: 'Mutation', readonly statefulNotificationAcknowledge: { readonly __typename: 'StatefulNotificationAcknowledgePayload', readonly notification: { readonly __typename: 'StatefulNotification', readonly acknowledgedAt?: number | null } } };
+
 export type CirclesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -4791,6 +4805,96 @@ export type BusinessMapMarkersQueryHookResult = ReturnType<typeof useBusinessMap
 export type BusinessMapMarkersLazyQueryHookResult = ReturnType<typeof useBusinessMapMarkersLazyQuery>;
 export type BusinessMapMarkersSuspenseQueryHookResult = ReturnType<typeof useBusinessMapMarkersSuspenseQuery>;
 export type BusinessMapMarkersQueryResult = Apollo.QueryResult<BusinessMapMarkersQuery, BusinessMapMarkersQueryVariables>;
+export const StatefulNotificationsDocument = gql`
+    query StatefulNotifications($after: String) {
+  me {
+    statefulNotifications(first: 10, after: $after) {
+      nodes {
+        id
+        title
+        body
+        deepLink
+        createdAt
+        acknowledgedAt
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useStatefulNotificationsQuery__
+ *
+ * To run a query within a React component, call `useStatefulNotificationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useStatefulNotificationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useStatefulNotificationsQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useStatefulNotificationsQuery(baseOptions?: Apollo.QueryHookOptions<StatefulNotificationsQuery, StatefulNotificationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<StatefulNotificationsQuery, StatefulNotificationsQueryVariables>(StatefulNotificationsDocument, options);
+      }
+export function useStatefulNotificationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<StatefulNotificationsQuery, StatefulNotificationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<StatefulNotificationsQuery, StatefulNotificationsQueryVariables>(StatefulNotificationsDocument, options);
+        }
+export function useStatefulNotificationsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<StatefulNotificationsQuery, StatefulNotificationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<StatefulNotificationsQuery, StatefulNotificationsQueryVariables>(StatefulNotificationsDocument, options);
+        }
+export type StatefulNotificationsQueryHookResult = ReturnType<typeof useStatefulNotificationsQuery>;
+export type StatefulNotificationsLazyQueryHookResult = ReturnType<typeof useStatefulNotificationsLazyQuery>;
+export type StatefulNotificationsSuspenseQueryHookResult = ReturnType<typeof useStatefulNotificationsSuspenseQuery>;
+export type StatefulNotificationsQueryResult = Apollo.QueryResult<StatefulNotificationsQuery, StatefulNotificationsQueryVariables>;
+export const StatefulNotificationAcknowledgeDocument = gql`
+    mutation StatefulNotificationAcknowledge($input: StatefulNotificationAcknowledgeInput!) {
+  statefulNotificationAcknowledge(input: $input) {
+    notification {
+      acknowledgedAt
+    }
+  }
+}
+    `;
+export type StatefulNotificationAcknowledgeMutationFn = Apollo.MutationFunction<StatefulNotificationAcknowledgeMutation, StatefulNotificationAcknowledgeMutationVariables>;
+
+/**
+ * __useStatefulNotificationAcknowledgeMutation__
+ *
+ * To run a mutation, you first call `useStatefulNotificationAcknowledgeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useStatefulNotificationAcknowledgeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [statefulNotificationAcknowledgeMutation, { data, loading, error }] = useStatefulNotificationAcknowledgeMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useStatefulNotificationAcknowledgeMutation(baseOptions?: Apollo.MutationHookOptions<StatefulNotificationAcknowledgeMutation, StatefulNotificationAcknowledgeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<StatefulNotificationAcknowledgeMutation, StatefulNotificationAcknowledgeMutationVariables>(StatefulNotificationAcknowledgeDocument, options);
+      }
+export type StatefulNotificationAcknowledgeMutationHookResult = ReturnType<typeof useStatefulNotificationAcknowledgeMutation>;
+export type StatefulNotificationAcknowledgeMutationResult = Apollo.MutationResult<StatefulNotificationAcknowledgeMutation>;
+export type StatefulNotificationAcknowledgeMutationOptions = Apollo.BaseMutationOptions<StatefulNotificationAcknowledgeMutation, StatefulNotificationAcknowledgeMutationVariables>;
 export const CirclesDocument = gql`
     query Circles {
   me {

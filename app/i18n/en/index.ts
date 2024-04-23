@@ -2893,6 +2893,10 @@ const en: BaseTranslation = {
     PROCESSING: "Processing",
     REVIEW: "Review",
   },
+  NotificationHistory: {
+    title: "Notifications",
+    noNotifications: "You don't have any notifications right now"
+  }
 }
 
 export default en

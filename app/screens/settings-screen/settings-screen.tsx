@@ -1,11 +1,17 @@
 import { ScrollView } from "react-native-gesture-handler"
+import { useEffect } from "react"
+import { TouchableOpacity } from "react-native"
+
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 
 import { gql } from "@apollo/client"
 import { Screen } from "@app/components/screen"
 import { VersionComponent } from "@app/components/version"
 import { AccountLevel, useLevel } from "@app/graphql/level-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { makeStyles } from "@rneui/themed"
+import { Icon, makeStyles } from "@rneui/themed"
 
 import { AccountBanner } from "./account/banner"
 import { EmailSetting } from "./account/settings/email"
@@ -79,6 +85,17 @@ export const SettingsScreen: React.FC = () => {
     community: [NeedHelpSetting, JoinCommunitySetting],
   }
 
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={() => navigation.navigate("notificationHistory")}>
+          <Icon style={styles.headerRight} name="notifications" type="ionicon" />
+        </TouchableOpacity>
+      ),
+    })
+  })
+
   return (
     <Screen keyboardShouldPersistTaps="handled">
       <ScrollView contentContainerStyle={styles.outer}>
@@ -115,5 +132,8 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     flexDirection: "column",
     rowGap: 18,
+  },
+  headerRight: {
+    marginRight: 12,
   },
 }))
