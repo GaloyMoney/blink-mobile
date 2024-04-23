@@ -62,21 +62,4 @@ const useStyles = makeStyles(({ colors }) => ({
   titleContainer: {
     marginBottom: 12,
   },
-  checkBox: {
-    paddingLeft: 0,
-    backgroundColor: "transparent",
-  },
-  checkBoxTouchable: {
-    marginTop: 12,
-  },
-  checkBoxContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: colors.grey5,
-    borderRadius: 8,
-  },
-  checkBoxText: {
-    flex: 1,
-  },
 }))
