@@ -90,6 +90,7 @@ export type Scalars = {
 export type Account = {
   readonly btcWallet?: Maybe<BtcWallet>;
   readonly callbackEndpoints: ReadonlyArray<CallbackEndpoint>;
+  readonly callbackPortalUrl: Scalars['String']['output'];
   readonly csvTransactions: Scalars['String']['output'];
   readonly defaultWallet: PublicWallet;
   /** @deprecated Shifting property to 'defaultWallet.id' */
@@ -403,6 +404,7 @@ export type ConsumerAccount = Account & {
   readonly __typename: 'ConsumerAccount';
   readonly btcWallet?: Maybe<BtcWallet>;
   readonly callbackEndpoints: ReadonlyArray<CallbackEndpoint>;
+  readonly callbackPortalUrl: Scalars['String']['output'];
   /** return CSV stream, base64 encoded, of the list of transactions in the wallet */
   readonly csvTransactions: Scalars['String']['output'];
   readonly defaultWallet: PublicWallet;
@@ -8146,6 +8148,7 @@ export type AccountResolvers<ContextType = any, ParentType extends ResolversPare
   __resolveType: TypeResolveFn<'ConsumerAccount', ParentType, ContextType>;
   btcWallet?: Resolver<Maybe<ResolversTypes['BTCWallet']>, ParentType, ContextType>;
   callbackEndpoints?: Resolver<ReadonlyArray<ResolversTypes['CallbackEndpoint']>, ParentType, ContextType>;
+  callbackPortalUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   csvTransactions?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<AccountCsvTransactionsArgs, 'walletIds'>>;
   defaultWallet?: Resolver<ResolversTypes['PublicWallet'], ParentType, ContextType>;
   defaultWalletId?: Resolver<ResolversTypes['WalletId'], ParentType, ContextType>;
@@ -8304,6 +8307,7 @@ export type CentAmountPayloadResolvers<ContextType = any, ParentType extends Res
 export type ConsumerAccountResolvers<ContextType = any, ParentType extends ResolversParentTypes['ConsumerAccount'] = ResolversParentTypes['ConsumerAccount']> = {
   btcWallet?: Resolver<Maybe<ResolversTypes['BTCWallet']>, ParentType, ContextType>;
   callbackEndpoints?: Resolver<ReadonlyArray<ResolversTypes['CallbackEndpoint']>, ParentType, ContextType>;
+  callbackPortalUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   csvTransactions?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<ConsumerAccountCsvTransactionsArgs, 'walletIds'>>;
   defaultWallet?: Resolver<ResolversTypes['PublicWallet'], ParentType, ContextType>;
   defaultWalletId?: Resolver<ResolversTypes['WalletId'], ParentType, ContextType>;
