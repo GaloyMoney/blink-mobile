@@ -1,21 +1,50 @@
 import React from "react"
+import { View, Text } from "react-native"
 
-import { MockConsumer } from "@app/store/mock-consumer"
-import { PersistentStateProvider } from "@app/store/persistent-state"
+import {
+  PersistentStateProvider,
+  usePersistentStateContext,
+} from "@app/store/persistent-state"
+import * as StateMigrations from "@app/store/persistent-state/state-migrations"
 import KeyStoreWrapper from "@app/utils/storage/secureStorage"
 import { act, render } from "@testing-library/react-native"
 
+const MockConsumer: React.FC = () => {
+  const { persistentState } = usePersistentStateContext()
+  const { galoyAuthToken, schemaVersion, galoyInstance } = persistentState
+
+  return (
+    <View>
+      <Text>{schemaVersion}</Text>
+      <Text>{galoyAuthToken}</Text>
+      <Text>{galoyInstance.id}</Text>
+    </View>
+  )
+}
+
 describe("PersistentStateProvider", () => {
-  it("loads and saves persistent state correctly", async () => {
+  it("loads persistent state from storage and secure storage", async () => {
     const getSecureStorageStateSpy = jest.spyOn(KeyStoreWrapper, "getSecureStorageState")
-    const setSecureStorageStateSpy = jest.spyOn(KeyStoreWrapper, "setSecureStorageState")
-    render(
+    const migrateAndGetLocalStorageStateSpy = jest.spyOn(
+      StateMigrations,
+      "migrateAndGetLocalStorageState",
+    )
+
+    getSecureStorageStateSpy.mockResolvedValue({ galoyAuthToken: "myToken" })
+    migrateAndGetLocalStorageStateSpy.mockResolvedValue({
+      schemaVersion: 7,
+      galoyInstance: { id: "Main" },
+    })
+
+    const { getByText } = render(
       <PersistentStateProvider>
         <MockConsumer />
       </PersistentStateProvider>,
     )
     await act(async () => {})
-    expect(getSecureStorageStateSpy).toHaveBeenCalled()
-    expect(setSecureStorageStateSpy).toHaveBeenCalled()
+
+    expect(getByText("7")).toBeTruthy()
+    expect(getByText("myToken")).toBeTruthy()
+    expect(getByText("Main")).toBeTruthy()
   })
 })
