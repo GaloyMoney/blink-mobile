@@ -20,8 +20,6 @@ class RNSecureKeyStoreMock {
   }
 
   set(k, value) {
-    console.log("set", k, value)
-
     this.store.set(k, value)
     return Promise.resolve(true)
   }
