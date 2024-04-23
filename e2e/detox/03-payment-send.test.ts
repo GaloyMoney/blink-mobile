@@ -28,7 +28,7 @@ describe("Send: Intraledger using Username - BTC Amount", () => {
     await waitFor(usernameInput).toBeVisible().withTimeout(timeout)
     await usernameInput.clearText()
     await usernameInput.typeText(BOB_USERNAME)
-    await tap(by.id(LL.common.next()))
+    await tap(by.id(LL.common.next()), 3)
 
     try {
       await tap(by.id("address-is-right"))
@@ -73,7 +73,7 @@ describe("Send: Intraledger using Username - USD Amount", () => {
     await waitFor(usernameInput).toBeVisible().withTimeout(timeout)
     await usernameInput.clearText()
     await usernameInput.typeText(BOB_USERNAME)
-    await tap(by.id(LL.common.next()))
+    await tap(by.id(LL.common.next()), 3)
 
     try {
       await tap(by.id("address-is-right"))

@@ -529,8 +529,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                     {hideAmount
                       ? "****"
                       : sendingWalletDescriptor.currency === WalletCurrency.Btc
-                      ? btcWalletText
-                      : usdWalletText}
+                        ? btcWalletText
+                        : usdWalletText}
                   </Text>
                 </View>
               </View>

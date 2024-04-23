@@ -21,6 +21,7 @@ export type Locales =
 	| 'hy'
 	| 'it'
 	| 'ja'
+	| 'lg'
 	| 'ms'
 	| 'nl'
 	| 'pt'
@@ -9007,6 +9008,26 @@ type RootTranslation = {
 			 */
 			details: string
 		}
+		mayChallenge: {
+			/**
+			 * M​a​y​ ​C​h​a​l​l​e​n​g​e​!
+			 */
+			title: string
+			/**
+			 * G​r​o​w​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​6​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​t​o​ ​w​i​n​ ​a​ ​s​e​t​ ​o​f​ ​P​i​z​z​a​s​ ​o​n​ ​y​o​u​r​ ​n​e​x​t​ ​B​i​t​c​o​i​n​ ​M​e​e​t​u​p​.
+			 */
+			description: string
+			/**
+			 * W​a​n​t​ ​a​ ​B​i​t​c​o​i​n​ ​P​i​z​z​a​ ​D​a​y​ ​P​a​r​t​y​?​
+		​
+		​E​x​p​a​n​d​ ​y​o​u​r​ ​I​n​n​e​r​ ​C​i​r​c​l​e​ ​b​y​ ​6​ ​f​o​r​ ​a​ ​s​h​o​t​ ​a​t​ ​w​i​n​n​i​n​g​ ​a​ ​s​e​t​ ​o​f​ ​p​i​z​z​a​s​ ​f​o​r​ ​y​o​u​r​ ​n​e​x​t​ ​B​i​t​c​o​i​n​ ​M​e​e​t​u​p​.​ ​T​h​e​ ​c​h​a​l​l​e​n​g​e​ ​w​r​a​p​s​ ​u​p​ ​o​n​ ​M​a​y​ ​1​5​t​h​.​
+		​
+		​S​h​a​r​e​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​o​n​ ​s​o​c​i​a​l​ ​w​i​t​h​ ​t​h​e​ ​h​a​s​h​t​a​g​ ​#​b​l​i​n​k​c​i​r​c​l​e​s​ ​t​o​ ​p​a​r​t​i​c​i​p​a​t​e​.​
+		​
+		​T​h​e​ ​p​r​i​z​e​ ​i​s​ ​$​1​5​0​ ​f​o​r​ ​p​i​z​z​a​s​.
+			 */
+			details: string
+		}
 	}
 	FullOnboarding: {
 		/**
@@ -17968,6 +17989,26 @@ export type TranslationFunctions = {
 		Reminder: your circles grow when you send a new Blink user their first sats.
 	
 		Share your circles on social with #blinkcircles to participate.
+			 */
+			details: () => LocalizedString
+		}
+		mayChallenge: {
+			/**
+			 * May Challenge!
+			 */
+			title: () => LocalizedString
+			/**
+			 * Grow your inner circle by 6 for a chance to win a set of Pizzas on your next Bitcoin Meetup.
+			 */
+			description: () => LocalizedString
+			/**
+			 * Want a Bitcoin Pizza Day Party?
+	
+		Expand your Inner Circle by 6 for a shot at winning a set of pizzas for your next Bitcoin Meetup. The challenge wraps up on May 15th.
+	
+		Share your circles on social with the hashtag #blinkcircles to participate.
+	
+		The prize is $150 for pizzas.
 			 */
 			details: () => LocalizedString
 		}

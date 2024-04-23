@@ -338,6 +338,20 @@ type Currency {
   symbol: String!
 }
 
+type CurrencyConversionEstimation {
+  """Amount in satoshis."""
+  btcSatAmount: SatAmount!
+  id: ID!
+
+  """
+  Unix timestamp (number of seconds elapsed since January 1, 1970 00:00:00 UTC)
+  """
+  timestamp: Timestamp!
+
+  """Amount in USD cents."""
+  usdCentAmount: CentAmount!
+}
+
 type DepositFeesInformation {
   minBankFee: String!
 
@@ -487,6 +501,9 @@ input IntraLedgerUsdPaymentSendInput {
 interface Invoice {
   createdAt: Timestamp!
 
+  """The unique external id set for the invoice."""
+  externalId: TxExternalId!
+
   """The payment hash of the lightning invoice."""
   paymentHash: PaymentHash!
 
@@ -541,6 +558,7 @@ input LnAddressPaymentSendInput {
 
 type LnInvoice implements Invoice {
   createdAt: Timestamp!
+  externalId: TxExternalId!
   paymentHash: PaymentHash!
   paymentRequest: LnPaymentRequest!
   paymentSecret: LnPaymentSecret!
@@ -634,6 +652,7 @@ type LnInvoicePaymentStatusPayload {
 
 type LnNoAmountInvoice implements Invoice {
   createdAt: Timestamp!
+  externalId: TxExternalId!
   paymentHash: PaymentHash!
   paymentRequest: LnPaymentRequest!
   paymentSecret: LnPaymentSecret!
@@ -965,6 +984,7 @@ type Mutation {
   onChainUsdPaymentSend(input: OnChainUsdPaymentSendInput!): PaymentSendPayload!
   onChainUsdPaymentSendAsBtcDenominated(input: OnChainUsdPaymentSendAsBtcDenominatedInput!): PaymentSendPayload!
   quizClaim(input: QuizClaimInput!): QuizClaimPayload!
+  supportChatMessageAdd(input: SupportChatMessageAddInput!): SupportChatMessageAddPayload!
   userContactUpdateAlias(input: UserContactUpdateAliasInput!): UserContactUpdateAliasPayload! @deprecated(reason: "will be moved to AccountContact")
   userEmailDelete: UserEmailDeletePayload!
   userEmailRegistrationInitiate(input: UserEmailRegistrationInitiateInput!): UserEmailRegistrationInitiatePayload!
@@ -1224,6 +1244,15 @@ type Query {
   authorization: Authorization!
   btcPriceList(range: PriceGraphRange!): [PricePoint]
   businessMapMarkers: [MapMarker!]!
+
+  """Returns an estimated conversion rate for the given amount and currency"""
+  currencyConversionEstimation(
+    """Amount in major unit."""
+    amount: Float!
+
+    """Currency of the amount to be converted."""
+    currency: DisplayCurrency!
+  ): CurrencyConversionEstimation!
   currencyList: [Currency!]!
   globals: Globals
   lnInvoicePaymentStatus(input: LnInvoicePaymentStatusInput!): LnInvoicePaymentStatusPayload! @deprecated(reason: "Deprecated in favor of lnInvoicePaymentStatusByPaymentRequest")
@@ -1235,7 +1264,9 @@ type Query {
   onChainUsdTxFee(address: OnChainAddress!, amount: CentAmount!, speed: PayoutSpeed! = FAST, walletId: WalletId!): OnChainUsdTxFee!
   onChainUsdTxFeeAsBtcDenominated(address: OnChainAddress!, amount: SatAmount!, speed: PayoutSpeed! = FAST, walletId: WalletId!): OnChainUsdTxFee!
 
-  """Returns 1 Sat and 1 Usd Cent price for the given currency"""
+  """
+  Returns 1 Sat and 1 Usd Cent price for the given currency in minor unit
+  """
   realtimePrice(currency: DisplayCurrency = "USD"): RealtimePrice!
   userDefaultWalletId(username: Username!): WalletId! @deprecated(reason: "will be migrated to AccountDefaultWalletId")
   usernameAvailable(username: Username!): Boolean
@@ -1260,7 +1291,8 @@ type QuizClaimPayload {
 
 type RealtimePrice {
   btcSatPrice: PriceOfOneSatInMinorUnit!
-  denominatorCurrency: DisplayCurrency!
+  denominatorCurrency: DisplayCurrency! @deprecated(reason: "Deprecated in favor of denominatorCurrencyDetails")
+  denominatorCurrencyDetails: Currency!
   id: ID!
 
   """
@@ -1347,6 +1379,27 @@ type SuccessPayload {
   success: Boolean
 }
 
+input SupportChatMessageAddInput {
+  message: String!
+}
+
+type SupportChatMessageAddPayload {
+  errors: [Error!]!
+  supportMessage: [SupportMessage]
+}
+
+type SupportMessage {
+  id: ID!
+  message: String!
+  role: SupportRole!
+  timestamp: Timestamp!
+}
+
+enum SupportRole {
+  ASSISTANT
+  USER
+}
+
 """
 Timestamp field, serialized as Unix time (the number of seconds since the Unix epoch)
 """
@@ -1371,6 +1424,7 @@ or with lightning but settled intraledger.
 type Transaction {
   createdAt: Timestamp!
   direction: TxDirection!
+  externalId: TxExternalId
   id: ID!
 
   """From which protocol the payment has been initiated."""
@@ -1417,6 +1471,11 @@ enum TxDirection {
   RECEIVE
   SEND
 }
+
+"""
+An external reference id that can be optionally added for transactions.
+"""
+scalar TxExternalId
 
 enum TxNotificationType {
   IntraLedgerPayment
@@ -1532,6 +1591,7 @@ type User {
 
   """Phone number with international calling code."""
   phone: Phone
+  supportChat: [SupportMessage!]!
 
   """Whether TOTP is enabled for this user."""
   totpEnabled: Boolean!

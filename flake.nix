@@ -89,12 +89,13 @@
                 emulator
                 platform-tools
                 platforms-android-34
-                ndk-23-1-7779620
+                ndk-25-1-8937393
                 cmake-3-22-1
 
                 # Some dependencies we use are on old versions
                 # TODO: Update these obsolete dependencies
                 build-tools-30-0-3
+                build-tools-33-0-1
                 platforms-android-33
               ]
               ++ lib.optionals (system == "aarch64-darwin") [

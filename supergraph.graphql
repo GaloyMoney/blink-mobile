@@ -474,6 +474,22 @@ type Currency
   symbol: String!
 }
 
+type CurrencyConversionEstimation
+  @join__type(graph: GALOY)
+{
+  """Amount in satoshis."""
+  btcSatAmount: SatAmount!
+  id: ID!
+
+  """
+  Unix timestamp (number of seconds elapsed since January 1, 1970 00:00:00 UTC)
+  """
+  timestamp: Timestamp!
+
+  """Amount in USD cents."""
+  usdCentAmount: CentAmount!
+}
+
 type DepositFeesInformation
   @join__type(graph: GALOY)
 {
@@ -594,6 +610,17 @@ type GraphQLApplicationError implements Error
 scalar Hex32Bytes
   @join__type(graph: GALOY)
 
+type InAppNotification
+  @join__type(graph: GALOY)
+{
+  id: ID!
+  title: String!
+  body: String!
+  deepLink: String
+  createdAt: Timestamp!
+  readAt: Timestamp
+}
+
 union InitiationVia
   @join__type(graph: GALOY)
   @join__unionMember(graph: GALOY, member: "InitiationViaIntraLedger")
@@ -667,6 +694,9 @@ interface Invoice
   @join__type(graph: GALOY)
 {
   createdAt: Timestamp!
+
+  """The unique external id set for the invoice."""
+  externalId: TxExternalId!
 
   """The payment hash of the lightning invoice."""
   paymentHash: PaymentHash!
@@ -774,6 +804,7 @@ type LnInvoice implements Invoice
   @join__type(graph: GALOY)
 {
   createdAt: Timestamp!
+  externalId: TxExternalId!
   paymentHash: PaymentHash!
   paymentRequest: LnPaymentRequest!
   paymentSecret: LnPaymentSecret!
@@ -798,6 +829,7 @@ input LnInvoiceCreateInput
 
   """Optional invoice expiration time in minutes."""
   expiresIn: Minutes
+  externalId: TxExternalId
 
   """Optional memo for the lightning invoice."""
   memo: Memo
@@ -815,6 +847,7 @@ input LnInvoiceCreateOnBehalfOfRecipientInput
 
   """Optional invoice expiration time in minutes."""
   expiresIn: Minutes
+  externalId: TxExternalId
 
   """Optional memo for the lightning invoice."""
   memo: Memo
@@ -892,6 +925,7 @@ type LnNoAmountInvoice implements Invoice
   @join__type(graph: GALOY)
 {
   createdAt: Timestamp!
+  externalId: TxExternalId!
   paymentHash: PaymentHash!
   paymentRequest: LnPaymentRequest!
   paymentSecret: LnPaymentSecret!
@@ -903,6 +937,7 @@ input LnNoAmountInvoiceCreateInput
 {
   """Optional invoice expiration time in minutes."""
   expiresIn: Minutes
+  externalId: TxExternalId
 
   """Optional memo for the lightning invoice."""
   memo: Memo
@@ -918,6 +953,7 @@ input LnNoAmountInvoiceCreateOnBehalfOfRecipientInput
 {
   """Optional invoice expiration time in minutes."""
   expiresIn: Minutes
+  externalId: TxExternalId
 
   """Optional memo for the lightning invoice."""
   memo: Memo
@@ -1028,6 +1064,7 @@ input LnUsdInvoiceBtcDenominatedCreateOnBehalfOfRecipientInput
 
   """Optional invoice expiration time in minutes."""
   expiresIn: Minutes
+  externalId: TxExternalId
 
   """
   Optional memo for the lightning invoice. Acts as a note to the recipient.
@@ -1046,6 +1083,7 @@ input LnUsdInvoiceCreateInput
 
   """Optional invoice expiration time in minutes."""
   expiresIn: Minutes
+  externalId: TxExternalId
 
   """Optional memo for the lightning invoice."""
   memo: Memo
@@ -1063,6 +1101,7 @@ input LnUsdInvoiceCreateOnBehalfOfRecipientInput
 
   """Optional invoice expiration time in minutes."""
   expiresIn: Minutes
+  externalId: TxExternalId
 
   """
   Optional memo for the lightning invoice. Acts as a note to the recipient.
@@ -1150,10 +1189,7 @@ type Mutation
 {
   apiKeyCreate(input: ApiKeyCreateInput!): ApiKeyCreatePayload! @join__field(graph: GALOY)
   apiKeyRevoke(input: ApiKeyRevokeInput!): ApiKeyRevokePayload! @join__field(graph: GALOY)
-  userDisableNotificationChannel(input: UserDisableNotificationChannelInput!): UserUpdateNotificationSettingsPayload! @join__field(graph: GALOY)
-  userEnableNotificationChannel(input: UserEnableNotificationChannelInput!): UserUpdateNotificationSettingsPayload! @join__field(graph: GALOY)
-  userDisableNotificationCategory(input: UserDisableNotificationCategoryInput!): UserUpdateNotificationSettingsPayload! @join__field(graph: GALOY)
-  userEnableNotificationCategory(input: UserEnableNotificationCategoryInput!): UserUpdateNotificationSettingsPayload! @join__field(graph: GALOY)
+  userInAppNotificationMarkAsRead(input: UserInAppNotificationMarkAsReadInput!): UserInAppNotificationMarkAsReadPayload! @join__field(graph: GALOY)
   accountDelete: AccountDeletePayload! @join__field(graph: GALOY)
   accountDisableNotificationCategory(input: AccountDisableNotificationCategoryInput!): AccountUpdateNotificationSettingsPayload! @join__field(graph: GALOY)
   accountDisableNotificationChannel(input: AccountDisableNotificationChannelInput!): AccountUpdateNotificationSettingsPayload! @join__field(graph: GALOY)
@@ -1642,6 +1678,15 @@ type Query
   authorization: Authorization! @join__field(graph: GALOY)
   btcPriceList(range: PriceGraphRange!): [PricePoint] @join__field(graph: GALOY)
   businessMapMarkers: [MapMarker!]! @join__field(graph: GALOY)
+
+  """Returns an estimated conversion rate for the given amount and currency"""
+  currencyConversionEstimation(
+    """Amount in major unit."""
+    amount: Float!
+
+    """Currency of the amount to be converted."""
+    currency: DisplayCurrency!
+  ): CurrencyConversionEstimation! @join__field(graph: GALOY)
   currencyList: [Currency!]! @join__field(graph: GALOY)
   globals: Globals @join__field(graph: GALOY)
   lnInvoicePaymentStatus(input: LnInvoicePaymentStatusInput!): LnInvoicePaymentStatusPayload! @join__field(graph: GALOY) @deprecated(reason: "Deprecated in favor of lnInvoicePaymentStatusByPaymentRequest")
@@ -1863,6 +1908,7 @@ type Transaction
 {
   createdAt: Timestamp!
   direction: TxDirection!
+  externalId: TxExternalId
   id: ID!
 
   """From which protocol the payment has been initiated."""
@@ -1915,6 +1961,12 @@ enum TxDirection
   RECEIVE @join__enumValue(graph: GALOY)
   SEND @join__enumValue(graph: GALOY)
 }
+
+"""
+An external reference id that can be optionally added for transactions.
+"""
+scalar TxExternalId
+  @join__type(graph: GALOY)
 
 enum TxNotificationType
   @join__type(graph: GALOY)
@@ -2017,7 +2069,7 @@ type User
 {
   id: ID!
   apiKeys: [ApiKey!]!
-  notificationSettings: UserNotificationSettings!
+  inAppNotifications(onlyUnread: Boolean): [InAppNotification!]!
 
   """
   Get single contact details.
@@ -2097,19 +2149,6 @@ type UserContactUpdateAliasPayload
   errors: [Error!]!
 }
 
-input UserDisableNotificationCategoryInput
-  @join__type(graph: GALOY)
-{
-  channel: UserNotificationChannel!
-  category: UserNotificationCategory!
-}
-
-input UserDisableNotificationChannelInput
-  @join__type(graph: GALOY)
-{
-  channel: UserNotificationChannel!
-}
-
 type UserEmailDeletePayload
   @join__type(graph: GALOY)
 {
@@ -2145,17 +2184,16 @@ type UserEmailRegistrationValidatePayload
   me: User
 }
 
-input UserEnableNotificationCategoryInput
+input UserInAppNotificationMarkAsReadInput
   @join__type(graph: GALOY)
 {
-  channel: UserNotificationChannel!
-  category: UserNotificationCategory!
+  notificationId: ID!
 }
 
-input UserEnableNotificationChannelInput
+type UserInAppNotificationMarkAsReadPayload
   @join__type(graph: GALOY)
 {
-  channel: UserNotificationChannel!
+  notification: InAppNotification!
 }
 
 input UserLoginInput
@@ -2181,36 +2219,6 @@ input UserLogoutInput
 """Unique identifier of a user"""
 scalar Username
   @join__type(graph: GALOY)
-
-enum UserNotificationCategory
-  @join__type(graph: GALOY)
-{
-  CIRCLES @join__enumValue(graph: GALOY)
-  PAYMENTS @join__enumValue(graph: GALOY)
-  ADMIN_NOTIFICATION @join__enumValue(graph: GALOY)
-  MARKETING @join__enumValue(graph: GALOY)
-  PRICE @join__enumValue(graph: GALOY)
-  SECURITY @join__enumValue(graph: GALOY)
-}
-
-enum UserNotificationChannel
-  @join__type(graph: GALOY)
-{
-  PUSH @join__enumValue(graph: GALOY)
-}
-
-type UserNotificationChannelSettings
-  @join__type(graph: GALOY)
-{
-  enabled: Boolean!
-  disabledCategories: [UserNotificationCategory!]!
-}
-
-type UserNotificationSettings
-  @join__type(graph: GALOY)
-{
-  push: UserNotificationChannelSettings!
-}
 
 type UserPhoneDeletePayload
   @join__type(graph: GALOY)
@@ -2290,12 +2298,6 @@ type UserUpdateLanguagePayload
 {
   errors: [Error!]!
   user: User
-}
-
-type UserUpdateNotificationSettingsPayload
-  @join__type(graph: GALOY)
-{
-  notificationSettings: UserNotificationSettings!
 }
 
 input UserUpdateUsernameInput

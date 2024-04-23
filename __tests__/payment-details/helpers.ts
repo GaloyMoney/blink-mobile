@@ -37,18 +37,6 @@ export const usdSendingWalletDescriptor = {
   id: "testwallet",
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type CreateFunctionWithSpyParams<T extends (...args: any) => any> = {
-  spy: jest.SpyInstance<ReturnType<T>, Parameters<T>>
-  defaultParams: Parameters<T>
-  creatorFunction: T
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type CreateFunctionWithSpy = <T extends (...args: any) => any>() => (
-  params: CreateFunctionWithSpyParams<T>,
-) => void
-
 export const expectDestinationSpecifiedMemoCannotSetMemo = <T extends WalletCurrency>(
   paymentDetails: PaymentDetail<T>,
   destinationSpecifiedMemo: string,
@@ -69,44 +57,6 @@ export const expectCannotSendPayment = (
   expect(paymentDetails.canSendPayment).toBeFalsy()
   expect(paymentDetails.sendPaymentMutation).toBeUndefined()
 }
-
-export const getTestSetMemo: CreateFunctionWithSpy = () => (params) => {
-  const { defaultParams, creatorFunction, spy } = params
-  const senderSpecifiedMemo = "sender memo"
-  const paymentDetails = creatorFunction(defaultParams)
-
-  if (!paymentDetails.canSetMemo) throw new Error("Memo is unable to be set")
-  paymentDetails.setMemo(senderSpecifiedMemo)
-
-  const lastCall = spy.mock.lastCall && spy.mock.lastCall[0]
-  expect(lastCall).toEqual({ ...defaultParams, senderSpecifiedMemo })
-}
-
-export const getTestSetAmount: CreateFunctionWithSpy = () => (params) => {
-  const { defaultParams, creatorFunction, spy } = params
-  const paymentDetails = creatorFunction(defaultParams)
-  const unitOfAccountAmount = {
-    amount: 100,
-    currency: WalletCurrency.Btc,
-  }
-  if (!paymentDetails.canSetAmount) throw new Error("Amount is unable to be set")
-  paymentDetails.setAmount(unitOfAccountAmount)
-  const lastCall = spy.mock.lastCall && spy.mock.lastCall[0]
-  expect(lastCall).toEqual({ ...defaultParams, unitOfAccountAmount })
-}
-
-export const getTestSetSendingWalletDescriptor: CreateFunctionWithSpy =
-  () => (params) => {
-    const { defaultParams, creatorFunction, spy } = params
-    const paymentDetails = creatorFunction(defaultParams)
-    const sendingWalletDescriptor = {
-      currency: WalletCurrency.Btc,
-      id: "newtestwallet",
-    }
-    paymentDetails.setSendingWalletDescriptor(sendingWalletDescriptor)
-    const lastCall = spy.mock.lastCall && spy.mock.lastCall[0]
-    expect(lastCall).toEqual({ ...defaultParams, sendingWalletDescriptor })
-  }
 
 export const createGetFeeMocks = (): GetFeeParams => {
   return {
