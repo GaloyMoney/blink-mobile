@@ -1,5 +1,5 @@
 import * as React from "react"
-import { View } from "react-native"
+import { Alert, View } from "react-native"
 
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -39,8 +39,10 @@ export const AcceptTermsAndConditionsScreen: React.FC = () => {
           type: PhoneLoginInitiateType.CreateAccount,
         },
       })
-    } else {
+    } else if (flow === "trial") {
       openConfirmationModal()
+    } else {
+      Alert.alert("unknown flow")
     }
   }
 

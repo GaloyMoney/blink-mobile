@@ -23,9 +23,9 @@
     "AcceptTermsAndConditionsScreen": {
         "title": "Terms and Conditions",
         "accept": "Accept",
-        "termsAndConditions": "View terms and Conditions",
+        "termsAndConditions": "View Terms and Conditions",
         "prohibitedCountry": "View prohibited countries",
-        "text": "By clicking 'Accept', you agree to our Terms And Conditions. You also agree that you are not a resident or citizen from one of the prohibited countries"
+        "text": "By clicking 'Accept', you agree to our Terms And Conditions. You also agree that you are not a resident or citizen from one of the prohibited countries."
     },
     "SetAccountModal": {
         "title": "Set default account",

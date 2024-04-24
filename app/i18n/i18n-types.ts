@@ -132,7 +132,7 @@ type RootTranslation = {
 		 */
 		accept: string
 		/**
-		 * V​i​e​w​ ​t​e​r​m​s​ ​a​n​d​ ​C​o​n​d​i​t​i​o​n​s
+		 * V​i​e​w​ ​T​e​r​m​s​ ​a​n​d​ ​C​o​n​d​i​t​i​o​n​s
 		 */
 		termsAndConditions: string
 		/**
@@ -140,7 +140,7 @@ type RootTranslation = {
 		 */
 		prohibitedCountry: string
 		/**
-		 * B​y​ ​c​l​i​c​k​i​n​g​ ​'​A​c​c​e​p​t​'​,​ ​y​o​u​ ​a​g​r​e​e​ ​t​o​ ​o​u​r​ ​T​e​r​m​s​ ​A​n​d​ ​C​o​n​d​i​t​i​o​n​s​.​ ​Y​o​u​ ​a​l​s​o​ ​a​g​r​e​e​ ​t​h​a​t​ ​y​o​u​ ​a​r​e​ ​n​o​t​ ​a​ ​r​e​s​i​d​e​n​t​ ​o​r​ ​c​i​t​i​z​e​n​ ​f​r​o​m​ ​o​n​e​ ​o​f​ ​t​h​e​ ​p​r​o​h​i​b​i​t​e​d​ ​c​o​u​n​t​r​i​e​s
+		 * B​y​ ​c​l​i​c​k​i​n​g​ ​'​A​c​c​e​p​t​'​,​ ​y​o​u​ ​a​g​r​e​e​ ​t​o​ ​o​u​r​ ​T​e​r​m​s​ ​A​n​d​ ​C​o​n​d​i​t​i​o​n​s​.​ ​Y​o​u​ ​a​l​s​o​ ​a​g​r​e​e​ ​t​h​a​t​ ​y​o​u​ ​a​r​e​ ​n​o​t​ ​a​ ​r​e​s​i​d​e​n​t​ ​o​r​ ​c​i​t​i​z​e​n​ ​f​r​o​m​ ​o​n​e​ ​o​f​ ​t​h​e​ ​p​r​o​h​i​b​i​t​e​d​ ​c​o​u​n​t​r​i​e​s​.
 		 */
 		text: string
 	}
@@ -9216,7 +9216,7 @@ export type TranslationFunctions = {
 		 */
 		accept: () => LocalizedString
 		/**
-		 * View terms and Conditions
+		 * View Terms and Conditions
 		 */
 		termsAndConditions: () => LocalizedString
 		/**
@@ -9224,7 +9224,7 @@ export type TranslationFunctions = {
 		 */
 		prohibitedCountry: () => LocalizedString
 		/**
-		 * By clicking 'Accept', you agree to our Terms And Conditions. You also agree that you are not a resident or citizen from one of the prohibited countries
+		 * By clicking 'Accept', you agree to our Terms And Conditions. You also agree that you are not a resident or citizen from one of the prohibited countries.
 		 */
 		text: () => LocalizedString
 	}
