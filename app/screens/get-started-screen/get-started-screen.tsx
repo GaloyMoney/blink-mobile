@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { Pressable, TouchableOpacity, View } from "react-native"
 
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
@@ -18,7 +18,6 @@ import AppLogoLightMode from "../../assets/logo/app-logo-light.svg"
 import { Screen } from "../../components/screen"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { PhoneLoginInitiateType } from "../phone-auth-screen"
-import { DeviceAccountModal } from "./device-account-modal"
 import useAppCheckToken from "./use-device-token"
 
 export const GetStartedScreen: React.FC = () => {
@@ -41,11 +40,6 @@ export const GetStartedScreen: React.FC = () => {
   const AppLogo = mode === "dark" ? AppLogoDarkMode : AppLogoLightMode
 
   const { LL } = useI18nContext()
-  const [confirmationModalVisible, setConfirmationModalVisible] = useState(false)
-  const openConfirmationModal = () => setConfirmationModalVisible(true)
-  const closeConfirmationModal = () => {
-    setConfirmationModalVisible(false)
-  }
 
   const { deviceAccountEnabled } = useFeatureFlags()
 
@@ -56,10 +50,7 @@ export const GetStartedScreen: React.FC = () => {
       action: "log_in",
       createDeviceAccountEnabled: Boolean(appCheckToken),
     })
-    navigation.navigate("phoneFlow", {
-      screen: "phoneLoginInitiate",
-      params: { type: PhoneLoginInitiateType.CreateAccount },
-    })
+    navigation.navigate("acceptTermsAndConditions", { flow: "phone" })
   }
 
   const handleLoginWithPhone = () => {
@@ -87,7 +78,7 @@ export const GetStartedScreen: React.FC = () => {
       createDeviceAccountEnabled: Boolean(appCheckToken),
     })
 
-    openConfirmationModal()
+    navigation.navigate("acceptTermsAndConditions", { flow: "trial" })
   }
 
   const handleLoginWithEmail = async () => {
@@ -124,11 +115,6 @@ export const GetStartedScreen: React.FC = () => {
       >
         <AppLogo width={"100%"} height={"100%"} />
       </Pressable>
-      <DeviceAccountModal
-        isVisible={confirmationModalVisible}
-        closeModal={closeConfirmationModal}
-        appCheckToken={appCheckToken}
-      />
       <View style={styles.bottom}>
         <GaloyPrimaryButton
           title={LL.GetStartedScreen.createAccount()}
