@@ -245,7 +245,7 @@ export const HomeScreen: React.FC = () => {
       }
     | undefined = undefined
 
-  const TRANSACTIONS_TO_SHOW = 2
+  const TRANSACTIONS_TO_SHOW = 1
 
   if (isAuthed && transactions.length > 0) {
     recentTransactionsData = {
