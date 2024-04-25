@@ -122,6 +122,28 @@ type RootTranslation = {
 		 */
 		howToUseYourCashRegisterExplainer: RequiredParams<'bankName'>
 	}
+	AcceptTermsAndConditionsScreen: {
+		/**
+		 * T​e​r​m​s​ ​a​n​d​ ​C​o​n​d​i​t​i​o​n​s
+		 */
+		title: string
+		/**
+		 * A​c​c​e​p​t
+		 */
+		accept: string
+		/**
+		 * V​i​e​w​ ​T​e​r​m​s​ ​a​n​d​ ​C​o​n​d​i​t​i​o​n​s
+		 */
+		termsAndConditions: string
+		/**
+		 * V​i​e​w​ ​p​r​o​h​i​b​i​t​e​d​ ​c​o​u​n​t​r​i​e​s
+		 */
+		prohibitedCountry: string
+		/**
+		 * B​y​ ​c​l​i​c​k​i​n​g​ ​'​A​c​c​e​p​t​'​,​ ​y​o​u​ ​a​g​r​e​e​ ​t​o​ ​o​u​r​ ​T​e​r​m​s​ ​A​n​d​ ​C​o​n​d​i​t​i​o​n​s​.​ ​Y​o​u​ ​a​l​s​o​ ​a​g​r​e​e​ ​t​h​a​t​ ​y​o​u​ ​a​r​e​ ​n​o​t​ ​a​ ​r​e​s​i​d​e​n​t​ ​o​r​ ​c​i​t​i​z​e​n​ ​f​r​o​m​ ​o​n​e​ ​o​f​ ​t​h​e​ ​p​r​o​h​i​b​i​t​e​d​ ​c​o​u​n​t​r​i​e​s​.
+		 */
+		text: string
+	}
 	SetAccountModal: {
 		/**
 		 * S​e​t​ ​d​e​f​a​u​l​t​ ​a​c​c​o​u​n​t
@@ -9183,6 +9205,28 @@ export type TranslationFunctions = {
 	They can create invoices and payments will be sent directly to your {bankName} Wallet.
 		 */
 		howToUseYourCashRegisterExplainer: (arg: { bankName: string }) => LocalizedString
+	}
+	AcceptTermsAndConditionsScreen: {
+		/**
+		 * Terms and Conditions
+		 */
+		title: () => LocalizedString
+		/**
+		 * Accept
+		 */
+		accept: () => LocalizedString
+		/**
+		 * View Terms and Conditions
+		 */
+		termsAndConditions: () => LocalizedString
+		/**
+		 * View prohibited countries
+		 */
+		prohibitedCountry: () => LocalizedString
+		/**
+		 * By clicking 'Accept', you agree to our Terms And Conditions. You also agree that you are not a resident or citizen from one of the prohibited countries.
+		 */
+		text: () => LocalizedString
 	}
 	SetAccountModal: {
 		/**

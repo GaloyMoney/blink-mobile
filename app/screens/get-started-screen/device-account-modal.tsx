@@ -22,8 +22,10 @@ import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 
-import { PhoneLoginInitiateType } from "../phone-auth-screen"
 import { DeviceAccountFailModal } from "./device-account-fail-modal"
+import useAppCheckToken from "./use-device-token"
+import { useFeatureFlags } from "@app/config/feature-flags-context"
+import { PhoneLoginInitiateType } from "../phone-auth-screen"
 
 const generateSecureRandomUUID = async () => {
   const randomBytes = await generateSecureRandom(16) // Generate 16 random bytes
@@ -36,13 +38,11 @@ const DEVICE_ACCOUNT_CREDENTIALS_KEY = "device-account"
 export type DeviceAccountModalProps = {
   isVisible: boolean
   closeModal: () => void
-  appCheckToken: string | undefined
 }
 
 export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
   isVisible,
   closeModal,
-  appCheckToken,
 }) => {
   const { saveToken } = useAppConfig()
   const {
@@ -50,6 +50,9 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
       galoyInstance: { authUrl },
     },
   } = useAppConfig()
+
+  const { deviceAccountEnabled } = useFeatureFlags()
+  const appCheckToken = useAppCheckToken({ skip: !deviceAccountEnabled })
 
   const [hasError, setHasError] = React.useState(false)
   const [loading, setLoading] = React.useState(false)

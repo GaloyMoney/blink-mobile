@@ -20,6 +20,13 @@
         "howToUseYourPaycodeExplainer": "You can print your Paycode (technically, this is an lnurl-pay address) and display it in your business to receive payments. Individuals can pay you by scanning it with a Lightning-enabled wallet.\n\nHowever, be aware that some wallets can’t scan a Paycode such as:",
         "howToUseYourCashRegisterExplainer": "Allow people to collect payments via the Cash Register link, without accessing your wallet.\n\nThey can create invoices and payments will be sent directly to your {bankName: string} Wallet."
     },
+    "AcceptTermsAndConditionsScreen": {
+        "title": "Terms and Conditions",
+        "accept": "Accept",
+        "termsAndConditions": "View Terms and Conditions",
+        "prohibitedCountry": "View prohibited countries",
+        "text": "By clicking 'Accept', you agree to our Terms And Conditions. You also agree that you are not a resident or citizen from one of the prohibited countries."
+    },
     "SetAccountModal": {
         "title": "Set default account",
         "description": "This account will be initially selected for sending and receiving payments. It can be changed at any time.",

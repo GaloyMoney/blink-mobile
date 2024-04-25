@@ -17,7 +17,6 @@ import { makeStyles, useTheme } from "@rneui/themed"
 import { Screen } from "../../components/screen"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { useQuizServer } from "../earns-map-screen/use-quiz-server"
-import { PhoneLoginInitiateType } from "../phone-auth-screen"
 import { SVGs } from "./earn-svg-factory"
 import {
   augmentCardWithGqlData,
@@ -219,10 +218,7 @@ export const EarnSection = ({ route }: Props) => {
         {
           text: "OK",
           onPress: () =>
-            navigation.navigate("phoneFlow", {
-              screen: "phoneLoginInitiate",
-              params: { type: PhoneLoginInitiateType.CreateAccount },
-            }),
+            navigation.navigate("acceptTermsAndConditions", { flow: "phone" }),
         },
       ])
       return

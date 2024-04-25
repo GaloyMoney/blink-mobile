@@ -45,7 +45,6 @@ import { Screen } from "../../components/screen"
 import { MemoizedTransactionItem } from "../../components/transaction-item"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 import { testProps } from "../../utils/testProps"
-import { PhoneLoginInitiateType } from "../phone-auth-screen"
 
 const TransactionCountToTriggerSetDefaultAccountModal = 1
 
@@ -219,12 +218,7 @@ export const HomeScreen: React.FC = () => {
 
   const activateWallet = () => {
     setModalVisible(false)
-    navigation.navigate("phoneFlow", {
-      screen: "phoneLoginInitiate",
-      params: {
-        type: PhoneLoginInitiateType.CreateAccount,
-      },
-    })
+    navigation.navigate("acceptTermsAndConditions", { flow: "phone" })
   }
 
   // debug code. verify that we have 2 wallets. mobile doesn't work well with only one wallet
@@ -245,7 +239,7 @@ export const HomeScreen: React.FC = () => {
       }
     | undefined = undefined
 
-  const TRANSACTIONS_TO_SHOW = 2
+  const TRANSACTIONS_TO_SHOW = 1
 
   if (isAuthed && transactions.length > 0) {
     recentTransactionsData = {

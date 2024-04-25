@@ -25,6 +25,7 @@ interface Account
   @join__type(graph: GALOY)
 {
   callbackEndpoints: [CallbackEndpoint!]!
+  callbackPortalUrl: String!
   csvTransactions(walletIds: [WalletId!]!): String!
   defaultWallet: PublicWallet!
   defaultWalletId: WalletId! @deprecated(reason: "Shifting property to 'defaultWallet.id'")
@@ -383,6 +384,7 @@ type ConsumerAccount implements Account
   id: ID!
   welcomeProfile: WelcomeProfile @join__field(graph: CIRCLES)
   callbackEndpoints: [CallbackEndpoint!]! @join__field(graph: GALOY)
+  callbackPortalUrl: String! @join__field(graph: GALOY)
 
   """
   return CSV stream, base64 encoded, of the list of transactions in the wallet
@@ -609,17 +611,6 @@ type GraphQLApplicationError implements Error
 """Hex-encoded string of 32 bytes"""
 scalar Hex32Bytes
   @join__type(graph: GALOY)
-
-type InAppNotification
-  @join__type(graph: GALOY)
-{
-  id: ID!
-  title: String!
-  body: String!
-  deepLink: String
-  createdAt: Timestamp!
-  readAt: Timestamp
-}
 
 union InitiationVia
   @join__type(graph: GALOY)
@@ -1175,6 +1166,14 @@ type MerchantPayload
 scalar Minutes
   @join__type(graph: GALOY)
 
+type MobileSession
+  @join__type(graph: GALOY)
+{
+  expiresAt: Timestamp!
+  id: ID!
+  issuedAt: Timestamp!
+}
+
 type MobileVersions
   @join__type(graph: GALOY)
 {
@@ -1189,7 +1188,7 @@ type Mutation
 {
   apiKeyCreate(input: ApiKeyCreateInput!): ApiKeyCreatePayload! @join__field(graph: GALOY)
   apiKeyRevoke(input: ApiKeyRevokeInput!): ApiKeyRevokePayload! @join__field(graph: GALOY)
-  userInAppNotificationMarkAsRead(input: UserInAppNotificationMarkAsReadInput!): UserInAppNotificationMarkAsReadPayload! @join__field(graph: GALOY)
+  statefulNotificationAcknowledge(input: StatefulNotificationAcknowledgeInput!): StatefulNotificationAcknowledgePayload! @join__field(graph: GALOY)
   accountDelete: AccountDeletePayload! @join__field(graph: GALOY)
   accountDisableNotificationCategory(input: AccountDisableNotificationCategoryInput!): AccountUpdateNotificationSettingsPayload! @join__field(graph: GALOY)
   accountDisableNotificationChannel(input: AccountDisableNotificationChannelInput!): AccountUpdateNotificationSettingsPayload! @join__field(graph: GALOY)
@@ -1509,21 +1508,21 @@ type OneDayAccountLimit implements AccountLimit
 scalar OneTimeAuthCode
   @join__type(graph: GALOY)
 
-"""Information about pagination in a connection."""
+"""Information about pagination in a connection"""
 type PageInfo
   @join__type(graph: GALOY)
 {
-  """When paginating forwards, the cursor to continue."""
-  endCursor: String
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
 
   """When paginating forwards, are there more items?"""
   hasNextPage: Boolean!
 
-  """When paginating backwards, are there more items?"""
-  hasPreviousPage: Boolean!
-
   """When paginating backwards, the cursor to continue."""
   startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
 }
 
 scalar PaymentHash
@@ -1829,6 +1828,53 @@ A string amount (of a currency) that can be negative (e.g. in a transaction)
 scalar SignedDisplayMajorAmount
   @join__type(graph: GALOY)
 
+type StatefulNotification
+  @join__type(graph: GALOY)
+{
+  id: ID!
+  title: String!
+  body: String!
+  deepLink: String
+  createdAt: Timestamp!
+  acknowledgedAt: Timestamp
+}
+
+input StatefulNotificationAcknowledgeInput
+  @join__type(graph: GALOY)
+{
+  notificationId: ID!
+}
+
+type StatefulNotificationAcknowledgePayload
+  @join__type(graph: GALOY)
+{
+  notification: StatefulNotification!
+}
+
+type StatefulNotificationConnection
+  @join__type(graph: GALOY)
+{
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [StatefulNotificationEdge!]!
+
+  """A list of nodes."""
+  nodes: [StatefulNotification!]!
+}
+
+"""An edge in a connection."""
+type StatefulNotificationEdge
+  @join__type(graph: GALOY)
+{
+  """The item at the end of the edge"""
+  node: StatefulNotification!
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
 type Subscription
   @join__type(graph: GALOY)
 {
@@ -2069,7 +2115,7 @@ type User
 {
   id: ID!
   apiKeys: [ApiKey!]!
-  inAppNotifications(onlyUnread: Boolean): [InAppNotification!]!
+  statefulNotifications(first: Int!, after: String): StatefulNotificationConnection!
 
   """
   Get single contact details.
@@ -2093,6 +2139,9 @@ type User
   When value is 'default' the intent is to use preferred language from OS settings.
   """
   language: Language!
+
+  """List of mobile sessions"""
+  mobileSessions: [MobileSession!]!
 
   """Phone number with international calling code."""
   phone: Phone
@@ -2182,18 +2231,6 @@ type UserEmailRegistrationValidatePayload
 {
   errors: [Error!]!
   me: User
-}
-
-input UserInAppNotificationMarkAsReadInput
-  @join__type(graph: GALOY)
-{
-  notificationId: ID!
-}
-
-type UserInAppNotificationMarkAsReadPayload
-  @join__type(graph: GALOY)
-{
-  notification: InAppNotification!
 }
 
 input UserLoginInput

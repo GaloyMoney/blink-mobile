@@ -81,6 +81,7 @@ import {
   PrimaryStackParamList,
   RootStackParamList,
 } from "./stack-param-lists"
+import { AcceptTermsAndConditionsScreen } from "@app/screens/accept-t-and-c"
 
 const RootNavigator = createStackNavigator<RootStackParamList>()
 
@@ -345,6 +346,13 @@ export const RootStack = () => {
         component={TransactionLimitsScreen}
         options={{
           title: LL.common.transactionLimits(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="acceptTermsAndConditions"
+        component={AcceptTermsAndConditionsScreen}
+        options={{
+          title: LL.AcceptTermsAndConditionsScreen.title(),
         }}
       />
       <RootNavigator.Screen

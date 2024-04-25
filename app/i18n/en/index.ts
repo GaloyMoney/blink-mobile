@@ -28,6 +28,13 @@ const en: BaseTranslation = {
     howToUseYourCashRegisterExplainer:
       "Allow people to collect payments via the Cash Register link, without accessing your wallet.\n\nThey can create invoices and payments will be sent directly to your {bankName: string} Wallet.",
   },
+  AcceptTermsAndConditionsScreen: {
+    title: "Terms and Conditions",
+    accept: "Accept",
+    termsAndConditions: "View Terms and Conditions",
+    prohibitedCountry: "View prohibited countries",
+    text: "By clicking 'Accept', you agree to our Terms And Conditions. You also agree that you are not a resident or citizen from one of the prohibited countries.",
+  },
   SetAccountModal: {
     title: "Set default account",
     description:

@@ -26,3 +26,6 @@
   @org.greenrobot.eventbus.Subscribe <methods>;
 }
 -keep enum org.greenrobot.eventbus.ThreadMode { *; }
+
+-dontwarn com.samsung.** 
+-keep class com.samsung.** { *; }
