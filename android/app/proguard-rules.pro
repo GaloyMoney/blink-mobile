@@ -20,6 +20,8 @@
 -keep class com.swmansion.reanimated.** { *; }
 -keep class com.facebook.react.turbomodule.** { *; }
 
+-keep public class com.shopify.reactnative.skia.* {*;}
+
 # inapp browser
 -keepattributes *Annotation*
 -keepclassmembers class ** {
