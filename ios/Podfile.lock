@@ -1050,7 +1050,7 @@ PODS:
     - React-Core
   - react-native-secure-key-store (2.0.10):
     - React-Core
-  - react-native-skia (1.2.2):
+  - react-native-skia (1.2.3):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React
@@ -1680,7 +1680,7 @@ SPEC CHECKSUMS:
   react-native-nfc-manager: ead2cd1d1eaab139cc8b2dc5fbfe575eaa45efc4
   react-native-safe-area-context: b97eb6f9e3b7f437806c2ce5983f479f8eb5de4b
   react-native-secure-key-store: 910e6df6bc33cb790aba6ee24bc7818df1fe5898
-  react-native-skia: 18eb8f299e30a90594eb97454815bc71de86170d
+  react-native-skia: 3ac80cc6de9c33e0a02b3a7b66c29dc6b6286211
   react-native-slider: 7a39874fc1fcdfee48e448fa72cce0a8f2c7c5d6
   react-native-view-shot: 6b7ed61d77d88580fed10954d45fad0eb2d47688
   react-native-webview: d6607cbbe7bad689cc08d6d5e35cbf9938093223

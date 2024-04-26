@@ -159,10 +159,21 @@ export const PriceHistory = () => {
         {
           /* eslint @typescript-eslint/ban-ts-comment: "off" */
           // @ts-ignore-next-line no-implicit-any error
-          <CartesianChart data={prices2} yKeys={["y"]} chartPressState={state}>
+          <CartesianChart
+            data={prices2}
+            yKeys={["y"]}
+            chartPressState={state}
+            padding={{ left: 20, right: 20 }}
+            domainPadding={{ bottom: 10, top: 10 }}
+          >
             {({ points }) => (
               <>
-                <Line points={points.y} color={colors.primary} strokeWidth={3} />
+                <Line
+                  points={points.y}
+                  color={colors.primary}
+                  strokeWidth={2}
+                  curveType="natural"
+                />
                 {isActive && <ToolTip x={state.x.position} y={state.y.y.position} />}
               </>
             )}
