@@ -190,7 +190,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   cross: {},
   qrCard: {
-    backgroundColor: colors.black,
+    backgroundColor: colors._white,
     padding: 20,
     borderRadius: 12,
   },
