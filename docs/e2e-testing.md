@@ -1,4 +1,42 @@
-# E2E Testing
+# E2E Testing using Detox
+
+The detox tests uses the local backend. Hence, make sure you have run `make tilt-up` and set everything up using our [dev docs](./dev.md).
+Keep `yarn start` running in the backgroud.
+
+### Testing on Android
+
+Run an emulator or use `make emulator` to get it up.
+Then, run:
+```
+yarn e2e:build android.emu.debug
+yarn e2e:test android.emu.debug
+```
+
+### Testing on iOS
+
+Make sure you are on a Mac. Run:
+```
+yarn e2e:build ios.sim.debug
+yarn e2e:test ios.sim.debug
+```
+
+### TMUX one liner
+Remove the make emulator line if you don't want to run on android emulator.
+
+```
+tmux new-session \; \
+  send-keys 'make tilt-up' C-m \; \
+  split-window -h \; \
+  send-keys 'yarn start' C-m \; \
+  split-window -v \; \
+  send-keys 'make emulator' C-m \; \
+  select-pane -t 0 \; \
+  split-window -v \; \
+  select-pane -t 3
+```
+
+
+# E2E Testing using Appium (Legacy)
 
 ```mermaid
   flowchart TD;
