@@ -2,14 +2,14 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'chore: use kaniko builder in shared build task (#50)'
-      sha: 3d1a7c11c7967952e84231e39aa5425ad704d93d
+      commitTitle: 'chore: use nix for rust check-code (#52)'
+      sha: a14ab78128be32e6e1d37f21def9a83351531bde
     path: .
   path: ../.github/workflows/vendor
 - contents:
   - git:
-      commitTitle: 'chore: use kaniko builder in shared build task (#50)'
-      sha: 3d1a7c11c7967952e84231e39aa5425ad704d93d
+      commitTitle: 'chore: use nix for rust check-code (#52)'
+      sha: a14ab78128be32e6e1d37f21def9a83351531bde
     path: .
-  path: ./vendor
+  path: vendor
 kind: LockConfig
