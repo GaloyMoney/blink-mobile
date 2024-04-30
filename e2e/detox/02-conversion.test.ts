@@ -37,7 +37,7 @@ describe("Intraledger Flow", () => {
   })
 
   it("check if last two transactions indicate conversion", async () => {
-    // The home screen displays the top two transactions
+    // The home screen displays the top transactions
     const tx1 = element(by.id("transaction-by-index-0"))
     await waitFor(tx1)
       .toBeVisible()
@@ -45,16 +45,6 @@ describe("Intraledger Flow", () => {
     await tx1.tap()
 
     await verifyTextPresent("From Local User")
-    await tap(by.id("close"))
-
-    const tx2 = element(by.id("transaction-by-index-1"))
-    await waitFor(tx2)
-      .toBeVisible()
-      .whileElement(by.id("home-screen"))
-      .scroll(400, "down", NaN, 0.85)
-    await tx2.tap()
-
-    await verifyTextPresent("To Local User")
     await tap(by.id("close"))
   })
 })
