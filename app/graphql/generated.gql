@@ -74,6 +74,16 @@ fragment TransactionList on TransactionConnection {
   __typename
 }
 
+mutation StatefulNotificationAcknowledge($input: StatefulNotificationAcknowledgeInput!) {
+  statefulNotificationAcknowledge(input: $input) {
+    notification {
+      acknowledgedAt
+      __typename
+    }
+    __typename
+  }
+}
+
 mutation accountDelete {
   accountDelete {
     errors {
@@ -836,6 +846,39 @@ query SettingsScreen {
       verified
       __typename
     }
+    __typename
+  }
+}
+
+query StatefulNotifications($after: String) {
+  me {
+    statefulNotifications(first: 10, after: $after) {
+      nodes {
+        id
+        title
+        body
+        deepLink
+        createdAt
+        acknowledgedAt
+        __typename
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+query UnacknowledgedNotificationCount {
+  me {
+    id
+    unacknowledgedStatefulNotificationsCount
     __typename
   }
 }

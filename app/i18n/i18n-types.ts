@@ -9121,6 +9121,16 @@ type RootTranslation = {
 		 */
 		REVIEW: string
 	}
+	NotificationHistory: {
+		/**
+		 * N​o​t​i​f​i​c​a​t​i​o​n​s
+		 */
+		title: string
+		/**
+		 * Y​o​u​ ​d​o​n​'​t​ ​h​a​v​e​ ​a​n​y​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​r​i​g​h​t​ ​n​o​w
+		 */
+		noNotifications: string
+	}
 }
 
 export type TranslationFunctions = {
@@ -18124,6 +18134,16 @@ export type TranslationFunctions = {
 		 * Review
 		 */
 		REVIEW: () => LocalizedString
+	}
+	NotificationHistory: {
+		/**
+		 * Notifications
+		 */
+		title: () => LocalizedString
+		/**
+		 * You don't have any notifications right now
+		 */
+		noNotifications: () => LocalizedString
 	}
 }
 

@@ -1,11 +1,17 @@
 import { ScrollView } from "react-native-gesture-handler"
+import { useEffect } from "react"
+import { TouchableOpacity } from "react-native"
+
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 
 import { gql } from "@apollo/client"
 import { Screen } from "@app/components/screen"
 import { VersionComponent } from "@app/components/version"
 import { AccountLevel, useLevel } from "@app/graphql/level-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { makeStyles } from "@rneui/themed"
+import { Icon, makeStyles, Text } from "@rneui/themed"
 
 import { AccountBanner } from "./account/banner"
 import { EmailSetting } from "./account/settings/email"
@@ -27,10 +33,18 @@ import { ThemeSetting } from "./settings/preferences-theme"
 import { NotificationSetting } from "./settings/sp-notifications"
 import { OnDeviceSecuritySetting } from "./settings/sp-security"
 import { TotpSetting } from "./totp"
+import { useUnacknowledgedNotificationCountQuery } from "@app/graphql/generated"
 
 // All queries in settings have to be set here so that the server is not hit with
 // multiple requests for each query
 gql`
+  query UnacknowledgedNotificationCount {
+    me {
+      id
+      unacknowledgedStatefulNotificationsCount
+    }
+  }
+
   query SettingsScreen {
     me {
       id
@@ -62,6 +76,9 @@ export const SettingsScreen: React.FC = () => {
   const { LL } = useI18nContext()
 
   const { currentLevel, isAtLeastLevelOne } = useLevel()
+  const { data: unackNotificationCount } = useUnacknowledgedNotificationCountQuery({
+    fetchPolicy: "cache-and-network",
+  })
 
   const items = {
     account: [AccountLevelSetting, TxLimits],
@@ -78,6 +95,25 @@ export const SettingsScreen: React.FC = () => {
     advanced: [ExportCsvSetting, ApiAccessSetting],
     community: [NeedHelpSetting, JoinCommunitySetting],
   }
+
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+
+  useEffect(() => {
+    const count =
+      unackNotificationCount?.me?.unacknowledgedStatefulNotificationsCount || 0
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={() => navigation.navigate("notificationHistory")}>
+          <Icon style={styles.headerRight} name="notifications" type="ionicon" />
+          {count !== 0 && (
+            <Text type="p4" style={styles.notificationCount}>
+              {count}
+            </Text>
+          )}
+        </TouchableOpacity>
+      ),
+    })
+  }, [navigation, styles, unackNotificationCount])
 
   return (
     <Screen keyboardShouldPersistTaps="handled">
@@ -107,7 +143,7 @@ export const SettingsScreen: React.FC = () => {
   )
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ colors }) => ({
   outer: {
     marginTop: 12,
     paddingHorizontal: 12,
@@ -115,5 +151,21 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     flexDirection: "column",
     rowGap: 18,
+  },
+  headerRight: {
+    marginRight: 12,
+  },
+  notificationCount: {
+    position: "absolute",
+    right: 9,
+    top: -3,
+    color: colors._darkGrey,
+    backgroundColor: colors.primary,
+    textAlign: "center",
+    verticalAlign: "middle",
+    height: 18,
+    width: 18,
+    borderRadius: 9,
+    overflow: "hidden",
   },
 }))

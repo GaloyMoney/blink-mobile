@@ -75,6 +75,7 @@ import { LanguageScreen } from "../screens/settings-screen/language-screen"
 import { SecurityScreen } from "../screens/settings-screen/security-screen"
 import { TransactionDetailScreen } from "../screens/transaction-detail-screen"
 import { TransactionHistoryScreen } from "../screens/transaction-history/transaction-history-screen"
+import { NotificationHistoryScreen } from "@app/screens/notification-history-screen/notification-history-screen"
 import {
   PeopleStackParamList,
   PhoneValidationStackParamList,
@@ -424,6 +425,11 @@ export const RootStack = () => {
         options={{
           title: LL.support.chatbot(),
         }}
+      />
+      <RootNavigator.Screen
+        name="notificationHistory"
+        component={NotificationHistoryScreen}
+        options={{ title: LL.NotificationHistory.title() }}
       />
     </RootNavigator.Navigator>
   )
