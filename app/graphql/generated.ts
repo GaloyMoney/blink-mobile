@@ -2993,6 +2993,11 @@ export type AccountDisableNotificationCategoryMutationVariables = Exact<{
 
 export type AccountDisableNotificationCategoryMutation = { readonly __typename: 'Mutation', readonly accountDisableNotificationCategory: { readonly __typename: 'AccountUpdateNotificationSettingsPayload', readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly account?: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly notificationSettings: { readonly __typename: 'NotificationSettings', readonly push: { readonly __typename: 'NotificationChannelSettings', readonly enabled: boolean, readonly disabledCategories: ReadonlyArray<string> } } } | null } };
 
+export type UnacknowledgedNotificationCountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UnacknowledgedNotificationCountQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly unacknowledgedStatefulNotificationsCount: number } | null };
+
 export type SettingsScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -7248,6 +7253,46 @@ export function useAccountDisableNotificationCategoryMutation(baseOptions?: Apol
 export type AccountDisableNotificationCategoryMutationHookResult = ReturnType<typeof useAccountDisableNotificationCategoryMutation>;
 export type AccountDisableNotificationCategoryMutationResult = Apollo.MutationResult<AccountDisableNotificationCategoryMutation>;
 export type AccountDisableNotificationCategoryMutationOptions = Apollo.BaseMutationOptions<AccountDisableNotificationCategoryMutation, AccountDisableNotificationCategoryMutationVariables>;
+export const UnacknowledgedNotificationCountDocument = gql`
+    query UnacknowledgedNotificationCount {
+  me {
+    id
+    unacknowledgedStatefulNotificationsCount
+  }
+}
+    `;
+
+/**
+ * __useUnacknowledgedNotificationCountQuery__
+ *
+ * To run a query within a React component, call `useUnacknowledgedNotificationCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUnacknowledgedNotificationCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUnacknowledgedNotificationCountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUnacknowledgedNotificationCountQuery(baseOptions?: Apollo.QueryHookOptions<UnacknowledgedNotificationCountQuery, UnacknowledgedNotificationCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UnacknowledgedNotificationCountQuery, UnacknowledgedNotificationCountQueryVariables>(UnacknowledgedNotificationCountDocument, options);
+      }
+export function useUnacknowledgedNotificationCountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UnacknowledgedNotificationCountQuery, UnacknowledgedNotificationCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UnacknowledgedNotificationCountQuery, UnacknowledgedNotificationCountQueryVariables>(UnacknowledgedNotificationCountDocument, options);
+        }
+export function useUnacknowledgedNotificationCountSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<UnacknowledgedNotificationCountQuery, UnacknowledgedNotificationCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<UnacknowledgedNotificationCountQuery, UnacknowledgedNotificationCountQueryVariables>(UnacknowledgedNotificationCountDocument, options);
+        }
+export type UnacknowledgedNotificationCountQueryHookResult = ReturnType<typeof useUnacknowledgedNotificationCountQuery>;
+export type UnacknowledgedNotificationCountLazyQueryHookResult = ReturnType<typeof useUnacknowledgedNotificationCountLazyQuery>;
+export type UnacknowledgedNotificationCountSuspenseQueryHookResult = ReturnType<typeof useUnacknowledgedNotificationCountSuspenseQuery>;
+export type UnacknowledgedNotificationCountQueryResult = Apollo.QueryResult<UnacknowledgedNotificationCountQuery, UnacknowledgedNotificationCountQueryVariables>;
 export const SettingsScreenDocument = gql`
     query SettingsScreen {
   me {

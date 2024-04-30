@@ -875,6 +875,14 @@ query StatefulNotifications($after: String) {
   }
 }
 
+query UnacknowledgedNotificationCount {
+  me {
+    id
+    unacknowledgedStatefulNotificationsCount
+    __typename
+  }
+}
+
 query accountDefaultWallet($walletCurrency: WalletCurrency, $username: Username!) {
   accountDefaultWallet(walletCurrency: $walletCurrency, username: $username) {
     id

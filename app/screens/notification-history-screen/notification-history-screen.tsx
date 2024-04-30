@@ -78,7 +78,11 @@ export const NotificationHistoryScreen = () => {
         onRefresh={refetch}
         refreshing={loading}
         ListEmptyComponent={
-          loading ? <></> : <Text>{LL.NotificationHistory.noNotifications()}</Text>
+          loading ? (
+            <></>
+          ) : (
+            <Text style={styles.center}>{LL.NotificationHistory.noNotifications()}</Text>
+          )
         }
       ></FlatList>
     </Screen>
@@ -87,4 +91,8 @@ export const NotificationHistoryScreen = () => {
 
 const useStyles = makeStyles(() => ({
   scrollViewContainer: {},
+  center: {
+    textAlign: "center",
+    marginTop: 10,
+  },
 }))
