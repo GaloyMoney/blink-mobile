@@ -101,7 +101,6 @@ const useStyles = makeStyles(
     spacing: {
       paddingHorizontal: 8,
       paddingRight: 12,
-      paddingVertical: 6,
     },
     center: {
       justifyContent: "space-around",
