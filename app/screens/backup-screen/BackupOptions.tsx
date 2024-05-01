@@ -32,7 +32,7 @@ const BackupOptions: React.FC<Props> = ({ navigation }) => {
   const { theme } = useTheme()
   const colors = theme.colors
   const bottom = useSafeAreaInsets().bottom
-  const { btcWalletEnabled } = useAppSelector((state) => state.settings)
+  const { isAdvanceMode } = useAppSelector((state) => state.settings)
   const { LL } = useI18nContext()
   const { isAtLeastLevelZero } = useLevel()
   const [backupIsCompleted, setBackupIsCompleted] = React.useState(false)
@@ -83,7 +83,7 @@ const BackupOptions: React.FC<Props> = ({ navigation }) => {
     <Wrapper style={{ backgroundColor: colors.white }}>
       <Container>
         <Title style={{ color: colors.black }}>{LL.BackupOptions.title()}</Title>
-        {btcWalletEnabled && (
+        {isAdvanceMode && (
           <Btn onPress={onBackupBTCWallet}>
             <Icon
               type="ionicon"

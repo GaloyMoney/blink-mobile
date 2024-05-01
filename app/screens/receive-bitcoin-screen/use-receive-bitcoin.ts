@@ -530,7 +530,7 @@ export const useReceiveBitcoin = (isFirstTransaction: Boolean, initPRParams = {}
     readablePaymentRequest = `${uri.slice(0, 10)}..${uri.slice(-10)}`
   } else if (pr?.info?.data?.invoiceType === Invoice.OnChain) {
     const address = pr.info?.data?.address || ""
-    readablePaymentRequest = `${address}`
+    readablePaymentRequest = `${address.slice(0, 10)}..${address.slice(-10)}`
   } else if (prcd.type === "PayCode" && pr?.info?.data?.invoiceType === "PayCode") {
     readablePaymentRequest = `${pr.info.data.username}@${lnAddressHostname}`
   }

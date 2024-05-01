@@ -59,7 +59,7 @@ const TransactionCountToTriggerSetDefaultAccountModal = 1
 export const HomeScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const dispatch = useAppDispatch()
-  const { btcWalletEnabled } = useAppSelector((state) => state.settings)
+  const { isAdvanceMode } = useAppSelector((state) => state.settings)
   const {
     appConfig: {
       galoyInstance: { id: galoyInstanceId },
@@ -237,6 +237,7 @@ export const HomeScreen: React.FC = () => {
     | "sendBitcoinDestination"
     | "receiveBitcoin"
     | "TransactionHistoryTabs"
+    | "USDTransactionHistory"
   type IconNamesType = keyof typeof icons
 
   const buttons = [
@@ -257,7 +258,7 @@ export const HomeScreen: React.FC = () => {
     },
   ]
 
-  if (btcWalletEnabled) {
+  if (isAdvanceMode) {
     buttons.unshift({
       title: LL.ConversionDetailsScreen.title(),
       target: "conversionDetails" as Target,
@@ -265,9 +266,9 @@ export const HomeScreen: React.FC = () => {
     })
   }
 
-  const transactions = btcWalletEnabled
+  const transactions = isAdvanceMode
     ? mergedTransactions
-    : transactionsEdges.map((el) => el.node).slice(0, 5)
+    : transactionsEdges?.map((el) => el.node).slice(0, 5)
 
   const AccountCreationNeededModal = (
     <Modal
@@ -366,7 +367,11 @@ export const HomeScreen: React.FC = () => {
           <>
             <TouchableWithoutFeedback
               style={styles.recentTransaction}
-              onPress={() => onMenuClick("TransactionHistoryTabs")}
+              onPress={() =>
+                onMenuClick(
+                  isAdvanceMode ? "TransactionHistoryTabs" : "USDTransactionHistory",
+                )
+              }
             >
               <Text type="p1" bold {...testProps(LL.TransactionScreen.title())}>
                 {LL.TransactionScreen.title()}
@@ -401,7 +406,7 @@ export const HomeScreen: React.FC = () => {
           </>
         ) : (
           <ActivityIndicator
-            animating={btcWalletEnabled ? transactionLoading : loadingAuthed}
+            animating={isAdvanceMode ? transactionLoading : loadingAuthed}
             size="large"
             color={colors.primary}
           />

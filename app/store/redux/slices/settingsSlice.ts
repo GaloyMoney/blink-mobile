@@ -3,13 +3,13 @@ import { AppThunk } from ".."
 import { loadJson } from "@app/utils/storage"
 
 interface SettingsSlice {
-  btcWalletEnabled: boolean
+  isAdvanceMode: boolean
   loading: boolean
   error: string
 }
 
 const initialState: SettingsSlice = {
-  btcWalletEnabled: false,
+  isAdvanceMode: false,
   loading: false,
   error: "",
 }
@@ -41,6 +41,6 @@ export const { updateSettings, setLoading, setError, resetSettingsSlice } =
 export default settingsSlice.reducer
 
 export const getSettingsData = (): AppThunk => async (dispatch, getState) => {
-  const res = await loadJson("btcWalletEnabled")
-  dispatch(updateSettings({ btcWalletEnabled: res }))
+  const res = await loadJson("isAdvanceMode")
+  dispatch(updateSettings({ isAdvanceMode: res }))
 }

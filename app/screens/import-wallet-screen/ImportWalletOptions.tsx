@@ -28,7 +28,7 @@ const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
   const colors = theme.colors
   const insideApp = route.params?.insideApp
   const bottom = useSafeAreaInsets().bottom
-  const { btcWalletEnabled } = useAppSelector((state) => state.settings)
+  const { isAdvanceMode } = useAppSelector((state) => state.settings)
   const { LL } = useI18nContext()
   const { saveToken } = useAppConfig()
   const { deviceAccountEnabled } = useFeatureFlags()
@@ -113,7 +113,7 @@ const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
             : LL.ImportWalletOptions.loginOptions()}
         </Title>
 
-        {btcWalletEnabled && (
+        {isAdvanceMode && (
           <Btn onPress={onImportBTCWallet} disabled={BTCWalletImported}>
             <Icon
               type="ionicon"

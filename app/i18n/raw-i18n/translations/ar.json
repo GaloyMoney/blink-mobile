@@ -894,7 +894,7 @@
         "minAmountNotMet": "Amount must be at least {minAmount: string}."
     },
     "AmountInputButton": {
-        "tapToSetAmount": "Tap to set amount"
+        "tapToSetAmount": "Add an amount"
     },
     "AppUpdate": {
         "needToUpdateSupportMessage": "أحتاج إلى تحديث تطبيقي إلى أحدث إصدار. أنا أستخدم تطبيق {os: string} مع الإصدار {version: string}.",

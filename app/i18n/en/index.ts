@@ -587,11 +587,14 @@ const en: BaseTranslation = {
     },
     invoiceHasBeenPaid: "Invoice has been paid",
     yourBitcoinOnChainAddress: "Your Bitcoin Onchain Address",
+    receive: "Receive",
     receiveViaInvoice: "Receive via Lightning",
     receiveViaPaycode: "Receive via Paycode",
     receiveViaOnchain: "Receive via Onchain",
     payCodeOrLNURL: "Paycode / LNURL",
-    initialDeposit: "* Initial deposit of $5 recommended for channel setup. ~$1 will be paid as setup fee."
+    initialDeposit: "* Initial deposit of $5 recommended for channel setup. ~$1 will be paid as setup fee.",
+    selectPaymentMethod: "Select Payment Method",
+    selectWallet: "Select Wallet"
   },
   RedeemBitcoinScreen: {
     title: "Redeem Bitcoin",
@@ -718,6 +721,7 @@ const en: BaseTranslation = {
     max: "Max",
     maxAmount: "Max Amount",
     title: "Send Bitcoin",
+    send: "Send",
     failedToFetchLnurlInvoice: "Failed to fetch lnurl invoice",
     lnurlInvoiceIncorrectAmount:
       "The lnurl server responded with an invoice with an incorrect amount.",
@@ -754,8 +758,8 @@ const en: BaseTranslation = {
     importWallet: "Import Wallet",
     showSeedPhrase: "Reveal recovery phrase",
     showNostrSecret: "Reveal Nostr secret",
-    enableBtcWallet: "Enable Bitcoin wallet",
-    disableBtcWallet: "Disable Bitcoin wallet",
+    beginnerMode: "Switch to Beginner Mode",
+    advanceMode: "Switch to Advanced Mode",
   },
   AccountScreen: {
     accountLevel: "Account Level",
@@ -1180,7 +1184,7 @@ const en: BaseTranslation = {
     deleteAccountError:
       "Something went wrong. Contact {email: string} for further assistance.",
     bye: "Bye!",
-    disableBtcWallet: "By disabling your BTC wallet you will not lose access to your funds, but the wallet will be hidden. You can enable the BTC wallet again at any time. Are you sure you want to proceed?"
+    switchToBeginnerMode: "By switching to Beginner Mode you will not lose access to your BTC wallet funds, but the wallet will be hidden. You can switch to Advanced Mode again at any time. Are you sure you want to proceed?"
   },
   lnurl: {
     overLimit: "You can't send more than max amount",
@@ -1198,8 +1202,8 @@ const en: BaseTranslation = {
     minAmountNotMet: "Amount must be at least {minAmount: string}.",
   },
   AmountInputButton: {
-    tapToSetAmount: "Tap to set amount",
-    tapToSetOnChainAmount: "Tap to set amount",
+    tapToSetAmount: "Add an amount",
+    tapToSetOnChainAmount: "Add an amount",
     enterAmount: "Please enter the amount to proceed",
   },
   AppUpdate: {

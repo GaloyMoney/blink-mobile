@@ -1836,6 +1836,10 @@ type RootTranslation = {
 		 */
 		yourBitcoinOnChainAddress: string
 		/**
+		 * R​e​c​e​i​v​e​
+		 */
+		receive: string
+		/**
 		 * R​e​c​e​i​v​e​ ​v​i​a​ ​L​i​g​h​t​n​i​n​g
 		 */
 		receiveViaInvoice: string
@@ -1851,6 +1855,14 @@ type RootTranslation = {
 		 * P​a​y​c​o​d​e​ ​/​ ​L​N​U​R​L
 		 */
 		payCodeOrLNURL: string
+		/**
+		 * Select Payment Method
+		 */
+		selectPaymentMethod: string
+		/**
+		 * Select Wallet
+		 */
+		selectWallet: string
 	}
 	RedeemBitcoinScreen: {
 		/**
@@ -2244,6 +2256,10 @@ type RootTranslation = {
 		 * S​e​n​d​ ​B​i​t​c​o​i​n
 		 */
 		title: string
+		/**
+		 * S​e​n​d​
+		 */
+		send: string
 		/**
 		 * F​a​i​l​e​d​ ​t​o​ ​f​e​t​c​h​ ​l​n​u​r​l​ ​i​n​v​o​i​c​e
 		 */
@@ -5401,6 +5417,10 @@ export type TranslationFunctions = {
 		 */
 		yourBitcoinOnChainAddress: () => LocalizedString
 		/**
+		 * Receive
+		 */
+		receive: () => LocalizedString
+		/**
 		 * Receive via Lightning
 		 */
 		receiveViaInvoice: () => LocalizedString
@@ -5420,6 +5440,14 @@ export type TranslationFunctions = {
 		 * Initial Deposit Warning
 		 */
 		initialDeposit: () => LocalizedString
+		/**
+		 * Select Payment Method
+		 */
+		selectPaymentMethod: () => LocalizedString
+		/**
+		 * Select Wallet
+		 */
+		selectWallet: () => LocalizedString
 	}
 	RedeemBitcoinScreen: {
 		/**
@@ -5811,6 +5839,10 @@ export type TranslationFunctions = {
 		 */
 		title: () => LocalizedString
 		/**
+		 * Send
+		 */
+		send: () => LocalizedString
+		/**
 		 * Failed to fetch lnurl invoice
 		 */
 		failedToFetchLnurlInvoice: () => LocalizedString
@@ -5919,8 +5951,8 @@ export type TranslationFunctions = {
 		importWallet: () => LocalizedString
 		showSeedPhrase: () => LocalizedString
 		showNostrSecret: () => LocalizedString
-		enableBtcWallet: () => LocalizedString
-		disableBtcWallet: () => LocalizedString
+		beginnerMode: () => LocalizedString
+		advanceMode: () => LocalizedString
 	}
 	AccountScreen: {
 		/**
@@ -7143,7 +7175,7 @@ export type TranslationFunctions = {
 		 * Bye!
 		 */
 		bye: () => LocalizedString
-		disableBtcWallet: () => LocalizedString
+		switchToBeginnerMode: () => LocalizedString
 	}
 	lnurl: {
 		/**

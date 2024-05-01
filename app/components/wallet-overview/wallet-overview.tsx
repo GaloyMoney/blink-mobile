@@ -6,7 +6,7 @@ import { useWalletOverviewScreenQuery, WalletCurrency } from "@app/graphql/gener
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
-import { makeStyles, Text } from "@rneui/themed"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
 
 import { GaloyCurrencyBubble } from "../atomic/galoy-currency-bubble"
 import { GaloyIcon } from "../atomic/galoy-icon"
@@ -21,6 +21,8 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useAppSelector } from "@app/store/redux"
 import { loadJson, save } from "@app/utils/storage"
 import moment from "moment"
+import { useAppConfig } from "@app/hooks"
+import { getLightningAddress } from "@app/utils/pay-links"
 
 const Loader = () => {
   const styles = useStyles()
@@ -57,11 +59,16 @@ const WalletOverview: React.FC<Props> = ({
   pendingBalance,
 }) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const { btcWalletEnabled } = useAppSelector((state) => state.settings)
+  const { userData } = useAppSelector((state) => state.user)
+  const { isAdvanceMode } = useAppSelector((state) => state.settings)
 
   const { LL } = useI18nContext()
+  const { appConfig } = useAppConfig()
+  const { theme } = useTheme()
   const isAuthed = useIsAuthed()
   const styles = useStyles()
+  const colors = theme.colors
+
   const { persistentState, updateState } = usePersistentStateContext()
   const { formatMoneyAmount, displayCurrency, moneyAmountToDisplayCurrencyString } =
     useDisplayCurrency()
@@ -108,7 +115,13 @@ const WalletOverview: React.FC<Props> = ({
 
   useEffect(() => {
     if (isAuthed) formatBalance()
-  }, [isAuthed, data?.me?.defaultAccount?.wallets, pendingBalance, breezBalance])
+  }, [
+    isAuthed,
+    data?.me?.defaultAccount?.wallets,
+    pendingBalance,
+    breezBalance,
+    displayCurrency,
+  ])
 
   useEffect(() => {
     if (!error && data?.me?.defaultAccount.wallets) {
@@ -158,18 +171,26 @@ const WalletOverview: React.FC<Props> = ({
           isApproximate: displayCurrency !== WalletCurrency.Usd,
         }),
       )
-      if (displayCurrency !== WalletCurrency.Usd) {
-        setConvertedUsdBalance(
-          formatMoneyAmount({
-            moneyAmount: extUsdWalletBalance,
-          }),
-        )
-      }
+      setConvertedUsdBalance(
+        formatMoneyAmount({
+          moneyAmount: extUsdWalletBalance,
+        }),
+      )
     }
   }
 
   const toggleIsContentVisible = () => {
     setIsContentVisible((prevState) => !prevState)
+  }
+
+  const navigateHandler = (activeTab: string) => {
+    if (isAdvanceMode) {
+      navigation.navigate("TransactionHistoryTabs", {
+        initialRouteName: activeTab,
+      })
+    } else {
+      navigation.navigate(activeTab as any)
+    }
   }
 
   return (
@@ -184,34 +205,33 @@ const WalletOverview: React.FC<Props> = ({
       </View>
       {/* Start of IBEX Wallet overview */}
       <View style={styles.separator}></View>
-      <Pressable
-        onPress={() =>
-          navigation.navigate("TransactionHistoryTabs", {
-            initialRouteName: "USDTransactionHistory",
-          })
-        }
-      >
+      <Pressable onPress={() => navigateHandler("USDTransactionHistory")}>
         <View style={styles.displayTextView}>
           <View style={styles.currency}>
             <GaloyCurrencyBubble currency="USD" />
-            <Text type="p1">Cash (USD)</Text>
+            <View>
+              <Text type="p1">Cash (USD)</Text>
+              {isAdvanceMode && !!userData?.username && (
+                <Text type="p4" color={colors.grey1}>
+                  {getLightningAddress(
+                    appConfig.galoyInstance.lnAddressHostname,
+                    userData.username,
+                  )}
+                </Text>
+              )}
+            </View>
           </View>
           {loading ? (
             <Loader />
           ) : (
             <View style={styles.hideableArea}>
               <HideableArea isContentVisible={isContentVisible}>
-                {convertedUsdBalance ? (
-                  <Text type="p1" bold>
-                    {convertedUsdBalance}
-                  </Text>
-                ) : null}
-                <Text
-                  type={convertedUsdBalance ? "p3" : "p1"}
-                  bold={!convertedUsdBalance}
-                >
-                  {usdBalance}
+                <Text type="p1" bold>
+                  {convertedUsdBalance}
                 </Text>
+                {displayCurrency !== WalletCurrency.Usd && (
+                  <Text type={"p3"}>{usdBalance}</Text>
+                )}
               </HideableArea>
             </View>
           )}
@@ -219,16 +239,10 @@ const WalletOverview: React.FC<Props> = ({
       </Pressable>
       {/* End of IBEX Wallet overview */}
       {/* Start of Breez SDK Wallet overview */}
-      {btcWalletEnabled && (
+      {isAdvanceMode && (
         <>
           <View style={styles.separator}></View>
-          <Pressable
-            onPress={() =>
-              navigation.navigate("TransactionHistoryTabs", {
-                initialRouteName: "BTCTransactionHistory",
-              })
-            }
-          >
+          <Pressable onPress={() => navigateHandler("BTCTransactionHistory")}>
             <View style={styles.displayTextView}>
               <View style={styles.currency}>
                 <GaloyCurrencyBubble currency="BTC" />

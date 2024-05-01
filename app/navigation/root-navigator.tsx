@@ -95,7 +95,9 @@ import {
   BackupOptions,
   TransactionHistoryTabs,
   IntroScreen,
+  USDTransactionHistory,
 } from "@app/screens"
+import { useAppSelector } from "@app/store/redux"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -115,12 +117,11 @@ const useStyles = makeStyles(({ colors }) => ({
 const RootNavigator = createStackNavigator<RootStackParamList>()
 
 export const RootStack = () => {
-  const styles = useStyles()
-  const {
-    theme: { colors },
-  } = useTheme()
-  const isAuthed = useIsAuthed()
+  const { isAdvanceMode } = useAppSelector((state) => state.settings)
   const { LL } = useI18nContext()
+  const styles = useStyles()
+  const { theme } = useTheme()
+  const colors = theme.colors
 
   return (
     <RootNavigator.Navigator
@@ -183,22 +184,38 @@ export const RootStack = () => {
       <RootNavigator.Screen
         name="sendBitcoinDestination"
         component={SendBitcoinDestinationScreen}
-        options={{ title: LL.SendBitcoinScreen.title() }}
+        options={{
+          title: isAdvanceMode
+            ? LL.SendBitcoinScreen.title()
+            : LL.SendBitcoinScreen.send(),
+        }}
       />
       <RootNavigator.Screen
         name="sendBitcoinDetails"
         component={SendBitcoinDetailsScreen}
-        options={{ title: LL.SendBitcoinScreen.title() }}
+        options={{
+          title: isAdvanceMode
+            ? LL.SendBitcoinScreen.title()
+            : LL.SendBitcoinScreen.send(),
+        }}
       />
       <RootNavigator.Screen
         name="sendBitcoinConfirmation"
         component={SendBitcoinConfirmationScreen}
-        options={{ title: LL.SendBitcoinScreen.title() }}
+        options={{
+          title: isAdvanceMode
+            ? LL.SendBitcoinScreen.title()
+            : LL.SendBitcoinScreen.send(),
+        }}
       />
       <RootNavigator.Screen
         name="sendBitcoinSuccess"
         component={SendBitcoinSuccessScreen}
-        options={{ title: LL.SendBitcoinScreen.title() }}
+        options={{
+          title: isAdvanceMode
+            ? LL.SendBitcoinScreen.title()
+            : LL.SendBitcoinScreen.send(),
+        }}
       />
       <RootNavigator.Screen
         name="receiveBitcoin"
@@ -456,6 +473,11 @@ export const RootStack = () => {
       <RootNavigator.Screen
         name="TransactionHistoryTabs"
         component={TransactionHistoryTabs}
+        options={{ title: LL.TransactionScreen.transactionHistoryTitle() }}
+      />
+      <RootNavigator.Screen
+        name="USDTransactionHistory"
+        component={USDTransactionHistory}
         options={{ title: LL.TransactionScreen.transactionHistoryTitle() }}
       />
     </RootNavigator.Navigator>

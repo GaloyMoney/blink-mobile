@@ -16,6 +16,7 @@ import crashlytics from "@react-native-firebase/crashlytics"
 import { gql } from "@apollo/client"
 import { ratingOptions } from "@app/config"
 import {
+  useAccountUpdateDefaultWalletIdMutation,
   useSettingsScreenQuery,
   useWalletCsvTransactionsLazyQuery,
 } from "@app/graphql/generated"
@@ -77,7 +78,7 @@ gql`
 export const SettingsScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "settings">>()
   const dispatch = useAppDispatch()
-  const { btcWalletEnabled } = useAppSelector((state) => state.settings)
+  const { isAdvanceMode } = useAppSelector((state) => state.settings)
   const { moneyAmountToDisplayCurrencyString } = useDisplayCurrency()
   const [breezBalance] = useBreezBalance()
   const {
@@ -99,6 +100,9 @@ export const SettingsScreen: React.FC = () => {
     returnPartialData: true,
     skip: !isAtLeastLevelZero,
   })
+
+  const [accountUpdateDefaultWallet, { loading }] =
+    useAccountUpdateDefaultWalletIdMutation()
 
   const { displayCurrency } = useDisplayCurrency()
 
@@ -186,8 +190,21 @@ export const SettingsScreen: React.FC = () => {
     })
   }
 
-  const toggleBtcWallet = () => {
-    if (btcWalletEnabled) {
+  const handleSetDefaultWallet = async () => {
+    if (loading) return
+    if (usdWallet) {
+      await accountUpdateDefaultWallet({
+        variables: {
+          input: {
+            walletId: usdWallet?.id,
+          },
+        },
+      })
+    }
+  }
+
+  const toggleAdvanceMode = () => {
+    if (isAdvanceMode) {
       if (breezBalance && breezBalance > 0) {
         const btcWalletBalance = toBtcMoneyAmount(breezBalance || 0)
         const convertedBalance =
@@ -199,26 +216,30 @@ export const SettingsScreen: React.FC = () => {
           balance: convertedBalance,
         })
 
-        const fullMessage = btcBalanceWarning + "\n" + LL.support.disableBtcWallet()
+        const fullMessage = btcBalanceWarning + "\n" + LL.support.switchToBeginnerMode()
 
         Alert.alert(LL.common.warning(), fullMessage, [
           { text: LL.common.cancel(), onPress: () => {} },
           {
             text: LL.common.yes(),
-            onPress: async () => {
-              dispatch(updateSettings({ btcWalletEnabled: false }))
-              save("btcWalletEnabled", false)
-            },
+            onPress: () => toggleAdvanceModeComplete(false),
           },
         ])
       } else {
-        dispatch(updateSettings({ btcWalletEnabled: false }))
-        save("btcWalletEnabled", false)
+        toggleAdvanceModeComplete(false)
       }
     } else {
-      dispatch(updateSettings({ btcWalletEnabled: true }))
-      save("btcWalletEnabled", true)
+      toggleAdvanceModeComplete(true)
     }
+  }
+
+  const toggleAdvanceModeComplete = (isAdvanceMode: boolean) => {
+    if (!isAdvanceMode) {
+      handleSetDefaultWallet()
+    }
+    dispatch(updateSettings({ isAdvanceMode }))
+    save("isAdvanceMode", isAdvanceMode)
+    setTimeout(() => navigation.goBack(), 500)
   }
 
   const contactMessageBody = LL.support.defaultSupportMessage({
@@ -300,12 +321,12 @@ export const SettingsScreen: React.FC = () => {
       chevron: true,
     },
     {
-      category: btcWalletEnabled
-        ? LL.SettingsScreen.disableBtcWallet()
-        : LL.SettingsScreen.enableBtcWallet(),
-      icon: "logo-bitcoin",
+      category: isAdvanceMode
+        ? LL.SettingsScreen.beginnerMode()
+        : LL.SettingsScreen.advanceMode(),
+      icon: isAdvanceMode ? "invert-mode-outline" : "invert-mode",
       id: "enableBtcWallet",
-      action: toggleBtcWallet,
+      action: toggleAdvanceMode,
       enabled: true,
       chevron: true,
     },
@@ -351,8 +372,8 @@ export const SettingsScreen: React.FC = () => {
       id: "default-wallet",
       action: () => navigation.navigate("defaultWallet"),
       subTitleText: defaultWalletCurrency,
-      enabled: btcWalletEnabled ? isAtLeastLevelZero : false,
-      greyed: btcWalletEnabled ? !isAtLeastLevelZero : true,
+      enabled: isAdvanceMode ? isAtLeastLevelZero : false,
+      greyed: isAdvanceMode ? !isAtLeastLevelZero : true,
     },
     {
       category: LL.common.security(),

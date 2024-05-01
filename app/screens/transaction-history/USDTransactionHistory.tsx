@@ -1,8 +1,8 @@
 import * as React from "react"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { ActivityIndicator, SectionList, Text, View } from "react-native"
+import { ActivityIndicator, SectionList, View } from "react-native"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { makeStyles, useTheme } from "@rneui/themed"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
 
 // components
 import { Screen } from "@app/components/screen"
@@ -24,7 +24,11 @@ export const USDTransactionHistory: React.FC = () => {
   const { LL } = useI18nContext()
 
   const { data, error, fetchMore, refetch, loading } =
-    useTransactionListForDefaultAccountQuery({ skip: !useIsAuthed() })
+    useTransactionListForDefaultAccountQuery({
+      skip: !useIsAuthed(),
+      fetchPolicy: "network-only",
+      nextFetchPolicy: "cache-and-network",
+    })
 
   const transactionSections = groupTransactionsByDate({
     txs: data?.me?.defaultAccount?.transactions?.edges?.map((el) => el.node) ?? [],
