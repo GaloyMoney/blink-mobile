@@ -860,6 +860,7 @@ query StatefulNotifications($after: String) {
         deepLink
         createdAt
         acknowledgedAt
+        addToBulletin
         __typename
       }
       pageInfo {
