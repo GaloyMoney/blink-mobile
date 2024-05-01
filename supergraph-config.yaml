@@ -1,9 +1,9 @@
 federation_version: =2.3.2
 subgraphs:
-  galoy:
+  blink:
     routing_url: url
     schema:
-      file: ../galoy/dev/config/apollo-federation/supergraph.graphql
+      file: ../blink/dev/config/apollo-federation/supergraph.graphql
   circles:
     routing_url: url
     schema:
