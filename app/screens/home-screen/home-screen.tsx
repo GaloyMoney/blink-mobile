@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useMemo } from "react"
-import { RefreshControl, View, Alert } from "react-native"
+import { RefreshControl, View, Alert, Dimensions, LayoutChangeEvent } from "react-native"
 import {
   ScrollView,
   TouchableOpacity,
@@ -239,7 +239,19 @@ export const HomeScreen: React.FC = () => {
       }
     | undefined = undefined
 
-  const TRANSACTIONS_TO_SHOW = 1
+  const [noOfTransactionsToShow, setTransactionsToShow] = React.useState(1)
+
+  const onLayoutTransactionDataWrapper = (e: LayoutChangeEvent) => {
+    if (loading) return
+    const layout = e.nativeEvent.layout
+    const txItemsToShow = Math.floor(
+      (Dimensions.get("screen").height -
+        (layout.y + layout.height) -
+        180) /* Bottom Tab Navigation */ /
+        80 /* Per Transaction Item */,
+    )
+    if (noOfTransactionsToShow < txItemsToShow) setTransactionsToShow(txItemsToShow)
+  }
 
   if (isAuthed && transactions.length > 0) {
     recentTransactionsData = {
@@ -247,7 +259,7 @@ export const HomeScreen: React.FC = () => {
       details: (
         <>
           {transactions
-            .slice(0, TRANSACTIONS_TO_SHOW)
+            .slice(0, noOfTransactionsToShow)
             .map(
               (tx, index, array) =>
                 tx && (
@@ -383,7 +395,9 @@ export const HomeScreen: React.FC = () => {
           ))}
         </View>
         <NotificationCard />
-        <View>
+        <AppUpdate />
+
+        <View onLayout={onLayoutTransactionDataWrapper}>
           {recentTransactionsData && (
             <>
               <TouchableOpacity
@@ -405,7 +419,6 @@ export const HomeScreen: React.FC = () => {
           )}
         </View>
 
-        <AppUpdate />
         <SetDefaultAccountModal
           isVisible={setDefaultAccountModalVisible}
           toggleModal={() => {
