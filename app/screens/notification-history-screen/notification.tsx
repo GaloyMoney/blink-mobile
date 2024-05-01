@@ -1,7 +1,6 @@
 import {
   StatefulNotification,
   StatefulNotificationsDocument,
-  UnacknowledgedNotificationCountDocument,
   useStatefulNotificationAcknowledgeMutation,
 } from "@app/graphql/generated"
 import { Text, makeStyles } from "@rneui/themed"
@@ -37,10 +36,7 @@ export const Notification: React.FC<StatefulNotification> = ({
 
   const [ack, _] = useStatefulNotificationAcknowledgeMutation({
     variables: { input: { notificationId: id } },
-    refetchQueries: [
-      StatefulNotificationsDocument,
-      UnacknowledgedNotificationCountDocument,
-    ],
+    refetchQueries: [StatefulNotificationsDocument],
   })
 
   const linkTo = useLinkTo()
