@@ -526,6 +526,13 @@ mutation supportChatMessageAdd($input: SupportChatMessageAddInput!) {
   }
 }
 
+mutation supportChatReset {
+  supportChatReset {
+    success
+    __typename
+  }
+}
+
 mutation userContactUpdateAlias($input: UserContactUpdateAliasInput!) {
   userContactUpdateAlias(input: $input) {
     errors {

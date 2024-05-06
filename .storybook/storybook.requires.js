@@ -68,7 +68,6 @@ const getStories = () => {
     "./app/screens/authentication-screen/authentication-check-screen.stories.tsx": require("../app/screens/authentication-screen/authentication-check-screen.stories.tsx"),
     "./app/screens/authentication-screen/authentication-screen.stories.tsx": require("../app/screens/authentication-screen/authentication-screen.stories.tsx"),
     "./app/screens/authentication-screen/pin-screen.stories.tsx": require("../app/screens/authentication-screen/pin-screen.stories.tsx"),
-    "./app/screens/chatbot-screen/chatbot.stories.tsx": require("../app/screens/chatbot-screen/chatbot.stories.tsx"),
     "./app/screens/conversion-flow/conversion-success-screen.stories.tsx": require("../app/screens/conversion-flow/conversion-success-screen.stories.tsx"),
     "./app/screens/earns-map-screen/earns-map-screen.stories.tsx": require("../app/screens/earns-map-screen/earns-map-screen.stories.tsx"),
     "./app/screens/earns-screen/earns-quiz.stories.tsx": require("../app/screens/earns-screen/earns-quiz.stories.tsx"),
@@ -105,6 +104,7 @@ const getStories = () => {
     "./app/screens/settings-screen/settings-screen.stories.tsx": require("../app/screens/settings-screen/settings-screen.stories.tsx"),
     "./app/screens/settings-screen/settings.stories.tsx": require("../app/screens/settings-screen/settings.stories.tsx"),
     "./app/screens/settings-screen/theme-screen.stories.tsx": require("../app/screens/settings-screen/theme-screen.stories.tsx"),
+    "./app/screens/support-chat-screen/support-chat.stories.tsx": require("../app/screens/support-chat-screen/support-chat.stories.tsx"),
     "./app/screens/transaction-detail-screen/transaction-detail-screen.stories.tsx": require("../app/screens/transaction-detail-screen/transaction-detail-screen.stories.tsx"),
   };
 };

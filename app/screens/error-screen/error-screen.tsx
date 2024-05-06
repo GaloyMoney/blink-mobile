@@ -85,7 +85,7 @@ export const ErrorScreen = ({
         supportChannels={[
           SupportChannels.Faq,
           SupportChannels.StatusPage,
-          SupportChannels.Chatbot,
+          SupportChannels.SupportChat,
           SupportChannels.Email,
           SupportChannels.Telegram,
           SupportChannels.Mattermost,
