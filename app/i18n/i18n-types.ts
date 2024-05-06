@@ -8940,96 +8940,6 @@ type RootTranslation = {
 		 * F​u​l​l​ ​d​e​t​a​i​l​s​ ​a​t​ 
 		 */
 		fullDetails: string
-		decemberChallenge: {
-			/**
-			 * D​e​c​e​m​b​e​r​ ​C​h​a​l​l​e​n​g​e​!
-			 */
-			title: string
-			/**
-			 * +​1​0​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​a​t​ ​$​1​0​0​!
-			 */
-			description: string
-			/**
-			 * G​r​o​w​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​1​0​ ​p​e​o​p​l​e​ ​i​n​ ​D​e​c​e​m​b​e​r​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​a​t​ ​$​1​0​0​!​
-		​
-		​T​o​ ​p​a​r​t​i​c​i​p​a​t​e​,​ ​s​h​a​r​e​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​o​n​ ​s​o​c​i​a​l​ ​o​n​c​e​ ​y​o​u​'​v​e​ ​r​e​a​c​h​e​d​ ​1​0​ ​f​o​r​ ​t​h​e​ ​m​o​n​t​h​ ​a​n​d​ ​t​a​g​ ​#​b​l​i​n​k​c​i​r​c​l​e​s​.​
-		​
-		​O​n​ ​J​a​n​u​a​r​y​ ​1​,​ ​t​h​r​e​e​ ​p​e​o​p​l​e​ ​w​i​l​l​ ​b​e​ ​c​h​o​s​e​n​ ​a​t​ ​r​a​n​d​o​m​ ​t​o​ ​r​e​c​e​i​v​e​ ​$​1​0​0​!
-			 */
-			details: string
-		}
-		januaryChallenge: {
-			/**
-			 * J​a​n​u​a​r​y​ ​C​h​a​l​l​e​n​g​e​!
-			 */
-			title: string
-			/**
-			 * +​1​0​ ​o​u​t​e​r​ ​c​i​r​c​l​e​ ​i​n​ ​J​a​n​u​a​r​y​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​a​t​ ​$​1​0​0​!
-			 */
-			description: string
-			/**
-			 * G​r​o​w​ ​y​o​u​r​ ​O​U​T​E​R​ ​c​i​r​c​l​e​ ​b​y​ ​1​0​ ​i​n​ ​J​a​n​u​a​r​y​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​a​t​ ​$​1​0​0​!​
-		​
-		​Y​o​u​r​ ​o​u​t​e​r​ ​c​i​r​c​l​e​ ​g​r​o​w​s​ ​w​h​e​n​ ​p​e​o​p​l​e​ ​i​n​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​w​e​l​c​o​m​e​ ​o​t​h​e​r​s​,​ ​s​o​ ​r​e​a​c​h​ ​o​u​t​ ​a​n​d​ ​r​e​m​i​n​d​ ​t​h​o​s​e​ ​y​o​u​ ​o​n​b​o​a​r​d​e​d​ ​t​o​ ​s​h​a​r​e​ ​B​l​i​n​k​ ​w​i​t​h​ ​t​h​e​i​r​ ​f​r​i​e​n​d​s​ ​a​n​d​ ​f​a​m​i​l​y​.​
-		​
-		​S​h​a​r​e​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​o​n​ ​s​o​c​i​a​l​ ​w​i​t​h​ ​#​b​l​i​n​k​c​i​r​c​l​e​s​ ​t​o​ ​p​a​r​t​i​c​i​p​a​t​e​.
-			 */
-			details: string
-		}
-		februaryChallenge: {
-			/**
-			 * F​e​b​r​u​a​r​y​ ​C​h​a​l​l​e​n​g​e​!
-			 */
-			title: string
-			/**
-			 * +​3​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​t​o​ ​w​i​n​ ​a​ ​S​e​e​d​s​i​g​n​e​r​ ​h​a​r​d​w​a​r​e​ ​w​a​l​l​e​t​!
-			 */
-			description: string
-			/**
-			 * G​r​o​w​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​3​ ​i​n​ ​F​e​b​r​u​a​r​y​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​t​o​ ​w​i​n​ ​a​ ​S​e​e​d​s​i​g​n​e​r​ ​h​a​r​d​w​a​r​e​ ​w​a​l​l​e​t​!​
-		​
-		​R​e​m​i​n​d​e​r​:​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​g​r​o​w​ ​w​h​e​n​ ​y​o​u​ ​s​e​n​d​ ​a​ ​n​e​w​ ​B​l​i​n​k​ ​u​s​e​r​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s​.​
-		​
-		​S​h​a​r​e​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​o​n​ ​s​o​c​i​a​l​ ​w​i​t​h​ ​#​b​l​i​n​k​c​i​r​c​l​e​s​ ​t​o​ ​p​a​r​t​i​c​i​p​a​t​e​.
-			 */
-			details: string
-		}
-		marchChallenge: {
-			/**
-			 * M​a​r​c​h​ ​C​h​a​l​l​e​n​g​e​!
-			 */
-			title: string
-			/**
-			 * +​3​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​a​n​d​ ​+​3​ ​o​u​t​e​r​ ​c​i​r​c​l​e​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​t​o​ ​w​i​n​ ​$​1​0​0
-			 */
-			description: string
-			/**
-			 * G​r​o​w​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​3​ ​a​n​d​ ​y​o​u​r​ ​o​u​t​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​3​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​a​t​ ​w​i​n​n​i​n​g​ ​$​1​0​0​!​
-		​
-		​R​e​m​i​n​d​e​r​:​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​g​r​o​w​ ​w​h​e​n​ ​y​o​u​ ​s​e​n​d​ ​a​ ​n​e​w​ ​B​l​i​n​k​ ​u​s​e​r​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s​.​
-		​
-		​S​h​a​r​e​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​o​n​ ​s​o​c​i​a​l​ ​w​i​t​h​ ​#​b​l​i​n​k​c​i​r​c​l​e​s​ ​t​o​ ​p​a​r​t​i​c​i​p​a​t​e​.
-			 */
-			details: string
-		}
-		aprilChallenge: {
-			/**
-			 * A​p​r​i​l​ ​C​h​a​l​l​e​n​g​e​!
-			 */
-			title: string
-			/**
-			 * G​r​o​w​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​1​2​ ​a​n​d​ ​y​o​u​r​ ​o​u​t​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​3​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​t​o​ ​w​i​n​ ​a​ ​B​i​t​b​o​x​0​2​ ​h​a​r​d​w​a​r​e​ ​w​a​l​l​e​t​.
-			 */
-			description: string
-			/**
-			 * D​u​r​i​n​g​ ​t​h​e​ ​h​a​l​v​i​n​g​ ​m​o​n​t​h​,​ ​e​x​p​a​n​d​ ​y​o​u​r​ ​i​n​n​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​1​2​ ​a​n​d​ ​y​o​u​r​ ​o​u​t​e​r​ ​c​i​r​c​l​e​ ​b​y​ ​3​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​t​o​ ​w​i​n​ ​a​ ​B​i​t​b​o​x​0​2​ ​h​a​r​d​w​a​r​e​ ​w​a​l​l​e​t​!​
-		​
-		​R​e​m​i​n​d​e​r​:​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​g​r​o​w​ ​w​h​e​n​ ​y​o​u​ ​s​e​n​d​ ​a​ ​n​e​w​ ​B​l​i​n​k​ ​u​s​e​r​ ​t​h​e​i​r​ ​f​i​r​s​t​ ​s​a​t​s​.​
-		​
-		​S​h​a​r​e​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​o​n​ ​s​o​c​i​a​l​ ​w​i​t​h​ ​#​b​l​i​n​k​c​i​r​c​l​e​s​ ​t​o​ ​p​a​r​t​i​c​i​p​a​t​e​.
-			 */
-			details: string
-		}
 		mayChallenge: {
 			/**
 			 * M​a​y​ ​C​h​a​l​l​e​n​g​e​!
@@ -9130,6 +9040,20 @@ type RootTranslation = {
 		 * Y​o​u​ ​d​o​n​'​t​ ​h​a​v​e​ ​a​n​y​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​r​i​g​h​t​ ​n​o​w
 		 */
 		noNotifications: string
+	}
+	SupportChat: {
+		/**
+		 * A​n​ ​e​r​r​o​r​ ​o​c​c​u​r​r​e​d​ ​w​h​i​l​e​ ​s​e​n​d​i​n​g​ ​t​h​e​ ​m​e​s​s​a​g​e
+		 */
+		errorSendingMessage: string
+		/**
+		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​r​e​s​e​t​ ​t​h​e​ ​c​h​a​t​?
+		 */
+		confirmChatReset: string
+		/**
+		 * A​n​ ​e​r​r​o​r​ ​o​c​c​u​r​r​e​d​ ​w​h​i​l​e​ ​r​e​s​e​t​t​i​n​g​ ​t​h​e​ ​c​h​a​t
+		 */
+		errorResettingChat: string
 	}
 }
 
@@ -17956,96 +17880,6 @@ export type TranslationFunctions = {
 		 * Full details at 
 		 */
 		fullDetails: () => LocalizedString
-		decemberChallenge: {
-			/**
-			 * December Challenge!
-			 */
-			title: () => LocalizedString
-			/**
-			 * +10 inner circle for a chance at $100!
-			 */
-			description: () => LocalizedString
-			/**
-			 * Grow your inner circle by 10 people in December for a chance at $100!
-	
-		To participate, share your circles on social once you've reached 10 for the month and tag #blinkcircles.
-	
-		On January 1, three people will be chosen at random to receive $100!
-			 */
-			details: () => LocalizedString
-		}
-		januaryChallenge: {
-			/**
-			 * January Challenge!
-			 */
-			title: () => LocalizedString
-			/**
-			 * +10 outer circle in January for a chance at $100!
-			 */
-			description: () => LocalizedString
-			/**
-			 * Grow your OUTER circle by 10 in January for a chance at $100!
-	
-		Your outer circle grows when people in your inner circle welcome others, so reach out and remind those you onboarded to share Blink with their friends and family.
-	
-		Share your circles on social with #blinkcircles to participate.
-			 */
-			details: () => LocalizedString
-		}
-		februaryChallenge: {
-			/**
-			 * February Challenge!
-			 */
-			title: () => LocalizedString
-			/**
-			 * +3 inner circle for a chance to win a Seedsigner hardware wallet!
-			 */
-			description: () => LocalizedString
-			/**
-			 * Grow your inner circle by 3 in February for a chance to win a Seedsigner hardware wallet!
-	
-		Reminder: your circles grow when you send a new Blink user their first sats.
-	
-		Share your circles on social with #blinkcircles to participate.
-			 */
-			details: () => LocalizedString
-		}
-		marchChallenge: {
-			/**
-			 * March Challenge!
-			 */
-			title: () => LocalizedString
-			/**
-			 * +3 inner circle and +3 outer circle for a chance to win $100
-			 */
-			description: () => LocalizedString
-			/**
-			 * Grow your inner circle by 3 and your outer circle by 3 for a chance at winning $100!
-	
-		Reminder: your circles grow when you send a new Blink user their first sats.
-	
-		Share your circles on social with #blinkcircles to participate.
-			 */
-			details: () => LocalizedString
-		}
-		aprilChallenge: {
-			/**
-			 * April Challenge!
-			 */
-			title: () => LocalizedString
-			/**
-			 * Grow your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet.
-			 */
-			description: () => LocalizedString
-			/**
-			 * During the halving month, expand your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet!
-	
-		Reminder: your circles grow when you send a new Blink user their first sats.
-	
-		Share your circles on social with #blinkcircles to participate.
-			 */
-			details: () => LocalizedString
-		}
 		mayChallenge: {
 			/**
 			 * May Challenge!
@@ -18144,6 +17978,20 @@ export type TranslationFunctions = {
 		 * You don't have any notifications right now
 		 */
 		noNotifications: () => LocalizedString
+	}
+	SupportChat: {
+		/**
+		 * An error occurred while sending the message
+		 */
+		errorSendingMessage: () => LocalizedString
+		/**
+		 * Are you sure you want to reset the chat?
+		 */
+		confirmChatReset: () => LocalizedString
+		/**
+		 * An error occurred while resetting the chat
+		 */
+		errorResettingChat: () => LocalizedString
 	}
 }
 

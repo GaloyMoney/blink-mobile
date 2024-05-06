@@ -5,7 +5,7 @@ import LearnIcon from "@app/assets/icons/learn.svg"
 import MapIcon from "@app/assets/icons/map.svg"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { ChatBotScreen } from "@app/screens/chatbot-screen/chatbot"
+import { SupportChatScreen } from "@app/screens/support-chat-screen/support-chat"
 import {
   ConversionConfirmationScreen,
   ConversionDetailsScreen,
@@ -420,8 +420,8 @@ export const RootStack = () => {
         }}
       />
       <RootNavigator.Screen
-        name="chatbot"
-        component={ChatBotScreen}
+        name="supportChat"
+        component={SupportChatScreen}
         options={{
           title: LL.support.chatbot(),
         }}
