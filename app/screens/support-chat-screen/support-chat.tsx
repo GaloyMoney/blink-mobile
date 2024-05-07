@@ -5,6 +5,7 @@ import {
   FlatList,
   Keyboard,
   TouchableHighlight,
+  TouchableOpacity,
   View,
 } from "react-native"
 import { TextInput } from "react-native-gesture-handler"
@@ -18,11 +19,16 @@ import {
   SupportRole,
   useSupportChatMessageAddMutation,
   useSupportChatQuery,
+  useSupportChatResetMutation,
 } from "@app/graphql/generated"
 import { useActionSheet } from "@expo/react-native-action-sheet"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 import Markdown from "@ronradtke/react-native-markdown-display"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { useNavigation } from "@react-navigation/native"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { useI18nContext } from "@app/i18n/i18n-react"
 
 type SupportChatMe = SupportChatQuery["me"]
 type SupportChatArray = NonNullable<SupportChatMe>["supportChat"]
@@ -54,13 +60,19 @@ gql`
       }
     }
   }
+
+  mutation supportChatReset {
+    supportChatReset {
+      success
+    }
+  }
 `
 
-export const ChatBotScreen = () => {
+export const SupportChatScreen = () => {
   const styles = useStyles()
   const { theme } = useTheme()
 
-  const supportChatQuery = useSupportChatQuery({ fetchPolicy: "network-only" })
+  const supportChatQuery = useSupportChatQuery()
   const supportChat = supportChatQuery.data?.me?.supportChat ?? []
 
   const flatListRef = useRef<FlatList<SupportChatMessage>>(null)
@@ -70,6 +82,42 @@ export const ChatBotScreen = () => {
   const [input, setInput] = useState<string>("")
   const [pendingInput, setPendingInput] = useState<string>("")
 
+  const [supportChatReset] = useSupportChatResetMutation()
+  const { LL } = useI18nContext()
+
+  const maybeResetChat = () => {
+    Alert.alert(LL.SupportChat.confirmChatReset(), "", [
+      {
+        text: LL.common.ok(),
+        onPress: async () => {
+          try {
+            const result = await supportChatReset()
+            if (result.data?.supportChatReset.success) {
+              supportChatQuery.refetch()
+            } else {
+              Alert.alert(LL.common.error(), LL.SupportChat.errorResettingChat())
+            }
+          } catch (error) {
+            Alert.alert(LL.common.error(), LL.SupportChat.errorResettingChat())
+            console.error("Reset chat error: ", error)
+          }
+        },
+      },
+      {
+        text: LL.common.cancel(),
+        style: "cancel",
+      },
+    ])
+  }
+
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  navigation.setOptions({
+    headerRight: () => (
+      <TouchableOpacity onPress={maybeResetChat}>
+        <Text style={styles.clearText}>Clear</Text>
+      </TouchableOpacity>
+    ),
+  })
   // TODO: replace with cache:
   // ie: adding the SupportRole messaage to the supportChat cache
   const supportChatMaybeInput = pendingInput
@@ -118,8 +166,7 @@ export const ChatBotScreen = () => {
         },
       })
     } catch (err) {
-      // TODO: translation
-      Alert.alert("Error", "An error occurred while sending the message")
+      Alert.alert(LL.common.error(), LL.SupportChat.errorSendingMessage())
       console.log("error: ", err)
     } finally {
       setPendingInput("")
@@ -385,4 +432,5 @@ const useStyles = makeStyles(({ colors }) => ({
     backgroundColor: colors._lightBlue,
   },
   activityIndicator: { padding: 10 },
+  clearText: { marginRight: 15 },
 }))

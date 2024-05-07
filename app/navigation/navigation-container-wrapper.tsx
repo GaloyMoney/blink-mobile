@@ -119,7 +119,7 @@ export const NavigationContainerWrapper: React.FC<React.PropsWithChildren> = ({
         receiveBitcoin: "receive",
         conversionDetails: "convert",
         scanningQRCode: "scan-qr",
-        chatbot: "chat",
+        supportChat: "chat",
         totpRegistrationInitiate: "settings/2fa",
         currency: "settings/display-currency",
         defaultWallet: "settings/default-account",

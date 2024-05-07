@@ -97,7 +97,7 @@ export type RootStackParamList = {
   totpLoginValidate: { authToken: string }
   webView: { url: string; initialTitle?: string }
   fullOnboardingFlow: undefined
-  chatbot: undefined
+  supportChat: undefined
   notificationHistory: undefined
 }
 

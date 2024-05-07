@@ -3,7 +3,6 @@ import { Linking } from "react-native"
 import ReactNativeModal from "react-native-modal"
 
 import { CONTACT_EMAIL_ADDRESS, WHATSAPP_CONTACT_NUMBER } from "@app/config"
-import { useBetaQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { openWhatsApp } from "@app/utils/external"
@@ -20,7 +19,7 @@ export const SupportChannels = {
   StatusPage: "statusPage",
   Mattermost: "mattermost",
   Faq: "faq",
-  Chatbot: "chatbot",
+  SupportChat: "supportChat",
 } as const
 
 export type SupportChannels = (typeof SupportChannels)[keyof typeof SupportChannels]
@@ -51,15 +50,13 @@ const ContactModal: React.FC<Props> = ({
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
-  const betaActivated = useBetaQuery().data?.beta ?? false
-
   const contactOptionList = [
     {
-      id: SupportChannels.Chatbot,
+      id: SupportChannels.SupportChat,
       name: LL.support.chatbot(),
       icon: <Icon name={"chatbubbles-outline"} type="ionicon" />,
       action: () => {
-        navigation.navigate("chatbot")
+        navigation.navigate("supportChat")
         toggleModal()
       },
     },
@@ -133,7 +130,6 @@ const ContactModal: React.FC<Props> = ({
     >
       {contactOptionList
         .filter((item) => supportChannels.includes(item.id))
-        .filter((item) => (item.id === SupportChannels.Chatbot ? betaActivated : true))
         .map((item) => {
           return (
             <ListItem
