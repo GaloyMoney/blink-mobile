@@ -9,7 +9,7 @@ import { SettingsRow } from "../row"
 
 export const AccountStaticQR: React.FC = () => {
   const { appConfig } = useAppConfig()
-  const posUrl = appConfig.galoyInstance.posUrl
+  const posUrl = appConfig.galoyInstance.lnAddressHostname
 
   const { LL } = useI18nContext()
 
