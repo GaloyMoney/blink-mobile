@@ -15,7 +15,6 @@ type Props = {
   rightIconAction?: () => void | Promise<void>
   loading?: boolean
   spinner?: boolean
-  shorter?: boolean
 }
 
 export const SettingsRow: React.FC<Props> = ({
@@ -29,10 +28,9 @@ export const SettingsRow: React.FC<Props> = ({
   extraComponentBesideTitle = <></>,
   loading,
   spinner,
-  shorter,
 }) => {
   const [hovering, setHovering] = useState(false)
-  const styles = useStyles({ hovering, shorter })
+  const styles = useStyles({ hovering })
 
   if (loading) return <Skeleton style={styles.container} animation="pulse" />
   if (spinner)
@@ -87,39 +85,37 @@ export const SettingsRow: React.FC<Props> = ({
   )
 }
 
-const useStyles = makeStyles(
-  ({ colors }, { hovering, shorter }: { hovering: boolean; shorter?: boolean }) => ({
-    container: {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between",
-      columnGap: 16,
-      backgroundColor: hovering ? colors.grey4 : undefined,
-      minHeight: shorter ? 56 : 64,
-    },
-    spacing: {
-      paddingHorizontal: 8,
-      paddingRight: 12,
-    },
-    center: {
-      justifyContent: "space-around",
-    },
-    rightActionTouchArea: {
-      padding: 12,
-      marginRight: -12,
-      position: "relative",
-    },
-    sidetoside: {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-      columnGap: 5,
-    },
-    internalContainer: {
-      flex: 2,
-      justifyContent: "flex-start",
-      paddingRight: 16,
-    },
-  }),
-)
+const useStyles = makeStyles(({ colors }, { hovering }: { hovering: boolean }) => ({
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    columnGap: 16,
+    backgroundColor: hovering ? colors.grey4 : undefined,
+    minHeight: 58,
+  },
+  spacing: {
+    paddingHorizontal: 8,
+    paddingRight: 12,
+  },
+  center: {
+    justifyContent: "space-around",
+  },
+  rightActionTouchArea: {
+    padding: 12,
+    marginRight: -12,
+    position: "relative",
+  },
+  sidetoside: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    columnGap: 5,
+  },
+  internalContainer: {
+    flex: 2,
+    justifyContent: "flex-start",
+    paddingRight: 16,
+  },
+}))
