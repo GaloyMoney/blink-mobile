@@ -1367,6 +1367,8 @@ export const Network = {
 } as const;
 
 export type Network = typeof Network[keyof typeof Network];
+export type NotificationAction = OpenDeepLinkAction | OpenExternalLinkAction;
+
 export const NotificationChannel = {
   Push: 'PUSH'
 } as const;
@@ -1487,6 +1489,16 @@ export type OneDayAccountLimit = AccountLimit & {
   readonly remainingLimit?: Maybe<Scalars['CentAmount']['output']>;
   /** The current maximum limit for a given 24 hour period. */
   readonly totalLimit: Scalars['CentAmount']['output'];
+};
+
+export type OpenDeepLinkAction = {
+  readonly __typename: 'OpenDeepLinkAction';
+  readonly deepLink: Scalars['String']['output'];
+};
+
+export type OpenExternalLinkAction = {
+  readonly __typename: 'OpenExternalLinkAction';
+  readonly url: Scalars['String']['output'];
 };
 
 /** Information about pagination in a connection. */
@@ -1815,6 +1827,7 @@ export type SettlementViaOnChain = {
 export type StatefulNotification = {
   readonly __typename: 'StatefulNotification';
   readonly acknowledgedAt?: Maybe<Scalars['Timestamp']['output']>;
+  readonly action?: Maybe<NotificationAction>;
   readonly body: Scalars['String']['output'];
   readonly bulletinEnabled: Scalars['Boolean']['output'];
   readonly createdAt: Scalars['Timestamp']['output'];
@@ -7867,6 +7880,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping of union types */
 export type ResolversUnionTypes<RefType extends Record<string, unknown>> = {
   InitiationVia: ( InitiationViaIntraLedger ) | ( InitiationViaLn ) | ( InitiationViaOnChain );
+  NotificationAction: ( OpenDeepLinkAction ) | ( OpenExternalLinkAction );
   SettlementVia: ( SettlementViaIntraLedger ) | ( SettlementViaLn ) | ( SettlementViaOnChain );
   UserUpdate: ( IntraLedgerUpdate ) | ( LnUpdate ) | ( OnChainUpdate ) | ( Price ) | ( RealtimePrice );
 };
@@ -8001,6 +8015,7 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   MyUpdatesPayload: ResolverTypeWrapper<Omit<MyUpdatesPayload, 'update'> & { update?: Maybe<ResolversTypes['UserUpdate']> }>;
   Network: Network;
+  NotificationAction: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['NotificationAction']>;
   NotificationCategory: ResolverTypeWrapper<Scalars['NotificationCategory']['output']>;
   NotificationChannel: NotificationChannel;
   NotificationChannelSettings: ResolverTypeWrapper<NotificationChannelSettings>;
@@ -8022,6 +8037,8 @@ export type ResolversTypes = {
   OnboardingStatus: OnboardingStatus;
   OneDayAccountLimit: ResolverTypeWrapper<OneDayAccountLimit>;
   OneTimeAuthCode: ResolverTypeWrapper<Scalars['OneTimeAuthCode']['output']>;
+  OpenDeepLinkAction: ResolverTypeWrapper<OpenDeepLinkAction>;
+  OpenExternalLinkAction: ResolverTypeWrapper<OpenExternalLinkAction>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   PaymentHash: ResolverTypeWrapper<Scalars['PaymentHash']['output']>;
   PaymentSendPayload: ResolverTypeWrapper<PaymentSendPayload>;
@@ -8058,7 +8075,7 @@ export type ResolversTypes = {
   SettlementViaOnChain: ResolverTypeWrapper<SettlementViaOnChain>;
   SignedAmount: ResolverTypeWrapper<Scalars['SignedAmount']['output']>;
   SignedDisplayMajorAmount: ResolverTypeWrapper<Scalars['SignedDisplayMajorAmount']['output']>;
-  StatefulNotification: ResolverTypeWrapper<StatefulNotification>;
+  StatefulNotification: ResolverTypeWrapper<Omit<StatefulNotification, 'action'> & { action?: Maybe<ResolversTypes['NotificationAction']> }>;
   StatefulNotificationAcknowledgeInput: StatefulNotificationAcknowledgeInput;
   StatefulNotificationAcknowledgePayload: ResolverTypeWrapper<StatefulNotificationAcknowledgePayload>;
   StatefulNotificationConnection: ResolverTypeWrapper<StatefulNotificationConnection>;
@@ -8232,6 +8249,7 @@ export type ResolversParentTypes = {
   MobileVersions: MobileVersions;
   Mutation: {};
   MyUpdatesPayload: Omit<MyUpdatesPayload, 'update'> & { update?: Maybe<ResolversParentTypes['UserUpdate']> };
+  NotificationAction: ResolversUnionTypes<ResolversParentTypes>['NotificationAction'];
   NotificationCategory: Scalars['NotificationCategory']['output'];
   NotificationChannelSettings: NotificationChannelSettings;
   NotificationSettings: NotificationSettings;
@@ -8251,6 +8269,8 @@ export type ResolversParentTypes = {
   OnboardingFlowStartResult: OnboardingFlowStartResult;
   OneDayAccountLimit: OneDayAccountLimit;
   OneTimeAuthCode: Scalars['OneTimeAuthCode']['output'];
+  OpenDeepLinkAction: OpenDeepLinkAction;
+  OpenExternalLinkAction: OpenExternalLinkAction;
   PageInfo: PageInfo;
   PaymentHash: Scalars['PaymentHash']['output'];
   PaymentSendPayload: PaymentSendPayload;
@@ -8282,7 +8302,7 @@ export type ResolversParentTypes = {
   SettlementViaOnChain: SettlementViaOnChain;
   SignedAmount: Scalars['SignedAmount']['output'];
   SignedDisplayMajorAmount: Scalars['SignedDisplayMajorAmount']['output'];
-  StatefulNotification: StatefulNotification;
+  StatefulNotification: Omit<StatefulNotification, 'action'> & { action?: Maybe<ResolversParentTypes['NotificationAction']> };
   StatefulNotificationAcknowledgeInput: StatefulNotificationAcknowledgeInput;
   StatefulNotificationAcknowledgePayload: StatefulNotificationAcknowledgePayload;
   StatefulNotificationConnection: StatefulNotificationConnection;
@@ -8897,6 +8917,10 @@ export type MyUpdatesPayloadResolvers<ContextType = any, ParentType extends Reso
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type NotificationActionResolvers<ContextType = any, ParentType extends ResolversParentTypes['NotificationAction'] = ResolversParentTypes['NotificationAction']> = {
+  __resolveType: TypeResolveFn<'OpenDeepLinkAction' | 'OpenExternalLinkAction', ParentType, ContextType>;
+};
+
 export interface NotificationCategoryScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['NotificationCategory'], any> {
   name: 'NotificationCategory';
 }
@@ -8965,6 +8989,16 @@ export type OneDayAccountLimitResolvers<ContextType = any, ParentType extends Re
 export interface OneTimeAuthCodeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['OneTimeAuthCode'], any> {
   name: 'OneTimeAuthCode';
 }
+
+export type OpenDeepLinkActionResolvers<ContextType = any, ParentType extends ResolversParentTypes['OpenDeepLinkAction'] = ResolversParentTypes['OpenDeepLinkAction']> = {
+  deepLink?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type OpenExternalLinkActionResolvers<ContextType = any, ParentType extends ResolversParentTypes['OpenExternalLinkAction'] = ResolversParentTypes['OpenExternalLinkAction']> = {
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
 
 export type PageInfoResolvers<ContextType = any, ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']> = {
   endCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -9168,6 +9202,7 @@ export interface SignedDisplayMajorAmountScalarConfig extends GraphQLScalarTypeC
 
 export type StatefulNotificationResolvers<ContextType = any, ParentType extends ResolversParentTypes['StatefulNotification'] = ResolversParentTypes['StatefulNotification']> = {
   acknowledgedAt?: Resolver<Maybe<ResolversTypes['Timestamp']>, ParentType, ContextType>;
+  action?: Resolver<Maybe<ResolversTypes['NotificationAction']>, ParentType, ContextType>;
   body?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   bulletinEnabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
@@ -9513,6 +9548,7 @@ export type Resolvers<ContextType = any> = {
   MobileVersions?: MobileVersionsResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   MyUpdatesPayload?: MyUpdatesPayloadResolvers<ContextType>;
+  NotificationAction?: NotificationActionResolvers<ContextType>;
   NotificationCategory?: GraphQLScalarType;
   NotificationChannelSettings?: NotificationChannelSettingsResolvers<ContextType>;
   NotificationSettings?: NotificationSettingsResolvers<ContextType>;
@@ -9525,6 +9561,8 @@ export type Resolvers<ContextType = any> = {
   OnboardingFlowStartResult?: OnboardingFlowStartResultResolvers<ContextType>;
   OneDayAccountLimit?: OneDayAccountLimitResolvers<ContextType>;
   OneTimeAuthCode?: GraphQLScalarType;
+  OpenDeepLinkAction?: OpenDeepLinkActionResolvers<ContextType>;
+  OpenExternalLinkAction?: OpenExternalLinkActionResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   PaymentHash?: GraphQLScalarType;
   PaymentSendPayload?: PaymentSendPayloadResolvers<ContextType>;
