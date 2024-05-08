@@ -4,12 +4,13 @@ import {
   useStatefulNotificationAcknowledgeMutation,
 } from "@app/graphql/generated"
 import { Text, makeStyles } from "@rneui/themed"
-import { View } from "react-native"
+import { View, Linking } from "react-native"
 import { timeAgo } from "./utils"
 import { gql } from "@apollo/client"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
-import { useLinkTo } from "@react-navigation/native"
 import { useState } from "react"
+
+const BLINK_DEEP_LINK_PREFIX = "blink:/"
 
 gql`
   mutation StatefulNotificationAcknowledge(
@@ -38,15 +39,13 @@ export const Notification: React.FC<StatefulNotification> = ({
     variables: { input: { notificationId: id } },
     refetchQueries: [StatefulNotificationsDocument],
   })
-
-  const linkTo = useLinkTo()
-
+  const prefixedDeepLink = deepLink ? `${BLINK_DEEP_LINK_PREFIX}${deepLink}` : undefined
   return (
     <TouchableWithoutFeedback
       onPress={() => {
         setIsAcknowledged(true)
         !isAcknowledged && ack()
-        deepLink && linkTo(deepLink)
+        prefixedDeepLink && Linking.openURL(prefixedDeepLink)
       }}
     >
       <View style={styles.container}>
