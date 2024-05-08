@@ -211,23 +211,4 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-export const NotificationCard = () => {
-  const { cardInfo } = useNotifications()
-
-  if (!cardInfo) {
-    return null
-  }
-
-  return (
-    <NotificationCardUI
-      title={cardInfo.title}
-      text={cardInfo.text}
-      icon={cardInfo.icon}
-      action={cardInfo.action}
-      loading={cardInfo.loading}
-      dismissAction={cardInfo.dismissAction}
-    />
-  )
-}
-
 export const useNotifications = () => useContext(NotificationModalContext)

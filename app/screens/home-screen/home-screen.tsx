@@ -16,7 +16,7 @@ import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { icons } from "@app/components/atomic/galoy-icon"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import { NotificationCard } from "@app/components/notifications"
+import { BulletinsCard } from "@app/components/notifications/bulletins"
 import { SetDefaultAccountModal } from "@app/components/set-default-account-modal"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
@@ -382,7 +382,7 @@ export const HomeScreen: React.FC = () => {
             </View>
           ))}
         </View>
-        <NotificationCard />
+        <BulletinsCard />
         <View>
           {recentTransactionsData && (
             <>

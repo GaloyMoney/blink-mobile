@@ -2489,6 +2489,14 @@ export type InviteQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type InviteQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly username?: string | null } | null };
 
+export type BulletinsQueryVariables = Exact<{
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type BulletinsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly unacknowledgedStatefulNotificationsWithBulletinEnabled: { readonly __typename: 'StatefulNotificationConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly endCursor?: string | null, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null }, readonly nodes: ReadonlyArray<{ readonly __typename: 'StatefulNotification', readonly id: string, readonly title: string, readonly body: string, readonly deepLink?: string | null, readonly createdAt: number, readonly acknowledgedAt?: number | null, readonly bulletinEnabled: boolean }>, readonly edges: ReadonlyArray<{ readonly __typename: 'StatefulNotificationEdge', readonly cursor: string, readonly node: { readonly __typename: 'StatefulNotification', readonly id: string, readonly title: string, readonly body: string, readonly deepLink?: string | null, readonly createdAt: number, readonly acknowledgedAt?: number | null, readonly bulletinEnabled: boolean } }> } } | null };
+
 export type BtcPriceListQueryVariables = Exact<{
   range: PriceGraphRange;
 }>;
@@ -3335,6 +3343,78 @@ export type InviteQueryHookResult = ReturnType<typeof useInviteQuery>;
 export type InviteLazyQueryHookResult = ReturnType<typeof useInviteLazyQuery>;
 export type InviteSuspenseQueryHookResult = ReturnType<typeof useInviteSuspenseQuery>;
 export type InviteQueryResult = Apollo.QueryResult<InviteQuery, InviteQueryVariables>;
+export const BulletinsDocument = gql`
+    query Bulletins($first: Int!, $after: String) {
+  me {
+    unacknowledgedStatefulNotificationsWithBulletinEnabled(
+      first: $first
+      after: $after
+    ) {
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+      nodes {
+        id
+        title
+        body
+        deepLink
+        createdAt
+        acknowledgedAt
+        bulletinEnabled
+      }
+      edges {
+        node {
+          id
+          title
+          body
+          deepLink
+          createdAt
+          acknowledgedAt
+          bulletinEnabled
+        }
+        cursor
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useBulletinsQuery__
+ *
+ * To run a query within a React component, call `useBulletinsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBulletinsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBulletinsQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useBulletinsQuery(baseOptions: Apollo.QueryHookOptions<BulletinsQuery, BulletinsQueryVariables> & ({ variables: BulletinsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BulletinsQuery, BulletinsQueryVariables>(BulletinsDocument, options);
+      }
+export function useBulletinsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BulletinsQuery, BulletinsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BulletinsQuery, BulletinsQueryVariables>(BulletinsDocument, options);
+        }
+export function useBulletinsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<BulletinsQuery, BulletinsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<BulletinsQuery, BulletinsQueryVariables>(BulletinsDocument, options);
+        }
+export type BulletinsQueryHookResult = ReturnType<typeof useBulletinsQuery>;
+export type BulletinsLazyQueryHookResult = ReturnType<typeof useBulletinsLazyQuery>;
+export type BulletinsSuspenseQueryHookResult = ReturnType<typeof useBulletinsSuspenseQuery>;
+export type BulletinsQueryResult = Apollo.QueryResult<BulletinsQuery, BulletinsQueryVariables>;
 export const BtcPriceListDocument = gql`
     query btcPriceList($range: PriceGraphRange!) {
   btcPriceList(range: $range) {

@@ -778,6 +778,49 @@ mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
   }
 }
 
+query Bulletins($first: Int!, $after: String) {
+  me {
+    unacknowledgedStatefulNotificationsWithBulletinEnabled(
+      first: $first
+      after: $after
+    ) {
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        __typename
+      }
+      nodes {
+        id
+        title
+        body
+        deepLink
+        createdAt
+        acknowledgedAt
+        bulletinEnabled
+        __typename
+      }
+      edges {
+        node {
+          id
+          title
+          body
+          deepLink
+          createdAt
+          acknowledgedAt
+          bulletinEnabled
+          __typename
+        }
+        cursor
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
 query Circles {
   me {
     id

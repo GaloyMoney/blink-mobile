@@ -72,7 +72,7 @@ export const NotificationHistoryScreen = () => {
             tintColor={colors.primary} // iOS refresh indicator color
           />
         }
-        data={notifications?.nodes}
+        data={notifications?.nodes.filter((n) => !n.bulletinEnabled)}
         renderItem={({ item }) => <Notification {...item} />}
         onEndReached={fetchNextNotificationsPage}
         onEndReachedThreshold={0.5}
