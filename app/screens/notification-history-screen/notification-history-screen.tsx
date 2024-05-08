@@ -20,7 +20,7 @@ gql`
           deepLink
           createdAt
           acknowledgedAt
-          addToBulletin
+          bulletinEnabled
         }
         pageInfo {
           endCursor
