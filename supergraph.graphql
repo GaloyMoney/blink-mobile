@@ -612,6 +612,62 @@ type GraphQLApplicationError implements Error
 scalar Hex32Bytes
   @join__type(graph: BLINK)
 
+enum Icon
+  @join__type(graph: BLINK)
+{
+  ARROW_RIGHT @join__enumValue(graph: BLINK)
+  ARROW_LEFT @join__enumValue(graph: BLINK)
+  BACK_SPACE @join__enumValue(graph: BLINK)
+  BANK @join__enumValue(graph: BLINK)
+  BITCOIN @join__enumValue(graph: BLINK)
+  BOOK @join__enumValue(graph: BLINK)
+  BTC_BOOK @join__enumValue(graph: BLINK)
+  CARET_DOWN @join__enumValue(graph: BLINK)
+  CARET_LEFT @join__enumValue(graph: BLINK)
+  CARET_RIGHT @join__enumValue(graph: BLINK)
+  CARET_UP @join__enumValue(graph: BLINK)
+  CHECK_CIRCLE @join__enumValue(graph: BLINK)
+  CHECK @join__enumValue(graph: BLINK)
+  CLOSE @join__enumValue(graph: BLINK)
+  CLOSE_CROSS_WITH_BACKGROUND @join__enumValue(graph: BLINK)
+  COINS @join__enumValue(graph: BLINK)
+  PEOPLE @join__enumValue(graph: BLINK)
+  COPY_PASTE @join__enumValue(graph: BLINK)
+  DOLLAR @join__enumValue(graph: BLINK)
+  EYE_SLASH @join__enumValue(graph: BLINK)
+  EYE @join__enumValue(graph: BLINK)
+  FILTER @join__enumValue(graph: BLINK)
+  GLOBE @join__enumValue(graph: BLINK)
+  GRAPH @join__enumValue(graph: BLINK)
+  IMAGE @join__enumValue(graph: BLINK)
+  INFO @join__enumValue(graph: BLINK)
+  LIGHTNING @join__enumValue(graph: BLINK)
+  LINK @join__enumValue(graph: BLINK)
+  LOADING @join__enumValue(graph: BLINK)
+  MAGNIFYING_GLASS @join__enumValue(graph: BLINK)
+  MAP @join__enumValue(graph: BLINK)
+  MENU @join__enumValue(graph: BLINK)
+  PENCIL @join__enumValue(graph: BLINK)
+  NOTE @join__enumValue(graph: BLINK)
+  RANK @join__enumValue(graph: BLINK)
+  QR_CODE @join__enumValue(graph: BLINK)
+  QUESTION @join__enumValue(graph: BLINK)
+  RECEIVE @join__enumValue(graph: BLINK)
+  SEND @join__enumValue(graph: BLINK)
+  SETTINGS @join__enumValue(graph: BLINK)
+  SHARE @join__enumValue(graph: BLINK)
+  TRANSFER @join__enumValue(graph: BLINK)
+  USER @join__enumValue(graph: BLINK)
+  VIDEO @join__enumValue(graph: BLINK)
+  WARNING @join__enumValue(graph: BLINK)
+  WARNING_WITH_BACKGROUND @join__enumValue(graph: BLINK)
+  PAYMENT_SUCCESS @join__enumValue(graph: BLINK)
+  PAYMENT_PENDING @join__enumValue(graph: BLINK)
+  PAYMENT_ERROR @join__enumValue(graph: BLINK)
+  BELL @join__enumValue(graph: BLINK)
+  REFRESH @join__enumValue(graph: BLINK)
+}
+
 union InitiationVia
   @join__type(graph: BLINK)
   @join__unionMember(graph: BLINK, member: "InitiationViaIntraLedger")
@@ -1339,6 +1395,12 @@ enum Network
   testnet @join__enumValue(graph: BLINK)
 }
 
+union NotificationAction
+  @join__type(graph: BLINK)
+  @join__unionMember(graph: BLINK, member: "OpenDeepLinkAction")
+  @join__unionMember(graph: BLINK, member: "OpenExternalLinkAction")
+ = OpenDeepLinkAction | OpenExternalLinkAction
+
 scalar NotificationCategory
   @join__type(graph: BLINK)
 
@@ -1500,6 +1562,18 @@ type OneDayAccountLimit implements AccountLimit
 """An authentication code valid for a single use"""
 scalar OneTimeAuthCode
   @join__type(graph: BLINK)
+
+type OpenDeepLinkAction
+  @join__type(graph: BLINK)
+{
+  deepLink: String!
+}
+
+type OpenExternalLinkAction
+  @join__type(graph: BLINK)
+{
+  url: String!
+}
 
 """Information about pagination in a connection"""
 type PageInfo
@@ -1828,9 +1902,11 @@ type StatefulNotification
   title: String!
   body: String!
   deepLink: String
+  action: NotificationAction
   createdAt: Timestamp!
   acknowledgedAt: Timestamp
-  addToBulletin: Boolean!
+  bulletinEnabled: Boolean!
+  icon: Icon
 }
 
 input StatefulNotificationAcknowledgeInput
@@ -2111,6 +2187,7 @@ type User
   apiKeys: [ApiKey!]!
   statefulNotifications(first: Int!, after: String): StatefulNotificationConnection!
   unacknowledgedStatefulNotificationsCount: Int!
+  unacknowledgedStatefulNotificationsWithBulletinEnabled(first: Int!, after: String): StatefulNotificationConnection!
 
   """
   Get single contact details.
