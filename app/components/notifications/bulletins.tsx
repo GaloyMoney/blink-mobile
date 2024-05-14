@@ -1,63 +1,25 @@
+import React from "react"
 import { Linking } from "react-native"
-import { gql } from "@apollo/client"
 
 import { useNotifications } from "."
 import { NotificationCardUI } from "./notification-card-ui"
 import {
   BulletinsDocument,
-  useBulletinsQuery,
+  BulletinsQuery,
   useStatefulNotificationAcknowledgeMutation,
 } from "@app/graphql/generated"
 import { BLINK_DEEP_LINK_PREFIX } from "@app/config"
 
-gql`
-  query Bulletins($first: Int!, $after: String) {
-    me {
-      unacknowledgedStatefulNotificationsWithBulletinEnabled(
-        first: $first
-        after: $after
-      ) {
-        pageInfo {
-          endCursor
-          hasNextPage
-          hasPreviousPage
-          startCursor
-        }
-        edges {
-          node {
-            id
-            title
-            body
-            createdAt
-            acknowledgedAt
-            bulletinEnabled
-            action {
-              ... on OpenDeepLinkAction {
-                deepLink
-              }
-              ... on OpenExternalLinkAction {
-                url
-              }
-            }
-          }
-          cursor
-        }
-      }
-    }
-  }
-`
+type Props = {
+  loading: boolean
+  bulletins: BulletinsQuery | undefined
+}
 
-export const BulletinsCard: React.FC = () => {
+export const BulletinsCard: React.FC<Props> = ({ loading, bulletins }) => {
   const { cardInfo } = useNotifications()
 
   const [ack, { loading: ackLoading }] = useStatefulNotificationAcknowledgeMutation({
     refetchQueries: [BulletinsDocument],
-  })
-
-  const { data: bulletins, loading } = useBulletinsQuery({
-    fetchPolicy: "cache-and-network",
-    variables: { first: 1 },
-    pollInterval: 30000,
   })
 
   if (loading) return null
