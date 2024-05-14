@@ -796,10 +796,20 @@ query Bulletins($first: Int!, $after: String) {
           id
           title
           body
-          deepLink
           createdAt
           acknowledgedAt
           bulletinEnabled
+          action {
+            ... on OpenDeepLinkAction {
+              deepLink
+              __typename
+            }
+            ... on OpenExternalLinkAction {
+              url
+              __typename
+            }
+            __typename
+          }
           __typename
         }
         cursor
@@ -897,10 +907,20 @@ query StatefulNotifications($after: String) {
         id
         title
         body
-        deepLink
         createdAt
         acknowledgedAt
         bulletinEnabled
+        action {
+          ... on OpenDeepLinkAction {
+            deepLink
+            __typename
+          }
+          ... on OpenExternalLinkAction {
+            url
+            __typename
+          }
+          __typename
+        }
         __typename
       }
       pageInfo {

@@ -4,11 +4,11 @@ import { gql } from "@apollo/client"
 import { useNotifications } from "."
 import { NotificationCardUI } from "./notification-card-ui"
 import {
-  StatefulNotificationsDocument,
-  UnacknowledgedNotificationCountDocument,
+  BulletinsDocument,
   useBulletinsQuery,
   useStatefulNotificationAcknowledgeMutation,
 } from "@app/graphql/generated"
+import { BLINK_DEEP_LINK_PREFIX } from "@app/config"
 
 gql`
   query Bulletins($first: Int!, $after: String) {
@@ -28,10 +28,17 @@ gql`
             id
             title
             body
-            deepLink
             createdAt
             acknowledgedAt
             bulletinEnabled
+            action {
+              ... on OpenDeepLinkAction {
+                deepLink
+              }
+              ... on OpenExternalLinkAction {
+                url
+              }
+            }
           }
           cursor
         }
@@ -40,17 +47,19 @@ gql`
   }
 `
 
-export const BulletinsCard = () => {
+export const BulletinsCard: React.FC = () => {
   const { cardInfo } = useNotifications()
 
-  const [ack, _] = useStatefulNotificationAcknowledgeMutation({
-    refetchQueries: [
-      UnacknowledgedNotificationCountDocument,
-      StatefulNotificationsDocument,
-    ],
+  const [ack, { loading: ackLoading }] = useStatefulNotificationAcknowledgeMutation({
+    refetchQueries: [BulletinsDocument],
   })
 
-  const { data: bulletins, loading } = useBulletinsQuery({ variables: { first: 2 } })
+  const { data: bulletins, loading } = useBulletinsQuery({
+    fetchPolicy: "cache-and-network",
+    variables: { first: 1 },
+    pollInterval: 30000,
+  })
+
   if (loading) return null
 
   if (
@@ -68,11 +77,15 @@ export const BulletinsCard = () => {
               text={bulletin.body}
               action={async () => {
                 ack({ variables: { input: { notificationId: bulletin.id } } })
-                if (bulletin.deepLink) Linking.openURL("blink:" + bulletin.deepLink)
+                if (bulletin.action?.__typename === "OpenDeepLinkAction")
+                  Linking.openURL(BLINK_DEEP_LINK_PREFIX + bulletin.action.deepLink)
+                else if (bulletin.action?.__typename === "OpenExternalLinkAction")
+                  Linking.openURL(bulletin.action.url)
               }}
               dismissAction={() =>
                 ack({ variables: { input: { notificationId: bulletin.id } } })
               }
+              loading={ackLoading}
             />
           ),
         )}

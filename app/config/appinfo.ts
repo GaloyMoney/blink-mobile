@@ -19,3 +19,5 @@ export const getInviteLink = (_username: string | null | undefined) => {
   const username = _username ? `/${_username}` : ""
   return `https://get.blink.sv${username}`
 }
+
+export const BLINK_DEEP_LINK_PREFIX = "blink:/"

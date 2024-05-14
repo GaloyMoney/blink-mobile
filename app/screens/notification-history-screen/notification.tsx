@@ -9,8 +9,7 @@ import { timeAgo } from "./utils"
 import { gql } from "@apollo/client"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { useState } from "react"
-
-const BLINK_DEEP_LINK_PREFIX = "blink:/"
+import { BLINK_DEEP_LINK_PREFIX } from "@app/config"
 
 gql`
   mutation StatefulNotificationAcknowledge(
@@ -30,7 +29,7 @@ export const Notification: React.FC<StatefulNotification> = ({
   body,
   createdAt,
   acknowledgedAt,
-  deepLink,
+  action,
 }) => {
   const [isAcknowledged, setIsAcknowledged] = useState(Boolean(acknowledgedAt))
   const styles = useStyles({ isAcknowledged })
@@ -39,13 +38,16 @@ export const Notification: React.FC<StatefulNotification> = ({
     variables: { input: { notificationId: id } },
     refetchQueries: [StatefulNotificationsDocument],
   })
-  const prefixedDeepLink = deepLink ? `${BLINK_DEEP_LINK_PREFIX}${deepLink}` : undefined
+
   return (
     <TouchableWithoutFeedback
       onPress={() => {
         setIsAcknowledged(true)
         !isAcknowledged && ack()
-        prefixedDeepLink && Linking.openURL(prefixedDeepLink)
+        if (action?.__typename === "OpenDeepLinkAction")
+          Linking.openURL(BLINK_DEEP_LINK_PREFIX + action.deepLink)
+        else if (action?.__typename === "OpenExternalLinkAction")
+          Linking.openURL(action.url)
       }}
     >
       <View style={styles.container}>

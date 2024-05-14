@@ -17,10 +17,17 @@ gql`
           id
           title
           body
-          deepLink
           createdAt
           acknowledgedAt
           bulletinEnabled
+          action {
+            ... on OpenDeepLinkAction {
+              deepLink
+            }
+            ... on OpenExternalLinkAction {
+              url
+            }
+          }
         }
         pageInfo {
           endCursor
