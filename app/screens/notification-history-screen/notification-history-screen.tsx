@@ -12,7 +12,7 @@ import { Notification } from "./notification"
 gql`
   query StatefulNotifications($after: String) {
     me {
-      statefulNotificationsWithoutBulletinEnabled(first: 10, after: $after) {
+      statefulNotificationsWithoutBulletinEnabled(first: 20, after: $after) {
         nodes {
           id
           title
@@ -20,6 +20,7 @@ gql`
           createdAt
           acknowledgedAt
           bulletinEnabled
+          icon
           action {
             ... on OpenDeepLinkAction {
               deepLink

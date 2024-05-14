@@ -9,6 +9,7 @@ import {
   useStatefulNotificationAcknowledgeMutation,
 } from "@app/graphql/generated"
 import { BLINK_DEEP_LINK_PREFIX } from "@app/config"
+import { IconNamesType } from "../atomic/galoy-icon"
 
 type Props = {
   loading: boolean
@@ -34,6 +35,11 @@ export const BulletinsCard: React.FC<Props> = ({ loading, bulletins }) => {
         {bulletins.me?.unacknowledgedStatefulNotificationsWithBulletinEnabled?.edges.map(
           ({ node: bulletin }) => (
             <NotificationCardUI
+              icon={
+                bulletin.icon
+                  ? (bulletin.icon.toLowerCase().replace("_", "-") as IconNamesType)
+                  : undefined
+              }
               key={bulletin.id}
               title={bulletin.title}
               text={bulletin.body}
