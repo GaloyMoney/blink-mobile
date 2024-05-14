@@ -2173,11 +2173,12 @@ export type User = {
   /** Phone number with international calling code. */
   readonly phone?: Maybe<Scalars['Phone']['output']>;
   readonly statefulNotifications: StatefulNotificationConnection;
+  readonly statefulNotificationsWithoutBulletinEnabled: StatefulNotificationConnection;
   readonly supportChat: ReadonlyArray<SupportMessage>;
   /** Whether TOTP is enabled for this user. */
   readonly totpEnabled: Scalars['Boolean']['output'];
-  readonly unacknowledgedStatefulNotificationsCount: Scalars['Int']['output'];
   readonly unacknowledgedStatefulNotificationsWithBulletinEnabled: StatefulNotificationConnection;
+  readonly unacknowledgedStatefulNotificationsWithoutBulletinEnabledCount: Scalars['Int']['output'];
   /**
    * Optional immutable user friendly identifier.
    * @deprecated will be moved to @Handle in Account and Wallet
@@ -2192,6 +2193,12 @@ export type UserContactByUsernameArgs = {
 
 
 export type UserStatefulNotificationsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+};
+
+
+export type UserStatefulNotificationsWithoutBulletinEnabledArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   first: Scalars['Int']['input'];
 };
@@ -2495,7 +2502,7 @@ export type BulletinsQueryVariables = Exact<{
 }>;
 
 
-export type BulletinsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly unacknowledgedStatefulNotificationsWithBulletinEnabled: { readonly __typename: 'StatefulNotificationConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly endCursor?: string | null, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null }, readonly nodes: ReadonlyArray<{ readonly __typename: 'StatefulNotification', readonly id: string, readonly title: string, readonly body: string, readonly deepLink?: string | null, readonly createdAt: number, readonly acknowledgedAt?: number | null, readonly bulletinEnabled: boolean }>, readonly edges: ReadonlyArray<{ readonly __typename: 'StatefulNotificationEdge', readonly cursor: string, readonly node: { readonly __typename: 'StatefulNotification', readonly id: string, readonly title: string, readonly body: string, readonly deepLink?: string | null, readonly createdAt: number, readonly acknowledgedAt?: number | null, readonly bulletinEnabled: boolean } }> } } | null };
+export type BulletinsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly unacknowledgedStatefulNotificationsWithBulletinEnabled: { readonly __typename: 'StatefulNotificationConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly endCursor?: string | null, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null }, readonly edges: ReadonlyArray<{ readonly __typename: 'StatefulNotificationEdge', readonly cursor: string, readonly node: { readonly __typename: 'StatefulNotification', readonly id: string, readonly title: string, readonly body: string, readonly deepLink?: string | null, readonly createdAt: number, readonly acknowledgedAt?: number | null, readonly bulletinEnabled: boolean } }> } } | null };
 
 export type BtcPriceListQueryVariables = Exact<{
   range: PriceGraphRange;
@@ -2695,7 +2702,7 @@ export type StatefulNotificationsQueryVariables = Exact<{
 }>;
 
 
-export type StatefulNotificationsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly statefulNotifications: { readonly __typename: 'StatefulNotificationConnection', readonly nodes: ReadonlyArray<{ readonly __typename: 'StatefulNotification', readonly id: string, readonly title: string, readonly body: string, readonly deepLink?: string | null, readonly createdAt: number, readonly acknowledgedAt?: number | null, readonly bulletinEnabled: boolean }>, readonly pageInfo: { readonly __typename: 'PageInfo', readonly endCursor?: string | null, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null } } } | null };
+export type StatefulNotificationsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly statefulNotificationsWithoutBulletinEnabled: { readonly __typename: 'StatefulNotificationConnection', readonly nodes: ReadonlyArray<{ readonly __typename: 'StatefulNotification', readonly id: string, readonly title: string, readonly body: string, readonly deepLink?: string | null, readonly createdAt: number, readonly acknowledgedAt?: number | null, readonly bulletinEnabled: boolean }>, readonly pageInfo: { readonly __typename: 'PageInfo', readonly endCursor?: string | null, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null } } } | null };
 
 export type StatefulNotificationAcknowledgeMutationVariables = Exact<{
   input: StatefulNotificationAcknowledgeInput;
@@ -3070,7 +3077,7 @@ export type AccountDisableNotificationCategoryMutation = { readonly __typename: 
 export type UnacknowledgedNotificationCountQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UnacknowledgedNotificationCountQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly unacknowledgedStatefulNotificationsCount: number } | null };
+export type UnacknowledgedNotificationCountQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly unacknowledgedStatefulNotificationsWithoutBulletinEnabledCount: number } | null };
 
 export type SettingsScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3355,15 +3362,6 @@ export const BulletinsDocument = gql`
         hasNextPage
         hasPreviousPage
         startCursor
-      }
-      nodes {
-        id
-        title
-        body
-        deepLink
-        createdAt
-        acknowledgedAt
-        bulletinEnabled
       }
       edges {
         node {
@@ -4890,7 +4888,7 @@ export type BusinessMapMarkersQueryResult = Apollo.QueryResult<BusinessMapMarker
 export const StatefulNotificationsDocument = gql`
     query StatefulNotifications($after: String) {
   me {
-    statefulNotifications(first: 10, after: $after) {
+    statefulNotificationsWithoutBulletinEnabled(first: 10, after: $after) {
       nodes {
         id
         title
@@ -7335,7 +7333,7 @@ export const UnacknowledgedNotificationCountDocument = gql`
     query UnacknowledgedNotificationCount {
   me {
     id
-    unacknowledgedStatefulNotificationsCount
+    unacknowledgedStatefulNotificationsWithoutBulletinEnabledCount
   }
 }
     `;
@@ -9484,10 +9482,11 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   language?: Resolver<ResolversTypes['Language'], ParentType, ContextType>;
   phone?: Resolver<Maybe<ResolversTypes['Phone']>, ParentType, ContextType>;
   statefulNotifications?: Resolver<ResolversTypes['StatefulNotificationConnection'], ParentType, ContextType, RequireFields<UserStatefulNotificationsArgs, 'first'>>;
+  statefulNotificationsWithoutBulletinEnabled?: Resolver<ResolversTypes['StatefulNotificationConnection'], ParentType, ContextType, RequireFields<UserStatefulNotificationsWithoutBulletinEnabledArgs, 'first'>>;
   supportChat?: Resolver<ReadonlyArray<ResolversTypes['SupportMessage']>, ParentType, ContextType>;
   totpEnabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  unacknowledgedStatefulNotificationsCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   unacknowledgedStatefulNotificationsWithBulletinEnabled?: Resolver<ResolversTypes['StatefulNotificationConnection'], ParentType, ContextType, RequireFields<UserUnacknowledgedStatefulNotificationsWithBulletinEnabledArgs, 'first'>>;
+  unacknowledgedStatefulNotificationsWithoutBulletinEnabledCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   username?: Resolver<Maybe<ResolversTypes['Username']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

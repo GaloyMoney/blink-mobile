@@ -791,16 +791,6 @@ query Bulletins($first: Int!, $after: String) {
         startCursor
         __typename
       }
-      nodes {
-        id
-        title
-        body
-        deepLink
-        createdAt
-        acknowledgedAt
-        bulletinEnabled
-        __typename
-      }
       edges {
         node {
           id
@@ -902,7 +892,7 @@ query SettingsScreen {
 
 query StatefulNotifications($after: String) {
   me {
-    statefulNotifications(first: 10, after: $after) {
+    statefulNotificationsWithoutBulletinEnabled(first: 10, after: $after) {
       nodes {
         id
         title
@@ -929,7 +919,7 @@ query StatefulNotifications($after: String) {
 query UnacknowledgedNotificationCount {
   me {
     id
-    unacknowledgedStatefulNotificationsCount
+    unacknowledgedStatefulNotificationsWithoutBulletinEnabledCount
     __typename
   }
 }

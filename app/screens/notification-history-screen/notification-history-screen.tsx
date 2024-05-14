@@ -12,7 +12,7 @@ import { Notification } from "./notification"
 gql`
   query StatefulNotifications($after: String) {
     me {
-      statefulNotifications(first: 10, after: $after) {
+      statefulNotificationsWithoutBulletinEnabled(first: 10, after: $after) {
         nodes {
           id
           title
@@ -45,7 +45,7 @@ export const NotificationHistoryScreen = () => {
   const { data, fetchMore, refetch, loading } = useStatefulNotificationsQuery({
     skip: !useIsAuthed(),
   })
-  const notifications = data?.me?.statefulNotifications
+  const notifications = data?.me?.statefulNotificationsWithoutBulletinEnabled
 
   const fetchNextNotificationsPage = () => {
     const pageInfo = notifications?.pageInfo
