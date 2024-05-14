@@ -1,3 +1,4 @@
+import { Linking } from "react-native"
 import { gql } from "@apollo/client"
 
 import { useNotifications } from "."
@@ -8,7 +9,6 @@ import {
   useBulletinsQuery,
   useStatefulNotificationAcknowledgeMutation,
 } from "@app/graphql/generated"
-import { useLinkTo } from "@react-navigation/native"
 
 gql`
   query Bulletins($first: Int!, $after: String) {
@@ -22,15 +22,6 @@ gql`
           hasNextPage
           hasPreviousPage
           startCursor
-        }
-        nodes {
-          id
-          title
-          body
-          deepLink
-          createdAt
-          acknowledgedAt
-          bulletinEnabled
         }
         edges {
           node {
@@ -51,7 +42,6 @@ gql`
 
 export const BulletinsCard = () => {
   const { cardInfo } = useNotifications()
-  const linkTo = useLinkTo()
 
   const [ack, _] = useStatefulNotificationAcknowledgeMutation({
     refetchQueries: [
@@ -65,20 +55,20 @@ export const BulletinsCard = () => {
 
   if (
     bulletins &&
-    bulletins.me?.unacknowledgedStatefulNotificationsWithBulletinEnabled?.nodes &&
-    bulletins.me?.unacknowledgedStatefulNotificationsWithBulletinEnabled?.nodes.length > 0
+    bulletins.me?.unacknowledgedStatefulNotificationsWithBulletinEnabled?.edges &&
+    bulletins.me?.unacknowledgedStatefulNotificationsWithBulletinEnabled?.edges.length > 0
   ) {
     return (
       <>
-        {bulletins.me?.unacknowledgedStatefulNotificationsWithBulletinEnabled?.nodes.map(
-          (bulletin) => (
+        {bulletins.me?.unacknowledgedStatefulNotificationsWithBulletinEnabled?.edges.map(
+          ({ node: bulletin }) => (
             <NotificationCardUI
               key={bulletin.id}
               title={bulletin.title}
               text={bulletin.body}
               action={async () => {
                 ack({ variables: { input: { notificationId: bulletin.id } } })
-                if (bulletin.deepLink) linkTo(bulletin.deepLink)
+                if (bulletin.deepLink) Linking.openURL("blink:" + bulletin.deepLink)
               }}
               dismissAction={() =>
                 ack({ variables: { input: { notificationId: bulletin.id } } })
