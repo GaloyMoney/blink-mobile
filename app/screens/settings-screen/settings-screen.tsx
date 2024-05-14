@@ -41,7 +41,7 @@ gql`
   query UnacknowledgedNotificationCount {
     me {
       id
-      unacknowledgedStatefulNotificationsCount
+      unacknowledgedStatefulNotificationsWithoutBulletinEnabledCount
     }
   }
 
@@ -100,7 +100,8 @@ export const SettingsScreen: React.FC = () => {
 
   useEffect(() => {
     const count =
-      unackNotificationCount?.me?.unacknowledgedStatefulNotificationsCount || 0
+      unackNotificationCount?.me
+        ?.unacknowledgedStatefulNotificationsWithoutBulletinEnabledCount || 0
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity onPress={() => navigation.navigate("notificationHistory")}>

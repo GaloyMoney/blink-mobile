@@ -16,7 +16,7 @@ import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { icons } from "@app/components/atomic/galoy-icon"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import { NotificationCard } from "@app/components/notifications"
+import { BulletinsCard } from "@app/components/notifications/bulletins"
 import { SetDefaultAccountModal } from "@app/components/set-default-account-modal"
 import { StableSatsModal } from "@app/components/stablesats-modal"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
@@ -25,6 +25,7 @@ import {
   TransactionFragment,
   TxDirection,
   TxStatus,
+  useBulletinsQuery,
   useHasPromptedSetDefaultAccountQuery,
   useHomeAuthedQuery,
   useHomeUnauthedQuery,
@@ -90,6 +91,41 @@ gql`
       name
       symbol
       fractionDigits
+    }
+  }
+
+  query Bulletins($first: Int!, $after: String) {
+    me {
+      unacknowledgedStatefulNotificationsWithBulletinEnabled(
+        first: $first
+        after: $after
+      ) {
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+        edges {
+          node {
+            id
+            title
+            body
+            createdAt
+            acknowledgedAt
+            bulletinEnabled
+            action {
+              ... on OpenDeepLinkAction {
+                deepLink
+              }
+              ... on OpenExternalLinkAction {
+                url
+              }
+            }
+          }
+          cursor
+        }
+      }
     }
   }
 `
@@ -161,6 +197,17 @@ export const HomeScreen: React.FC = () => {
     nextFetchPolicy: "cache-and-network",
   })
 
+  // load bulletins on home screen
+  const {
+    data: bulletins,
+    loading: bulletinsLoading,
+    refetch: refetchBulletins,
+  } = useBulletinsQuery({
+    skip: !isAuthed,
+    fetchPolicy: "cache-and-network",
+    variables: { first: 1 },
+  })
+
   const loading = loadingAuthed || loadingPrice || loadingUnauthed || loadingSettings
 
   const refetch = React.useCallback(() => {
@@ -168,8 +215,9 @@ export const HomeScreen: React.FC = () => {
       refetchRealtimePrice()
       refetchAuthed()
       refetchUnauthed()
+      refetchBulletins()
     }
-  }, [isAuthed, refetchAuthed, refetchRealtimePrice, refetchUnauthed])
+  }, [isAuthed, refetchAuthed, refetchBulletins, refetchRealtimePrice, refetchUnauthed])
 
   const pendingIncomingTransactions =
     dataAuthed?.me?.defaultAccount?.pendingIncomingTransactions
@@ -382,7 +430,7 @@ export const HomeScreen: React.FC = () => {
             </View>
           ))}
         </View>
-        <NotificationCard />
+        <BulletinsCard loading={bulletinsLoading} bulletins={bulletins} />
         <View>
           {recentTransactionsData && (
             <>

@@ -2173,11 +2173,12 @@ export type User = {
   /** Phone number with international calling code. */
   readonly phone?: Maybe<Scalars['Phone']['output']>;
   readonly statefulNotifications: StatefulNotificationConnection;
+  readonly statefulNotificationsWithoutBulletinEnabled: StatefulNotificationConnection;
   readonly supportChat: ReadonlyArray<SupportMessage>;
   /** Whether TOTP is enabled for this user. */
   readonly totpEnabled: Scalars['Boolean']['output'];
-  readonly unacknowledgedStatefulNotificationsCount: Scalars['Int']['output'];
   readonly unacknowledgedStatefulNotificationsWithBulletinEnabled: StatefulNotificationConnection;
+  readonly unacknowledgedStatefulNotificationsWithoutBulletinEnabledCount: Scalars['Int']['output'];
   /**
    * Optional immutable user friendly identifier.
    * @deprecated will be moved to @Handle in Account and Wallet
@@ -2192,6 +2193,12 @@ export type UserContactByUsernameArgs = {
 
 
 export type UserStatefulNotificationsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+};
+
+
+export type UserStatefulNotificationsWithoutBulletinEnabledArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   first: Scalars['Int']['input'];
 };
@@ -2677,6 +2684,14 @@ export type HomeUnauthedQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type HomeUnauthedQuery = { readonly __typename: 'Query', readonly globals?: { readonly __typename: 'Globals', readonly network: Network } | null, readonly currencyList: ReadonlyArray<{ readonly __typename: 'Currency', readonly id: string, readonly flag: string, readonly name: string, readonly symbol: string, readonly fractionDigits: number }> };
 
+export type BulletinsQueryVariables = Exact<{
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type BulletinsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly unacknowledgedStatefulNotificationsWithBulletinEnabled: { readonly __typename: 'StatefulNotificationConnection', readonly pageInfo: { readonly __typename: 'PageInfo', readonly endCursor?: string | null, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null }, readonly edges: ReadonlyArray<{ readonly __typename: 'StatefulNotificationEdge', readonly cursor: string, readonly node: { readonly __typename: 'StatefulNotification', readonly id: string, readonly title: string, readonly body: string, readonly createdAt: number, readonly acknowledgedAt?: number | null, readonly bulletinEnabled: boolean, readonly action?: { readonly __typename: 'OpenDeepLinkAction', readonly deepLink: string } | { readonly __typename: 'OpenExternalLinkAction', readonly url: string } | null } }> } } | null };
+
 export type BusinessMapMarkersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2687,7 +2702,7 @@ export type StatefulNotificationsQueryVariables = Exact<{
 }>;
 
 
-export type StatefulNotificationsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly statefulNotifications: { readonly __typename: 'StatefulNotificationConnection', readonly nodes: ReadonlyArray<{ readonly __typename: 'StatefulNotification', readonly id: string, readonly title: string, readonly body: string, readonly deepLink?: string | null, readonly createdAt: number, readonly acknowledgedAt?: number | null, readonly bulletinEnabled: boolean }>, readonly pageInfo: { readonly __typename: 'PageInfo', readonly endCursor?: string | null, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null } } } | null };
+export type StatefulNotificationsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly statefulNotificationsWithoutBulletinEnabled: { readonly __typename: 'StatefulNotificationConnection', readonly nodes: ReadonlyArray<{ readonly __typename: 'StatefulNotification', readonly id: string, readonly title: string, readonly body: string, readonly createdAt: number, readonly acknowledgedAt?: number | null, readonly bulletinEnabled: boolean, readonly action?: { readonly __typename: 'OpenDeepLinkAction', readonly deepLink: string } | { readonly __typename: 'OpenExternalLinkAction', readonly url: string } | null }>, readonly pageInfo: { readonly __typename: 'PageInfo', readonly endCursor?: string | null, readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor?: string | null } } } | null };
 
 export type StatefulNotificationAcknowledgeMutationVariables = Exact<{
   input: StatefulNotificationAcknowledgeInput;
@@ -3062,7 +3077,7 @@ export type AccountDisableNotificationCategoryMutation = { readonly __typename: 
 export type UnacknowledgedNotificationCountQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UnacknowledgedNotificationCountQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly unacknowledgedStatefulNotificationsCount: number } | null };
+export type UnacknowledgedNotificationCountQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly unacknowledgedStatefulNotificationsWithoutBulletinEnabledCount: number } | null };
 
 export type SettingsScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4761,6 +4776,76 @@ export type HomeUnauthedQueryHookResult = ReturnType<typeof useHomeUnauthedQuery
 export type HomeUnauthedLazyQueryHookResult = ReturnType<typeof useHomeUnauthedLazyQuery>;
 export type HomeUnauthedSuspenseQueryHookResult = ReturnType<typeof useHomeUnauthedSuspenseQuery>;
 export type HomeUnauthedQueryResult = Apollo.QueryResult<HomeUnauthedQuery, HomeUnauthedQueryVariables>;
+export const BulletinsDocument = gql`
+    query Bulletins($first: Int!, $after: String) {
+  me {
+    unacknowledgedStatefulNotificationsWithBulletinEnabled(
+      first: $first
+      after: $after
+    ) {
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+      edges {
+        node {
+          id
+          title
+          body
+          createdAt
+          acknowledgedAt
+          bulletinEnabled
+          action {
+            ... on OpenDeepLinkAction {
+              deepLink
+            }
+            ... on OpenExternalLinkAction {
+              url
+            }
+          }
+        }
+        cursor
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useBulletinsQuery__
+ *
+ * To run a query within a React component, call `useBulletinsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBulletinsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBulletinsQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useBulletinsQuery(baseOptions: Apollo.QueryHookOptions<BulletinsQuery, BulletinsQueryVariables> & ({ variables: BulletinsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BulletinsQuery, BulletinsQueryVariables>(BulletinsDocument, options);
+      }
+export function useBulletinsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BulletinsQuery, BulletinsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BulletinsQuery, BulletinsQueryVariables>(BulletinsDocument, options);
+        }
+export function useBulletinsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<BulletinsQuery, BulletinsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<BulletinsQuery, BulletinsQueryVariables>(BulletinsDocument, options);
+        }
+export type BulletinsQueryHookResult = ReturnType<typeof useBulletinsQuery>;
+export type BulletinsLazyQueryHookResult = ReturnType<typeof useBulletinsLazyQuery>;
+export type BulletinsSuspenseQueryHookResult = ReturnType<typeof useBulletinsSuspenseQuery>;
+export type BulletinsQueryResult = Apollo.QueryResult<BulletinsQuery, BulletinsQueryVariables>;
 export const BusinessMapMarkersDocument = gql`
     query businessMapMarkers {
   businessMapMarkers {
@@ -4810,15 +4895,22 @@ export type BusinessMapMarkersQueryResult = Apollo.QueryResult<BusinessMapMarker
 export const StatefulNotificationsDocument = gql`
     query StatefulNotifications($after: String) {
   me {
-    statefulNotifications(first: 10, after: $after) {
+    statefulNotificationsWithoutBulletinEnabled(first: 10, after: $after) {
       nodes {
         id
         title
         body
-        deepLink
         createdAt
         acknowledgedAt
         bulletinEnabled
+        action {
+          ... on OpenDeepLinkAction {
+            deepLink
+          }
+          ... on OpenExternalLinkAction {
+            url
+          }
+        }
       }
       pageInfo {
         endCursor
@@ -7255,7 +7347,7 @@ export const UnacknowledgedNotificationCountDocument = gql`
     query UnacknowledgedNotificationCount {
   me {
     id
-    unacknowledgedStatefulNotificationsCount
+    unacknowledgedStatefulNotificationsWithoutBulletinEnabledCount
   }
 }
     `;
@@ -9404,10 +9496,11 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   language?: Resolver<ResolversTypes['Language'], ParentType, ContextType>;
   phone?: Resolver<Maybe<ResolversTypes['Phone']>, ParentType, ContextType>;
   statefulNotifications?: Resolver<ResolversTypes['StatefulNotificationConnection'], ParentType, ContextType, RequireFields<UserStatefulNotificationsArgs, 'first'>>;
+  statefulNotificationsWithoutBulletinEnabled?: Resolver<ResolversTypes['StatefulNotificationConnection'], ParentType, ContextType, RequireFields<UserStatefulNotificationsWithoutBulletinEnabledArgs, 'first'>>;
   supportChat?: Resolver<ReadonlyArray<ResolversTypes['SupportMessage']>, ParentType, ContextType>;
   totpEnabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  unacknowledgedStatefulNotificationsCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   unacknowledgedStatefulNotificationsWithBulletinEnabled?: Resolver<ResolversTypes['StatefulNotificationConnection'], ParentType, ContextType, RequireFields<UserUnacknowledgedStatefulNotificationsWithBulletinEnabledArgs, 'first'>>;
+  unacknowledgedStatefulNotificationsWithoutBulletinEnabledCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   username?: Resolver<Maybe<ResolversTypes['Username']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

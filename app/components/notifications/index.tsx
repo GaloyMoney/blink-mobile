@@ -4,7 +4,6 @@ import { Text, makeStyles, useTheme } from "@rneui/themed"
 
 import { GaloyIcon, IconNamesType } from "../atomic/galoy-icon"
 import CustomModal from "../custom-modal/custom-modal"
-import { NotificationCardUI } from "./notification-card-ui"
 
 type NotifyModalArgs = {
   title: string
@@ -210,24 +209,5 @@ const useStyles = makeStyles(() => ({
     textAlign: "center",
   },
 }))
-
-export const NotificationCard = () => {
-  const { cardInfo } = useNotifications()
-
-  if (!cardInfo) {
-    return null
-  }
-
-  return (
-    <NotificationCardUI
-      title={cardInfo.title}
-      text={cardInfo.text}
-      icon={cardInfo.icon}
-      action={cardInfo.action}
-      loading={cardInfo.loading}
-      dismissAction={cardInfo.dismissAction}
-    />
-  )
-}
 
 export const useNotifications = () => useContext(NotificationModalContext)
