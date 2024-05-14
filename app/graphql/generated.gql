@@ -799,6 +799,7 @@ query Bulletins($first: Int!, $after: String) {
           createdAt
           acknowledgedAt
           bulletinEnabled
+          icon
           action {
             ... on OpenDeepLinkAction {
               deepLink
@@ -902,7 +903,7 @@ query SettingsScreen {
 
 query StatefulNotifications($after: String) {
   me {
-    statefulNotificationsWithoutBulletinEnabled(first: 10, after: $after) {
+    statefulNotificationsWithoutBulletinEnabled(first: 20, after: $after) {
       nodes {
         id
         title
@@ -910,6 +911,7 @@ query StatefulNotifications($after: String) {
         createdAt
         acknowledgedAt
         bulletinEnabled
+        icon
         action {
           ... on OpenDeepLinkAction {
             deepLink

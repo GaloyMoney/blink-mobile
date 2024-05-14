@@ -114,6 +114,7 @@ gql`
             createdAt
             acknowledgedAt
             bulletinEnabled
+            icon
             action {
               ... on OpenDeepLinkAction {
                 deepLink
