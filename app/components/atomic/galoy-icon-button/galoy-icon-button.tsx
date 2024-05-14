@@ -1,18 +1,22 @@
 import React from "react"
 import { Pressable, PressableProps, TextStyle, ViewStyle, StyleProp } from "react-native"
+
+import { testProps } from "@app/utils/testProps"
 import { useTheme, Text } from "@rneui/themed"
+
 import {
   GaloyIcon,
   IconNamesType,
   circleDiameterThatContainsSquare,
 } from "../galoy-icon/galoy-icon"
-import { testProps } from "@app/utils/testProps"
 
 export type GaloyIconButtonProps = {
   name: IconNamesType
   size: "small" | "medium" | "large"
   text?: string
   iconOnly?: boolean
+  color?: string
+  backgroundColor?: string
 }
 
 const sizeMapping = {
@@ -27,6 +31,8 @@ export const GaloyIconButton = ({
   text,
   iconOnly,
   disabled,
+  color,
+  backgroundColor,
   ...remainingProps
 }: GaloyIconButtonProps & PressableProps) => {
   const {
@@ -53,36 +59,36 @@ export const GaloyIconButton = ({
       case iconOnly && disabled:
         return {
           opacity: 0.7,
-          color: colors.primary,
+          color: color || colors.primary,
           backgroundColor: colors.transparent,
         }
       case iconOnly && pressed:
         return {
           opacity: 0.7,
-          color: colors.primary,
-          backgroundColor: colors.grey4,
+          color: color || colors.primary,
+          backgroundColor: backgroundColor || colors.grey4,
         }
       case iconOnly && !pressed:
         return {
-          color: colors.primary,
+          color: color || colors.primary,
           backgroundColor: colors.transparent,
         }
       case !iconOnly && disabled:
         return {
           opacity: 0.7,
-          color: colors.primary,
-          backgroundColor: colors.grey4,
+          color: color || colors.primary,
+          backgroundColor: backgroundColor || colors.grey4,
         }
       case !iconOnly && pressed:
         return {
           opacity: 0.7,
-          color: colors.primary,
-          backgroundColor: colors.grey4,
+          color: color || colors.primary,
+          backgroundColor: backgroundColor || colors.grey4,
         }
       case !iconOnly && !pressed:
         return {
-          color: colors.primary,
-          backgroundColor: colors.grey4,
+          color: color || colors.primary,
+          backgroundColor: backgroundColor || colors.grey4,
         }
       default:
         return {}

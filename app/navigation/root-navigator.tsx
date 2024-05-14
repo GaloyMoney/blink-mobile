@@ -56,7 +56,7 @@ import SendBitcoinConfirmationScreen from "@app/screens/send-bitcoin-screen/send
 import SendBitcoinDestinationScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-destination-screen"
 import SendBitcoinDetailsScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-details-screen"
 import SendBitcoinSuccessScreen from "@app/screens/send-bitcoin-screen/send-bitcoin-success-screen"
-import { AccountScreen } from "@app/screens/settings-screen/account-screen"
+import { AccountScreen } from "@app/screens/settings-screen/account"
 import { DefaultWalletScreen } from "@app/screens/settings-screen/default-wallet"
 import { DisplayCurrencyScreen } from "@app/screens/settings-screen/display-currency-screen"
 import { ThemeScreen } from "@app/screens/settings-screen/theme-screen"

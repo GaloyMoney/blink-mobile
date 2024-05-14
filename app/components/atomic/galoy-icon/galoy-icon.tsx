@@ -1,8 +1,11 @@
 import React from "react"
+import { StyleProp, View, ViewStyle } from "react-native"
 
+import ArrowLeft from "@app/assets/icons-redesign/arrow-left.svg"
 import ArrowRight from "@app/assets/icons-redesign/arrow-right.svg"
 import BackSpace from "@app/assets/icons-redesign/back-space.svg"
 import Bank from "@app/assets/icons-redesign/bank.svg"
+import Bell from "@app/assets/icons-redesign/bell.svg"
 import Bitcoin from "@app/assets/icons-redesign/bitcoin.svg"
 import Book from "@app/assets/icons-redesign/book.svg"
 import BtcBook from "@app/assets/icons-redesign/btc-book.svg"
@@ -47,11 +50,14 @@ import PaymentSuccess from "@app/assets/icons-redesign/payment-success.svg"
 import PaymentPending from "@app/assets/icons-redesign/payment-pending.svg"
 import PaymentError from "@app/assets/icons-redesign/payment-error.svg"
 import Note from "@app/assets/icons/note.svg"
+import People from "@app/assets/icons/people.svg"
+import Rank from "@app/assets/icons/rank.svg"
+import Refresh from "@app/assets/icons/refresh.svg"
 import { makeStyles, useTheme } from "@rneui/themed"
-import { StyleProp, View, ViewStyle } from "react-native"
 
 export const icons = {
   "arrow-right": ArrowRight,
+  "arrow-left": ArrowLeft,
   "back-space": BackSpace,
   "bank": Bank,
   "bitcoin": Bitcoin,
@@ -66,6 +72,7 @@ export const icons = {
   "close": Close,
   "close-cross-with-background": CloseCrossWithBackground,
   "coins": Coins,
+  "people": People,
   "contact": Contact,
   "copy-paste": CopyPaste,
   "dollar": Dollar,
@@ -84,6 +91,7 @@ export const icons = {
   "menu": Menu,
   "pencil": Pencil,
   "note": Note,
+  "rank": Rank,
   "qr-code": QrCode,
   "question": Question,
   "receive": Receive,
@@ -98,6 +106,8 @@ export const icons = {
   "payment-success": PaymentSuccess,
   "payment-pending": PaymentPending,
   "payment-error": PaymentError,
+  "bell": Bell,
+  "refresh": Refresh,
 } as const
 
 export type IconNamesType = keyof typeof icons

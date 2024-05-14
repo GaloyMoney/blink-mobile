@@ -43,6 +43,10 @@ type RootTranslation = {
 		 */
 		buttonTitle: string
 		/**
+		 * Y​o​u​r​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s
+		 */
+		yourLightningAddress: string
+		/**
 		 * Y​o​u​r​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s
 		 * @param {string} bankName
 		 */
@@ -73,6 +77,10 @@ type RootTranslation = {
 		 * Y​o​u​r​ ​P​a​y​c​o​d​e
 		 */
 		yourPaycode: string
+		/**
+		 * C​o​p​i​e​d​ ​L​i​g​h​t​n​i​n​g​ ​a​d​d​r​e​s​s​ ​t​o​ ​c​l​i​p​b​o​a​r​d
+		 */
+		copiedLightningAddressToClipboard: string
 		/**
 		 * C​o​p​i​e​d​ ​{​b​a​n​k​N​a​m​e​}​ ​a​d​d​r​e​s​s​ ​t​o​ ​c​l​i​p​b​o​a​r​d
 		 * @param {string} bankName
@@ -2275,6 +2283,34 @@ type RootTranslation = {
 	}
 	SettingsScreen: {
 		/**
+		 * P​r​i​n​t​a​b​l​e​ ​S​t​a​t​i​c​ ​Q​R​ ​C​o​d​e
+		 */
+		staticQr: string
+		/**
+		 * Y​o​u​r​ ​s​t​a​t​i​c​ ​Q​R​ ​c​o​d​e​ ​l​i​n​k​ ​h​a​s​ ​b​e​e​n​ ​c​o​p​i​e​d
+		 */
+		staticQrCopied: string
+		/**
+		 * S​e​t​ ​b​y​ ​O​S
+		 */
+		setByOs: string
+		/**
+		 * A​P​I​ ​A​c​c​e​s​s
+		 */
+		apiAcess: string
+		/**
+		 * P​o​i​n​t​ ​o​f​ ​S​a​l​e
+		 */
+		pos: string
+		/**
+		 * Y​o​u​r​ ​p​o​i​n​t​ ​o​f​ ​s​a​l​e​ ​l​i​n​k​ ​h​a​s​ ​b​e​e​n​ ​c​o​p​i​e​d
+		 */
+		posCopied: string
+		/**
+		 * S​e​t​ ​Y​o​u​r​ ​L​i​g​h​t​n​i​n​g​ ​A​d​d​r​e​s​s
+		 */
+		setYourLightningAddress: string
+		/**
 		 * A​c​t​i​v​a​t​e​d
 		 */
 		activated: string
@@ -2363,8 +2399,52 @@ type RootTranslation = {
 		 * L​o​g​ ​i​n​ ​o​r​ ​c​r​e​a​t​e​ ​a​c​c​o​u​n​t
 		 */
 		logInOrCreateAccount: string
+		backup: string
+		importWallet: string
+		showSeedPhrase: string
+		showNostrSecret: string
+		beginnerMode: string
+		advanceMode: string
+		keysManagement: string
 	}
 	AccountScreen: {
+		/**
+		 * Y​o​u​r​ ​a​c​c​o​u​n​t​ ​h​a​s​ ​m​o​r​e​ ​t​h​a​n​ ​$​5
+		 */
+		fundsMoreThan5Dollars: string
+		/**
+		 * T​r​i​a​l​ ​a​c​c​o​u​n​t​s​ ​h​a​v​e​ ​r​e​d​u​c​e​d​ ​t​r​a​n​s​a​c​t​i​o​n​ ​l​i​m​i​t​s​ ​a​n​d​ ​n​o​ ​r​e​c​o​v​e​r​y​ ​m​e​t​h​o​d​.​ ​I​f​ ​y​o​u​ ​l​o​s​e​ ​y​o​u​r​ ​p​h​o​n​e​ ​o​r​ ​u​n​i​n​s​t​a​l​l​ ​t​h​e​ ​a​p​p​,​ ​y​o​u​r​ ​f​u​n​d​s​ ​w​i​l​l​ ​b​e​ ​u​n​r​e​c​o​v​e​r​a​b​l​e​.
+		 */
+		itsATrialAccount: string
+		/**
+		 * Y​o​u​r​ ​a​c​c​o​u​n​t​ ​i​s​ ​b​e​i​n​g​ ​d​e​l​e​t​e​d​,​ ​p​l​e​a​s​e​ ​w​a​i​t​.​.​.
+		 */
+		accountBeingDeleted: string
+		/**
+		 * D​a​n​g​e​r​ ​Z​o​n​e
+		 */
+		dangerZone: string
+		/**
+		 * P​h​o​n​e​ ​d​e​l​e​t​e​d​ ​s​u​c​c​e​s​s​f​u​l​l​y
+		 */
+		phoneDeletedSuccessfully: string
+		/**
+		 * P​h​o​n​e​ ​N​u​m​b​e​r
+		 */
+		phoneNumber: string
+		/**
+		 * T​a​p​ ​t​o​ ​a​d​d​ ​p​h​o​n​e​ ​n​u​m​b​e​r
+		 */
+		tapToAddPhoneNumber: string
+		/**
+		 * L​o​g​i​n​ ​M​e​t​h​o​d​s
+		 */
+		loginMethods: string
+		/**
+		 * L​e​v​e​l​ ​{​l​e​v​e​l​}
+		 * @param {string} level
+		 */
+		level: RequiredParams<'level'>
 		/**
 		 * A​c​c​o​u​n​t​ ​L​e​v​e​l
 		 */
@@ -2422,6 +2502,29 @@ type RootTranslation = {
 		 * T​a​p​ ​t​o​ ​a​d​d
 		 */
 		tapToAdd: string
+		/**
+		 * D​e​l​e​t​e​ ​e​m​a​i​l
+		 */
+		/**
+		 * T​a​p​ ​t​o​ ​a​d​d​ ​e​m​a​i​l
+		 */
+		tapToAddEmail: string
+		/**
+		 * E​m​a​i​l​ ​(​U​n​v​e​r​i​f​i​e​d​)
+		 */
+		unverifiedEmail: string
+		/**
+		 * E​m​a​i​l
+		 */
+		email: string
+		/**
+		 * E​m​a​i​l​ ​d​e​l​e​t​e​d​ ​s​u​c​c​e​s​s​f​u​l​l​y
+		 */
+		emailDeletedSuccessfully: string
+		/**
+		 * U​n​v​e​r​i​f​i​e​d​ ​e​m​a​i​l​s​ ​c​a​n​'​t​ ​b​e​ ​u​s​e​d​ ​t​o​ ​l​o​g​i​n​.​ ​Y​o​u​ ​s​h​o​u​l​d​ ​r​e​-​v​e​r​i​f​y​ ​y​o​u​r​ ​e​m​a​i​l​ ​a​d​d​r​e​s​s​.
+		 */
+		unverifiedEmailAdvice: string
 		/**
 		 * D​e​l​e​t​e​ ​e​m​a​i​l
 		 */
@@ -2498,6 +2601,22 @@ type RootTranslation = {
 		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​t​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n​?
 		 */
 		totpDeleteAlertContent: string
+		/**
+		 * C​o​p​i​e​d​ ​y​o​u​r​ ​a​c​c​o​u​n​t​ ​I​D​ ​t​o​ ​c​l​i​p​b​o​a​r​d
+		 */
+		copiedAccountId: string
+		/**
+		 * Y​o​u​r​ ​A​c​c​o​u​n​t​ ​I​D
+		 */
+		yourAccountId: string
+		/**
+		 * A​c​c​o​u​n​t​ ​I​D
+		 */
+		accountId: string
+		/**
+		 * C​o​p​y
+		 */
+		copy: string
 	}
 	TotpRegistrationInitiateScreen: {
 		/**
@@ -2580,6 +2699,14 @@ type RootTranslation = {
 		 * U​s​e​ ​D​a​r​k​ ​M​o​d​e
 		 */
 		dark: string
+		/**
+		 * D​a​r​k​ ​M​o​d​e
+		 */
+		setToDark: string
+		/**
+		 * L​i​g​h​t​ ​M​o​d​e
+		 */
+		setToLight: string
 	}
 	Languages: {
 		/**
@@ -3017,9 +3144,45 @@ type RootTranslation = {
 	}
 	common: {
 		/**
+		 * E​n​a​b​l​e​d
+		 */
+		enabled: string
+		/**
+		 * N​o​t​i​f​i​c​a​t​i​o​n​s
+		 */
+		notifications: string
+		/**
+		 * P​r​e​f​e​r​e​n​c​e​s
+		 */
+		preferences: string
+		/**
+		 * O​n​-​D​e​v​i​c​e​ ​S​e​c​u​r​i​t​y
+		 */
+		onDeviceSecurity: string
+		/**
+		 * S​e​c​u​r​i​t​y​ ​a​n​d​ ​P​r​i​v​a​c​y
+		 */
+		securityAndPrivacy: string
+		/**
+		 * A​d​v​a​n​c​e​d
+		 */
+		advanced: string
+		/**
+		 * C​o​m​m​u​n​i​t​y
+		 */
+		community: string
+		/**
 		 * A​c​c​o​u​n​t
 		 */
 		account: string
+		/**
+		 * T​r​i​a​l​ ​A​c​c​o​u​n​t
+		 */
+		trialAccount: string
+		/**
+		 * Flash ​U​s​e​r
+		 */
+		flashUser: string
 		/**
 		 * T​r​a​n​s​a​c​t​i​o​n​ ​L​i​m​i​t​s
 		 */
@@ -3635,6 +3798,10 @@ export type TranslationFunctions = {
 		 */
 		buttonTitle: () => LocalizedString
 		/**
+		 * Your Lightning address
+		 */
+		yourLightningAddress: () => LocalizedString
+		/**
 		 * Your {bankName} address
 		 */
 		yourAddress: (arg: { bankName: string }) => LocalizedString
@@ -3662,6 +3829,10 @@ export type TranslationFunctions = {
 		 * Your Paycode
 		 */
 		yourPaycode: () => LocalizedString
+		/**
+		 * Copied Lightning address to clipboard
+		 */
+		copiedLightningAddressToClipboard: () => LocalizedString
 		/**
 		 * Copied {bankName} address to clipboard
 		 */
@@ -5857,6 +6028,34 @@ export type TranslationFunctions = {
 	}
 	SettingsScreen: {
 		/**
+		 * Printable Static QR Code
+		 */
+		staticQr: () => LocalizedString
+		/**
+		 * Your static QR code link has been copied
+		 */
+		staticQrCopied: () => LocalizedString
+		/**
+		 * Set by OS
+		 */
+		setByOs: () => LocalizedString
+		/**
+		 * API Access
+		 */
+		apiAcess: () => LocalizedString
+		/**
+		 * Point of Sale
+		 */
+		pos: () => LocalizedString
+		/**
+		 * Your point of sale link has been copied
+		 */
+		posCopied: () => LocalizedString
+		/**
+		 * Set Your Lightning Address
+		 */
+		setYourLightningAddress: () => LocalizedString
+		/**
 		 * Activated
 		 */
 		activated: () => LocalizedString
@@ -5953,8 +6152,45 @@ export type TranslationFunctions = {
 		showNostrSecret: () => LocalizedString
 		beginnerMode: () => LocalizedString
 		advanceMode: () => LocalizedString
+		keysManagement: () => LocalizedString
 	}
 	AccountScreen: {
+		/**
+		 * Your account has more than $5
+		 */
+		fundsMoreThan5Dollars: () => LocalizedString
+		/**
+		 * Trial accounts have reduced transaction limits and no recovery method. If you lose your phone or uninstall the app, your funds will be unrecoverable.
+		 */
+		itsATrialAccount: () => LocalizedString
+		/**
+		 * Your account is being deleted, please wait...
+		 */
+		accountBeingDeleted: () => LocalizedString
+		/**
+		 * Danger Zone
+		 */
+		dangerZone: () => LocalizedString
+		/**
+		 * Phone deleted successfully
+		 */
+		phoneDeletedSuccessfully: () => LocalizedString
+		/**
+		 * Phone Number
+		 */
+		phoneNumber: () => LocalizedString
+		/**
+		 * Tap to add phone number
+		 */
+		tapToAddPhoneNumber: () => LocalizedString
+		/**
+		 * Login Methods
+		 */
+		loginMethods: () => LocalizedString
+		/**
+		 * Level {level}
+		 */
+		level: (arg: { level: string }) => LocalizedString
 		/**
 		 * Account Level
 		 */
@@ -6007,8 +6243,29 @@ export type TranslationFunctions = {
 		 */
 		tapToAdd: () => LocalizedString
 		/**
+		 * Tap to add email
+		 */
+		tapToAddEmail: () => LocalizedString
+		/**
+		 * Email (Unverified)
+		 */
+		unverifiedEmail: () => LocalizedString
+		/**
+		 * Email
+		 */
+		email: () => LocalizedString
+		/**
+		 * Email deleted successfully
+		 */
+		emailDeletedSuccessfully: () => LocalizedString
+		/**
+		 * Unverified emails can't be used to login. You should re-verify your email address.
+		 */
+		unverifiedEmailAdvice: () => LocalizedString
+		/**
 		 * Delete email
 		 */
+		
 		deleteEmailPromptTitle: () => LocalizedString
 		/**
 		 * Are you sure you want to delete your email address? you will only be able to log back in with your phone number.
@@ -6082,6 +6339,22 @@ export type TranslationFunctions = {
 		 * Are you sure you want to delete your two-factor authentication?
 		 */
 		totpDeleteAlertContent: () => LocalizedString
+		/**
+		 * Copied your account ID to clipboard
+		 */
+		copiedAccountId: () => LocalizedString
+		/**
+		 * Your Account ID
+		 */
+		yourAccountId: () => LocalizedString
+		/**
+		 * Account ID
+		 */
+		accountId: () => LocalizedString
+		/**
+		 * Copy
+		 */
+		copy: () => LocalizedString
 	}
 	TotpRegistrationInitiateScreen: {
 		/**
@@ -6232,6 +6505,15 @@ export type TranslationFunctions = {
 		 * Use Dark Mode
 		 */
 		dark: () => LocalizedString
+		/**
+		 * Dark Mode
+		 */
+		setToDark: () => LocalizedString
+		/**
+		 * Light Mode
+		 */
+		setToLight: () => LocalizedString
+		
 	}
 	Languages: {
 		/**
@@ -6657,9 +6939,45 @@ export type TranslationFunctions = {
 	}
 	common: {
 		/**
+		 * Enabled
+		 */
+		enabled: () => LocalizedString
+		/**
+		 * Notifications
+		 */
+		notifications: () => LocalizedString
+		/**
+		 * Preferences
+		 */
+		preferences: () => LocalizedString
+		/**
+		 * On-Device Security
+		 */
+		onDeviceSecurity: () => LocalizedString
+		/**
+		 * Security and Privacy
+		 */
+		securityAndPrivacy: () => LocalizedString
+		/**
+		 * Advanced
+		 */
+		advanced: () => LocalizedString
+		/**
+		 * Community
+		 */
+		community: () => LocalizedString
+		/**
 		 * Account
 		 */
 		account: () => LocalizedString
+		/**
+		 * T​r​i​a​l​ ​A​c​c​o​u​n​t
+		 */
+		trialAccount: () => LocalizedString
+		/**
+		 * Flash ​U​s​e​r
+		 */
+		flashUser: () => LocalizedString
 		/**
 		 * Transaction Limits
 		 */

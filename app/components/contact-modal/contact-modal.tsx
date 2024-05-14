@@ -15,6 +15,8 @@ export const SupportChannels = {
   WhatsApp: "whatsapp",
   StatusPage: "statusPage",
   Mattermost: "mattermost",
+  Faq: "faq",
+  Chatbot: "chatbot",
 } as const
 
 export type SupportChannelsToHide = (typeof SupportChannels)[keyof typeof SupportChannels]
