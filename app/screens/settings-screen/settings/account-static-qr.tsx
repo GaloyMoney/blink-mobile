@@ -9,7 +9,8 @@ import { SettingsRow } from "../row"
 
 export const AccountStaticQR: React.FC = () => {
   const { appConfig } = useAppConfig()
-  const posUrl = appConfig.galoyInstance.lnAddressHostname
+  const posUrl = appConfig.galoyInstance.posUrl
+  const shortUrl = appConfig.galoyInstance.lnAddressHostname
 
   const { LL } = useI18nContext()
 
@@ -17,12 +18,13 @@ export const AccountStaticQR: React.FC = () => {
   if (!data?.me?.username) return <></>
 
   const qrUrl = `${posUrl}/${data.me.username}/print`
+  const short = `${shortUrl}/${data.me.username}/print`
 
   return (
     <SettingsRow
       loading={loading}
       title={LL.SettingsScreen.staticQr()}
-      subtitle={qrUrl}
+      subtitle={short}
       subtitleShorter={true}
       leftIcon="qr-code-outline"
       rightIcon={<GaloyIcon name="link" size={24} />}
