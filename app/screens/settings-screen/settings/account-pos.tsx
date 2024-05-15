@@ -9,7 +9,8 @@ import { SettingsRow } from "../row"
 
 export const AccountPOS: React.FC = () => {
   const { appConfig } = useAppConfig()
-  const posUrl = appConfig.galoyInstance.lnAddressHostname
+  const posUrl = appConfig.galoyInstance.posUrl
+  const shortUrl = appConfig.galoyInstance.lnAddressHostname
 
   const { LL } = useI18nContext()
 
@@ -17,12 +18,13 @@ export const AccountPOS: React.FC = () => {
   if (!data?.me?.username) return <></>
 
   const pos = `${posUrl}/${data.me.username}`
+  const short = `${shortUrl}/${data.me.username}`
 
   return (
     <SettingsRow
       loading={loading}
       title={LL.SettingsScreen.pos()}
-      subtitle={pos}
+      subtitle={short}
       subtitleShorter={data.me.username.length > 22}
       leftIcon="calculator"
       rightIcon={<GaloyIcon name="link" size={24} />}
