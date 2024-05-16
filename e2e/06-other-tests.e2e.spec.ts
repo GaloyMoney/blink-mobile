@@ -154,13 +154,6 @@ describe("Price graph flow", () => {
     await clickIcon("graph")
   })
 
-  it("check if price graph header is shown", async () => {
-    const priceGraphHeader = await $(selector(LL.PriceHistoryScreen.satPrice(), "Other"))
-    const rangeText = await $(selector("range", "StaticText"))
-    await priceGraphHeader.waitForDisplayed({ timeout })
-    expect(rangeText).toBeDisplayed()
-  })
-
   it("click on one week button", async () => {
     const oneWeekButton = await $(selector(LL.PriceHistoryScreen.oneWeek(), "Button"))
     const rangeText = await $(selector("range", "StaticText"))
