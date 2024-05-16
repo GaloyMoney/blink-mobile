@@ -96,6 +96,7 @@ gql`
 
   query Bulletins($first: Int!, $after: String) {
     me {
+      id
       unacknowledgedStatefulNotificationsWithBulletinEnabled(
         first: $first
         after: $after

@@ -1,25 +1,28 @@
 import { TextStyle, ViewStyle } from "node_modules/@types/react-native/index"
 import * as React from "react"
-import { ActivityIndicator, StyleProp, View } from "react-native"
+import {
+  ActivityIndicator,
+  StyleProp,
+  View,
+  TextInput,
+  type TextInputProps,
+} from "react-native"
 import { CartesianChart, Line, useChartPressState } from "victory-native"
-import type { SharedValue } from "react-native-reanimated"
+import Reanimated, {
+  useAnimatedProps,
+  useDerivedValue,
+  type SharedValue,
+} from "react-native-reanimated"
 
 import { gql } from "@apollo/client"
-import { PricePoint, useBtcPriceListQuery } from "@app/graphql/generated"
+import { PricePoint, WalletCurrency, useBtcPriceListQuery } from "@app/graphql/generated"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
 import { Button } from "@rneui/base"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { Circle } from "@shopify/react-native-skia"
-
-const multiple = (currentUnit: string) => {
-  switch (currentUnit) {
-    case "USDCENT":
-      return 10 ** -5
-    default:
-      return 1
-  }
-}
+import { GaloyErrorBox } from "../atomic/galoy-error-box"
+import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 
 const GraphRange = {
   ONE_DAY: "ONE_DAY",
@@ -49,7 +52,6 @@ export const PriceHistory = () => {
   const {
     theme: { colors },
   } = useTheme()
-
   const { LL } = useI18nContext()
   const [graphRange, setGraphRange] = React.useState<GraphRangeType>(GraphRange.ONE_DAY)
 
@@ -61,55 +63,59 @@ export const PriceHistory = () => {
 
   const { state, isActive } = useChartPressState({ x: 0, y: { y: 0 } })
 
+  const { formatMoneyAmount } = useDisplayCurrency()
+
   function ToolTip({ x, y }: { x: SharedValue<number>; y: SharedValue<number> }) {
-    return <Circle cx={x} cy={y} r={8} color={colors.secondary} />
-  }
-
-  if (error) {
-    return <Text>{`${error}`}</Text>
-  }
-
-  if (loading || data === null || data?.btcPriceList === null) {
     return (
-      <View style={styles.verticalAlignment}>
-        <ActivityIndicator animating size="large" color={colors.primary} />
-      </View>
+      <>
+        <Circle cx={x} cy={y} r={8} color={colors.primary} />
+      </>
     )
-  }
-
-  const ranges = GraphRange[graphRange]
-  const rangeTimestamps = {
-    ONE_DAY: 300,
-    ONE_WEEK: 1800,
-    ONE_MONTH: 86400,
-    ONE_YEAR: 86400,
-    FIVE_YEARS: 86400,
-  }
-
-  const lastPrice = priceList && priceList[priceList.length - 1]
-  if (!loading && lastPrice) {
-    const timeDiff = Date.now() / 1000 - lastPrice.timestamp
-    if (timeDiff > rangeTimestamps[ranges]) {
-      setGraphRange(ranges)
-    }
   }
 
   const prices = priceList
     .filter((price) => price !== null)
     .map((price) => price as PricePoint)
-  // FIXME: backend should be updated so that PricePoint is non-nullable
+    .map((index) => {
+      const amount = Math.floor(index.price.base / 10 ** index.price.offset)
 
-  const currentPriceData = prices[prices.length - 1].price
-  const startPriceData = prices[0].price
-  const price =
-    (currentPriceData.base / 10 ** currentPriceData.offset) *
-    multiple(currentPriceData.currencyUnit)
-  const delta = currentPriceData.base / startPriceData.base - 1
+      return {
+        y: amount,
+        formattedAmount: formatMoneyAmount({
+          moneyAmount: {
+            amount,
+            currency: WalletCurrency.Usd,
+            currencyCode: "USDCENT",
+          },
+        }),
+        timestamp: index.timestamp,
+        currencyUnit: index.price.currencyUnit,
+      }
+    })
+
+  const currentPriceData = prices[prices.length - 1]?.y
+  const startPriceData = prices[0]?.y
+  const delta =
+    currentPriceData && startPriceData
+      ? (currentPriceData - startPriceData) / startPriceData
+      : 0
   const color = delta > 0 ? { color: colors._green } : { color: colors.red }
 
-  const prices2 = prices.map((index) => ({
-    y: (index.price.base / 10 ** index.price.offset) * multiple(index.price.currencyUnit),
-  }))
+  const activePrice = useDerivedValue(() => {
+    const price = isActive
+      ? prices.find((price) => price.y === state.y.y.value.value)
+      : prices[prices.length - 1]
+
+    return price?.formattedAmount ?? ""
+  })
+
+  const activeTimestamp = useDerivedValue(() => {
+    const timestamp = isActive
+      ? prices.find((price) => price.y === state.y.y.value.value)?.timestamp
+      : undefined
+
+    return `${timestamp ? new Date(timestamp * 1000).toLocaleString(undefined, { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }) : ""}`
+  })
 
   const label = () => {
     switch (graphRange) {
@@ -136,36 +142,38 @@ export const PriceHistory = () => {
   const titleStyleForRange = (titleGraphRange: GraphRangeType): StyleProp<TextStyle> => {
     return graphRange === titleGraphRange ? null : styles.titleStyleTime
   }
-
   return (
-    <View style={styles.verticalAlignment}>
-      <View>
-        <View {...testProps(LL.PriceHistoryScreen.satPrice())} style={styles.textView}>
-          <Text type="p1">{LL.PriceHistoryScreen.satPrice()}</Text>
-          <Text type="p1" bold>
-            ${price.toFixed(2)}
-          </Text>
-        </View>
-        <View style={styles.textView}>
-          <Text type="p1" style={[styles.delta, color]}>
-            {(delta * 100).toFixed(2)}%{" "}
-          </Text>
-          <Text type="p1" {...testProps("range")}>
-            {label()}
-          </Text>
+    <View style={styles.screen}>
+      <View {...testProps(LL.PriceHistoryScreen.satPrice())} style={styles.textView}>
+        <AnimText
+          // @ts-ignore-next-line
+          text={activePrice}
+          style={styles.priceText}
+          color={colors.black}
+        />
+        <View style={styles.subtextContainer}>
+          {!isActive && !loading ? (
+            <Text type="p1" {...testProps("range")}>
+              <Text type="p1" style={[styles.delta, color]}>
+                {(delta * 100).toFixed(2)}%{" "}
+              </Text>
+              {label()}
+            </Text>
+          ) : (
+            <AnimText
+              // @ts-ignore-next-line
+              text={activeTimestamp}
+              style={styles.subtext}
+              color={colors.black}
+            />
+          )}
         </View>
       </View>
       <View style={styles.chart}>
-        {
+        {!loading && data ? (
           /* eslint @typescript-eslint/ban-ts-comment: "off" */
           // @ts-ignore-next-line no-implicit-any error
-          <CartesianChart
-            data={prices2}
-            yKeys={["y"]}
-            chartPressState={state}
-            padding={{ left: 20, right: 20 }}
-            domainPadding={{ bottom: 10, top: 10 }}
-          >
+          <CartesianChart data={prices} yKeys={["y"]} chartPressState={state}>
             {({ points }) => (
               <>
                 <Line
@@ -174,11 +182,20 @@ export const PriceHistory = () => {
                   strokeWidth={2}
                   curveType="natural"
                 />
-                {isActive && <ToolTip x={state.x.position} y={state.y.y.position} />}
+
+                {isActive && (
+                  <>
+                    <ToolTip x={state.x.position} y={state.y.y.position} />
+                  </>
+                )}
               </>
             )}
           </CartesianChart>
-        }
+        ) : (
+          <View style={styles.verticalAlignment}>
+            <ActivityIndicator animating size="large" color={colors.primary} />
+          </View>
+        )}
       </View>
       <View style={styles.pricesContainer}>
         <Button
@@ -228,7 +245,34 @@ export const PriceHistory = () => {
           onPress={() => setGraphRange(GraphRange.FIVE_YEARS)}
         />
       </View>
+      {error && <GaloyErrorBox errorMessage={error.message} />}
     </View>
+  )
+}
+
+const AnimText = Reanimated.createAnimatedComponent(TextInput)
+Reanimated.addWhitelistedNativeProps({ text: true })
+
+type AnimatedTextProps = Omit<TextInputProps, "editable" | "value"> & {
+  text: SharedValue<string>
+  style?: React.ComponentProps<typeof AnimText>["style"]
+}
+
+export function AnimatedText({ text, ...rest }: AnimatedTextProps) {
+  const animProps = useAnimatedProps(() => {
+    return {
+      text: text.value,
+    }
+  })
+
+  return (
+    <AnimText
+      {...rest}
+      value={text.value}
+      // @ts-ignore
+      animatedProps={animProps}
+      editable={false}
+    />
   )
 }
 
@@ -239,7 +283,16 @@ const useStyles = makeStyles(({ colors }) => ({
     width: 48,
     height: 48,
   },
-
+  subtextContainer: {
+    height: 24,
+  },
+  priceText: {
+    fontSize: 32,
+  },
+  subtext: {
+    fontSize: 18,
+    lineHeight: 24,
+  },
   buttonStyleTimeActive: {
     backgroundColor: colors.primary,
     borderRadius: 40,
@@ -248,7 +301,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   chart: {
-    height: "70%",
+    height: "60%",
   },
 
   delta: {
@@ -262,16 +315,18 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   textView: {
-    alignSelf: "center",
-    flexDirection: "row",
+    paddingHorizontal: 16,
+    marginBottom: 16,
   },
-
   titleStyleTime: {
     color: colors.grey3,
   },
-
+  screen: {
+    paddingVertical: 16,
+  },
   verticalAlignment: {
     flex: 1,
-    justifyContent: "space-between",
+    alignItems: "center",
+    justifyContent: "center",
   },
 }))

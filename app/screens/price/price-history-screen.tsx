@@ -45,6 +45,7 @@ export const PriceHistoryScreen: React.FC = () => {
   }, [accountId])
 
   const styles = useStyles()
+
   return (
     <Screen preset="scroll" style={styles.screen}>
       <PriceHistory />
