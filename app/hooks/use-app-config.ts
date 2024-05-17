@@ -10,8 +10,13 @@ export const useAppConfig = () => {
     () => ({
       token: persistentState.galoyAuthToken,
       galoyInstance: resolveGaloyInstanceOrDefault(persistentState.galoyInstance),
+      savedAccounts: persistentState.galoySavedAccounts,
     }),
-    [persistentState.galoyAuthToken, persistentState.galoyInstance],
+    [
+      persistentState.galoyAuthToken,
+      persistentState.galoyInstance,
+      persistentState.galoySavedAccounts,
+    ],
   )
 
   const setGaloyInstance = useCallback(
@@ -35,6 +40,7 @@ export const useAppConfig = () => {
           return {
             ...state,
             galoyAuthToken: token,
+            galoySavedAccounts: [...state.galoySavedAccounts, token],
           }
         return undefined
       })
