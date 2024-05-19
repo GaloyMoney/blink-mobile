@@ -34,7 +34,7 @@ type PersistentState_7 = {
   schemaVersion: 7
   galoyInstance: GaloyInstanceInput
   galoyAuthToken: string
-  galoySavedAccounts: string[]
+  galoyAllAuthTokens: string[]
 }
 
 const migrate7ToCurrent = (state: PersistentState_7): Promise<PersistentState> =>
@@ -44,7 +44,7 @@ const migrate6ToCurrent = (state: PersistentState_6): Promise<PersistentState> =
   return migrate7ToCurrent({
     ...state,
     schemaVersion: 7,
-    galoySavedAccounts: [],
+    galoyAllAuthTokens: [],
   })
 }
 
@@ -130,7 +130,7 @@ export const defaultPersistentState: PersistentState = {
   schemaVersion: 7,
   galoyInstance: { id: "Main" },
   galoyAuthToken: "",
-  galoySavedAccounts: [],
+  galoyAllAuthTokens: [],
 }
 
 export const migrateAndGetPersistentState = async (

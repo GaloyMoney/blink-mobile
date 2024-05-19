@@ -10,12 +10,12 @@ export const useAppConfig = () => {
     () => ({
       token: persistentState.galoyAuthToken,
       galoyInstance: resolveGaloyInstanceOrDefault(persistentState.galoyInstance),
-      savedAccounts: persistentState.galoySavedAccounts,
+      savedAccounts: persistentState.galoyAllAuthTokens,
     }),
     [
       persistentState.galoyAuthToken,
       persistentState.galoyInstance,
-      persistentState.galoySavedAccounts,
+      persistentState.galoyAllAuthTokens,
     ],
   )
 
@@ -40,7 +40,7 @@ export const useAppConfig = () => {
           return {
             ...state,
             galoyAuthToken: token,
-            galoySavedAccounts: [...state.galoySavedAccounts, token],
+            galoyAllAuthTokens: [...state.galoyAllAuthTokens, token],
           }
         return undefined
       })
@@ -56,6 +56,7 @@ export const useAppConfig = () => {
             ...state,
             galoyInstance: instance,
             galoyAuthToken: token,
+            galoyAllAuthTokens: [...state.galoyAllAuthTokens, token],
           }
         return undefined
       })

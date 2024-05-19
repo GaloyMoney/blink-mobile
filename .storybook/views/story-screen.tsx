@@ -10,7 +10,7 @@ const PersistentStateWrapper: React.FC<React.PropsWithChildren> = ({ children })
           id: "Main",
         },
         galoyAuthToken: "",
-        galoySavedAccounts: [],
+        galoyAllAuthTokens: [],
       },
       updateState: () => {},
       resetState: () => {},
