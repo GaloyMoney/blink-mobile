@@ -2186,7 +2186,8 @@ type User
   id: ID!
   apiKeys: [ApiKey!]!
   statefulNotifications(first: Int!, after: String): StatefulNotificationConnection!
-  unacknowledgedStatefulNotificationsCount: Int!
+  statefulNotificationsWithoutBulletinEnabled(first: Int!, after: String): StatefulNotificationConnection!
+  unacknowledgedStatefulNotificationsWithoutBulletinEnabledCount: Int!
   unacknowledgedStatefulNotificationsWithBulletinEnabled(first: Int!, after: String): StatefulNotificationConnection!
 
   """
