@@ -2726,10 +2726,16 @@
         "drivingAdoption": "I'm driving Bitcoin adoption using Blink.",
         "connectOnSocial": "Connect on social: ",
         "fullDetails": "Full details at ",
+        "learnMore": "Learn more about Adopting Bitcoin at ",
         "mayChallenge": {
             "title": "May Challenge!",
             "description": "Grow your inner circle by 6 for a chance to win a set of Pizzas on your next Bitcoin Meetup.",
             "details": "Want a Bitcoin Pizza Day Party?\n\nExpand your Inner Circle by 6 for a shot at winning a set of pizzas for your next Bitcoin Meetup. The challenge wraps up on May 15th.\n\nShare your circles on social with the hashtag #blinkcircles to participate.\n\nThe prize is $150 for pizzas."
+        },
+        "juneChallenge": {
+            "title": "June Challenge!",
+            "description": "Expand your Inner Circle by 10 for a chance to win a $1000 privilege ticket to the Adopting Bitcoin El Salvador",
+            "details": "Win a privilege ticket to Adopting Bitcoin El Salvador\n\nExpand your Inner Circle by 10 for a chance to win a $1000 privilege ticket to Adopting Bitcoin El Salvador! The ticket includes exclusive access to the main conference, mezzanine with food/drinks/snacks, speakers' dinner, and the Film Festival.\n\nShare your circles on social with the hashtag #blinkcircles to participate.\n\nThis time, there will be two winners!"
         }
     },
     "FullOnboarding": {

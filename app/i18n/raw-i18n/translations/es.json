@@ -2685,6 +2685,7 @@
         "drivingAdoption": "Estoy impulsando la adopción de Bitcoin usando Blink.",
         "connectOnSocial": "Conecta en redes sociales:",
         "fullDetails": "Detalles completos en",
+        "learnMore": "Obtén más información sobre Adopting Bitcoin en ",
         "decemberChallenge": {
             "title": "¡Reto de diciembre! ",
             "description": "\"¡+10 amigos a tu círculo interno para tener la oportunidad de ganar $100!\"",
@@ -2709,6 +2710,11 @@
             "title": "Reto de abril!",
             "description": "Amplia en 12 tu círculo interno y en 3 tu círculo externo para tener la oportunidad de ganar una Bitbox02 hardware wallet.",
             "details": "En el mes del Halving, amplía tu Círculo Interior en 12 y aumenta tu Círculo Exterior en 3 para tener la oportunidad de ganar una Bitbox02 hardware wallet.\n\nRecordatorio: Tus círculos crecen cuando envías a un nuevo usuario de Blink sus primeros sats.\n\nComparte tus círculos en las redes sociales con el hashtag #blinkcircles para participar."
+        },
+        "juneChallenge": {
+            "title": "Challenge de Junio!",
+            "description": "¡Amplía tu Círculo Interno en 10 para tener la oportunidad de ganar un boleto privilegio de $1000 para Adopting Bitcoin El Salvador!",
+            "details": "Gana un boleto privilegio para Adopting Bitcoin El Salvador\n\n¡Amplía tu Círculo Interno en 10 para tener la oportunidad de ganar un boleto privilegio de $1000 para Adopting Bitcoin El Salvador! El boleto incluye acceso exclusivo a la conferencia principal, al entrepiso con comida/bebidas/snacks, a la cena de los oradores y al Festival de Cine.\n\nComparte tus círculos en las redes sociales con el hashtag #blinkcircles para participar.\n\n¡Esta vez, habrá dos ganadores!"
         }
     },
     "FullOnboarding": {
