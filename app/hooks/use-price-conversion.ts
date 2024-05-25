@@ -84,7 +84,7 @@ export const usePriceConversion = () => {
         return moneyAmount
       }
 
-      let amount = Math.round(
+      let amount = Math.floor(
         moneyAmount.amount * priceOfCurrencyInCurrency(moneyAmount.currency, toCurrency),
       )
 

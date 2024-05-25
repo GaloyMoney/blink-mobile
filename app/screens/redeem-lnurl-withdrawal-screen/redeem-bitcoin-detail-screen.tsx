@@ -2,7 +2,7 @@ import { AmountInput } from "@app/components/amount-input"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { Screen } from "@app/components/screen"
 import { usePaymentRequestQuery, WalletCurrency } from "@app/graphql/generated"
-import { getBtcWallet } from "@app/graphql/wallets-utils"
+import { getBtcWallet, getDefaultWallet } from "@app/graphql/wallets-utils"
 import { usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -33,8 +33,15 @@ const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
 
   const { formatMoneyAmount } = useDisplayCurrency()
 
-  const { callback, domain, defaultDescription, k1, minWithdrawable, maxWithdrawable } =
-    route.params.receiveDestination.validDestination
+  const {
+    callback,
+    domain,
+    defaultDescription,
+    k1,
+    minWithdrawable,
+    maxWithdrawable,
+    lnurl,
+  } = route.params.receiveDestination.validDestination
 
   // minWithdrawable and maxWithdrawable are in msats
   const minWithdrawableSatoshis = toBtcMoneyAmount(Math.round(minWithdrawable / 1000))
@@ -51,20 +58,24 @@ const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
   const { data } = usePaymentRequestQuery({ fetchPolicy: "cache-first" })
 
   const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
+  const defaultWallet = getDefaultWallet(
+    data?.me?.defaultAccount?.wallets,
+    data?.me?.defaultAccount?.defaultWalletId,
+  )
 
   const btcWalletId = btcWallet?.id
 
   const usdWalletId = null // TODO: enable receiving USD when USD invoices support satoshi amounts
 
   useEffect(() => {
-    if (receiveCurrency === WalletCurrency.Usd) {
+    if (defaultWallet?.walletCurrency === WalletCurrency.Usd) {
       navigation.setOptions({ title: LL.RedeemBitcoinScreen.usdTitle() })
     }
 
-    if (receiveCurrency === WalletCurrency.Btc) {
+    if (defaultWallet?.walletCurrency === WalletCurrency.Btc) {
       navigation.setOptions({ title: LL.RedeemBitcoinScreen.title() })
     }
-  }, [receiveCurrency, navigation, LL])
+  }, [defaultWallet, navigation, LL])
 
   const [unitOfAccountAmount, setUnitOfAccountAmount] = useState<
     MoneyAmount<WalletOrDisplayCurrency>
@@ -84,11 +95,7 @@ const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
     btcMoneyAmount.amount >= minWithdrawableSatoshis.amount
 
   const navigate = () => {
-    if (receiveCurrency !== WalletCurrency.Btc) {
-      return
-    }
-
-    btcWalletId &&
+    if (defaultWallet) {
       navigation.replace("redeemBitcoinResult", {
         callback,
         domain,
@@ -97,13 +104,15 @@ const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
         minWithdrawableSatoshis,
         maxWithdrawableSatoshis,
         receivingWalletDescriptor: {
-          id: btcWalletId,
-          currency: receiveCurrency,
+          id: defaultWallet?.id,
+          currency: defaultWallet?.walletCurrency,
         },
         unitOfAccountAmount,
         settlementAmount: btcMoneyAmount,
         displayAmount: convertMoneyAmount(btcMoneyAmount, DisplayCurrency),
+        lnurl,
       })
+    }
   }
 
   return (
@@ -137,7 +146,7 @@ const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
         </Text>
         <View style={styles.currencyInputContainer}>
           <AmountInput
-            walletCurrency={receiveCurrency}
+            walletCurrency={defaultWallet?.walletCurrency || "BTC"}
             unitOfAccountAmount={unitOfAccountAmount}
             setAmount={setUnitOfAccountAmount}
             maxAmount={maxWithdrawableSatoshis}

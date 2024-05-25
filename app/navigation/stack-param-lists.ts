@@ -71,12 +71,13 @@ export type RootStackParamList = {
     domain: string
     k1: string
     defaultDescription: string
-    minWithdrawableSatoshis: MoneyAmount<typeof WalletCurrency.Btc>
-    maxWithdrawableSatoshis: MoneyAmount<typeof WalletCurrency.Btc>
-    receivingWalletDescriptor: WalletDescriptor<typeof WalletCurrency.Btc>
+    minWithdrawableSatoshis: MoneyAmount<WalletCurrency>
+    maxWithdrawableSatoshis: MoneyAmount<WalletCurrency>
+    receivingWalletDescriptor: WalletDescriptor<WalletCurrency>
     unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency>
-    settlementAmount: MoneyAmount<typeof WalletCurrency.Btc>
+    settlementAmount: MoneyAmount<WalletCurrency>
     displayAmount: MoneyAmount<DisplayCurrency>
+    lnurl: string
   }
   phoneFlow: { onComplete?: (token?: string) => void } | undefined
   phoneRegistrationInitiate: { onComplete?: (token?: string) => void } | undefined
