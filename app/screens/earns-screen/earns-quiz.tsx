@@ -310,6 +310,12 @@ export const EarnQuiz = ({ route }: Props) => {
     j = (j + 1) as ZeroTo2
   })
 
+  const formatAmount = (amount: number): string => {
+    return amount === 1
+      ? `${amount} ${LL.EarnScreen.satoshi()}`
+      : `${amount} ${LL.EarnScreen.satoshis()}`
+  }
+
   return (
     <Screen backgroundColor={colors._lighterGrey} unsafe>
       <Modal
@@ -373,7 +379,7 @@ export const EarnQuiz = ({ route }: Props) => {
           {(completed && (
             <>
               <Text style={styles.textEarn}>
-                {LL.EarnScreen.quizComplete({ amount })}
+                {LL.EarnScreen.quizComplete({ formattedAmount: formatAmount(amount) })}
               </Text>
               <Button
                 title={LL.EarnScreen.reviewQuiz()}
@@ -385,7 +391,7 @@ export const EarnQuiz = ({ route }: Props) => {
           )) || (
             <Button
               title={LL.EarnScreen.earnSats({
-                formattedNumber: amount,
+                formattedAmount: formatAmount(amount),
               })}
               buttonStyle={styles.buttonStyle}
               titleStyle={styles.titleStyle}
