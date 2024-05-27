@@ -147,7 +147,6 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
-    implementation("com.facebook.react:flipper-integration")
 
     implementation("com.google.mlkit:barcode-scanning:17.2.0")
 
