@@ -34,7 +34,7 @@ export const usePriceConversion = () => {
 
   if (realtimePrice) {
     displayCurrencyPerSat =
-      realtimePrice.btcSatPrice.base / 10 ** realtimePrice.btcSatPrice.offset
+      realtimePrice.btcSatPrice.base / 10 ** (realtimePrice.btcSatPrice.offset * 1.0002)
     displayCurrencyPerCent =
       realtimePrice.usdCentPrice.base / 10 ** realtimePrice.usdCentPrice.offset
   }
