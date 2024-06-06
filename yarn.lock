@@ -4833,22 +4833,13 @@
     react-lifecycles-compat "^3.0.4"
     react-select "^3.2.0"
 
-"@storybook/addon-links@6.5.16":
-  version "6.5.16"
-  resolved "https://registry.npmjs.org/@storybook/addon-links/-/addon-links-6.5.16.tgz#cacb20cd0656f0681a874709d428d3f3577828c3"
-  integrity sha512-P/mmqK57NGXnR0i3d/T5B0rIt0Lg8Yq+qionRr3LK3AwG/4yGnYt4GNomLEknn/eEwABYq1Q/Z1aOpgIhNdq5A==
+"@storybook/addon-links@8.1.6":
+  version "8.1.6"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-links/-/addon-links-8.1.6.tgz#83b75f79da2106ca0b5cc3e4db1c6ca7f6096743"
+  integrity sha512-EuSXoK+tpApjW08ZiC4yE9ePdJkIu36AFPJHA6FVierVU31klW+cbFqps88JpmALZkrlf+pzKf3uBIGLrkBSAw==
   dependencies:
-    "@storybook/addons" "6.5.16"
-    "@storybook/client-logger" "6.5.16"
-    "@storybook/core-events" "6.5.16"
-    "@storybook/csf" "0.0.2--canary.4566f4d.1"
-    "@storybook/router" "6.5.16"
-    "@types/qs" "^6.9.5"
-    core-js "^3.8.2"
-    global "^4.4.0"
-    prop-types "^15.7.2"
-    qs "^6.10.0"
-    regenerator-runtime "^0.13.7"
+    "@storybook/csf" "^0.1.7"
+    "@storybook/global" "^5.0.0"
     ts-dedent "^2.0.0"
 
 "@storybook/addon-measure@6.5.16":
@@ -5389,10 +5380,10 @@
   dependencies:
     lodash "^4.17.15"
 
-"@storybook/csf@^0.1.0":
-  version "0.1.4"
-  resolved "https://registry.npmjs.org/@storybook/csf/-/csf-0.1.4.tgz#18224bcd571fa834ccc4bebda8a0ca4cedbc4d91"
-  integrity sha512-B9UI/lsQMjF+oEfZCI6YXNoeuBcGZoOP5x8yKbe2tIEmsMjSztFKkpPzi5nLCnBk/MBtl6QJeI3ksJnbsWPkOw==
+"@storybook/csf@^0.1.0", "@storybook/csf@^0.1.7":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@storybook/csf/-/csf-0.1.8.tgz#63a83dc493c462d84e0f333e3f3264d319bec716"
+  integrity sha512-Ntab9o7LjBCbFIao5l42itFiaSh/Qu+l16l/r/9qmV9LnYZkO+JQ7tzhdlwpgJfhs+B5xeejpdAtftDRyXNajw==
   dependencies:
     type-fest "^2.19.0"
 
