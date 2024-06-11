@@ -172,7 +172,8 @@ export const PhoneRegistrationValidateScreen: React.FC<
   const [phoneValidate] = useUserPhoneRegistrationValidateMutation()
 
   const [code, _setCode] = useState("")
-  const [secondsRemaining, setSecondsRemaining] = useState<number>(30)
+  // Wait 2.5 minutes before allowing another code request
+  const [secondsRemaining, setSecondsRemaining] = useState<number>(150)
   const { phone, channel } = route.params
 
   const {
