@@ -82,7 +82,9 @@ const en: BaseTranslation = {
     message: "Conversion successful",
   },
   EarnScreen: {
-    earnSats: "Earn {formattedNumber|sats}",
+    satoshi: "sat",
+    satoshis: "sats",
+    earnSats: "Earn {formattedAmount: string}",
     earnSections: {
       bitcoinWhatIsIt: {
         title: "Bitcoin: What is it?",
@@ -2032,10 +2034,10 @@ const en: BaseTranslation = {
     getRewardNow: "Answer quiz",
     keepDigging: "Keep digging!",
     phoneNumberNeeded: "Phone number required",
-    quizComplete: "Quiz completed and {amount: number} sats earned",
+    quizComplete: "Quiz completed and {formattedAmount: string} earned",
     reviewQuiz: "Review quiz",
     satAccumulated: "Sats accumulated",
-    satsEarned: "{formattedNumber|sats} earned",
+    satsEarned: "{formattedAmount: string} earned",
     sectionsCompleted: "You've completed",
     title: "Earn",
     unlockQuestion: "To unlock, answer the question:",
