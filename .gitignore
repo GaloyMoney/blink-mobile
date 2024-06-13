@@ -47,7 +47,7 @@ buck-out/
 .vscode
 
 # ios
-ios/Pods
+**/Pods
 ios/Xcode.app
 ios/.bundle
 ios/vendor
@@ -93,4 +93,12 @@ ios-recordings
 android-recordings
 .direnv
 
-ios/.xcode.env.local
+**/.xcode.env.local
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
