@@ -1,5 +1,5 @@
-import React from "react"
-import { View, TextInput, StyleProp, ViewStyle } from "react-native"
+import React, { useRef } from "react"
+import { View, TextInput, StyleProp, ViewStyle, TouchableOpacity } from "react-native"
 
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
@@ -29,7 +29,13 @@ export const NoteInput: React.FC<NoteInputProps> = ({
   const {
     theme: { colors },
   } = useTheme()
+  const textInputRef = useRef<TextInput>(null)
 
+  const focusTextInput = () => {
+    if (textInputRef.current) {
+      textInputRef.current.focus()
+    }
+  }
   return (
     <View style={[styles.fieldBackground, style]}>
       <View style={styles.noteContainer}>
@@ -44,10 +50,11 @@ export const NoteInput: React.FC<NoteInputProps> = ({
           editable={editable}
           selectTextOnFocus
           maxLength={500}
+          ref={textInputRef}
         />
-        <View style={styles.noteIconContainer}>
+        <TouchableOpacity style={styles.noteIconContainer} onPress={focusTextInput}>
           <GaloyIcon name={"note"} size={18} color={colors.primary} />
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   )
