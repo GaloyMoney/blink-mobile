@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Blink</string>
+    <string name="appwidget_text">Bitcoin Price</string>
+    <string name="add_widget">Add bitcoin price widget</string>
+    <string name="app_widget_description">USD/BTC price as reported by Blink Servers</string>
 </resources>
