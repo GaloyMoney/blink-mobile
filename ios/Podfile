@@ -10,8 +10,6 @@ end
 node_require('react-native/scripts/react_native_pods.rb')
 node_require('react-native-permissions/scripts/setup.rb')
 
-use_modular_headers!
-
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
 
@@ -26,10 +24,11 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-$RNFirebaseAnalyticsWithoutAdIdSupport=true
-
 target 'GaloyApp' do
   config = use_native_modules!
+
+  use_frameworks! :linkage => :static
+  $RNFirebaseAsStaticFramework = true
 
   use_react_native!(
     :path => config[:reactNativePath],
