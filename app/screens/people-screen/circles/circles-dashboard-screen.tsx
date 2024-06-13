@@ -16,6 +16,7 @@ import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { Screen } from "../../../components/screen"
 import { InviteFriendsCard } from "./invite-friends-card"
 import { ShareCircles } from "./share-circles-card"
+import { JuneChallengeCard } from "@app/components/june-challenge"
 
 gql`
   query Circles {
@@ -153,6 +154,7 @@ export const CirclesDashboardScreen: React.FC = () => {
           </View>
         )}
         <MayChallengeCard />
+        <JuneChallengeCard />
         {isLonely ? <InviteFriendsCard /> : <ShareCircles />}
       </ScrollView>
     </Screen>

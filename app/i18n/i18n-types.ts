@@ -8940,6 +8940,10 @@ type RootTranslation = {
 		 * F​u​l​l​ ​d​e​t​a​i​l​s​ ​a​t​ 
 		 */
 		fullDetails: string
+		/**
+		 * L​e​a​r​n​ ​m​o​r​e​ ​a​b​o​u​t​ ​A​d​o​p​t​i​n​g​ ​B​i​t​c​o​i​n​ ​a​t
+		 */
+		learnMore: string
 		mayChallenge: {
 			/**
 			 * M​a​y​ ​C​h​a​l​l​e​n​g​e​!
@@ -8957,6 +8961,26 @@ type RootTranslation = {
 		​S​h​a​r​e​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​o​n​ ​s​o​c​i​a​l​ ​w​i​t​h​ ​t​h​e​ ​h​a​s​h​t​a​g​ ​#​b​l​i​n​k​c​i​r​c​l​e​s​ ​t​o​ ​p​a​r​t​i​c​i​p​a​t​e​.​
 		​
 		​T​h​e​ ​p​r​i​z​e​ ​i​s​ ​$​1​5​0​ ​f​o​r​ ​p​i​z​z​a​s​.
+			 */
+			details: string
+		}
+		juneChallenge: {
+			/**
+			 * J​u​n​e​ ​C​h​a​l​l​e​n​g​e​!
+			 */
+			title: string
+			/**
+			 * E​x​p​a​n​d​ ​y​o​u​r​ ​I​n​n​e​r​ ​C​i​r​c​l​e​ ​b​y​ ​1​0​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​t​o​ ​w​i​n​ ​a​ ​$​1​0​0​0​ ​p​r​i​v​i​l​e​g​e​ ​t​i​c​k​e​t​ ​t​o​ ​t​h​e​ ​A​d​o​p​t​i​n​g​ ​B​i​t​c​o​i​n​ ​E​l​ ​S​a​l​v​a​d​o​r
+			 */
+			description: string
+			/**
+			 * W​i​n​ ​a​ ​p​r​i​v​i​l​e​g​e​ ​t​i​c​k​e​t​ ​t​o​ ​A​d​o​p​t​i​n​g​ ​B​i​t​c​o​i​n​ ​E​l​ ​S​a​l​v​a​d​o​r​
+		​
+		​E​x​p​a​n​d​ ​y​o​u​r​ ​I​n​n​e​r​ ​C​i​r​c​l​e​ ​b​y​ ​1​0​ ​f​o​r​ ​a​ ​c​h​a​n​c​e​ ​t​o​ ​w​i​n​ ​a​ ​$​1​0​0​0​ ​p​r​i​v​i​l​e​g​e​ ​t​i​c​k​e​t​ ​t​o​ ​A​d​o​p​t​i​n​g​ ​B​i​t​c​o​i​n​ ​E​l​ ​S​a​l​v​a​d​o​r​!​ ​T​h​e​ ​t​i​c​k​e​t​ ​i​n​c​l​u​d​e​s​ ​e​x​c​l​u​s​i​v​e​ ​a​c​c​e​s​s​ ​t​o​ ​t​h​e​ ​m​a​i​n​ ​c​o​n​f​e​r​e​n​c​e​,​ ​m​e​z​z​a​n​i​n​e​ ​w​i​t​h​ ​f​o​o​d​/​d​r​i​n​k​s​/​s​n​a​c​k​s​,​ ​s​p​e​a​k​e​r​s​'​ ​d​i​n​n​e​r​,​ ​a​n​d​ ​t​h​e​ ​F​i​l​m​ ​F​e​s​t​i​v​a​l​.​
+		​
+		​S​h​a​r​e​ ​y​o​u​r​ ​c​i​r​c​l​e​s​ ​o​n​ ​s​o​c​i​a​l​ ​w​i​t​h​ ​t​h​e​ ​h​a​s​h​t​a​g​ ​#​b​l​i​n​k​c​i​r​c​l​e​s​ ​t​o​ ​p​a​r​t​i​c​i​p​a​t​e​.​
+		​
+		​T​h​i​s​ ​t​i​m​e​,​ ​t​h​e​r​e​ ​w​i​l​l​ ​b​e​ ​t​w​o​ ​w​i​n​n​e​r​s​!
 			 */
 			details: string
 		}
@@ -17880,6 +17904,10 @@ export type TranslationFunctions = {
 		 * Full details at 
 		 */
 		fullDetails: () => LocalizedString
+		/**
+		 * Learn more about Adopting Bitcoin at
+		 */
+		learnMore: () => LocalizedString
 		mayChallenge: {
 			/**
 			 * May Challenge!
@@ -17897,6 +17925,26 @@ export type TranslationFunctions = {
 		Share your circles on social with the hashtag #blinkcircles to participate.
 	
 		The prize is $150 for pizzas.
+			 */
+			details: () => LocalizedString
+		}
+		juneChallenge: {
+			/**
+			 * June Challenge!
+			 */
+			title: () => LocalizedString
+			/**
+			 * Expand your Inner Circle by 10 for a chance to win a $1000 privilege ticket to the Adopting Bitcoin El Salvador
+			 */
+			description: () => LocalizedString
+			/**
+			 * Win a privilege ticket to Adopting Bitcoin El Salvador
+	
+		Expand your Inner Circle by 10 for a chance to win a $1000 privilege ticket to Adopting Bitcoin El Salvador! The ticket includes exclusive access to the main conference, mezzanine with food/drinks/snacks, speakers' dinner, and the Film Festival.
+	
+		Share your circles on social with the hashtag #blinkcircles to participate.
+	
+		This time, there will be two winners!
 			 */
 			details: () => LocalizedString
 		}
