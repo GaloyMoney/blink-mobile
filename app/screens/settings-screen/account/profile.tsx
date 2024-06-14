@@ -5,33 +5,35 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { TouchableOpacity, View } from "react-native"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { makeStyles, Text } from "@rneui/themed"
+import { usePersistentStateContext } from "@app/store/persistent-state"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { useApolloClient } from "@apollo/client"
 
 export const ProfileScreen: React.FC = () => {
   const styles = useStyles()
   const { LL } = useI18nContext()
+  const { persistentState } = usePersistentStateContext()
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const data = persistentState.galoyAllAuthTokens.map((token) => {
+    return { username: token, selected: false }
+  })
 
-  const data = [
-    {
-      username: "User 1",
-      selected: true,
-    },
-    {
-      username: "User 2",
-      selected: false,
-    },
-    {
-      username: "User 3",
-      selected: false,
-    },
-  ]
+  data.filter((token) => token.username === persistentState.galoyAuthToken)[0].selected =
+    true
+
+  const handleAddNew = () => {
+    navigation.navigate("getStarted")
+  }
 
   return (
     <Screen keyboardShouldPersistTaps="handled">
       <ScrollView contentContainerStyle={styles.outer}>
-        {data.map((profile, index) => {
-          return <Profile key={index} {...profile} />
+        {data.map((token, index) => {
+          return <Profile key={index} {...token} />
         })}
-        <GaloyPrimaryButton onPress={() => {}} containerStyle={styles.addNewButton}>
+        <GaloyPrimaryButton onPress={handleAddNew} containerStyle={styles.addNewButton}>
           <GaloyIcon name="user" size={30} style={styles.icon} />
           <Text>{LL.ProfileScreen.addNew()}</Text>
         </GaloyPrimaryButton>
@@ -47,8 +49,38 @@ const Profile: React.FC<{ username: string; selected?: boolean }> = ({
   const styles = useStyles()
   const { LL } = useI18nContext()
 
+  const { updateState } = usePersistentStateContext()
+  const client = useApolloClient()
+
+  const handleLogout = () => {
+    updateState((state) => {
+      if (state) {
+        return {
+          ...state,
+          galoyAllAuthTokens: state.galoyAllAuthTokens.filter(
+            (token) => token !== username,
+          ),
+        }
+      }
+      return state
+    })
+  }
+
+  const handleProfileSwitch = () => {
+    updateState((state) => {
+      if (state) {
+        return {
+          ...state,
+          galoyAuthToken: username,
+        }
+      }
+      return state
+    })
+    client.clearStore() // clears cache
+  }
+
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={handleProfileSwitch}>
       <View style={styles.profile}>
         <View style={styles.iconContainer}>
           {selected && (
@@ -57,7 +89,7 @@ const Profile: React.FC<{ username: string; selected?: boolean }> = ({
         </View>
         <Text>{username}</Text>
         {!selected && (
-          <TouchableOpacity style={styles.logoutButton} onPress={() => {}}>
+          <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
             <Text style={styles.logoutButtonText}>{LL.ProfileScreen.logout()}</Text>
           </TouchableOpacity>
         )}
