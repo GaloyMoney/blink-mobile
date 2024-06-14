@@ -3,4 +3,5 @@
     <string name="appwidget_text">Bitcoin Price</string>
     <string name="add_widget">Add bitcoin price widget</string>
     <string name="app_widget_description">USD/BTC price as reported by Blink Servers</string>
+    <string name="chart_content_description">Bitcoin Price USD/BTC Chart</string>
 </resources>
