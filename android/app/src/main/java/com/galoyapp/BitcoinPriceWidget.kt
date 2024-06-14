@@ -4,10 +4,10 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.util.Log
+import android.graphics.Color
 import android.view.View
 import android.widget.RemoteViews
+import androidx.core.content.ContextCompat
 import androidx.work.Data
 import androidx.work.Worker
 import androidx.work.WorkerParameters
@@ -26,7 +26,6 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 class BitcoinPriceWidget : AppWidgetProvider() {
-
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
@@ -37,11 +36,9 @@ class BitcoinPriceWidget : AppWidgetProvider() {
         val data = Data.Builder()
             .putString("RANGE", "ONE_DAY")
             .build()
-
         val periodicWorkRequest = PeriodicWorkRequestBuilder<FetchPriceWorker>(5, TimeUnit.MINUTES)
             .setInputData(data)
             .build()
-
         WorkManager.getInstance(context).enqueue(periodicWorkRequest)
     }
 
@@ -50,10 +47,18 @@ class BitcoinPriceWidget : AppWidgetProvider() {
     }
 }
 
-private fun generateChartBitmap(context: Context, data: JSONArray): Bitmap {
-    val chart = LineChart(context)
-    chart.layout(0, 0, 1000, 1000)  // Set chart dimensions
-    chart.setDrawGridBackground(false)
+private fun generateChartBitmap(context: Context, data: JSONArray, width: Int, height: Int): Bitmap {
+    val chart = LineChart(context).apply {
+        setDrawGridBackground(false)
+        description.isEnabled = false
+        legend.isEnabled = false
+        axisLeft.isEnabled = false
+        axisRight.isEnabled = false
+        xAxis.isEnabled = false
+        setExtraOffsets(0f, 0f, 0f, 0f)
+        setViewPortOffsets(0f, 0f, 0f, 0f)
+        setBackgroundColor(Color.BLACK)
+    }
 
     val entries = ArrayList<Entry>()
     for (i in 0 until data.length()) {
@@ -62,26 +67,42 @@ private fun generateChartBitmap(context: Context, data: JSONArray): Bitmap {
         entries.add(Entry(i.toFloat(), price))
     }
 
-    val dataSet = LineDataSet(entries, "Bitcoin Price")
-    val lineData = LineData(dataSet)
-    chart.data = lineData
+    val dataSet = LineDataSet(entries, "").apply {
+        setDrawValues(false)
+        setDrawCircles(false)
+        mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+        cubicIntensity = 0.4f // Adjust this value to control the smoothness, default is 0.2
+        lineWidth = 1f // Adjust the line width for aesthetic appearance
+        color = ContextCompat.getColor(context, R.color.primary)
+        setDrawFilled(true)
+        fillDrawable = ContextCompat.getDrawable(context, R.drawable.bitcoin_price_widget_chart_gradient)
+    }
+
+    chart.data = LineData(dataSet)
 
     chart.measure(
-        View.MeasureSpec.makeMeasureSpec(300,View.MeasureSpec.EXACTLY),
-        View.MeasureSpec.makeMeasureSpec(500,View.MeasureSpec.EXACTLY));
-    chart.layout(0, 0, chart.measuredWidth, chart.measuredHeight);
+        View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
+        View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY))
+    chart.layout(0, 0, chart.measuredWidth, chart.measuredHeight)
 
-    chart.invalidate()  // Refresh chart
+    chart.invalidate()
     return chart.getChartBitmap();
 }
 
 internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
+    val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
+    val width = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)
+    val height = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT)
+
+    val minWidth = View.MeasureSpec.getSize(width)
+    val maxHeight = View.MeasureSpec.getSize(height)
+
     val prefs = context.getSharedPreferences("bitcoinPricePrefs", Context.MODE_PRIVATE)
     val priceInfo = prefs.getString("PRICE_INFO", "[]")
     val array = JSONArray(priceInfo)
 
     val views = RemoteViews(context.packageName, R.layout.bitcoin_price_widget)
-    val bitmap = generateChartBitmap(context, array)
+    val bitmap = generateChartBitmap(context, array, minWidth, maxHeight)
     views.setImageViewBitmap(R.id.chart_image_view, bitmap)
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }
