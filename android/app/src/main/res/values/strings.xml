@@ -6,4 +6,5 @@
     <string name="chart_content_description">Bitcoin Price USD/BTC Chart</string>
     <string name="btc_usd">BTC/USD</string>
     <string name="blink_logo_description">Blink Logo</string>
+    <string name="blink_price_no_internet">Need internet connection to show BTC/USD price data</string>
 </resources>

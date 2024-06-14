@@ -3,7 +3,9 @@ package com.galoyapp
 import android.annotation.SuppressLint
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.util.Log
@@ -51,6 +53,17 @@ class BitcoinPriceWidget : AppWidgetProvider() {
 }
 
 private fun generateChartBitmap(context: Context, data: JSONArray, width: Int, height: Int): Bitmap {
+    val entries = ArrayList<Entry>()
+    var maxY = 0f
+    var minY = 9999999f
+    for (i in 0 until data.length()) {
+        val item = data.getJSONObject(i)
+        val price = item.getJSONObject("price").getString("formattedAmount").toFloat()
+        entries.add(Entry(i.toFloat(), price))
+        if (price > maxY) { maxY = price }
+        if (price < minY) { minY = price }
+    }
+
     val chart = LineChart(context).apply {
         setDrawGridBackground(false)
         description.isEnabled = false
@@ -58,16 +71,12 @@ private fun generateChartBitmap(context: Context, data: JSONArray, width: Int, h
         axisLeft.isEnabled = false
         axisRight.isEnabled = false
         xAxis.isEnabled = false
+
+        setBackgroundColor(Color.BLACK)
         setExtraOffsets(0f, 0f, 0f, 0f)
         setViewPortOffsets(0f, 0f, 0f, 0f)
-        setBackgroundColor(Color.BLACK)
-    }
 
-    val entries = ArrayList<Entry>()
-    for (i in 0 until data.length()) {
-        val item = data.getJSONObject(i)
-        val price = item.getJSONObject("price").getString("formattedAmount").toFloat()
-        entries.add(Entry(i.toFloat(), price))
+        axisLeft.axisMaximum = maxY + ( (maxY - minY) * 0.3f )
     }
 
     val dataSet = LineDataSet(entries, "").apply {
@@ -101,20 +110,34 @@ internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManage
     val minWidth = View.MeasureSpec.getSize(width)
     val maxHeight = View.MeasureSpec.getSize(height)
 
+    val views = RemoteViews(context.packageName, R.layout.bitcoin_price_widget)
+
     val prefs = context.getSharedPreferences("bitcoinPricePrefs", Context.MODE_PRIVATE)
     val priceArray = JSONArray(prefs.getString("PRICE_ARRAY", "[]"))
 
-    val views = RemoteViews(context.packageName, R.layout.bitcoin_price_widget)
-    val bitmap = generateChartBitmap(context, priceArray, minWidth, maxHeight)
-    views.setImageViewBitmap(R.id.chart_image_view, bitmap)
-
     val realtimePrice = JSONObject(prefs.getString("REALTIME_PRICE", "No Data") ?: "{}")
-    val btcSatBase = realtimePrice.getJSONObject("btcSatPrice").getLong("base")
-    val btcSatOffset = realtimePrice.getJSONObject("btcSatPrice").getInt("offset")
-    val btcUsdPrice = (btcSatBase / 10.0.pow(btcSatOffset)) * 100000000 / 100
+    if (!realtimePrice.has("noData")) {
 
-    val formattedBtcUsdPrice = String.format("%.2f", btcUsdPrice)
-    views.setTextViewText(R.id.btc_price, "$$formattedBtcUsdPrice")
+        val bitmap = generateChartBitmap(context, priceArray, minWidth, maxHeight)
+        views.setImageViewBitmap(R.id.chart_image_view, bitmap)
+
+        val btcSatBase = realtimePrice.getJSONObject("btcSatPrice").getLong("base")
+        val btcSatOffset = realtimePrice.getJSONObject("btcSatPrice").getInt("offset")
+        val btcUsdPrice = (btcSatBase / 10.0.pow(btcSatOffset)) * 100000000 / 100
+
+        val formattedBtcUsdPrice = String.format("%.2f", btcUsdPrice)
+        views.setTextViewText(R.id.btc_price, "$$formattedBtcUsdPrice")
+
+        views.setViewVisibility(R.id.error_message, View.GONE)
+        views.setViewVisibility(R.id.btc_price, View.VISIBLE)
+        views.setViewVisibility(R.id.btc_price_label, View.VISIBLE)
+        views.setViewVisibility(R.id.btc_logo, View.VISIBLE)
+    } else {
+        views.setViewVisibility(R.id.error_message, View.VISIBLE)
+        views.setViewVisibility(R.id.btc_price, View.GONE)
+        views.setViewVisibility(R.id.btc_price_label, View.GONE)
+        views.setViewVisibility(R.id.btc_logo, View.GONE)
+    }
 
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }
@@ -135,12 +158,28 @@ class FetchPriceWorker(context: Context, params: WorkerParameters) : Worker(cont
         val realtimePrice = jsonResponse.getJSONObject("realtimePrice")
         val prefs =
             applicationContext.getSharedPreferences("bitcoinPricePrefs", Context.MODE_PRIVATE)
+
         with(prefs.edit()) {
             putString("PRICE_ARRAY", priceArray.toString())
             putString("REALTIME_PRICE", realtimePrice.toString())
             apply()
         }
+
+        updateWidgets(applicationContext)
         return Result.success()
+    }
+
+    private fun updateWidgets(context: Context) {
+        Log.i("updateWidgets", "")
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+        val ids = appWidgetManager.getAppWidgetIds(ComponentName(context, BitcoinPriceWidget::class.java))
+        ids.forEach { id ->
+            val updateIntent = Intent(context, BitcoinPriceWidget::class.java).apply {
+                action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(id))
+            }
+            context.sendBroadcast(updateIntent)
+        }
     }
 
     private fun fetchBitcoinPrice(range: BitcoinPriceRanges): JSONObject {
@@ -160,7 +199,7 @@ class FetchPriceWorker(context: Context, params: WorkerParameters) : Worker(cont
                     JSONObject(br.readText()).getJSONObject("data")
                 }
             } else {
-                JSONObject("{}")
+                JSONObject("{\"btcPriceList\": [], \"realtimePrice\": { \"noData\": true } }")
             }
         }
     }
