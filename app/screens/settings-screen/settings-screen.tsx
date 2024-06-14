@@ -68,7 +68,10 @@ const items = {
     // TotpSetting,
     OnDeviceSecuritySetting,
   ],
-  advanced: [ExportCsvSetting, ApiAccessSetting],
+  advanced: [
+    ExportCsvSetting,
+    //  ApiAccessSetting
+  ],
   community: [NeedHelpSetting, JoinCommunitySetting],
 }
 
@@ -97,7 +100,7 @@ export const SettingsScreen: React.FC = () => {
           name={LL.common.securityAndPrivacy()}
           items={items.securityAndPrivacy}
         />
-        {/* <SettingsGroup name={LL.common.advanced()} items={items.advanced} /> */}
+        <SettingsGroup name={LL.common.advanced()} items={items.advanced} />
         <SettingsGroup name={LL.common.community()} items={items.community} />
         <VersionComponent />
       </ScrollView>
