@@ -15,10 +15,6 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Text, makeStyles, useTheme, Skeleton } from "@rneui/themed"
-import {
-  GaloyIconButton,
-  GaloyIconButtonProps,
-} from "@app/components/atomic/galoy-icon-button"
 
 export const AccountBanner = () => {
   const styles = useStyles()
