@@ -10,4 +10,37 @@
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:contentDescription="@string/chart_content_description" />
+
+    <TextView
+        android:id="@+id/btc_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="8dp"
+        android:paddingHorizontal="8dp"
+        android:text=""
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/btc_price_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btc_price"
+        android:layout_alignStart="@id/btc_price"
+        android:text="@string/btc_usd"
+        android:textSize="11sp"
+        android:textColor="#FFFFFF"
+        android:paddingHorizontal="8dp" />
+
+    <ImageView
+        android:id="@+id/btc_logo"
+        android:layout_width="86dp"
+        android:layout_height="86dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="-20dp"
+        android:src="@drawable/bootsplash_logo"
+        android:contentDescription="@string/blink_logo_description" />
 </RelativeLayout>

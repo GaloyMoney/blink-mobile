@@ -1,10 +1,12 @@
 package com.galoyapp
 
+import android.annotation.SuppressLint
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
 import androidx.core.content.ContextCompat
@@ -24,6 +26,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import org.json.JSONArray
 import org.json.JSONObject
+import kotlin.math.pow
 
 class BitcoinPriceWidget : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
@@ -36,7 +39,7 @@ class BitcoinPriceWidget : AppWidgetProvider() {
         val data = Data.Builder()
             .putString("RANGE", "ONE_DAY")
             .build()
-        val periodicWorkRequest = PeriodicWorkRequestBuilder<FetchPriceWorker>(5, TimeUnit.MINUTES)
+        val periodicWorkRequest = PeriodicWorkRequestBuilder<FetchPriceWorker>(15, TimeUnit.MINUTES)
             .setInputData(data)
             .build()
         WorkManager.getInstance(context).enqueue(periodicWorkRequest)
@@ -89,6 +92,7 @@ private fun generateChartBitmap(context: Context, data: JSONArray, width: Int, h
     return chart.getChartBitmap();
 }
 
+@SuppressLint("DefaultLocale")
 internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
     val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
     val width = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)
@@ -98,12 +102,20 @@ internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManage
     val maxHeight = View.MeasureSpec.getSize(height)
 
     val prefs = context.getSharedPreferences("bitcoinPricePrefs", Context.MODE_PRIVATE)
-    val priceInfo = prefs.getString("PRICE_INFO", "[]")
-    val array = JSONArray(priceInfo)
+    val priceArray = JSONArray(prefs.getString("PRICE_ARRAY", "[]"))
 
     val views = RemoteViews(context.packageName, R.layout.bitcoin_price_widget)
-    val bitmap = generateChartBitmap(context, array, minWidth, maxHeight)
+    val bitmap = generateChartBitmap(context, priceArray, minWidth, maxHeight)
     views.setImageViewBitmap(R.id.chart_image_view, bitmap)
+
+    val realtimePrice = JSONObject(prefs.getString("REALTIME_PRICE", "No Data") ?: "{}")
+    val btcSatBase = realtimePrice.getJSONObject("btcSatPrice").getLong("base")
+    val btcSatOffset = realtimePrice.getJSONObject("btcSatPrice").getInt("offset")
+    val btcUsdPrice = (btcSatBase / 10.0.pow(btcSatOffset)) * 100000000 / 100
+
+    val formattedBtcUsdPrice = String.format("%.2f", btcUsdPrice)
+    views.setTextViewText(R.id.btc_price, "$$formattedBtcUsdPrice")
+
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }
 
@@ -119,26 +131,22 @@ class FetchPriceWorker(context: Context, params: WorkerParameters) : Worker(cont
     override fun doWork(): Result {
         val range = BitcoinPriceRanges.valueOf(inputData.getString("RANGE") ?: "ONE_DAY")
         val jsonResponse = fetchBitcoinPrice(range)
+        val priceArray = jsonResponse.getJSONArray("btcPriceList")
+        val realtimePrice = jsonResponse.getJSONObject("realtimePrice")
         val prefs =
             applicationContext.getSharedPreferences("bitcoinPricePrefs", Context.MODE_PRIVATE)
         with(prefs.edit()) {
-            putString("PRICE_INFO", jsonResponse.toString())
+            putString("PRICE_ARRAY", priceArray.toString())
+            putString("REALTIME_PRICE", realtimePrice.toString())
             apply()
         }
         return Result.success()
     }
 
-    private fun fetchBitcoinPrice(range: BitcoinPriceRanges): JSONArray {
+    private fun fetchBitcoinPrice(range: BitcoinPriceRanges): JSONObject {
         val url = URL("https://api.mainnet.galoy.io/graphql")
-        val query = "query btcPriceList(\$range: PriceGraphRange!) { btcPriceList(range: \$range) { timestamp price { base offset currencyUnit formattedAmount } } }"
-        val jsonInputString = """
-        {
-            "query": "$query",
-            "variables": {
-                "range": "$range"
-            }
-        }
-        """.trimIndent()
+        val query = "query BitcoinPriceForAppWidget(\$range: PriceGraphRange!) { btcPriceList(range: \$range) { timestamp price { base offset currencyUnit formattedAmount } } realtimePrice { btcSatPrice { base offset } timestamp usdCentPrice { base offset } } }"
+        val jsonInputString = """{ "query": "$query", "variables": { "range": "$range" } }"""
 
         with(url.openConnection() as HttpURLConnection) {
             requestMethod = "POST"
@@ -147,13 +155,12 @@ class FetchPriceWorker(context: Context, params: WorkerParameters) : Worker(cont
             outputStream.use { os ->
                 os.write(jsonInputString.toByteArray())
             }
-
             return if (responseCode == HttpURLConnection.HTTP_OK) {
                 BufferedReader(InputStreamReader(inputStream)).use { br ->
-                    JSONObject(br.readText()).getJSONObject("data").getJSONArray("btcPriceList")
+                    JSONObject(br.readText()).getJSONObject("data")
                 }
             } else {
-                JSONArray("[]")
+                JSONObject("{}")
             }
         }
     }
