@@ -2343,6 +2343,10 @@
         "accountId": "Account ID",
         "copy": "Copy"
     },
+    "ProfileScreen": {
+        "addNew": "Add new",
+        "logout": "Logout"
+    },
     "TotpRegistrationInitiateScreen": {
         "title": "Two-factor authentication",
         "content": "Scan this QR code with your authenticator app. Alternatively, you can manually copy/paste the secret into your authenticator app."
@@ -2579,7 +2583,7 @@
         "phone": "Phone",
         "phoneNumber": "Phone Number",
         "preimageProofOfPayment": "Preimage / Proof of Payment",
-        "profile": "Profile",
+        "profile": "Profiles",
         "rate": "Rate",
         "reauth": "Your session has expired. Please log in again.",
         "restart": "Restart",

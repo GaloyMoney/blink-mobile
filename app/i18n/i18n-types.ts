@@ -7581,6 +7581,16 @@ type RootTranslation = {
 		 */
 		copy: string
 	}
+	ProfileScreen: {
+		/**
+		 * A​d​d​ ​n​e​w
+		 */
+		addNew: string
+		/**
+		 * L​o​g​o​u​t
+		 */
+		logout: string
+	}
 	TotpRegistrationInitiateScreen: {
 		/**
 		 * T​w​o​-​f​a​c​t​o​r​ ​a​u​t​h​e​n​t​i​c​a​t​i​o​n
@@ -8400,7 +8410,7 @@ type RootTranslation = {
 		 */
 		preimageProofOfPayment: string
 		/**
-		 * P​r​o​f​i​l​e
+		 * P​r​o​f​i​l​e​s
 		 */
 		profile: string
 		/**
@@ -16594,6 +16604,16 @@ export type TranslationFunctions = {
 		 */
 		copy: () => LocalizedString
 	}
+	ProfileScreen: {
+		/**
+		 * Add new
+		 */
+		addNew: () => LocalizedString
+		/**
+		 * Logout
+		 */
+		logout: () => LocalizedString
+	}
 	TotpRegistrationInitiateScreen: {
 		/**
 		 * Two-factor authentication
@@ -17398,7 +17418,7 @@ export type TranslationFunctions = {
 		 */
 		preimageProofOfPayment: () => LocalizedString
 		/**
-		 * Profile
+		 * Profiles
 		 */
 		profile: () => LocalizedString
 		/**

@@ -2424,6 +2424,10 @@ const en: BaseTranslation = {
     accountId: "Account ID",
     copy: "Copy"
   },
+  ProfileScreen: {
+    addNew : "Add new",
+    logout: "Logout",
+  },
   TotpRegistrationInitiateScreen: {
     title: "Two-factor authentication",
     content:
@@ -2682,7 +2686,7 @@ const en: BaseTranslation = {
     phone: "Phone",
     phoneNumber: "Phone Number",
     preimageProofOfPayment: "Preimage / Proof of Payment",
-    profile: "Profile",
+    profile: "Profiles",
     rate: "Rate",
     reauth: "Your session has expired. Please log in again.",
     restart: "Restart",
