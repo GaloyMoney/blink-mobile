@@ -36,7 +36,7 @@ it("migration from 6 to 7", async () => {
     schemaVersion: 7,
     galoyInstance: { id: "Main" },
     galoyAuthToken: "myToken",
-    galoyAllAuthTokens: [],
+    galoyAllAuthTokens: ["myToken"],
   }
 
   const res = await migrateAndGetPersistentState(state6)

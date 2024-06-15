@@ -44,7 +44,7 @@ const migrate6ToCurrent = (state: PersistentState_6): Promise<PersistentState> =
   return migrate7ToCurrent({
     ...state,
     schemaVersion: 7,
-    galoyAllAuthTokens: [],
+    galoyAllAuthTokens: [state.galoyAuthToken],
   })
 }
 

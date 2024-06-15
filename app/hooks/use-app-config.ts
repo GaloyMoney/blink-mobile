@@ -10,7 +10,7 @@ export const useAppConfig = () => {
     () => ({
       token: persistentState.galoyAuthToken,
       galoyInstance: resolveGaloyInstanceOrDefault(persistentState.galoyInstance),
-      savedAccounts: persistentState.galoyAllAuthTokens,
+      allTokens: persistentState.galoyAllAuthTokens,
     }),
     [
       persistentState.galoyAuthToken,
