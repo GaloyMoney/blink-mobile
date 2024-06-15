@@ -2,26 +2,105 @@ import { ScrollView } from "react-native-gesture-handler"
 import { Screen } from "@app/components/screen"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, Button, TouchableOpacity, View } from "react-native"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
-import { makeStyles, Text } from "@rneui/themed"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { useApolloClient } from "@apollo/client"
+import { useApolloClient, gql } from "@apollo/client"
+import { useUsernameLazyQuery } from "@app/graphql/generated"
+import { useEffect, useState } from "react"
+
+gql`
+  query username {
+    me {
+      username
+    }
+  }
+`
+
+type ProfileProps = {
+  username: string
+  token: string
+  selected?: boolean
+}
 
 export const ProfileScreen: React.FC = () => {
   const styles = useStyles()
+  const {
+    theme: { colors },
+  } = useTheme()
   const { LL } = useI18nContext()
   const { persistentState } = usePersistentStateContext()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const data = persistentState.galoyAllAuthTokens.map((token) => {
-    return { username: token, selected: false }
+
+  const tokens = persistentState.galoyAllAuthTokens
+
+  const [profiles, setProfiles] = useState<ProfileProps[]>([])
+  const [fetchUsername, { loading, error, refetch }] = useUsernameLazyQuery({
+    fetchPolicy: "no-cache",
   })
 
-  data.filter((token) => token.username === persistentState.galoyAuthToken)[0].selected =
-    true
+  useEffect(() => {
+    const fetchUsernames = async () => {
+      const profiles: ProfileProps[] = []
+
+      for (const token of tokens) {
+        try {
+          const { data } = await fetchUsername({
+            context: {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            },
+          })
+          if (data && data.me) {
+            profiles.push({
+              username: data.me.username ? data.me.username : "No username specified",
+              token,
+              selected: token === persistentState.galoyAuthToken,
+            })
+          }
+        } catch (err) {
+          console.error(`Failed to fetch username for token ${token}`, err)
+        }
+      }
+
+      setProfiles(profiles)
+      console.log(profiles)
+    }
+    fetchUsernames()
+  }, [tokens, fetchUsername, persistentState.galoyAuthToken])
+
+  if (error) {
+    return (
+      <Screen>
+        <View style={styles.errorWrapper}>
+          <Text adjustsFontSizeToFit style={styles.errorText}>
+            {LL.ProfileScreen.error()}
+          </Text>
+          <Button
+            title="reload"
+            disabled={loading}
+            color={colors.error}
+            onPress={() => refetch()}
+          />
+        </View>
+      </Screen>
+    )
+  }
+
+  if (loading) {
+    return (
+      <Screen>
+        <View style={styles.loadingWrapper}>
+          <ActivityIndicator animating size="large" color={colors.primary} />
+        </View>
+      </Screen>
+    )
+  }
 
   const handleAddNew = () => {
     navigation.navigate("getStarted")
@@ -30,8 +109,8 @@ export const ProfileScreen: React.FC = () => {
   return (
     <Screen keyboardShouldPersistTaps="handled">
       <ScrollView contentContainerStyle={styles.outer}>
-        {data.map((token, index) => {
-          return <Profile key={index} {...token} />
+        {profiles.map((profile, index) => {
+          return <Profile key={index} {...profile} />
         })}
         <GaloyPrimaryButton onPress={handleAddNew} containerStyle={styles.addNewButton}>
           <GaloyIcon name="user" size={30} style={styles.icon} />
@@ -42,10 +121,7 @@ export const ProfileScreen: React.FC = () => {
   )
 }
 
-const Profile: React.FC<{ username: string; selected?: boolean }> = ({
-  username,
-  selected,
-}) => {
+const Profile: React.FC<ProfileProps> = ({ username, token, selected }) => {
   const styles = useStyles()
   const { LL } = useI18nContext()
 
@@ -57,9 +133,7 @@ const Profile: React.FC<{ username: string; selected?: boolean }> = ({
       if (state) {
         return {
           ...state,
-          galoyAllAuthTokens: state.galoyAllAuthTokens.filter(
-            (token) => token !== username,
-          ),
+          galoyAllAuthTokens: state.galoyAllAuthTokens.filter((t) => t !== token),
         }
       }
       return state
@@ -76,7 +150,7 @@ const Profile: React.FC<{ username: string; selected?: boolean }> = ({
       }
       return state
     })
-    client.clearStore() // clears cache
+    client.clearStore() // clear cache to load fresh data using new token
   }
 
   return (
@@ -145,5 +219,23 @@ const useStyles = makeStyles(({ colors }) => ({
     color: colors.primary,
     fontSize: 20,
     fontWeight: "bold",
+  },
+  errorWrapper: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "50%",
+    marginBottom: "50%",
+  },
+  errorText: {
+    color: colors.error,
+    fontWeight: "bold",
+    fontSize: 18,
+    marginBottom: 20,
+  },
+  loadingWrapper: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "50%",
+    marginBottom: "50%",
   },
 }))
