@@ -36,18 +36,20 @@ export const ProfileScreen: React.FC = () => {
   const { persistentState } = usePersistentStateContext()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
-  const tokens = persistentState.galoyAllAuthTokens
+  const { galoyAuthToken: curToken, galoyAllAuthTokens: allTokens } = persistentState
 
   const [profiles, setProfiles] = useState<ProfileProps[]>([])
-  const [fetchUsername, { loading, error, refetch }] = useUsernameLazyQuery({
+  const [fetchUsername, { error, refetch }] = useUsernameLazyQuery({
     fetchPolicy: "no-cache",
   })
+  const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const fetchUsernames = async () => {
+      setLoading(true)
       const profiles: ProfileProps[] = []
-
-      for (const token of tokens) {
+      let counter = 1
+      for (const token of allTokens) {
         try {
           const { data } = await fetchUsername({
             context: {
@@ -58,21 +60,20 @@ export const ProfileScreen: React.FC = () => {
           })
           if (data && data.me) {
             profiles.push({
-              username: data.me.username ? data.me.username : "No username specified",
+              username: data.me.username ? data.me.username : `Account ${counter++}`,
               token,
-              selected: token === persistentState.galoyAuthToken,
+              selected: token === curToken,
             })
           }
         } catch (err) {
           console.error(`Failed to fetch username for token ${token}`, err)
         }
       }
-
       setProfiles(profiles)
-      console.log(profiles)
+      setLoading(false)
     }
     fetchUsernames()
-  }, [tokens, fetchUsername, persistentState.galoyAuthToken])
+  }, [allTokens, fetchUsername, curToken])
 
   if (error) {
     return (
@@ -145,7 +146,7 @@ const Profile: React.FC<ProfileProps> = ({ username, token, selected }) => {
       if (state) {
         return {
           ...state,
-          galoyAuthToken: username,
+          galoyAuthToken: token,
         }
       }
       return state
