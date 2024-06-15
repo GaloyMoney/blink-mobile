@@ -12,6 +12,16 @@ buildscript {
         androidXAnnotation = "1.2.0"
         androidXBrowser = "1.3.0"
     }
+    subprojects { subproject ->
+        afterEvaluate{
+            if((subproject.plugins.hasPlugin('android') || subproject.plugins.hasPlugin('android-library'))) {
+                android {
+                    compileSdkVersion rootProject.ext.compileSdkVersion
+                    buildToolsVersion rootProject.ext.buildToolsVersion
+                }
+            }
+        }
+    }
     repositories {
         google()
         jcenter()
