@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
 import androidx.core.content.ContextCompat
@@ -170,7 +169,6 @@ class FetchPriceWorker(context: Context, params: WorkerParameters) : Worker(cont
     }
 
     private fun updateWidgets(context: Context) {
-        Log.i("updateWidgets", "")
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val ids = appWidgetManager.getAppWidgetIds(ComponentName(context, BitcoinPriceWidget::class.java))
         ids.forEach { id ->
