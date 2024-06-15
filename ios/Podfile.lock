@@ -1524,8 +1524,6 @@ PODS:
     - ZXingObjC
   - RNReactNativeHapticFeedback (2.2.0):
     - React-Core
-  - RNReactNativeSharedGroupPreferences (1.1.24):
-    - React
   - RNReanimated (3.11.0):
     - DoubleConversion
     - glog
@@ -1697,7 +1695,6 @@ DEPENDENCIES:
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNQrGenerator (from `../node_modules/rn-qr-generator`)
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
-  - RNReactNativeSharedGroupPreferences (from `../node_modules/react-native-shared-group-preferences`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSecureRandom (from `../node_modules/react-native-securerandom`)
@@ -1909,8 +1906,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/rn-qr-generator"
   RNReactNativeHapticFeedback:
     :path: "../node_modules/react-native-haptic-feedback"
-  RNReactNativeSharedGroupPreferences:
-    :path: "../node_modules/react-native-shared-group-preferences"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -2038,7 +2033,6 @@ SPEC CHECKSUMS:
   RNPermissions: 107a3106f541d738b80450cdf2dd9fbd134646eb
   RNQrGenerator: 1676221c08bfabec978242989c733810dad20959
   RNReactNativeHapticFeedback: ec56a5f81c3941206fd85625fa669ffc7b4545f9
-  RNReactNativeSharedGroupPreferences: 29092869fc2e40d5baca5e15d82fa5c24a668977
   RNReanimated: 82d44098f1640ac390d073bca26264d52a67dc7d
   RNScreens: 30249f9331c3b00ae7cb7922e11f58b3ed369c07
   RNSecureRandom: 07efbdf2cd99efe13497433668e54acd7df49fef
