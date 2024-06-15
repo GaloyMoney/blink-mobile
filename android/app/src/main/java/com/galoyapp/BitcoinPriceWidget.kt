@@ -1,6 +1,7 @@
 package com.galoyapp
 
 import android.annotation.SuppressLint
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -8,10 +9,13 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.net.Uri
 import android.view.View
 import android.widget.RemoteViews
 import androidx.core.content.ContextCompat
 import androidx.work.Data
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.OutOfQuotaPolicy
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import java.io.BufferedReader
@@ -37,13 +41,27 @@ class BitcoinPriceWidget : AppWidgetProvider() {
     }
 
     override fun onEnabled(context: Context) {
-        val data = Data.Builder()
-            .putString("RANGE", "ONE_DAY")
+        super.onEnabled(context)
+
+        val immediateWorkRequest = OneTimeWorkRequestBuilder<FetchPriceWorker>()
+            .setInputData(Data.Builder().putString("RANGE", "ONE_DAY").build())
+            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             .build()
+
         val periodicWorkRequest = PeriodicWorkRequestBuilder<FetchPriceWorker>(15, TimeUnit.MINUTES)
-            .setInputData(data)
+            .setInputData(Data.Builder().putString("RANGE", "ONE_DAY").build())
             .build()
-        WorkManager.getInstance(context).enqueue(periodicWorkRequest)
+
+        WorkManager.getInstance(context).apply {
+            enqueue(immediateWorkRequest)
+            enqueue(periodicWorkRequest)
+        }
+
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+        val appWidgetIds = appWidgetManager.getAppWidgetIds(ComponentName(context, BitcoinPriceWidget::class.java))
+        appWidgetIds.forEach { appWidgetId ->
+            updateAppWidget(context, appWidgetManager, appWidgetId)
+        }
     }
 
     override fun onDisabled(context: Context) {
@@ -137,6 +155,10 @@ internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManage
         views.setViewVisibility(R.id.btc_price_label, View.GONE)
         views.setViewVisibility(R.id.btc_logo, View.GONE)
     }
+
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("blink://price"))
+    val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+    views.setOnClickPendingIntent(R.id.bitcoin_price_widget, pendingIntent)
 
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }

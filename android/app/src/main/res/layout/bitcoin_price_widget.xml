@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
+    android:id="@+id/bitcoin_price_widget"
     android:padding="0dp">
 
     <TextView
@@ -32,11 +33,11 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="8dp"
         android:paddingHorizontal="8dp"
-        android:text=""
+        android:text="@string/loading"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         android:background="#80000000"
-        android:textSize="24sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/btc_price_label"
