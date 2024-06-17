@@ -147,8 +147,11 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
-
     implementation("com.google.mlkit:barcode-scanning:17.2.0")
+
+    // For widget
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:id="@+id/bitcoin_price_widget"
+    android:padding="0dp">
+
+    <TextView
+        android:id="@+id/error_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/blink_price_no_internet"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:gravity="center"
+        android:padding="16dp" />
+
+    <ImageView
+        android:id="@+id/chart_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="0dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/chart_content_description" />
+
+    <TextView
+        android:id="@+id/btc_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="8dp"
+        android:paddingHorizontal="8dp"
+        android:text="@string/loading"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:background="#80000000"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/btc_price_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btc_price"
+        android:layout_alignStart="@id/btc_price"
+        android:text="@string/btc_usd"
+        android:textSize="11sp"
+        android:textColor="#FFFFFF"
+        android:paddingHorizontal="8dp"
+        android:background="#80000000"
+    />
+
+    <ImageView
+        android:id="@+id/btc_logo"
+        android:layout_width="86dp"
+        android:layout_height="86dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="-20dp"
+        android:src="@drawable/bootsplash_logo"
+        android:contentDescription="@string/blink_logo_description" />
+</RelativeLayout>
