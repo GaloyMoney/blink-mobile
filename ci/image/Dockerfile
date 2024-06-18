@@ -19,6 +19,10 @@ RUN curl -L -O "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/te
   unzip "terraform_${TERRAFORM_VERSION}_linux_amd64.zip" -d /usr/local/bin && \
   rm -f "terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
 
+ARG TOFU_VERSION=1.7.2
+RUN wget https://github.com/opentofu/opentofu/releases/download/v${TOFU_VERSION}/tofu_${TOFU_VERSION}_386.apk -O tofu.apk && \
+  apk add --allow-untrusted tofu.apk
+
 ARG HCLEDIT_VERSION=0.2.8
 RUN wget https://github.com/minamijoyo/hcledit/releases/download/v${HCLEDIT_VERSION}/hcledit_${HCLEDIT_VERSION}_linux_amd64.tar.gz \
   && tar -zxvf hcledit_${HCLEDIT_VERSION}_linux_amd64.tar.gz \
