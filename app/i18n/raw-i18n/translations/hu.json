@@ -2,14 +2,14 @@
     "GaloyAddressScreen": {
         "title": "Fizetés fogadása így:",
         "buttonTitle": "Állítsd be a címed",
-        "yourAddress": "A te {bankName: string} címed",
+        "yourLightningAddress": "A lightning címed",
         "notAbleToChange": "Beállítás után a {bankName: string} címet nem fogod tudni megváltoztatni.",
         "addressNotAvailable": "{bankName: string} címet már másvalaki használja.",
         "somethingWentWrong": "Valami nem sikerült. Kérlek próbáld újra.",
         "merchantTitle": "Kereskedőknek",
         "yourCashRegister": "A Lightning Pénztárad",
         "yourPaycode": "Fizetési Kódod",
-        "copiedAddressToClipboard": "{bankName: string} címe a vágólapra másolva",
+        "copiedLightningAddressToClipboard": "a lightning címed a vágólapra került",
         "copiedPaycodeToClipboard": "Fizetési Kód a vágólapra másolva",
         "copiedCashRegisterLinkToClipboard": "Pénztár link a vágólapra másolva",
         "howToUseIt": "Hogyan használd?",
@@ -19,6 +19,13 @@
         "howToUseYourAddressExplainer": "Oszd meg olyan személlyel, akinek kompatibilis tárcája van, például:",
         "howToUseYourPaycodeExplainer": "A Fizetési Kódod (technikailag ez egy LNURLpay cím) kinyomtathatod és ki is helyezheted az üzletedben, hogy fizetéseket fogadhass. Bárki fizethet Neked úgy, hogy beszkenneli a Fizetési Kódod egy mobil Lightning tárca alkalmazással.\n\nAzonban tartsd szem előtt, hogy nem minden tárca alkalmazás tudja azt beolvasni, például:",
         "howToUseYourCashRegisterExplainer": "A Pénztár Link segítségével bárki kezdeményezhet fizetést a tárcádba való bejelentkezés nélkül.\n\nKiállíthat fizetési kérelmeket és azok alapján, a fizetések egyből a Te {bankName: string} tárcádba fognak érkezni."
+    },
+    "AcceptTermsAndConditionsScreen": {
+        "title": "Felhasználási feltételek",
+        "accept": "Elfogadom",
+        "termsAndConditions": "Felhasználási feltételek megtekintése",
+        "prohibitedCountry": "Tiltott országok megtekintése",
+        "text": "Az 'Elfogadom' gombra kattintva elfogadod a Felhasználási Feltételeinket. Azzal is egyetértesz, hogy nem egy tiltott ország lakosa vagy állampolgára vagy."
     },
     "SetAccountModal": {
         "title": "Alapértelmezett számla beállítása",
@@ -65,6 +72,8 @@
         "message": "Sikeres átváltás"
     },
     "EarnScreen": {
+        "satoshi": "sat",
+        "satoshis": "satoshi",
         "earnSats": "Kapj {formattedNumber|sats}ot",
         "earnSections": {
             "bitcoinWhatIsIt": {
@@ -1987,13 +1996,13 @@
         "satAccumulated": "Keresett satoshik",
         "satsEarned": "{formattedNumber|sats} keresve",
         "sectionsCompleted": "Befejezett szakaszok",
-        "title": "Keresés",
+        "title": "Kvíz",
         "unlockQuestion": "Feloldáshoz, válaszolj a kérdésre:",
         "youEarned": "Kerestél",
         "registerTitle": "A magasabb szintű számlára kell váltanod",
         "registerContent": "Regisztrálj a telefonszámoddal, hogy sat-okat fogadhass",
-        "oneSectionADay": "One section a day!",
-        "availableTomorrow": "Come back tomorrow to continue learning about Bitcoin!",
+        "oneSectionADay": "Naponta csak egy fejezet lehetséges!",
+        "availableTomorrow": "Holnap folytathatod a tanulást!",
         "motivatingBadger": "Haladj végig ezeken a leckéken, és keress a tanulás során"
     },
     "GetStartedScreen": {
@@ -2123,6 +2132,8 @@
         "invalidContent": "Ezt találtuk:\n\n{found: string}\n\nEz nem egy érvényes Bitcoin cím vagy Lightning fizetési kérelem",
         "expiredContent": "Ezt találtuk:\n\n{found: string}\n\nEz a fizetési kérelem lejárt",
         "invalidTitle": "Érvénytelen QR kód",
+        "openLinkTitle": "Link megnyítása",
+        "confirmOpenLink": "Biztos meg akarod nyitni?",
         "noQrCode": "Nem találtunk QR kódot a képen",
         "title": "QR kód beolvasása",
         "permissionCamera": "Engedélyre van szükségünk a kamera használatához",
@@ -2227,6 +2238,13 @@
         "pendingPayment": "A fizetés elküldve, de még nem érkezett visszaigazolás.\n\n Visszaigazolás hiányában a pénz visszakerül a számládra."
     },
     "SettingsScreen": {
+        "staticQr": "Nyomtatható statikus QR-kód",
+        "staticQrCopied": "A statikus QR-kód hivatkozásod másolva lett",
+        "setByOs": "Az operációs rendszer által beállítva",
+        "apiAcess": "API hozzáférés",
+        "pos": "Értékesítési pont",
+        "posCopied": "Az értékesítési pont hivatkozásod másolva lett",
+        "setYourLightningAddress": "Állítsd be a Lightning címed",
         "activated": "Aktiválva",
         "addressScreen": "Fizetési módok",
         "tapUserName": "Koppints a felhasználónév beállításához",
@@ -2264,16 +2282,25 @@
                 "description": "Fizetések küldésével és fogadásával kapcsolatos értesítések."
             },
             "Marketing": {
-                "title": "Features and updates",
-                "description": "Notifications about new features and updates."
+                "title": "Funkciók és frissítések",
+                "description": "Értesítések az új funkciókról és frissítésekről."
             },
             "Price": {
-                "title": "Price changes",
-                "description": "Notifications about the price of Bitcoin."
+                "title": "Árváltozások",
+                "description": "Értesítések a Bitcoin áráról."
             }
         }
     },
     "AccountScreen": {
+        "fundsMoreThan5Dollars": "A számládon több mint 5 dollár van",
+        "itsATrialAccount": "A próba felhasználói fiókok korlátozott tranzakciós kerettel rendelkeznek, és nincs visszaállításukra lehetőség. Ha elveszíted a telefonodat vagy eltávolítod az alkalmazást, a pénzedhez többé nem férsz hozzá.",
+        "accountBeingDeleted": "A felhasználói fiókod törlése folyamatban van, kérlek várj...",
+        "dangerZone": "Veszélyzóna",
+        "phoneDeletedSuccessfully": "A telefon sikeresen törölve",
+        "phoneNumber": "Telefonszám",
+        "tapToAddPhoneNumber": "Koppints a telefonszám hozzáadásához",
+        "loginMethods": "Bejelentkezési módok",
+        "level": "Szint {level: string}",
         "accountLevel": "Számla szintje",
         "upgrade": "Váltás magasabb szintű számlára",
         "logOutAndDeleteLocalData": "Kijelentkezés és helyi adatok törlése",
@@ -2286,6 +2313,11 @@
         "btcBalanceWarning": "Bitcoin egyenleged: {balance: string}.",
         "secureYourAccount": "Regisztrálj a számlád biztonságossá tételéhez",
         "tapToAdd": "Koppints a hozzáadáshoz",
+        "tapToAddEmail": "Koppints az email hozzáadásához",
+        "unverifiedEmail": "Email (Nincs jóváhagyva)",
+        "email": "Email",
+        "emailDeletedSuccessfully": "Az email sikeresen törölve",
+        "unverifiedEmailAdvice": "A nem jóváhagyott emailekkel nem lehet bejelentkezni. Újra jóvá kell hagynod az email címed.",
         "deleteEmailPromptTitle": "Email törlése",
         "deleteEmailPromptContent": "Biztosan törölni szeretnéd az email címedet? Csak a telefonszámoddal tudsz majd bejelentkezni.",
         "deletePhonePromptTitle": "Telefonszám törlése",
@@ -2307,6 +2339,7 @@
         "totpDeleteAlertContent": "Biztosan törölni szeretnéd a kétlépcsős azonosítást?",
         "copiedAccountId": "A számla azonosítód a vágólapra másolva",
         "yourAccountId": "A számlád azonosítója",
+        "accountId": "Felhasználói fiók azonosító",
         "copy": "Másol"
     },
     "TotpRegistrationInitiateScreen": {
@@ -2335,7 +2368,9 @@
         "info": "Válaszd ki a preferált témát a Blink használatához, vagy válaszd a rendszerbeállítás szerintit.",
         "system": "Rendszerbeállítás használata",
         "light": "Világos mód használata",
-        "dark": "Sötét mód használata"
+        "dark": "Sötét mód használata",
+        "setToDark": "Sötét mód",
+        "setToLight": "Világos mód"
     },
     "Languages": {
         "DEFAULT": "Alapértelmezett"
@@ -2393,6 +2428,7 @@
     },
     "SetAddressModal": {
         "title": "{bankName: string} cím beállítása",
+        "setLightningAddress": "Állítsd be a Lightning címed",
         "Errors": {
             "tooShort": "A cím legalább 3 karakter hosszú kell legyen",
             "tooLong": "A cím legfeljebb 50 karakter hosszú lehet",
@@ -2474,7 +2510,16 @@
         "success": "Az {email: string} email cím sikeresen megerősítve"
     },
     "common": {
+        "enabled": "Engedélyezve",
+        "notifications": "Értesítések",
+        "preferences": "Preferenciák",
+        "onDeviceSecurity": "Eszközön lévő biztonság",
+        "securityAndPrivacy": "Biztonság és adatvédelem",
+        "advanced": "Haladó",
+        "community": "Közösség",
         "account": "Számla",
+        "trialAccount": "Próba fiók",
+        "blinkUser": "Blink felhasználó",
         "transactionLimits": "Tranzakciós Limitek",
         "activateWallet": "Tárca Aktiválása",
         "amountRequired": "Összeg szükséges",
@@ -2599,6 +2644,7 @@
         "faq": "GYIK",
         "enjoyingApp": "Tetszik az alkalmazás?",
         "statusPage": "Állapotoldal",
+        "chatbot": "Csevegőrobot",
         "telegram": "Telegram",
         "mattermost": "Mattermost",
         "thankYouText": "Köszönjük a visszajelzést! Szeretnél javaslatot tenni a fejlesztésre?",
@@ -2682,30 +2728,16 @@
         "drivingAdoption": "Terjesztem a Bitcoint a Blinken keresztül.",
         "connectOnSocial": "Kapcsolódj közösségi médián: ",
         "fullDetails": "Részletek itt ",
-        "decemberChallenge": {
-            "title": "Decemberi Kihívás!",
-            "description": "+10, növeld belső köröd, $100-t nyerhetsz!",
-            "details": "Növeld meg a belső körödet 10 fővel decemberben, a játékban résztvevők között $100-t sorsolunk ki!\n\nRészt venni a következő módon lehet: Amint megvan a +10 fő,oszd meg a körödet a #blinkcircles cimkével a közösségi felületeken. Január 1-jén 3 résztvevőt sorsolunk ki, ők kapnak fejenként $100-t!"
+        "learnMore": "Több információ az Adopting Bitcoinról itt:",
+        "mayChallenge": {
+            "title": "Májusi Kihívás!",
+            "description": "Növeld a belső körödet 6-tal, hogy esélyed legyen megnyerni egy pizzakészletet a következő Bitcoin Találkozódra.",
+            "details": "Szeretnél egy Bitcoin Pizza Day Party-t?\n\nNöveld a belső körödet 6-tal, hogy esélyed legyen megnyerni egy pizzakészletet a következő Bitcoin Találkozódra. A kihívás május 15-én zárul.\n\nOszd meg a köreidet a közösségi médiában a #blinkcircles hashtaggel, hogy részt vehess.\n\nA nyeremény 150 dollár értékű pizza."
         },
-        "januaryChallenge": {
-            "title": "Januári kihívás",
-            "description": "+10 külső kör, hogy nyehess 100 dollár januárban!",
-            "details": "Növeld a KÜLSŐ köredet 10-zel januárban, hogy nyerhess 100 dollárt!\n\nA külső köröd akkor növekszik, amikor a belső körödben lévő emberek másokat is meghívnak, szóval lépj kapcsolatba azokkal, akiket te szerveztél be, hogy osszák meg a Blink-et barátaikkal és családjukkal.\n\nOszd meg a köreidet a közösségi médiában a #blinkcircles hashtag-gel a részvételhez."
-        },
-        "februaryChallenge": {
-            "title": "Februári kihívás!",
-            "description": "Növeld 3-al a belső köröd, hogy Seedsigner hardver tárcát nyerhess!",
-            "details": "Növeld belső körödet 3-mal februárban, hogy esélyed legyen nyerni egy Seedsigner hardver tárcát!\n\nEmlékeztető: a körök akkor növekednek, amikor egy új Blink felhasználónak küldöd az első satoshiját.\n\nOszd meg körödet a közösségi médiában a #blinkcircles hashtaggel a részvételhez."
-        },
-        "marchChallenge": {
-            "title": "March Challenge!",
-            "description": "+3 inner circle and +3 outer circle for a chance to win $100",
-            "details": "Grow your inner circle by 3 and your outer circle by 3 for a chance at winning $100!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
-        },
-        "aprilChallenge": {
-            "title": "April Challenge!",
-            "description": "Grow your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet.",
-            "details": "During the halving month, expand your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
+        "juneChallenge": {
+            "title": "Júniusi kihívás!",
+            "description": "Bővítsd a Belső Körödet 10 fővel, és nyerj esélyt egy 1000 dollár értékű belépőre az Adopting Bitcoin El Salvador eseményre.",
+            "details": "Nyerj egy privilégium jegyet az Adopting Bitcoin El Salvador eseményre!\n\nBővítsd a Belső Körödet 10 fővel, és nyerj esélyt egy 1000 dollár értékű privilégium jegyre az Adopting Bitcoin El Salvador eseményre! A jegy kizárólagos hozzáférést biztosít a fő konferenciához, az emeleti részleghez étellel/italokkal/nasikkal, az előadók vacsorájához, valamint a Filmfesztiválhoz.\n\nOszd meg a körödet a közösségi médián a #blinkcircles hashtaggel a részvételhez.\n\nEzúttal két nyertes lesz!"
         }
     },
     "FullOnboarding": {
@@ -2724,5 +2756,14 @@
         "ERROR": "Hiba",
         "PROCESSING": "Feldolgozás alatt",
         "REVIEW": "Felülvizsgál"
+    },
+    "NotificationHistory": {
+        "title": "Értesítések",
+        "noNotifications": "Jelenleg nincsenek értesítéseid"
+    },
+    "SupportChat": {
+        "errorSendingMessage": "Hiba történt az üzenet küldése közben",
+        "confirmChatReset": "Biztos, hogy törölni akarod a chat előzményeit?",
+        "errorResettingChat": "Hiba történt a chat előzmények törlése közben"
     }
 }
