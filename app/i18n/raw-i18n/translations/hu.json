@@ -2,14 +2,14 @@
     "GaloyAddressScreen": {
         "title": "Fizetés fogadása így:",
         "buttonTitle": "Állítsd be a címed",
-        "yourLightningAddress": "A lightning címed",
+        "yourLightningAddress": "A {bankName: string} címed",
         "notAbleToChange": "Beállítás után a {bankName: string} címet nem fogod tudni megváltoztatni.",
         "addressNotAvailable": "{bankName: string} címet már másvalaki használja.",
         "somethingWentWrong": "Valami nem sikerült. Kérlek próbáld újra.",
         "merchantTitle": "Kereskedőknek",
         "yourCashRegister": "A Lightning Pénztárad",
         "yourPaycode": "Fizetési Kódod",
-        "copiedLightningAddressToClipboard": "a lightning címed a vágólapra került",
+        "copiedLightningAddressToClipboard": "{bankName: string} címed a vágólapra került",
         "copiedPaycodeToClipboard": "Fizetési Kód a vágólapra másolva",
         "copiedCashRegisterLinkToClipboard": "Pénztár link a vágólapra másolva",
         "howToUseIt": "Hogyan használd?",
@@ -46,7 +46,7 @@
         "confirmLogout": "Biztos, hogy szeretnél kijelentkezni? Ezzel visszaállítod a gyorsítótárat és az összes helyi felhasználói beállítást"
     },
     "PeopleScreen": {
-        "title": "Emberek",
+        "title": "Kapcsolatok",
         "copy": "Másol",
         "noContactsTitle": "Nincsenek találatok",
         "noContactsYet": "Indíts vagy fogadj fizetést felhasználónév megadásával és a kapcsolat automatikusan felvételre kerül.",
@@ -74,7 +74,7 @@
     "EarnScreen": {
         "satoshi": "sat",
         "satoshis": "satoshi",
-        "earnSats": "Kapj {formattedNumber|sats}ot",
+        "earnSats": "Kapj {formattedNumber|sat}ot",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Mi a Bitcoin?",
@@ -1126,9 +1126,9 @@
                             "Az infláció, amit a központi hatóságok okoznak több egység kibocsátásával"
                         ],
                         "feedback": [
-                            "Pontosan. A Bitcoin nem igényel megbízható harmadik felet, és lehetővé teszi a tranzakciók közvetlen lebonyolítását az egyének között Ezt peer-to-peer tranzakciónak nevezzük, központi hatóság vagy közvetítők nélkül.",
+                            "Pontosan. A Bitcoin nem igényel megbízható harmadik felet, és lehetővé teszi a tranzakciók közvetlen lebonyolítását az egyének között. Ezt peer-to-peer tranzakciónak nevezzük, központi hatóság vagy közvetítők nélkül.",
                             "Nem, ez nem az. Próbáld újra",
-                            "A központosított kinocsátók által okozott pénzkínálat önkényes inflációja valóban egy probléma, amit a Bitcoin elegánsan megold, de van egy még alapvetőbb probléma, amit Satoshi kezelt. Próbáld újra!"
+                            "A központosított kibocsátók által okozott pénzkínálat önkényes inflációja valóban egy probléma, amit a Bitcoin elegánsan megold, de van egy még alapvetőbb probléma, amit Satoshi kezelt. Próbáld újra!"
                         ],
                         "question": "Melyik volt a fő probléma, amit Satoshi Nakamoto meg akart oldani a Bitcoin létrehozásával",
                         "text": "Az 1971 utáni fiat valuta rendszer minden szinten bizalmat igényel, mert adósságalapú és mellőzi a ritkaság tulajdonságot. Ez magában foglalja a jövőbeli adósságok visszafizetésének képességébe vetett bizalmat, a kereskedelmi és központi bankokban vetett bizalmat, hogy ne értéktelenítsék a valutát, valamint a tranzakciókhoz való hozzáférés és a források szabad használatába vetett bizalmat.\n\nEzt a bizalmat számos alkalommal megsértették, beleértve a 2008/09-es Globális Pénzügyi Válságot is. E probléma kezelése érdekében Satoshi Nakamoto olyan digitális pénzformát kívánt létrehozni, amely nem igényel harmadik felekbe vetett bizalmat a tranzakciókhoz, és nem értékteleníthető egy központi hatóság által több egység kibocsátásával.\n",
@@ -1994,7 +1994,7 @@
         "quizComplete": "Teljesítetted a kvízt, és ezért {amount: number} sat a jutalmad",
         "reviewQuiz": "Kvíz átnézése",
         "satAccumulated": "Keresett satoshik",
-        "satsEarned": "{formattedNumber|sats} keresve",
+        "satsEarned": "{formattedNumber|sat}ot kerestél",
         "sectionsCompleted": "Befejezett szakaszok",
         "title": "Kvíz",
         "unlockQuestion": "Feloldáshoz, válaszolj a kérdésre:",
@@ -2301,8 +2301,8 @@
         "tapToAddPhoneNumber": "Koppints a telefonszám hozzáadásához",
         "loginMethods": "Bejelentkezési módok",
         "level": "Szint {level: string}",
-        "accountLevel": "Számla szintje",
-        "upgrade": "Váltás magasabb szintű számlára",
+        "accountLevel": "felhasználói fiók szintje",
+        "upgrade": "Váltás magasabb szintű felhasználói fiókra",
         "logOutAndDeleteLocalData": "Kijelentkezés és helyi adatok törlése",
         "IUnderstand": "Értem. Kijelentkezem.",
         "logoutAlertTitle": "Biztosan ki szeretnél jelentkezni és törölni minden helyi adatot?",
@@ -2517,7 +2517,7 @@
         "securityAndPrivacy": "Biztonság és adatvédelem",
         "advanced": "Haladó",
         "community": "Közösség",
-        "account": "Számla",
+        "account": "Fiók",
         "trialAccount": "Próba fiók",
         "blinkUser": "Blink felhasználó",
         "transactionLimits": "Tranzakciós Limitek",
