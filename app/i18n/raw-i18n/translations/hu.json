@@ -2465,7 +2465,7 @@
         "errorTooManyAttempts": "Túl sok próbálkozás. Kérlek, próbáld újra később.",
         "errorIpNotAllowed": "Ez az IP cím egy nem támogatott országból származik és nem lehet számlát létrehozni. Ha támogatott országban tartózkodsz, de VPNt használsz, próbáld meg kikapcsolni.",
         "errorPhoneNotAllowed": "Ezzal  a telefonszámmal nem lehet számlákat létrehozni.",
-        "errorCannotUpgradeToExistingAccount": "Már létezik felhsználói fiók ezzel a telefonszámmal. Kérlek, lépj ki a próbaszámládból, majd jelentkezz be a telefonszámoddal.",
+        "errorCannotUpgradeToExistingAccount": "Már létezik felhasználói fiók ezzel a telefonszámmal. Kérlek, lépj ki a próbaszámládból, majd jelentkezz be a telefonszámoddal.",
         "header": "írd be ide a kódot, amit a {channel: string} szolgáltatáson keresztül kaptál tőlünk a következő telefonszámon: {phoneNumber: string}",
         "placeholder": "6 jegyű kód",
         "sendAgain": "Újraküldés",
