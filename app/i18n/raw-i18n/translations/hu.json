@@ -2174,7 +2174,7 @@
         "slideToConfirm": "Húzd el a megerősítéshez",
         "slideConfirming": "Megerősítés...",
         "copiedDestination": "Címzett a vágólapra másolva",
-        "lightningRecommended": "Magas díj! A Lightning használatát ajánljuk."
+        "lightningRecommended": "Magas díj! Lightning használata ajánlott."
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "Mostantól a {bankName: string} felhasználónevek {bankName: string} címek is.",
