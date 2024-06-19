@@ -2655,7 +2655,7 @@
         "delete": "törlés",
         "typeDelete": "Kérlek írd be a(z) \"{delete: string}\" szót a számla törlésének megerősítéséhez",
         "finalConfirmationAccountDeletionTitle": "Végleges megerősítés szükséges",
-        "finalConfirmationAccountDeletionMessage": "Biztosan törölni akarod a felhsználói fiókodat? Ez a művelet visszafordíthatatlan.",
+        "finalConfirmationAccountDeletionMessage": "Biztosan törölni akarod a felhasználói fiókodat? Ez a művelet visszafordíthatatlan.",
         "deleteAccountBalanceWarning": "A fiókod törlése a jelenlegi egyenleged elvesztéséhez vezet. Biztosan folytatnád?",
         "deleteAccountConfirmation": "A fikókod törlésre került.\n\nAmikor a szabályozási követelmények szerinti próbaidőszak lejár, a fiókhoz kapcsolódó fennmaradó adatok véglegesen törlődnek.",
         "deleteAccountFromPhone": "Szia! Kérem a fiókom törlését. A telefonszámom: {phoneNumber: string}.",
