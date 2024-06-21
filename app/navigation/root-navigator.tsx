@@ -98,6 +98,7 @@ import {
   USDTransactionHistory,
 } from "@app/screens"
 import { useAppSelector } from "@app/store/redux"
+import { usePersistentStateContext } from "@app/store/persistent-state"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -118,10 +119,20 @@ const RootNavigator = createStackNavigator<RootStackParamList>()
 
 export const RootStack = () => {
   const { isAdvanceMode } = useAppSelector((state) => state.settings)
+  const { persistentState } = usePersistentStateContext()
   const { LL } = useI18nContext()
+  const isAuthed = useIsAuthed()
   const styles = useStyles()
   const { theme } = useTheme()
   const colors = theme.colors
+
+  // Check if intro screen is displayed twice.
+  const initialRouteName =
+    persistentState.introVideoCount >= 2
+      ? isAuthed
+        ? "authenticationCheck"
+        : "getStarted"
+      : "IntroScreen"
 
   return (
     <RootNavigator.Navigator
@@ -133,9 +144,7 @@ export const RootStack = () => {
         headerBackTitleStyle: styles.title,
         headerTintColor: colors.black,
       }}
-      // initialRouteName={isAuthed ? "authenticationCheck" : "getStarted"}
-      // Set 'IntroScreen' as the initial route
-      initialRouteName="IntroScreen"
+      initialRouteName={initialRouteName}
     >
       {/* Intro Screen route */}
       <RootNavigator.Screen

@@ -4,14 +4,27 @@ import Video from "react-native-video"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { usePersistentStateContext } from "@app/store/persistent-state"
 
 type IntroScreenProps = {
   navigation: StackNavigationProp<RootStackParamList, "IntroScreen">
 }
 
 const IntroScreen: React.FC<IntroScreenProps> = ({ navigation }) => {
-  const [introFinished, setIntroFinished] = useState(false)
   const isAuthed = useIsAuthed()
+  const { updateState } = usePersistentStateContext()
+  const [introFinished, setIntroFinished] = useState(false)
+
+  useEffect(() => {
+    updateState((state: any) => {
+      if (state)
+        return {
+          ...state,
+          introVideoCount: state?.introVideoCount ? state?.introVideoCount + 1 : 1,
+        }
+      return undefined
+    })
+  }, [])
 
   useEffect(() => {
     if (introFinished) {

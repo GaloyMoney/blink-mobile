@@ -59,6 +59,7 @@ type PersistentState_7 = {
   usdBalance?: string
   convertedBtcBalance?: string
   convertedUsdBalance?: string
+  introVideoCount: number
 }
 
 type JwtPayload = {
@@ -86,6 +87,7 @@ const migrate6ToCurrent = (state: PersistentState_6): Promise<PersistentState> =
     ...state,
     schemaVersion: 7,
     hasInitializedBreezSDK: false,
+    introVideoCount: 0,
   })
 }
 
@@ -232,6 +234,7 @@ export const defaultPersistentState: PersistentState = {
   galoyInstance: { id: "Staging" },
   galoyAuthToken: "",
   hasInitializedBreezSDK: false,
+  introVideoCount: 0,
 }
 
 export const migrateAndGetPersistentState = async (
