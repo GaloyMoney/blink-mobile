@@ -1,8 +1,9 @@
 import jwtDecode from "jwt-decode"
 
 import { GALOY_INSTANCES, GaloyInstance, GaloyInstanceInput } from "@app/config"
-import { Network } from "@app/graphql/generated"
+import { Network, TransactionFragment } from "@app/graphql/generated"
 import { loadString } from "@app/utils/storage"
+import { SectionTransactions } from "@app/screens/transaction-history/index.types"
 
 type PersistentState_0 = {
   schemaVersion: 0
@@ -55,10 +56,15 @@ type PersistentState_7 = {
   galoyInstance: GaloyInstanceInput
   galoyAuthToken: string
   hasInitializedBreezSDK: boolean
+  breezBalance?: number
+  balance?: string
   btcBalance?: string
   usdBalance?: string
   convertedBtcBalance?: string
   convertedUsdBalance?: string
+  mergedTransactions?: TransactionFragment[]
+  usdTransactions?: SectionTransactions[]
+  btcTransactions?: SectionTransactions[]
   introVideoCount: number
 }
 

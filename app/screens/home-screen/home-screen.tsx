@@ -53,6 +53,7 @@ import useNostrProfile from "@app/hooks/use-nostr-profile"
 // store
 import { useAppDispatch, useAppSelector } from "@app/store/redux"
 import { setUserData } from "@app/store/redux/slices/userSlice"
+import { usePersistentStateContext } from "@app/store/persistent-state"
 
 const TransactionCountToTriggerSetDefaultAccountModal = 1
 
@@ -102,11 +103,14 @@ export const HomeScreen: React.FC = () => {
     data: dataUnauthed,
   } = useHomeUnauthedQuery()
 
+  const { persistentState, updateState } = usePersistentStateContext()
   const [defaultAccountModalVisible, setDefaultAccountModalVisible] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [isContentVisible, setIsContentVisible] = useState(false)
   const [breezTransactions, setBreezTransactions] = useState<Payment[]>([])
-  const [mergedTransactions, setMergedTransactions] = useState<TransactionFragment[]>([])
+  const [mergedTransactions, setMergedTransactions] = useState<TransactionFragment[]>(
+    persistentState?.mergedTransactions || [],
+  )
   const [transactionLoading, setTransactionLoading] = useState(false)
   const [refreshTriggered, setRefreshTriggered] = useState(false)
 
@@ -127,12 +131,28 @@ export const HomeScreen: React.FC = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      if (breezSDKInitialized) {
+      if (isAdvanceMode && breezSDKInitialized) {
         fetchPaymentsBreez()
         refreshBreezBalance()
+      } else {
+        updateMergedTransactions(transactionsEdges?.map((el) => el.node))
       }
-    }, [breezSDKInitialized, loadingAuthed]),
+    }, [breezSDKInitialized, loadingAuthed, isAdvanceMode]),
   )
+
+  const updateMergedTransactions = (txs: TransactionFragment[]) => {
+    if (txs.length > 0) {
+      setMergedTransactions(txs.slice(0, 5))
+      updateState((state: any) => {
+        if (state)
+          return {
+            ...state,
+            mergedTransactions: txs.slice(0, 5),
+          }
+        return undefined
+      })
+    }
+  }
 
   const fetchPaymentsBreez = async () => {
     setTransactionLoading(true)
@@ -143,7 +163,7 @@ export const HomeScreen: React.FC = () => {
   }
 
   const mergeTransactions = async (breezTxs: Payment[]) => {
-    const mergedTransactions = []
+    const mergedTransactions: TransactionFragment[] = []
 
     const formattedBreezTxs = await formatBreezTransactions(breezTxs)
 
@@ -169,7 +189,7 @@ export const HomeScreen: React.FC = () => {
       j++
     }
 
-    setMergedTransactions(mergedTransactions.slice(0, 5))
+    updateMergedTransactions(mergedTransactions)
     setTransactionLoading(false)
   }
 
@@ -266,10 +286,6 @@ export const HomeScreen: React.FC = () => {
     })
   }
 
-  const transactions = isAdvanceMode
-    ? mergedTransactions
-    : transactionsEdges?.map((el) => el.node).slice(0, 5)
-
   const AccountCreationNeededModal = (
     <Modal
       style={styles.modal}
@@ -312,7 +328,7 @@ export const HomeScreen: React.FC = () => {
           isContentVisible={isContentVisible}
           setIsContentVisible={setIsContentVisible}
           loading={false}
-          breezBalance={breezBalance}
+          breezBalance={breezBalance ? breezBalance : 0}
         />
         <GaloyIconButton
           onPress={() => navigation.navigate("settings")}
@@ -363,7 +379,7 @@ export const HomeScreen: React.FC = () => {
           ))}
         </View>
 
-        {transactions.length > 0 && !loadingAuthed ? (
+        {mergedTransactions.length > 0 ? (
           <>
             <TouchableWithoutFeedback
               style={styles.recentTransaction}
@@ -377,7 +393,7 @@ export const HomeScreen: React.FC = () => {
                 {LL.TransactionScreen.title()}
               </Text>
             </TouchableWithoutFeedback>
-            {transactions.map((item, index) => {
+            {mergedTransactions.map((item, index) => {
               if (item.settlementCurrency === "BTC") {
                 return (
                   <BreezTransactionItem
@@ -386,7 +402,7 @@ export const HomeScreen: React.FC = () => {
                     subtitle
                     isOnHomeScreen={true}
                     isFirst={index === 0}
-                    isLast={index === transactions.length - 1}
+                    isLast={index === mergedTransactions.length - 1}
                   />
                 )
                 // eslint-disable-next-line no-else-return
@@ -398,7 +414,7 @@ export const HomeScreen: React.FC = () => {
                     subtitle
                     isOnHomeScreen={true}
                     isFirst={index === 0}
-                    isLast={index === transactions.length - 1}
+                    isLast={index === mergedTransactions.length - 1}
                   />
                 )
               }

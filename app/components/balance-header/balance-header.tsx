@@ -20,6 +20,9 @@ import {
   toUsdMoneyAmount,
 } from "@app/types/amounts"
 
+// store
+import { usePersistentStateContext } from "@app/store/persistent-state"
+
 type Props = {
   loading?: boolean
   isContentVisible: boolean
@@ -40,6 +43,11 @@ export const BalanceHeader: React.FC<Props> = ({
   const isAuthed = useIsAuthed()
   const { formatMoneyAmount } = useDisplayCurrency()
   const { convertMoneyAmount } = usePriceConversion()
+  const { persistentState, updateState } = usePersistentStateContext()
+
+  const [balanceInDisplayCurrency, setBalanceInDisplayCurrency] = React.useState(
+    persistentState.balance || "$0.00",
+  )
 
   // TODO: use suspense for this component with the apollo suspense hook (in beta)
   // so there is no need to pass loading from parent?
@@ -49,27 +57,41 @@ export const BalanceHeader: React.FC<Props> = ({
   // otherwise fail (account with more/less 2 wallets will not be working with the current mobile app)
   // some tests accounts have only 1 wallet
 
-  let balanceInDisplayCurrency = "$0.00"
+  React.useEffect(() => {
+    formatBalance()
+  }, [isAuthed, data?.me?.defaultAccount?.wallets, breezBalance, walletType])
 
-  if (isAuthed) {
-    const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
+  const formatBalance = () => {
+    if (isAuthed) {
+      const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
-    const usdWalletBalance = toUsdMoneyAmount(usdWallet?.balance)
-    const btcWalletBalance = toBtcMoneyAmount(breezBalance ?? NaN)
+      const usdWalletBalance = toUsdMoneyAmount(usdWallet?.balance)
+      const btcWalletBalance = toBtcMoneyAmount(breezBalance ?? NaN)
 
-    const btcBalanceInDisplayCurrency =
-      convertMoneyAmount && convertMoneyAmount(btcWalletBalance, DisplayCurrency)
+      const btcBalanceInDisplayCurrency =
+        convertMoneyAmount && convertMoneyAmount(btcWalletBalance, DisplayCurrency)
 
-    const usdBalanceInDisplayCurrency =
-      convertMoneyAmount && convertMoneyAmount(usdWalletBalance, DisplayCurrency)
+      const usdBalanceInDisplayCurrency =
+        convertMoneyAmount && convertMoneyAmount(usdWalletBalance, DisplayCurrency)
 
-    if (usdBalanceInDisplayCurrency && btcBalanceInDisplayCurrency) {
-      balanceInDisplayCurrency = formatMoneyAmount({
-        moneyAmount: addMoneyAmounts({
-          a: walletType === "btc" ? toUsdMoneyAmount(0) : usdBalanceInDisplayCurrency,
-          b: walletType === "usd" ? toBtcMoneyAmount(0) : btcBalanceInDisplayCurrency,
-        }),
-      })
+      if (usdBalanceInDisplayCurrency && btcBalanceInDisplayCurrency) {
+        const formattedBalance = formatMoneyAmount({
+          moneyAmount: addMoneyAmounts({
+            a: walletType === "btc" ? toUsdMoneyAmount(0) : usdBalanceInDisplayCurrency,
+            b: walletType === "usd" ? toBtcMoneyAmount(0) : btcBalanceInDisplayCurrency,
+          }),
+        })
+        setBalanceInDisplayCurrency(formattedBalance)
+
+        updateState((state: any) => {
+          if (state)
+            return {
+              ...state,
+              balance: formattedBalance,
+            }
+          return undefined
+        })
+      }
     }
   }
 

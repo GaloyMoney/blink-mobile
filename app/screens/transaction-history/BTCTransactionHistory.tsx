@@ -21,6 +21,9 @@ import { formatPaymentsBreezSDK } from "@app/hooks/useBreezPayments"
 import { toBtcMoneyAmount } from "@app/types/amounts"
 import { SectionTransactions } from "./index.types"
 
+// store
+import { usePersistentStateContext } from "@app/store/persistent-state"
+
 export const BTCTransactionHistory: React.FC = () => {
   const {
     theme: { colors },
@@ -28,8 +31,12 @@ export const BTCTransactionHistory: React.FC = () => {
   const styles = useStyles()
   const { LL } = useI18nContext()
   const { convertMoneyAmount } = usePriceConversion()
+
+  const { persistentState, updateState } = usePersistentStateContext()
   const [breezLoading, setBreezLoading] = React.useState(false)
-  const [txsList, setTxsList] = React.useState<SectionTransactions[]>([])
+  const [txsList, setTxsList] = React.useState<SectionTransactions[]>(
+    persistentState.btcTransactions || [],
+  )
 
   React.useEffect(() => {
     fetchPaymentsBreez()
@@ -47,6 +54,14 @@ export const BTCTransactionHistory: React.FC = () => {
 
     setTxsList(transactionSections)
     setBreezLoading(false)
+    updateState((state: any) => {
+      if (state)
+        return {
+          ...state,
+          btcTransactions: transactionSections,
+        }
+      return undefined
+    })
   }
 
   const formatBreezTransactions = async (txs: Payment[]) => {
@@ -65,7 +80,7 @@ export const BTCTransactionHistory: React.FC = () => {
     return formattedTxs?.filter(Boolean) ?? []
   }
 
-  if (breezLoading) {
+  if (breezLoading && txsList.length === 0) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator color={colors.primary} size={"large"} />

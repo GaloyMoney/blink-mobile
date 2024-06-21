@@ -15,6 +15,10 @@ import { groupTransactionsByDate } from "@app/graphql/transactions"
 
 // utils
 import { toastShow } from "../../utils/toast"
+import { SectionTransactions } from "./index.types"
+
+// store
+import { usePersistentStateContext } from "@app/store/persistent-state"
 
 export const USDTransactionHistory: React.FC = () => {
   const {
@@ -23,6 +27,11 @@ export const USDTransactionHistory: React.FC = () => {
   const styles = useStyles()
   const { LL } = useI18nContext()
 
+  const { persistentState, updateState } = usePersistentStateContext()
+  const [transactions, setTransactions] = React.useState<SectionTransactions[]>(
+    persistentState.usdTransactions || [],
+  )
+
   const { data, error, fetchMore, refetch, loading } =
     useTransactionListForDefaultAccountQuery({
       skip: !useIsAuthed(),
@@ -30,10 +39,26 @@ export const USDTransactionHistory: React.FC = () => {
       nextFetchPolicy: "cache-and-network",
     })
 
-  const transactionSections = groupTransactionsByDate({
-    txs: data?.me?.defaultAccount?.transactions?.edges?.map((el) => el.node) ?? [],
-    common: LL.common,
-  })
+  React.useEffect(() => {
+    if (
+      data?.me?.defaultAccount?.transactions?.edges &&
+      data?.me?.defaultAccount?.transactions?.edges?.length > 0
+    ) {
+      const transactionSections = groupTransactionsByDate({
+        txs: data?.me?.defaultAccount?.transactions?.edges?.map((el) => el.node) ?? [],
+        common: LL.common,
+      })
+      setTransactions(transactionSections)
+      updateState((state: any) => {
+        if (state)
+          return {
+            ...state,
+            usdTransactions: transactionSections,
+          }
+        return undefined
+      })
+    }
+  }, [data?.me?.defaultAccount?.transactions?.edges])
 
   const fetchNextTransactionsPage = () => {
     const pageInfo = data?.me?.defaultAccount?.transactions?.pageInfo
@@ -47,14 +72,27 @@ export const USDTransactionHistory: React.FC = () => {
   }
 
   if (error) {
+    if (error.message === "Network request failed") {
+      toastShow({
+        message: "Wallet is offline",
+        currentTranslation: LL,
+      })
+    } else {
+      toastShow({
+        message: (translations) => translations.common.transactionsError(),
+        currentTranslation: LL,
+      })
+    }
     console.error(error)
     crashlytics().recordError(error)
-    toastShow({
-      message: (translations) => translations.common.transactionsError(),
-      currentTranslation: LL,
-    })
-    return <></>
-  } else if (loading) {
+    return (
+      <View style={styles.noTransactionView}>
+        <Text style={styles.noTransactionText}>
+          {LL.TransactionScreen.noTransaction()}
+        </Text>
+      </View>
+    )
+  } else if (loading && transactions.length === 0) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator color={colors.primary} size={"large"} />
@@ -87,7 +125,7 @@ export const USDTransactionHistory: React.FC = () => {
               </Text>
             </View>
           }
-          sections={transactionSections}
+          sections={transactions}
           keyExtractor={(item) => item.id}
           onEndReached={fetchNextTransactionsPage}
           onEndReachedThreshold={0.5}
