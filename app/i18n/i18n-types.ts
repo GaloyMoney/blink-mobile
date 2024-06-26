@@ -5202,7 +5202,7 @@ export type TranslationFunctions = {
 		 */
 		logBackInWith: () => LocalizedString
 		/**
-		 * Wallet powered by Galoy
+		 * Made in Jamaica
 		 */
 		headline: () => LocalizedString
 		/**

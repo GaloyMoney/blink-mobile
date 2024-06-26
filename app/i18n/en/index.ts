@@ -476,7 +476,7 @@ const en: BaseTranslation = {
     createAccount: "Create new account",
     exploreWallet: "Explore wallet",
     logBackInWith: "Log back in with",
-    headline: "Wallet powered by Galoy",
+    headline: "Made in Jamaica",
     startTrialAccount: "Start with a trial account",
     startWithTrialAccount: "Start with trial account",
     registerPhoneAccount: "Register phone account",
