@@ -128,7 +128,7 @@ export const ProfileScreen: React.FC = () => {
 const Profile: React.FC<ProfileProps> = ({ username, token, selected }) => {
   const styles = useStyles()
   const { LL } = useI18nContext()
-
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { updateState } = usePersistentStateContext()
   const client = useApolloClient()
   const [userLogoutMutation] = useUserLogoutMutation({
@@ -181,6 +181,7 @@ const Profile: React.FC<ProfileProps> = ({ username, token, selected }) => {
       return state
     })
     client.clearStore() // clear cache to load fresh data using new token
+    navigation.navigate("Primary")
   }
 
   return (
