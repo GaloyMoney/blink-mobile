@@ -72,6 +72,7 @@
             android-sdk
             nodejs
             ruby
+            scrcpy
           ]
           ++ lib.optionals stdenv.isDarwin [
             pkgsStable.cocoapods
