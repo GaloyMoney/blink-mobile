@@ -55,7 +55,7 @@ export const AccountBanner = () => {
         </Text>
         {isUserLoggedIn && (
           <TouchableOpacity style={styles.switch} onPress={handleSwitchPress}>
-            <GaloyIcon name="switch" size={20} />
+            <GaloyIcon name="switch" size={20} color={colors.primary} />
             <Text type="p2" style={{ color: colors.primary }}>
               {LL.AccountScreen.switch()}
             </Text>
