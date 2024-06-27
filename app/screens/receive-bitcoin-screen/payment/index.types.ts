@@ -134,7 +134,7 @@ type BasePaymentRequestCreationData<T extends WalletCurrency> = {
 export type BaseCreatePaymentRequestCreationDataParams<T extends WalletCurrency> = {
   type: InvoiceType
   defaultWalletDescriptor: WalletDescriptor<T>
-  bitcoinWalletDescriptor: BtcWalletDescriptor
+  bitcoinWalletDescriptor?: BtcWalletDescriptor
   convertMoneyAmount: ConvertMoneyAmount
   username?: string
   posUrl: string

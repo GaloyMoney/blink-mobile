@@ -8,7 +8,6 @@ import { Screen } from "@app/components/screen"
 import {
   useConversionScreenQuery,
   useRealtimePriceQuery,
-  Wallet,
   WalletCurrency,
 } from "@app/graphql/generated"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
@@ -26,12 +25,11 @@ import {
 
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+import { getUsdWallet } from "@app/graphql/wallets-utils"
 
 // import Breez SDK Wallet
-import useBreezBalance from "@app/hooks/useBreezBalance"
 import { StackScreenProps } from "@react-navigation/stack"
-import { usePriceConversion } from "@app/hooks"
+import { useBreez, usePriceConversion } from "@app/hooks"
 
 type Props = StackScreenProps<RootStackParamList, "conversionDetails">
 
@@ -44,7 +42,7 @@ export const ConversionDetailsScreen: React.FC<Props> = ({ navigation }) => {
   const { zeroDisplayAmount } = useDisplayCurrency()
   const { convertMoneyAmount } = usePriceConversion()
   const { formatDisplayAndWalletAmount } = useDisplayCurrency()
-  const [breezBalance, refreshBreezBalance] = useBreezBalance()
+  const { btcWallet } = useBreez()
 
   const [fromWalletCurrency, setFromWalletCurrency] = useState<WalletCurrency>("BTC")
   const [moneyAmount, setMoneyAmount] =
@@ -59,11 +57,10 @@ export const ConversionDetailsScreen: React.FC<Props> = ({ navigation }) => {
     returnPartialData: true,
   })
 
-  const _btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
-  const _usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
+  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
-  const btcBalance = toBtcMoneyAmount(breezBalance ?? NaN)
-  const usdBalance = toUsdMoneyAmount(_usdWallet?.balance ?? NaN)
+  const btcBalance = toBtcMoneyAmount(btcWallet?.balance ?? NaN)
+  const usdBalance = toUsdMoneyAmount(usdWallet?.balance ?? NaN)
 
   // @ts-ignore: Unreachable code error
   const convertedBTCBalance = convertMoneyAmount(btcBalance, DisplayCurrency) // @ts-ignore: Unreachable code error
@@ -118,10 +115,10 @@ export const ConversionDetailsScreen: React.FC<Props> = ({ navigation }) => {
   }
 
   const moveToNextScreen = () => {
-    if (_usdWallet && _btcWallet) {
+    if (usdWallet && btcWallet) {
       navigation.navigate("conversionConfirmation", {
-        toWallet: fromWalletCurrency === "BTC" ? _usdWallet : _btcWallet,
-        fromWallet: fromWalletCurrency === "BTC" ? _btcWallet : _usdWallet,
+        toWallet: fromWalletCurrency === "BTC" ? usdWallet : btcWallet,
+        fromWallet: fromWalletCurrency === "BTC" ? btcWallet : usdWallet,
         moneyAmount: settlementSendAmount,
       })
     }

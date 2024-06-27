@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import {
   Platform,
   View,
@@ -10,117 +10,65 @@ import Modal from "react-native-modal"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { GaloyIcon } from "../atomic/galoy-icon"
 import { GaloyCurrencyBubble } from "../atomic/galoy-currency-bubble"
-import {
-  WalletCurrency,
-  useAccountUpdateDefaultWalletIdMutation,
-  useSetDefaultAccountModalQuery,
-} from "@app/graphql/generated"
-import { gql, useApolloClient } from "@apollo/client"
-import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
-import crashlytics from "@react-native-firebase/crashlytics"
-import { setHasPromptedSetDefaultAccount } from "@app/graphql/client-only-query"
+import { WalletCurrency, useSetDefaultAccountModalQuery } from "@app/graphql/generated"
+import { getUsdWallet } from "@app/graphql/wallets-utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-
-gql`
-  query setDefaultAccountModal {
-    me {
-      id
-      defaultAccount {
-        id
-        defaultWalletId
-        wallets {
-          id
-          balance
-          walletCurrency
-        }
-      }
-    }
-  }
-`
+import { useBreez } from "@app/hooks"
+import { usePersistentStateContext } from "@app/store/persistent-state"
 
 export type SetDefaultAccountModalProps = {
   isVisible: boolean
   toggleModal: () => void
+  transactionLength: number
 }
 
 export const SetDefaultAccountModal = ({
   isVisible,
   toggleModal,
+  transactionLength,
 }: SetDefaultAccountModalProps) => {
-  const [btcLoading, setBtcLoading] = React.useState(false)
-  const [usdLoading, setUsdLoading] = React.useState(false)
-
-  const [accountUpdateDefaultWallet] = useAccountUpdateDefaultWalletIdMutation()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Primary">>()
+  const { updateState } = usePersistentStateContext()
+  const { btcWallet } = useBreez()
+
+  const [loading, setLoading] = useState(false)
 
   const { data } = useSetDefaultAccountModalQuery({
     fetchPolicy: "cache-only",
   })
 
-  const client = useApolloClient()
-
   const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
-  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
 
-  const onPressUsdAccount = async () => {
-    setUsdLoading(true)
-    if (usdWallet) {
-      try {
-        await accountUpdateDefaultWallet({
-          variables: {
-            input: {
-              walletId: usdWallet.id,
-            },
-          },
-        })
-      } catch (err) {
-        if (err instanceof Error) {
-          crashlytics().recordError(err)
-        }
-      }
+  const onPressHandler = (currency: string) => {
+    setLoading(true)
+    let defaultWallet = usdWallet
+    if (currency === "BTC") {
+      defaultWallet = btcWallet
     }
-    setUsdLoading(false)
-
-    setHasPromptedSetDefaultAccount(client)
-    toggleModal()
-    navigation.navigate("receiveBitcoin")
-  }
-
-  const onPressBtcAccount = async () => {
-    setBtcLoading(true)
-    if (btcWallet) {
-      try {
-        await accountUpdateDefaultWallet({
-          variables: {
-            input: {
-              walletId: btcWallet.id,
-            },
-          },
-        })
-      } catch (err) {
-        if (err instanceof Error) {
-          crashlytics().recordError(err)
+    updateState((state: any) => {
+      if (state)
+        return {
+          ...state,
+          defaultWallet,
         }
-      }
-    }
-    setBtcLoading(false)
-
-    setHasPromptedSetDefaultAccount(client)
+      return undefined
+    })
+    setLoading(false)
     toggleModal()
-    navigation.navigate("receiveBitcoin")
+    navigation.navigate("receiveBitcoin", { transactionLength })
   }
 
   return (
     <SetDefaultAccountModalUI
-      loadingUsdAccount={usdLoading}
-      loadingBtcAccount={btcLoading}
+      loadingUsdAccount={loading}
+      loadingBtcAccount={loading}
       isVisible={isVisible}
       toggleModal={toggleModal}
-      onPressBtcAccount={onPressBtcAccount}
-      onPressUsdAccount={onPressUsdAccount}
+      onPressBtcAccount={() => onPressHandler("BTC")}
+      onPressUsdAccount={() => onPressHandler("USD")}
     />
   )
 }

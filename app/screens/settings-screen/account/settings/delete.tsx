@@ -8,7 +8,7 @@ import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 import { CONTACT_EMAIL_ADDRESS } from "@app/config"
 import { useAccountDeleteMutation, useSettingsScreenQuery } from "@app/graphql/generated"
-import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+import { getUsdWallet } from "@app/graphql/wallets-utils"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import useLogout from "@app/hooks/use-logout"
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -20,6 +20,7 @@ import { useTheme, Text, makeStyles } from "@rneui/themed"
 
 import { SettingsButton } from "../../button"
 import { useAccountDeleteContext } from "../account-delete-context"
+import { useBreez } from "@app/hooks"
 
 gql`
   mutation accountDelete {
@@ -33,12 +34,13 @@ gql`
 `
 
 export const Delete = () => {
-  const styles = useStyles()
-
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const styles = useStyles()
+  const { colors } = useTheme().theme
   const { logout } = useLogout()
-
   const { LL } = useI18nContext()
+  const { btcWallet } = useBreez()
+  const { setAccountIsBeingDeleted } = useAccountDeleteContext()
 
   const [text, setText] = useState("")
   const [modalVisible, setModalVisible] = useState(false)
@@ -47,18 +49,10 @@ export const Delete = () => {
     setText("")
   }
 
-  const {
-    theme: { colors },
-  } = useTheme()
-
-  const { setAccountIsBeingDeleted } = useAccountDeleteContext()
-
   const [deleteAccount] = useAccountDeleteMutation({ fetchPolicy: "no-cache" })
-
   const { data, loading } = useSettingsScreenQuery()
   const { formatMoneyAmount } = useDisplayCurrency()
 
-  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
   const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
   const usdWalletBalance = toUsdMoneyAmount(usdWallet?.balance)

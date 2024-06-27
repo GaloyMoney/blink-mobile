@@ -9,14 +9,13 @@ import useBreezBalance from "@app/hooks/useBreezBalance"
 import { toBtcMoneyAmount } from "@app/types/amounts"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { Alert } from "react-native"
-import {
-  useAccountUpdateDefaultWalletIdMutation,
-  useSettingsScreenQuery,
-} from "@app/graphql/generated"
+import { useSettingsScreenQuery } from "@app/graphql/generated"
 import { getUsdWallet } from "@app/graphql/wallets-utils"
 import { useLevel } from "@app/graphql/level-context"
 import { updateSettings } from "@app/store/redux/slices/settingsSlice"
 import { save } from "@app/utils/storage"
+import { usePersistentStateContext } from "@app/store/persistent-state"
+import { useActivityIndicator } from "@app/hooks"
 
 export const AdvancedModeToggle: React.FC = () => {
   const { LL } = useI18nContext()
@@ -25,11 +24,11 @@ export const AdvancedModeToggle: React.FC = () => {
   const { isAdvanceMode } = useAppSelector((state) => state.settings)
   const dispatch = useAppDispatch()
 
+  const { updateState } = usePersistentStateContext()
   const [breezBalance] = useBreezBalance()
   const { moneyAmountToDisplayCurrencyString } = useDisplayCurrency()
+  const { toggleActivityIndicator } = useActivityIndicator()
 
-  const [accountUpdateDefaultWallet, { loading }] =
-    useAccountUpdateDefaultWalletIdMutation()
   const { data } = useSettingsScreenQuery({
     fetchPolicy: "cache-first",
     returnPartialData: true,
@@ -38,26 +37,24 @@ export const AdvancedModeToggle: React.FC = () => {
 
   const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
-  const handleSetDefaultWallet = async () => {
-    if (loading) return
-    if (usdWallet) {
-      await accountUpdateDefaultWallet({
-        variables: {
-          input: {
-            walletId: usdWallet?.id,
-          },
-        },
-      })
-    }
-  }
-
   const toggleAdvanceModeComplete = (isAdvanceMode: boolean) => {
+    toggleActivityIndicator(true)
     if (!isAdvanceMode) {
-      handleSetDefaultWallet()
+      updateState((state: any) => {
+        if (state)
+          return {
+            ...state,
+            defaultWallet: usdWallet,
+          }
+        return undefined
+      })
     }
     dispatch(updateSettings({ isAdvanceMode }))
     save("isAdvanceMode", isAdvanceMode)
-    setTimeout(() => goBack(), 500)
+    setTimeout(() => {
+      toggleActivityIndicator(false)
+      goBack()
+    }, 500)
   }
 
   const toggleAdvanceMode = () => {

@@ -34,6 +34,7 @@ import {
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { getErrorMessages } from "@app/graphql/utils"
+import { getDefaultWallet } from "@app/graphql/wallets-utils"
 
 // utils
 import { testProps } from "../../utils/testProps"
@@ -122,6 +123,7 @@ export const HomeScreen: React.FC = () => {
   useEffect(() => {
     if (dataAuthed?.me) {
       dispatch(setUserData(dataAuthed.me))
+      saveDefaultWallet()
     }
   }, [dataAuthed?.me])
 
@@ -139,6 +141,23 @@ export const HomeScreen: React.FC = () => {
       }
     }, [breezSDKInitialized, loadingAuthed, isAdvanceMode]),
   )
+
+  const saveDefaultWallet = () => {
+    if (!persistentState.defaultWallet) {
+      const defaultWallet = getDefaultWallet(
+        dataAuthed?.me?.defaultAccount?.wallets,
+        dataAuthed?.me?.defaultAccount?.defaultWalletId,
+      )
+      updateState((state: any) => {
+        if (state)
+          return {
+            ...state,
+            defaultWallet,
+          }
+        return undefined
+      })
+    }
+  }
 
   const updateMergedTransactions = (txs: TransactionFragment[]) => {
     if (txs.length > 0) {
@@ -431,6 +450,7 @@ export const HomeScreen: React.FC = () => {
         <SetDefaultAccountModal
           isVisible={defaultAccountModalVisible}
           toggleModal={() => setDefaultAccountModalVisible(!defaultAccountModalVisible)}
+          transactionLength={breezTransactions.length}
         />
       </ScrollView>
     </Screen>

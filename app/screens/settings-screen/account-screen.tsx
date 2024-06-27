@@ -23,12 +23,10 @@ import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import Modal from "react-native-modal"
 import { CONTACT_EMAIL_ADDRESS } from "@app/config"
-import { UpgradeAccountModal } from "@app/components/upgrade-account-modal"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
-import { useShowWarningSecureAccount } from "./show-warning-secure-account"
-import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+import { getUsdWallet } from "@app/graphql/wallets-utils"
 import { useNavigation } from "@react-navigation/native"
-import { useAppConfig } from "@app/hooks"
+import { useAppConfig, useBreez } from "@app/hooks"
 
 gql`
   query accountScreen {
@@ -116,7 +114,7 @@ gql`
 export const AccountScreen = () => {
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "accountScreen">>()
-
+  const { btcWallet } = useBreez()
   const { logout } = useLogout()
   const { LL } = useI18nContext()
   const styles = useStyles()
@@ -150,11 +148,8 @@ export const AccountScreen = () => {
   const emailString = String(email)
   const totpEnabled = Boolean(data?.me?.totpEnabled)
 
-  const showWarningSecureAccount = useShowWarningSecureAccount()
-
   const [setEmailMutation] = useUserEmailRegistrationInitiateMutation()
 
-  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
   const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
   const usdWalletBalance = toUsdMoneyAmount(usdWallet?.balance)

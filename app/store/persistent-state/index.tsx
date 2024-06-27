@@ -8,7 +8,6 @@ import {
 import * as React from "react"
 import { useAppDispatch } from "../redux"
 import { getSettingsData } from "../redux/slices/settingsSlice"
-// import { initializeBreezSDK } from "@app/utils/breez-sdk/index"
 
 const PERSISTENT_STATE_KEY = "persistentState"
 
@@ -49,9 +48,6 @@ export const PersistentStateProvider: React.FC<PropsWithChildren> = ({ children 
 
   React.useEffect(() => {
     ;(async () => {
-      // Initialize BreezSDK if it hasn't been initialized yet
-      // await initializeBreezSDK()
-
       const loadedState = await loadPersistentState()
       setPersistentState(loadedState)
       dispatch(getSettingsData())

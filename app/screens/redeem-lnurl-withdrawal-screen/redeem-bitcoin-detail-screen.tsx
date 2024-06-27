@@ -1,12 +1,12 @@
 import { AmountInput } from "@app/components/amount-input"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { Screen } from "@app/components/screen"
-import { usePaymentRequestQuery, WalletCurrency } from "@app/graphql/generated"
-import { getBtcWallet, getDefaultWallet } from "@app/graphql/wallets-utils"
+import { WalletCurrency } from "@app/graphql/generated"
 import { usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { usePersistentStateContext } from "@app/store/persistent-state"
 import {
   DisplayCurrency,
   MoneyAmount,
@@ -19,7 +19,6 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { makeStyles, Text } from "@rneui/themed"
 import React, { useEffect, useState } from "react"
 import { View } from "react-native"
-import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 
 type Prop = {
   route: RouteProp<RootStackParamList, "redeemBitcoinDetail">
@@ -27,7 +26,8 @@ type Prop = {
 
 const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
   const styles = useStyles()
-
+  const { LL } = useI18nContext()
+  const { persistentState } = usePersistentStateContext()
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "redeemBitcoinDetail">>()
 
@@ -50,29 +50,12 @@ const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
   const amountIsFlexible =
     minWithdrawableSatoshis.amount !== maxWithdrawableSatoshis.amount
 
-  const [receiveCurrency, setReceiveCurrency] = useState<WalletCurrency>(
-    WalletCurrency.Btc,
-  )
-
-  const { LL } = useI18nContext()
-  const { data } = usePaymentRequestQuery({ fetchPolicy: "cache-first" })
-
-  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
-  const defaultWallet = getDefaultWallet(
-    data?.me?.defaultAccount?.wallets,
-    data?.me?.defaultAccount?.defaultWalletId,
-  )
-
-  const btcWalletId = btcWallet?.id
-
-  const usdWalletId = null // TODO: enable receiving USD when USD invoices support satoshi amounts
+  const defaultWallet = persistentState.defaultWallet
 
   useEffect(() => {
     if (defaultWallet?.walletCurrency === WalletCurrency.Usd) {
       navigation.setOptions({ title: LL.RedeemBitcoinScreen.usdTitle() })
-    }
-
-    if (defaultWallet?.walletCurrency === WalletCurrency.Btc) {
+    } else if (defaultWallet?.walletCurrency === WalletCurrency.Btc) {
       navigation.setOptions({ title: LL.RedeemBitcoinScreen.title() })
     }
   }, [defaultWallet, navigation, LL])
@@ -117,24 +100,6 @@ const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route }) => {
 
   return (
     <Screen preset="scroll" style={styles.contentContainer}>
-      {usdWalletId && (
-        <View style={styles.tabRow}>
-          <TouchableWithoutFeedback
-            onPress={() => setReceiveCurrency(WalletCurrency.Btc)}
-          >
-            <View>
-              <Text>BTC</Text>
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback
-            onPress={() => setReceiveCurrency(WalletCurrency.Usd)}
-          >
-            <View>
-              <Text>USD</Text>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-      )}
       <View style={[styles.inputForm, styles.container]}>
         {defaultDescription && (
           <Text {...testProps("description")} style={styles.withdrawableDescriptionText}>

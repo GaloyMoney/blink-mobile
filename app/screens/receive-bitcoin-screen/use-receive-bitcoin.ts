@@ -20,11 +20,11 @@ import {
 } from "@app/graphql/generated"
 import { createPaymentRequestCreationData } from "./payment/payment-request-creation-data"
 
-import { useAppConfig, usePriceConversion } from "@app/hooks"
+import { useAppConfig, useBreez, usePriceConversion } from "@app/hooks"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { gql } from "@apollo/client"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { getBtcWallet, getDefaultWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+import { getUsdWallet } from "@app/graphql/wallets-utils"
 import { createPaymentRequest } from "./payment/payment-request"
 import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
 import { useLnUpdateHashPaid } from "@app/graphql/ln-update-context"
@@ -40,6 +40,8 @@ import { ReceiveDestination } from "../send-bitcoin-screen/payment-destination/i
 import fetch from "cross-fetch"
 
 import Sound from "react-native-sound"
+import { useAppSelector } from "@app/store/redux"
+import { usePersistentStateContext } from "@app/store/persistent-state"
 
 // Enable playback in silence mode (iOS only)
 Sound.setCategory("Playback")
@@ -140,7 +142,7 @@ export const useReceiveBitcoin = (isFirstTransaction: Boolean, initPRParams = {}
     lnInvoiceCreate,
     onChainAddressCurrent,
   }
-
+  const { persistentState } = usePersistentStateContext()
   const [prcd, setPRCD] = useState<PaymentRequestCreationData<WalletCurrency> | null>(
     null,
   )
@@ -154,6 +156,8 @@ export const useReceiveBitcoin = (isFirstTransaction: Boolean, initPRParams = {}
     setIsSetLightningAddressModalVisible(!isSetLightningAddressModalVisible)
   }
 
+  const { isAdvanceMode } = useAppSelector((state) => state.settings)
+  const { btcWallet } = useBreez()
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
 
@@ -168,12 +172,8 @@ export const useReceiveBitcoin = (isFirstTransaction: Boolean, initPRParams = {}
     skip: !isAuthed,
   })
 
-  const defaultWallet = getDefaultWallet(
-    data?.me?.defaultAccount?.wallets,
-    data?.me?.defaultAccount?.defaultWalletId,
-  )
+  const defaultWallet = persistentState.defaultWallet
 
-  const bitcoinWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
   const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
   const username = data?.me?.username
@@ -190,7 +190,6 @@ export const useReceiveBitcoin = (isFirstTransaction: Boolean, initPRParams = {}
       prcd === null &&
       _convertMoneyAmount &&
       defaultWallet &&
-      bitcoinWallet &&
       posUrl &&
       data?.globals?.network
     ) {
@@ -199,10 +198,14 @@ export const useReceiveBitcoin = (isFirstTransaction: Boolean, initPRParams = {}
         id: defaultWallet.id,
       }
 
-      const bitcoinWalletDescriptor = {
-        currency: bitcoinWallet.walletCurrency,
-        id: bitcoinWallet.id,
-      } as BtcWalletDescriptor
+      let bitcoinWalletDescriptor = undefined
+
+      if (isAdvanceMode && btcWallet) {
+        bitcoinWalletDescriptor = {
+          currency: btcWallet.walletCurrency,
+          id: btcWallet.id,
+        } as BtcWalletDescriptor
+      }
 
       const initialPRParams: BaseCreatePaymentRequestCreationDataParams<WalletCurrency> =
         {
@@ -225,8 +228,7 @@ export const useReceiveBitcoin = (isFirstTransaction: Boolean, initPRParams = {}
         }
       setPRCD(createPaymentRequestCreationData(initialPRParams))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [_convertMoneyAmount, defaultWallet, bitcoinWallet, username])
+  }, [_convertMoneyAmount, defaultWallet, btcWallet, username, isAdvanceMode])
 
   // Initialize Payment Request
   useLayoutEffect(() => {
@@ -455,7 +457,7 @@ export const useReceiveBitcoin = (isFirstTransaction: Boolean, initPRParams = {}
   const setReceivingWallet = (walletCurrency: WalletCurrency) => {
     setPRCD((pr) => {
       if (pr && pr.setReceivingWalletDescriptor) {
-        if (walletCurrency === WalletCurrency.Btc && bitcoinWallet) {
+        if (walletCurrency === WalletCurrency.Btc && isAdvanceMode && btcWallet) {
           if (isFirstTransaction) {
             setAmount({
               amount: 500,
@@ -464,7 +466,7 @@ export const useReceiveBitcoin = (isFirstTransaction: Boolean, initPRParams = {}
             })
           }
           return pr.setReceivingWalletDescriptor({
-            id: bitcoinWallet.id,
+            id: btcWallet.id,
             currency: WalletCurrency.Btc,
           })
         } else if (walletCurrency === WalletCurrency.Usd && usdWallet) {

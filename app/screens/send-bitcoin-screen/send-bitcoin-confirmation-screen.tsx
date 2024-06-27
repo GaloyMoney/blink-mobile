@@ -23,7 +23,7 @@ import {
 } from "@app/types/amounts"
 import { logPaymentAttempt, logPaymentResult } from "@app/utils/analytics"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { CommonActions, RouteProp, useNavigation } from "@react-navigation/native"
+import { RouteProp, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import React, { useEffect, useMemo, useState } from "react"
@@ -34,10 +34,10 @@ import useFee, { FeeType } from "./use-fee"
 import { useSendPayment } from "./use-send-payment"
 import { AmountInput } from "@app/components/amount-input"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
-import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+import { getUsdWallet } from "@app/graphql/wallets-utils"
 
 // Breez SDK
-import useBreezBalance from "@app/hooks/useBreezBalance"
+import { useBreez } from "@app/hooks"
 import { fetchReverseSwapFeesBreezSDK } from "@app/utils/breez-sdk"
 import Video from "react-native-video"
 
@@ -83,20 +83,14 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     convertMoneyAmount,
     isSendingMax,
   } = paymentDetail
-
+  const { btcWallet } = useBreez()
   const { formatDisplayAndWalletAmount } = useDisplayCurrency()
 
   const { data } = useSendBitcoinConfirmationScreenQuery({ skip: !useIsAuthed() })
 
-  // import and use breez balance
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [breezBalance, setBreezBalance] = useBreezBalance()
-
-  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
   const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
-  const btcBalanceMoneyAmount = toBtcMoneyAmount(breezBalance || btcWallet?.balance)
-
+  const btcBalanceMoneyAmount = toBtcMoneyAmount(btcWallet?.balance)
   const usdBalanceMoneyAmount = toUsdMoneyAmount(usdWallet?.balance)
 
   const btcWalletText = formatDisplayAndWalletAmount({

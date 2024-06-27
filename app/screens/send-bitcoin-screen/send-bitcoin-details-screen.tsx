@@ -11,7 +11,7 @@ import {
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useLevel } from "@app/graphql/level-context"
-import { useAppConfig, usePriceConversion } from "@app/hooks"
+import { useAppConfig, useBreez, usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -37,11 +37,12 @@ import { PaymentDetail } from "./payment-details/index.types"
 import { SendBitcoinDetailsExtraInfo } from "./send-bitcoin-details-extra-info"
 import { requestInvoice, utils } from "lnurl-pay"
 import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
-import { getBtcWallet, getDefaultWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+import { getUsdWallet } from "@app/graphql/wallets-utils"
 import { NoteInput } from "@app/components/note-input"
 // import Breez SDK Wallet
 import useBreezBalance from "@app/hooks/useBreezBalance"
 import { useAppSelector } from "@app/store/redux"
+import { usePersistentStateContext } from "@app/store/persistent-state"
 
 gql`
   query sendBitcoinDetailsScreen {
@@ -100,11 +101,13 @@ type Props = {
 }
 
 const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
+  const { persistentState } = usePersistentStateContext()
   const { isAdvanceMode } = useAppSelector((state) => state.settings)
   const {
     theme: { colors },
   } = useTheme()
   const styles = useStyles()
+  const { btcWallet } = useBreez()
 
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "sendBitcoinDetails">>()
@@ -125,22 +128,19 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
   const { zeroDisplayAmount, formatMoneyAmount } = useDisplayCurrency()
 
-  const defaultWallet = getDefaultWallet(
-    data?.me?.defaultAccount?.wallets,
-    data?.me?.defaultAccount?.defaultWalletId,
-  )
+  const defaultWallet = persistentState.defaultWallet
 
-  // import and use breez balance
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [breezBalance, setBreezBalance] = useBreezBalance()
 
-  // deconstruct the btcwallet and change the balance to the breez balance
-  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
   const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
   const network = "mainnet" // data?.globals?.network
 
-  const wallets = data?.me?.defaultAccount?.wallets
+  let wallets = data?.me?.defaultAccount?.wallets as any[]
+  if (isAdvanceMode && btcWallet) {
+    wallets = [...wallets, btcWallet]
+  }
+
   const { paymentDestination } = route.params
 
   const [paymentDetail, setPaymentDetail] =

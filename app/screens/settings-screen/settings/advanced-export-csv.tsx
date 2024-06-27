@@ -5,11 +5,12 @@ import {
   useSettingsScreenQuery,
   useWalletCsvTransactionsLazyQuery,
 } from "@app/graphql/generated"
-import { getBtcWallet, getUsdWallet } from "@app/graphql/wallets-utils"
+import { getUsdWallet } from "@app/graphql/wallets-utils"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import crashlytics from "@react-native-firebase/crashlytics"
 
 import { SettingsRow } from "../row"
+import { useBreez } from "@app/hooks"
 
 gql`
   query ExportCsvSetting($walletIds: [WalletId!]!) {
@@ -25,10 +26,9 @@ gql`
 
 export const ExportCsvSetting: React.FC = () => {
   const { LL } = useI18nContext()
-
+  const { btcWallet } = useBreez()
   const { data, loading } = useSettingsScreenQuery()
 
-  const btcWallet = getBtcWallet(data?.me?.defaultAccount?.wallets)
   const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
   const btcWalletId = btcWallet?.id
   const usdWalletId = usdWallet?.id
@@ -40,7 +40,7 @@ export const ExportCsvSetting: React.FC = () => {
 
   const fetchCsvTransactions = async () => {
     const walletIds: string[] = []
-    if (btcWalletId) walletIds.push(btcWalletId)
+    // if (btcWalletId) walletIds.push(btcWalletId)
     if (usdWalletId) walletIds.push(usdWalletId)
 
     const { data } = await fetchCsvTransactionsQuery({
