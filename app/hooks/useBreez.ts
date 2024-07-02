@@ -1,10 +1,6 @@
-import { useState, useEffect } from "react"
-import { nodeInfo } from "@breeztech/react-native-breez-sdk"
-import { initializeBreezSDK } from "@app/utils/breez-sdk"
-
-// hooks
+import { useContext } from "react"
+import { BreezContext } from "@app/contexts/BreezContext"
 import { WalletCurrency } from "@app/graphql/generated"
-import { useAppSelector } from "@app/store/redux"
 
 type BtcWallet = {
   id: string
@@ -12,24 +8,13 @@ type BtcWallet = {
   balance: number
 }
 
-export const useBreez = (): { btcWallet: BtcWallet | undefined } => {
-  const { isAdvanceMode } = useAppSelector((state) => state.settings)
-  const [btcWallet, setBtcWallet] = useState<BtcWallet>()
+interface ContextProps {
+  btcWallet: BtcWallet
+  loading: boolean
+  refreshBreez: () => void
+}
 
-  useEffect(() => {
-    if (isAdvanceMode) getBreezInfo()
-  }, [isAdvanceMode])
-
-  const getBreezInfo = async () => {
-    await initializeBreezSDK()
-    const nodeState = await nodeInfo()
-
-    setBtcWallet({
-      id: nodeState.id,
-      walletCurrency: WalletCurrency.Btc,
-      balance: nodeState.channelsBalanceMsat / 1000,
-    })
-  }
-
-  return { btcWallet }
+export const useBreez = () => {
+  const context: ContextProps = useContext(BreezContext)
+  return context
 }

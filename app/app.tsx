@@ -38,6 +38,7 @@ import { Provider } from "react-redux"
 import { store } from "./store/redux"
 import PolyfillCrypto from "react-native-webview-crypto"
 import { ActivityIndicatorProvider } from "./contexts"
+import { BreezProvider } from "./contexts/BreezContext"
 
 // FIXME should we only load the currently used local?
 // this would help to make the app load faster
@@ -66,7 +67,9 @@ export const App = () => (
                       <RootSiblingParent>
                         <AppStateWrapper />
                         <NotificationComponent />
-                        <RootStack />
+                        <BreezProvider>
+                          <RootStack />
+                        </BreezProvider>
                         <GaloyToast />
                         <NetworkErrorComponent />
                       </RootSiblingParent>

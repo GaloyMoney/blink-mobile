@@ -394,11 +394,12 @@ export const nodeInfoBreezSDK = async (): Promise<sdk.NodeState> => {
   }
 }
 
-export const listPaymentsBreezSDK = async (): Promise<sdk.Payment[]> => {
+export const listPaymentsBreezSDK = async (
+  offset?: number,
+  limit?: number,
+): Promise<sdk.Payment[]> => {
   try {
-    // const filter: sdk.PaymentTypeFilter = sdk.PaymentTypeFilter.ALL
-    const payments = await sdk.listPayments({})
-    // console.log("Payments: ", payments)
+    const payments = await sdk.listPayments({ offset, limit })
     return payments
   } catch (error) {
     console.log(error)
