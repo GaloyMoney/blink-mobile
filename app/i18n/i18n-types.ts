@@ -6052,7 +6052,7 @@ export type TranslationFunctions = {
 		 */
 		posCopied: () => LocalizedString
 		/**
-		 * Set Your Lightning Address
+		 * Set Your Lightning Address - Changed to Set Your Username
 		 */
 		setYourLightningAddress: () => LocalizedString
 		/**

@@ -737,7 +737,7 @@ const en: BaseTranslation = {
     apiAcess: "API Access",
     pos: "Point of Sale",
     posCopied: "Your point of sale link has been copied",
-    setYourLightningAddress: "Set Your Lightning Address",
+    setYourLightningAddress: "Set Your Username",
     activated: "Activated",
     addressScreen: "Ways to get paid",
     tapUserName: "Tap to set username",
