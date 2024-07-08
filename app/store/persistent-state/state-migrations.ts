@@ -66,7 +66,7 @@ type PersistentState_7 = {
   convertedUsdBalance?: string
   mergedTransactions?: TransactionFragment[]
   usdTransactions?: SectionTransactions[]
-  btcTransactions?: SectionTransactions[]
+  btcTransactions?: TransactionFragment[]
   introVideoCount: number
   defaultWallet?: WalletBalance
 }

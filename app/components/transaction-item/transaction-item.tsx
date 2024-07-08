@@ -46,7 +46,7 @@ export const useDescriptionDisplay = ({
 
   const isReceive = direction === "RECEIVE"
 
-  switch (settlementVia.__typename) {
+  switch (settlementVia?.__typename) {
     case "SettlementViaOnChain":
       return "OnChain Payment"
     case "SettlementViaLn":
@@ -58,9 +58,9 @@ export const useDescriptionDisplay = ({
     case "SettlementViaIntraLedger":
       return isReceive
         ? `${LL.common.from()} ${
-            settlementVia.counterPartyUsername || bankName + " User"
+            settlementVia?.counterPartyUsername || bankName + " User"
           }`
-        : `${LL.common.to()} ${settlementVia.counterPartyUsername || bankName + " User"}`
+        : `${LL.common.to()} ${settlementVia?.counterPartyUsername || bankName + " User"}`
   }
 }
 
@@ -148,7 +148,7 @@ export const TransactionItem: React.FC<Props> = ({
       onPress={() => navigation.navigate("transactionDetail", { tx })}
     >
       <IconTransaction
-        onChain={tx.settlementVia.__typename === "SettlementViaOnChain"}
+        onChain={tx.settlementVia?.__typename === "SettlementViaOnChain"}
         isReceive={isReceive}
         pending={isPending}
         walletCurrency={walletCurrency}
