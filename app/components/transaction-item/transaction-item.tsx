@@ -28,19 +28,21 @@ import { useAppSelector } from "@app/store/redux"
 export const useDescriptionDisplay = ({
   tx,
   bankName,
+  showMemo,
 }: {
   tx: TransactionFragment | undefined
   bankName: string
+  showMemo?: boolean
 }) => {
   const { LL } = useI18nContext()
-  const { userData } = useAppSelector((state) => state.user)
 
   if (!tx) {
     return ""
   }
 
   const { memo, direction, settlementVia } = tx
-  if (memo && !memo.includes("Pay to Flash Wallet User")) {
+
+  if (memo && (!memo.includes("Pay to Flash Wallet User") || showMemo)) {
     return memo
   }
 

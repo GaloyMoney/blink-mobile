@@ -105,6 +105,7 @@ export const BreezTransactionDetailScreen: React.FC<Props> = ({ route }) => {
   const description = useDescriptionDisplay({
     tx,
     bankName: galoyInstance.name,
+    showMemo: true,
   })
 
   // FIXME doesn't work with storybook
