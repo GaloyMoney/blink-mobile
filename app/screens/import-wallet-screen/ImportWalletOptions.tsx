@@ -11,6 +11,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useFeatureFlags } from "@app/config/feature-flags-context"
 import useAppCheckToken from "../get-started-screen/use-device-token"
 import { useAppSelector } from "@app/store/redux"
+import { usePersistentStateContext } from "@app/store/persistent-state"
 
 // types
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
@@ -23,6 +24,9 @@ const KEYCHAIN_MNEMONIC_KEY = "mnemonic_key"
 type Props = StackScreenProps<RootStackParamList, "ImportWalletOptions">
 
 const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
+  const {
+    persistentState: { btcWalletImported },
+  } = usePersistentStateContext()
   const { theme } = useTheme()
   const { mode } = useThemeMode()
   const colors = theme.colors
@@ -33,7 +37,6 @@ const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
   const { saveToken } = useAppConfig()
   const { deviceAccountEnabled } = useFeatureFlags()
   const [appCheckToken] = useAppCheckToken({ skip: !deviceAccountEnabled })
-  const [BTCWalletImported, setBTCWalletImported] = useState(false)
   const [USDWalletImported, setUSDWalletImported] = useState(false)
   const [phoneVerified, setPhoneVerified] = useState(false)
   const [emailVerified, setEmailVerified] = useState(false)
@@ -56,7 +59,6 @@ const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
     navigation.navigate("ImportWallet", {
       insideApp,
       onComplete: (token) => {
-        setBTCWalletImported(true)
         setToken(token)
       },
     })
@@ -114,11 +116,11 @@ const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
         </Title>
 
         {isAdvanceMode && (
-          <Btn onPress={onImportBTCWallet} disabled={BTCWalletImported}>
+          <Btn onPress={onImportBTCWallet}>
             <Icon
               type="ionicon"
-              name={BTCWalletImported ? "checkmark-circle" : "checkmark-circle-outline"}
-              color={BTCWalletImported ? "#60aa55" : "#999"}
+              name={btcWalletImported ? "checkmark-circle" : "checkmark-circle-outline"}
+              color={btcWalletImported ? "#60aa55" : "#999"}
               size={40}
             />
             <BtnTextWrapper>
@@ -127,9 +129,7 @@ const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
               </BtnTitle>
               <BtnDesc>{LL.ImportWalletOptions.importBTCWallet()}</BtnDesc>
             </BtnTextWrapper>
-            {!BTCWalletImported && (
-              <Icon type="ionicon" name={"chevron-forward"} size={20} />
-            )}
+            <Icon type="ionicon" name={"chevron-forward"} size={20} />
           </Btn>
         )}
         <Btn onPress={onLoginWithPhone} disabled={USDWalletImported}>
@@ -176,12 +176,12 @@ const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
         </Btn>
       </Container>
       <MainBtn
-        disabled={!BTCWalletImported && !USDWalletImported}
+        disabled={!btcWalletImported && !USDWalletImported}
         bottom={bottom}
         onPress={onLogin}
         style={{
           backgroundColor:
-            !BTCWalletImported && !USDWalletImported
+            !btcWalletImported && !USDWalletImported
               ? mode === "dark"
                 ? "#5b5b5b"
                 : "#DEDEDE"

@@ -11,6 +11,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useCreateAccount } from "@app/hooks/useCreateAccount"
 import { useTheme, useThemeMode } from "@rneui/themed"
+import { usePersistentStateContext } from "@app/store/persistent-state"
 
 // utils
 import { disconnectToSDK, initializeBreezSDK } from "@app/utils/breez-sdk"
@@ -27,6 +28,7 @@ const KEYCHAIN_MNEMONIC_KEY = "mnemonic_key"
 
 const ImportWallet: React.FC<Props> = ({ navigation, route }) => {
   const insideApp = route.params?.insideApp
+  const { updateState } = usePersistentStateContext()
   const { theme } = useTheme()
   const { mode } = useThemeMode()
   const colors = theme.colors
@@ -39,6 +41,7 @@ const ImportWallet: React.FC<Props> = ({ navigation, route }) => {
 
   const onComplete = async () => {
     setLoading(true)
+    updateStateHandler(false)
     const mnemonicKey = inputSeedPhrase.join(" ").toLowerCase()
     const res = bip39.validateMnemonic(mnemonicKey)
     if (res) {
@@ -59,11 +62,24 @@ const ImportWallet: React.FC<Props> = ({ navigation, route }) => {
           route.params?.onComplete(token)
         }
       }
+      updateStateHandler(true)
       navigation.goBack()
     } else {
       Alert.alert("Invalid recovery phrase")
     }
     setLoading(false)
+  }
+
+  const updateStateHandler = (btcWalletImported: boolean) => {
+    updateState((state: any) => {
+      if (state)
+        return {
+          ...state,
+          btcTransactions: [],
+          btcWalletImported,
+        }
+      return undefined
+    })
   }
 
   const renderItemHandler = ({

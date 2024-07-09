@@ -132,7 +132,7 @@ export const HomeScreen: React.FC = () => {
         paymentEvents.off("paymentSuccess", fetchPaymentsBreez)
       }
     }
-  }, [breezSDKInitialized])
+  }, [breezSDKInitialized, persistentState.btcWalletImported])
 
   useEffect(() => {
     if (!loadingAuthed && !breezTxsLoading) {

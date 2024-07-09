@@ -69,6 +69,7 @@ type PersistentState_7 = {
   btcTransactions?: TransactionFragment[]
   introVideoCount: number
   defaultWallet?: WalletBalance
+  btcWalletImported?: boolean
 }
 
 type JwtPayload = {
