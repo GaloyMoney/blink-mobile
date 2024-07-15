@@ -141,7 +141,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     wallets = [...wallets, btcWallet]
   }
 
-  const { paymentDestination } = route.params
+  const { paymentDestination, flashUserAddress } = route.params
 
   const [paymentDetail, setPaymentDetail] =
     useState<PaymentDetail<WalletCurrency> | null>(null)
@@ -507,6 +507,19 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             </View>
           </TouchableWithoutFeedback>
           {ChooseWalletModal}
+        </View>
+        <View style={styles.fieldContainer}>
+          <Text style={styles.fieldTitleText}>{LL.common.to()}</Text>
+
+          <View style={styles.fieldBackground}>
+            <View style={styles.walletSelectorInfoContainer}>
+              <Text>
+                {flashUserAddress?.split("@")[0] === paymentDetail.destination
+                  ? flashUserAddress
+                  : paymentDetail.destination}
+              </Text>
+            </View>
+          </View>
         </View>
         <View style={styles.fieldContainer}>
           <View style={styles.amountRightMaxField}>

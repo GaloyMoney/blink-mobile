@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useReducer } from "react"
+import React, { useCallback, useEffect, useMemo, useReducer, useState } from "react"
 import { TextInput, TouchableWithoutFeedback, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "@app/components/screen"
@@ -89,6 +89,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
     defaultDestinationState,
   )
   const [goToNextScreenWhenValid, setGoToNextScreenWhenValid] = React.useState(false)
+  const [flashUserAddress, setFlashUserAddress] = useState<string>()
 
   const { data } = useSendBitcoinDestinationQuery({
     fetchPolicy: "cache-first",
@@ -225,6 +226,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
       setGoToNextScreenWhenValid(false)
       navigation.navigate("sendBitcoinDetails", {
         paymentDestination: destinationState.destination,
+        flashUserAddress,
       })
       return
     }
@@ -291,6 +293,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
       <ConfirmDestinationModal
         destinationState={destinationState}
         dispatchDestinationStateAction={dispatchDestinationStateAction}
+        setFlashUserAddress={(address) => setFlashUserAddress(address)}
       />
       <View style={styles.sendBitcoinDestinationContainer}>
         <Text
