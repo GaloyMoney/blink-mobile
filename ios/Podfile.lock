@@ -695,11 +695,6 @@ PODS:
     - React
   - RNShare (9.4.1):
     - React-Core
-  - RNSound (0.11.2):
-    - React-Core
-    - RNSound/Core (= 0.11.2)
-  - RNSound/Core (0.11.2):
-    - React-Core
   - RNSVG (14.1.0):
     - React-Core
   - RNVectorIcons (10.0.3):
@@ -805,7 +800,6 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSecureRandom (from `../node_modules/react-native-securerandom`)
   - RNShare (from `../node_modules/react-native-share`)
-  - RNSound (from `../node_modules/react-native-sound`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
@@ -1017,8 +1011,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-securerandom"
   RNShare:
     :path: "../node_modules/react-native-share"
-  RNSound:
-    :path: "../node_modules/react-native-sound"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -1142,7 +1134,6 @@ SPEC CHECKSUMS:
   RNScreens: 3c5b9f4a9dcde752466854b6109b79c0e205dad3
   RNSecureRandom: 07efbdf2cd99efe13497433668e54acd7df49fef
   RNShare: 32e97adc8d8c97d4a26bcdd3c45516882184f8b6
-  RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNSVG: ba3e7232f45e34b7b47e74472386cf4e1a676d0a
   RNVectorIcons: 64e6a523ac30a3241efa9baf1ffbcc5e76ff747a
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17

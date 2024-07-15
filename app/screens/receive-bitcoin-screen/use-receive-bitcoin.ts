@@ -39,19 +39,8 @@ import { BtcWalletDescriptor } from "@app/types/wallets"
 import { ReceiveDestination } from "../send-bitcoin-screen/payment-destination/index.types"
 import fetch from "cross-fetch"
 
-import Sound from "react-native-sound"
 import { useAppSelector } from "@app/store/redux"
 import { usePersistentStateContext } from "@app/store/persistent-state"
-
-// Enable playback in silence mode (iOS only)
-Sound.setCategory("Playback")
-
-// Load the sound file
-const paymentReceivedSound = new Sound("coins", Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    console.log("Failed to load the sound", error)
-  }
-})
 
 gql`
   query paymentRequest {
@@ -286,21 +275,9 @@ export const useReceiveBitcoin = (isFirstTransaction: Boolean, initPRParams = {}
       lastHash === pr.info.data.paymentHash
     ) {
       setPR((pq) => pq && pq.setState(PaymentRequestState.Paid))
-      paymentReceivedSound.play((success) => {
-        // Play the sound
-        if (!success) {
-          console.log("Sound did not play")
-        }
-      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastHash])
-
-  useEffect(() => {
-    return () => {
-      paymentReceivedSound.release() // Release the sound on component unmount
-    }
-  }, [paymentReceivedSound])
 
   // For Expires In
   useLayoutEffect(() => {
