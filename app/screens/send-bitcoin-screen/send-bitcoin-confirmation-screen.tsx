@@ -37,7 +37,7 @@ import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { getUsdWallet } from "@app/graphql/wallets-utils"
 
 // Breez SDK
-import { useBreez } from "@app/hooks"
+import { useAppConfig, useBreez } from "@app/hooks"
 import { fetchReverseSwapFeesBreezSDK } from "@app/utils/breez-sdk"
 import Video from "react-native-video"
 
@@ -65,6 +65,12 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     theme: { colors },
   } = useTheme()
   const styles = useStyles()
+
+  const {
+    appConfig: {
+      galoyInstance: { lnAddressHostname: lnDomain },
+    },
+  } = useAppConfig()
 
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinConfirmation">>()
@@ -145,12 +151,16 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     paymentDetail.sendingWalletDescriptor.currency,
     settlementAmount.amount,
   ])
+  const convertedDestination =
+    sendingWalletDescriptor.currency === "BTC" && paymentType === "intraledger"
+      ? destination + `@${lnDomain}`
+      : destination
 
   const {
     loading: sendPaymentLoading,
     sendPayment,
     hasAttemptedSend,
-  } = useSendPayment(sendPaymentMutation, destination, settlementAmount, note)
+  } = useSendPayment(sendPaymentMutation, convertedDestination, settlementAmount, note)
 
   let feeDisplayText = ""
   if (fee.amount) {
