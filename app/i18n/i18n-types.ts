@@ -228,6 +228,24 @@ type RootTranslation = {
 		 */
 		title: RequiredParams<'username'>
 	}
+	CardScreen: {
+		/**
+		 * N​o​ ​C​ard​s​ ​F​o​u​n​d
+		 */
+		noCardsTitle: string
+		/**
+		 * Scan a QR Code to add a card
+		 */
+		noCardsYet: string
+		/**
+		 * N​o​ ​c​ard​s​ ​m​a​t​c​h​i​n​g​ ​y​o​u​r​ ​s​e​a​r​c​h​ ​w​e​r​e​ ​f​o​u​n​d​.
+		 */
+		noMatchingCards: string
+		/**
+		 * C​ard
+		 */
+		title: string
+	}
 	ConversionDetailsScreen: {
 		/**
 		 * C​o​n​v​e​r​t
@@ -1539,9 +1557,21 @@ type RootTranslation = {
 		 */
 		receive: string
 		/**
+		 * Reload
+		 */
+		reload: string
+		/**
+		 * Refresh Balance
+		 */
+		balance: string
+		/**
 		 * S​e​n​d
 		 */
 		send: string
+		/**
+		 * Sweep
+		 */
+		sweep: string
 		/**
 		 * P​a​y
 		 */
@@ -3976,6 +4006,24 @@ export type TranslationFunctions = {
 		 */
 		title: (arg: { username: string }) => LocalizedString
 	}
+	CardScreen: {
+		/**
+		 * N​o​ ​C​ard​s​ ​F​o​u​n​d
+		 */
+		noCardsTitle: () => LocalizedString
+		/**
+		 * Scan a QR Code to add a card
+		 */
+		noCardsYet: () => LocalizedString
+		/**
+		 * N​o​ ​c​ard​s​ ​m​a​t​c​h​i​n​g​ ​y​o​u​r​ ​s​e​a​r​c​h​ ​w​e​r​e​ ​f​o​u​n​d​.
+		 */
+		noMatchingCards: () => LocalizedString
+		/**
+		 * C​ard
+		 */
+		title: () => LocalizedString
+	}
 	ConversionDetailsScreen: {
 		/**
 		 * Convert
@@ -5288,9 +5336,21 @@ export type TranslationFunctions = {
 		 */
 		receive: () => LocalizedString
 		/**
+		 * Reload
+		 */
+		reload: () => LocalizedString
+		/**
+		 * Refresh Balance
+		 */
+		balance: () => LocalizedString
+		/**
 		 * Send
 		 */
 		send: () => LocalizedString
+		/**
+		 * Sweep
+		 */
+		sweep: () => LocalizedString
 		/**
 		 * Pay
 		 */
@@ -5591,6 +5651,14 @@ export type TranslationFunctions = {
 		 * Receive
 		 */
 		receive: () => LocalizedString
+		/**
+		 * Reload
+		 */
+		reload: () => LocalizedString
+		/**
+		 * Refresh Balance
+		 */
+		balance: () => LocalizedString
 		/**
 		 * Receive via Lightning
 		 */

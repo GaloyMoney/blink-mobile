@@ -13,6 +13,7 @@ import {
 import { PinScreen } from "../screens/authentication-screen/pin-screen"
 import { ContactsDetailScreen, ContactsScreen } from "../screens/contacts-screen"
 import { ChatDetailScreen, ChatScreen } from "../screens/chat-screen"
+import { CardScreen } from "../screens/card-screen"
 import { DeveloperScreen } from "../screens/developer-screen"
 import { EarnMapScreen } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
@@ -23,6 +24,7 @@ import { MapScreen } from "../screens/map-screen/map-screen"
 
 import { PriceHistoryScreen } from "../screens/price/price-history-screen"
 import ChatIcon from "@app/assets/icons/chat.svg"
+import CardIcon from "@app/assets/icons/nfc.svg"
 import ContactsIcon from "@app/assets/icons/contacts.svg"
 import HomeIcon from "@app/assets/icons/home.svg"
 import LearnIcon from "@app/assets/icons/learn.svg"
@@ -622,6 +624,16 @@ export const PrimaryNavigator = () => {
           tabBarIcon: ({ color }) => <ChatIcon color={color} />,
         }}
       /> */}
+      <Tab.Screen
+        name="Card"
+        component={CardScreen}
+        options={{
+          title: LL.CardScreen.title(),
+          headerShown: true,
+          tabBarTestID: LL.CardScreen.title(),
+          tabBarIcon: ({ color }) => <CardIcon color={color} />,
+        }}
+      />
       <Tab.Screen
         name="Map"
         component={MapScreen}

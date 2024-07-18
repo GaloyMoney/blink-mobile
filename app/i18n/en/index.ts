@@ -68,6 +68,13 @@ const en: BaseTranslation = {
   ChatDetailsScreen: {
     title: "Chat with {username: string}",
   },
+  CardScreen: {
+    noCardsTitle: "No Cards Found",
+    noCardsYet:
+      "Tap a Flashcard to add it here",
+    noMatchingCards: "No Cards matching your search were found.",
+    title: "Flashcard",
+  },
   ConversionDetailsScreen: {
     title: "Swap",
     percentageToConvert: "% to convert",
@@ -504,7 +511,10 @@ const en: BaseTranslation = {
   HomeScreen: {
     cashout: "Cash Out",
     receive: "Receive",
+    reload: "Reload Card",
+    balance: "Refresh Balance",
     send: "Send",
+    sweep: "Sweep to Wallet",
     pay: "Pay",
     title: "Home",
     scan: "Scan QR",

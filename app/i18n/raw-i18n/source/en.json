@@ -54,6 +54,12 @@
         "noMatchingChats": "No chats matching your search were found.",
         "title": "Chat"
     },
+    "CardScreen": {
+        "noCardsTitle": "No Cards Found",
+        "noCardsYet": "Tap a Flashcard to add it here",
+        "noMatchingCards": "No cards matching your search were found.",
+        "title": "Card"
+    },
     "ChatDetailsScreen": {
         "title": "Chat with {username: string}"
     },
