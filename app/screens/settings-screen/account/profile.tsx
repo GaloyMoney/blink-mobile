@@ -78,6 +78,16 @@ export const ProfileScreen: React.FC = () => {
     fetchUsernames()
   }, [allTokens, fetchUsername, curToken])
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("beforeRemove", (e) => {
+      if (loading) {
+        e.preventDefault()
+      }
+    })
+
+    return unsubscribe
+  }, [navigation, loading])
+
   if (error) {
     return (
       <Screen>
