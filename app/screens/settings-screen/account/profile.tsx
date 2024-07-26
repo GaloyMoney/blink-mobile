@@ -11,10 +11,11 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useApolloClient, gql } from "@apollo/client"
 import { useUserLogoutMutation, useUsernameLazyQuery } from "@app/graphql/generated"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import messaging from "@react-native-firebase/messaging"
 import crashlytics from "@react-native-firebase/crashlytics"
 import { logLogout } from "@app/utils/analytics"
+import { PersistentState } from "@app/store/persistent-state/state-migrations"
 
 gql`
   query username {
@@ -46,6 +47,7 @@ export const ProfileScreen: React.FC = () => {
     fetchPolicy: "no-cache",
   })
   const [loading, setLoading] = useState<boolean>(true)
+  const prevTokenRef = useRef<string>(persistentState.galoyAuthToken) // Previous token state
 
   useEffect(() => {
     const fetchUsernames = async () => {
@@ -87,6 +89,14 @@ export const ProfileScreen: React.FC = () => {
 
     return unsubscribe
   }, [navigation, loading])
+
+  useEffect(() => {
+    if (prevTokenRef.current !== persistentState.galoyAuthToken) {
+      // Navigate back when token is updated and different from the previous token
+      navigation.goBack()
+    }
+    prevTokenRef.current = persistentState.galoyAuthToken // Update previous token
+  }, [persistentState.galoyAuthToken, navigation])
 
   if (error) {
     return (
@@ -139,11 +149,12 @@ const Profile: React.FC<ProfileProps> = ({ username, token, selected }) => {
   const styles = useStyles()
   const { LL } = useI18nContext()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const { updateState } = usePersistentStateContext()
+  const { persistentState, updateState } = usePersistentStateContext()
   const client = useApolloClient()
   const [userLogoutMutation] = useUserLogoutMutation({
     fetchPolicy: "no-cache",
   })
+  const oldToken = persistentState.galoyAuthToken
 
   const logout = useCallback(async (): Promise<void> => {
     try {
@@ -191,7 +202,6 @@ const Profile: React.FC<ProfileProps> = ({ username, token, selected }) => {
       return state
     })
     client.clearStore() // clear cache to load fresh data using new token
-    navigation.navigate("Primary")
   }
 
   return (
