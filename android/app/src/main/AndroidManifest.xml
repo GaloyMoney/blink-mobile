@@ -13,7 +13,8 @@
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     <uses-feature android:name="android.hardware.camera.front" android:required="false" />
     <uses-permission android:name="android.permission.VIBRATE"/>
-    
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" tools:node="remove" /> 
+
     <!-- TODO android:roundIcon="@mipmap/ic_launcher_round" -->
     <application
       android:name=".MainApplication"
