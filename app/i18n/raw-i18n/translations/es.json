@@ -667,6 +667,28 @@
         "nfcNotSupported": "NFC no es compatible con este dispositivo",
         "logInOrCreateAccount": "Inicia sesión o crea una cuenta"
     },
+    "NotificationSettingsScreen": {
+        "title": "Configuración de Notificaciones ",
+        "pushNotifications": "Notificaciones push",
+        "notificationCategories": {
+            "Circles": {
+                "title": "Círculos",
+                "description": "Notificaciones sobre tus círculos."
+            },
+            "Payments": {
+                "title": "Pagos",
+                "description": "Notificaciones relacionadas con el envío y recepción de pagos."
+            },
+            "Marketing": {
+                "title": "Funciones y actualizaciones",
+                "description": "Notificaciones sobre nuevas funciones y actualizaciones."
+            },
+            "Price": {
+                "title": "Cambios de precio",
+                "description": "Notificaciones sobre el precio de Bitcoin."
+            }
+        }
+    },
     "AccountScreen": {
         "accountLevel": "Nivel de cuenta",
         "upgrade": "Actualiza tu cuenta",

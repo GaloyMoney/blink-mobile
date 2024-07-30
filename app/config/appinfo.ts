@@ -22,3 +22,5 @@ export const ratingOptions = {
   preferInApp: true,
   openAppStoreIfInAppFails: true,
 }
+
+export const FLASH_DEEP_LINK_PREFIX = "flash:/"

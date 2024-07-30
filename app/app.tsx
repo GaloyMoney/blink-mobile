@@ -18,7 +18,7 @@ import * as React from "react"
 import ErrorBoundary from "react-native-error-boundary"
 import { RootSiblingParent } from "react-native-root-siblings"
 import { GaloyToast } from "./components/galoy-toast"
-import { NotificationComponent } from "./components/notification"
+import { PushNotificationComponent } from "./components/push-notification"
 import { GaloyClient } from "./graphql/client"
 import TypesafeI18n from "./i18n/i18n-react"
 import { loadAllLocales } from "./i18n/i18n-util.sync"
@@ -39,6 +39,7 @@ import { store } from "./store/redux"
 import PolyfillCrypto from "react-native-webview-crypto"
 import { ActivityIndicatorProvider } from "./contexts"
 import { BreezProvider } from "./contexts/BreezContext"
+import { NotificationsProvider } from "./components/notification"
 
 // FIXME should we only load the currently used local?
 // this would help to make the app load faster
@@ -65,13 +66,15 @@ export const App = () => (
                   <ErrorBoundary FallbackComponent={ErrorScreen}>
                     <NavigationContainerWrapper>
                       <RootSiblingParent>
-                        <AppStateWrapper />
-                        <NotificationComponent />
-                        <BreezProvider>
-                          <RootStack />
-                        </BreezProvider>
-                        <GaloyToast />
-                        <NetworkErrorComponent />
+                        <NotificationsProvider>
+                          <AppStateWrapper />
+                          <PushNotificationComponent />
+                          <BreezProvider>
+                            <RootStack />
+                          </BreezProvider>
+                          <GaloyToast />
+                          <NetworkErrorComponent />
+                        </NotificationsProvider>
                       </RootSiblingParent>
                     </NavigationContainerWrapper>
                   </ErrorBoundary>

@@ -630,6 +630,20 @@
         "nfcScanNow": "Scan NFC Now",
         "nfcNotSupported": "NFC is not supported on this device"
     },
+    "NotificationSettingsScreen": {
+        "title": "Notification Settings",
+        "pushNotifications": "Push Notifications",
+        "notificationCategories": {
+            "Circles": {
+                "title": "Circles",
+                "description": "Notifications about your circles."
+            },
+            "Payments": {
+                "title": "Payments",
+                "description": "Notifications related to sending and receiving payments."
+            }
+        }
+    },
     "AccountScreen": {
         "accountLevel": "Account Level",
         "logIn": "Log in",

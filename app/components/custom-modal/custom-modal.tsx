@@ -1,7 +1,16 @@
 import React, { ReactNode } from "react"
-import { Platform, View, ScrollView, TouchableOpacity } from "react-native"
+import {
+  Platform,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  DimensionValue,
+} from "react-native"
+import { ScrollView } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
+
 import { makeStyles, Text, useTheme } from "@rneui/themed"
+
 import { GaloyIcon } from "../atomic/galoy-icon"
 import { GaloyPrimaryButton } from "../atomic/galoy-primary-button"
 import { GaloySecondaryButton } from "../atomic/galoy-secondary-button"
@@ -20,9 +29,10 @@ export type CustomModalProps = {
   primaryButtonDisabled?: boolean
   secondaryButtonTitle?: string
   secondaryButtonOnPress?: () => void
+  secondaryButtonLoading?: boolean
   showCloseIconButton?: boolean
-  minHeight?: string
-  titleMaxWidth?: string
+  minHeight?: DimensionValue
+  titleMaxWidth?: DimensionValue
   titleTextAlignment?: "auto" | "center" | "left" | "right" | "justify"
 }
 
@@ -43,6 +53,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
   primaryButtonDisabled,
   secondaryButtonTitle,
   secondaryButtonOnPress,
+  secondaryButtonLoading,
   showCloseIconButton = true,
 }) => {
   const styles = useStyles({
@@ -50,17 +61,21 @@ const CustomModal: React.FC<CustomModalProps> = ({
     minHeight,
     titleMaxWidth,
     titleTextAlignment,
-  })
+    showCloseIconButton,
+    /* eslint @typescript-eslint/ban-ts-comment: "off" */
+    // @ts-ignore-next-line no-implicit-any error
+  }) as StyleSheet.NamedStyles
   const {
     theme: { mode, colors },
   } = useTheme()
   return (
     <Modal
       isVisible={isVisible}
-      backdropOpacity={0.7}
-      backdropColor={colors.grey3}
+      backdropOpacity={0.8}
+      backdropColor={colors.white}
       backdropTransitionOutTiming={0}
       avoidKeyboard={true}
+      onBackdropPress={toggleModal}
     >
       <View style={styles.container}>
         {showCloseIconButton && (
@@ -89,18 +104,17 @@ const CustomModal: React.FC<CustomModalProps> = ({
                 {primaryButtonTextAbove}
               </Text>
             )}
-            {primaryButtonTitle && primaryButtonOnPress && (
-              <GaloyPrimaryButton
-                title={primaryButtonTitle}
-                onPress={primaryButtonOnPress}
-                loading={primaryButtonLoading}
-                disabled={primaryButtonDisabled}
-              />
-            )}
+            <GaloyPrimaryButton
+              title={primaryButtonTitle}
+              onPress={primaryButtonOnPress}
+              loading={primaryButtonLoading}
+              disabled={primaryButtonDisabled}
+            />
           </View>
           {secondaryButtonTitle && secondaryButtonOnPress && (
             <GaloySecondaryButton
               title={secondaryButtonTitle}
+              loading={secondaryButtonLoading}
               onPress={secondaryButtonOnPress}
             />
           )}
@@ -114,15 +128,16 @@ export default CustomModal
 
 type UseStylesProps = {
   hasPrimaryButtonTextAbove: boolean
-  minHeight?: string
+  showCloseIconButton: boolean
+  minHeight?: DimensionValue
   titleTextAlignment?: "auto" | "center" | "left" | "right" | "justify"
-  titleMaxWidth?: string
+  titleMaxWidth?: DimensionValue
 }
 
 const useStyles = makeStyles(({ colors }, props: UseStylesProps) => ({
   container: {
-    backgroundColor: colors.white,
-    maxHeight: "80%",
+    backgroundColor: colors.grey5,
+    maxHeight: "95%",
     minHeight: props.minHeight || "auto",
     borderRadius: 16,
     padding: 20,
@@ -134,11 +149,12 @@ const useStyles = makeStyles(({ colors }, props: UseStylesProps) => ({
     justifyContent: "center",
     alignItems: "center",
     paddingBottom: 20,
+    paddingTop: props.showCloseIconButton ? 0 : 20,
   },
   modalTitleContainer: {
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 10,
+    paddingBottom: 10,
   },
   modalTitleText: {
     fontSize: 24,
@@ -147,7 +163,6 @@ const useStyles = makeStyles(({ colors }, props: UseStylesProps) => ({
     maxWidth: props.titleMaxWidth || "80%",
     textAlign: props.titleTextAlignment || "center",
     color: colors.black,
-    marginBottom: 10,
   },
   modalBodyContainer: {
     flex: 1,

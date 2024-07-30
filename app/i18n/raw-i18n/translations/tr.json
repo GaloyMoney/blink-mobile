@@ -667,6 +667,28 @@
         "nfcNotSupported": "NFC bu cihazda desteklenmiyor",
         "logInOrCreateAccount": "Giriş yap ya da hesap oluştur"
     },
+    "NotificationSettingsScreen": {
+        "title": "Bildirim Ayarları",
+        "pushNotifications": "Anlık Bildirimler",
+        "notificationCategories": {
+            "Circles": {
+                "title": "Çevreler",
+                "description": "Çevrenizle alakalı bildirimler."
+            },
+            "Payments": {
+                "title": "Ödemeler",
+                "description": "Ödeme almak ve gördermekle alakalı bildirimler."
+            },
+            "Marketing": {
+                "title": "Özellikler ve güncellemeler",
+                "description": "Yeni özellikler ve güncellemeler hakkında bildirimler."
+            },
+            "Price": {
+                "title": "Fiyat değişiklikleri",
+                "description": "Bitcoin fiyatı hakkında bildirimler."
+            }
+        }
+    },
     "AccountScreen": {
         "accountLevel": "Hesap Seviyesi",
         "upgrade": "Hesabını güncelle",

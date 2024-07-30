@@ -11,6 +11,7 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import nfcManager from "react-native-nfc-manager"
 import { useAppConfig } from "@app/hooks"
 import moment from "moment"
+import messaging from "@react-native-firebase/messaging"
 
 // components
 import { Screen } from "@app/components/screen"
@@ -26,12 +27,13 @@ import { ReceiveTypeBottomSheet, WalletBottomSheet } from "@app/components/recei
 // gql
 import { WalletCurrency, useWalletsQuery } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useApolloClient } from "@apollo/client"
 
 // breez-sdk
 import { paymentEvents } from "@app/utils/breez-sdk"
 
 // utils
-import { requestNotificationPermission } from "@app/utils/notifications"
+import { addDeviceToken, requestNotificationPermission } from "@app/utils/notifications"
 import { testProps } from "../../utils/testProps"
 
 // types
@@ -50,6 +52,7 @@ const ReceiveScreen = ({ route }: Props) => {
   const styles = useStyles()
   const { LL } = useI18nContext()
   const navigation = useNavigation()
+  const client = useApolloClient()
 
   const { appConfig } = useAppConfig()
   const isAuthed = useIsAuthed()
@@ -152,6 +155,27 @@ const ReceiveScreen = ({ route }: Props) => {
       return () => clearTimeout(id)
     }
   }, [request?.state, navigation])
+
+  // notification permission
+  useEffect(() => {
+    let timeout: NodeJS.Timeout
+    if (isAuthed && isFocused && client) {
+      const WAIT_TIME_TO_PROMPT_USER = 5000
+      timeout = setTimeout(
+        async () => {
+          const result = await requestNotificationPermission()
+          if (
+            result === messaging.AuthorizationStatus.PROVISIONAL ||
+            result === messaging.AuthorizationStatus.AUTHORIZED
+          ) {
+            await addDeviceToken(client)
+          }
+        }, // no op if already requested
+        WAIT_TIME_TO_PROMPT_USER,
+      )
+    }
+    return () => timeout && clearTimeout(timeout)
+  }, [isAuthed, isFocused, client])
 
   const handleInvoicePaid = () => {
     if (request) {

@@ -630,6 +630,28 @@
         "nfcScanNow": "Escaneja NFC ara",
         "nfcNotSupported": "NFC no és compatible amb aquest dispositiu"
     },
+    "NotificationSettingsScreen": {
+        "title": "Configuració de notificacions",
+        "pushNotifications": "Notificacions automatiques",
+        "notificationCategories": {
+            "Circles": {
+                "title": "Cercles",
+                "description": "Notificacions sobre els teus cercles"
+            },
+            "Payments": {
+                "title": "Pagaments",
+                "description": "Notificacions relacionades amb enviar i rebre pagaments"
+            },
+            "Marketing": {
+                "title": "Característiques i actualitzacions",
+                "description": "Notificacions de les noves característiques i actualitzacions."
+            },
+            "Price": {
+                "title": "Canvis de preu",
+                "description": "Notificacions sobre el preu de Bitcoin."
+            }
+        }
+    },
     "AccountScreen": {
         "accountLevel": "Nivell de compte",
         "logIn": "Iniciar sessió",

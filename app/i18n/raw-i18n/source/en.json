@@ -703,6 +703,28 @@
         "logInOrCreateAccount": "Log in or create account",
         "keysManagement": "Keys management"
     },
+    "NotificationSettingsScreen": {
+        "title": "Notification Settings",
+        "pushNotifications": "Push Notifications",
+        "notificationCategories": {
+            "Circles": {
+                "title": "Circles",
+                "description": "Notifications about your circles."
+            },
+            "Payments": {
+                "title": "Payments",
+                "description": "Notifications related to sending and receiving payments."
+            },
+            "Marketing": {
+                "title": "Features and updates",
+                "description": "Notifications about new features and updates."
+            },
+            "Price": {
+                "title": "Price changes",
+                "description": "Notifications about the price of Bitcoin."
+            }
+        }
+    },
     "AccountScreen": {
         "fundsMoreThan5Dollars": "Your account has more than $5",
         "itsATrialAccount": "Trial accounts have reduced transaction limits and no recovery method. If you lose your phone or uninstall the app, your funds will be unrecoverable.",

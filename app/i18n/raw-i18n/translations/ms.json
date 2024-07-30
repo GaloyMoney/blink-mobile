@@ -630,6 +630,20 @@
         "nfcScanNow": "Imbas NFC sekarang",
         "nfcNotSupported": "Gajet ini tidak menyokong NFC"
     },
+    "NotificationSettingsScreen": {
+        "title": "Tetapan Notifikasi",
+        "pushNotifications": "Paparan notifikasi",
+        "notificationCategories": {
+            "Circles": {
+                "title": "Kumpulan kecil",
+                "description": "Notifikasi tentang kumpulan kecil "
+            },
+            "Payments": {
+                "title": "Bayaran",
+                "description": "Notifikasi berkait dengan penerimaan dan penghantaran bayaran"
+            }
+        }
+    },
     "AccountScreen": {
         "accountLevel": "Peringkat akaun",
         "logIn": "Log masuk",

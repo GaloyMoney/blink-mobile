@@ -630,6 +630,28 @@
         "nfcScanNow": "Scan NFC Now",
         "nfcNotSupported": "NFC is not supported on this device"
     },
+    "NotificationSettingsScreen": {
+        "title": "Mipangilio ya Arifa",
+        "pushNotifications": "Arifa za Kusukuma",
+        "notificationCategories": {
+            "Circles": {
+                "title": "Vikundi",
+                "description": "Arifa kuhusu vikundi vyako."
+            },
+            "Payments": {
+                "title": "Malipo",
+                "description": "Arifa zinazohusiana na kutuma na kupokea malipo."
+            },
+            "Marketing": {
+                "title": "Features and updates",
+                "description": "Notifications about new features and updates."
+            },
+            "Price": {
+                "title": "Price changes",
+                "description": "Notifications about the price of Bitcoin."
+            }
+        }
+    },
     "AccountScreen": {
         "accountLevel": "Account Level",
         "logIn": "Log in",

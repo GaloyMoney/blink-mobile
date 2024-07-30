@@ -2437,6 +2437,58 @@ type RootTranslation = {
 		advanceMode: string
 		keysManagement: string
 	}
+	NotificationSettingsScreen: {
+		/**
+		 * N​o​t​i​f​i​c​a​t​i​o​n​ ​S​e​t​t​i​n​g​s
+		 */
+		title: string
+		/**
+		 * P​u​s​h​ ​N​o​t​i​f​i​c​a​t​i​o​n​s
+		 */
+		pushNotifications: string
+		notificationCategories: {
+			Circles: {
+				/**
+				 * C​i​r​c​l​e​s
+				 */
+				title: string
+				/**
+				 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​b​o​u​t​ ​y​o​u​r​ ​c​i​r​c​l​e​s​.
+				 */
+				description: string
+			}
+			Payments: {
+				/**
+				 * P​a​y​m​e​n​t​s
+				 */
+				title: string
+				/**
+				 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​r​e​l​a​t​e​d​ ​t​o​ ​s​e​n​d​i​n​g​ ​a​n​d​ ​r​e​c​e​i​v​i​n​g​ ​p​a​y​m​e​n​t​s​.
+				 */
+				description: string
+			}
+			Marketing: {
+				/**
+				 * F​e​a​t​u​r​e​s​ ​a​n​d​ ​u​p​d​a​t​e​s
+				 */
+				title: string
+				/**
+				 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​b​o​u​t​ ​n​e​w​ ​f​e​a​t​u​r​e​s​ ​a​n​d​ ​u​p​d​a​t​e​s​.
+				 */
+				description: string
+			}
+			Price: {
+				/**
+				 * P​r​i​c​e​ ​c​h​a​n​g​e​s
+				 */
+				title: string
+				/**
+				 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​b​o​u​t​ ​t​h​e​ ​p​r​i​c​e​ ​o​f​ ​B​i​t​c​o​i​n​.
+				 */
+				description: string
+			}
+		}
+}
 	AccountScreen: {
 		/**
 		 * Y​o​u​r​ ​a​c​c​o​u​n​t​ ​h​a​s​ ​m​o​r​e​ ​t​h​a​n​ ​$​5
@@ -6221,6 +6273,58 @@ export type TranslationFunctions = {
 		beginnerMode: () => LocalizedString
 		advanceMode: () => LocalizedString
 		keysManagement: () => LocalizedString
+	}
+	NotificationSettingsScreen: {
+		/**
+		 * Notification Settings
+		 */
+		title: () => LocalizedString
+		/**
+		 * Push Notifications
+		 */
+		pushNotifications: () => LocalizedString
+		notificationCategories: {
+			Circles: {
+				/**
+				 * Circles
+				 */
+				title: () => LocalizedString
+				/**
+				 * Notifications about your circles.
+				 */
+				description: () => LocalizedString
+			}
+			Payments: {
+				/**
+				 * Payments
+				 */
+				title: () => LocalizedString
+				/**
+				 * Notifications related to sending and receiving payments.
+				 */
+				description: () => LocalizedString
+			}
+			Marketing: {
+				/**
+				 * Features and updates
+				 */
+				title: () => LocalizedString
+				/**
+				 * Notifications about new features and updates.
+				 */
+				description: () => LocalizedString
+			}
+			Price: {
+				/**
+				 * Price changes
+				 */
+				title: () => LocalizedString
+				/**
+				 * Notifications about the price of Bitcoin.
+				 */
+				description: () => LocalizedString
+			}
+		}
 	}
 	AccountScreen: {
 		/**

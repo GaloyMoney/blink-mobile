@@ -14,73 +14,76 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 const defaultOptions = {} as const
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string
-  String: string
-  Boolean: boolean
-  Int: number
-  Float: number
+  ID: { input: string; output: string }
+  String: { input: string; output: string }
+  Boolean: { input: boolean; output: boolean }
+  Int: { input: number; output: number }
+  Float: { input: number; output: number }
   /** An Opaque Bearer token */
-  AuthToken: string
+  AuthToken: { input: string; output: string }
   /** (Positive) Cent amount (1/100 of a dollar) */
-  CentAmount: number
+  CentAmount: { input: number; output: number }
   /** An alias name that a user can set for a wallet (with which they have transactions) */
-  ContactAlias: string
+  ContactAlias: { input: string; output: string }
   /** A CCA2 country code (ex US, FR, etc) */
-  CountryCode: string
+  CountryCode: { input: string; output: string }
   /** Display currency of an account */
-  DisplayCurrency: string
+  DisplayCurrency: { input: string; output: string }
   /** Email address */
-  EmailAddress: string
+  EmailAddress: { input: string; output: string }
   /** An id to be passed between registrationInitiate and registrationValidate for confirming email */
-  EmailRegistrationId: string
-  EndpointId: string
+  EmailRegistrationId: { input: string; output: string }
+  EndpointId: { input: string; output: string }
   /** Url that will be fetched on events for the account */
-  EndpointUrl: string
+  EndpointUrl: { input: string; output: string }
   /** Feedback shared with our user */
-  Feedback: string
+  Feedback: { input: string; output: string }
   /** Hex-encoded string of 32 bytes */
-  Hex32Bytes: string
-  Language: string
-  LeaderboardName: string
-  LnPaymentPreImage: string
+  Hex32Bytes: { input: string; output: string }
+  Language: { input: string; output: string }
+  LeaderboardName: { input: string; output: string }
+  LnPaymentPreImage: { input: string; output: string }
   /** BOLT11 lightning invoice payment request with the amount included */
-  LnPaymentRequest: string
-  LnPaymentSecret: string
+  LnPaymentRequest: { input: string; output: string }
+  LnPaymentSecret: { input: string; output: string }
   /** Text field in a lightning payment transaction */
-  Memo: string
+  Memo: { input: string; output: string }
   /** (Positive) amount of minutes */
-  Minutes: string
-  NotificationCategory: string
+  Minutes: { input: string; output: string }
+  NotificationCategory: { input: string; output: string }
   /** An address for an on-chain bitcoin destination */
-  OnChainAddress: string
-  OnChainTxHash: string
+  OnChainAddress: { input: string; output: string }
+  OnChainTxHash: { input: string; output: string }
   /** An authentication code valid for a single use */
-  OneTimeAuthCode: string
-  PaymentHash: string
+  OneTimeAuthCode: { input: string; output: string }
+  PaymentHash: { input: string; output: string }
   /** Phone number which includes country code */
-  Phone: string
+  Phone: { input: string; output: string }
   /** Non-fractional signed whole numeric value between -(2^53) + 1 and 2^53 - 1 */
-  SafeInt: number
+  SafeInt: { input: number; output: number }
   /** (Positive) Satoshi amount */
-  SatAmount: number
+  SatAmount: { input: number; output: number }
   /** (Positive) amount of seconds */
-  Seconds: number
+  Seconds: { input: number; output: number }
   /** An amount (of a currency) that can be negative (e.g. in a transaction) */
-  SignedAmount: number
+  SignedAmount: { input: number; output: number }
   /** A string amount (of a currency) that can be negative (e.g. in a transaction) */
-  SignedDisplayMajorAmount: string
+  SignedDisplayMajorAmount: { input: string; output: string }
   /** Timestamp field, serialized as Unix time (the number of seconds since the Unix epoch) */
-  Timestamp: number
+  Timestamp: { input: number; output: number }
   /** A time-based one-time password */
-  TotpCode: string
+  TotpCode: { input: string; output: string }
   /** An id to be passed between set and verify for confirming totp */
-  TotpRegistrationId: string
+  TotpRegistrationId: { input: string; output: string }
   /** A secret to generate time-based one-time password */
-  TotpSecret: string
+  TotpSecret: { input: string; output: string }
+  /** An external reference id that can be optionally added for transactions. */
+  TxExternalId: { input: string; output: string }
   /** Unique identifier of a user */
-  Username: string
+  Username: { input: string; output: string }
   /** Unique identifier of a wallet */
-  WalletId: string
+  WalletId: { input: string; output: string }
+  _FieldSet: { input: string; output: string }
 }
 
 export type Account = {
@@ -410,6 +413,62 @@ export type GraphQlApplicationError = Error & {
   readonly message: Scalars["String"]
   readonly path?: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>
 }
+
+export const Icon = {
+  ArrowLeft: "ARROW_LEFT",
+  ArrowRight: "ARROW_RIGHT",
+  BackSpace: "BACK_SPACE",
+  Bank: "BANK",
+  Bell: "BELL",
+  Bitcoin: "BITCOIN",
+  Book: "BOOK",
+  BtcBook: "BTC_BOOK",
+  CaretDown: "CARET_DOWN",
+  CaretLeft: "CARET_LEFT",
+  CaretRight: "CARET_RIGHT",
+  CaretUp: "CARET_UP",
+  Check: "CHECK",
+  CheckCircle: "CHECK_CIRCLE",
+  Close: "CLOSE",
+  CloseCrossWithBackground: "CLOSE_CROSS_WITH_BACKGROUND",
+  Coins: "COINS",
+  CopyPaste: "COPY_PASTE",
+  Dollar: "DOLLAR",
+  Eye: "EYE",
+  EyeSlash: "EYE_SLASH",
+  Filter: "FILTER",
+  Globe: "GLOBE",
+  Graph: "GRAPH",
+  Image: "IMAGE",
+  Info: "INFO",
+  Lightning: "LIGHTNING",
+  Link: "LINK",
+  Loading: "LOADING",
+  MagnifyingGlass: "MAGNIFYING_GLASS",
+  Map: "MAP",
+  Menu: "MENU",
+  Note: "NOTE",
+  PaymentError: "PAYMENT_ERROR",
+  PaymentPending: "PAYMENT_PENDING",
+  PaymentSuccess: "PAYMENT_SUCCESS",
+  Pencil: "PENCIL",
+  People: "PEOPLE",
+  QrCode: "QR_CODE",
+  Question: "QUESTION",
+  Rank: "RANK",
+  Receive: "RECEIVE",
+  Refresh: "REFRESH",
+  Send: "SEND",
+  Settings: "SETTINGS",
+  Share: "SHARE",
+  Transfer: "TRANSFER",
+  User: "USER",
+  Video: "VIDEO",
+  Warning: "WARNING",
+  WarningWithBackground: "WARNING_WITH_BACKGROUND",
+} as const
+
+export type Icon = (typeof Icon)[keyof typeof Icon]
 
 export type InitiationVia =
   | InitiationViaIntraLedger
@@ -1003,6 +1062,8 @@ export const Network = {
 } as const
 
 export type Network = (typeof Network)[keyof typeof Network]
+export type NotificationAction = OpenDeepLinkAction | OpenExternalLinkAction
+
 export const NotificationChannel = {
   Push: "PUSH",
 } as const
@@ -1118,6 +1179,16 @@ export type OneDayAccountLimit = AccountLimit & {
   readonly remainingLimit?: Maybe<Scalars["CentAmount"]>
   /** The current maximum limit for a given 24 hour period. */
   readonly totalLimit: Scalars["CentAmount"]
+}
+
+export type OpenDeepLinkAction = {
+  readonly __typename: "OpenDeepLinkAction"
+  readonly deepLink: Scalars["String"]["output"]
+}
+
+export type OpenExternalLinkAction = {
+  readonly __typename: "OpenExternalLinkAction"
+  readonly url: Scalars["String"]["output"]
 }
 
 /** Information about pagination in a connection. */
@@ -1394,6 +1465,47 @@ export type SettlementViaOnChain = {
   readonly __typename: "SettlementViaOnChain"
   readonly transactionHash?: Maybe<Scalars["OnChainTxHash"]>
   readonly vout?: Maybe<Scalars["Int"]>
+}
+
+export type StatefulNotification = {
+  readonly __typename: "StatefulNotification"
+  readonly acknowledgedAt?: Maybe<Scalars["Timestamp"]["output"]>
+  readonly action?: Maybe<NotificationAction>
+  readonly body: Scalars["String"]["output"]
+  readonly bulletinEnabled: Scalars["Boolean"]["output"]
+  readonly createdAt: Scalars["Timestamp"]["output"]
+  readonly deepLink?: Maybe<Scalars["String"]["output"]>
+  readonly icon?: Maybe<Icon>
+  readonly id: Scalars["ID"]["output"]
+  readonly title: Scalars["String"]["output"]
+}
+
+export type StatefulNotificationAcknowledgeInput = {
+  readonly notificationId: Scalars["ID"]["input"]
+}
+
+export type StatefulNotificationAcknowledgePayload = {
+  readonly __typename: "StatefulNotificationAcknowledgePayload"
+  readonly notification: StatefulNotification
+}
+
+export type StatefulNotificationConnection = {
+  readonly __typename: "StatefulNotificationConnection"
+  /** A list of edges. */
+  readonly edges: ReadonlyArray<StatefulNotificationEdge>
+  /** A list of nodes. */
+  readonly nodes: ReadonlyArray<StatefulNotification>
+  /** Information to aid in pagination. */
+  readonly pageInfo: PageInfo
+}
+
+/** An edge in a connection. */
+export type StatefulNotificationEdge = {
+  readonly __typename: "StatefulNotificationEdge"
+  /** A cursor for use in pagination */
+  readonly cursor: Scalars["String"]["output"]
+  /** The item at the end of the edge */
+  readonly node: StatefulNotification
 }
 
 export type Subscription = {
@@ -2333,6 +2445,18 @@ export type UserContactUpdateAliasMutation = {
   }
 }
 
+export type UserLogoutMutationVariables = Exact<{
+  input: UserLogoutInput
+}>
+
+export type UserLogoutMutation = {
+  readonly __typename: "Mutation"
+  readonly userLogout: {
+    readonly __typename: "SuccessPayload"
+    readonly success?: boolean | null
+  }
+}
+
 export type ConversionScreenQueryVariables = Exact<{ [key: string]: never }>
 
 export type ConversionScreenQuery = {
@@ -2582,6 +2706,47 @@ export type HomeUnauthedQuery = {
   }>
 }
 
+export type BulletinsQueryVariables = Exact<{
+  first: Scalars["Int"]["input"]
+  after?: InputMaybe<Scalars["String"]["input"]>
+}>
+
+export type BulletinsQuery = {
+  readonly __typename: "Query"
+  readonly me?: {
+    readonly __typename: "User"
+    readonly id: string
+    readonly unacknowledgedStatefulNotificationsWithBulletinEnabled: {
+      readonly __typename: "StatefulNotificationConnection"
+      readonly pageInfo: {
+        readonly __typename: "PageInfo"
+        readonly endCursor?: string | null
+        readonly hasNextPage: boolean
+        readonly hasPreviousPage: boolean
+        readonly startCursor?: string | null
+      }
+      readonly edges: ReadonlyArray<{
+        readonly __typename: "StatefulNotificationEdge"
+        readonly cursor: string
+        readonly node: {
+          readonly __typename: "StatefulNotification"
+          readonly id: string
+          readonly title: string
+          readonly body: string
+          readonly createdAt: number
+          readonly acknowledgedAt?: number | null
+          readonly bulletinEnabled: boolean
+          readonly icon?: Icon | null
+          readonly action?:
+            | { readonly __typename: "OpenDeepLinkAction"; readonly deepLink: string }
+            | { readonly __typename: "OpenExternalLinkAction"; readonly url: string }
+            | null
+        }
+      }>
+    }
+  } | null
+}
+
 export type BusinessMapMarkersQueryVariables = Exact<{ [key: string]: never }>
 
 export type BusinessMapMarkersQuery = {
@@ -2599,6 +2764,56 @@ export type BusinessMapMarkersQuery = {
       }
     }
   } | null> | null
+}
+
+export type StatefulNotificationsQueryVariables = Exact<{
+  after?: InputMaybe<Scalars["String"]["input"]>
+}>
+
+export type StatefulNotificationsQuery = {
+  readonly __typename: "Query"
+  readonly me?: {
+    readonly __typename: "User"
+    readonly statefulNotificationsWithoutBulletinEnabled: {
+      readonly __typename: "StatefulNotificationConnection"
+      readonly nodes: ReadonlyArray<{
+        readonly __typename: "StatefulNotification"
+        readonly id: string
+        readonly title: string
+        readonly body: string
+        readonly createdAt: number
+        readonly acknowledgedAt?: number | null
+        readonly bulletinEnabled: boolean
+        readonly icon?: Icon | null
+        readonly action?:
+          | { readonly __typename: "OpenDeepLinkAction"; readonly deepLink: string }
+          | { readonly __typename: "OpenExternalLinkAction"; readonly url: string }
+          | null
+      }>
+      readonly pageInfo: {
+        readonly __typename: "PageInfo"
+        readonly endCursor?: string | null
+        readonly hasNextPage: boolean
+        readonly hasPreviousPage: boolean
+        readonly startCursor?: string | null
+      }
+    }
+  } | null
+}
+
+export type StatefulNotificationAcknowledgeMutationVariables = Exact<{
+  input: StatefulNotificationAcknowledgeInput
+}>
+
+export type StatefulNotificationAcknowledgeMutation = {
+  readonly __typename: "Mutation"
+  readonly statefulNotificationAcknowledge: {
+    readonly __typename: "StatefulNotificationAcknowledgePayload"
+    readonly notification: {
+      readonly __typename: "StatefulNotification"
+      readonly acknowledgedAt?: number | null
+    }
+  }
 }
 
 export type UserLoginMutationVariables = Exact<{
@@ -3508,6 +3723,149 @@ export type UserUpdateLanguageMutation = {
       readonly language: string
     } | null
   }
+}
+
+export type NotificationSettingsQueryVariables = Exact<{ [key: string]: never }>
+
+export type NotificationSettingsQuery = {
+  readonly __typename: "Query"
+  readonly me?: {
+    readonly __typename: "User"
+    readonly id: string
+    readonly defaultAccount: {
+      readonly __typename: "ConsumerAccount"
+      readonly id: string
+      readonly notificationSettings: {
+        readonly __typename: "NotificationSettings"
+        readonly push: {
+          readonly __typename: "NotificationChannelSettings"
+          readonly enabled: boolean
+          readonly disabledCategories: ReadonlyArray<string>
+        }
+      }
+    }
+  } | null
+}
+
+export type AccountEnableNotificationChannelMutationVariables = Exact<{
+  input: AccountEnableNotificationChannelInput
+}>
+
+export type AccountEnableNotificationChannelMutation = {
+  readonly __typename: "Mutation"
+  readonly accountEnableNotificationChannel: {
+    readonly __typename: "AccountUpdateNotificationSettingsPayload"
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+    readonly account?: {
+      readonly __typename: "ConsumerAccount"
+      readonly id: string
+      readonly notificationSettings: {
+        readonly __typename: "NotificationSettings"
+        readonly push: {
+          readonly __typename: "NotificationChannelSettings"
+          readonly enabled: boolean
+          readonly disabledCategories: ReadonlyArray<string>
+        }
+      }
+    } | null
+  }
+}
+
+export type AccountDisableNotificationChannelMutationVariables = Exact<{
+  input: AccountDisableNotificationChannelInput
+}>
+
+export type AccountDisableNotificationChannelMutation = {
+  readonly __typename: "Mutation"
+  readonly accountDisableNotificationChannel: {
+    readonly __typename: "AccountUpdateNotificationSettingsPayload"
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+    readonly account?: {
+      readonly __typename: "ConsumerAccount"
+      readonly id: string
+      readonly notificationSettings: {
+        readonly __typename: "NotificationSettings"
+        readonly push: {
+          readonly __typename: "NotificationChannelSettings"
+          readonly enabled: boolean
+          readonly disabledCategories: ReadonlyArray<string>
+        }
+      }
+    } | null
+  }
+}
+
+export type AccountEnableNotificationCategoryMutationVariables = Exact<{
+  input: AccountEnableNotificationCategoryInput
+}>
+
+export type AccountEnableNotificationCategoryMutation = {
+  readonly __typename: "Mutation"
+  readonly accountEnableNotificationCategory: {
+    readonly __typename: "AccountUpdateNotificationSettingsPayload"
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+    readonly account?: {
+      readonly __typename: "ConsumerAccount"
+      readonly id: string
+      readonly notificationSettings: {
+        readonly __typename: "NotificationSettings"
+        readonly push: {
+          readonly __typename: "NotificationChannelSettings"
+          readonly enabled: boolean
+          readonly disabledCategories: ReadonlyArray<string>
+        }
+      }
+    } | null
+  }
+}
+
+export type AccountDisableNotificationCategoryMutationVariables = Exact<{
+  input: AccountDisableNotificationCategoryInput
+}>
+
+export type AccountDisableNotificationCategoryMutation = {
+  readonly __typename: "Mutation"
+  readonly accountDisableNotificationCategory: {
+    readonly __typename: "AccountUpdateNotificationSettingsPayload"
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly message: string
+    }>
+    readonly account?: {
+      readonly __typename: "ConsumerAccount"
+      readonly id: string
+      readonly notificationSettings: {
+        readonly __typename: "NotificationSettings"
+        readonly push: {
+          readonly __typename: "NotificationChannelSettings"
+          readonly enabled: boolean
+          readonly disabledCategories: ReadonlyArray<string>
+        }
+      }
+    } | null
+  }
+}
+
+export type UnacknowledgedNotificationCountQueryVariables = Exact<{
+  [key: string]: never
+}>
+
+export type UnacknowledgedNotificationCountQuery = {
+  readonly __typename: "Query"
+  readonly me?: {
+    readonly __typename: "User"
+    readonly id: string
+    readonly unacknowledgedStatefulNotificationsWithoutBulletinEnabledCount: number
+  } | null
 }
 
 export type WalletCsvTransactionsQueryVariables = Exact<{
@@ -5105,6 +5463,53 @@ export type UserContactUpdateAliasMutationOptions = Apollo.BaseMutationOptions<
   UserContactUpdateAliasMutation,
   UserContactUpdateAliasMutationVariables
 >
+export const UserLogoutDocument = gql`
+  mutation userLogout($input: UserLogoutInput!) {
+    userLogout(input: $input) {
+      success
+    }
+  }
+`
+export type UserLogoutMutationFn = Apollo.MutationFunction<
+  UserLogoutMutation,
+  UserLogoutMutationVariables
+>
+
+/**
+ * __useUserLogoutMutation__
+ *
+ * To run a mutation, you first call `useUserLogoutMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserLogoutMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userLogoutMutation, { data, loading, error }] = useUserLogoutMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserLogoutMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UserLogoutMutation,
+    UserLogoutMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<UserLogoutMutation, UserLogoutMutationVariables>(
+    UserLogoutDocument,
+    options,
+  )
+}
+export type UserLogoutMutationHookResult = ReturnType<typeof useUserLogoutMutation>
+export type UserLogoutMutationResult = Apollo.MutationResult<UserLogoutMutation>
+export type UserLogoutMutationOptions = Apollo.BaseMutationOptions<
+  UserLogoutMutation,
+  UserLogoutMutationVariables
+>
 export const ConversionScreenDocument = gql`
   query conversionScreen {
     me {
@@ -5628,6 +6033,99 @@ export type HomeUnauthedQueryResult = Apollo.QueryResult<
   HomeUnauthedQuery,
   HomeUnauthedQueryVariables
 >
+export const BulletinsDocument = gql`
+  query Bulletins($first: Int!, $after: String) {
+    me {
+      id
+      unacknowledgedStatefulNotificationsWithBulletinEnabled(
+        first: $first
+        after: $after
+      ) {
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+        edges {
+          node {
+            id
+            title
+            body
+            createdAt
+            acknowledgedAt
+            bulletinEnabled
+            icon
+            action {
+              ... on OpenDeepLinkAction {
+                deepLink
+              }
+              ... on OpenExternalLinkAction {
+                url
+              }
+            }
+          }
+          cursor
+        }
+      }
+    }
+  }
+`
+
+/**
+ * __useBulletinsQuery__
+ *
+ * To run a query within a React component, call `useBulletinsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBulletinsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBulletinsQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useBulletinsQuery(
+  baseOptions: Apollo.QueryHookOptions<BulletinsQuery, BulletinsQueryVariables> &
+    ({ variables: BulletinsQueryVariables; skip?: boolean } | { skip: boolean }),
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<BulletinsQuery, BulletinsQueryVariables>(
+    BulletinsDocument,
+    options,
+  )
+}
+export function useBulletinsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<BulletinsQuery, BulletinsQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<BulletinsQuery, BulletinsQueryVariables>(
+    BulletinsDocument,
+    options,
+  )
+}
+export function useBulletinsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<BulletinsQuery, BulletinsQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<BulletinsQuery, BulletinsQueryVariables>(
+    BulletinsDocument,
+    options,
+  )
+}
+export type BulletinsQueryHookResult = ReturnType<typeof useBulletinsQuery>
+export type BulletinsLazyQueryHookResult = ReturnType<typeof useBulletinsLazyQuery>
+export type BulletinsSuspenseQueryHookResult = ReturnType<
+  typeof useBulletinsSuspenseQuery
+>
+export type BulletinsQueryResult = Apollo.QueryResult<
+  BulletinsQuery,
+  BulletinsQueryVariables
+>
 export const BusinessMapMarkersDocument = gql`
   query businessMapMarkers {
     businessMapMarkers {
@@ -5692,6 +6190,159 @@ export type BusinessMapMarkersQueryResult = Apollo.QueryResult<
   BusinessMapMarkersQuery,
   BusinessMapMarkersQueryVariables
 >
+
+export const StatefulNotificationsDocument = gql`
+  query StatefulNotifications($after: String) {
+    me {
+      statefulNotificationsWithoutBulletinEnabled(first: 20, after: $after) {
+        nodes {
+          id
+          title
+          body
+          createdAt
+          acknowledgedAt
+          bulletinEnabled
+          icon
+          action {
+            ... on OpenDeepLinkAction {
+              deepLink
+            }
+            ... on OpenExternalLinkAction {
+              url
+            }
+          }
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+    }
+  }
+`
+
+/**
+ * __useStatefulNotificationsQuery__
+ *
+ * To run a query within a React component, call `useStatefulNotificationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useStatefulNotificationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useStatefulNotificationsQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useStatefulNotificationsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    StatefulNotificationsQuery,
+    StatefulNotificationsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<StatefulNotificationsQuery, StatefulNotificationsQueryVariables>(
+    StatefulNotificationsDocument,
+    options,
+  )
+}
+export function useStatefulNotificationsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    StatefulNotificationsQuery,
+    StatefulNotificationsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<
+    StatefulNotificationsQuery,
+    StatefulNotificationsQueryVariables
+  >(StatefulNotificationsDocument, options)
+}
+export function useStatefulNotificationsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    StatefulNotificationsQuery,
+    StatefulNotificationsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<
+    StatefulNotificationsQuery,
+    StatefulNotificationsQueryVariables
+  >(StatefulNotificationsDocument, options)
+}
+export type StatefulNotificationsQueryHookResult = ReturnType<
+  typeof useStatefulNotificationsQuery
+>
+export type StatefulNotificationsLazyQueryHookResult = ReturnType<
+  typeof useStatefulNotificationsLazyQuery
+>
+export type StatefulNotificationsSuspenseQueryHookResult = ReturnType<
+  typeof useStatefulNotificationsSuspenseQuery
+>
+export type StatefulNotificationsQueryResult = Apollo.QueryResult<
+  StatefulNotificationsQuery,
+  StatefulNotificationsQueryVariables
+>
+export const StatefulNotificationAcknowledgeDocument = gql`
+  mutation StatefulNotificationAcknowledge(
+    $input: StatefulNotificationAcknowledgeInput!
+  ) {
+    statefulNotificationAcknowledge(input: $input) {
+      notification {
+        acknowledgedAt
+      }
+    }
+  }
+`
+export type StatefulNotificationAcknowledgeMutationFn = Apollo.MutationFunction<
+  StatefulNotificationAcknowledgeMutation,
+  StatefulNotificationAcknowledgeMutationVariables
+>
+
+/**
+ * __useStatefulNotificationAcknowledgeMutation__
+ *
+ * To run a mutation, you first call `useStatefulNotificationAcknowledgeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useStatefulNotificationAcknowledgeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [statefulNotificationAcknowledgeMutation, { data, loading, error }] = useStatefulNotificationAcknowledgeMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useStatefulNotificationAcknowledgeMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    StatefulNotificationAcknowledgeMutation,
+    StatefulNotificationAcknowledgeMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    StatefulNotificationAcknowledgeMutation,
+    StatefulNotificationAcknowledgeMutationVariables
+  >(StatefulNotificationAcknowledgeDocument, options)
+}
+export type StatefulNotificationAcknowledgeMutationHookResult = ReturnType<
+  typeof useStatefulNotificationAcknowledgeMutation
+>
+export type StatefulNotificationAcknowledgeMutationResult =
+  Apollo.MutationResult<StatefulNotificationAcknowledgeMutation>
+export type StatefulNotificationAcknowledgeMutationOptions = Apollo.BaseMutationOptions<
+  StatefulNotificationAcknowledgeMutation,
+  StatefulNotificationAcknowledgeMutationVariables
+>
+
 export const UserLoginDocument = gql`
   mutation userLogin($input: UserLoginInput!) {
     userLogin(input: $input) {
@@ -8346,6 +8997,414 @@ export type UserUpdateLanguageMutationOptions = Apollo.BaseMutationOptions<
   UserUpdateLanguageMutation,
   UserUpdateLanguageMutationVariables
 >
+export const NotificationSettingsDocument = gql`
+  query notificationSettings {
+    me {
+      id
+      defaultAccount {
+        id
+        notificationSettings {
+          push {
+            enabled
+            disabledCategories
+          }
+        }
+      }
+    }
+  }
+`
+
+/**
+ * __useNotificationSettingsQuery__
+ *
+ * To run a query within a React component, call `useNotificationSettingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNotificationSettingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNotificationSettingsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useNotificationSettingsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    NotificationSettingsQuery,
+    NotificationSettingsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<NotificationSettingsQuery, NotificationSettingsQueryVariables>(
+    NotificationSettingsDocument,
+    options,
+  )
+}
+export function useNotificationSettingsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    NotificationSettingsQuery,
+    NotificationSettingsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<
+    NotificationSettingsQuery,
+    NotificationSettingsQueryVariables
+  >(NotificationSettingsDocument, options)
+}
+export function useNotificationSettingsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    NotificationSettingsQuery,
+    NotificationSettingsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<
+    NotificationSettingsQuery,
+    NotificationSettingsQueryVariables
+  >(NotificationSettingsDocument, options)
+}
+export type NotificationSettingsQueryHookResult = ReturnType<
+  typeof useNotificationSettingsQuery
+>
+export type NotificationSettingsLazyQueryHookResult = ReturnType<
+  typeof useNotificationSettingsLazyQuery
+>
+export type NotificationSettingsSuspenseQueryHookResult = ReturnType<
+  typeof useNotificationSettingsSuspenseQuery
+>
+export type NotificationSettingsQueryResult = Apollo.QueryResult<
+  NotificationSettingsQuery,
+  NotificationSettingsQueryVariables
+>
+export const AccountEnableNotificationChannelDocument = gql`
+  mutation accountEnableNotificationChannel(
+    $input: AccountEnableNotificationChannelInput!
+  ) {
+    accountEnableNotificationChannel(input: $input) {
+      errors {
+        message
+      }
+      account {
+        id
+        notificationSettings {
+          push {
+            enabled
+            disabledCategories
+          }
+        }
+      }
+    }
+  }
+`
+export type AccountEnableNotificationChannelMutationFn = Apollo.MutationFunction<
+  AccountEnableNotificationChannelMutation,
+  AccountEnableNotificationChannelMutationVariables
+>
+
+/**
+ * __useAccountEnableNotificationChannelMutation__
+ *
+ * To run a mutation, you first call `useAccountEnableNotificationChannelMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAccountEnableNotificationChannelMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [accountEnableNotificationChannelMutation, { data, loading, error }] = useAccountEnableNotificationChannelMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAccountEnableNotificationChannelMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AccountEnableNotificationChannelMutation,
+    AccountEnableNotificationChannelMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    AccountEnableNotificationChannelMutation,
+    AccountEnableNotificationChannelMutationVariables
+  >(AccountEnableNotificationChannelDocument, options)
+}
+export type AccountEnableNotificationChannelMutationHookResult = ReturnType<
+  typeof useAccountEnableNotificationChannelMutation
+>
+export type AccountEnableNotificationChannelMutationResult =
+  Apollo.MutationResult<AccountEnableNotificationChannelMutation>
+export type AccountEnableNotificationChannelMutationOptions = Apollo.BaseMutationOptions<
+  AccountEnableNotificationChannelMutation,
+  AccountEnableNotificationChannelMutationVariables
+>
+export const AccountDisableNotificationChannelDocument = gql`
+  mutation accountDisableNotificationChannel(
+    $input: AccountDisableNotificationChannelInput!
+  ) {
+    accountDisableNotificationChannel(input: $input) {
+      errors {
+        message
+      }
+      account {
+        id
+        notificationSettings {
+          push {
+            enabled
+            disabledCategories
+          }
+        }
+      }
+    }
+  }
+`
+export type AccountDisableNotificationChannelMutationFn = Apollo.MutationFunction<
+  AccountDisableNotificationChannelMutation,
+  AccountDisableNotificationChannelMutationVariables
+>
+
+/**
+ * __useAccountDisableNotificationChannelMutation__
+ *
+ * To run a mutation, you first call `useAccountDisableNotificationChannelMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAccountDisableNotificationChannelMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [accountDisableNotificationChannelMutation, { data, loading, error }] = useAccountDisableNotificationChannelMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAccountDisableNotificationChannelMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AccountDisableNotificationChannelMutation,
+    AccountDisableNotificationChannelMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    AccountDisableNotificationChannelMutation,
+    AccountDisableNotificationChannelMutationVariables
+  >(AccountDisableNotificationChannelDocument, options)
+}
+export type AccountDisableNotificationChannelMutationHookResult = ReturnType<
+  typeof useAccountDisableNotificationChannelMutation
+>
+export type AccountDisableNotificationChannelMutationResult =
+  Apollo.MutationResult<AccountDisableNotificationChannelMutation>
+export type AccountDisableNotificationChannelMutationOptions = Apollo.BaseMutationOptions<
+  AccountDisableNotificationChannelMutation,
+  AccountDisableNotificationChannelMutationVariables
+>
+export const AccountEnableNotificationCategoryDocument = gql`
+  mutation accountEnableNotificationCategory(
+    $input: AccountEnableNotificationCategoryInput!
+  ) {
+    accountEnableNotificationCategory(input: $input) {
+      errors {
+        message
+      }
+      account {
+        id
+        notificationSettings {
+          push {
+            enabled
+            disabledCategories
+          }
+        }
+      }
+    }
+  }
+`
+export type AccountEnableNotificationCategoryMutationFn = Apollo.MutationFunction<
+  AccountEnableNotificationCategoryMutation,
+  AccountEnableNotificationCategoryMutationVariables
+>
+
+/**
+ * __useAccountEnableNotificationCategoryMutation__
+ *
+ * To run a mutation, you first call `useAccountEnableNotificationCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAccountEnableNotificationCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [accountEnableNotificationCategoryMutation, { data, loading, error }] = useAccountEnableNotificationCategoryMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAccountEnableNotificationCategoryMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AccountEnableNotificationCategoryMutation,
+    AccountEnableNotificationCategoryMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    AccountEnableNotificationCategoryMutation,
+    AccountEnableNotificationCategoryMutationVariables
+  >(AccountEnableNotificationCategoryDocument, options)
+}
+export type AccountEnableNotificationCategoryMutationHookResult = ReturnType<
+  typeof useAccountEnableNotificationCategoryMutation
+>
+export type AccountEnableNotificationCategoryMutationResult =
+  Apollo.MutationResult<AccountEnableNotificationCategoryMutation>
+export type AccountEnableNotificationCategoryMutationOptions = Apollo.BaseMutationOptions<
+  AccountEnableNotificationCategoryMutation,
+  AccountEnableNotificationCategoryMutationVariables
+>
+export const AccountDisableNotificationCategoryDocument = gql`
+  mutation accountDisableNotificationCategory(
+    $input: AccountDisableNotificationCategoryInput!
+  ) {
+    accountDisableNotificationCategory(input: $input) {
+      errors {
+        message
+      }
+      account {
+        id
+        notificationSettings {
+          push {
+            enabled
+            disabledCategories
+          }
+        }
+      }
+    }
+  }
+`
+export type AccountDisableNotificationCategoryMutationFn = Apollo.MutationFunction<
+  AccountDisableNotificationCategoryMutation,
+  AccountDisableNotificationCategoryMutationVariables
+>
+
+/**
+ * __useAccountDisableNotificationCategoryMutation__
+ *
+ * To run a mutation, you first call `useAccountDisableNotificationCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAccountDisableNotificationCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [accountDisableNotificationCategoryMutation, { data, loading, error }] = useAccountDisableNotificationCategoryMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAccountDisableNotificationCategoryMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AccountDisableNotificationCategoryMutation,
+    AccountDisableNotificationCategoryMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    AccountDisableNotificationCategoryMutation,
+    AccountDisableNotificationCategoryMutationVariables
+  >(AccountDisableNotificationCategoryDocument, options)
+}
+export type AccountDisableNotificationCategoryMutationHookResult = ReturnType<
+  typeof useAccountDisableNotificationCategoryMutation
+>
+export type AccountDisableNotificationCategoryMutationResult =
+  Apollo.MutationResult<AccountDisableNotificationCategoryMutation>
+export type AccountDisableNotificationCategoryMutationOptions =
+  Apollo.BaseMutationOptions<
+    AccountDisableNotificationCategoryMutation,
+    AccountDisableNotificationCategoryMutationVariables
+  >
+export const UnacknowledgedNotificationCountDocument = gql`
+  query UnacknowledgedNotificationCount {
+    me {
+      id
+      unacknowledgedStatefulNotificationsWithoutBulletinEnabledCount
+    }
+  }
+`
+
+/**
+ * __useUnacknowledgedNotificationCountQuery__
+ *
+ * To run a query within a React component, call `useUnacknowledgedNotificationCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUnacknowledgedNotificationCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUnacknowledgedNotificationCountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUnacknowledgedNotificationCountQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    UnacknowledgedNotificationCountQuery,
+    UnacknowledgedNotificationCountQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<
+    UnacknowledgedNotificationCountQuery,
+    UnacknowledgedNotificationCountQueryVariables
+  >(UnacknowledgedNotificationCountDocument, options)
+}
+export function useUnacknowledgedNotificationCountLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    UnacknowledgedNotificationCountQuery,
+    UnacknowledgedNotificationCountQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<
+    UnacknowledgedNotificationCountQuery,
+    UnacknowledgedNotificationCountQueryVariables
+  >(UnacknowledgedNotificationCountDocument, options)
+}
+export function useUnacknowledgedNotificationCountSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    UnacknowledgedNotificationCountQuery,
+    UnacknowledgedNotificationCountQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<
+    UnacknowledgedNotificationCountQuery,
+    UnacknowledgedNotificationCountQueryVariables
+  >(UnacknowledgedNotificationCountDocument, options)
+}
+export type UnacknowledgedNotificationCountQueryHookResult = ReturnType<
+  typeof useUnacknowledgedNotificationCountQuery
+>
+export type UnacknowledgedNotificationCountLazyQueryHookResult = ReturnType<
+  typeof useUnacknowledgedNotificationCountLazyQuery
+>
+export type UnacknowledgedNotificationCountSuspenseQueryHookResult = ReturnType<
+  typeof useUnacknowledgedNotificationCountSuspenseQuery
+>
+export type UnacknowledgedNotificationCountQueryResult = Apollo.QueryResult<
+  UnacknowledgedNotificationCountQuery,
+  UnacknowledgedNotificationCountQueryVariables
+>
+
 export const WalletCsvTransactionsDocument = gql`
   query walletCSVTransactions($walletIds: [WalletId!]!) {
     me {

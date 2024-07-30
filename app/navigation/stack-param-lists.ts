@@ -100,6 +100,7 @@ export type RootStackParamList = {
   Card: undefined
   Map: undefined
   accountScreen: undefined
+  notificationSettingsScreen: undefined
   transactionLimitsScreen: undefined
   emailRegistrationInitiate: undefined
   emailRegistrationValidate: { email: string; emailRegistrationId: string }

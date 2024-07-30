@@ -630,6 +630,20 @@
         "nfcScanNow": "Skeniraj NFC sada",
         "nfcNotSupported": "NFC nije podržan na ovom uređaju"
     },
+    "NotificationSettingsScreen": {
+        "title": "Postavke obavijesti",
+        "pushNotifications": "Push obavijesti",
+        "notificationCategories": {
+            "Circles": {
+                "title": "Krugovi",
+                "description": "Obavijesti o tvojim krugovima."
+            },
+            "Payments": {
+                "title": "Plaćanja",
+                "description": "Obavijesti vezane uz slanje i primanje uplata."
+            }
+        }
+    },
     "AccountScreen": {
         "accountLevel": "Razina računa",
         "logIn": "Prijavi se",

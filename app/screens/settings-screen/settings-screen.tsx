@@ -57,7 +57,7 @@ const items = {
   waysToGetPaid: [AccountLNAddress, AccountPOS, AccountStaticQR],
   wallet: [NostrSecret, BackupWallet, ImportWallet],
   preferences: [
-    // NotificationSetting,
+    NotificationSetting,
     AdvancedModeToggle,
     DefaultWallet,
     LanguageSetting,

@@ -101,6 +101,7 @@ import {
 } from "@app/screens"
 import { useAppSelector } from "@app/store/redux"
 import { usePersistentStateContext } from "@app/store/persistent-state"
+import { NotificationSettingsScreen } from "@app/screens/settings-screen/notifications-screen"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -395,6 +396,13 @@ export const RootStack = () => {
         component={AccountScreen}
         options={{
           title: LL.common.account(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="notificationSettingsScreen"
+        component={NotificationSettingsScreen}
+        options={{
+          title: LL.NotificationSettingsScreen.title(),
         }}
       />
       <RootNavigator.Screen

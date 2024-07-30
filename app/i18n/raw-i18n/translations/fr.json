@@ -638,6 +638,20 @@
         "nfcScanNow": "Scanner NFC maintenant",
         "nfcNotSupported": "NFC n’est pas compatible sur cet appareil"
     },
+    "NotificationSettingsScreen": {
+        "title": "Réglages des notifications",
+        "pushNotifications": "Notifications push",
+        "notificationCategories": {
+            "Circles": {
+                "title": "Cercles",
+                "description": "Notifications concernant vos cercles."
+            },
+            "Payments": {
+                "title": "Paiements",
+                "description": "Notifications associées aux paiements envoyés et reçus."
+            }
+        }
+    },
     "AccountScreen": {
         "accountLevel": "Niveau du compte",
         "logIn": "Se connecter",

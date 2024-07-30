@@ -667,6 +667,28 @@
         "nfcNotSupported": "Η λειτουργία NFC δεν υποστιρίζεται από αυτήν την συσκευή",
         "logInOrCreateAccount": "Είσοδος ή δημιουργία λογαριασμού"
     },
+    "NotificationSettingsScreen": {
+        "title": "Ρυθμίσεις ειδοποιήσεων",
+        "pushNotifications": "Προώθηση ειδοποιήσεων",
+        "notificationCategories": {
+            "Circles": {
+                "title": "Κύκλοι επαφών",
+                "description": "Ειδοποιήσεις σχετικά με τους κύκλους επαφών"
+            },
+            "Payments": {
+                "title": "Πληρωμές",
+                "description": "Ειδοποιήσεις σχετικά με την αποστολή και τη λήψη πληρωμών."
+            },
+            "Marketing": {
+                "title": "Features and updates",
+                "description": "Notifications about new features and updates."
+            },
+            "Price": {
+                "title": "Price changes",
+                "description": "Notifications about the price of Bitcoin."
+            }
+        }
+    },
     "AccountScreen": {
         "accountLevel": "Επίπεδο Λογαριασμού",
         "upgrade": "Αναβαθμίστε τον λογαριασμό σας",

@@ -630,6 +630,28 @@
         "nfcScanNow": "Scan do NFC Agora",
         "nfcNotSupported": "NFC não é suportado neste dispositivo"
     },
+    "NotificationSettingsScreen": {
+        "title": "Configurações de Notificação",
+        "pushNotifications": "Notificações Push",
+        "notificationCategories": {
+            "Circles": {
+                "title": "círculos",
+                "description": "Notificações sobre seus círculos."
+            },
+            "Payments": {
+                "title": "Pagamentos",
+                "description": "Notificações relacionadas ao envio e recebimento de pagamentos."
+            },
+            "Marketing": {
+                "title": "Recursos e atualizações",
+                "description": "Notificações sobre novos recursos e atualizações"
+            },
+            "Price": {
+                "title": "Mudança de preços",
+                "description": "Notificações sobre o preço do Bitcoin"
+            }
+        }
+    },
     "AccountScreen": {
         "accountLevel": "Nivél de Conta",
         "logIn": "Entra na conta",
