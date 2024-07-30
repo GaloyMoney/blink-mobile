@@ -14,76 +14,73 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 const defaultOptions = {} as const
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string }
-  String: { input: string; output: string }
-  Boolean: { input: boolean; output: boolean }
-  Int: { input: number; output: number }
-  Float: { input: number; output: number }
+  ID: string
+  String: string
+  Boolean: boolean
+  Int: number
+  Float: number
   /** An Opaque Bearer token */
-  AuthToken: { input: string; output: string }
+  AuthToken: string
   /** (Positive) Cent amount (1/100 of a dollar) */
-  CentAmount: { input: number; output: number }
+  CentAmount: number
   /** An alias name that a user can set for a wallet (with which they have transactions) */
-  ContactAlias: { input: string; output: string }
+  ContactAlias: string
   /** A CCA2 country code (ex US, FR, etc) */
-  CountryCode: { input: string; output: string }
+  CountryCode: string
   /** Display currency of an account */
-  DisplayCurrency: { input: string; output: string }
+  DisplayCurrency: string
   /** Email address */
-  EmailAddress: { input: string; output: string }
+  EmailAddress: string
   /** An id to be passed between registrationInitiate and registrationValidate for confirming email */
-  EmailRegistrationId: { input: string; output: string }
-  EndpointId: { input: string; output: string }
+  EmailRegistrationId: string
+  EndpointId: string
   /** Url that will be fetched on events for the account */
-  EndpointUrl: { input: string; output: string }
+  EndpointUrl: string
   /** Feedback shared with our user */
-  Feedback: { input: string; output: string }
+  Feedback: string
   /** Hex-encoded string of 32 bytes */
-  Hex32Bytes: { input: string; output: string }
-  Language: { input: string; output: string }
-  LeaderboardName: { input: string; output: string }
-  LnPaymentPreImage: { input: string; output: string }
+  Hex32Bytes: string
+  Language: string
+  LeaderboardName: string
+  LnPaymentPreImage: string
   /** BOLT11 lightning invoice payment request with the amount included */
-  LnPaymentRequest: { input: string; output: string }
-  LnPaymentSecret: { input: string; output: string }
+  LnPaymentRequest: string
+  LnPaymentSecret: string
   /** Text field in a lightning payment transaction */
-  Memo: { input: string; output: string }
+  Memo: string
   /** (Positive) amount of minutes */
-  Minutes: { input: string; output: string }
-  NotificationCategory: { input: string; output: string }
+  Minutes: string
+  NotificationCategory: string
   /** An address for an on-chain bitcoin destination */
-  OnChainAddress: { input: string; output: string }
-  OnChainTxHash: { input: string; output: string }
+  OnChainAddress: string
+  OnChainTxHash: string
   /** An authentication code valid for a single use */
-  OneTimeAuthCode: { input: string; output: string }
-  PaymentHash: { input: string; output: string }
+  OneTimeAuthCode: string
+  PaymentHash: string
   /** Phone number which includes country code */
-  Phone: { input: string; output: string }
+  Phone: string
   /** Non-fractional signed whole numeric value between -(2^53) + 1 and 2^53 - 1 */
-  SafeInt: { input: number; output: number }
+  SafeInt: number
   /** (Positive) Satoshi amount */
-  SatAmount: { input: number; output: number }
+  SatAmount: number
   /** (Positive) amount of seconds */
-  Seconds: { input: number; output: number }
+  Seconds: number
   /** An amount (of a currency) that can be negative (e.g. in a transaction) */
-  SignedAmount: { input: number; output: number }
+  SignedAmount: number
   /** A string amount (of a currency) that can be negative (e.g. in a transaction) */
-  SignedDisplayMajorAmount: { input: string; output: string }
+  SignedDisplayMajorAmount: string
   /** Timestamp field, serialized as Unix time (the number of seconds since the Unix epoch) */
-  Timestamp: { input: number; output: number }
+  Timestamp: number
   /** A time-based one-time password */
-  TotpCode: { input: string; output: string }
+  TotpCode: string
   /** An id to be passed between set and verify for confirming totp */
-  TotpRegistrationId: { input: string; output: string }
+  TotpRegistrationId: string
   /** A secret to generate time-based one-time password */
-  TotpSecret: { input: string; output: string }
-  /** An external reference id that can be optionally added for transactions. */
-  TxExternalId: { input: string; output: string }
+  TotpSecret: string
   /** Unique identifier of a user */
-  Username: { input: string; output: string }
+  Username: string
   /** Unique identifier of a wallet */
-  WalletId: { input: string; output: string }
-  _FieldSet: { input: string; output: string }
+  WalletId: string
 }
 
 export type Account = {
@@ -1183,12 +1180,12 @@ export type OneDayAccountLimit = AccountLimit & {
 
 export type OpenDeepLinkAction = {
   readonly __typename: "OpenDeepLinkAction"
-  readonly deepLink: Scalars["String"]["output"]
+  readonly deepLink: Scalars["String"]
 }
 
 export type OpenExternalLinkAction = {
   readonly __typename: "OpenExternalLinkAction"
-  readonly url: Scalars["String"]["output"]
+  readonly url: Scalars["String"]
 }
 
 /** Information about pagination in a connection. */
@@ -1469,19 +1466,19 @@ export type SettlementViaOnChain = {
 
 export type StatefulNotification = {
   readonly __typename: "StatefulNotification"
-  readonly acknowledgedAt?: Maybe<Scalars["Timestamp"]["output"]>
+  readonly acknowledgedAt?: Maybe<Scalars["Timestamp"]>
   readonly action?: Maybe<NotificationAction>
-  readonly body: Scalars["String"]["output"]
-  readonly bulletinEnabled: Scalars["Boolean"]["output"]
-  readonly createdAt: Scalars["Timestamp"]["output"]
-  readonly deepLink?: Maybe<Scalars["String"]["output"]>
+  readonly body: Scalars["String"]
+  readonly bulletinEnabled: Scalars["Boolean"]
+  readonly createdAt: Scalars["Timestamp"]
+  readonly deepLink?: Maybe<Scalars["String"]>
   readonly icon?: Maybe<Icon>
-  readonly id: Scalars["ID"]["output"]
-  readonly title: Scalars["String"]["output"]
+  readonly id: Scalars["ID"]
+  readonly title: Scalars["String"]
 }
 
 export type StatefulNotificationAcknowledgeInput = {
-  readonly notificationId: Scalars["ID"]["input"]
+  readonly notificationId: Scalars["ID"]
 }
 
 export type StatefulNotificationAcknowledgePayload = {
@@ -1503,7 +1500,7 @@ export type StatefulNotificationConnection = {
 export type StatefulNotificationEdge = {
   readonly __typename: "StatefulNotificationEdge"
   /** A cursor for use in pagination */
-  readonly cursor: Scalars["String"]["output"]
+  readonly cursor: Scalars["String"]
   /** The item at the end of the edge */
   readonly node: StatefulNotification
 }
@@ -2707,8 +2704,8 @@ export type HomeUnauthedQuery = {
 }
 
 export type BulletinsQueryVariables = Exact<{
-  first: Scalars["Int"]["input"]
-  after?: InputMaybe<Scalars["String"]["input"]>
+  first: Scalars["Int"]
+  after?: InputMaybe<Scalars["String"]>
 }>
 
 export type BulletinsQuery = {
@@ -2767,7 +2764,7 @@ export type BusinessMapMarkersQuery = {
 }
 
 export type StatefulNotificationsQueryVariables = Exact<{
-  after?: InputMaybe<Scalars["String"]["input"]>
+  after?: InputMaybe<Scalars["String"]>
 }>
 
 export type StatefulNotificationsQuery = {
