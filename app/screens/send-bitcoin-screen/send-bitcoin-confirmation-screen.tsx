@@ -291,7 +291,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
             playInBackground={false}
             playWhenInactive={false}
             ignoreSilentSwitch="ignore"
-            onEnd={() => setIsAnimating(false)}
+            // onEnd={() => setIsAnimating(false)}
           />
           <View style={styles.semiTransparentOverlay} />
         </View>
