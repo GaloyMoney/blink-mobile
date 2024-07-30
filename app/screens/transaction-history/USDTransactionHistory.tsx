@@ -1,8 +1,9 @@
 import * as React from "react"
 import crashlytics from "@react-native-firebase/crashlytics"
-import { ActivityIndicator, SectionList, View } from "react-native"
+import { ActivityIndicator, RefreshControl, SectionList, View } from "react-native"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
+import { BarIndicator } from "react-native-indicators"
 
 // components
 import { Screen } from "@app/components/screen"
@@ -28,6 +29,11 @@ export const USDTransactionHistory: React.FC = () => {
   const { LL } = useI18nContext()
 
   const { persistentState, updateState } = usePersistentStateContext()
+
+  const [hasMore, setHasMore] = React.useState<boolean | undefined>()
+  const [numOfTxs, setNumOfTxs] = React.useState(0)
+  const [refreshing, setRefreshing] = React.useState(false)
+  const [fetchingMore, setFetchingMore] = React.useState(false)
   const [transactions, setTransactions] = React.useState<SectionTransactions[]>(
     persistentState.usdTransactions || [],
   )
@@ -37,6 +43,7 @@ export const USDTransactionHistory: React.FC = () => {
       skip: !useIsAuthed(),
       fetchPolicy: "network-only",
       nextFetchPolicy: "cache-and-network",
+      variables: { first: 15 },
     })
 
   React.useEffect(() => {
@@ -44,10 +51,16 @@ export const USDTransactionHistory: React.FC = () => {
       data?.me?.defaultAccount?.transactions?.edges &&
       data?.me?.defaultAccount?.transactions?.edges?.length > 0
     ) {
+      const txs =
+        data?.me?.defaultAccount?.transactions?.edges?.map((el) => el.node) ?? []
+
       const transactionSections = groupTransactionsByDate({
-        txs: data?.me?.defaultAccount?.transactions?.edges?.map((el) => el.node) ?? [],
+        txs: txs,
         common: LL.common,
       })
+
+      setHasMore(data.me.defaultAccount.transactions.pageInfo.hasNextPage)
+      setNumOfTxs(txs.length)
       setTransactions(transactionSections)
       updateState((state: any) => {
         if (state)
@@ -60,14 +73,43 @@ export const USDTransactionHistory: React.FC = () => {
     }
   }, [data?.me?.defaultAccount?.transactions?.edges])
 
-  const fetchNextTransactionsPage = () => {
-    const pageInfo = data?.me?.defaultAccount?.transactions?.pageInfo
-    if (pageInfo?.hasNextPage) {
-      fetchMore({
-        variables: {
-          after: pageInfo.endCursor,
-        },
+  const onEndReached = async () => {
+    if (!loading && !fetchingMore && hasMore) {
+      setFetchingMore(true)
+      const { data } = await fetchMore({
+        variables: { first: numOfTxs + 15 },
       })
+      const txs =
+        data?.me?.defaultAccount?.transactions?.edges?.map((el) => el.node) ?? []
+      const transactionSections = groupTransactionsByDate({
+        txs: txs,
+        common: LL.common,
+      })
+
+      setHasMore(data.me?.defaultAccount.transactions?.pageInfo.hasNextPage)
+      setNumOfTxs(txs.length)
+      setTransactions(transactionSections)
+      setFetchingMore(false)
+    }
+  }
+
+  const onRefresh = async () => {
+    if (!loading && !refreshing) {
+      setRefreshing(true)
+      const { data } = await fetchMore({
+        variables: { first: 15 },
+      })
+      const txs =
+        data?.me?.defaultAccount?.transactions?.edges?.map((el) => el.node) ?? []
+      const transactionSections = groupTransactionsByDate({
+        txs: txs,
+        common: LL.common,
+      })
+
+      setHasMore(data.me?.defaultAccount.transactions?.pageInfo.hasNextPage)
+      setNumOfTxs(txs.length)
+      setTransactions(transactionSections)
+      setRefreshing(false)
     }
   }
 
@@ -125,12 +167,28 @@ export const USDTransactionHistory: React.FC = () => {
               </Text>
             </View>
           }
+          ListFooterComponent={() =>
+            fetchingMore && (
+              <BarIndicator
+                color={colors.primary}
+                count={5}
+                size={20}
+                style={{ marginVertical: 20 }}
+              />
+            )
+          }
           sections={transactions}
           keyExtractor={(item) => item.id}
-          onEndReached={fetchNextTransactionsPage}
           onEndReachedThreshold={0.5}
-          onRefresh={refetch}
-          refreshing={loading}
+          onEndReached={onEndReached}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              colors={[colors.primary]}
+              tintColor={colors.primary}
+            />
+          }
         />
       </Screen>
     )
