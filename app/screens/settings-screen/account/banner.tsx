@@ -5,7 +5,7 @@
  * Later on, this will support switching between accounts
  */
 import { View } from "react-native"
-import { TouchableWithoutFeedback } from "react-native-gesture-handler"
+import { TouchableWithoutFeedback, TouchableOpacity } from "react-native-gesture-handler"
 
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { useSettingsScreenQuery } from "@app/graphql/generated"
@@ -19,6 +19,9 @@ import { Text, makeStyles, useTheme, Skeleton } from "@rneui/themed"
 export const AccountBanner = () => {
   const styles = useStyles()
   const { LL } = useI18nContext()
+  const {
+    theme: { colors },
+  } = useTheme()
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
@@ -31,6 +34,10 @@ export const AccountBanner = () => {
 
   if (loading) return <Skeleton style={styles.outer} animation="pulse" />
 
+  const handleSwitchPress = () => {
+    navigation.navigate("profileScreen")
+  }
+
   return (
     <TouchableWithoutFeedback
       onPress={() =>
@@ -42,10 +49,20 @@ export const AccountBanner = () => {
       }
     >
       <View style={styles.outer}>
-        <AccountIcon size={30} />
-        <Text type="p2">
-          {isUserLoggedIn ? usernameTitle : LL.SettingsScreen.logInOrCreateAccount()}
-        </Text>
+        <View style={styles.inner}>
+          <AccountIcon size={30} />
+          <Text type="p2">
+            {isUserLoggedIn ? usernameTitle : LL.SettingsScreen.logInOrCreateAccount()}
+          </Text>
+        </View>
+        {isUserLoggedIn && (
+          <TouchableOpacity style={styles.switch} onPress={handleSwitchPress}>
+            <GaloyIcon name="switch" size={20} color={colors.primary} />
+            <Text type="p2" style={{ color: colors.primary }}>
+              {LL.AccountScreen.switch()}
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
     </TouchableWithoutFeedback>
   )
@@ -59,12 +76,25 @@ export const AccountIcon: React.FC<{ size: number }> = ({ size }) => {
 }
 
 const useStyles = makeStyles(() => ({
+  inner: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    columnGap: 12,
+  },
   outer: {
     height: 70,
     padding: 4,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    columnGap: 12,
+    justifyContent: "space-between",
+  },
+  switch: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    columnGap: 4,
+    marginLeft: "auto",
   },
 }))
