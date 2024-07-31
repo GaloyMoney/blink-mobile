@@ -132,7 +132,7 @@ const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
             <Icon type="ionicon" name={"chevron-forward"} size={20} />
           </Btn>
         )}
-        <Btn onPress={onLoginWithPhone} disabled={USDWalletImported}>
+        {/* <Btn onPress={onLoginWithPhone} disabled={USDWalletImported}>
           <Icon
             type="ionicon"
             name={
@@ -173,7 +173,7 @@ const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
           {!USDWalletImported && (
             <Icon type="ionicon" name={"chevron-forward"} size={20} />
           )}
-        </Btn>
+        </Btn> */}
       </Container>
       <MainBtn
         disabled={!btcWalletImported && !USDWalletImported}
