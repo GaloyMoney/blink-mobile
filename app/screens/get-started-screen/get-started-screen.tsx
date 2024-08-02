@@ -57,7 +57,7 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
     if (token) {
       setError(false)
       saveToken(token)
-      navigation.navigate("Primary")
+      navigation.replace("Primary")
     } else {
       setError(true)
     }
@@ -70,7 +70,7 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
 
   const navigateToHomeScreen = () => {
     setError(false)
-    navigation.navigate("Primary")
+    navigation.replace("Primary")
   }
 
   return (

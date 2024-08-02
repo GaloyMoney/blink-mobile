@@ -126,7 +126,7 @@ const BackupOptions: React.FC<Props> = ({ navigation }) => {
           {!data?.me?.phone && <Icon type="ionicon" name={"chevron-forward"} size={20} />}
         </Btn>
       </Container>
-      <MainBtn bottom={bottom} onPress={() => navigation.goBack()}>
+      <MainBtn bottom={bottom} onPress={() => navigation.popToTop()}>
         <MainBtnTitle style={{ color: colors.white }}>
           {LL.BackupOptions.done()}
         </MainBtnTitle>

@@ -777,8 +777,8 @@ const en: BaseTranslation = {
     importWallet: "Import Wallet",
     showSeedPhrase: "Reveal recovery phrase",
     showNostrSecret: "Reveal Nostr secret",
-    beginnerMode: "Switch to Beginner Mode",
-    advanceMode: "Switch to Advanced Mode",
+    beginnerMode: "Disable Bitcoin Account",
+    advanceMode: "Enable Bitcoin Account (Advanced Mode)",
     keysManagement: "Keys management"
   },
   NotificationSettingsScreen: {
@@ -963,6 +963,20 @@ const en: BaseTranslation = {
     termsAndConditions: "Read the Terms & Conditions.",
     learnMore: "Learn more about Stablesats",
   },
+  AdvancedModeModal: {
+    header: "Welcome to Advanced Mode. You now have a non-custodial Bitcoin account added to your wallet!",
+    body:
+      "You can use it to send and receive larger amounts of money, denominated in Bitcoin. You can also use the SWAP button to instantly transfer value between your Bitcoin account and USD account. The dollar value in the Bitcoin account WILL fluctuate with the price of Bitcoin.\n\nIMPORTANT: Your Bitcoin account is a non-custodial account, so you may be charged a small fee to make your first transaction. Also, you are solely responsible for securing your recovery phrase in a safe place. \n\n\nDO NOT SHARE YOUR RECOVERY PHRASE WITH ANYONE.",
+    termsAndConditions: "\nRead the Terms & Conditions.",
+    learnMore: "What is a Non-Custodial Wallet?",
+  },
+  UnVerifiedSeedModal: {
+    header: "YOUR BITCOIN IS NOT SECURE!",
+    body:
+      "You should WRITE DOWN your recovery phrase somewhere safe in order to protect your money. If you lose your phone or uninstall the app without writing down your recovery phrase, you will lose access to your funds.\n\n",
+    termsAndConditions: "\nRead the Terms & Conditions.",
+    learnMore: "What is a Recovery Phase?",
+  },
   SplashScreen: {
     update:
       "Your app is outdated. An update is needed before the app can be used.\n\nThis can be done from the PlayStore for Android and Testflight for iOS",
@@ -1115,7 +1129,8 @@ const en: BaseTranslation = {
     activateWallet: "Activate Wallet",
     amountRequired: "Amount is required",
     back: "Back",
-    backHome: "Back home",
+    backHome: "Back Home",
+    revealSeed: "Show Recovery Phrase",
     bank: "Bank",
     bankAccount: "Cash Account",
     bankAdvice: "{bankName: string} Advice",

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { Pressable, View } from "react-native"
 
@@ -15,7 +15,7 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
 import { getUsdWallet } from "@app/graphql/wallets-utils"
 import { usePersistentStateContext } from "@app/store/persistent-state"
-import { useNavigation } from "@react-navigation/native"
+import { useFocusEffect, useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useAppSelector } from "@app/store/redux"
@@ -48,6 +48,7 @@ type Props = {
   setIsContentVisible: React.Dispatch<React.SetStateAction<boolean>>
   breezBalance: number | null
   pendingBalance: number | null
+  setIsUnverifiedSeedModalVisible: (value: boolean) => void
 }
 
 const WalletOverview: React.FC<Props> = ({
@@ -57,6 +58,7 @@ const WalletOverview: React.FC<Props> = ({
   setIsContentVisible,
   breezBalance,
   pendingBalance,
+  setIsUnverifiedSeedModalVisible,
 }) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { userData } = useAppSelector((state) => state.user)
@@ -91,6 +93,7 @@ const WalletOverview: React.FC<Props> = ({
     persistentState?.convertedUsdBalance || undefined,
   )
   const [lastUpdated, setLastUpdated] = useState<Date>()
+  const [backupIsCompleted, setBackupIsCompleted] = React.useState(false)
 
   useEffect(() => {
     if (
@@ -142,6 +145,17 @@ const WalletOverview: React.FC<Props> = ({
   const getLastUpdated = async () => {
     const res = await loadJson("lastUpdated")
     setLastUpdated(res)
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      checkBackupCompleted()
+    }, []),
+  )
+
+  const checkBackupCompleted = async () => {
+    const res = await loadJson("backupCompleted")
+    setBackupIsCompleted(res)
   }
 
   const formatBalance = () => {
@@ -211,7 +225,7 @@ const WalletOverview: React.FC<Props> = ({
             <GaloyCurrencyBubble currency="USD" />
             <View>
               <Text type="p1">Cash (USD)</Text>
-              {isAdvanceMode && !!userData?.username && (
+              {isAdvanceMode && Boolean(userData?.username) && (
                 <Text type="p4" color={colors.grey1}>
                   {getLightningAddress(
                     appConfig.galoyInstance.lnAddressHostname,
@@ -247,6 +261,11 @@ const WalletOverview: React.FC<Props> = ({
               <View style={styles.currency}>
                 <GaloyCurrencyBubble currency="BTC" />
                 <Text type="p1">Bitcoin</Text>
+                {!backupIsCompleted && (
+                  <Pressable onPress={() => setIsUnverifiedSeedModalVisible(true)}>
+                    <GaloyIcon color={colors.warning} name="warning" size={28} />
+                  </Pressable>
+                )}
               </View>
               {loading ? (
                 <Loader />

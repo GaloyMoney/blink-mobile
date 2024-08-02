@@ -2814,6 +2814,42 @@ type RootTranslation = {
 		 */
 		learnMore: string
 	}
+	AdvancedModeModal: {
+		/**
+		 * W​i​t​h​ ​S​t​a​b​l​e​s​a​t​s​,​ ​y​o​u​ ​n​o​w​ ​h​a​v​e​ ​a​ ​U​S​D​ ​a​c​c​o​u​n​t​ ​a​d​d​e​d​ ​t​o​ ​y​o​u​r​ ​w​a​l​l​e​t​!
+		 */
+		header: string
+		/**
+		 * Y​o​u​ ​c​a​n​ ​u​s​e​ ​i​t​ ​t​o​ ​s​e​n​d​ ​a​n​d​ ​r​e​c​e​i​v​e​ ​B​i​t​c​o​i​n​,​ ​a​n​d​ ​i​n​s​t​a​n​t​l​y​ ​t​r​a​n​s​f​e​r​ ​v​a​l​u​e​ ​b​e​t​w​e​e​n​ ​y​o​u​r​ ​B​T​C​ ​a​n​d​ ​U​S​D​ ​a​c​c​o​u​n​t​.​ ​V​a​l​u​e​ ​i​n​ ​t​h​e​ ​U​S​D​ ​a​c​c​o​u​n​t​ ​w​i​l​l​ ​n​o​t​ ​f​l​u​c​t​u​a​t​e​ ​w​i​t​h​ ​t​h​e​ ​p​r​i​c​e​ ​o​f​ ​B​i​t​c​o​i​n​.​ ​T​h​i​s​ ​f​e​a​t​u​r​e​ ​i​s​ ​n​o​t​ ​c​o​m​p​a​t​i​b​l​e​ ​w​i​t​h​ ​t​h​e​ ​t​r​a​d​i​t​i​o​n​a​l​ ​b​a​n​k​i​n​g​ ​s​y​s​t​e​m​.
+		 */
+		body: string
+		/**
+		 * R​e​a​d​ ​t​h​e​ ​T​e​r​m​s​ ​&​ ​C​o​n​d​i​t​i​o​n​s​.
+		 */
+		termsAndConditions: string
+		/**
+		 * L​e​a​r​n​ ​m​o​r​e​ ​a​b​o​u​t​ ​S​t​a​b​l​e​s​a​t​s
+		 */
+		learnMore: string
+	}
+	UnVerifiedSeedModal: {
+		/**
+		 * W​i​t​h​ ​S​t​a​b​l​e​s​a​t​s​,​ ​y​o​u​ ​n​o​w​ ​h​a​v​e​ ​a​ ​U​S​D​ ​a​c​c​o​u​n​t​ ​a​d​d​e​d​ ​t​o​ ​y​o​u​r​ ​w​a​l​l​e​t​!
+		 */
+		header: string
+		/**
+		 * Y​o​u​ ​c​a​n​ ​u​s​e​ ​i​t​ ​t​o​ ​s​e​n​d​ ​a​n​d​ ​r​e​c​e​i​v​e​ ​B​i​t​c​o​i​n​,​ ​a​n​d​ ​i​n​s​t​a​n​t​l​y​ ​t​r​a​n​s​f​e​r​ ​v​a​l​u​e​ ​b​e​t​w​e​e​n​ ​y​o​u​r​ ​B​T​C​ ​a​n​d​ ​U​S​D​ ​a​c​c​o​u​n​t​.​ ​V​a​l​u​e​ ​i​n​ ​t​h​e​ ​U​S​D​ ​a​c​c​o​u​n​t​ ​w​i​l​l​ ​n​o​t​ ​f​l​u​c​t​u​a​t​e​ ​w​i​t​h​ ​t​h​e​ ​p​r​i​c​e​ ​o​f​ ​B​i​t​c​o​i​n​.​ ​T​h​i​s​ ​f​e​a​t​u​r​e​ ​i​s​ ​n​o​t​ ​c​o​m​p​a​t​i​b​l​e​ ​w​i​t​h​ ​t​h​e​ ​t​r​a​d​i​t​i​o​n​a​l​ ​b​a​n​k​i​n​g​ ​s​y​s​t​e​m​.
+		 */
+		body: string
+		/**
+		 * R​e​a​d​ ​t​h​e​ ​T​e​r​m​s​ ​&​ ​C​o​n​d​i​t​i​o​n​s​.
+		 */
+		termsAndConditions: string
+		/**
+		 * L​e​a​r​n​ ​m​o​r​e​ ​a​b​o​u​t​ ​S​t​a​b​l​e​s​a​t​s
+		 */
+		learnMore: string
+	}
 	SplashScreen: {
 		/**
 		 * Y​o​u​r​ ​a​p​p​ ​i​s​ ​o​u​t​d​a​t​e​d​.​ ​A​n​ ​u​p​d​a​t​e​ ​i​s​ ​n​e​e​d​e​d​ ​b​e​f​o​r​e​ ​t​h​e​ ​a​p​p​ ​c​a​n​ ​b​e​ ​u​s​e​d​.​
@@ -3285,6 +3321,10 @@ type RootTranslation = {
 		 * B​a​c​k​ ​h​o​m​e
 		 */
 		backHome: string
+		/**
+		 * Show Recovery Phrase
+		 */
+		revealSeed: string
 		/**
 		 * B​a​n​k
 		 */
@@ -6711,6 +6751,42 @@ export type TranslationFunctions = {
 		 */
 		learnMore: () => LocalizedString
 	}
+	AdvancedModeModal: {
+		/**
+		 * With Stablesats, you now have a USD account added to your wallet!
+		 */
+		header: () => LocalizedString
+		/**
+		 * You can use it to send and receive Bitcoin, and instantly transfer value between your BTC and USD account. Value in the USD account will not fluctuate with the price of Bitcoin. This feature is not compatible with the traditional banking system.
+		 */
+		body: () => LocalizedString
+		/**
+		 * Read the Terms & Conditions.
+		 */
+		termsAndConditions: () => LocalizedString
+		/**
+		 * Learn more about Stablesats
+		 */
+		learnMore: () => LocalizedString
+	}
+	UnVerifiedSeedModal: {
+		/**
+		 * With Stablesats, you now have a USD account added to your wallet!
+		 */
+		header: () => LocalizedString
+		/**
+		 * You can use it to send and receive Bitcoin, and instantly transfer value between your BTC and USD account. Value in the USD account will not fluctuate with the price of Bitcoin. This feature is not compatible with the traditional banking system.
+		 */
+		body: () => LocalizedString
+		/**
+		 * Read the Terms & Conditions.
+		 */
+		termsAndConditions: () => LocalizedString
+		/**
+		 * Learn more about Stablesats
+		 */
+		learnMore: () => LocalizedString
+	}
 	SplashScreen: {
 		/**
 		 * Your app is outdated. An update is needed before the app can be used.
@@ -7170,6 +7246,10 @@ export type TranslationFunctions = {
 		 * Back home
 		 */
 		backHome: () => LocalizedString
+		/**
+		 * Show Recovery Phrase
+		 */
+		revealSeed: () => LocalizedString
 		/**
 		 * Bank
 		 */

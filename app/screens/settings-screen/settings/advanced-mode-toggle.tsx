@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "@app/store/redux"
 import useBreezBalance from "@app/hooks/useBreezBalance"
 import { toBtcMoneyAmount } from "@app/types/amounts"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { Alert } from "react-native"
+import { Alert, Image, Modal } from "react-native"
 import { useSettingsScreenQuery } from "@app/graphql/generated"
 import { getUsdWallet } from "@app/graphql/wallets-utils"
 import { useLevel } from "@app/graphql/level-context"
@@ -16,6 +16,8 @@ import { updateSettings } from "@app/store/redux/slices/settingsSlice"
 import { save } from "@app/utils/storage"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 import { useActivityIndicator } from "@app/hooks"
+import { useState } from "react"
+import { AdvancedModeModal } from "@app/components/advanced-mode-modal"
 
 export const AdvancedModeToggle: React.FC = () => {
   const { LL } = useI18nContext()
@@ -29,6 +31,9 @@ export const AdvancedModeToggle: React.FC = () => {
   const { moneyAmountToDisplayCurrencyString } = useDisplayCurrency()
   const { toggleActivityIndicator } = useActivityIndicator()
 
+  const [animationVisible, setAnimationVisible] = useState(false)
+  const [advanceModalVisible, setAdvanceModalVisible] = useState(false)
+
   const { data } = useSettingsScreenQuery({
     fetchPolicy: "cache-first",
     returnPartialData: true,
@@ -40,6 +45,7 @@ export const AdvancedModeToggle: React.FC = () => {
   const toggleAdvanceModeComplete = (isAdvanceMode: boolean) => {
     toggleActivityIndicator(true)
     if (!isAdvanceMode) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       updateState((state: any) => {
         if (state)
           return {
@@ -51,10 +57,17 @@ export const AdvancedModeToggle: React.FC = () => {
     }
     dispatch(updateSettings({ isAdvanceMode }))
     save("isAdvanceMode", isAdvanceMode)
-    setTimeout(() => {
-      toggleActivityIndicator(false)
+
+    toggleActivityIndicator(false)
+    if (isAdvanceMode) {
+      setAnimationVisible(true)
+      setTimeout(() => {
+        setAnimationVisible(false)
+        setAdvanceModalVisible(true)
+      }, 5500)
+    } else {
       goBack()
-    }, 500)
+    }
   }
 
   const toggleAdvanceMode = () => {
@@ -88,13 +101,27 @@ export const AdvancedModeToggle: React.FC = () => {
   }
 
   return (
-    <SettingsRow
-      title={
-        isAdvanceMode ? LL.SettingsScreen.beginnerMode() : LL.SettingsScreen.advanceMode()
-      }
-      leftIcon={isAdvanceMode ? "invert-mode-outline" : "invert-mode"}
-      action={toggleAdvanceMode}
-      rightIcon={"sync-outline"}
-    />
+    <>
+      <SettingsRow
+        title={
+          isAdvanceMode
+            ? LL.SettingsScreen.beginnerMode()
+            : LL.SettingsScreen.advanceMode()
+        }
+        leftIcon={isAdvanceMode ? "invert-mode-outline" : "invert-mode"}
+        action={toggleAdvanceMode}
+        rightIcon={"sync-outline"}
+      />
+      <Modal visible={animationVisible} animationType={"fade"}>
+        <Image
+          source={require("@app/assets/gifs/flash-logo-btc-enabled.gif")}
+          style={{ height: "100%", width: "100%" }}
+        />
+      </Modal>
+      <AdvancedModeModal
+        isVisible={advanceModalVisible}
+        setIsVisible={setAdvanceModalVisible}
+      />
+    </>
   )
 }

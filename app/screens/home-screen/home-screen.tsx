@@ -6,7 +6,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useFocusEffect, useNavigation } from "@react-navigation/native"
+import { useNavigation, useRoute } from "@react-navigation/native"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 
 // components
@@ -17,6 +17,7 @@ import WalletOverview from "@app/components/wallet-overview/wallet-overview"
 import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { SetDefaultAccountModal } from "@app/components/set-default-account-modal"
+import { UnVerifiedSeedModal } from "@app/components/unverified-seed-modal"
 import { BalanceHeader } from "../../components/balance-header"
 import { Screen } from "../../components/screen"
 import { TransactionItem } from "../../components/transaction-item"
@@ -116,6 +117,7 @@ export const HomeScreen: React.FC = () => {
   )
   const [breezTxsLoading, setBreezTxsLoading] = useState(false)
   const [refreshTriggered, setRefreshTriggered] = useState(false)
+  const [isUnverifiedSeedModalVisible, setIsUnverifiedSeedModalVisible] = useState(false)
 
   const isBalanceVisible = hideBalance ?? false
   const transactionsEdges = dataAuthed?.me?.defaultAccount?.transactions?.edges ?? []
@@ -351,6 +353,10 @@ export const HomeScreen: React.FC = () => {
   return (
     <Screen>
       {AccountCreationNeededModal}
+      <UnVerifiedSeedModal
+        isVisible={isUnverifiedSeedModalVisible}
+        setIsVisible={setIsUnverifiedSeedModalVisible}
+      />
       <View style={[styles.header, styles.container]}>
         <GaloyIconButton
           onPress={() => navigation.navigate("priceHistory")}
@@ -394,6 +400,7 @@ export const HomeScreen: React.FC = () => {
                 pendingSwap?.channelOpeningFees?.minMsat / 1000
               : null
           }
+          setIsUnverifiedSeedModalVisible={setIsUnverifiedSeedModalVisible}
         />
         {error && (
           <View style={styles.marginButtonContainer}>
