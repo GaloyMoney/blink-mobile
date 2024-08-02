@@ -31,10 +31,14 @@ import {
 import { parseDestination } from "@app/screens/send-bitcoin-screen/payment-destination"
 
 // Import the conversion functions
-import { toUsdMoneyAmount } from "@app/types/amounts"
+import { DisplayCurrency, toUsdMoneyAmount } from "@app/types/amounts"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { LNURL_DOMAINS } from "@app/config"
+
+// hooks
+import { usePriceConversion } from "@app/hooks"
+import { usePersistentStateContext } from "@app/store/persistent-state"
 
 type CardScreenNavigationProp = StackNavigationProp<RootStackParamList, "cardScreen">
 type CardScreenRouteProp = RouteProp<RootStackParamList, "cardScreen">
@@ -106,6 +110,12 @@ export const CardScreen: React.FC<Props> = ({ navigation }) => {
 
   const isAuthed = useIsAuthed()
   const { formatMoneyAmount } = useDisplayCurrency()
+  const { convertMoneyAmount } = usePriceConversion()
+  const { persistentState, updateState } = usePersistentStateContext()
+
+  const [balanceInDisplayCurrency, setBalanceInDisplayCurrency] = React.useState(
+    persistentState.balance || "$0.00",
+  )
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [flashCards, setFlashCards] = useState<FlashCards[]>([])
@@ -172,10 +182,27 @@ export const CardScreen: React.FC<Props> = ({ navigation }) => {
 
         // Convert SATS to USD using the current BTC price
         const usdAmount = satoshiAmount * usdPerSat
-        const formattedBalance = formatMoneyAmount({
-          moneyAmount: toUsdMoneyAmount(usdAmount * 100),
-        })
-        setBalance(formattedBalance)
+
+        const convertedBalance =
+          convertMoneyAmount &&
+          convertMoneyAmount(toUsdMoneyAmount(usdAmount * 100), DisplayCurrency)
+        console.log("convertedBalance", convertedBalance?.amount)
+        if (convertedBalance) {
+          const formattedBalance = formatMoneyAmount({
+            moneyAmount: convertedBalance,
+            noSymbol: false,
+          })
+          setBalanceInDisplayCurrency(formattedBalance)
+          setBalance(formattedBalance)
+          updateState((state: any) => {
+            if (state)
+              return {
+                ...state,
+                balance: formattedBalance,
+              }
+            return undefined
+          })
+        }
       }
       const lnurlMatch = html.match(/href="lightning:(lnurl\w+)"/)
       if (lnurlMatch) {

@@ -9,13 +9,14 @@ import {
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { testProps } from "@app/utils/testProps"
-import { makeStyles, SearchBar, Text } from "@rneui/themed"
+import { makeStyles, SearchBar, Text, Button } from "@rneui/themed"
 import * as React from "react"
 import { useCallback } from "react"
-import { ActivityIndicator, View } from "react-native"
+import { ActivityIndicator, ScrollView, View } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons"
 import { Screen } from "../../components/screen"
 import { MenuSelect, MenuSelectItem } from "@app/components/menu-select"
+import { CommonActions, useNavigation } from "@react-navigation/native"
 
 gql`
   mutation accountUpdateDisplayCurrency($input: AccountUpdateDisplayCurrencyInput!) {
@@ -36,6 +37,7 @@ export const DisplayCurrencyScreen: React.FC = () => {
 
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
+  const navigation = useNavigation()
 
   const { data: dataAuthed } = useDisplayCurrencyQuery({ skip: !isAuthed })
   const displayCurrency = dataAuthed?.me?.defaultAccount?.displayCurrency
@@ -114,33 +116,48 @@ export const DisplayCurrencyScreen: React.FC = () => {
     setNewCurrency(currencyId)
   }
 
+  const handleSave = () => {
+    // Reset navigation state to the initial route
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: "Primary" }], // Replace with your initial route name
+      }),
+    )
+  }
+
   return (
-    <Screen preset="scroll">
-      <SearchBar
-        {...testProps(LL.common.search())}
-        placeholder={LL.common.search()}
-        value={searchText}
-        onChangeText={updateMatchingCurrency}
-        platform="default"
-        round
-        showLoading={false}
-        containerStyle={styles.searchBarContainer}
-        inputContainerStyle={styles.searchBarInputContainerStyle}
-        inputStyle={styles.searchBarText}
-        rightIconContainerStyle={styles.searchBarRightIconStyle}
-        searchIcon={<Icon name="search" size={24} />}
-        clearIcon={<Icon name="close" size={24} onPress={reset} />}
-      />
-      <MenuSelect
-        value={newCurrency || displayCurrency || ""}
-        onChange={handleCurrencyChange}
-      >
-        {matchingCurrencies.map((currency) => (
-          <MenuSelectItem key={currency.id} value={currency.id}>
-            {currency.id} - {currency.name} {currency.flag && `- ${currency.flag}`}
-          </MenuSelectItem>
-        ))}
-      </MenuSelect>
+    <Screen style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <SearchBar
+          {...testProps(LL.common.search())}
+          placeholder={LL.common.search()}
+          value={searchText}
+          onChangeText={updateMatchingCurrency}
+          platform="default"
+          round
+          showLoading={false}
+          containerStyle={styles.searchBarContainer}
+          inputContainerStyle={styles.searchBarInputContainerStyle}
+          inputStyle={styles.searchBarText}
+          rightIconContainerStyle={styles.searchBarRightIconStyle}
+          searchIcon={<Icon name="search" size={24} />}
+          clearIcon={<Icon name="close" size={24} onPress={reset} />}
+        />
+        <MenuSelect
+          value={newCurrency || displayCurrency || ""}
+          onChange={handleCurrencyChange}
+        >
+          {matchingCurrencies.map((currency) => (
+            <MenuSelectItem key={currency.id} value={currency.id}>
+              {currency.id} - {currency.name} {currency.flag && `- ${currency.flag}`}
+            </MenuSelectItem>
+          ))}
+        </MenuSelect>
+      </ScrollView>
+      <View style={styles.buttonContainer}>
+        <Button title={LL.common.confirm()} onPress={handleSave} />
+      </View>
     </Screen>
   )
 }
@@ -161,11 +178,21 @@ export const getMatchingCurrencies = (searchText: string, currencies: Currency[]
 }
 
 const useStyles = makeStyles(({ colors }) => ({
+  container: {
+    flex: 1,
+  },
+
+  scrollViewContent: {
+    flexGrow: 1,
+    paddingBottom: 16,
+  },
+
   loadingContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
+
   searchBarContainer: {
     backgroundColor: colors.white,
     borderBottomWidth: 0,
@@ -186,5 +213,12 @@ const useStyles = makeStyles(({ colors }) => ({
   searchBarText: {
     color: colors.black,
     textDecorationLine: "none",
+  },
+
+  buttonContainer: {
+    padding: 16,
+    borderTopWidth: 1,
+    borderColor: "#ccc",
+    backgroundColor: "#fff",
   },
 }))
