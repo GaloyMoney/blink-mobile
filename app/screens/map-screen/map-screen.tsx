@@ -155,9 +155,9 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
   useFocusEffect(requestLocationPermission)
 
   const markers: ReturnType<React.FC<MapMarkerProps>>[] = []
-  maps.forEach((item: any) => {
+  maps.forEach((item: any, index) => {
     if (item) {
-      const key = item.username + item.mapInfo.title
+      const key = item.username + item.mapInfo.title + index
       const onPress = () => {
         const domain = item.source === "blink" ? "@blink.sv" : "@flashapp.me"
         const usernameWithDomain = `${item.username}${domain}`
