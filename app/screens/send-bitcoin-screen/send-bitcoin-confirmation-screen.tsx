@@ -297,18 +297,23 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
         </View>
       )}
       <View style={styles.sendBitcoinConfirmationContainer}>
-        <View style={styles.fieldContainer}>
-          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.destination()}</Text>
-          <View style={styles.fieldBackground}>
-            <View style={styles.destinationIconContainer}>
-              <DestinationIcon fill={colors.black} />
+        {(paymentDetail.paymentType === "intraledger" ||
+          paymentDetail.paymentType === "lnurl") && (
+          <View style={styles.fieldContainer}>
+            <Text style={styles.fieldTitleText}>
+              {LL.SendBitcoinScreen.destination()}
+            </Text>
+            <View style={styles.fieldBackground}>
+              <View style={styles.destinationIconContainer}>
+                <DestinationIcon fill={colors.black} />
+              </View>
+              <PaymentDestinationDisplay
+                destination={destination}
+                paymentType={paymentType}
+              />
             </View>
-            <PaymentDestinationDisplay
-              destination={destination}
-              paymentType={paymentType}
-            />
           </View>
-        </View>
+        )}
         <View style={styles.fieldContainer}>
           <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.amount()}</Text>
           <AmountInput

@@ -508,19 +508,22 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           </TouchableWithoutFeedback>
           {ChooseWalletModal}
         </View>
-        <View style={styles.fieldContainer}>
-          <Text style={styles.fieldTitleText}>{LL.common.to()}</Text>
+        {(paymentDetail.paymentType === "intraledger" ||
+          paymentDetail.paymentType === "lnurl") && (
+          <View style={styles.fieldContainer}>
+            <Text style={styles.fieldTitleText}>{LL.common.to()}</Text>
 
-          <View style={styles.fieldBackground}>
-            <View style={styles.walletSelectorInfoContainer}>
-              <Text>
-                {flashUserAddress?.split("@")[0] === paymentDetail.destination
-                  ? flashUserAddress
-                  : paymentDetail.destination}
-              </Text>
+            <View style={styles.fieldBackground}>
+              <View style={styles.walletSelectorInfoContainer}>
+                <Text>
+                  {flashUserAddress?.split("@")[0] === paymentDetail.destination
+                    ? flashUserAddress
+                    : paymentDetail.destination}
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
+        )}
         <View style={styles.fieldContainer}>
           <View style={styles.amountRightMaxField}>
             <Text {...testProps(LL.SendBitcoinScreen.amount())} style={styles.amountText}>
@@ -565,16 +568,18 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             />
           </View>
         </View>
-        <View style={styles.fieldContainer}>
-          <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
-          <NoteInput
-            onChangeText={(text) =>
-              paymentDetail.setMemo && setPaymentDetail(paymentDetail.setMemo(text))
-            }
-            value={paymentDetail.memo || ""}
-            editable={paymentDetail.canSetMemo}
-          />
-        </View>
+        {paymentDetail.paymentType === "intraledger" && (
+          <View style={styles.fieldContainer}>
+            <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
+            <NoteInput
+              onChangeText={(text) =>
+                paymentDetail.setMemo && setPaymentDetail(paymentDetail.setMemo(text))
+              }
+              value={paymentDetail.memo || ""}
+              editable={paymentDetail.canSetMemo}
+            />
+          </View>
+        )}
         <SendBitcoinDetailsExtraInfo
           errorMessage={asyncErrorMessage || maxAmountErr}
           amountStatus={amountStatus}
