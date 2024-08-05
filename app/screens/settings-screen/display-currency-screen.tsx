@@ -216,9 +216,8 @@ const useStyles = makeStyles(({ colors }) => ({
   },
 
   buttonContainer: {
+    backgroundColor: colors.white,
     padding: 16,
     borderTopWidth: 1,
-    borderColor: "#ccc",
-    backgroundColor: "#fff",
   },
 }))
