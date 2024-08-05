@@ -150,11 +150,14 @@ const ReceiveScreen = ({ route }: Props) => {
   }, [request?.receivingWalletDescriptor?.currency])
 
   useEffect(() => {
-    if (request?.state === PaymentRequestState.Paid) {
+    if (
+      request?.state === PaymentRequestState.Paid ||
+      updatedPaymentState === PaymentRequestState.Paid
+    ) {
       const id = setTimeout(() => navigation.goBack(), 5000)
       return () => clearTimeout(id)
     }
-  }, [request?.state, navigation])
+  }, [request?.state, updatedPaymentState, navigation])
 
   // notification permission
   useEffect(() => {
@@ -182,12 +185,6 @@ const ReceiveScreen = ({ route }: Props) => {
       request.state = PaymentRequestState.Paid
       if (request?.state === PaymentRequestState.Paid) {
         setUpdatedPaymentState(PaymentRequestState.Paid)
-        const id = setTimeout(() => {
-          if (navigation.canGoBack()) {
-            navigation.goBack()
-          }
-        }, 5000)
-        return () => clearTimeout(id)
       }
     }
   }
@@ -372,6 +369,7 @@ const ReceiveScreen = ({ route }: Props) => {
           setIsActive={setDisplayReceiveNfc}
           settlementAmount={request.settlementAmount}
           receiveViaNFC={request.receiveViaNFC}
+          onPaid={() => setUpdatedPaymentState(PaymentRequestState.Paid)}
         />
       </Screen>
     </>

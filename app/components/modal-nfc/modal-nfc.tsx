@@ -25,13 +25,19 @@ import { isIOS } from "@rneui/base"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 
 import { GaloySecondaryButton } from "../atomic/galoy-secondary-button"
+import {
+  InputTypeVariant,
+  parseInput,
+  withdrawLnurl,
+} from "@breeztech/react-native-breez-sdk"
 
 export const ModalNfc: React.FC<{
   isActive: boolean
   setIsActive: (arg: boolean) => void
   settlementAmount?: WalletAmount<WalletCurrency>
   receiveViaNFC: (destination: ReceiveDestination) => Promise<void>
-}> = ({ isActive, setIsActive, settlementAmount, receiveViaNFC }) => {
+  onPaid: () => void
+}> = ({ isActive, setIsActive, settlementAmount, receiveViaNFC, onPaid }) => {
   const { data } = useScanningQrCodeScreenQuery({ skip: !useIsAuthed() })
   const wallets = data?.me?.defaultAccount.wallets
   const bitcoinNetwork = data?.globals?.network
@@ -93,7 +99,6 @@ export const ModalNfc: React.FC<{
       try {
         const isSupported = await NfcManager.isSupported()
 
-        // TODO: menu should only appear if this is a supported feature?
         if (!isSupported) {
           Alert.alert(LL.SettingsScreen.nfcNotSupported())
           dismiss()
@@ -142,31 +147,61 @@ export const ModalNfc: React.FC<{
       // TODO: add a loading icon because this call do a fetch() to an external server
       // and the response can be arbitrary long
 
-      const destination = await parseDestination({
-        rawInput: lnurl,
-        myWalletIds: wallets.map((wallet) => wallet.id),
-        bitcoinNetwork,
-        lnurlDomains: LNURL_DOMAINS,
-        accountDefaultWalletQuery,
-      })
-      logParseDestinationResult(destination)
+      if (settlementAmount?.currency === "USD") {
+        const destination = await parseDestination({
+          rawInput: lnurl,
+          myWalletIds: wallets.map((wallet) => wallet.id),
+          bitcoinNetwork,
+          lnurlDomains: LNURL_DOMAINS,
+          accountDefaultWalletQuery,
+        })
+        logParseDestinationResult(destination)
 
-      if (destination.valid && settlementAmount && convertMoneyAmount) {
-        if (destination.destinationDirection === DestinationDirection.Send) {
-          Alert.alert(LL.SettingsScreen.nfcOnlyReceive())
-        } else {
-          let amount = settlementAmount.amount
-          if (settlementAmount.currency === WalletCurrency.Usd) {
-            amount = convertMoneyAmount(
-              toUsdMoneyAmount(settlementAmount.amount),
-              WalletCurrency.Btc,
-            ).amount
+        if (destination.valid && settlementAmount && convertMoneyAmount) {
+          if (destination.destinationDirection === DestinationDirection.Send) {
+            Alert.alert(LL.SettingsScreen.nfcOnlyReceive())
+          } else {
+            let amount = settlementAmount.amount
+            if (settlementAmount.currency === WalletCurrency.Usd) {
+              amount = convertMoneyAmount(
+                toUsdMoneyAmount(settlementAmount.amount),
+                WalletCurrency.Btc,
+              ).amount
+            }
+
+            destination.validDestination.minWithdrawable = amount * 1000 // coz msats
+            destination.validDestination.maxWithdrawable = amount * 1000 // coz msats
+
+            receiveViaNFC(destination)
           }
-
-          destination.validDestination.minWithdrawable = amount * 1000 // coz msats
-          destination.validDestination.maxWithdrawable = amount * 1000 // coz msats
-
-          receiveViaNFC(destination)
+        }
+      } else {
+        try {
+          const input = await parseInput(lnurl)
+          if (input.type === InputTypeVariant.LN_URL_WITHDRAW) {
+            const amountMsat = settlementAmount.amount * 1000
+            const lnUrlWithdrawResult = await withdrawLnurl({
+              data: input.data,
+              amountMsat,
+              description: "comment",
+            })
+            console.log(lnUrlWithdrawResult)
+            if (lnUrlWithdrawResult.type === "ok") {
+              // setSuccess(true)
+              onPaid()
+            } else if (lnUrlWithdrawResult.type === "errorStatus") {
+              console.error(lnUrlWithdrawResult)
+              alert(
+                lnUrlWithdrawResult?.data?.reason ||
+                  LL.RedeemBitcoinScreen.redeemingError(),
+              )
+            }
+          } else if (input.type === InputTypeVariant.LN_URL_ERROR) {
+            alert(input?.data?.reason || LL.RedeemBitcoinScreen.redeemingError())
+          }
+        } catch (err: any) {
+          console.error(err)
+          Alert.alert(err.message)
         }
       }
 
