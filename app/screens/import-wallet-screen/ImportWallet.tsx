@@ -76,6 +76,9 @@ const ImportWallet: React.FC<Props> = ({ navigation, route }) => {
         return {
           ...state,
           btcTransactions: [],
+          breezBalance: undefined,
+          btcBalance: undefined,
+          convertedBtcBalance: undefined,
           btcWalletImported,
         }
       return undefined
