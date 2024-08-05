@@ -11,6 +11,7 @@ const scriptHostname = (): string => {
 export const possibleGaloyInstanceNames = [
   "Main",
   "Staging",
+  "Test",
   "Development",
   "Local",
   "Custom",
@@ -18,7 +19,7 @@ export const possibleGaloyInstanceNames = [
 export type GaloyInstanceName = (typeof possibleGaloyInstanceNames)[number]
 
 export type StandardInstance = {
-  id: "Main" | "Staging" | "Development" | "Local"
+  id: "Main" | "Staging" | "Test" | "Development" | "Local"
 }
 
 export type CustomInstance = {
@@ -82,6 +83,16 @@ export const GALOY_INSTANCES: readonly GaloyInstance[] = [
     authUrl: "https://api.staging.flashapp.me",
     posUrl: "http://pay.staging.flashapp.me",
     lnAddressHostname: "staging.flashapp.me",
+    blockExplorer: "https://mempool.space/signet/tx/",
+  },
+  {
+    id: "Test",
+    name: "Test",
+    graphqlUri: "https://api.test.flashapp.me/graphql",
+    graphqlWsUri: "wss://ws.test.flashapp.me/graphql",
+    authUrl: "https://api.test.flashapp.me",
+    posUrl: "http://pay.test.flashapp.me",
+    lnAddressHostname: "test.flashapp.me",
     blockExplorer: "https://mempool.space/signet/tx/",
   },
   {
