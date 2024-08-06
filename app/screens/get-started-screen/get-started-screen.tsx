@@ -71,7 +71,7 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
       saveToken(token)
       navigation.replace("Primary")
     } else {
-      setError(true)
+      navigation.replace("phoneFlow")
     }
   }
 
