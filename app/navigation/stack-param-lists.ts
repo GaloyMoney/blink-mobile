@@ -13,11 +13,12 @@ import {
   ReceiveDestination,
 } from "@app/screens/send-bitcoin-screen/payment-destination/index.types"
 import { WalletDescriptor } from "@app/types/wallets"
-import Map from "@app/assets/icons-redesign/map.svg"
+import _Map from "@app/assets/icons-redesign/map.svg"
 
 export type RootStackParamList = {
   IntroScreen: undefined
   getStarted: undefined
+  welcomeFirst: undefined
   liteDeviceAccount: {
     appCheckToken: string
   }

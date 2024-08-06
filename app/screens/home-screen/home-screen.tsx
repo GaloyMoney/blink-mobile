@@ -1,5 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react"
-import { ActivityIndicator, RefreshControl, ScrollView, View } from "react-native"
+import React, { useCallback, useEffect, useRef, useState } from "react"
+import {
+  ActivityIndicator,
+  RefreshControl,
+  ScrollView,
+  View,
+  TouchableOpacity,
+  Animated,
+  Easing,
+} from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Modal from "react-native-modal"
 import Icon from "react-native-vector-icons/Ionicons"
@@ -74,6 +82,7 @@ export const HomeScreen: React.FC = () => {
     theme: { colors },
   } = useTheme()
   const styles = useStyles()
+
   const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
   const { convertMoneyAmount } = usePriceConversion()
@@ -122,6 +131,45 @@ export const HomeScreen: React.FC = () => {
   const isBalanceVisible = hideBalance ?? false
   const transactionsEdges = dataAuthed?.me?.defaultAccount?.transactions?.edges ?? []
   const numberOfTxs = dataAuthed?.me?.defaultAccount?.transactions?.edges?.length ?? 0
+
+  const pulseAnim = useRef(new Animated.Value(1)).current // Initial scale value
+
+  const helpTriggered = persistentState?.helpTriggered ?? false
+
+  useEffect(() => {
+    const pulse = () => {
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(pulseAnim, {
+            toValue: 1.1, // Scale up
+            duration: 400,
+            easing: Easing.inOut(Easing.ease),
+            useNativeDriver: true,
+          }),
+          Animated.timing(pulseAnim, {
+            toValue: 1, // Scale down
+            duration: 800,
+            easing: Easing.inOut(Easing.ease),
+            useNativeDriver: true,
+          }),
+        ]),
+      ).start()
+    }
+
+    pulse()
+  }, [pulseAnim])
+
+  const handleHelpPress = () => {
+    updateState((state: any) => {
+      if (state)
+        return {
+          ...state,
+          helpTriggered: true,
+        }
+      return undefined
+    })
+    navigation.navigate("welcomeFirst")
+  }
 
   useEffect(() => {
     if (breezSDKInitialized && isAdvanceMode) {
@@ -370,6 +418,16 @@ export const HomeScreen: React.FC = () => {
           loading={false}
           breezBalance={btcWallet?.balance || 0}
         />
+        {/* Help Icon */}
+        {!helpTriggered && (
+          <View style={styles.helpIconContainer}>
+            <Animated.View style={{ transform: [{ scale: pulseAnim }] }}>
+              <TouchableOpacity onPress={handleHelpPress}>
+                <Icon name="help-circle-outline" size={30} color={colors.primary} />
+              </TouchableOpacity>
+            </Animated.View>
+          </View>
+        )}
         <GaloyIconButton
           onPress={() => navigation.navigate("settings")}
           size={"medium"}
@@ -556,5 +614,12 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   container: {
     marginHorizontal: 20,
+  },
+  helpIconContainer: {
+    position: "absolute",
+    // bottom: 20, // Adjust as needed to place above the Tab navigation
+    right: "15%", // Adjust as needed for positioning
+    alignItems: "center",
+    justifyContent: "center",
   },
 }))

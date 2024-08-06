@@ -168,6 +168,7 @@
     "react-native-securerandom": "^1.0.1",
     "react-native-share": "^9.4.1",
     "react-native-svg": "^14.0.0",
+    "react-native-swiper": "^1.6.0",
     "react-native-tab-view": "^3.5.2",
     "react-native-toast-message": "^2.1.5",
     "react-native-url-polyfill": "^2.0.0",

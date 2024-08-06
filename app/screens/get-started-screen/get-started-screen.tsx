@@ -1,7 +1,15 @@
-import React, { useEffect, useState } from "react"
-import { StackScreenProps } from "@react-navigation/stack"
-import { ActivityIndicator, Pressable, TouchableOpacity, View } from "react-native"
+import React, { useEffect, useRef, useState } from "react"
+import { StackNavigationProp, StackScreenProps } from "@react-navigation/stack"
+import {
+  ActivityIndicator,
+  Animated,
+  Easing,
+  Pressable,
+  TouchableOpacity,
+  View,
+} from "react-native"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
+import Icon from "react-native-vector-icons/Ionicons"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
 
 // components
@@ -21,10 +29,12 @@ import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
 // utils
 import { logGetStartedAction } from "@app/utils/analytics"
 import { testProps } from "@app/utils/testProps"
+import { useNavigation } from "@react-navigation/native"
 
 type Props = StackScreenProps<RootStackParamList, "getStarted">
 
 export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
+  const welcomeNavigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const {
     theme: { mode },
   } = useTheme()
@@ -35,7 +45,9 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const [secretMenuCounter, setSecretMenuCounter] = useState(0)
-
+  const {
+    theme: { colors },
+  } = useTheme()
   const AppLogo = mode === "dark" ? AppLogoDarkMode : AppLogoLightMode
 
   useEffect(() => {
@@ -73,6 +85,35 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
     navigation.replace("Primary")
   }
 
+  const pulseAnim = useRef(new Animated.Value(1)).current // Initial scale value
+
+  useEffect(() => {
+    const pulse = () => {
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(pulseAnim, {
+            toValue: 1.1, // Scale up
+            duration: 400,
+            easing: Easing.inOut(Easing.ease),
+            useNativeDriver: true,
+          }),
+          Animated.timing(pulseAnim, {
+            toValue: 1, // Scale down
+            duration: 800,
+            easing: Easing.inOut(Easing.ease),
+            useNativeDriver: true,
+          }),
+        ]),
+      ).start()
+    }
+
+    pulse()
+  }, [pulseAnim])
+
+  const handleHelpPress = () => {
+    welcomeNavigation.navigate("welcomeFirst")
+  }
+
   return (
     <Screen>
       <Pressable
@@ -83,6 +124,14 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
         <AppLogo width={"100%"} height={"100%"} />
       </Pressable>
       <View style={styles.bottom}>
+        {/* Help Icon */}
+        <View style={styles.helpIconContainer}>
+          <Animated.View style={{ transform: [{ scale: pulseAnim }] }}>
+            <TouchableOpacity onPress={handleHelpPress}>
+              <Icon name="help-circle-outline" size={40} color={colors.primary} />
+            </TouchableOpacity>
+          </Animated.View>
+        </View>
         <GaloyPrimaryButton
           title={LL.GetStartedScreen.quickStart()}
           onPress={handleCreateDeviceAccount}
@@ -110,7 +159,7 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
   )
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ colors }) => ({
   bottom: {
     flex: 1,
     paddingHorizontal: 24,
@@ -137,5 +186,12 @@ const useStyles = makeStyles(() => ({
     bottom: 0,
     justifyContent: "center",
     alignItems: "center",
+  },
+  helpIconContainer: {
+    flex: 1,
+    position: "relative",
+    alignItems: "center",
+    justifyContent: "center",
+    color: colors.primary,
   },
 }))

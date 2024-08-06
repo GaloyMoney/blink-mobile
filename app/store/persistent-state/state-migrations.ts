@@ -70,6 +70,7 @@ type PersistentState_7 = {
   introVideoCount: number
   defaultWallet?: WalletBalance
   btcWalletImported?: boolean
+  helpTriggered?: boolean
 }
 
 type JwtPayload = {
@@ -98,6 +99,7 @@ const migrate6ToCurrent = (state: PersistentState_6): Promise<PersistentState> =
     schemaVersion: 7,
     hasInitializedBreezSDK: false,
     introVideoCount: 0,
+    helpTriggered: false,
   })
 }
 
@@ -245,6 +247,7 @@ export const defaultPersistentState: PersistentState = {
   galoyAuthToken: "",
   hasInitializedBreezSDK: false,
   introVideoCount: 0,
+  helpTriggered: false,
 }
 
 export const migrateAndGetPersistentState = async (
@@ -254,7 +257,7 @@ export const migrateAndGetPersistentState = async (
   data: any,
 ): Promise<PersistentState> => {
   if (Boolean(data) && data.schemaVersion in stateMigrations) {
-    const schemaVersion: 0 | 1 | 2 | 3 | 4 | 5 = data.schemaVersion
+    const schemaVersion: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 = data.schemaVersion
     try {
       const migration = stateMigrations[schemaVersion]
       const persistentState = await migration(data)

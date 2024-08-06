@@ -102,6 +102,7 @@ import {
 import { useAppSelector } from "@app/store/redux"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 import { NotificationSettingsScreen } from "@app/screens/settings-screen/notifications-screen"
+import { WelcomeFirstScreen } from "../screens/welcome-screen"
 
 const useStyles = makeStyles(({ colors }) => ({
   bottomNavigatorStyle: {
@@ -159,6 +160,11 @@ export const RootStack = () => {
         name="getStarted"
         component={GetStartedScreen}
         options={{ headerShown: false, animationEnabled: false }}
+      />
+      <RootNavigator.Screen
+        name="welcomeFirst"
+        component={WelcomeFirstScreen}
+        options={{ headerShown: false }}
       />
       <RootNavigator.Screen
         name="authenticationCheck"

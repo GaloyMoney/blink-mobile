@@ -29,6 +29,7 @@ import {
   sendNoAmountPaymentBreezSDK,
   paymentEvents,
   breezHealthCheck,
+  addLogListenerBreezSDK,
 } from "@app/utils/breez-sdk"
 
 import * as sdk from "@breeztech/react-native-breez-sdk"
@@ -253,7 +254,13 @@ export const useSendPayment = (
               console.log("Starting sendPaymentBreezSDK using invoice with amount")
               try {
                 const response = await sendNoAmountPaymentBreezSDK(paymentRequest)
+                const logResponse = await addLogListenerBreezSDK()
                 console.log("BreezSDK LNInvoice response:", response)
+                console.log("--------------------------------")
+                console.log("--------------------------------")
+                console.log("BreezSDK SDK Logs:", logResponse)
+                console.log("--------------------------------")
+                console.log("--------------------------------")
                 // Wait for the payment success event
                 await Promise.race([successPromise, failurePromise])
                 return {
@@ -262,6 +269,12 @@ export const useSendPayment = (
                 }
               } catch (err) {
                 console.error("Failed to send LNInvoice using Breez SDK:", err)
+                const logResponse = await addLogListenerBreezSDK()
+                console.log("--------------------------------")
+                console.log("--------------------------------")
+                console.log("BreezSDK SDK Logs:", logResponse)
+                console.log("--------------------------------")
+                console.log("--------------------------------")
                 return {
                   status: PaymentSendResult.Failure,
                   errors: [],
@@ -280,6 +293,12 @@ export const useSendPayment = (
                   paymentRequest,
                   amountSats.amount,
                 )
+                const logResponse = await addLogListenerBreezSDK()
+                console.log("--------------------------------")
+                console.log("--------------------------------")
+                console.log("BreezSDK SDK Logs:", logResponse)
+                console.log("--------------------------------")
+                console.log("--------------------------------")
                 console.log("BreezSDK No Amount LNInvoice response:", response)
                 // Wait for the payment success event
                 await Promise.race([successPromise, failurePromise])
@@ -289,6 +308,12 @@ export const useSendPayment = (
                 }
               } catch (err) {
                 console.error("Failed to send No Amount LNInvoice using Breez SDK:", err)
+                const logResponse = await addLogListenerBreezSDK()
+                console.log("--------------------------------")
+                console.log("--------------------------------")
+                console.log("BreezSDK SDK Logs:", logResponse)
+                console.log("--------------------------------")
+                console.log("--------------------------------")
                 return {
                   status: PaymentSendResult.Failure,
                   errors: [],
