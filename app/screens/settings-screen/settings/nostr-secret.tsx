@@ -9,15 +9,18 @@ export const NostrSecret: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
 
   const toggleModal = () => setIsModalVisible((x) => !x)
+  const isRowHidden = true // You can change this to false when we are ready to show nostr keys
 
   return (
     <>
-      <SettingsRow
-        title={LL.SettingsScreen.showNostrSecret()}
-        leftIcon="globe-outline"
-        rightIcon={null}
-        action={toggleModal}
-      />
+      {!isRowHidden && (
+        <SettingsRow
+          title={LL.SettingsScreen.showNostrSecret()}
+          leftIcon="globe-outline"
+          rightIcon={null}
+          action={toggleModal}
+        />
+      )}
       <ShowNostrSecret isActive={isModalVisible} onCancel={toggleModal} />
     </>
   )

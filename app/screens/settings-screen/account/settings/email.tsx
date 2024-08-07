@@ -66,7 +66,6 @@ const title = (
 
 export const EmailSetting: React.FC = () => {
   const styles = useStyles()
-
   const { LL } = useI18nContext()
   const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>()
 

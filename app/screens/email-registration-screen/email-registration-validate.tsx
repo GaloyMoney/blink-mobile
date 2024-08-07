@@ -66,7 +66,7 @@ export const EmailRegistrationValidateScreen: React.FC<Props> = ({ route }) => {
               {
                 text: LL.common.ok(),
                 onPress: () => {
-                  navigation.navigate("accountScreen")
+                  navigation.navigate("settings")
                 },
               },
             ],
