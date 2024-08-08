@@ -7,7 +7,7 @@ import { Icon } from "@rneui/themed"
 // hooks
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { useAppSelector } from "@app/store/redux"
+import { usePersistentStateContext } from "@app/store/persistent-state"
 import { useTheme } from "@rneui/themed"
 
 // components
@@ -32,7 +32,7 @@ const BackupOptions: React.FC<Props> = ({ navigation }) => {
   const { theme } = useTheme()
   const colors = theme.colors
   const bottom = useSafeAreaInsets().bottom
-  const { isAdvanceMode } = useAppSelector((state) => state.settings)
+  const { persistentState } = usePersistentStateContext()
   const { LL } = useI18nContext()
   const { isAtLeastLevelZero } = useLevel()
   const [backupIsCompleted, setBackupIsCompleted] = React.useState(false)
@@ -83,7 +83,7 @@ const BackupOptions: React.FC<Props> = ({ navigation }) => {
     <Wrapper style={{ backgroundColor: colors.white }}>
       <Container>
         <Title style={{ color: colors.black }}>{LL.BackupOptions.title()}</Title>
-        {isAdvanceMode && (
+        {persistentState.isAdvanceMode && (
           <Btn onPress={onBackupBTCWallet}>
             <Icon
               type="ionicon"

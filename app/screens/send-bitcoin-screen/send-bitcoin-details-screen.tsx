@@ -41,7 +41,6 @@ import { getUsdWallet } from "@app/graphql/wallets-utils"
 import { NoteInput } from "@app/components/note-input"
 // import Breez SDK Wallet
 import useBreezBalance from "@app/hooks/useBreezBalance"
-import { useAppSelector } from "@app/store/redux"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 
 gql`
@@ -102,7 +101,6 @@ type Props = {
 
 const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const { persistentState } = usePersistentStateContext()
-  const { isAdvanceMode } = useAppSelector((state) => state.settings)
   const {
     theme: { colors },
   } = useTheme()
@@ -137,7 +135,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const network = "mainnet" // data?.globals?.network
 
   let wallets = data?.me?.defaultAccount?.wallets as any[]
-  if (isAdvanceMode && btcWallet) {
+  if (persistentState.isAdvanceMode && btcWallet) {
     wallets = [...wallets, btcWallet]
   }
 
@@ -242,7 +240,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   })
 
   const toggleModal = () => {
-    if (isAdvanceMode) setIsModalVisible(!isModalVisible)
+    if (persistentState.isAdvanceMode) setIsModalVisible(!isModalVisible)
   }
 
   const chooseWallet = (wallet: Pick<Wallet, "id" | "walletCurrency">) => {
@@ -499,7 +497,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
                 <View />
               </View>
 
-              {isAdvanceMode && (
+              {persistentState.isAdvanceMode && (
                 <View style={styles.pickWalletIcon}>
                   <Icon name={"chevron-down"} size={24} color={colors.black} />
                 </View>

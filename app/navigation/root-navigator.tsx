@@ -99,7 +99,6 @@ import {
   IntroScreen,
   USDTransactionHistory,
 } from "@app/screens"
-import { useAppSelector } from "@app/store/redux"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 import { NotificationSettingsScreen } from "@app/screens/settings-screen/notifications-screen"
 import { WelcomeFirstScreen } from "../screens/welcome-screen"
@@ -122,7 +121,6 @@ const useStyles = makeStyles(({ colors }) => ({
 const RootNavigator = createStackNavigator<RootStackParamList>()
 
 export const RootStack = () => {
-  const { isAdvanceMode } = useAppSelector((state) => state.settings)
   const { persistentState } = usePersistentStateContext()
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
@@ -203,7 +201,7 @@ export const RootStack = () => {
         name="sendBitcoinDestination"
         component={SendBitcoinDestinationScreen}
         options={{
-          title: isAdvanceMode
+          title: persistentState.isAdvanceMode
             ? LL.SendBitcoinScreen.title()
             : LL.SendBitcoinScreen.send(),
         }}
@@ -212,7 +210,7 @@ export const RootStack = () => {
         name="sendBitcoinDetails"
         component={SendBitcoinDetailsScreen}
         options={{
-          title: isAdvanceMode
+          title: persistentState.isAdvanceMode
             ? LL.SendBitcoinScreen.title()
             : LL.SendBitcoinScreen.send(),
         }}
@@ -221,7 +219,7 @@ export const RootStack = () => {
         name="sendBitcoinConfirmation"
         component={SendBitcoinConfirmationScreen}
         options={{
-          title: isAdvanceMode
+          title: persistentState.isAdvanceMode
             ? LL.SendBitcoinScreen.title()
             : LL.SendBitcoinScreen.send(),
         }}
@@ -230,7 +228,7 @@ export const RootStack = () => {
         name="sendBitcoinSuccess"
         component={SendBitcoinSuccessScreen}
         options={{
-          title: isAdvanceMode
+          title: persistentState.isAdvanceMode
             ? LL.SendBitcoinScreen.title()
             : LL.SendBitcoinScreen.send(),
         }}

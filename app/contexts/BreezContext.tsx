@@ -1,7 +1,6 @@
 import React, { createContext, useEffect, useState } from "react"
 import { WalletCurrency } from "@app/graphql/generated"
 import { usePersistentStateContext } from "@app/store/persistent-state"
-import { useAppSelector } from "@app/store/redux"
 import { initializeBreezSDK } from "@app/utils/breez-sdk"
 import { nodeInfo } from "@breeztech/react-native-breez-sdk"
 
@@ -33,7 +32,6 @@ type Props = {
 
 export const BreezProvider = ({ children }: Props) => {
   const { persistentState, updateState } = usePersistentStateContext()
-  const { isAdvanceMode } = useAppSelector((state) => state.settings)
   const [loading, setLoading] = useState(false)
   const [btcWallet, setBtcWallet] = useState<BtcWallet>({
     id: "",
@@ -42,7 +40,7 @@ export const BreezProvider = ({ children }: Props) => {
   })
 
   useEffect(() => {
-    if (isAdvanceMode) {
+    if (persistentState.isAdvanceMode) {
       getBreezInfo()
     } else {
       setBtcWallet({
@@ -51,7 +49,7 @@ export const BreezProvider = ({ children }: Props) => {
         balance: 0,
       })
     }
-  }, [isAdvanceMode])
+  }, [persistentState.isAdvanceMode])
 
   const getBreezInfo = async () => {
     setLoading(true)
@@ -75,7 +73,7 @@ export const BreezProvider = ({ children }: Props) => {
   }
 
   const refreshBreez = () => {
-    if (isAdvanceMode) getBreezInfo()
+    if (persistentState.isAdvanceMode) getBreezInfo()
   }
 
   return (

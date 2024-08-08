@@ -22,7 +22,6 @@ import HideableArea from "../hideable-area/hideable-area"
 import { IconTransaction } from "../icon-transactions"
 import { TransactionDate } from "../transaction-date"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useAppSelector } from "@app/store/redux"
 
 // This should extend the Transaction directly from the cache
 export const useDescriptionDisplay = ({

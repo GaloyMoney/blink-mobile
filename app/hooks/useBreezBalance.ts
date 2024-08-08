@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react"
 import { nodeInfo } from "@breeztech/react-native-breez-sdk"
 import { initializeBreezSDK } from "@app/utils/breez-sdk"
-import { useAppSelector } from "@app/store/redux"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 
 const useBreezBalance = (): [number | null, () => void] => {
-  const { isAdvanceMode } = useAppSelector((state) => state.settings)
   const { persistentState, updateState } = usePersistentStateContext()
 
   const [balance, setBalance] = useState<number | null>(
@@ -32,8 +30,8 @@ const useBreezBalance = (): [number | null, () => void] => {
       })
     }
 
-    if (isAdvanceMode) initializeAndFetchBalance()
-  }, [refresh, isAdvanceMode])
+    if (persistentState.isAdvanceMode) initializeAndFetchBalance()
+  }, [refresh, persistentState.isAdvanceMode])
 
   const refreshBreezBalance = () => {
     setRefresh((prev) => prev + 1)

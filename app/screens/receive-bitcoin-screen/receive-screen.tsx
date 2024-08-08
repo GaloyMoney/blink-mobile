@@ -12,6 +12,7 @@ import nfcManager from "react-native-nfc-manager"
 import { useAppConfig } from "@app/hooks"
 import moment from "moment"
 import messaging from "@react-native-firebase/messaging"
+import { usePersistentStateContext } from "@app/store/persistent-state"
 
 // components
 import { Screen } from "@app/components/screen"
@@ -44,7 +45,6 @@ type Props = {
 }
 
 const ReceiveScreen = ({ route }: Props) => {
-  const { isAdvanceMode } = useAppSelector((state) => state.settings)
   const { userData } = useAppSelector((state) => state.user)
   const {
     theme: { colors },
@@ -62,6 +62,7 @@ const ReceiveScreen = ({ route }: Props) => {
   const isFirstTransaction = route.params.transactionLength === 0
   const request = useReceiveBitcoin(isFirstTransaction)
 
+  const { persistentState } = usePersistentStateContext()
   const [displayReceiveNfc, setDisplayReceiveNfc] = useState(false)
   const [currentWallet, setCurrentWallet] = useState(
     request?.receivingWalletDescriptor.currency,
@@ -113,7 +114,7 @@ const ReceiveScreen = ({ route }: Props) => {
   }, [isAuthed, isFocused])
 
   useEffect(() => {
-    if (isAdvanceMode) {
+    if (persistentState.isAdvanceMode) {
       switch (request?.type) {
         case Invoice.OnChain:
           navigation.setOptions({ title: LL.ReceiveScreen.receiveViaOnchain() })
@@ -251,7 +252,7 @@ const ReceiveScreen = ({ route }: Props) => {
         keyboardShouldPersistTaps="handled"
         style={styles.screenStyle}
       >
-        {isAdvanceMode && (
+        {persistentState.isAdvanceMode && (
           <View style={{ flexDirection: "row", marginBottom: 10 }}>
             <WalletBottomSheet
               currency={request.receivingWalletDescriptor.currency}

@@ -62,7 +62,6 @@ const WalletOverview: React.FC<Props> = ({
 }) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { userData } = useAppSelector((state) => state.user)
-  const { isAdvanceMode } = useAppSelector((state) => state.settings)
 
   const { LL } = useI18nContext()
   const { appConfig } = useAppConfig()
@@ -198,7 +197,7 @@ const WalletOverview: React.FC<Props> = ({
   }
 
   const navigateHandler = (activeTab: string) => {
-    if (isAdvanceMode) {
+    if (persistentState.isAdvanceMode) {
       navigation.navigate("TransactionHistoryTabs", {
         initialRouteName: activeTab,
       })
@@ -225,7 +224,7 @@ const WalletOverview: React.FC<Props> = ({
             <GaloyCurrencyBubble currency="USD" />
             <View>
               <Text type="p1">Cash (USD)</Text>
-              {isAdvanceMode && Boolean(userData?.username) && (
+              {persistentState.isAdvanceMode && Boolean(userData?.username) && (
                 <Text type="p4" color={colors.grey1}>
                   {getLightningAddress(
                     appConfig.galoyInstance.lnAddressHostname,
@@ -253,7 +252,7 @@ const WalletOverview: React.FC<Props> = ({
       </Pressable>
       {/* End of IBEX Wallet overview */}
       {/* Start of Breez SDK Wallet overview */}
-      {isAdvanceMode && (
+      {persistentState.isAdvanceMode && (
         <>
           <View style={styles.separator}></View>
           <Pressable onPress={() => navigateHandler("BTCTransactionHistory")}>

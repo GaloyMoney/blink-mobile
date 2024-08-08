@@ -7,7 +7,6 @@ import {
 } from "./state-migrations"
 import * as React from "react"
 import { useAppDispatch } from "../redux"
-import { getSettingsData } from "../redux/slices/settingsSlice"
 
 const PERSISTENT_STATE_KEY = "persistentState"
 
@@ -50,7 +49,6 @@ export const PersistentStateProvider: React.FC<PropsWithChildren> = ({ children 
     ;(async () => {
       const loadedState = await loadPersistentState()
       setPersistentState(loadedState)
-      dispatch(getSettingsData())
     })()
   }, [])
 

@@ -10,7 +10,6 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useFeatureFlags } from "@app/config/feature-flags-context"
 import useAppCheckToken from "../get-started-screen/use-device-token"
-import { useAppSelector } from "@app/store/redux"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 
 // types
@@ -25,14 +24,13 @@ type Props = StackScreenProps<RootStackParamList, "ImportWalletOptions">
 
 const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
   const {
-    persistentState: { btcWalletImported },
+    persistentState: { btcWalletImported, isAdvanceMode },
   } = usePersistentStateContext()
   const { theme } = useTheme()
   const { mode } = useThemeMode()
   const colors = theme.colors
   const insideApp = route.params?.insideApp
   const bottom = useSafeAreaInsets().bottom
-  const { isAdvanceMode } = useAppSelector((state) => state.settings)
   const { LL } = useI18nContext()
   const { saveToken } = useAppConfig()
   const { deviceAccountEnabled } = useFeatureFlags()

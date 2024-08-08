@@ -14,7 +14,7 @@ import { BalanceHeader } from "@app/components/balance-header"
 // hooks
 import { useI18nContext } from "@app/i18n/i18n-react"
 import useBreezBalance from "@app/hooks/useBreezBalance"
-import { useAppSelector } from "@app/store/redux"
+import { usePersistentStateContext } from "@app/store/persistent-state"
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -22,9 +22,9 @@ type Props = StackScreenProps<RootStackParamList, "TransactionHistoryTabs">
 
 export const TransactionHistoryTabs: React.FC<Props> = ({ navigation, route }) => {
   const initialRouteName = route.params?.initialRouteName
-  const { isAdvanceMode } = useAppSelector((state) => state.settings)
   const { LL } = useI18nContext()
   const [breezBalance] = useBreezBalance()
+  const { persistentState } = usePersistentStateContext()
   const [isContentVisible, setIsContentVisible] = React.useState(false)
   const [activeWallet, setActiveWallet] = useState<"btc" | "usd">(
     initialRouteName === "USDTransactionHistory" ? "usd" : "btc",
@@ -38,7 +38,7 @@ export const TransactionHistoryTabs: React.FC<Props> = ({ navigation, route }) =
             isContentVisible={isContentVisible}
             setIsContentVisible={setIsContentVisible}
             breezBalance={breezBalance}
-            walletType={isAdvanceMode ? activeWallet : "usd"}
+            walletType={persistentState.isAdvanceMode ? activeWallet : "usd"}
             smallText
           />
         </HeaderRight>
@@ -54,7 +54,7 @@ export const TransactionHistoryTabs: React.FC<Props> = ({ navigation, route }) =
         tabBarIndicatorStyle: { backgroundColor: "#60aa55" },
       }}
     >
-      {isAdvanceMode && (
+      {persistentState.isAdvanceMode && (
         <Tab.Screen
           name="BTCTransactionHistory"
           component={BTCTransactionHistory}

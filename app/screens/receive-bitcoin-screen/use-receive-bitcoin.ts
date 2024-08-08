@@ -39,7 +39,6 @@ import { BtcWalletDescriptor } from "@app/types/wallets"
 import { ReceiveDestination } from "../send-bitcoin-screen/payment-destination/index.types"
 import fetch from "cross-fetch"
 
-import { useAppSelector } from "@app/store/redux"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 
 gql`
@@ -145,7 +144,6 @@ export const useReceiveBitcoin = (isFirstTransaction: Boolean, initPRParams = {}
     setIsSetLightningAddressModalVisible(!isSetLightningAddressModalVisible)
   }
 
-  const { isAdvanceMode } = useAppSelector((state) => state.settings)
   const { btcWallet } = useBreez()
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
@@ -189,7 +187,7 @@ export const useReceiveBitcoin = (isFirstTransaction: Boolean, initPRParams = {}
 
       let bitcoinWalletDescriptor = undefined
 
-      if (isAdvanceMode && btcWallet) {
+      if (persistentState.isAdvanceMode && btcWallet) {
         bitcoinWalletDescriptor = {
           currency: btcWallet.walletCurrency,
           id: btcWallet.id,
@@ -217,7 +215,13 @@ export const useReceiveBitcoin = (isFirstTransaction: Boolean, initPRParams = {}
         }
       setPRCD(createPaymentRequestCreationData(initialPRParams))
     }
-  }, [_convertMoneyAmount, defaultWallet, btcWallet, username, isAdvanceMode])
+  }, [
+    _convertMoneyAmount,
+    defaultWallet,
+    btcWallet,
+    username,
+    persistentState.isAdvanceMode,
+  ])
 
   // Initialize Payment Request
   useLayoutEffect(() => {
@@ -439,7 +443,11 @@ export const useReceiveBitcoin = (isFirstTransaction: Boolean, initPRParams = {}
   const setReceivingWallet = (walletCurrency: WalletCurrency) => {
     setPRCD((pr) => {
       if (pr && pr.setReceivingWalletDescriptor) {
-        if (walletCurrency === WalletCurrency.Btc && isAdvanceMode && btcWallet) {
+        if (
+          walletCurrency === WalletCurrency.Btc &&
+          persistentState.isAdvanceMode &&
+          btcWallet
+        ) {
           if (isFirstTransaction) {
             setAmount({
               amount: 500,

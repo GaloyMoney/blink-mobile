@@ -63,7 +63,7 @@ import { useAppConfig, useBreez, usePriceConversion, useRedeem } from "@app/hook
 import useNostrProfile from "@app/hooks/use-nostr-profile"
 
 // store
-import { useAppDispatch, useAppSelector } from "@app/store/redux"
+import { useAppDispatch } from "@app/store/redux"
 import { setUserData } from "@app/store/redux/slices/userSlice"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 
@@ -72,7 +72,6 @@ const TransactionCountToTriggerSetDefaultAccountModal = 1
 export const HomeScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const dispatch = useAppDispatch()
-  const { isAdvanceMode } = useAppSelector((state) => state.settings)
   const {
     appConfig: {
       galoyInstance: { id: galoyInstanceId },
@@ -172,7 +171,7 @@ export const HomeScreen: React.FC = () => {
   }
 
   useEffect(() => {
-    if (breezSDKInitialized && isAdvanceMode) {
+    if (breezSDKInitialized && persistentState.isAdvanceMode) {
       fetchPaymentsBreez()
       paymentEvents.once("invoicePaid", fetchPaymentsBreez)
       paymentEvents.once("paymentSuccess", fetchPaymentsBreez)
@@ -296,7 +295,7 @@ export const HomeScreen: React.FC = () => {
       refetchAuthed()
       refetchUnauthed()
 
-      if (isAdvanceMode && breezSDKInitialized) {
+      if (persistentState.isAdvanceMode && breezSDKInitialized) {
         fetchPaymentsBreez()
         checkInProgressSwap()
       }
@@ -362,7 +361,7 @@ export const HomeScreen: React.FC = () => {
     },
   ]
 
-  if (isAdvanceMode) {
+  if (persistentState.isAdvanceMode) {
     buttons.unshift({
       title: LL.ConversionDetailsScreen.title(),
       target: "conversionDetails" as Target,
@@ -484,7 +483,9 @@ export const HomeScreen: React.FC = () => {
               style={styles.recentTransaction}
               onPress={() =>
                 onMenuClick(
-                  isAdvanceMode ? "TransactionHistoryTabs" : "USDTransactionHistory",
+                  persistentState.isAdvanceMode
+                    ? "TransactionHistoryTabs"
+                    : "USDTransactionHistory",
                 )
               }
             >

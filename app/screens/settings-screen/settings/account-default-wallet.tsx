@@ -14,14 +14,18 @@ export const DefaultWallet: React.FC = () => {
   const defaultWalletCurrency =
     persistentState.defaultWallet?.walletCurrency === "BTC" ? "BTC" : "Cash (USD)"
 
-  return (
-    <SettingsRow
-      title={LL.SettingsScreen.defaultWallet()}
-      subtitle={defaultWalletCurrency}
-      leftIcon="wallet-outline"
-      action={() => {
-        navigate("defaultWallet")
-      }}
-    />
-  )
+  if (persistentState.isAdvanceMode) {
+    return (
+      <SettingsRow
+        title={LL.SettingsScreen.defaultWallet()}
+        subtitle={defaultWalletCurrency}
+        leftIcon="wallet-outline"
+        action={() => {
+          navigate("defaultWallet")
+        }}
+      />
+    )
+  } else {
+    return null
+  }
 }

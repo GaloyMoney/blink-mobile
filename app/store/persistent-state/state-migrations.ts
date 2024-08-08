@@ -71,6 +71,7 @@ type PersistentState_7 = {
   defaultWallet?: WalletBalance
   btcWalletImported?: boolean
   helpTriggered?: boolean
+  isAdvanceMode?: boolean
 }
 
 type JwtPayload = {
