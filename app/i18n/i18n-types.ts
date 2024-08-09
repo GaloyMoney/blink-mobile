@@ -1565,6 +1565,10 @@ type RootTranslation = {
 		 */
 		balance: string
 		/**
+		 * Show QR Code
+		 */
+		showQrCode: string
+		/**
 		 * S​e​n​d
 		 */
 		send: string
@@ -1682,6 +1686,10 @@ type RootTranslation = {
 		title: string
 	}
 	ReceiveScreen: {
+		/**
+		 * Instructions for receiving to your flashcard
+		 */
+		flashcardInstructions: string
 		/**
 		 * N​F​C
 		 */
@@ -1885,6 +1893,10 @@ type RootTranslation = {
 		 * R​e​c​e​i​v​e​ ​v​i​a​ ​P​a​y​c​o​d​e
 		 */
 		receiveViaPaycode: string
+		/**
+		 * Topup Flashcard
+		 */
+		topupFlashcard: string
 		/**
 		 * R​e​c​e​i​v​e​ ​v​i​a​ ​O​n​c​h​a​i​n
 		 */
@@ -5436,6 +5448,10 @@ export type TranslationFunctions = {
 		 */
 		balance: () => LocalizedString
 		/**
+		 * Show QR Code
+		 */
+		showQrCode: () => LocalizedString
+		/**
 		 * Send
 		 */
 		send: () => LocalizedString
@@ -5553,6 +5569,10 @@ export type TranslationFunctions = {
 	}
 	ReceiveScreen: {
     [x: string]: any
+		/**
+		 * Instructions for receiving to your Flashcard
+		 */
+		flashcardInstructions: () => LocalizedString
 		/**
 		 * NFC
 		 */
@@ -5759,6 +5779,10 @@ export type TranslationFunctions = {
 		 * Receive via Paycode
 		 */
 		receiveViaPaycode: () => LocalizedString
+		/**
+		 * Topup Flashcard
+		 */
+		topupFlashcard: () => LocalizedString
 		/**
 		 * Receive via Onchain
 		 */

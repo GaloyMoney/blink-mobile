@@ -329,13 +329,18 @@ export const CardScreen: React.FC<Props> = ({ navigation }) => {
         console.log("Reloading card")
         setRefreshBalance(null)
         setDisplayReceiveNfc(true)
+      } else if (target === "topupFlashcard" && reloadLnurl) {
+        navigation.navigate("flashcardTopup", {
+          // @ts-ignore: Unreachable code error
+          flashcardLnurl: reloadLnurl.validDestination.lnurl,
+        })
       }
     } else {
       console.log("Reloading skipped")
     }
   }
 
-  type Target = "cardScreen" | "sendBitcoinDetails"
+  type Target = "cardScreen" | "sendBitcoinDetails" | "topupFlashcard"
   type IconNamesType = keyof typeof icons
 
   const buttons = [
@@ -348,6 +353,11 @@ export const CardScreen: React.FC<Props> = ({ navigation }) => {
       title: LL.HomeScreen.reload(),
       target: "sendBitcoinDetails" as Target,
       icon: "receive" as IconNamesType,
+    },
+    {
+      title: LL.HomeScreen.showQrCode(),
+      target: "topupFlashcard" as Target,
+      icon: "qr-code" as IconNamesType,
     },
   ]
 
@@ -503,8 +513,8 @@ const useStyles = makeStyles(({ colors }) => ({
   button: {
     display: "flex",
     justifyContent: "space-between",
-    width: "100%",
-    maxWidth: 184,
+    width: "25%",
+    // maxWidth: 184,
   },
   removeButton: {
     marginTop: 16,

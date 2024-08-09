@@ -513,6 +513,7 @@ const en: BaseTranslation = {
     receive: "Receive",
     reload: "Reload Card",
     balance: "Refresh Balance",
+    showQrCode: "Topup via QR",
     send: "Send",
     sweep: "Sweep to Wallet",
     pay: "Pay",
@@ -548,6 +549,7 @@ const en: BaseTranslation = {
     title: "Home",
   },
   ReceiveScreen: {
+    flashcardInstructions: "Top up your Flashcard here! \n\nScan the QR code, or tap the icon to share this on whatsapp, email, etc.",
     nfc: "NFC",
     enterAmountFirst: "Please enter an amount first",
     activateNotifications:
@@ -602,6 +604,7 @@ const en: BaseTranslation = {
     receive: "Receive",
     receiveViaInvoice: "Receive via Lightning",
     receiveViaPaycode: "Receive via Paycode",
+    topupFlashcard: "Topup Flashcard",
     receiveViaOnchain: "Receive via Onchain",
     payCodeOrLNURL: "Paycode / LNURL",
     initialDeposit: "* Initial deposit of $5 recommended for channel setup. ~$1 will be paid as setup fee.",

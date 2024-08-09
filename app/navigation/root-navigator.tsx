@@ -13,7 +13,7 @@ import {
 import { PinScreen } from "../screens/authentication-screen/pin-screen"
 import { ContactsDetailScreen, ContactsScreen } from "../screens/contacts-screen"
 import { ChatDetailScreen, ChatScreen } from "../screens/chat-screen"
-import { CardScreen } from "../screens/card-screen"
+import { CardScreen, FlashcardTopup } from "../screens/card-screen"
 import { DeveloperScreen } from "../screens/developer-screen"
 import { EarnMapScreen } from "../screens/earns-map-screen"
 import { EarnQuiz, EarnSection } from "../screens/earns-screen"
@@ -21,7 +21,6 @@ import { SectionCompleted } from "../screens/earns-screen/section-completed"
 import { GetStartedScreen } from "../screens/get-started-screen"
 import { HomeScreen } from "../screens/home-screen"
 import { MapScreen } from "../screens/map-screen/map-screen"
-
 import { PriceHistoryScreen } from "../screens/price/price-history-screen"
 import ChatIcon from "@app/assets/icons/chat.svg"
 import CardIcon from "@app/assets/icons/nfc.svg"
@@ -238,6 +237,13 @@ export const RootStack = () => {
         component={ReceiveScreen}
         options={{
           title: LL.ReceiveScreen.title(),
+        }}
+      />
+      <RootNavigator.Screen
+        name="flashcardTopup"
+        component={FlashcardTopup}
+        options={{
+          title: LL.ReceiveScreen.topupFlashcard(),
         }}
       />
       <RootNavigator.Screen

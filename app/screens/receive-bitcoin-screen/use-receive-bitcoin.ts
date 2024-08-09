@@ -118,7 +118,7 @@ gql`
   }
 `
 
-export const useReceiveBitcoin = (isFirstTransaction: Boolean, initPRParams = {}) => {
+export const useReceiveBitcoin = (isFirstTransaction: boolean, initPRParams = {}) => {
   const [lnNoAmountInvoiceCreate] = useLnNoAmountInvoiceCreateMutation()
   const [lnUsdInvoiceCreate] = useLnUsdInvoiceCreateMutation()
   const [lnInvoiceCreate] = useLnInvoiceCreateMutation()
