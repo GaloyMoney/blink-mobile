@@ -13,16 +13,16 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2830FDAE2A67C03400301116 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2830FDAD2A67C03400301116 /* GoogleService-Info.plist */; };
-		3152A8AF830F40A7AB689E42 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		3E3C92C2FC91412D8DFDE94D /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		560415592C5B4119B9F91553 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		3152A8AF830F40A7AB689E42 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		3E3C92C2FC91412D8DFDE94D /* (null) in Resources */ = {isa = PBXBuildFile; };
+		560415592C5B4119B9F91553 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		86FB60FC2BC40BBC0088C78C /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 86FB60FB2BC40BBC0088C78C /* PrivacyInfo.xcprivacy */; };
 		922869E2611560E0BABDD066 /* libPods-LNFlash.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F675C724C850DCE831172994 /* libPods-LNFlash.a */; };
-		94D9F3C84EB547D68D41C50F /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		94D9F3C84EB547D68D41C50F /* (null) in Resources */ = {isa = PBXBuildFile; };
 		AEBBD0A1234A4C5490A44CC1 /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C8483F4C3424986AEBE74CC /* DMSans-Bold.ttf */; };
-		BD157A9851974C298EB06CB7 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		C426C81D58C8450C878B6086 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		BD157A9851974C298EB06CB7 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		C426C81D58C8450C878B6086 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		C61EE0AD23C530E30054100C /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C61EE0AC23C530E30054100C /* AuthenticationServices.framework */; };
 		F1D71F3628CE5C9A00636277 /* AppDelegate.h in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FAF1A68108700A75B9A /* AppDelegate.h */; };
 /* End PBXBuildFile section */
@@ -220,13 +220,13 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				86FB60FC2BC40BBC0088C78C /* PrivacyInfo.xcprivacy in Resources */,
 				0147E0DD2BAE64B90071CDF2 /* coins.mp3 in Resources */,
-				560415592C5B4119B9F91553 /* BuildFile in Resources */,
-				3E3C92C2FC91412D8DFDE94D /* BuildFile in Resources */,
-				BD157A9851974C298EB06CB7 /* BuildFile in Resources */,
-				3152A8AF830F40A7AB689E42 /* BuildFile in Resources */,
-				94D9F3C84EB547D68D41C50F /* BuildFile in Resources */,
+				560415592C5B4119B9F91553 /* (null) in Resources */,
+				3E3C92C2FC91412D8DFDE94D /* (null) in Resources */,
+				BD157A9851974C298EB06CB7 /* (null) in Resources */,
+				3152A8AF830F40A7AB689E42 /* (null) in Resources */,
+				94D9F3C84EB547D68D41C50F /* (null) in Resources */,
 				2830FDAE2A67C03400301116 /* GoogleService-Info.plist in Resources */,
-				C426C81D58C8450C878B6086 /* BuildFile in Resources */,
+				C426C81D58C8450C878B6086 /* (null) in Resources */,
 				AEBBD0A1234A4C5490A44CC1 /* DMSans-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -464,7 +464,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Flash;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 0.0.2;
+				MARKETING_VERSION = 0.0.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -497,7 +497,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Flash;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 0.0.2;
+				MARKETING_VERSION = 0.0.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
