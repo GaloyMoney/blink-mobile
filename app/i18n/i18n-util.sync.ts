@@ -53,7 +53,7 @@ const localeTranslations = {
 	nl,
 	pt,
 	qu,
-        ro,
+	ro,
 	sr,
 	sw,
 	th,
