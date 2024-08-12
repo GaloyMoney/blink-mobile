@@ -26,7 +26,7 @@ export type Locales =
 	| 'nl'
 	| 'pt'
 	| 'qu'
-        | 'ro'
+	| 'ro'
 	| 'sr'
 	| 'sw'
 	| 'th'
