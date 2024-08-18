@@ -18,6 +18,8 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { useBreez } from "@app/hooks"
 import { usePersistentStateContext } from "@app/store/persistent-state"
+import { setHasPromptedSetDefaultAccount } from "@app/graphql/client-only-query"
+import { useApolloClient } from "@apollo/client"
 
 export type SetDefaultAccountModalProps = {
   isVisible: boolean
@@ -31,6 +33,7 @@ export const SetDefaultAccountModal = ({
   transactionLength,
 }: SetDefaultAccountModalProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Primary">>()
+  const client = useApolloClient()
   const { updateState } = usePersistentStateContext()
   const { btcWallet } = useBreez()
 
@@ -56,6 +59,7 @@ export const SetDefaultAccountModal = ({
         }
       return undefined
     })
+    setHasPromptedSetDefaultAccount(client)
     setLoading(false)
     toggleModal()
     navigation.navigate("receiveBitcoin", { transactionLength })

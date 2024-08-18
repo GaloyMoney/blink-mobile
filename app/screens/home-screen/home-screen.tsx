@@ -312,8 +312,7 @@ export const HomeScreen: React.FC = () => {
       if (
         target === "receiveBitcoin" &&
         !hasPromptedSetDefaultAccount &&
-        numberOfTxs >= TransactionCountToTriggerSetDefaultAccountModal &&
-        galoyInstanceId === "Main"
+        persistentState.isAdvanceMode
       ) {
         setDefaultAccountModalVisible(!defaultAccountModalVisible)
         return
