@@ -20,7 +20,7 @@ const DEVICE_ACCOUNT_CREDENTIALS_KEY = "device-account"
 
 export const useCreateAccount = () => {
   const { deviceAccountEnabled } = useFeatureFlags()
-  const [appCheckToken] = useAppCheckToken({ skip: !deviceAccountEnabled })
+  const [appCheckToken, loading] = useAppCheckToken({ skip: !deviceAccountEnabled })
   const {
     appConfig: {
       galoyInstance: { authUrl },
@@ -98,5 +98,6 @@ export const useCreateAccount = () => {
 
   return {
     createDeviceAccountAndLogin,
+    appcheckTokenLoading: loading,
   }
 }
