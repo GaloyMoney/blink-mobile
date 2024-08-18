@@ -52,7 +52,11 @@ gql`
 `
 
 const items = {
-  account: [AccountLevelSetting, AdvancedModeToggle, TxLimits],
+  account: [
+    AccountLevelSetting,
+    //  AdvancedModeToggle,
+    TxLimits,
+  ],
   loginMethods: [EmailSetting, PhoneSetting],
   waysToGetPaid: [AccountLNAddress, AccountPOS, AccountStaticQR],
   wallet: [NostrSecret, BackupWallet, ImportWallet],
