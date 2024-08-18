@@ -14,8 +14,10 @@ import Icon from "react-native-vector-icons/Ionicons"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useNavigation, useRoute } from "@react-navigation/native"
+import { useIsFocused, useNavigation } from "@react-navigation/native"
 import { RootStackParamList } from "../../navigation/stack-param-lists"
+import { useApolloClient } from "@apollo/client"
+import messaging from "@react-native-firebase/messaging"
 
 // components
 import { AppUpdate } from "@app/components/app-update/app-update"
@@ -47,6 +49,7 @@ import { getDefaultWallet } from "@app/graphql/wallets-utils"
 
 // utils
 import { testProps } from "../../utils/testProps"
+import { addDeviceToken, requestNotificationPermission } from "@app/utils/notifications"
 
 // breez
 import { Payment } from "@breeztech/react-native-breez-sdk"
@@ -71,6 +74,8 @@ const TransactionCountToTriggerSetDefaultAccountModal = 1
 
 export const HomeScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const isFocused = useIsFocused()
+  const client = useApolloClient()
   const dispatch = useAppDispatch()
   const {
     appConfig: {
@@ -134,6 +139,27 @@ export const HomeScreen: React.FC = () => {
   const pulseAnim = useRef(new Animated.Value(1)).current // Initial scale value
 
   const helpTriggered = persistentState?.helpTriggered ?? false
+
+  // notification permission
+  useEffect(() => {
+    let timeout: NodeJS.Timeout
+    if (isAuthed && isFocused && client) {
+      const WAIT_TIME_TO_PROMPT_USER = 5000
+      timeout = setTimeout(
+        async () => {
+          const result = await requestNotificationPermission()
+          if (
+            result === messaging.AuthorizationStatus.PROVISIONAL ||
+            result === messaging.AuthorizationStatus.AUTHORIZED
+          ) {
+            await addDeviceToken(client)
+          }
+        }, // no op if already requested
+        WAIT_TIME_TO_PROMPT_USER,
+      )
+    }
+    return () => timeout && clearTimeout(timeout)
+  }, [isAuthed, isFocused, client])
 
   useEffect(() => {
     const pulse = () => {
