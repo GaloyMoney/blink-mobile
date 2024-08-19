@@ -124,7 +124,6 @@ export const CardScreen: React.FC<Props> = ({ navigation }) => {
 
   const { LL } = useI18nContext()
 
-  const loading = false // placeholder for query loading if we need to load card data in the future
   const [cardHtml, setCardHtml] = useState<string | null>(null)
   const [cardTag, setCardTag] = useState<string | null>(null)
   const [refreshBalance, setRefreshBalance] = useState<string | null>("false")
@@ -249,7 +248,7 @@ export const CardScreen: React.FC<Props> = ({ navigation }) => {
 
   let ListEmptyContent: React.ReactNode
 
-  if (loading || !initialized) {
+  if (!initialized || priceLoading) {
     ListEmptyContent = (
       <View style={styles.activityIndicatorContainer}>
         <ActivityIndicator size="large" color={colors.primary} />
@@ -416,7 +415,7 @@ export const CardScreen: React.FC<Props> = ({ navigation }) => {
           />
         </>
       )}
-      {(!cardHtml || !refreshBalance) && (
+      {(!cardHtml || !refreshBalance) && !priceLoading && (
         <ModalNfcFlashcard
           isActive={displayReceiveNfc}
           setIsActive={setDisplayReceiveNfc}
