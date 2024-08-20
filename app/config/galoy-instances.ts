@@ -69,7 +69,7 @@ export const GALOY_INSTANCES: readonly GaloyInstance[] = [
     id: "Main",
     name: "Flash",
     graphqlUri: "https://api.flashapp.me/graphql",
-    graphqlWsUri: "wss://ws.flashapp.me/graphqlws",
+    graphqlWsUri: "wss://ws.flashapp.me/graphql",
     authUrl: "https://api.flashapp.me",
     posUrl: "https://pay.flashapp.me",
     lnAddressHostname: "flashapp.me",
