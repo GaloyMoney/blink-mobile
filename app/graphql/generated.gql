@@ -92,6 +92,102 @@ mutation accountDelete {
   }
 }
 
+mutation accountDisableNotificationCategory(
+  $input: AccountDisableNotificationCategoryInput!
+) {
+  accountDisableNotificationCategory(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    account {
+      id
+      notificationSettings {
+        push {
+          enabled
+          disabledCategories
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+mutation accountDisableNotificationChannel(
+  $input: AccountDisableNotificationChannelInput!
+) {
+  accountDisableNotificationChannel(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    account {
+      id
+      notificationSettings {
+        push {
+          enabled
+          disabledCategories
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+mutation accountEnableNotificationCategory(
+  $input: AccountEnableNotificationCategoryInput!
+) {
+  accountEnableNotificationCategory(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    account {
+      id
+      notificationSettings {
+        push {
+          enabled
+          disabledCategories
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+mutation accountEnableNotificationChannel(
+  $input: AccountEnableNotificationChannelInput!
+) {
+  accountEnableNotificationChannel(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    account {
+      id
+      notificationSettings {
+        push {
+          enabled
+          disabledCategories
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
 mutation accountUpdateDefaultWalletId($input: AccountUpdateDefaultWalletIdInput!) {
   accountUpdateDefaultWalletId(input: $input) {
     errors {
@@ -366,7 +462,9 @@ mutation onChainUsdPaymentSend($input: OnChainUsdPaymentSendInput!) {
   }
 }
 
-mutation onChainUsdPaymentSendAsBtcDenominated($input: OnChainUsdPaymentSendAsBtcDenominatedInput!) {
+mutation onChainUsdPaymentSendAsBtcDenominated(
+  $input: OnChainUsdPaymentSendAsBtcDenominatedInput!
+) {
   onChainUsdPaymentSendAsBtcDenominated(input: $input) {
     errors {
       message
@@ -623,6 +721,18 @@ mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
     user {
       id
       username
+      __typename
+    }
+    __typename
+  }
+}
+
+query ExportCsvSetting($walletIds: [WalletId!]!) {
+  me {
+    id
+    defaultAccount {
+      id
+      csvTransactions(walletIds: $walletIds)
       __typename
     }
     __typename
@@ -946,6 +1056,25 @@ query network {
   }
 }
 
+query notificationSettings {
+  me {
+    id
+    defaultAccount {
+      id
+      notificationSettings {
+        push {
+          enabled
+          disabledCategories
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
 query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!) {
   onChainTxFee(walletId: $walletId, address: $address, amount: $amount) {
     amount
@@ -953,14 +1082,22 @@ query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: Sat
   }
 }
 
-query onChainUsdTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: CentAmount!) {
+query onChainUsdTxFee(
+  $walletId: WalletId!
+  $address: OnChainAddress!
+  $amount: CentAmount!
+) {
   onChainUsdTxFee(walletId: $walletId, address: $address, amount: $amount) {
     amount
     __typename
   }
 }
 
-query onChainUsdTxFeeAsBtcDenominated($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!) {
+query onChainUsdTxFeeAsBtcDenominated(
+  $walletId: WalletId!
+  $address: OnChainAddress!
+  $amount: SatAmount!
+) {
   onChainUsdTxFeeAsBtcDenominated(
     walletId: $walletId
     address: $address
@@ -1217,6 +1354,12 @@ query settingsScreen {
       }
       __typename
     }
+    totpEnabled
+    email {
+      address
+      verified
+      __typename
+    }
     __typename
   }
 }
@@ -1239,7 +1382,13 @@ query totpRegistrationScreen {
   }
 }
 
-query transactionListForContact($username: Username!, $first: Int, $after: String, $last: Int, $before: String) {
+query transactionListForContact(
+  $username: Username!
+  $first: Int
+  $after: String
+  $last: Int
+  $before: String
+) {
   me {
     id
     contactByUsername(username: $username) {
@@ -1253,7 +1402,12 @@ query transactionListForContact($username: Username!, $first: Int, $after: Strin
   }
 }
 
-query transactionListForDefaultAccount($first: Int, $after: String, $last: Int, $before: String) {
+query transactionListForDefaultAccount(
+  $first: Int
+  $after: String
+  $last: Int
+  $before: String
+) {
   me {
     id
     defaultAccount {
@@ -1305,6 +1459,7 @@ query wallets {
       wallets {
         walletCurrency
         id
+        lnurlp
         __typename
       }
       __typename

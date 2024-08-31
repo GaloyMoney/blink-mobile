@@ -89,6 +89,7 @@ gql`
         wallets {
           walletCurrency
           id
+          lnurlp
         }
       }
     }

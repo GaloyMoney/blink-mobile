@@ -63,3 +63,4 @@ generates:
         EndpointId: "string"
         EndpointUrl: "string"
         NotificationCategory: "string"
+        Lnurl: "string"

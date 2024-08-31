@@ -47,6 +47,11 @@ gql`
           walletCurrency
         }
       }
+      totpEnabled
+      email {
+        address
+        verified
+      }
     }
   }
 `
