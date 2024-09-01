@@ -678,9 +678,11 @@ export type Mutation = {
    */
   readonly intraLedgerPaymentSend: PaymentSendPayload
   /**
-   * Actions a payment which is internal to the ledger e.g. it does
+   * Galoy: Actions a payment which is internal to the ledger e.g. it does
    * not use onchain/lightning. Returns payment status (success,
    * failed, pending, already_paid).
+   *
+   * Flash: We do not currently have an internal ledger. Consequently, intraledger payments have been updated to call Ibex instead.
    */
   readonly intraLedgerUsdPaymentSend: PaymentSendPayload
   /**
@@ -743,6 +745,7 @@ export type Mutation = {
    */
   readonly lnUsdInvoiceCreateOnBehalfOfRecipient: LnInvoicePayload
   readonly lnUsdInvoiceFeeProbe: SatAmountPayload
+  readonly merchantMapSuggest: MerchantPayload
   readonly onChainAddressCreate: OnChainAddressPayload
   readonly onChainAddressCurrent: OnChainAddressPayload
   readonly onChainPaymentSend: PaymentSendPayload
@@ -873,6 +876,10 @@ export type MutationLnUsdInvoiceCreateOnBehalfOfRecipientArgs = {
 
 export type MutationLnUsdInvoiceFeeProbeArgs = {
   input: LnUsdInvoiceFeeProbeInput
+}
+
+export type MutationMerchantMapSuggestArgs = {
+  input: MerchantMapSuggestInput
 }
 
 export type MutationOnChainAddressCreateArgs = {
@@ -1214,6 +1221,7 @@ export type Query = {
   readonly quizQuestions?: Maybe<ReadonlyArray<Maybe<QuizQuestion>>>
   /** Returns 1 Sat and 1 Usd Cent price for the given currency */
   readonly realtimePrice: RealtimePrice
+  readonly region?: Maybe<Region>
   /** @deprecated will be migrated to AccountDefaultWalletId */
   readonly userDefaultWalletId: Scalars["WalletId"]["output"]
   readonly usernameAvailable?: Maybe<Scalars["Boolean"]["output"]>
@@ -1312,6 +1320,14 @@ export type RealtimePricePayload = {
   readonly __typename: "RealtimePricePayload"
   readonly errors: ReadonlyArray<Error>
   readonly realtimePrice?: Maybe<RealtimePrice>
+}
+
+export type Region = {
+  readonly __typename: "Region"
+  readonly latitude: Scalars["Float"]["output"]
+  readonly latitudeDelta: Scalars["Float"]["output"]
+  readonly longitude: Scalars["Float"]["output"]
+  readonly longitudeDelta: Scalars["Float"]["output"]
 }
 
 export type SatAmountPayload = {
@@ -2340,6 +2356,36 @@ export type LevelQuery = {
   } | null
 }
 
+export type MerchantMapSuggestMutationVariables = Exact<{
+  input: MerchantMapSuggestInput
+}>
+
+export type MerchantMapSuggestMutation = {
+  readonly __typename: "Mutation"
+  readonly merchantMapSuggest: {
+    readonly __typename: "MerchantPayload"
+    readonly errors: ReadonlyArray<{
+      readonly __typename: "GraphQLApplicationError"
+      readonly code?: string | null
+      readonly message: string
+      readonly path?: ReadonlyArray<string | null> | null
+    }>
+    readonly merchant?: {
+      readonly __typename: "Merchant"
+      readonly createdAt: number
+      readonly id: string
+      readonly title: string
+      readonly username: string
+      readonly validated: boolean
+      readonly coordinates: {
+        readonly __typename: "Coordinates"
+        readonly latitude: number
+        readonly longitude: number
+      }
+    } | null
+  }
+}
+
 export type DisplayCurrencyQueryVariables = Exact<{ [key: string]: never }>
 
 export type DisplayCurrencyQuery = {
@@ -2641,7 +2687,7 @@ export type BusinessMapMarkersQueryVariables = Exact<{ [key: string]: never }>
 
 export type BusinessMapMarkersQuery = {
   readonly __typename: "Query"
-  readonly businessMapMarkers?: ReadonlyArray<{
+  readonly businessMapMarkers: ReadonlyArray<{
     readonly __typename: "MapMarker"
     readonly username?: string | null
     readonly mapInfo: {
@@ -5168,6 +5214,122 @@ export function useLevelLazyQuery(
 export type LevelQueryHookResult = ReturnType<typeof useLevelQuery>
 export type LevelLazyQueryHookResult = ReturnType<typeof useLevelLazyQuery>
 export type LevelQueryResult = Apollo.QueryResult<LevelQuery, LevelQueryVariables>
+export const MerchantMapSuggestDocument = gql`
+  mutation MerchantMapSuggest($input: MerchantMapSuggestInput!) {
+    merchantMapSuggest(input: $input) {
+      errors {
+        code
+        message
+        path
+      }
+      merchant {
+        coordinates {
+          latitude
+          longitude
+        }
+        createdAt
+        id
+        title
+        username
+        validated
+      }
+    }
+  }
+`
+export type MerchantMapSuggestMutationFn = Apollo.MutationFunction<
+  MerchantMapSuggestMutation,
+  MerchantMapSuggestMutationVariables
+>
+
+/**
+ * __useMerchantMapSuggestMutation__
+ *
+ * To run a mutation, you first call `useMerchantMapSuggestMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMerchantMapSuggestMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [merchantMapSuggestMutation, { data, loading, error }] = useMerchantMapSuggestMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useMerchantMapSuggestMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    MerchantMapSuggestMutation,
+    MerchantMapSuggestMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    MerchantMapSuggestMutation,
+    MerchantMapSuggestMutationVariables
+  >(MerchantMapSuggestDocument, options)
+}
+export type MerchantMapSuggestMutationHookResult = ReturnType<
+  typeof useMerchantMapSuggestMutation
+>
+export type MerchantMapSuggestMutationResult =
+  Apollo.MutationResult<MerchantMapSuggestMutation>
+export type MerchantMapSuggestMutationOptions = Apollo.BaseMutationOptions<
+  MerchantMapSuggestMutation,
+  MerchantMapSuggestMutationVariables
+>
+export const UserLogoutDocument = gql`
+  mutation UserLogout($input: UserLogoutInput!) {
+    userLogout(input: $input) {
+      success
+      errors {
+        code
+        message
+      }
+    }
+  }
+`
+export type UserLogoutMutationFn = Apollo.MutationFunction<
+  UserLogoutMutation,
+  UserLogoutMutationVariables
+>
+
+/**
+ * __useUserLogoutMutation__
+ *
+ * To run a mutation, you first call `useUserLogoutMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserLogoutMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userLogoutMutation, { data, loading, error }] = useUserLogoutMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserLogoutMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UserLogoutMutation,
+    UserLogoutMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<UserLogoutMutation, UserLogoutMutationVariables>(
+    UserLogoutDocument,
+    options,
+  )
+}
+export type UserLogoutMutationHookResult = ReturnType<typeof useUserLogoutMutation>
+export type UserLogoutMutationResult = Apollo.MutationResult<UserLogoutMutation>
+export type UserLogoutMutationOptions = Apollo.BaseMutationOptions<
+  UserLogoutMutation,
+  UserLogoutMutationVariables
+>
 export const DisplayCurrencyDocument = gql`
   query displayCurrency {
     me {

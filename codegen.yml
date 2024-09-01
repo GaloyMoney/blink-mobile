@@ -1,10 +1,11 @@
 overwrite: true
-schema: "https://api.staging.flashapp.me/graphql"
-# schema: "../galoy/src/graphql/main/schema.graphql"
+schema: "https://api.test.flashapp.me/graphql"
+# schema: "https://raw.githubusercontent.com/lnflash/flash/feature/merchant-map-suggest/src/graphql/public/schema.graphql"
 documents:
   - "app/**/*.ts"
   - "app/**/*.tsx"
   - "e2e/**/*.ts"
+  - "app/graphql/local-schema.gql"
 generates:
   app/graphql/generated.ts:
     schema: "app/graphql/local-schema.gql"

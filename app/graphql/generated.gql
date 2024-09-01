@@ -81,6 +81,43 @@ fragment TransactionList on TransactionConnection {
   __typename
 }
 
+mutation MerchantMapSuggest($input: MerchantMapSuggestInput!) {
+  merchantMapSuggest(input: $input) {
+    errors {
+      code
+      message
+      path
+      __typename
+    }
+    merchant {
+      coordinates {
+        latitude
+        longitude
+        __typename
+      }
+      createdAt
+      id
+      title
+      username
+      validated
+      __typename
+    }
+    __typename
+  }
+}
+
+mutation UserLogout($input: UserLogoutInput!) {
+  userLogout(input: $input) {
+    success
+    errors {
+      code
+      message
+      __typename
+    }
+    __typename
+  }
+}
+
 mutation accountDelete {
   accountDelete {
     errors {
@@ -645,6 +682,27 @@ mutation userPhoneRegistrationValidate($input: UserPhoneRegistrationValidateInpu
 }
 
 mutation userTotpDelete($input: UserTotpDeleteInput!) {
+  userTotpDelete(input: $input) {
+    errors {
+      message
+      __typename
+    }
+    me {
+      id
+      phone
+      totpEnabled
+      email {
+        address
+        verified
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+mutation userTotpDeleteA($input: UserTotpDeleteInput!) {
   userTotpDelete(input: $input) {
     errors {
       message

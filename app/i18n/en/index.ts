@@ -505,8 +505,12 @@ const en: BaseTranslation = {
     locationPermissionNeutral: "Ask Me Later",
     locationPermissionPositive: "OK",
     locationPermissionTitle: "Locate yourself on the map",
-    payBusiness: "pay this business",
+    payBusiness: "Pay this Business",
     title: "Map",
+    addPin: "Click anywhere to add a pin",
+    selectedCoordinates: "Your Flashpoint Coordinates: \n",
+    viewInGoogleMaps: "View in Google Maps",
+    getDirections: "Get Directions",
   },
   HomeScreen: {
     cashout: "Cash Out",
@@ -973,6 +977,12 @@ const en: BaseTranslation = {
     termsAndConditions: "\nRead the Terms & Conditions.",
     learnMore: "What is a Non-Custodial Wallet?",
   },
+  MerchantSuggestModal: {
+    header: "Add Flashpoint",
+    body: "You have selected a location for your business on the map. Flash users will be able to find you on the map, and send you payments by clicking on your map pin.",
+    termsAndConditions: "\nRead the Terms & Conditions.",
+    learnMore: "Your pin request will be processed within 24 hours.",
+  },
   UnVerifiedSeedModal: {
     header: "YOUR BITCOIN IS NOT SECURE!",
     body:
@@ -1184,6 +1194,7 @@ const en: BaseTranslation = {
     phoneNumber: "Phone Number",
     rate: "Rate",
     reauth: "Your session has expired. Please log in again.",
+    request: "Request Pin",
     restart: "Restart",
     sats: "sats",
     search: "Search",

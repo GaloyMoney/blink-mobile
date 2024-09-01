@@ -1,5 +1,38 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-native/split-platform-components */
+/* eslint-disable no-extra-boolean-cast */
+/* eslint-disable no-implicit-coercion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useBusinessMapMarkersQuery } from "@app/graphql/generated"
+/* eslint-disable react/display-name */
+import React, { memo, useCallback, useEffect, useState } from "react"
+import { PermissionsAndroid, Platform } from "react-native"
+import MapView from "react-native-maps"
+import { makeStyles } from "@rneui/themed"
+import crashlytics from "@react-native-firebase/crashlytics"
+import { useI18nContext } from "@app/i18n/i18n-react"
+
+// components
+import { Screen } from "../../components/screen"
+import {
+  AddButton,
+  AddPin,
+  CustomMarker,
+  MerchantSuggestModal,
+  RefreshButton,
+} from "@app/components/map-screen"
+
+// utils
+import { toastShow } from "../../utils/toast"
+
+// hooks
+import { useActivityIndicator } from "@app/hooks"
+
+// gql
+import {
+  useBusinessMapMarkersQuery,
+  useMerchantMapSuggestMutation,
+  useSettingsScreenQuery,
+} from "@app/graphql/generated"
 import {
   ApolloClient,
   InMemoryCache,
@@ -7,27 +40,6 @@ import {
   gql,
   useQuery,
 } from "@apollo/client"
-import { useFocusEffect } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
-import * as React from "react"
-import { useCallback } from "react"
-// eslint-disable-next-line react-native/split-platform-components
-import { PermissionsAndroid, Text, View } from "react-native"
-import { Button } from "@rneui/base"
-import MapView, {
-  Marker,
-  Callout,
-  // CalloutSubview,
-  MapMarkerProps,
-} from "react-native-maps"
-import { Screen } from "../../components/screen"
-import { RootStackParamList } from "../../navigation/stack-param-lists"
-import { isIos } from "../../utils/helper"
-import { toastShow } from "../../utils/toast"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import crashlytics from "@react-native-firebase/crashlytics"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { makeStyles, useTheme } from "@rneui/themed"
 
 const httpLink = createHttpLink({
   uri: "https://api.blink.sv/graphql",
@@ -38,28 +50,6 @@ const blinkClient = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache(),
 })
-
-const useStyles = makeStyles(({ colors }) => ({
-  android: { marginTop: 18 },
-
-  customView: {
-    alignItems: "center",
-    margin: 12,
-  },
-
-  ios: { paddingTop: 12 },
-
-  map: {
-    height: "100%",
-    width: "100%",
-  },
-
-  title: { color: colors._darkGrey, fontSize: 18 },
-}))
-
-type Props = {
-  navigation: StackNavigationProp<RootStackParamList, "Primary">
-}
 
 const BUSINESS_MAP_MARKERS_QUERY = gql`
   query businessMapMarkers {
@@ -76,133 +66,161 @@ const BUSINESS_MAP_MARKERS_QUERY = gql`
   }
 `
 
-export const MapScreen: React.FC<Props> = ({ navigation }) => {
-  const { colors } = useTheme().theme
+export const MapScreen = memo(() => {
+  const { toggleActivityIndicator } = useActivityIndicator()
   const styles = useStyles()
-  const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
+  const { data } = useSettingsScreenQuery({ fetchPolicy: "cache-first" })
+  const usernameTitle = data?.me?.username || LL.common.flashUser()
 
-  const { data: blinkData, error: blinkError } = useQuery(BUSINESS_MAP_MARKERS_QUERY, {
+  const [businessName, setBusinessName] = useState("")
+  const [isAddingPin, setIsAddingPin] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
+  const [selectedLocation, setSelectedLocation] = useState<{
+    latitude: number
+    longitude: number
+  }>()
+
+  const [merchantMapSuggest] = useMerchantMapSuggestMutation()
+  const {
+    data: blinkData,
+    error: blinkError,
+    loading: blinkLoading,
+  } = useQuery(BUSINESS_MAP_MARKERS_QUERY, {
     client: blinkClient, // Use the custom Apollo client
-    fetchPolicy: "cache-and-network",
+    fetchPolicy: "cache-only",
   })
-
-  // Query using generated hook
   const {
     data: flashData,
     error: flashError,
     refetch,
+    loading: flashLoading,
   } = useBusinessMapMarkersQuery({
-    fetchPolicy: "cache-and-network",
+    fetchPolicy: "cache-first",
   })
 
-  useFocusEffect(
-    useCallback(() => {
-      refetch()
-    }, [refetch]),
-  )
-
-  // Handle errors from both queries
-  if (blinkError || flashError) {
+  useEffect(() => {
     const errorMessage = blinkError?.message || flashError?.message
-    if (errorMessage) {
-      toastShow({ message: errorMessage })
+    if (!!errorMessage) {
+      toastShow({ message: errorMessage, type: "error" })
+    }
+  }, [blinkError, flashError])
+
+  useEffect(() => {
+    if (blinkLoading || flashLoading) {
+      toggleActivityIndicator(true)
+    } else {
+      toggleActivityIndicator(false)
+    }
+  }, [blinkLoading, flashLoading])
+
+  useEffect(() => {
+    requestLocationPermission()
+  }, [])
+
+  const requestLocationPermission = useCallback(() => {
+    if (Platform.OS === "android") {
+      const asyncRequestLocationPermission = async () => {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: LL.MapScreen.locationPermissionTitle(),
+              message: LL.MapScreen.locationPermissionMessage(),
+              buttonNeutral: LL.MapScreen.locationPermissionNeutral(),
+              buttonNegative: LL.MapScreen.locationPermissionNegative(),
+              buttonPositive: LL.MapScreen.locationPermissionPositive(),
+            },
+          )
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            console.debug("You can use the location")
+          } else {
+            console.debug("Location permission denied")
+          }
+        } catch (err: unknown) {
+          if (err instanceof Error) {
+            crashlytics().recordError(err)
+          }
+          console.debug(err)
+        }
+      }
+      asyncRequestLocationPermission()
+    }
+  }, [])
+
+  const handleMapPress = (event: any) => {
+    if (isAddingPin) {
+      const { latitude, longitude } = event.nativeEvent.coordinate
+      setSelectedLocation({ latitude, longitude })
+      setModalVisible(true)
+      setIsAddingPin(false)
     }
   }
 
-  // Merge data from both queries
-  const maps = [
-    ...(blinkData?.businessMapMarkers?.map((item: any) => ({
-      ...item,
-      source: "blink",
-    })) ?? []),
-    ...(flashData?.businessMapMarkers?.map((item: any) => ({
-      ...item,
-      source: "flash",
-    })) ?? []),
-  ]
-
-  const requestLocationPermission = useCallback(() => {
-    const asyncRequestLocationPermission = async () => {
-      try {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          {
-            title: LL.MapScreen.locationPermissionTitle(),
-            message: LL.MapScreen.locationPermissionMessage(),
-            buttonNeutral: LL.MapScreen.locationPermissionNeutral(),
-            buttonNegative: LL.MapScreen.locationPermissionNegative(),
-            buttonPositive: LL.MapScreen.locationPermissionPositive(),
+  const handleSubmit = () => {
+    if (selectedLocation && businessName && usernameTitle) {
+      setModalVisible(false)
+      toggleActivityIndicator(true)
+      const { latitude, longitude } = selectedLocation
+      merchantMapSuggest({
+        variables: {
+          input: {
+            latitude,
+            longitude,
+            title: businessName,
+            username: usernameTitle,
           },
-        )
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.debug("You can use the location")
-        } else {
-          console.debug("Location permission denied")
-        }
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          crashlytics().recordError(err)
-        }
-        console.debug(err)
-      }
+        },
+      })
+        .then(() => {
+          toastShow({ message: "Pin added successfully!", type: "success" })
+          refetch()
+        })
+        .catch((error: any) => {
+          toastShow({ message: "Error adding pin: " + error.message })
+        })
+        .finally(() => {
+          toggleActivityIndicator(false)
+        })
     }
-    asyncRequestLocationPermission()
-    // disable eslint because we don't want to re-run this function when the language changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useFocusEffect(requestLocationPermission)
-
-  const markers: ReturnType<React.FC<MapMarkerProps>>[] = []
-  maps.forEach((item: any, index) => {
-    if (item) {
-      const key = item.username + item.mapInfo.title + index
-      const onPress = () => {
-        const domain = item.source === "blink" ? "@blink.sv" : "@flashapp.me"
-        const usernameWithDomain = `${item.username}${domain}`
-        if (isAuthed && item?.username) {
-          navigation.navigate("sendBitcoinDestination", { username: usernameWithDomain })
-        } else {
-          navigation.navigate("phoneFlow")
-        }
-      }
-
-      markers.push(
-        <Marker coordinate={item.mapInfo.coordinates} key={key} pinColor={colors._orange}>
-          <Callout
-            // alphaHitTest
-            // tooltip
-            onPress={() => (Boolean(item.username) && !isIos ? onPress() : null)}
-          >
-            <View style={styles.customView}>
-              <Text style={styles.title}>{item.mapInfo.title}</Text>
-              <Button
-                containerStyle={isIos ? styles.ios : styles.android}
-                title={LL.MapScreen.payBusiness()}
-                onPress={onPress}
-              />
-            </View>
-          </Callout>
-        </Marker>,
-      )
-    }
-  })
+  }
 
   return (
-    <Screen>
+    <Screen style={styles.center}>
       <MapView
         style={styles.map}
         showsUserLocation={true}
+        onPress={handleMapPress} // Add onPress event
         initialRegion={{
-          latitude: 18.1085,
-          longitude: -69.42021,
-          latitudeDelta: 18.0,
-          longitudeDelta: 18.0,
+          latitude: 18.018,
+          longitude: -77.329,
+          latitudeDelta: 2.1,
+          longitudeDelta: 2.1,
         }}
       >
-        {markers}
+        <CustomMarker blinkData={blinkData} flashData={flashData} />
       </MapView>
+      {!isAddingPin && <RefreshButton onRefresh={() => refetch()} />}
+      <AddPin visible={isAddingPin} />
+      <AddButton handleOnPress={setIsAddingPin} />
+      <MerchantSuggestModal
+        isVisible={modalVisible}
+        setIsVisible={setModalVisible}
+        businessName={businessName}
+        setBusinessName={setBusinessName}
+        onSubmit={handleSubmit}
+        selectedLocation={selectedLocation}
+      />
     </Screen>
   )
-}
+})
+
+const useStyles = makeStyles(() => ({
+  map: {
+    height: "100%",
+    width: "100%",
+  },
+  center: {
+    alignItems: "center",
+  },
+}))

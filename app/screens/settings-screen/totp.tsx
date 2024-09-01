@@ -12,7 +12,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { SettingsRow } from "./row"
 
 gql`
-  mutation userTotpDelete($input: UserTotpDeleteInput!) {
+  mutation userTotpDeleteA($input: UserTotpDeleteInput!) {
     userTotpDelete(input: $input) {
       errors {
         message
