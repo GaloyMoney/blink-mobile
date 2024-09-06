@@ -4064,6 +4064,48 @@ type RootTranslation = {
 			title: string
 		}
 	}
+	reports: {
+		/**
+		 * Create a Report
+		 */
+		title: string
+		/**
+		 * Reconciliation Report
+		 */
+		reconciliation: string
+		/**
+		 * Aggregated Report
+		 */
+		aggregation: string
+		/**
+		 * Top Recipients Report
+		 */
+		topRecipients: string
+		/**
+		 * Top Senders Report
+		 */
+		topSenders: string
+		/**
+		 * From Date
+		 */
+		selectFromDate: string
+		/**
+		 * To Date
+		 */
+		selectToDate: string
+		/**
+		 * From Date
+		 */
+		fromDate: string
+		/**
+		 * To Date
+		 */
+		toDate: string
+		/**
+		 * Total
+		 */
+		total: string
+	}
 	support: {
 		/**
 		 * N​e​e​d​ ​h​e​l​p​?​ ​C​o​n​t​a​c​t​ ​u​s​.
@@ -8217,6 +8259,48 @@ export type TranslationFunctions = {
 			 */
 			title: () => LocalizedString
 		}
+	}
+	reports: {
+		/**
+		 * Create a Report
+		 */
+		title: () => LocalizedString
+		/**
+		 * Reconciliation Report
+		 */
+		reconciliation: () => LocalizedString
+		/**
+		 * Aggregated Report
+		 */
+		aggregation: () => LocalizedString
+		/**
+		 * Top Recipients Report
+		 */
+		topRecipients: () => LocalizedString
+		/**
+		 * Top Senders Report
+		 */
+		topSenders: () => LocalizedString
+		/**
+		 * Report
+		 */
+		selectFromDate: () => LocalizedString
+		/**
+		 * Report
+		 */
+		selectToDate: () => LocalizedString
+		/**
+		 * Report
+		 */
+		fromDate: () => LocalizedString
+		/**
+		 * Report
+		 */
+		toDate: () => LocalizedString
+		/**
+		 * Generate Report
+		 */
+		total: () => LocalizedString
 	}
 	support: {
 		/**

@@ -2,7 +2,7 @@ import * as React from "react"
 import { gql } from "@apollo/client"
 import { makeStyles } from "@rneui/themed"
 import { ScrollView } from "react-native-gesture-handler"
-import { useLevel } from "@app/graphql/level-context"
+import { AccountLevel, useLevel } from "@app/graphql/level-context"
 import { useI18nContext } from "@app/i18n/i18n-react"
 
 import { Screen } from "../../components/screen"
@@ -27,6 +27,7 @@ import { ImportWallet } from "./settings/import-wallet"
 import { AdvancedModeToggle } from "./settings/advanced-mode-toggle"
 import { ExportCsvSetting } from "./settings/advanced-export-csv"
 import { ApiAccessSetting } from "./settings/advanced-api-access"
+import { GenerateReportsSetting } from "./settings/generate-reports"
 import { SettingsGroup } from "./group"
 import { EmailSetting } from "./account/settings/email"
 import { TotpSetting } from "./totp"
@@ -64,6 +65,7 @@ const items = {
   ],
   loginMethods: [EmailSetting, PhoneSetting],
   waysToGetPaid: [AccountLNAddress, AccountPOS, AccountStaticQR],
+  reports: [GenerateReportsSetting],
   wallet: [NostrSecret, BackupWallet, ImportWallet],
   preferences: [
     NotificationSetting,
@@ -87,6 +89,7 @@ export const SettingsScreen: React.FC = () => {
   const styles = useStyles()
   const { LL } = useI18nContext()
   const { isAtLeastLevelOne } = useLevel()
+  const { currentLevel } = useLevel()
 
   return (
     <Screen preset="scroll" keyboardShouldPersistTaps="handled">
@@ -102,6 +105,9 @@ export const SettingsScreen: React.FC = () => {
           name={LL.SettingsScreen.addressScreen()}
           items={items.waysToGetPaid}
         />
+        {currentLevel === AccountLevel.Two && (
+          <SettingsGroup name="Reports" items={items.reports} />
+        )}
         <SettingsGroup name={LL.SettingsScreen.keysManagement()} items={items.wallet} />
         <SettingsGroup name={LL.common.preferences()} items={items.preferences} />
         <SettingsGroup

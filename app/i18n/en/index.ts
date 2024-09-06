@@ -1255,6 +1255,18 @@ const en: BaseTranslation = {
       title: "Payment received",
     },
   },
+  reports: {
+    title: "Generate Reports",
+		reconciliation: "Reconciliation Report",
+		aggregation: "Aggregation Report",
+		topRecipients: "Top Recipients Report",
+		topSenders: "Top Senders Report",
+		selectFromDate: "Select From Date",
+		selectToDate: "Select To Date",
+		fromDate: "From",
+		toDate: "To",
+    total: "Total",
+  },
   support: {
     contactUs: "Need help? Contact us.",
     joinTheCommunity: "Join the community",
