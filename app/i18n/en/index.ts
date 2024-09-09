@@ -483,7 +483,7 @@ const en: BaseTranslation = {
     createAccount: "Create new account",
     exploreWallet: "Explore wallet",
     logBackInWith: "Log back in with",
-    headline: "Made in Jamaica",
+    headline: "Produt of Jamaica",
     startTrialAccount: "Start with a trial account",
     startWithTrialAccount: "Start with trial account",
     registerPhoneAccount: "Register phone account",

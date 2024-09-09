@@ -5728,7 +5728,7 @@ export type TranslationFunctions = {
 		 */
 		logBackInWith: () => LocalizedString
 		/**
-		 * Made in Jamaica
+		 * Product of Jamaica
 		 */
 		headline: () => LocalizedString
 		/**
