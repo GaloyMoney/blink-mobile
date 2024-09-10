@@ -3267,6 +3267,14 @@ type RootTranslation = {
 		 * I​n​c​r​e​a​s​e​ ​y​o​u​r​ ​l​i​m​i​t​s
 		 */
 		increaseLimits: string
+		/**
+		 * Spending Limits
+		 */
+		spendingLimits: string
+		/**
+		 * The spending limits shown on this page are denominated in USD. For your convenience, we convert these limits into your local currency based on current foreign exchange rates. Please note that the displayed local currency amount may fluctuate as exchange rates are updated in real-time.
+		 */
+		spendingLimitsDescription: string
 	}
 	TransactionScreen: {
 		/**
@@ -7476,6 +7484,14 @@ export type TranslationFunctions = {
 		 * Increase your limits
 		 */
 		increaseLimits: () => LocalizedString
+		/**
+		 * Spending Limits
+		 */
+		spendingLimits: () => LocalizedString
+		/**
+		 * The spending limits shown on this page are denominated in USD. For your convenience, we convert these limits into your local currency based on current foreign exchange rates. Please note that the displayed local currency amount may fluctuate as exchange rates are updated in real-time.
+		 */
+		spendingLimitsDescription: () => LocalizedString
 	}
 	TransactionScreen: {
 		/**
