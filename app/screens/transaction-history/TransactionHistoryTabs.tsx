@@ -13,8 +13,8 @@ import { BalanceHeader } from "@app/components/balance-header"
 
 // hooks
 import { useI18nContext } from "@app/i18n/i18n-react"
-import useBreezBalance from "@app/hooks/useBreezBalance"
 import { usePersistentStateContext } from "@app/store/persistent-state"
+import { useBreez } from "@app/hooks"
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -23,7 +23,7 @@ type Props = StackScreenProps<RootStackParamList, "TransactionHistoryTabs">
 export const TransactionHistoryTabs: React.FC<Props> = ({ navigation, route }) => {
   const initialRouteName = route.params?.initialRouteName
   const { LL } = useI18nContext()
-  const [breezBalance] = useBreezBalance()
+  const { btcWallet } = useBreez()
   const { persistentState } = usePersistentStateContext()
   const [isContentVisible, setIsContentVisible] = React.useState(false)
   const [activeWallet, setActiveWallet] = useState<"btc" | "usd">(
@@ -37,14 +37,14 @@ export const TransactionHistoryTabs: React.FC<Props> = ({ navigation, route }) =
           <BalanceHeader
             isContentVisible={isContentVisible}
             setIsContentVisible={setIsContentVisible}
-            breezBalance={breezBalance}
+            breezBalance={btcWallet.balance}
             walletType={persistentState.isAdvanceMode ? activeWallet : "usd"}
             smallText
           />
         </HeaderRight>
       ),
     })
-  }, [navigation, breezBalance, activeWallet, isContentVisible, setIsContentVisible])
+  }, [navigation, btcWallet.balance, activeWallet, isContentVisible, setIsContentVisible])
 
   return (
     <Tab.Navigator

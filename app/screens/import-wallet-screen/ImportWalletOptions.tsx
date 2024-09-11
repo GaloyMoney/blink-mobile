@@ -100,7 +100,7 @@ const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
         alert("Login failed. Please try again")
       }
     } else {
-      navigation.goBack()
+      navigation.popToTop()
     }
   }
 

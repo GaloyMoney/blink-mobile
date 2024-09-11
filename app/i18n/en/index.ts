@@ -746,6 +746,12 @@ const en: BaseTranslation = {
       "The lnurl server responded with an invoice with an incorrect amount.",
     lnurlInvoiceIncorrectDescription:
       "The lnurl server responded with an invoice with an incorrect description hash.",
+		noAmountInvoiceError: "No amount invoice is not supported in BTC wallet",
+		minAmountInvoiceError: "The amount on the invoice is less than minimum amount {amount: number}",
+		maxAmountInvoiceError: "The amount on the invoice is greater than maximum amount {amount: number}",
+		minAmountConvertError: "The conversion amount is less than minimum required amount {amount: number}",
+		maxAmountConvertError: "The conversion amount is greater than maximum amount {amount: number}"
+   
   },
   SettingsScreen: {
     staticQr: "Printable Static QR Code",
@@ -971,12 +977,16 @@ const en: BaseTranslation = {
     learnMore: "Learn more about Stablesats",
   },
   AdvancedModeModal: {
-    header: "Welcome to Advanced Mode. You now have a non-custodial Bitcoin account added to your wallet!",
+    header: "Welcome to Advanced Mode! Your non-custodial Bitcoin account is now live.",
     body:
-      "You can use it to send and receive larger amounts of money, denominated in Bitcoin. You can also use the SWAP button to instantly transfer value between your Bitcoin account and USD account. The dollar value in the Bitcoin account WILL fluctuate with the price of Bitcoin.\n\nIMPORTANT: Your Bitcoin account is a non-custodial account, so you may be charged a small fee to make your first transaction. Also, you are solely responsible for securing your recovery phrase in a safe place. \n\n\nDO NOT SHARE YOUR RECOVERY PHRASE WITH ANYONE.",
+      "Your Bitcoin is stored as LBTC on the Liquid Network, providing faster and secure transactions with your federated wallet.\n\n" +
+      "SEND & RECEIVE:\n Easily transfer larger amounts in Bitcoin.\n" +
+      "SWAP INSTANTLY:\n Convert between Bitcoin and USD seamlessly.\n" +
+      "TRANSACTION TIME:\n Transactions may take up to 30 seconds to confirm and will appear as 'Pending' until confirmed.\n\n" +
+      "IMPORTANT: This is a non-custodial account, so small network fees may apply. You are solely responsible for securing your recovery phrase in a safe place. \n\n\nDO NOT SHARE YOUR RECOVERY PHRASE WITH ANYONE.",
     termsAndConditions: "\nRead the Terms & Conditions.",
     learnMore: "What is a Non-Custodial Wallet?",
-  },
+},
   MerchantSuggestModal: {
     header: "Add Flashpoint",
     body: "You have selected a location for your business on the map. Flash users will be able to find you on the map, and send you payments by clicking on your map pin.",

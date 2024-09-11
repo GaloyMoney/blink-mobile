@@ -27,9 +27,10 @@ import { Text, makeStyles, useTheme } from "@rneui/themed"
 import { GaloySecondaryButton } from "../atomic/galoy-secondary-button"
 import {
   InputTypeVariant,
-  parseInput,
-  withdrawLnurl,
-} from "@breeztech/react-native-breez-sdk"
+  LnUrlPayResultVariant,
+  lnurlPay,
+  parse,
+} from "@breeztech/react-native-breez-sdk-liquid"
 
 export const ModalNfc: React.FC<{
   isActive: boolean
@@ -177,23 +178,27 @@ export const ModalNfc: React.FC<{
         }
       } else {
         try {
-          const input = await parseInput(lnurl)
-          if (input.type === InputTypeVariant.LN_URL_WITHDRAW) {
-            const amountMsat = settlementAmount.amount * 1000
-            const lnUrlWithdrawResult = await withdrawLnurl({
+          const input = await parse(lnurl)
+          if (input.type === InputTypeVariant.LN_URL_PAY) {
+            const amountMsat = input.data.minSendable
+            const optionalComment = "<comment>"
+            const optionalPaymentLabel = "<label>"
+            const optionalValidateSuccessActionUrl = true
+            const lnUrlPayResult = await lnurlPay({
               data: input.data,
               amountMsat,
-              description: "comment",
+              comment: optionalComment,
+              paymentLabel: optionalPaymentLabel,
+              validateSuccessActionUrl: optionalValidateSuccessActionUrl,
             })
-            console.log(lnUrlWithdrawResult)
-            if (lnUrlWithdrawResult.type === "ok") {
-              // setSuccess(true)
+
+            console.log(lnUrlPayResult)
+            if (lnUrlPayResult.type === LnUrlPayResultVariant.ENDPOINT_SUCCESS) {
               onPaid()
-            } else if (lnUrlWithdrawResult.type === "errorStatus") {
-              console.error(lnUrlWithdrawResult)
+            } else {
+              console.error(lnUrlPayResult)
               alert(
-                lnUrlWithdrawResult?.data?.reason ||
-                  LL.RedeemBitcoinScreen.redeemingError(),
+                lnUrlPayResult?.data?.reason || LL.RedeemBitcoinScreen.redeemingError(),
               )
             }
           } else if (input.type === InputTypeVariant.LN_URL_ERROR) {

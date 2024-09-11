@@ -69,7 +69,7 @@ export type RootStackParamList = {
   lnurl: { username: string }
   sectionCompleted: { amount: number; sectionTitle: string }
   priceHistory: undefined
-  receiveBitcoin: { transactionLength: number }
+  receiveBitcoin: undefined
   flashcardTopup: { flashcardLnurl: string }
   redeemBitcoinDetail: {
     receiveDestination: ReceiveDestination

@@ -2373,6 +2373,30 @@ type RootTranslation = {
 		 * T​h​e​ ​l​n​u​r​l​ ​s​e​r​v​e​r​ ​r​e​s​p​o​n​d​e​d​ ​w​i​t​h​ ​a​n​ ​i​n​v​o​i​c​e​ ​w​i​t​h​ ​a​n​ ​i​n​c​o​r​r​e​c​t​ ​d​e​s​c​r​i​p​t​i​o​n​ ​h​a​s​h​.
 		 */
 		lnurlInvoiceIncorrectDescription: string
+		/**
+		 * No amount invoice is not supported in BTC wallet
+		 */
+		noAmountInvoiceError: string
+		/**
+		 * The amount on the invoice is less than minimum amount
+		 * @param {number} amount
+		 */
+		minAmountInvoiceError: RequiredParams<'amount'>
+		/**
+		 * The amount on the invoice is greater than maximum amount
+		 * @param {number} amount
+		 */
+		maxAmountInvoiceError: RequiredParams<'amount'>
+		/**
+		 * The conversion amount is less than minimum required amount
+		 * @param {number} amount
+		 */
+		minAmountConvertError: RequiredParams<'amount'>
+		/**
+		 * The conversion amount is greater than maximum amount
+		  * @param {number} amount
+		 */
+		maxAmountConvertError: RequiredParams<'amount'>
 	}
 	SettingsScreen: {
 		/**
@@ -6600,6 +6624,26 @@ export type TranslationFunctions = {
 		 * The lnurl server responded with an invoice with an incorrect description hash.
 		 */
 		lnurlInvoiceIncorrectDescription: () => LocalizedString
+		/**
+		 * No amount invoice is not supported in BTC wallet
+		 */
+		noAmountInvoiceError: () => LocalizedString
+		/**
+		 * The amount on the invoice is less than minimum amount
+		 */
+		minAmountInvoiceError: (arg: { amount: number  | string }) => LocalizedString
+		/**
+		 * The amount on the invoice is greater than maximum amount
+		 */
+		maxAmountInvoiceError: (arg: { amount: number | string }) => LocalizedString
+		/**
+		 * The conversion amount is less than minimum required amount
+		 */
+		minAmountConvertError: (arg: { amount: number  | string }) => LocalizedString
+		/**
+		 * The conversion amount is greater than maximum amount
+		 */
+		maxAmountConvertError: (arg: { amount: number | string }) => LocalizedString
 	}
 	SettingsScreen: {
 		/**

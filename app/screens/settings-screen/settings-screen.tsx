@@ -30,7 +30,7 @@ import { ApiAccessSetting } from "./settings/advanced-api-access"
 import { GenerateReportsSetting } from "./settings/generate-reports"
 import { SettingsGroup } from "./group"
 import { EmailSetting } from "./account/settings/email"
-import { TotpSetting } from "./totp"
+// import { TotpSetting } from "./totp"
 
 gql`
   query settingsScreen {
@@ -58,11 +58,7 @@ gql`
 `
 
 const items = {
-  account: [
-    AccountLevelSetting,
-    //  AdvancedModeToggle,
-    TxLimits,
-  ],
+  account: [AccountLevelSetting, AdvancedModeToggle, TxLimits],
   loginMethods: [EmailSetting, PhoneSetting],
   waysToGetPaid: [AccountLNAddress, AccountPOS, AccountStaticQR],
   reports: [GenerateReportsSetting],

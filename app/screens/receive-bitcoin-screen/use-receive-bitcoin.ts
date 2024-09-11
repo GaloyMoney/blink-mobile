@@ -118,7 +118,7 @@ gql`
   }
 `
 
-export const useReceiveBitcoin = (isFirstTransaction: boolean, initPRParams = {}) => {
+export const useReceiveBitcoin = (initPRParams = {}) => {
   const [lnNoAmountInvoiceCreate] = useLnNoAmountInvoiceCreateMutation()
   const [lnUsdInvoiceCreate] = useLnUsdInvoiceCreateMutation()
   const [lnInvoiceCreate] = useLnInvoiceCreateMutation()
@@ -202,14 +202,6 @@ export const useReceiveBitcoin = (isFirstTransaction: boolean, initPRParams = {}
           convertMoneyAmount: _convertMoneyAmount,
           username: username || undefined,
           posUrl,
-          unitOfAccountAmount:
-            defaultWallet.walletCurrency === "BTC" && isFirstTransaction
-              ? {
-                  amount: 500,
-                  currency: "DisplayCurrency",
-                  currencyCode: "USD",
-                }
-              : undefined,
           network: data.globals?.network,
           ...initPRParams,
         }
@@ -448,19 +440,11 @@ export const useReceiveBitcoin = (isFirstTransaction: boolean, initPRParams = {}
           persistentState.isAdvanceMode &&
           btcWallet
         ) {
-          if (isFirstTransaction) {
-            setAmount({
-              amount: 500,
-              currency: "DisplayCurrency",
-              currencyCode: "USD",
-            })
-          }
           return pr.setReceivingWalletDescriptor({
             id: btcWallet.id,
             currency: WalletCurrency.Btc,
           })
         } else if (walletCurrency === WalletCurrency.Usd && usdWallet) {
-          setAmount(undefined)
           return pr.setReceivingWalletDescriptor({
             id: usdWallet.id,
             currency: WalletCurrency.Usd,
@@ -470,7 +454,7 @@ export const useReceiveBitcoin = (isFirstTransaction: boolean, initPRParams = {}
       return pr
     })
   }
-  const setAmount = (amount?: MoneyAmount<WalletOrDisplayCurrency>) => {
+  const setAmount = (amount: MoneyAmount<WalletOrDisplayCurrency>) => {
     setPRCD((pr) => {
       if (pr && pr.setAmount) {
         return pr.setAmount(amount)

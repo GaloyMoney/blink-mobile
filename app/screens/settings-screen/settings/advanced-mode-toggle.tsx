@@ -4,7 +4,6 @@ import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 
 import { SettingsRow } from "../row"
-import useBreezBalance from "@app/hooks/useBreezBalance"
 import { toBtcMoneyAmount } from "@app/types/amounts"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { Alert, Image, Modal } from "react-native"
@@ -12,7 +11,7 @@ import { useSettingsScreenQuery } from "@app/graphql/generated"
 import { getUsdWallet } from "@app/graphql/wallets-utils"
 import { useLevel } from "@app/graphql/level-context"
 import { usePersistentStateContext } from "@app/store/persistent-state"
-import { useActivityIndicator } from "@app/hooks"
+import { useActivityIndicator, useBreez } from "@app/hooks"
 import { useState } from "react"
 import { AdvancedModeModal } from "@app/components/advanced-mode-modal"
 
@@ -22,7 +21,7 @@ export const AdvancedModeToggle: React.FC = () => {
   const { goBack } = useNavigation<StackNavigationProp<RootStackParamList>>()
 
   const { persistentState, updateState } = usePersistentStateContext()
-  const [breezBalance] = useBreezBalance()
+  const { btcWallet } = useBreez()
   const { moneyAmountToDisplayCurrencyString } = useDisplayCurrency()
   const { toggleActivityIndicator } = useActivityIndicator()
 
@@ -68,8 +67,8 @@ export const AdvancedModeToggle: React.FC = () => {
 
   const toggleAdvanceMode = () => {
     if (isAdvanceMode) {
-      if (breezBalance && breezBalance > 0) {
-        const btcWalletBalance = toBtcMoneyAmount(breezBalance || 0)
+      if (btcWallet.balance && btcWallet.balance > 0) {
+        const btcWalletBalance = toBtcMoneyAmount(btcWallet.balance || 0)
         const convertedBalance =
           moneyAmountToDisplayCurrencyString({
             moneyAmount: btcWalletBalance,

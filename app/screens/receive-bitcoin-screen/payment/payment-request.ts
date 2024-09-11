@@ -1,9 +1,4 @@
-import {
-  LnInvoiceCreateMutation,
-  LnNoAmountInvoiceCreateMutation,
-  OnChainAddressCurrentMutation,
-  WalletCurrency,
-} from "@app/graphql/generated"
+import { WalletCurrency } from "@app/graphql/generated"
 import {
   CreatePaymentRequestParams,
   GetFullUriFn,
@@ -21,10 +16,7 @@ import { bech32 } from "bech32"
 import {
   receivePaymentBreezSDK,
   receiveOnchainBreezSDK,
-  breezHealthCheck,
-} from "@app/utils/breez-sdk"
-import { LnInvoice, SwapInfo } from "@breeztech/react-native-breez-sdk"
-import { GraphQLError } from "graphql/error/GraphQLError"
+} from "@app/utils/breez-sdk-liquid"
 
 export const createPaymentRequest = (
   params: CreatePaymentRequestParams,
@@ -38,181 +30,84 @@ export const createPaymentRequest = (
     return createPaymentRequest({ ...params, state })
   }
 
-  // Breez SDK
-  const fetchBreezOnchain = async () => {
+  // Breez SDK OnChain
+  const fetchBreezOnchain = async (amount?: number) => {
     try {
-      const populateFormattedBreezOnChain = (
-        rawOnChainData: SwapInfo | undefined,
-      ): Promise<OnChainAddressCurrentMutation | null | undefined> => {
-        if (rawOnChainData) {
-          const formattedBreezOnChain: OnChainAddressCurrentMutation = {
-            onChainAddressCurrent: {
-              errors: [], // TODO: Add error handling
-              address: rawOnChainData.bitcoinAddress,
-              __typename: "OnChainAddressPayload",
-            },
-            __typename: "Mutation",
-          }
-          return Promise.resolve(formattedBreezOnChain)
-        }
-        return Promise.resolve(null)
-      }
-      const breezOnChainData = populateFormattedBreezOnChain
-      const fetchedBreezOnChain = await receiveOnchainBreezSDK({})
-      const formattedOnChain = await breezOnChainData(fetchedBreezOnChain)
-      return formattedOnChain
+      const fetchedBreezOnChain = await receiveOnchainBreezSDK(amount)
+      return fetchedBreezOnChain.destination
     } catch (error) {
       console.error("Error fetching breezOnChain:", error)
     }
   }
 
-  const fetchBreezInvoice = async (
-    amount?: number | undefined,
-    memo?: string | undefined,
-    username?: string | undefined,
-  ) => {
+  // Breez SDK Lightning
+  const fetchBreezInvoice = async (amount?: number, memo?: string) => {
     try {
-      let breezInvoiceData
-      if (amount) {
-        const populateFormattedBreezInvoice = (
-          rawInvoiceData: LnInvoice | undefined,
-        ): Promise<
-          LnNoAmountInvoiceCreateMutation | LnInvoiceCreateMutation | null | undefined
-        > => {
-          if (rawInvoiceData) {
-            const formattedBreezInvoice: LnInvoiceCreateMutation = {
-              lnInvoiceCreate: {
-                errors: [],
-                invoice: {
-                  paymentHash: rawInvoiceData.paymentHash,
-                  paymentRequest: rawInvoiceData.bolt11,
-                  paymentSecret: rawInvoiceData.paymentSecret
-                    ? Array.from(rawInvoiceData.paymentSecret)
-                        .map((byte) => byte.toString(16))
-                        .join("")
-                    : "",
-                  __typename: "LnInvoice",
-                },
-                __typename: "LnInvoicePayload",
-              },
-              __typename: "Mutation",
-            }
-            return Promise.resolve(formattedBreezInvoice)
-          }
-          return Promise.resolve(null)
-        }
-        breezInvoiceData = populateFormattedBreezInvoice
-      } else {
-        const populateFormattedNoAmountBreezInvoice = (
-          rawInvoiceData: LnInvoice | undefined,
-        ): Promise<
-          LnNoAmountInvoiceCreateMutation | LnInvoiceCreateMutation | null | undefined
-        > => {
-          if (rawInvoiceData) {
-            const formattedBreezInvoice: LnNoAmountInvoiceCreateMutation = {
-              lnNoAmountInvoiceCreate: {
-                errors: [],
-                invoice: {
-                  paymentHash: rawInvoiceData.paymentHash,
-                  paymentRequest: rawInvoiceData.bolt11,
-                  paymentSecret: rawInvoiceData.paymentSecret
-                    ? Array.from(rawInvoiceData.paymentSecret)
-                        .map((byte) => byte.toString(16))
-                        .join("")
-                    : "",
-                  __typename: "LnNoAmountInvoice",
-                },
-                __typename: "LnNoAmountInvoicePayload",
-              },
-              __typename: "Mutation",
-            }
-            return Promise.resolve(formattedBreezInvoice)
-          }
-          return Promise.resolve(null)
-        }
-        breezInvoiceData = populateFormattedNoAmountBreezInvoice
+      const fetchedBreezInvoice = await receivePaymentBreezSDK(amount, memo)
+      const formattedBreezInvoice = {
+        lnInvoiceCreate: {
+          errors: [],
+          invoice: {
+            paymentHash: fetchedBreezInvoice.paymentHash,
+            paymentRequest: fetchedBreezInvoice.bolt11,
+            paymentSecret: fetchedBreezInvoice.paymentSecret
+              ? Array.from(fetchedBreezInvoice.paymentSecret)
+                  .map((byte) => byte.toString(16))
+                  .join("")
+              : "",
+          },
+        },
       }
-
-      const defaultMemo = `Pay to Flash Wallet User${username ? ": " + username : ""}`
-      const amountSats = amount ? amount : 1
-      const memoDetail = memo ? memo : defaultMemo
-      console.log("creating breez invoice")
-      const fetchedBreezInvoice = await receivePaymentBreezSDK({
-        amountMsat: amountSats * 1000,
-        description: memoDetail,
-      })
-      const formattedInvoice = await breezInvoiceData(fetchedBreezInvoice.lnInvoice)
-      return formattedInvoice
+      return formattedBreezInvoice
     } catch (error) {
       console.error("Error fetching breezInvoice:", error)
     }
   }
 
-  // The hook should setState(Loading) before calling this
   const generateQuote: () => Promise<PaymentRequest> = async () => {
     const { creationData, mutations } = params
     const pr = { ...creationData } // clone creation data object
-    let breezNoAmountInvoiceCreateData:
-      | LnNoAmountInvoiceCreateMutation
-      | LnInvoiceCreateMutation
-      | null
-      | undefined
-    let breezOnChainAddressCurrentData: OnChainAddressCurrentMutation | null | undefined
-    if (
-      creationData.receivingWalletDescriptor.currency === WalletCurrency.Btc &&
-      pr.type === Invoice.Lightning
-    ) {
-      breezNoAmountInvoiceCreateData = await fetchBreezInvoice(
-        pr.settlementAmount?.amount,
-        pr.memo,
-        pr.username,
-      )
-    } else if (
-      creationData.receivingWalletDescriptor.currency === WalletCurrency.Btc &&
-      pr.type === Invoice.OnChain
-    ) {
-      breezOnChainAddressCurrentData = await fetchBreezOnchain()
-    }
-
     let info: PaymentRequestInformation | undefined
 
-    // Default memo
-    if (!pr.memo) {
-      const defaultMemo = `Pay to Flash Wallet User${
-        pr.username ? ": " + pr.username : ""
-      }`
-      pr.memo = defaultMemo
+    const generateLightningInfo = (
+      invoice: any,
+      applicationErrors: any,
+      gqlErrors: any,
+    ) => {
+      const dateString = prToDateString(
+        invoice.paymentRequest ?? "",
+        "mainnet", // pr.network ,
+      )
+
+      const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
+        getPaymentRequestFullUri({
+          type: Invoice.Lightning,
+          input: invoice?.paymentRequest || "",
+          amount: pr.settlementAmount?.amount,
+          memo: pr.memo,
+          uppercase,
+          prefix,
+        })
+
+      return {
+        data: invoice
+          ? {
+              invoiceType: Invoice.Lightning,
+              ...invoice,
+              expiresAt: dateString ? new Date(dateString) : undefined,
+              getFullUriFn,
+            }
+          : undefined,
+        applicationErrors,
+        gqlErrors,
+      }
     }
 
-    // On Chain BTC
-    if (pr.type === Invoice.OnChain) {
-      let data = null
-      let errors: readonly GraphQLError[] | undefined = []
-      if (
-        pr.receivingWalletDescriptor &&
-        pr.receivingWalletDescriptor.currency === WalletCurrency.Usd
-      ) {
-        console.log("Creating Ibex Bitcoin On Chain Invoice")
-        const result = await mutations.onChainAddressCurrent({
-          variables: { input: { walletId: pr.receivingWalletDescriptor.id } },
-        })
-        data = result.data
-        errors = result.errors || []
-      } else if (
-        pr.receivingWalletDescriptor &&
-        pr.receivingWalletDescriptor.currency === WalletCurrency.Btc &&
-        breezOnChainAddressCurrentData
-      ) {
-        console.log("Creating Breez BTC Bitcoin On Chain Invoice")
-        data = breezOnChainAddressCurrentData
-        errors = []
-      }
-
-      if (pr.settlementAmount && pr.settlementAmount.currency !== WalletCurrency.Btc)
-        throw new Error("Onchain invoices only support BTC")
-
-      const address = data?.onChainAddressCurrent?.address || undefined
-
+    const generateOnChainInfo = (
+      address: string,
+      applicationErrors: any,
+      gqlErrors: any,
+    ) => {
       const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
         getPaymentRequestFullUri({
           type: Invoice.OnChain,
@@ -223,7 +118,7 @@ export const createPaymentRequest = (
           prefix,
         })
 
-      info = {
+      return {
         data: address
           ? {
               invoiceType: Invoice.OnChain,
@@ -233,233 +128,125 @@ export const createPaymentRequest = (
               memo: pr.memo,
             }
           : undefined,
-        applicationErrors: data?.onChainAddressCurrent?.errors,
-        gqlErrors: errors,
+        applicationErrors,
+        gqlErrors,
       }
+    }
 
-      // Lightning without Amount (or zero-amount)
-    } else if (
-      pr.type === Invoice.Lightning &&
-      (pr.settlementAmount === undefined || pr.settlementAmount.amount === 0) &&
-      pr.receivingWalletDescriptor.currency === WalletCurrency.Btc
-    ) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let data: any
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let errors: any
-      if (breezNoAmountInvoiceCreateData) {
-        data = breezNoAmountInvoiceCreateData
-        errors = []
-      }
+    // Default memo
+    if (!pr.memo) {
+      pr.memo = `Pay to Flash Wallet User${pr.username ? ": " + pr.username : ""}`
+    }
 
-      const dateString = prToDateString(
-        data?.lnNoAmountInvoiceCreate.invoice?.paymentRequest ?? "",
-        "mainnet", // pr.network ,
-      )
-
-      const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
-        getPaymentRequestFullUri({
-          type: Invoice.Lightning,
-          input: data?.lnNoAmountInvoiceCreate.invoice?.paymentRequest || "",
-          amount: pr.settlementAmount?.amount,
-          memo: pr.memo,
-          uppercase,
-          prefix,
-        })
-
-      info = {
-        data: data?.lnNoAmountInvoiceCreate.invoice
-          ? {
-              invoiceType: Invoice.Lightning,
-              ...data?.lnNoAmountInvoiceCreate.invoice,
-              expiresAt: dateString ? new Date(dateString) : undefined,
-              getFullUriFn,
-            }
-          : undefined,
-        applicationErrors: data?.lnNoAmountInvoiceCreate?.errors,
-        gqlErrors: errors,
-      }
-
-      // Lightning with BTC Amount
-    } else if (
-      pr.type === Invoice.Lightning &&
-      pr.settlementAmount &&
-      pr.settlementAmount?.currency === WalletCurrency.Btc
-    ) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let data: any
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let errors: any
-      if (breezNoAmountInvoiceCreateData) {
-        data = breezNoAmountInvoiceCreateData
-        errors = []
-      }
-
-      const dateString = prToDateString(
-        data?.lnInvoiceCreate.invoice?.paymentRequest ?? "",
-        "mainnet", // pr.network,
-      )
-
-      const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
-        getPaymentRequestFullUri({
-          type: Invoice.Lightning,
-          input: data?.lnInvoiceCreate.invoice?.paymentRequest || "",
-          amount: pr.settlementAmount?.amount,
-          memo: pr.memo,
-          uppercase,
-          prefix,
-        })
-
-      info = {
-        data: data?.lnInvoiceCreate.invoice
-          ? {
-              invoiceType: Invoice.Lightning,
-              ...data?.lnInvoiceCreate.invoice,
-              expiresAt: dateString ? new Date(dateString) : undefined,
-              getFullUriFn,
-            }
-          : undefined,
-        applicationErrors: data?.lnInvoiceCreate?.errors,
-        gqlErrors: errors,
-      }
-      // Lightning with USD Amount
-    } else if (
-      pr.type === Invoice.Lightning &&
-      pr.settlementAmount &&
-      pr.settlementAmount?.currency === WalletCurrency.Usd
-    ) {
-      const { data, errors } = await mutations.lnUsdInvoiceCreate({
-        variables: {
-          input: {
-            walletId: pr.receivingWalletDescriptor.id,
-            amount: pr.settlementAmount.amount,
-            memo: pr.memo,
-          },
-        },
-      })
-
-      const dateString = prToDateString(
-        data?.lnUsdInvoiceCreate.invoice?.paymentRequest ?? "",
-        "mainnet", // pr.network,
-      )
-
-      const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
-        getPaymentRequestFullUri({
-          type: Invoice.Lightning,
-          input: data?.lnUsdInvoiceCreate.invoice?.paymentRequest || "",
-          amount: pr.settlementAmount?.amount,
-          memo: pr.memo,
-          uppercase,
-          prefix,
-        })
-
-      info = {
-        data: data?.lnUsdInvoiceCreate.invoice
-          ? {
-              invoiceType: Invoice.Lightning,
-              ...data?.lnUsdInvoiceCreate.invoice,
-              expiresAt: dateString ? new Date(dateString) : undefined,
-              getFullUriFn,
-            }
-          : undefined,
-        applicationErrors: data?.lnUsdInvoiceCreate?.errors,
-        gqlErrors: errors,
-      }
-      // Lightning with USD without amount
-    } else if (
-      pr.type === Invoice.Lightning &&
-      (pr.settlementAmount === undefined || pr.settlementAmount.amount === 0)
-    ) {
-      console.log("Creating Ibex Lightning Invoice")
-      breezHealthCheck()
-      const { data, errors } = await mutations.lnUsdInvoiceCreate({
-        variables: {
-          input: {
-            walletId: pr.receivingWalletDescriptor.id,
-            amount: 0,
-            memo: pr.memo,
-          },
-        },
-      })
-      const dateString = prToDateString(
-        data?.lnUsdInvoiceCreate.invoice?.paymentRequest ?? "",
-        "mainnet", // pr.network,
-      )
-
-      const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
-        getPaymentRequestFullUri({
-          type: Invoice.Lightning,
-          input: data?.lnUsdInvoiceCreate.invoice?.paymentRequest || "",
-          amount: pr.settlementAmount?.amount,
-          memo: pr.memo,
-          uppercase,
-          prefix,
-        })
-
-      info = {
-        data: data?.lnUsdInvoiceCreate.invoice
-          ? {
-              invoiceType: Invoice.Lightning,
-              ...data?.lnUsdInvoiceCreate.invoice,
-              expiresAt: dateString ? new Date(dateString) : undefined,
-              getFullUriFn,
-            }
-          : undefined,
-        applicationErrors: data?.lnUsdInvoiceCreate?.errors,
-        gqlErrors: errors,
-      }
-
-      // Paycode
-    } else if (pr.type === Invoice.PayCode && pr.username) {
-      const lnurl: string = await new Promise((resolve) => {
-        resolve(
-          bech32.encode(
-            "lnurl",
-            bech32.toWords(
-              Buffer.from(`${pr.posUrl}/.well-known/lnurlp/${pr.username}`, "utf8"),
-            ),
-            1500,
-          ),
+    if (creationData.receivingWalletDescriptor.currency === WalletCurrency.Btc) {
+      // Handle BTC payment requests
+      if (pr.type === Invoice.Lightning) {
+        const fetchedBreezInvoice: any = await fetchBreezInvoice(
+          pr.settlementAmount?.amount,
+          pr.memo,
         )
-      })
+        info = generateLightningInfo(fetchedBreezInvoice.lnInvoiceCreate.invoice, [], [])
+      } else if (pr.type === Invoice.OnChain) {
+        const fetchedBreezOnchain = await fetchBreezOnchain(pr.settlementAmount?.amount)
+        info = generateOnChainInfo(fetchedBreezOnchain || "", [], [])
+      }
+    } else {
+      // Handle USD payment requests
+      if (pr.type === Invoice.Lightning) {
+        if (pr.settlementAmount && pr.settlementAmount?.currency === WalletCurrency.Usd) {
+          const { data, errors } = await mutations.lnUsdInvoiceCreate({
+            variables: {
+              input: {
+                walletId: pr.receivingWalletDescriptor.id,
+                amount: pr.settlementAmount.amount,
+                memo: pr.memo,
+              },
+            },
+          })
+          info = generateLightningInfo(
+            data?.lnUsdInvoiceCreate.invoice,
+            data?.lnUsdInvoiceCreate?.errors,
+            errors,
+          )
+        } else if (
+          pr.settlementAmount === undefined ||
+          pr.settlementAmount.amount === 0
+        ) {
+          const { data, errors } = await mutations.lnUsdInvoiceCreate({
+            variables: {
+              input: {
+                walletId: pr.receivingWalletDescriptor.id,
+                amount: 0,
+                memo: pr.memo,
+              },
+            },
+          })
 
-      // To make the page render at loading state
-      // (otherwise jittery because encode takes ~10ms on slower phones)
-      await new Promise((r) => {
-        setTimeout(r, 50)
-      })
-
-      const webURL = `${pr.posUrl}/${pr.username}`
-      const qrCodeURL = webURL.toUpperCase() + "?lightning=" + lnurl.toUpperCase()
-
-      const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
-        getPaymentRequestFullUri({
-          type: Invoice.PayCode,
-          input: qrCodeURL,
-          uppercase,
-          prefix,
+          info = generateLightningInfo(
+            data?.lnUsdInvoiceCreate.invoice,
+            data?.lnUsdInvoiceCreate?.errors,
+            errors,
+          )
+        }
+      } else if (pr.type === Invoice.OnChain) {
+        const result = await mutations.onChainAddressCurrent({
+          variables: { input: { walletId: pr.receivingWalletDescriptor.id } },
         })
 
-      info = {
-        data: {
-          invoiceType: Invoice.PayCode,
-          username: pr.username,
-          getFullUriFn,
-        },
-        applicationErrors: undefined,
-        gqlErrors: undefined,
+        info = generateOnChainInfo(
+          result.data?.onChainAddressCurrent.address || "",
+          result.data?.onChainAddressCurrent.errors,
+          result.errors,
+        )
+      } else if (pr.type === Invoice.PayCode && pr.username) {
+        const lnurl: string = await new Promise((resolve) => {
+          resolve(
+            bech32.encode(
+              "lnurl",
+              bech32.toWords(
+                Buffer.from(`${pr.posUrl}/.well-known/lnurlp/${pr.username}`, "utf8"),
+              ),
+              1500,
+            ),
+          )
+        })
+
+        await new Promise((r) => {
+          setTimeout(r, 50)
+        })
+
+        const webURL = `${pr.posUrl}/${pr.username}`
+        const qrCodeURL = webURL.toUpperCase() + "?lightning=" + lnurl.toUpperCase()
+
+        const getFullUriFn: GetFullUriFn = ({ uppercase, prefix }) =>
+          getPaymentRequestFullUri({
+            type: Invoice.PayCode,
+            input: qrCodeURL,
+            uppercase,
+            prefix,
+          })
+
+        info = {
+          data: {
+            invoiceType: Invoice.PayCode,
+            username: pr.username,
+            getFullUriFn,
+          },
+          applicationErrors: undefined,
+          gqlErrors: undefined,
+        }
+      } else if (pr.type === Invoice.PayCode && !pr.username) {
+        // Can't create paycode payment request for a user with no username set so info will be empty
+        return createPaymentRequest({
+          ...params,
+          state: PaymentRequestState.Created,
+          info: undefined,
+        })
+      } else {
+        info = undefined
+        console.log(JSON.stringify({ pr }, null, 2))
+        throw new Error("Unknown Payment Request Type Encountered - Please Report")
       }
-    } else if (pr.type === Invoice.PayCode && !pr.username) {
-      // Can't create paycode payment request for a user with no username set so info will be empty
-      return createPaymentRequest({
-        ...params,
-        state: PaymentRequestState.Created,
-        info: undefined,
-      })
-    } else {
-      info = undefined
-      console.log(JSON.stringify({ pr }, null, 2))
-      throw new Error("Unknown Payment Request Type Encountered - Please Report")
     }
 
     let state: PaymentRequestStateType = PaymentRequestState.Created

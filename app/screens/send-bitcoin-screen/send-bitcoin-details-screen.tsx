@@ -1,149 +1,74 @@
-import { gql } from "@apollo/client"
-import { AmountInput } from "@app/components/amount-input/amount-input"
+import React, { useEffect, useState } from "react"
+import { View } from "react-native"
+import { makeStyles } from "@rneui/themed"
+import crashlytics from "@react-native-firebase/crashlytics"
+
+// components
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { SendBitcoinDetailsExtraInfo } from "./send-bitcoin-details-extra-info"
 import { Screen } from "@app/components/screen"
+import {
+  ChooseWallet,
+  DetailAmountNote,
+  DetailDestination,
+} from "@app/components/send-flow"
+
+// gql
 import {
   useSendBitcoinDetailsScreenQuery,
   useSendBitcoinInternalLimitsQuery,
   useSendBitcoinWithdrawalLimitsQuery,
-  Wallet,
   WalletCurrency,
 } from "@app/graphql/generated"
+import { decodeInvoiceString, Network as NetworkLibGaloy } from "@galoymoney/client"
+import { getUsdWallet } from "@app/graphql/wallets-utils"
+
+// hooks
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useLevel } from "@app/graphql/level-context"
-import { useAppConfig, useBreez, usePriceConversion } from "@app/hooks"
+import { useBreez, usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import {
-  DisplayCurrency,
-  greaterThan,
-  MoneyAmount,
-  toBtcMoneyAmount,
-  toUsdMoneyAmount,
-  WalletOrDisplayCurrency,
-} from "@app/types/amounts"
-import { decodeInvoiceString, Network as NetworkLibGaloy } from "@galoymoney/client"
-import crashlytics from "@react-native-firebase/crashlytics"
-import { NavigationProp, RouteProp, useNavigation } from "@react-navigation/native"
-import { makeStyles, Text, useTheme } from "@rneui/themed"
-import React, { useEffect, useState } from "react"
-import { TouchableWithoutFeedback, View } from "react-native"
-import ReactNativeModal from "react-native-modal"
-import Icon from "react-native-vector-icons/Ionicons"
-import { testProps } from "../../utils/testProps"
-import { isValidAmount } from "./payment-details"
-import { PaymentDetail } from "./payment-details/index.types"
-import { SendBitcoinDetailsExtraInfo } from "./send-bitcoin-details-extra-info"
-import { requestInvoice, utils } from "lnurl-pay"
-import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
-import { getUsdWallet } from "@app/graphql/wallets-utils"
-import { NoteInput } from "@app/components/note-input"
-// import Breez SDK Wallet
-import useBreezBalance from "@app/hooks/useBreezBalance"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 
-gql`
-  query sendBitcoinDetailsScreen {
-    globals {
-      network
-    }
-    me {
-      id
-      defaultAccount {
-        id
-        defaultWalletId
-        wallets {
-          id
-          walletCurrency
-          balance
-        }
-      }
-    }
-  }
+// types
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { NavigationProp, RouteProp, useNavigation } from "@react-navigation/native"
+import { PaymentDetail } from "./payment-details/index.types"
 
-  query sendBitcoinWithdrawalLimits {
-    me {
-      id
-      defaultAccount {
-        id
-        limits {
-          withdrawal {
-            totalLimit
-            remainingLimit
-            interval
-          }
-        }
-      }
-    }
-  }
-
-  query sendBitcoinInternalLimits {
-    me {
-      id
-      defaultAccount {
-        id
-        limits {
-          internalSend {
-            totalLimit
-            remainingLimit
-            interval
-          }
-        }
-      }
-    }
-  }
-`
+// utils
+import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
+import { isValidAmount } from "./payment-details"
+import { requestInvoice, utils } from "lnurl-pay"
 
 type Props = {
   route: RouteProp<RootStackParamList, "sendBitcoinDetails">
 }
 
-const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
-  const { persistentState } = usePersistentStateContext()
-  const {
-    theme: { colors },
-  } = useTheme()
-  const styles = useStyles()
-  const { btcWallet } = useBreez()
+const network = "mainnet" // data?.globals?.network
 
+const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "sendBitcoinDetails">>()
-
-  const { appConfig } = useAppConfig()
+  const styles = useStyles()
+  const { LL } = useI18nContext()
   const { currentLevel } = useLevel()
+  const { btcWallet } = useBreez()
+  const { persistentState } = usePersistentStateContext()
+  const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
+  const { zeroDisplayAmount, formatMoneyAmount } = useDisplayCurrency()
+
+  const { paymentDestination, flashUserAddress } = route.params
+
+  const [isLoadingLnurl, setIsLoadingLnurl] = useState(false)
+  const [paymentDetail, setPaymentDetail] = useState<PaymentDetail<WalletCurrency>>()
+  const [asyncErrorMessage, setAsyncErrorMessage] = useState("")
 
   const { data } = useSendBitcoinDetailsScreenQuery({
     fetchPolicy: "cache-first",
     returnPartialData: true,
     skip: !useIsAuthed(),
   })
-
-  const { formatDisplayAndWalletAmount } = useDisplayCurrency()
-  const { LL } = useI18nContext()
-  const [isLoadingLnurl, setIsLoadingLnurl] = useState(false)
-
-  const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
-  const { zeroDisplayAmount, formatMoneyAmount } = useDisplayCurrency()
-
-  const defaultWallet = persistentState.defaultWallet
-
-  const [breezBalance, setBreezBalance] = useBreezBalance()
-
-  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
-
-  const network = "mainnet" // data?.globals?.network
-
-  let wallets = data?.me?.defaultAccount?.wallets as any[]
-  if (persistentState.isAdvanceMode && btcWallet) {
-    wallets = [...wallets, btcWallet]
-  }
-
-  const { paymentDestination, flashUserAddress } = route.params
-
-  const [paymentDetail, setPaymentDetail] =
-    useState<PaymentDetail<WalletCurrency> | null>(null)
-
   const { data: withdrawalLimitsData } = useSendBitcoinWithdrawalLimitsQuery({
     fetchPolicy: "no-cache",
     skip:
@@ -151,7 +76,6 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
       !paymentDetail?.paymentType ||
       paymentDetail.paymentType === "intraledger",
   })
-
   const { data: intraledgerLimitsData } = useSendBitcoinInternalLimitsQuery({
     fetchPolicy: "no-cache",
     skip:
@@ -160,175 +84,57 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
       paymentDetail.paymentType !== "intraledger",
   })
 
-  const [isModalVisible, setIsModalVisible] = useState(false)
-  const [asyncErrorMessage, setAsyncErrorMessage] = useState("")
+  const defaultWallet = persistentState.defaultWallet
 
-  // we are caching the _convertMoneyAmount when the screen loads.
-  // this is because the _convertMoneyAmount can change while the user is on this screen
-  // and we don't want to update the payment detail with a new convertMoneyAmount
+  const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
+  const usdBalanceMoneyAmount = toUsdMoneyAmount(usdWallet?.balance)
+  const btcBalanceMoneyAmount = toBtcMoneyAmount(btcWallet.balance || btcWallet?.balance)
+
   useEffect(() => {
-    if (!_convertMoneyAmount) {
-      return
+    // we are caching the _convertMoneyAmount when the screen loads.
+    // this is because the _convertMoneyAmount can change while the user is on this screen
+    // and we don't want to update the payment detail with a new convertMoneyAmount
+    if (_convertMoneyAmount) {
+      setPaymentDetail(
+        (paymentDetail) =>
+          paymentDetail && paymentDetail.setConvertMoneyAmount(_convertMoneyAmount),
+      )
     }
-
-    setPaymentDetail(
-      (paymentDetail) =>
-        paymentDetail && paymentDetail.setConvertMoneyAmount(_convertMoneyAmount),
-    )
-  }, [_convertMoneyAmount, setPaymentDetail])
+  }, [_convertMoneyAmount])
 
   // we set the default values when the screen loads
   // this only run once (doesn't re-run after paymentDetail is set)
   useEffect(() => {
-    if (paymentDetail || !defaultWallet || !_convertMoneyAmount) {
-      return
+    if (!(paymentDetail || !defaultWallet || !_convertMoneyAmount)) {
+      let initialPaymentDetail = paymentDestination.createPaymentDetail({
+        convertMoneyAmount: _convertMoneyAmount,
+        sendingWalletDescriptor: {
+          id: defaultWallet.id,
+          currency: defaultWallet.walletCurrency,
+        },
+      })
+
+      // Start with usd as the unit of account
+      if (initialPaymentDetail.canSetAmount) {
+        initialPaymentDetail = initialPaymentDetail.setAmount(zeroDisplayAmount)
+      }
+
+      setPaymentDetail(initialPaymentDetail)
     }
-
-    let initialPaymentDetail = paymentDestination.createPaymentDetail({
-      convertMoneyAmount: _convertMoneyAmount,
-      sendingWalletDescriptor: {
-        id: defaultWallet.id,
-        currency: defaultWallet.walletCurrency,
-      },
-    })
-
-    // Start with usd as the unit of account
-    if (initialPaymentDetail.canSetAmount) {
-      initialPaymentDetail = initialPaymentDetail.setAmount(zeroDisplayAmount)
-    }
-
-    setPaymentDetail(initialPaymentDetail)
   }, [
-    setPaymentDetail,
     paymentDestination,
     _convertMoneyAmount,
     paymentDetail,
     defaultWallet,
-    btcWallet,
     zeroDisplayAmount,
-    breezBalance,
   ])
 
-  if (!paymentDetail) {
-    return <></>
-  }
-
-  const { sendingWalletDescriptor, convertMoneyAmount } = paymentDetail
-  const lnurlParams =
-    paymentDetail?.paymentType === "lnurl" ? paymentDetail?.lnurlParams : undefined
-
-  const btcBalanceMoneyAmount = toBtcMoneyAmount(breezBalance || btcWallet?.balance)
-
-  const usdBalanceMoneyAmount = toUsdMoneyAmount(usdWallet?.balance)
-
-  const btcWalletText = formatDisplayAndWalletAmount({
-    displayAmount: convertMoneyAmount(btcBalanceMoneyAmount, DisplayCurrency),
-    walletAmount: btcBalanceMoneyAmount,
-  })
-
-  const usdWalletText = formatDisplayAndWalletAmount({
-    displayAmount: convertMoneyAmount(usdBalanceMoneyAmount, DisplayCurrency),
-    walletAmount: usdBalanceMoneyAmount,
-  })
-
-  const amountStatus = isValidAmount({
-    paymentDetail,
-    usdWalletAmount: usdBalanceMoneyAmount,
-    btcWalletAmount: btcBalanceMoneyAmount,
-    intraledgerLimits: intraledgerLimitsData?.me?.defaultAccount?.limits?.internalSend,
-    withdrawalLimits: withdrawalLimitsData?.me?.defaultAccount?.limits?.withdrawal,
-  })
-
-  const toggleModal = () => {
-    if (persistentState.isAdvanceMode) setIsModalVisible(!isModalVisible)
-  }
-
-  const chooseWallet = (wallet: Pick<Wallet, "id" | "walletCurrency">) => {
-    let updatedPaymentDetail = paymentDetail.setSendingWalletDescriptor({
-      id: wallet.id,
-      currency: wallet.walletCurrency,
-    })
-
-    // switch back to the display currency
-    if (updatedPaymentDetail.canSetAmount) {
-      const displayAmount = updatedPaymentDetail.convertMoneyAmount(
-        paymentDetail.unitOfAccountAmount,
-        DisplayCurrency,
-      )
-      updatedPaymentDetail = updatedPaymentDetail.setAmount(displayAmount)
-    }
-
-    setPaymentDetail(updatedPaymentDetail)
-    toggleModal()
-  }
-
-  const ChooseWalletModal = wallets && (
-    <ReactNativeModal
-      style={styles.modal}
-      animationIn="fadeInDown"
-      animationOut="fadeOutUp"
-      isVisible={isModalVisible}
-      onBackButtonPress={toggleModal}
-      onBackdropPress={toggleModal}
-    >
-      <View>
-        {wallets.map((wallet) => {
-          return (
-            <TouchableWithoutFeedback
-              key={wallet.id}
-              onPress={() => {
-                chooseWallet(wallet)
-              }}
-            >
-              <View style={styles.walletContainer}>
-                <View style={styles.walletSelectorTypeContainer}>
-                  <View
-                    style={
-                      wallet.walletCurrency === WalletCurrency.Btc
-                        ? styles.walletSelectorTypeLabelBitcoin
-                        : styles.walletSelectorTypeLabelUsd
-                    }
-                  >
-                    {wallet.walletCurrency === WalletCurrency.Btc ? (
-                      <Text style={styles.walletSelectorTypeLabelBtcText}>BTC</Text>
-                    ) : (
-                      <Text style={styles.walletSelectorTypeLabelUsdText}>USD</Text>
-                    )}
-                  </View>
-                </View>
-                <View style={styles.walletSelectorInfoContainer}>
-                  <View style={styles.walletSelectorTypeTextContainer}>
-                    {wallet.walletCurrency === WalletCurrency.Btc ? (
-                      <Text
-                        style={styles.walletCurrencyText}
-                      >{`${LL.common.btcAccount()}`}</Text>
-                    ) : (
-                      <Text
-                        style={styles.walletCurrencyText}
-                      >{`${LL.common.usdAccount()}`}</Text>
-                    )}
-                  </View>
-                  <View style={styles.walletSelectorBalanceContainer}>
-                    {wallet.walletCurrency === WalletCurrency.Btc ? (
-                      <Text>{btcWalletText}</Text>
-                    ) : (
-                      <Text>{usdWalletText}</Text>
-                    )}
-                  </View>
-                  <View />
-                </View>
-              </View>
-            </TouchableWithoutFeedback>
-          )
-        })}
-      </View>
-    </ReactNativeModal>
-  )
-
-  const goToNextScreen =
-    (paymentDetail.sendPaymentMutation ||
-      (paymentDetail.paymentType === "lnurl" && paymentDetail.unitOfAccountAmount)) &&
-    (async () => {
+  const goToNextScreen = async () => {
+    if (
+      paymentDetail &&
+      (paymentDetail.sendPaymentMutation ||
+        (paymentDetail.paymentType === "lnurl" && paymentDetail.unitOfAccountAmount))
+    ) {
       let paymentDetailForConfirmation: PaymentDetail<WalletCurrency> = paymentDetail
 
       if (paymentDetail.paymentType === "lnurl") {
@@ -383,329 +189,72 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           paymentDetail: paymentDetailForConfirmation,
         })
       }
-    })
-
-  const setAmount = (moneyAmount: MoneyAmount<WalletOrDisplayCurrency>) => {
-    setPaymentDetail((paymentDetail) =>
-      paymentDetail?.setAmount ? paymentDetail.setAmount(moneyAmount) : paymentDetail,
-    )
-  }
-
-  const sendAll = () => {
-    let moneyAmount: MoneyAmount<WalletCurrency>
-
-    if (paymentDetail.sendingWalletDescriptor.currency === WalletCurrency.Btc) {
-      moneyAmount = {
-        amount: breezBalance ?? 0,
-        currency: WalletCurrency.Btc,
-        currencyCode: "BTC",
-      }
     } else {
-      moneyAmount = {
-        amount: usdWallet?.balance ?? 0,
-        currency: WalletCurrency.Usd,
-        currencyCode: "USD",
-      }
-    }
-
-    setPaymentDetail((paymentDetail) =>
-      paymentDetail?.setAmount
-        ? paymentDetail.setAmount(moneyAmount, true)
-        : paymentDetail,
-    )
-  }
-
-  let maxAmountErr = ""
-  if (appConfig.galoyInstance.name === "Staging") {
-    const maxAmountInPrimaryCurrency = convertMoneyAmount(
-      {
-        amount: 2500,
-        currency: "DisplayCurrency",
-        currencyCode: "USD",
-      },
-      paymentDetail.sendingWalletDescriptor.currency,
-    )
-
-    if (
-      maxAmountInPrimaryCurrency &&
-      greaterThan({
-        value: convertMoneyAmount(
-          paymentDetail.settlementAmount,
-          maxAmountInPrimaryCurrency.currency,
-        ),
-        greaterThan: maxAmountInPrimaryCurrency,
-      })
-    ) {
-      maxAmountErr = LL.AmountInputScreen.maxAmountExceeded({
-        maxAmount: formatMoneyAmount({ moneyAmount: maxAmountInPrimaryCurrency }),
-      })
+      return null
     }
   }
 
-  return (
-    <Screen
-      preset="scroll"
-      style={styles.screenStyle}
-      keyboardOffset="navigationHeader"
-      keyboardShouldPersistTaps="handled"
-    >
-      <View style={styles.sendBitcoinAmountContainer}>
-        <View style={styles.fieldContainer}>
-          <Text style={styles.fieldTitleText}>{LL.common.from()}</Text>
-          <TouchableWithoutFeedback onPress={toggleModal} accessible={false}>
-            <View style={styles.fieldBackground}>
-              <View style={styles.walletSelectorTypeContainer}>
-                <View
-                  style={
-                    sendingWalletDescriptor.currency === WalletCurrency.Btc
-                      ? styles.walletSelectorTypeLabelBitcoin
-                      : styles.walletSelectorTypeLabelUsd
-                  }
-                >
-                  {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
-                    <Text style={styles.walletSelectorTypeLabelBtcText}>BTC</Text>
-                  ) : (
-                    <Text style={styles.walletSelectorTypeLabelUsdText}>USD</Text>
-                  )}
-                </View>
-              </View>
-              <View style={styles.walletSelectorInfoContainer}>
-                <View style={styles.walletSelectorTypeTextContainer}>
-                  {sendingWalletDescriptor.currency === WalletCurrency.Btc ? (
-                    <>
-                      <Text style={styles.walletCurrencyText}>
-                        {LL.common.btcAccount()}
-                      </Text>
-                    </>
-                  ) : (
-                    <>
-                      <Text style={styles.walletCurrencyText}>
-                        {LL.common.usdAccount()}
-                      </Text>
-                    </>
-                  )}
-                </View>
-                <View style={styles.walletSelectorBalanceContainer}>
-                  <Text
-                    {...testProps(`${sendingWalletDescriptor.currency} Wallet Balance`)}
-                  >
-                    {sendingWalletDescriptor.currency === WalletCurrency.Btc
-                      ? btcWalletText
-                      : usdWalletText}
-                  </Text>
-                </View>
-                <View />
-              </View>
+  const amountStatus = isValidAmount({
+    paymentDetail,
+    usdWalletAmount: usdBalanceMoneyAmount,
+    btcWalletAmount: btcBalanceMoneyAmount,
+    intraledgerLimits: intraledgerLimitsData?.me?.defaultAccount?.limits?.internalSend,
+    withdrawalLimits: withdrawalLimitsData?.me?.defaultAccount?.limits?.withdrawal,
+  })
 
-              {persistentState.isAdvanceMode && (
-                <View style={styles.pickWalletIcon}>
-                  <Icon name={"chevron-down"} size={24} color={colors.black} />
-                </View>
-              )}
-            </View>
-          </TouchableWithoutFeedback>
-          {ChooseWalletModal}
-        </View>
-        {(paymentDetail.paymentType === "intraledger" ||
-          paymentDetail.paymentType === "lnurl") && (
-          <View style={styles.fieldContainer}>
-            <Text style={styles.fieldTitleText}>{LL.common.to()}</Text>
-
-            <View style={styles.fieldBackground}>
-              <View style={styles.walletSelectorInfoContainer}>
-                <Text>
-                  {flashUserAddress?.split("@")[0] === paymentDetail.destination
-                    ? flashUserAddress
-                    : paymentDetail.destination}
-                </Text>
-              </View>
-            </View>
-          </View>
-        )}
-        <View style={styles.fieldContainer}>
-          <View style={styles.amountRightMaxField}>
-            <Text {...testProps(LL.SendBitcoinScreen.amount())} style={styles.amountText}>
-              {LL.SendBitcoinScreen.amount()}
-            </Text>
-            {paymentDetail.canSendMax && !paymentDetail.isSendingMax && (
-              <GaloyTertiaryButton
-                clear
-                title={LL.SendBitcoinScreen.maxAmount()}
-                onPress={sendAll}
-              />
-            )}
-          </View>
-          <View style={styles.currencyInputContainer}>
-            <AmountInput
-              unitOfAccountAmount={paymentDetail.unitOfAccountAmount}
-              setAmount={setAmount}
-              convertMoneyAmount={paymentDetail.convertMoneyAmount}
-              walletCurrency={sendingWalletDescriptor.currency}
-              canSetAmount={paymentDetail.canSetAmount}
-              isSendingMax={paymentDetail.isSendingMax}
-              maxAmount={
-                appConfig.galoyInstance.name === "Staging"
-                  ? {
-                      amount: 2500,
-                      currency: "DisplayCurrency",
-                      currencyCode: "USD",
-                    }
-                  : lnurlParams?.max
-                  ? toBtcMoneyAmount(lnurlParams.max)
-                  : undefined
-              }
-              minAmount={
-                lnurlParams?.min
-                  ? toUsdMoneyAmount(lnurlParams.min)
-                  : {
-                      amount: 1,
-                      currency: "USD",
-                      currencyCode: "USD",
-                    }
-              }
-            />
-          </View>
-        </View>
-        {paymentDetail.paymentType === "intraledger" && (
-          <View style={styles.fieldContainer}>
-            <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
-            <NoteInput
-              onChangeText={(text) =>
-                paymentDetail.setMemo && setPaymentDetail(paymentDetail.setMemo(text))
-              }
-              value={paymentDetail.memo || ""}
-              editable={paymentDetail.canSetMemo}
-            />
-          </View>
-        )}
+  if (paymentDetail) {
+    return (
+      <Screen
+        preset="scroll"
+        style={styles.screenStyle}
+        keyboardOffset="navigationHeader"
+        keyboardShouldPersistTaps="handled"
+      >
+        <ChooseWallet
+          usdWallet={usdWallet}
+          wallets={data?.me?.defaultAccount?.wallets as any[]}
+          paymentDetail={paymentDetail}
+          setPaymentDetail={setPaymentDetail}
+        />
+        <DetailDestination
+          flashUserAddress={flashUserAddress}
+          paymentDetail={paymentDetail}
+        />
+        <DetailAmountNote
+          usdWallet={usdWallet}
+          paymentDetail={paymentDetail}
+          setPaymentDetail={setPaymentDetail}
+          setAsyncErrorMessage={setAsyncErrorMessage}
+        />
         <SendBitcoinDetailsExtraInfo
-          errorMessage={asyncErrorMessage || maxAmountErr}
+          errorMessage={asyncErrorMessage}
           amountStatus={amountStatus}
           currentLevel={currentLevel}
         />
         <View style={styles.buttonContainer}>
           <GaloyPrimaryButton
-            onPress={goToNextScreen || undefined}
+            onPress={goToNextScreen}
             loading={isLoadingLnurl}
-            disabled={!goToNextScreen || !amountStatus.validAmount || !!maxAmountErr}
+            disabled={!amountStatus.validAmount || !!asyncErrorMessage}
             title={LL.common.next()}
           />
         </View>
-      </View>
-    </Screen>
-  )
+      </Screen>
+    )
+  } else {
+    return null
+  }
 }
-
 export default SendBitcoinDetailsScreen
 
 const useStyles = makeStyles(({ colors }) => ({
-  sendBitcoinAmountContainer: {
+  screenStyle: {
+    padding: 20,
+    flexGrow: 1,
     flex: 1,
-  },
-  fieldBackground: {
-    flexDirection: "row",
-    borderStyle: "solid",
-    overflow: "hidden",
-    backgroundColor: colors.grey5,
-    paddingHorizontal: 14,
-    borderRadius: 10,
-    alignItems: "center",
-    height: 60,
-  },
-  walletContainer: {
-    flexDirection: "row",
-    borderStyle: "solid",
-    overflow: "hidden",
-    backgroundColor: colors.grey5,
-    paddingHorizontal: 14,
-    borderRadius: 10,
-    alignItems: "center",
-    marginBottom: 10,
-    height: 60,
-  },
-  walletSelectorTypeContainer: {
-    justifyContent: "center",
-    alignItems: "flex-start",
-    width: 50,
-    marginRight: 20,
-  },
-  walletSelectorTypeLabelBitcoin: {
-    height: 30,
-    width: 50,
-    borderRadius: 10,
-    backgroundColor: colors.primary,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  walletSelectorTypeLabelUsd: {
-    height: 30,
-    width: 50,
-    backgroundColor: colors.green,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  walletSelectorTypeLabelUsdText: {
-    fontWeight: "bold",
-    color: colors.black,
-  },
-  walletSelectorTypeLabelBtcText: {
-    fontWeight: "bold",
-    color: colors.white,
-  },
-  walletSelectorInfoContainer: {
-    flex: 1,
-    flexDirection: "column",
-  },
-  walletCurrencyText: {
-    fontWeight: "bold",
-    fontSize: 18,
-  },
-  walletSelectorTypeTextContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
-  },
-  walletSelectorBalanceContainer: {
-    flex: 1,
-    flexDirection: "row",
-  },
-  fieldTitleText: {
-    fontWeight: "bold",
-    marginBottom: 4,
-  },
-  fieldContainer: {
-    marginBottom: 12,
-  },
-  currencyInputContainer: {
-    flexDirection: "column",
-  },
-  switchCurrencyIconContainer: {
-    width: 50,
-    justifyContent: "center",
-    alignItems: "center",
   },
   buttonContainer: {
     flex: 1,
     justifyContent: "flex-end",
-  },
-  modal: {
-    marginBottom: "90%",
-  },
-  pickWalletIcon: {
-    marginRight: 12,
-  },
-  screenStyle: {
-    padding: 20,
-    flexGrow: 1,
-  },
-  amountText: {
-    fontWeight: "bold",
-  },
-  amountRightMaxField: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 8,
-    height: 18,
   },
 }))

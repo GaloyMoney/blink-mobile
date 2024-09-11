@@ -14,7 +14,7 @@ import { useTheme, useThemeMode } from "@rneui/themed"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 
 // utils
-import { disconnectToSDK, initializeBreezSDK } from "@app/utils/breez-sdk"
+import { disconnectToSDK, initializeBreezSDK } from "@app/utils/breez-sdk-liquid"
 
 type Props = StackScreenProps<RootStackParamList, "ImportWallet">
 
@@ -62,12 +62,15 @@ const ImportWallet: React.FC<Props> = ({ navigation, route }) => {
           route.params?.onComplete(token)
         }
       }
-      updateStateHandler(true)
-      navigation.goBack()
+      setTimeout(() => {
+        updateStateHandler(true)
+        setLoading(false)
+        navigation.goBack()
+      }, 5000)
     } else {
+      setLoading(false)
       Alert.alert("Invalid recovery phrase")
     }
-    setLoading(false)
   }
 
   const updateStateHandler = (btcWalletImported: boolean) => {

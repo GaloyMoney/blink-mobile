@@ -14,8 +14,8 @@ import { TransactionFragment, WalletCurrency } from "@app/graphql/generated"
 import { groupTransactionsByDate } from "@app/graphql/transactions"
 
 // Breez SDK
-import { listPaymentsBreezSDK } from "@app/utils/breez-sdk"
-import { Payment } from "@breeztech/react-native-breez-sdk"
+import { listPaymentsBreezSDK } from "@app/utils/breez-sdk-liquid"
+import { Payment } from "@breeztech/react-native-breez-sdk-liquid"
 import { formatPaymentsBreezSDK } from "@app/hooks/useBreezPayments"
 
 // types
@@ -83,10 +83,9 @@ export const BTCTransactionHistory: React.FC = () => {
     }
     const formattedTxs = txs?.map((edge) =>
       formatPaymentsBreezSDK(
-        edge.id,
+        edge.txId,
         txs,
-        convertMoneyAmount(toBtcMoneyAmount(edge.amountMsat / 1000), WalletCurrency.Usd)
-          .amount,
+        convertMoneyAmount(toBtcMoneyAmount(edge.amountSat), WalletCurrency.Usd).amount,
       ),
     )
 

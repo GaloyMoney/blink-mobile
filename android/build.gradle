@@ -6,7 +6,7 @@ buildscript {
         minSdkVersion = 26
         compileSdkVersion = 34
         targetSdkVersion = 34
-        kotlinVersion='1.7.0'
+        kotlinVersion='1.8.0'
         // We use NDK 23 which has both M1 support and is the side-by-side NDK version from AGP.
         ndkVersion = "23.1.7779620"
 
@@ -19,6 +19,7 @@ buildscript {
         jcenter()
         maven {
             url('https://www.jitpack.io')
+            url = uri("https://storage.googleapis.com/r8-releases/raw")
         }
     }
     dependencies {
@@ -28,6 +29,8 @@ buildscript {
 
         classpath 'com.google.gms:google-services:4.3.14' // firebase
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+        classpath("com.android.tools:r8:8.2.24")
     }
 }
 

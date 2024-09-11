@@ -1,13 +1,15 @@
 import React, { createContext, useEffect, useState } from "react"
 import { WalletCurrency } from "@app/graphql/generated"
 import { usePersistentStateContext } from "@app/store/persistent-state"
-import { initializeBreezSDK } from "@app/utils/breez-sdk"
-import { nodeInfo } from "@breeztech/react-native-breez-sdk"
+import { initializeBreezSDK } from "@app/utils/breez-sdk-liquid"
+import { getInfo } from "@breeztech/react-native-breez-sdk-liquid"
 
 type BtcWallet = {
   id: string
   walletCurrency: WalletCurrency
   balance: number
+  pendingReceiveSat: number
+  pendingSendSat: number
 }
 
 interface BreezInterface {
@@ -23,6 +25,8 @@ export const BreezContext = createContext<BreezInterface>({
     id: "",
     walletCurrency: "BTC",
     balance: 0,
+    pendingReceiveSat: 0,
+    pendingSendSat: 0,
   },
 })
 
@@ -37,6 +41,8 @@ export const BreezProvider = ({ children }: Props) => {
     id: "",
     walletCurrency: "BTC",
     balance: persistentState.breezBalance || 0,
+    pendingReceiveSat: 0,
+    pendingSendSat: 0,
   })
 
   useEffect(() => {
@@ -47,6 +53,8 @@ export const BreezProvider = ({ children }: Props) => {
         id: "",
         walletCurrency: "BTC",
         balance: 0,
+        pendingReceiveSat: 0,
+        pendingSendSat: 0,
       })
     }
   }, [persistentState.isAdvanceMode])
@@ -54,18 +62,20 @@ export const BreezProvider = ({ children }: Props) => {
   const getBreezInfo = async () => {
     setLoading(true)
     await initializeBreezSDK()
-    const nodeState = await nodeInfo()
+    const walletInfo = await getInfo()
 
     setBtcWallet({
-      id: nodeState.id,
+      id: walletInfo.pubkey,
       walletCurrency: WalletCurrency.Btc,
-      balance: nodeState.channelsBalanceMsat / 1000,
+      balance: walletInfo.balanceSat,
+      pendingReceiveSat: walletInfo.pendingReceiveSat,
+      pendingSendSat: walletInfo.pendingSendSat,
     })
     updateState((state: any) => {
       if (state)
         return {
           ...state,
-          breezBalance: nodeState.channelsBalanceMsat / 1000,
+          breezBalance: walletInfo.balanceSat,
         }
       return undefined
     })

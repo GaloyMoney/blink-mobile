@@ -48,14 +48,10 @@ export const AmountInput: React.FC<AmountInputProps> = ({
   const { LL } = useI18nContext()
 
   React.useEffect(() => {
-    if (
-      request?.receivingWalletDescriptor.currency === "BTC" &&
-      request.type === "Lightning" &&
-      !request?.settlementAmount?.amount
-    ) {
+    if (request?.receivingWalletDescriptor.currency === "BTC") {
       setIsSettingAmount(true)
     }
-  }, [request?.type, request?.settlementAmount, request?.receivingWalletDescriptor])
+  }, [request?.type, request?.receivingWalletDescriptor.currency])
 
   const onSetAmount = (amount: MoneyAmount<WalletOrDisplayCurrency>) => {
     if (

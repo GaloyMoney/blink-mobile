@@ -24,13 +24,11 @@ import { useApolloClient } from "@apollo/client"
 export type SetDefaultAccountModalProps = {
   isVisible: boolean
   toggleModal: () => void
-  transactionLength: number
 }
 
 export const SetDefaultAccountModal = ({
   isVisible,
   toggleModal,
-  transactionLength,
 }: SetDefaultAccountModalProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Primary">>()
   const client = useApolloClient()
@@ -62,7 +60,7 @@ export const SetDefaultAccountModal = ({
     setHasPromptedSetDefaultAccount(client)
     setLoading(false)
     toggleModal()
-    navigation.navigate("receiveBitcoin", { transactionLength })
+    navigation.navigate("receiveBitcoin")
   }
 
   return (
