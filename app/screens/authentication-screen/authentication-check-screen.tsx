@@ -1,5 +1,5 @@
-import * as React from "react"
-import { useEffect } from "react"
+import React, { useEffect } from "react"
+import { Image } from "react-native"
 
 import { Screen } from "../../components/screen"
 import KeyStoreWrapper from "../../utils/storage/secureStorage"
@@ -8,8 +8,8 @@ import { AuthenticationScreenPurpose, PinScreenPurpose } from "../../utils/enum"
 import type { RootStackParamList } from "../../navigation/stack-param-lists"
 import { StackNavigationProp } from "@react-navigation/stack"
 
-import AppLogoLightMode from "../../assets/logo/app-logo-light.svg"
-import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
+import AppLogoLightMode from "../../assets/logo/app-logo-light.png"
+import AppLogoDarkMode from "../../assets/logo/app-logo-dark.png"
 import { makeStyles, useTheme } from "@rneui/themed"
 
 import { useIsAuthed } from "@app/graphql/is-authed-context"
@@ -52,15 +52,19 @@ export const AuthenticationCheckScreen: React.FC = () => {
 
   return (
     <Screen style={styles.container}>
-      <AppLogo width={"100%"} height={"60%"} />
+      <Image source={AppLogo} style={styles.logo} />
     </Screen>
   )
 }
 
 const useStyles = makeStyles(() => ({
   container: {
-    alignItems: "center",
     flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  logo: {
     width: "100%",
+    resizeMode: "contain",
   },
 }))

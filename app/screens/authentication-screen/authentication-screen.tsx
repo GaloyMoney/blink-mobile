@@ -1,6 +1,6 @@
 import { RouteProp, useFocusEffect, useNavigation } from "@react-navigation/native"
 import * as React from "react"
-import { Alert, View } from "react-native"
+import { Alert, Image, View } from "react-native"
 
 import { StackNavigationProp } from "@react-navigation/stack"
 import { Screen } from "../../components/screen"
@@ -13,8 +13,8 @@ import { useI18nContext } from "@app/i18n/i18n-react"
 import { useAuthenticationContext } from "@app/navigation/navigation-container-wrapper"
 import { makeStyles, useTheme } from "@rneui/themed"
 import useLogout from "../../hooks/use-logout"
-import AppLogoLightMode from "../../assets/logo/app-logo-light.svg"
-import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
+import AppLogoLightMode from "../../assets/logo/app-logo-light.png"
+import AppLogoDarkMode from "../../assets/logo/app-logo-dark.png"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { GaloySecondaryButton } from "@app/components/atomic/galoy-secondary-button"
 
@@ -148,7 +148,7 @@ export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
 
   return (
     <Screen>
-      <AppLogo width={"100%"} height={"60%"} />
+      <Image source={AppLogo} style={styles.logo} />
       <View style={styles.bottom}>
         <GaloyPrimaryButton
           title={buttonTitle}
@@ -163,9 +163,8 @@ export const AuthenticationScreen: React.FC<Props> = ({ route }) => {
 
 const useStyles = makeStyles(() => ({
   logo: {
-    marginTop: 24,
-    maxHeight: "50%",
-    maxWidth: "50%",
+    width: "100%",
+    resizeMode: "contain",
   },
 
   bottom: {

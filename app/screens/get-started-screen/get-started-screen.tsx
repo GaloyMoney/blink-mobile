@@ -4,6 +4,7 @@ import {
   ActivityIndicator,
   Animated,
   Easing,
+  Image,
   Pressable,
   TouchableOpacity,
   View,
@@ -23,8 +24,8 @@ import { useAppConfig } from "@app/hooks"
 import { useCreateAccount } from "@app/hooks/useCreateAccount"
 
 // assets
-import AppLogoLightMode from "../../assets/logo/app-logo-light.svg"
-import AppLogoDarkMode from "../../assets/logo/app-logo-dark.svg"
+import AppLogoLightMode from "../../assets/logo/app-logo-light.png"
+import AppLogoDarkMode from "../../assets/logo/app-logo-dark.png"
 
 // utils
 import { logGetStartedAction } from "@app/utils/analytics"
@@ -131,7 +132,7 @@ export const GetStartedScreen: React.FC<Props> = ({ navigation }) => {
         style={styles.logoContainer}
         {...testProps("logo-button")}
       >
-        <AppLogo width={"100%"} height={"100%"} />
+        <Image source={AppLogo} style={styles.logo} />
       </Pressable>
       <View style={styles.bottom}>
         {/* Help Icon */}
@@ -179,7 +180,17 @@ const useStyles = makeStyles(({ colors }) => ({
   buttonContainer: {
     marginVertical: 6,
   },
-  logoContainer: { width: "100%", height: "50%", marginTop: 50 },
+  logoContainer: {
+    width: "100%",
+    height: "50%",
+    marginTop: 50,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  logo: {
+    width: "100%",
+    resizeMode: "contain",
+  },
   loginFooterContainer: {
     marginTop: 24,
     justifyContent: "center",
