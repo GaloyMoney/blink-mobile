@@ -156,7 +156,11 @@ export const TransactionLimitsScreen = () => {
           </Text>
         </View>
         <GaloyPrimaryButton
-          title={LL.TransactionLimitsScreen.increaseLimits()}
+          title={
+            currentLevel === AccountLevel.Zero
+              ? LL.TransactionLimitsScreen.increaseLimits()
+              : LL.TransactionLimitsScreen.requestBusiness()
+          }
           containerStyle={styles.increaseLimitsButtonContainer}
           onPress={
             currentLevel === AccountLevel.Zero

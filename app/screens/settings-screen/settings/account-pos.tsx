@@ -4,6 +4,8 @@ import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { useSettingsScreenQuery } from "@app/graphql/generated"
 import { useAppConfig } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
+import { toastShow } from "@app/utils/toast"
+import Clipboard from "@react-native-clipboard/clipboard"
 
 import { SettingsRow } from "../row"
 
@@ -27,6 +29,13 @@ export const AccountPOS: React.FC = () => {
       leftIcon="calculator"
       rightIcon={<GaloyIcon name="link" size={24} />}
       action={() => {
+        Clipboard.setString(pos)
+        toastShow({
+          type: "success",
+          message: (translations) =>
+            translations.GaloyAddressScreen.copiedCashRegisterLinkToClipboard(),
+          currentTranslation: LL,
+        })
         Linking.openURL(pos)
       }}
     />

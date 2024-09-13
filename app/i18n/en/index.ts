@@ -1030,7 +1030,8 @@ const en: BaseTranslation = {
       "Contact support to perform manual KYC to increase your limit",
     increaseLimits: "Increase your limits",
     spendingLimits: "Spending Limits",
-    spendingLimitsDescription: "The spending limits shown on this page are denominated in USD. For your convenience, we convert these limits into your local currency based on current foreign exchange rates. Please note that the displayed local currency amount may fluctuate as exchange rates are updated in real-time."
+    spendingLimitsDescription: "The spending limits shown on this page are denominated in USD. For your convenience, we convert these limits into your local currency based on current foreign exchange rates. Please note that the displayed local currency amount may fluctuate as exchange rates are updated in real-time.",
+    requestBusiness: "Request Business Account",
   },
   TransactionScreen: {
     noTransaction: "No transaction to show",
