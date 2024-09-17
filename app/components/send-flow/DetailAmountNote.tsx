@@ -2,8 +2,15 @@ import React, { useEffect, useState } from "react"
 import { View } from "react-native"
 import { makeStyles, Text } from "@rneui/themed"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useAppConfig, useBreez } from "@app/hooks"
 import { parse } from "@breeztech/react-native-breez-sdk-liquid"
+
+// hooks
+import {
+  useAppConfig,
+  useBreez,
+  useDisplayCurrency,
+  usePriceConversion,
+} from "@app/hooks"
 
 // components
 import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
@@ -38,59 +45,14 @@ const DetailAmountNote: React.FC<Props> = ({
   const styles = useStyles()
   const { LL } = useI18nContext()
   const { btcWallet } = useBreez()
+  const { convertMoneyAmount } = usePriceConversion()
+  const { formatDisplayAndWalletAmount } = useDisplayCurrency()
+
   const { sendingWalletDescriptor } = paymentDetail
   const { lnAddressHostname: lnDomain } = useAppConfig().appConfig.galoyInstance
 
-  const [minAmount, setMinAmount] = useState<MoneyAmount<WalletOrDisplayCurrency>>()
-  const [maxAmount, setMaxAmount] = useState<MoneyAmount<WalletOrDisplayCurrency>>()
-
-  useEffect(() => {
-    if (paymentDetail?.sendingWalletDescriptor.currency === "BTC") {
-      if (paymentDetail.paymentType === "lightning" && paymentDetail.canSetAmount) {
-        setAsyncErrorMessage(LL.SendBitcoinScreen.noAmountInvoiceError())
-      } else if (
-        minAmount &&
-        paymentDetail.settlementAmount.amount &&
-        paymentDetail.settlementAmount.amount < minAmount?.amount
-      ) {
-        setAsyncErrorMessage(
-          LL.SendBitcoinScreen.minAmountInvoiceError({ amount: minAmount?.amount }),
-        )
-      } else if (
-        maxAmount &&
-        paymentDetail.settlementAmount.amount &&
-        paymentDetail.settlementAmount.amount > maxAmount?.amount
-      ) {
-        setAsyncErrorMessage(
-          LL.SendBitcoinScreen.maxAmountInvoiceError({ amount: maxAmount.amount }),
-        )
-      } else {
-        setAsyncErrorMessage("")
-      }
-    } else {
-      if (paymentDetail?.paymentType === "lnurl") {
-        if (paymentDetail.settlementAmount.amount < paymentDetail?.lnurlParams.min) {
-          setAsyncErrorMessage(
-            LL.SendBitcoinScreen.minAmountInvoiceError({
-              amount: paymentDetail?.lnurlParams.min,
-            }),
-          )
-        } else if (
-          paymentDetail.settlementAmount.amount > paymentDetail?.lnurlParams.max
-        ) {
-          setAsyncErrorMessage(
-            LL.SendBitcoinScreen.maxAmountInvoiceError({
-              amount: paymentDetail?.lnurlParams.max,
-            }),
-          )
-        } else {
-          setAsyncErrorMessage("")
-        }
-      } else {
-        setAsyncErrorMessage("")
-      }
-    }
-  }, [paymentDetail, minAmount, maxAmount])
+  const [minAmount, setMinAmount] = useState<MoneyAmount<WalletCurrency>>()
+  const [maxAmount, setMaxAmount] = useState<MoneyAmount<WalletCurrency>>()
 
   useEffect(() => {
     if (paymentDetail.sendingWalletDescriptor.currency === "BTC") fetchBtcMinMaxAmount()
@@ -126,6 +88,89 @@ const DetailAmountNote: React.FC<Props> = ({
       currency: "BTC",
       currencyCode: "SAT",
     })
+  }
+
+  useEffect(() => {
+    checkErrorMessage()
+  }, [paymentDetail, minAmount, maxAmount])
+
+  const checkErrorMessage = () => {
+    if (!convertMoneyAmount) return null
+    if (paymentDetail?.sendingWalletDescriptor.currency === "BTC") {
+      if (paymentDetail.paymentType === "lightning" && paymentDetail.canSetAmount) {
+        setAsyncErrorMessage(LL.SendBitcoinScreen.noAmountInvoiceError())
+      } else if (
+        minAmount &&
+        paymentDetail.settlementAmount.amount &&
+        paymentDetail.settlementAmount.amount < minAmount?.amount
+      ) {
+        const convertedBTCAmount = convertMoneyAmount(minAmount, "DisplayCurrency")
+        setAsyncErrorMessage(
+          LL.SendBitcoinScreen.minAmountInvoiceError({
+            amount: formatDisplayAndWalletAmount({
+              displayAmount: convertedBTCAmount,
+              walletAmount: minAmount,
+            }),
+          }),
+        )
+      } else if (
+        maxAmount &&
+        paymentDetail.settlementAmount.amount &&
+        paymentDetail.settlementAmount.amount > maxAmount?.amount
+      ) {
+        const convertedBTCAmount = convertMoneyAmount(maxAmount, "DisplayCurrency")
+        setAsyncErrorMessage(
+          LL.SendBitcoinScreen.maxAmountInvoiceError({
+            amount: formatDisplayAndWalletAmount({
+              displayAmount: convertedBTCAmount,
+              walletAmount: maxAmount,
+            }),
+          }),
+        )
+      } else {
+        setAsyncErrorMessage("")
+      }
+    } else {
+      if (paymentDetail?.paymentType === "lnurl") {
+        if (paymentDetail.settlementAmount.amount < paymentDetail?.lnurlParams.min) {
+          const minAmount: MoneyAmount<WalletCurrency> = {
+            amount: paymentDetail?.lnurlParams.min,
+            currency: "USD",
+            currencyCode: "USD",
+          }
+          const convertedUSDAmount = convertMoneyAmount(minAmount, "DisplayCurrency")
+          setAsyncErrorMessage(
+            LL.SendBitcoinScreen.minAmountInvoiceError({
+              amount: formatDisplayAndWalletAmount({
+                displayAmount: convertedUSDAmount,
+                walletAmount: minAmount,
+              }),
+            }),
+          )
+        } else if (
+          paymentDetail.settlementAmount.amount > paymentDetail?.lnurlParams.max
+        ) {
+          const maxAmount: MoneyAmount<WalletCurrency> = {
+            amount: paymentDetail?.lnurlParams.max,
+            currency: "USD",
+            currencyCode: "USD",
+          }
+          const convertedUSDAmount = convertMoneyAmount(maxAmount, "DisplayCurrency")
+          setAsyncErrorMessage(
+            LL.SendBitcoinScreen.maxAmountInvoiceError({
+              amount: formatDisplayAndWalletAmount({
+                displayAmount: convertedUSDAmount,
+                walletAmount: maxAmount,
+              }),
+            }),
+          )
+        } else {
+          setAsyncErrorMessage("")
+        }
+      } else {
+        setAsyncErrorMessage("")
+      }
+    }
   }
 
   const sendAll = () => {
