@@ -126,4 +126,93 @@ gql`
       }
     }
   }
+
+  query sendBitcoinDestination {
+    globals {
+      network
+    }
+    me {
+      id
+      defaultAccount {
+        id
+        wallets {
+          id
+        }
+      }
+      contacts {
+        id
+        username
+      }
+    }
+  }
+
+  query accountDefaultWallet($username: Username!) {
+    accountDefaultWallet(username: $username) {
+      id
+    }
+  }
+
+  query sendBitcoinDetailsScreen {
+    globals {
+      network
+    }
+    me {
+      id
+      defaultAccount {
+        id
+        defaultWalletId
+        wallets {
+          id
+          walletCurrency
+          balance
+        }
+      }
+    }
+  }
+
+  query sendBitcoinWithdrawalLimits {
+    me {
+      id
+      defaultAccount {
+        id
+        limits {
+          withdrawal {
+            totalLimit
+            remainingLimit
+            interval
+          }
+        }
+      }
+    }
+  }
+
+  query sendBitcoinInternalLimits {
+    me {
+      id
+      defaultAccount {
+        id
+        limits {
+          internalSend {
+            totalLimit
+            remainingLimit
+            interval
+          }
+        }
+      }
+    }
+  }
+
+  query sendBitcoinConfirmationScreen {
+    me {
+      id
+      defaultAccount {
+        id
+        wallets {
+          id
+          balance
+          walletCurrency
+        }
+      }
+    }
+  }
 `
