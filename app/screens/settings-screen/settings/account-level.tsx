@@ -19,7 +19,7 @@ export const AccountLevelSetting: React.FC = () => {
         level === AccountLevel.Zero
           ? "TRIAL ACCOUNT"
           : level === AccountLevel.One
-          ? "FULL ACCOUNT"
+          ? "PERSONAL ACCOUNT"
           : level === AccountLevel.Two
           ? "BUSINESS ACCOUNT"
           : level === AccountLevel.NonAuth
