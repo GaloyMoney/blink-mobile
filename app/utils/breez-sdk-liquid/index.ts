@@ -291,17 +291,9 @@ export const payLnurlBreezSDK = async (
       const lnUrlPayResult = await lnurlPay({
         data: input.data,
         amountMsat: amountSat * 1000,
-        comment: memo,
-        paymentLabel: "<label>",
         validateSuccessActionUrl: true,
       })
-      console.log("Payload: ", {
-        data: input.data,
-        amountMsat: 1000,
-        comment: memo,
-        paymentLabel: "<label>",
-        validateSuccessActionUrl: true,
-      })
+
       if (lnUrlPayResult.type === LnUrlPayResultVariant.PAY_ERROR) {
         console.log("Error paying lnurl: ", lnUrlPayResult.data.reason)
         console.log("Reporting issue to Breez SDK")
@@ -319,12 +311,11 @@ export const payLnurlBreezSDK = async (
 export const onRedeem = async (lnurl: string, defaultDescription: string) => {
   try {
     const input = await parse(lnurl)
-    console.log(">>>>>>>>>>>", input)
+
     if (input.type === InputTypeVariant.LN_URL_PAY) {
       const lnUrlPayResult = await lnurlPay({
         data: input.data,
-        amountMsat: input.data.minSendable / 1000,
-        paymentLabel: defaultDescription,
+        amountMsat: input.data.minSendable,
         validateSuccessActionUrl: true,
       })
       console.log("LNURL PAY>>>>>>>>", lnUrlPayResult)
