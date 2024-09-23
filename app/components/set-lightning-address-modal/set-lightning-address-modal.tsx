@@ -89,13 +89,16 @@ export const SetLightningAddressModal = ({
       return
     }
 
-    const { data } = await updateUsername({
+    const { data, errors } = await updateUsername({
       variables: {
         input: {
           username: lnAddress,
         },
       },
     })
+
+    console.log("Mutation response:", { data, errors }) // Log full response for debugging
+    console.log("User update errors:", data?.userUpdateUsername?.errors) // Log the errors array
 
     if ((data?.userUpdateUsername?.errors ?? []).length > 0) {
       if (data?.userUpdateUsername?.errors[0]?.code === "USERNAME_ERROR") {
@@ -198,11 +201,13 @@ export const SetLightningAddressModalUI = ({
             <TextInput
               autoCorrect={false}
               autoComplete="off"
+              autoCapitalize="none"
               style={styles.textInputStyle}
               onChangeText={setLnAddress}
               value={lnAddress}
-              placeholder={"SatoshiNakamoto"}
+              placeholder={"your-username"}
               placeholderTextColor={colors.grey3}
+              keyboardType="default"
             />
           </View>
           <Text style={{ textAlign: "center" }} type={"p1"}>{`${
@@ -258,7 +263,7 @@ const validateLightningAddress = (
     }
   }
 
-  if (!/^[A-Za-z0-9_]+$/.test(lightningAddress)) {
+  if (!/^[\p{L}0-9_]+$/u.test(lightningAddress)) {
     return {
       valid: false,
       error: SetAddressError.INVALID_CHARACTER,
