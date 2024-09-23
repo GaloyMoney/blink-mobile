@@ -65,7 +65,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   const [flashUserAddress, setFlashUserAddress] = useState<string>()
 
   const { data } = useSendBitcoinDestinationQuery({
-    fetchPolicy: "cache-first",
+    fetchPolicy: "cache-and-network",
     returnPartialData: true,
     skip: !isAuthed,
   })
