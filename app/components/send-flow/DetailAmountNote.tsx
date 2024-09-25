@@ -20,7 +20,11 @@ import { NoteInput } from "@app/components/note-input"
 // types
 import { PaymentDetail } from "@app/screens/send-bitcoin-screen/payment-details"
 import { WalletCurrency } from "@app/graphql/generated"
-import { MoneyAmount, WalletOrDisplayCurrency } from "@app/types/amounts"
+import {
+  isNonZeroMoneyAmount,
+  MoneyAmount,
+  WalletOrDisplayCurrency,
+} from "@app/types/amounts"
 
 // utils
 import { testProps } from "../../utils/testProps"
@@ -132,11 +136,14 @@ const DetailAmountNote: React.FC<Props> = ({
       }
     } else {
       if (paymentDetail?.paymentType === "lnurl") {
-        if (paymentDetail.settlementAmount.amount < paymentDetail?.lnurlParams.min) {
+        if (
+          isNonZeroMoneyAmount(paymentDetail.settlementAmount) &&
+          paymentDetail.settlementAmount.amount < paymentDetail?.lnurlParams.min
+        ) {
           const minAmount: MoneyAmount<WalletCurrency> = {
             amount: paymentDetail?.lnurlParams.min,
-            currency: "USD",
-            currencyCode: "USD",
+            currency: "BTC",
+            currencyCode: "SAT",
           }
           const convertedUSDAmount = convertMoneyAmount(minAmount, "DisplayCurrency")
           setAsyncErrorMessage(
@@ -239,7 +246,7 @@ const DetailAmountNote: React.FC<Props> = ({
           />
         </View>
       </View>
-      {paymentDetail.paymentType === "intraledger" && (
+      {paymentDetail.canSetMemo && (
         <View style={styles.fieldContainer}>
           <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
           <NoteInput

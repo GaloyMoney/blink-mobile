@@ -35,6 +35,7 @@ import { usePersistentStateContext } from "@app/store/persistent-state"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { NavigationProp, RouteProp, useNavigation } from "@react-navigation/native"
 import { PaymentDetail } from "./payment-details/index.types"
+import { Satoshis } from "lnurl-pay/dist/types/types"
 
 // utils
 import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
@@ -129,15 +130,14 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     zeroDisplayAmount,
   ])
 
-  const goToNextScreen = async () => {
-    if (
-      paymentDetail &&
-      (paymentDetail.sendPaymentMutation ||
-        (paymentDetail.paymentType === "lnurl" && paymentDetail.unitOfAccountAmount))
-    ) {
+  const goToNextScreen =
+    (paymentDetail?.sendPaymentMutation ||
+      (paymentDetail?.paymentType === "lnurl" && paymentDetail?.unitOfAccountAmount)) &&
+    (async () => {
       let paymentDetailForConfirmation: PaymentDetail<WalletCurrency> = paymentDetail
 
       if (paymentDetail.paymentType === "lnurl") {
+        const lnurlParams = paymentDetail?.lnurlParams
         try {
           setIsLoadingLnurl(true)
 
@@ -146,10 +146,20 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             "BTC",
           )
 
-          const result = await requestInvoice({
+          const requestInvoiceParams: {
+            lnUrlOrAddress: string
+            tokens: Satoshis
+            comment?: string
+          } = {
             lnUrlOrAddress: paymentDetail.destination,
             tokens: utils.toSats(btcAmount.amount),
-          })
+          }
+
+          if (lnurlParams?.commentAllowed) {
+            requestInvoiceParams.comment = paymentDetail.memo
+          }
+
+          const result = await requestInvoice(requestInvoiceParams)
           setIsLoadingLnurl(false)
           const invoice = result.invoice
           const decodedInvoice = decodeInvoiceString(invoice, network as NetworkLibGaloy)
@@ -158,15 +168,6 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             Math.round(Number(decodedInvoice.millisatoshis) / 1000) !== btcAmount.amount
           ) {
             setAsyncErrorMessage(LL.SendBitcoinScreen.lnurlInvoiceIncorrectAmount())
-            return
-          }
-
-          const decodedDescriptionHash = decodedInvoice.tags.find(
-            (tag) => tag.tagName === "purpose_commit_hash",
-          )?.data
-
-          if (paymentDetail.lnurlParams.metadataHash !== decodedDescriptionHash) {
-            setAsyncErrorMessage(LL.SendBitcoinScreen.lnurlInvoiceIncorrectDescription())
             return
           }
 
@@ -189,10 +190,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           paymentDetail: paymentDetailForConfirmation,
         })
       }
-    } else {
-      return null
-    }
-  }
+    })
 
   const amountStatus = isValidAmount({
     paymentDetail,
@@ -233,7 +231,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
         />
         <View style={styles.buttonContainer}>
           <GaloyPrimaryButton
-            onPress={goToNextScreen}
+            onPress={goToNextScreen || undefined}
             loading={isLoadingLnurl}
             disabled={!amountStatus.validAmount || !!asyncErrorMessage}
             title={LL.common.next()}
