@@ -95,7 +95,7 @@ const ImportWalletOptions: React.FC<Props> = ({ navigation, route }) => {
     if (!insideApp) {
       if (token) {
         saveToken(token)
-        navigation.replace("Primary")
+        navigation.reset({ index: 0, routes: [{ name: "Primary" }] })
       } else {
         alert("Login failed. Please try again")
       }
