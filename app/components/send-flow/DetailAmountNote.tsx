@@ -59,7 +59,7 @@ const DetailAmountNote: React.FC<Props> = ({
   const [maxAmount, setMaxAmount] = useState<MoneyAmount<WalletCurrency>>()
 
   useEffect(() => {
-    if (paymentDetail.sendingWalletDescriptor.currency === "BTC") fetchBtcMinMaxAmount()
+    fetchBtcMinMaxAmount()
   }, [])
 
   const fetchBtcMinMaxAmount = async () => {
@@ -69,16 +69,20 @@ const DetailAmountNote: React.FC<Props> = ({
     } else if (paymentDetail.paymentType === "onchain") {
       limits = await fetchBreezOnChainLimits()
     } else {
-      const destination =
-        paymentDetail.paymentType === "lnurl"
-          ? paymentDetail.destination
-          : paymentDetail.destination + `@${lnDomain}`
-      const invoice: any = await parse(destination)
-      limits = {
-        send: {
-          minSat: invoice?.data?.minSendable,
-          maxSat: invoice?.data?.maxSendable,
-        },
+      limits = await fetchBreezLightningLimits()
+      if (paymentDetail?.paymentType === "lnurl") {
+        limits = {
+          send: {
+            minSat:
+              limits.send.minSat < paymentDetail?.lnurlParams.min
+                ? paymentDetail?.lnurlParams.min
+                : limits.send.minSat,
+            maxSat:
+              limits.send.maxSat > paymentDetail?.lnurlParams.max
+                ? paymentDetail?.lnurlParams.max
+                : limits.send.maxSat,
+          },
+        }
       }
     }
 
@@ -137,6 +141,7 @@ const DetailAmountNote: React.FC<Props> = ({
     } else {
       if (paymentDetail?.paymentType === "lnurl") {
         if (
+          paymentDetail.canSetAmount &&
           isNonZeroMoneyAmount(paymentDetail.settlementAmount) &&
           paymentDetail.settlementAmount.amount < paymentDetail?.lnurlParams.min
         ) {
@@ -155,12 +160,14 @@ const DetailAmountNote: React.FC<Props> = ({
             }),
           )
         } else if (
+          paymentDetail.canSetAmount &&
+          isNonZeroMoneyAmount(paymentDetail.settlementAmount) &&
           paymentDetail.settlementAmount.amount > paymentDetail?.lnurlParams.max
         ) {
           const maxAmount: MoneyAmount<WalletCurrency> = {
             amount: paymentDetail?.lnurlParams.max,
-            currency: "USD",
-            currencyCode: "USD",
+            currency: "BTC",
+            currencyCode: "SAT",
           }
           const convertedUSDAmount = convertMoneyAmount(maxAmount, "DisplayCurrency")
           setAsyncErrorMessage(
