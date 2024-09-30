@@ -3,6 +3,7 @@ import { WalletCurrency } from "@app/graphql/generated"
 import { usePersistentStateContext } from "@app/store/persistent-state"
 import { initializeBreezSDK } from "@app/utils/breez-sdk-liquid"
 import { getInfo } from "@breeztech/react-native-breez-sdk-liquid"
+import { Platform } from "react-native"
 
 type BtcWallet = {
   id: string
@@ -46,7 +47,12 @@ export const BreezProvider = ({ children }: Props) => {
   })
 
   useEffect(() => {
-    if (persistentState.isAdvanceMode) {
+    if (
+      (Platform.OS === "android" && persistentState.isAdvanceMode) ||
+      (Platform.OS === "ios" &&
+        Number(Platform.Version) >= 13 &&
+        persistentState.isAdvanceMode)
+    ) {
       getBreezInfo()
     } else {
       setBtcWallet({
@@ -55,6 +61,14 @@ export const BreezProvider = ({ children }: Props) => {
         balance: 0,
         pendingReceiveSat: 0,
         pendingSendSat: 0,
+      })
+      updateState((state: any) => {
+        if (state)
+          return {
+            ...state,
+            isAdvanceMode: false,
+          }
+        return undefined
       })
     }
   }, [persistentState.isAdvanceMode])

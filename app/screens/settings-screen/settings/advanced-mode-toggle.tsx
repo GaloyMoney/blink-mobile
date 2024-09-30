@@ -6,7 +6,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { SettingsRow } from "../row"
 import { toBtcMoneyAmount } from "@app/types/amounts"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
-import { Alert, Image, Modal } from "react-native"
+import { Alert, Image, Modal, Platform } from "react-native"
 import { useSettingsScreenQuery } from "@app/graphql/generated"
 import { getUsdWallet } from "@app/graphql/wallets-utils"
 import { useLevel } from "@app/graphql/level-context"
@@ -94,29 +94,32 @@ export const AdvancedModeToggle: React.FC = () => {
       toggleAdvanceModeComplete(true)
     }
   }
-
-  return (
-    <>
-      <SettingsRow
-        title={
-          isAdvanceMode
-            ? LL.SettingsScreen.beginnerMode()
-            : LL.SettingsScreen.advanceMode()
-        }
-        leftIcon={isAdvanceMode ? "invert-mode-outline" : "invert-mode"}
-        action={toggleAdvanceMode}
-        rightIcon={"sync-outline"}
-      />
-      <Modal visible={animationVisible} animationType={"fade"}>
-        <Image
-          source={require("@app/assets/gifs/flash-logo-btc-enabled.gif")}
-          style={{ height: "100%", width: "100%" }}
+  if (Platform.OS === "ios" && Number(Platform.Version) < 13) {
+    return null
+  } else {
+    return (
+      <>
+        <SettingsRow
+          title={
+            isAdvanceMode
+              ? LL.SettingsScreen.beginnerMode()
+              : LL.SettingsScreen.advanceMode()
+          }
+          leftIcon={isAdvanceMode ? "invert-mode-outline" : "invert-mode"}
+          action={toggleAdvanceMode}
+          rightIcon={"sync-outline"}
         />
-      </Modal>
-      <AdvancedModeModal
-        isVisible={advanceModalVisible}
-        setIsVisible={setAdvanceModalVisible}
-      />
-    </>
-  )
+        <Modal visible={animationVisible} animationType={"fade"}>
+          <Image
+            source={require("@app/assets/gifs/flash-logo-btc-enabled.gif")}
+            style={{ height: "100%", width: "100%" }}
+          />
+        </Modal>
+        <AdvancedModeModal
+          isVisible={advanceModalVisible}
+          setIsVisible={setAdvanceModalVisible}
+        />
+      </>
+    )
+  }
 }
