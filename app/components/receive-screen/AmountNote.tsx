@@ -45,6 +45,13 @@ const AmountNote: React.FC<Props> = ({ request }) => {
         currency: "BTC",
         currencyCode: "SAT",
       })
+    } else {
+      setMinAmount({
+        amount: 1,
+        currency: "USD",
+        currencyCode: "USD",
+      })
+      setMaxAmount(undefined)
     }
   }
 

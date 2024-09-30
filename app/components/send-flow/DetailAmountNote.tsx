@@ -2,15 +2,9 @@ import React, { useEffect, useState } from "react"
 import { View } from "react-native"
 import { makeStyles, Text } from "@rneui/themed"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { parse } from "@breeztech/react-native-breez-sdk-liquid"
 
 // hooks
-import {
-  useAppConfig,
-  useBreez,
-  useDisplayCurrency,
-  usePriceConversion,
-} from "@app/hooks"
+import { useBreez, useDisplayCurrency, usePriceConversion } from "@app/hooks"
 
 // components
 import { GaloyTertiaryButton } from "@app/components/atomic/galoy-tertiary-button"
@@ -53,49 +47,57 @@ const DetailAmountNote: React.FC<Props> = ({
   const { formatDisplayAndWalletAmount } = useDisplayCurrency()
 
   const { sendingWalletDescriptor } = paymentDetail
-  const { lnAddressHostname: lnDomain } = useAppConfig().appConfig.galoyInstance
 
   const [minAmount, setMinAmount] = useState<MoneyAmount<WalletCurrency>>()
   const [maxAmount, setMaxAmount] = useState<MoneyAmount<WalletCurrency>>()
 
   useEffect(() => {
     fetchBtcMinMaxAmount()
-  }, [])
+  }, [paymentDetail.sendingWalletDescriptor.currency])
 
   const fetchBtcMinMaxAmount = async () => {
-    let limits
-    if (paymentDetail.paymentType === "lightning") {
-      limits = await fetchBreezLightningLimits()
-    } else if (paymentDetail.paymentType === "onchain") {
-      limits = await fetchBreezOnChainLimits()
-    } else {
-      limits = await fetchBreezLightningLimits()
-      if (paymentDetail?.paymentType === "lnurl") {
-        limits = {
-          send: {
-            minSat:
-              limits.send.minSat < paymentDetail?.lnurlParams.min
-                ? paymentDetail?.lnurlParams.min
-                : limits.send.minSat,
-            maxSat:
-              limits.send.maxSat > paymentDetail?.lnurlParams.max
-                ? paymentDetail?.lnurlParams.max
-                : limits.send.maxSat,
-          },
+    if (paymentDetail.sendingWalletDescriptor.currency === "BTC") {
+      let limits
+      if (paymentDetail.paymentType === "lightning") {
+        limits = await fetchBreezLightningLimits()
+      } else if (paymentDetail.paymentType === "onchain") {
+        limits = await fetchBreezOnChainLimits()
+      } else {
+        limits = await fetchBreezLightningLimits()
+        if (paymentDetail?.paymentType === "lnurl") {
+          limits = {
+            send: {
+              minSat:
+                limits.send.minSat < paymentDetail?.lnurlParams.min
+                  ? paymentDetail?.lnurlParams.min
+                  : limits.send.minSat,
+              maxSat:
+                limits.send.maxSat > paymentDetail?.lnurlParams.max
+                  ? paymentDetail?.lnurlParams.max
+                  : limits.send.maxSat,
+            },
+          }
         }
       }
-    }
 
-    setMinAmount({
-      amount: limits?.send.minSat || 0,
-      currency: "BTC",
-      currencyCode: "SAT",
-    })
-    setMaxAmount({
-      amount: limits?.send.maxSat || 0,
-      currency: "BTC",
-      currencyCode: "SAT",
-    })
+      setMinAmount({
+        amount: limits?.send.minSat || 0,
+        currency: "BTC",
+        currencyCode: "SAT",
+      })
+      setMaxAmount({
+        amount: limits?.send.maxSat || 0,
+        currency: "BTC",
+        currencyCode: "SAT",
+      })
+    } else {
+      setMinAmount({
+        amount: 1,
+        currency: "USD",
+        currencyCode: "USD",
+      })
+      setMaxAmount(undefined)
+    }
   }
 
   useEffect(() => {
@@ -240,16 +242,8 @@ const DetailAmountNote: React.FC<Props> = ({
             walletCurrency={sendingWalletDescriptor.currency}
             canSetAmount={paymentDetail.canSetAmount}
             isSendingMax={paymentDetail.isSendingMax}
-            maxAmount={
-              paymentDetail.sendingWalletDescriptor.currency === "BTC"
-                ? maxAmount
-                : undefined
-            }
-            minAmount={
-              paymentDetail.sendingWalletDescriptor.currency === "BTC"
-                ? minAmount
-                : undefined
-            }
+            maxAmount={maxAmount}
+            minAmount={minAmount}
           />
         </View>
       </View>
