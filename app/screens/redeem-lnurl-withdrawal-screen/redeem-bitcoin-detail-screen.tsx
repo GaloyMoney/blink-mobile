@@ -89,6 +89,7 @@ const RedeemBitcoinDetailScreen: React.FC<Prop> = ({ route, navigation }) => {
         unitOfAccountAmount,
         settlementAmount: btcMoneyAmount,
         displayAmount: convertMoneyAmount(btcMoneyAmount, DisplayCurrency),
+        usdAmount: convertMoneyAmount(btcMoneyAmount, WalletCurrency.Usd),
         lnurl,
       })
     }

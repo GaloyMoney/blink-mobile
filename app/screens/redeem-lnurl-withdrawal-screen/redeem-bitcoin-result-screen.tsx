@@ -39,6 +39,7 @@ const RedeemBitcoinResultScreen: React.FC<Prop> = ({ route, navigation }) => {
     unitOfAccountAmount,
     settlementAmount,
     displayAmount,
+    usdAmount,
     lnurl,
   } = route.params
 
@@ -87,10 +88,10 @@ const RedeemBitcoinResultScreen: React.FC<Prop> = ({ route, navigation }) => {
       if (withdrawalInvoice) {
         submitLNURLWithdrawRequest(withdrawalInvoice)
       } else {
-        createWithdrawRequestInvoice(displayAmount.amount, defaultDescription)
+        createWithdrawRequestInvoice(usdAmount.amount, defaultDescription)
       }
     }
-  }, [withdrawalInvoice, displayAmount, lnurl])
+  }, [withdrawalInvoice, usdAmount, lnurl])
 
   const createWithdrawRequestInvoice = useCallback(
     async (amount: number, memo: string) => {

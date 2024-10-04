@@ -85,6 +85,7 @@ export type RootStackParamList = {
     unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency>
     settlementAmount: MoneyAmount<WalletCurrency>
     displayAmount: MoneyAmount<DisplayCurrency>
+    usdAmount: MoneyAmount<WalletCurrency>
     lnurl: string
   }
   phoneFlow: { onComplete?: (token?: string) => void } | undefined
