@@ -47,21 +47,7 @@ export const BreezProvider = ({ children }: Props) => {
   })
 
   useEffect(() => {
-    if (
-      (Platform.OS === "android" && persistentState.isAdvanceMode) ||
-      (Platform.OS === "ios" &&
-        Number(Platform.Version) >= 13 &&
-        persistentState.isAdvanceMode)
-    ) {
-      getBreezInfo()
-    } else {
-      setBtcWallet({
-        id: "",
-        walletCurrency: "BTC",
-        balance: 0,
-        pendingReceiveSat: 0,
-        pendingSendSat: 0,
-      })
+    if (Platform.OS === "ios" && Number(Platform.Version) < 13) {
       updateState((state: any) => {
         if (state)
           return {
@@ -70,6 +56,18 @@ export const BreezProvider = ({ children }: Props) => {
           }
         return undefined
       })
+    } else {
+      if (persistentState.isAdvanceMode) {
+        getBreezInfo()
+      } else {
+        setBtcWallet({
+          id: "",
+          walletCurrency: "BTC",
+          balance: 0,
+          pendingReceiveSat: 0,
+          pendingSendSat: 0,
+        })
+      }
     }
   }, [persistentState.isAdvanceMode])
 
