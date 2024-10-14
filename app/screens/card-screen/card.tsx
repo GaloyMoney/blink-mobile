@@ -1,7 +1,7 @@
 import { Button, makeStyles, Text, useTheme } from "@rneui/themed"
 import * as React from "react"
 import { useState } from "react"
-import { ActivityIndicator, View, Image, Alert } from "react-native"
+import { ActivityIndicator, View, Image, Alert, ScrollView } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/Ionicons"
 import nfcManager from "react-native-nfc-manager"
@@ -367,7 +367,7 @@ export const CardScreen: React.FC<Props> = ({ navigation }) => {
       style={styles.screenStyle}
     >
       {cardHtml ? (
-        <>
+        <ScrollView contentContainerStyle={styles.scroll}>
           <Text style={styles.flashcardBalanceText}>{balance}</Text>
           <Image source={CardImage} style={styles.flashcardImage} />
           <View style={styles.listItemsContainer}>
@@ -390,7 +390,7 @@ export const CardScreen: React.FC<Props> = ({ navigation }) => {
             title="Remove Flashcard"
             onPress={resetCardHtml}
           />
-        </>
+        </ScrollView>
       ) : (
         <>
           <FlatList
@@ -431,6 +431,10 @@ const useStyles = makeStyles(({ colors }) => ({
   screenStyle: {
     paddingHorizontal: 16,
     paddingVertical: 12,
+    flexGrow: 1,
+  },
+
+  scroll: {
     flexGrow: 1,
   },
 
