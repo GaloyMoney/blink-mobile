@@ -173,7 +173,11 @@ export const TransactionLimitsScreen = () => {
           toggleModal={toggleIsContactModalVisible}
           messageBody={messageBody}
           messageSubject={messageSubject}
-          supportChannelsToHide={[SupportChannels.StatusPage, SupportChannels.Telegram]}
+          supportChannelsToHide={[
+            SupportChannels.Mattermost,
+            SupportChannels.StatusPage,
+            SupportChannels.Telegram,
+          ]}
         />
         <UpgradeAccountModal
           isVisible={isUpgradeAccountModalVisible}

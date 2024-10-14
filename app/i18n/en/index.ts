@@ -1024,10 +1024,10 @@ const en: BaseTranslation = {
     internalSend: "Send to {bankName: string} User",
     error: "Unable to fetch limits at this time",
     contactUsMessageBody:
-      "Hi, I will like to increase the transaction limits of my {bankName: string} account.",
-    contactUsMessageSubject: "Request To Increase Transaction Limits",
+      "Hi, I would like to upgrade my account to a {bankName: string} Business account.",
+    contactUsMessageSubject: "Flash Business Upgrade Request",
     contactSupportToPerformKyc:
-      "Contact support to perform manual KYC to increase your limit",
+      "Contact support to perform manual KYC and upgrade to {bankName: string} Business",
     increaseLimits: "Increase your limits",
     spendingLimits: "Spending Limits",
     spendingLimitsDescription: "The spending limits shown on this page are denominated in USD. For your convenience, we convert these limits into your local currency based on current foreign exchange rates. Please note that the displayed local currency amount may fluctuate as exchange rates are updated in real-time.",
