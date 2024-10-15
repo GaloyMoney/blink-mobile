@@ -911,7 +911,9 @@
         "header": "Welcome to Advanced Mode. You now have a non-custodial Bitcoin account added to your wallet!",
         "body": "You can use it to send and receive larger amounts of money, denominated in Bitcoin. You can also use the SWAP button to instantly transfer value between your Bitcoin account and USD account. The dollar value in the Bitcoin account WILL fluctuate with the price of Bitcoin.\n\nIMPORTANT: Your Bitcoin account is a non-custodial account, so you may be charged a small fee to make your first transaction. Also, you are solely responsible for securing your recovery phrase in a safe place. \n\n\nDO NOT SHARE YOUR RECOVERY PHRASE WITH ANYONE.",
         "termsAndConditions": "\nRead the Terms & Conditions.",
-        "learnMore": "What is a Non-Custodial Wallet?"
+        "learnMore": "What is a Non-Custodial Wallet?",
+        "importWallet": "Import Wallet",
+		"createWallet": "Create Wallet"
     },
     "UnVerifiedSeedModal": {
         "header": "YOUR BITCOIN IS NOT SECURE!",

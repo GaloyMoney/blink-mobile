@@ -986,6 +986,8 @@ const en: BaseTranslation = {
       "IMPORTANT: This is a non-custodial account, so small network fees may apply. You are solely responsible for securing your recovery phrase in a safe place. \n\n\nDO NOT SHARE YOUR RECOVERY PHRASE WITH ANYONE.",
     termsAndConditions: "\nRead the Terms & Conditions.",
     learnMore: "What is a Non-Custodial Wallet?",
+    importWallet: "Import Wallet",
+		createWallet: "Create Wallet"
 },
   MerchantSuggestModal: {
     header: "Add Flashpoint",

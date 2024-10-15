@@ -3156,6 +3156,14 @@ type RootTranslation = {
 		 * W​h​a​t​ ​i​s​ ​a​ ​N​o​n​-​C​u​s​t​o​d​i​a​l​ ​W​a​l​l​e​t​?
 		 */
 		learnMore: string
+		/**
+		 * Import wallet
+		 */
+		importWallet: string
+		/**
+		 * Create wallet
+		 */
+		createWallet: string
 	}
 	MerchantSuggestModal: {
 		/**
@@ -7399,6 +7407,14 @@ export type TranslationFunctions = {
 		 * What is a Non-Custodial Wallet?
 		 */
 		learnMore: () => LocalizedString
+		/**
+		 * Import wallet
+		 */
+		importWallet: () => LocalizedString
+		/**
+		 * Create wallet
+		 */
+		createWallet: () => LocalizedString
 	}
 	MerchantSuggestModal: {
 		/**

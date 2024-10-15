@@ -31,7 +31,7 @@ import {
   ReceivePaymentResponse,
 } from "@breeztech/react-native-breez-sdk-liquid"
 
-const KEYCHAIN_MNEMONIC_KEY = "mnemonic_key"
+export const KEYCHAIN_MNEMONIC_KEY = "mnemonic_key"
 
 export let breezSDKInitialized = false
 let breezSDKInitializing: Promise<void | boolean> | null = null
@@ -94,11 +94,13 @@ const connectToSDK = async () => {
 
 export const disconnectToSDK = async () => {
   try {
-    const config = await defaultConfig(LiquidNetwork.MAINNET)
-    await disconnect()
-    await RNFS.unlink(config.workingDir)
-    breezSDKInitialized = false
-    breezSDKInitializing = null
+    if (breezSDKInitialized) {
+      const config = await defaultConfig(LiquidNetwork.MAINNET)
+      await disconnect()
+      await RNFS.unlink(config.workingDir)
+      breezSDKInitialized = false
+      breezSDKInitializing = null
+    }
   } catch (error) {
     console.error("Disconnect error: ", error)
     throw error

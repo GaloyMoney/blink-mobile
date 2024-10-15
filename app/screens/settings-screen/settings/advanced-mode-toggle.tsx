@@ -11,9 +11,11 @@ import { useSettingsScreenQuery } from "@app/graphql/generated"
 import { getUsdWallet } from "@app/graphql/wallets-utils"
 import { useLevel } from "@app/graphql/level-context"
 import { usePersistentStateContext } from "@app/store/persistent-state"
-import { useActivityIndicator, useBreez } from "@app/hooks"
-import { useState } from "react"
+import { useBreez } from "@app/hooks"
+import { useEffect, useState } from "react"
 import { AdvancedModeModal } from "@app/components/advanced-mode-modal"
+import * as Keychain from "react-native-keychain"
+import { KEYCHAIN_MNEMONIC_KEY } from "@app/utils/breez-sdk-liquid"
 
 export const AdvancedModeToggle: React.FC = () => {
   const { LL } = useI18nContext()
@@ -23,10 +25,10 @@ export const AdvancedModeToggle: React.FC = () => {
   const { persistentState, updateState } = usePersistentStateContext()
   const { btcWallet } = useBreez()
   const { moneyAmountToDisplayCurrencyString } = useDisplayCurrency()
-  const { toggleActivityIndicator } = useActivityIndicator()
 
   const [animationVisible, setAnimationVisible] = useState(false)
   const [advanceModalVisible, setAdvanceModalVisible] = useState(false)
+  const [hasRecoveryPhrase, setHasRecoveryPhrase] = useState(false)
 
   const isAdvanceMode = persistentState.isAdvanceMode
 
@@ -38,10 +40,18 @@ export const AdvancedModeToggle: React.FC = () => {
 
   const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
 
-  const toggleAdvanceModeComplete = (isAdvanceMode: boolean) => {
-    toggleActivityIndicator(true)
+  useEffect(() => {
+    checkRecoveryPhrase()
+  }, [])
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const checkRecoveryPhrase = async () => {
+    const credentials = await Keychain.getInternetCredentials(KEYCHAIN_MNEMONIC_KEY)
+    if (credentials) {
+      setHasRecoveryPhrase(true)
+    }
+  }
+
+  const onUpdateState = (isAdvanceMode: boolean) => {
     updateState((state: any) => {
       if (state)
         return {
@@ -52,20 +62,22 @@ export const AdvancedModeToggle: React.FC = () => {
       return undefined
     })
 
-    toggleActivityIndicator(false)
-
     if (isAdvanceMode) {
       setAnimationVisible(true)
       setTimeout(() => {
         setAnimationVisible(false)
-        setAdvanceModalVisible(true)
+        if (hasRecoveryPhrase) {
+          setAdvanceModalVisible(true)
+        } else {
+          goBack()
+        }
       }, 5500)
     } else {
       goBack()
     }
   }
 
-  const toggleAdvanceMode = () => {
+  const toggleAdvanceMode = async () => {
     if (isAdvanceMode) {
       if (btcWallet.balance && btcWallet.balance > 0) {
         const btcWalletBalance = toBtcMoneyAmount(btcWallet.balance || 0)
@@ -84,16 +96,21 @@ export const AdvancedModeToggle: React.FC = () => {
           { text: LL.common.cancel(), onPress: () => {} },
           {
             text: LL.common.yes(),
-            onPress: () => toggleAdvanceModeComplete(false),
+            onPress: () => onUpdateState(false),
           },
         ])
       } else {
-        toggleAdvanceModeComplete(false)
+        onUpdateState(false)
       }
     } else {
-      toggleAdvanceModeComplete(true)
+      if (hasRecoveryPhrase) {
+        onUpdateState(true)
+      } else {
+        setAdvanceModalVisible(true)
+      }
     }
   }
+
   if (Platform.OS === "ios" && Number(Platform.Version) < 13) {
     return null
   } else {
@@ -116,8 +133,10 @@ export const AdvancedModeToggle: React.FC = () => {
           />
         </Modal>
         <AdvancedModeModal
+          hasRecoveryPhrase={hasRecoveryPhrase}
           isVisible={advanceModalVisible}
           setIsVisible={setAdvanceModalVisible}
+          enableAdvancedMode={() => onUpdateState(true)}
         />
       </>
     )
