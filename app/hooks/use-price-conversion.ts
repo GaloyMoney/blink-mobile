@@ -84,9 +84,8 @@ export const usePriceConversion = () => {
         return moneyAmount
       }
 
-      let amount = Math.floor(
-        moneyAmount.amount * priceOfCurrencyInCurrency(moneyAmount.currency, toCurrency),
-      )
+      let amount =
+        moneyAmount.amount * priceOfCurrencyInCurrency(moneyAmount.currency, toCurrency)
 
       if (
         moneyAmountIsCurrencyType(moneyAmount, DisplayCurrency) &&

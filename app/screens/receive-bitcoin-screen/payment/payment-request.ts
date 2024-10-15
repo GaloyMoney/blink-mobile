@@ -154,6 +154,7 @@ export const createPaymentRequest = (
       // Handle USD payment requests
       if (pr.type === Invoice.Lightning) {
         if (pr.settlementAmount && pr.settlementAmount?.currency === WalletCurrency.Usd) {
+          console.log("Invoice create amount: ", pr.settlementAmount.amount)
           const { data, errors } = await mutations.lnUsdInvoiceCreate({
             variables: {
               input: {
