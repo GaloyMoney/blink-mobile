@@ -1,6 +1,7 @@
 import { InMemoryCache, gql } from "@apollo/client"
 import { Account, MyWalletsFragmentDoc, Wallet, WalletCurrency } from "./generated"
 import { relayStylePagination } from "@apollo/client/utilities"
+import { ReadFieldFunction } from "@apollo/client/cache/core/types/common"
 
 gql`
   fragment MyWallets on ConsumerAccount {
@@ -108,7 +109,7 @@ export const createCache = () =>
             read: (value) => value ?? false,
           },
           colorScheme: {
-            read: (value) => value ?? "system",
+            read: (value) => value ?? "light",
           },
           feedbackModalShown: {
             read: (value) => value ?? false,
