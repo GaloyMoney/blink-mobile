@@ -594,10 +594,7 @@ const Tab = createBottomTabNavigator<PrimaryStackParamList>()
 
 export const PrimaryNavigator = () => {
   const styles = useStyles()
-  const {
-    theme: { colors },
-  } = useTheme()
-
+  const { colors } = useTheme().theme
   const { LL } = useI18nContext()
   // The cacheId is updated after every mutation that affects current user data (balanace, contacts, ...)
   // It's used to re-mount this component and thus reset what's cached in Apollo (and React)
@@ -654,6 +651,7 @@ export const PrimaryNavigator = () => {
         options={{
           title: LL.CardScreen.title(),
           headerShown: true,
+          headerStyle: { backgroundColor: colors.white },
           tabBarTestID: LL.CardScreen.title(),
           tabBarIcon: ({ color }) => <CardIcon color={color} />,
         }}

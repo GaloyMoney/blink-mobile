@@ -22,7 +22,7 @@ const defaultDisplayCurrency = usdDisplayCurrency
 
 export const usePriceConversion = () => {
   const isAuthed = useIsAuthed()
-  const { data } = useRealtimePriceQuery({ skip: !isAuthed })
+  const { data } = useRealtimePriceQuery({ fetchPolicy: "network-only", skip: !isAuthed })
 
   const displayCurrency =
     data?.me?.defaultAccount?.realtimePrice?.denominatorCurrency ||

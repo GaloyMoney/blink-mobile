@@ -1,46 +1,99 @@
-import * as React from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { Alert, Pressable, View } from "react-native"
 import Modal from "react-native-modal"
-import NfcManager, { Ndef, NfcTech } from "react-native-nfc-manager"
+import nfcManager, { Ndef, NfcTech } from "react-native-nfc-manager"
 import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from "react-native-vector-icons/Ionicons"
 import axios from "axios"
-
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { isIOS } from "@rneui/base"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
 
+// components
 import { GaloySecondaryButton } from "../atomic/galoy-secondary-button"
 
-export const ModalNfcFlashcard: React.FC<{
+type Props = {
   isActive: boolean
   setIsActive: (arg: boolean) => void
   onCardHtmlUpdate: (html: string) => void
-  tagId: (tag: string) => void
-}> = ({ isActive, setIsActive, onCardHtmlUpdate, tagId }) => {
-  const [nfcError, setNfcError] = React.useState<boolean>(false) // Added state to track NFC errors
+  setTagId: (tag: string) => void
+}
+
+export const ModalNfcFlashcard: React.FC<Props> = ({
+  isActive,
+  setIsActive,
+  onCardHtmlUpdate,
+  setTagId,
+}) => {
   const styles = useStyles()
-  const {
-    theme: { colors },
-  } = useTheme()
-
+  const { colors } = useTheme().theme
   const { LL } = useI18nContext()
-  const [nfcRegistered, setNfcRegistered] = React.useState<boolean>(false)
 
-  const dismiss = React.useCallback(async () => {
-    setIsActive(false)
-    if (nfcRegistered) {
-      try {
-        await NfcManager.cancelTechnologyRequest()
-        await NfcManager.unregisterTagEvent()
-        setNfcRegistered(false)
-      } catch (error) {
-        console.warn("Error while canceling NFC technology request", error)
+  const [nfcError, setNfcError] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (isActive) {
+      readNfc()
+    }
+
+    return () => {
+      nfcManager.cancelTechnologyRequest()
+      nfcManager.unregisterTagEvent()
+    }
+  }, [isActive])
+
+  const readNfc = async () => {
+    try {
+      const isSupported = await nfcManager.isSupported()
+
+      if (!isSupported) {
+        Alert.alert("NFC not supported on this device")
+        dismiss()
+      } else {
+        await nfcManager.start()
+        await nfcManager.requestTechnology(NfcTech.Ndef)
+
+        const tag = await nfcManager.getTag()
+        if (tag && tag.id) {
+          setTagId(tag.id)
+        } else {
+          console.log("No tag found")
+        }
+        const ndefRecord = tag?.ndefMessage?.[0]
+
+        if (!ndefRecord) {
+          Alert.alert("No NDEF message found")
+          setNfcError(true) // Set error state if no NDEF message is found
+          dismiss()
+        } else {
+          const payload = Ndef.text.decodePayload(new Uint8Array(ndefRecord.payload))
+          setNfcError(false) // Clear error state if successful
+
+          if (payload.startsWith("lnurlw")) {
+            await handleSubmit(payload)
+            await nfcManager.cancelTechnologyRequest()
+          }
+        }
+      }
+    } catch (error: any) {
+      dismiss()
+      if (error.message !== "Not even registered") {
+        setNfcError(true)
       }
     }
-  }, [setIsActive, nfcRegistered])
+  }
 
-  const handleSubmit = React.useCallback(
+  const dismiss = useCallback(async () => {
+    setIsActive(false)
+    try {
+      await nfcManager.cancelTechnologyRequest()
+      await nfcManager.unregisterTagEvent()
+    } catch (error) {
+      console.warn("Error while canceling NFC technology request", error)
+    }
+  }, [setIsActive])
+
+  const handleSubmit = useCallback(
     async (payload: string) => {
       try {
         const payloadPart = payload.split("?")[1]
@@ -59,68 +112,6 @@ export const ModalNfcFlashcard: React.FC<{
     [dismiss, onCardHtmlUpdate],
   )
 
-  React.useEffect(() => {
-    const readNfc = async () => {
-      try {
-        const isSupported = await NfcManager.isSupported()
-
-        if (!isSupported) {
-          Alert.alert("NFC not supported on this device")
-          dismiss()
-          return
-        }
-
-        await NfcManager.start()
-        console.log("NFC is enabled")
-        await NfcManager.requestTechnology(NfcTech.Ndef)
-
-        const tag = await NfcManager.getTag()
-        if (tag && tag.id) {
-          tagId(tag.id)
-        } else {
-          console.log("No tag found")
-        }
-        const ndefRecord = tag?.ndefMessage?.[0]
-
-        if (!ndefRecord) {
-          Alert.alert("No NDEF message found")
-          setNfcError(true) // Set error state if no NDEF message is found
-          dismiss()
-          return
-        }
-
-        const payload = Ndef.text.decodePayload(new Uint8Array(ndefRecord.payload))
-        setNfcError(false) // Clear error state if successful
-
-        // Close the modal if the payload starts with "lnurlw"
-        if (payload.startsWith("lnurlw")) {
-          await handleSubmit(payload)
-          await NfcManager.cancelTechnologyRequest()
-        }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        if (error.message !== "Not even registered") {
-          setNfcError(true)
-        }
-        // console.error("NFC Error", error)
-        dismiss()
-      }
-    }
-
-    if (isActive) {
-      readNfc()
-    }
-
-    return () => {
-      if (nfcRegistered) {
-        NfcManager.cancelTechnologyRequest()
-        NfcManager.unregisterTagEvent()
-        setNfcRegistered(false)
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isActive, dismiss, nfcRegistered])
-
   return (
     <Modal
       swipeDirection={["down"]}
@@ -132,11 +123,6 @@ export const ModalNfcFlashcard: React.FC<{
       swipeThreshold={50}
       propagateSwipe
       style={styles.modal}
-      onModalHide={() => {
-        if (nfcError) {
-          Alert.alert("Failed to read NFC tag") // Show alert only if there was an NFC error
-        }
-      }}
     >
       <Pressable style={styles.flex} onPress={dismiss}></Pressable>
       <SafeAreaView style={styles.modalForeground}>
@@ -162,34 +148,27 @@ const useStyles = makeStyles(({ colors }) => ({
     maxHeight: "25%",
     flex: 1,
   },
-
   buttonContainer: {
     marginBottom: 32,
   },
-
   icon: {
     height: 40,
     top: -40,
   },
-
   iconContainer: {
     height: 14,
   },
-
   scanIconContainer: {
     height: 40,
     flex: 1,
   },
-
   message: {
     marginVertical: 8,
   },
-
   modal: {
     margin: 0,
     flex: 3,
   },
-
   modalForeground: {
     alignItems: "center",
     paddingHorizontal: 20,
@@ -197,7 +176,6 @@ const useStyles = makeStyles(({ colors }) => ({
     flex: 1,
     backgroundColor: colors.white,
   },
-
   modalContent: {
     backgroundColor: "white",
   },
