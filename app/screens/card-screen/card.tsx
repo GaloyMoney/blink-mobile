@@ -56,7 +56,7 @@ export const CardScreen = () => {
   const { colors } = useTheme().theme
   const { LL } = useI18nContext()
   const { formatMoneyAmount } = useDisplayCurrency()
-  const { convertMoneyAmount } = usePriceConversion()
+  const { convertMoneyAmount } = usePriceConversion("network-only")
   const { persistentState, updateState } = usePersistentStateContext()
 
   const [displayReceiveNfc, setDisplayReceiveNfc] = useState(false)

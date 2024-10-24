@@ -9,6 +9,7 @@ import {
 } from "@app/types/amounts"
 import { useMemo } from "react"
 import crashlytics from "@react-native-firebase/crashlytics"
+import { WatchQueryFetchPolicy } from "@apollo/client"
 
 export const SATS_PER_BTC = 100000000
 
@@ -20,9 +21,12 @@ const usdDisplayCurrency = {
 
 const defaultDisplayCurrency = usdDisplayCurrency
 
-export const usePriceConversion = () => {
+export const usePriceConversion = (fetchPolicy?: WatchQueryFetchPolicy) => {
   const isAuthed = useIsAuthed()
-  const { data } = useRealtimePriceQuery({ fetchPolicy: "network-only", skip: !isAuthed })
+  const { data } = useRealtimePriceQuery({
+    fetchPolicy: fetchPolicy || "cache-and-network",
+    skip: !isAuthed,
+  })
 
   const displayCurrency =
     data?.me?.defaultAccount?.realtimePrice?.denominatorCurrency ||
@@ -86,6 +90,10 @@ export const usePriceConversion = () => {
 
       let amount =
         moneyAmount.amount * priceOfCurrencyInCurrency(moneyAmount.currency, toCurrency)
+
+      if (toCurrency === "BTC") {
+        amount = Math.floor(amount)
+      }
 
       if (
         moneyAmountIsCurrencyType(moneyAmount, DisplayCurrency) &&
