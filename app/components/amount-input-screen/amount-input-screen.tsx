@@ -192,7 +192,10 @@ export const AmountInputScreen: React.FC<AmountInputScreenProps> = ({
   const onToggleCurrency =
     secondaryNewAmount &&
     (() => {
-      setNumberPadAmount(secondaryNewAmount)
+      setNumberPadAmount({
+        ...secondaryNewAmount,
+        amount: Math.round(secondaryNewAmount.amount),
+      })
     })
 
   useEffect(() => {
