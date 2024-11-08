@@ -246,6 +246,22 @@ type RootTranslation = {
 		 * F​l​a​s​h​c​a​r​d
 		 */
 		title: string
+		/**
+		 * This is not a proper flashcard. Please use the correct flashcard.
+		 */
+		notFlashcard: string
+		/**
+		 * NDEF message not found.
+		 */
+		noNDEFMessage: string
+		/**
+		 * NFC is not supported on this device.
+		 */
+		notSupported: string
+		/**
+		 * No tag found
+		 */
+		noTag: string
 	}
 	ConversionDetailsScreen: {
 		/**
@@ -4545,6 +4561,22 @@ export type TranslationFunctions = {
 		 * Flashcard
 		 */
 		title: () => LocalizedString
+		/**
+		 * This is not a proper flashcard. Please use the correct flashcard.
+		 */
+		notFlashcard: () => LocalizedString
+		/**
+		 * NDEF message not found.
+		 */
+		noNDEFMessage: () => LocalizedString
+		/**
+		 * NFC is not supported on this device.
+		 */
+		notSupported: () => LocalizedString
+		/**
+		 * No tag found
+		 */
+		noTag: () => LocalizedString
 	}
 	ConversionDetailsScreen: {
 		/**

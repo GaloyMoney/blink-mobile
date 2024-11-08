@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react"
-import { Alert, Pressable, View } from "react-native"
+import { Pressable, View } from "react-native"
 import Modal from "react-native-modal"
 import nfcManager, { Ndef, NfcTech } from "react-native-nfc-manager"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -11,6 +11,9 @@ import { Text, makeStyles, useTheme } from "@rneui/themed"
 
 // components
 import { GaloySecondaryButton } from "../atomic/galoy-secondary-button"
+
+// utils
+import { toastShow } from "@app/utils/toast"
 
 type Props = {
   isActive: boolean
@@ -29,8 +32,6 @@ export const ModalNfcFlashcard: React.FC<Props> = ({
   const { colors } = useTheme().theme
   const { LL } = useI18nContext()
 
-  const [nfcError, setNfcError] = useState<boolean>(false)
-
   useEffect(() => {
     if (isActive) {
       readNfc()
@@ -45,41 +46,31 @@ export const ModalNfcFlashcard: React.FC<Props> = ({
   const readNfc = async () => {
     try {
       const isSupported = await nfcManager.isSupported()
-
       if (!isSupported) {
-        Alert.alert("NFC not supported on this device")
-        dismiss()
+        showToastMessage(LL.CardScreen.notSupported())
       } else {
         await nfcManager.start()
         await nfcManager.requestTechnology(NfcTech.Ndef)
-
         const tag = await nfcManager.getTag()
+
         if (tag && tag.id) {
           setTagId(tag.id)
-        } else {
-          console.log("No tag found")
-        }
-        const ndefRecord = tag?.ndefMessage?.[0]
-
-        if (!ndefRecord) {
-          Alert.alert("No NDEF message found")
-          setNfcError(true) // Set error state if no NDEF message is found
-          dismiss()
-        } else {
-          const payload = Ndef.text.decodePayload(new Uint8Array(ndefRecord.payload))
-          setNfcError(false) // Clear error state if successful
-
-          if (payload.startsWith("lnurlw")) {
-            await handleSubmit(payload)
-            await nfcManager.cancelTechnologyRequest()
+          const ndefRecord = tag?.ndefMessage?.[0]
+          if (!ndefRecord) {
+            showToastMessage(LL.CardScreen.noNDEFMessage())
+          } else {
+            const payload = Ndef.text.decodePayload(new Uint8Array(ndefRecord.payload))
+            if (payload.startsWith("lnurlw")) {
+              await handleSubmit(payload)
+              await nfcManager.cancelTechnologyRequest()
+            }
           }
+        } else {
+          showToastMessage(LL.CardScreen.noTag())
         }
       }
     } catch (error: any) {
-      dismiss()
-      if (error.message !== "Not even registered") {
-        setNfcError(true)
-      }
+      showToastMessage(LL.CardScreen.notFlashcard())
     }
   }
 
@@ -105,12 +96,20 @@ export const ModalNfcFlashcard: React.FC<Props> = ({
         onCardHtmlUpdate(response.data)
         await dismiss()
       } catch (error) {
-        Alert.alert("Failed to send data")
-        console.error("HTTP Error", error)
+        showToastMessage(LL.CardScreen.notFlashcard())
       }
     },
     [dismiss, onCardHtmlUpdate],
   )
+
+  const showToastMessage = async (message: string) => {
+    await dismiss()
+    toastShow({
+      message,
+      type: "error",
+      position: "top",
+    })
+  }
 
   return (
     <Modal

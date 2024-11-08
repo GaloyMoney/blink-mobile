@@ -74,6 +74,10 @@ const en: BaseTranslation = {
       "Tap a Flashcard to add it here",
     noMatchingCards: "No Cards matching your search were found.",
     title: "Flashcard",
+    notFlashcard: "Unsupported NFC card. Please ensure you are using a flashcard.",
+    noNDEFMessage: "NDEF message not found. Please ensure you are using a flashcard.",
+    notSupported: "NFC is not supported on this device.",
+    noTag: "No tag found. Please ensure you are using a flashcard."
   },
   ConversionDetailsScreen: {
     title: "Swap",

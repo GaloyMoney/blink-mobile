@@ -9,12 +9,14 @@ export const toastShow = ({
   onHide,
   type = "error",
   autoHide,
+  position = "bottom",
 }: {
   message: ((translations: TranslationFunctions) => string) | string
   currentTranslation?: TranslationFunctions
   onHide?: () => void
   type?: "error" | "success" | "warning"
   autoHide?: boolean
+  position?: "top" | "bottom"
 }): void => {
   const englishTranslation = i18nObject("en")
   const englishMessage =
@@ -38,7 +40,7 @@ export const toastShow = ({
     type,
     text1: type === "error" ? translations.common.error() : translations.common.success(),
     text2: translatedMessage,
-    position: "bottom",
+    position,
     bottomOffset: 80,
     onHide,
     visibilityTime: 12000,
