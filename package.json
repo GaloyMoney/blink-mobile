@@ -60,6 +60,7 @@
     "@apollo/client": "3.9.0-alpha.5",
     "@bitcoinerlab/secp256k1": "^1.0.5",
     "@breeztech/react-native-breez-sdk-liquid": "^0.3.0",
+    "@flash/client": "git+https://github.com/lnflash/flash-client.git",
     "@flyerhq/react-native-chat-ui": "^1.4.3",
     "@flyerhq/react-native-link-preview": "^1.6.0",
     "@formatjs/intl-getcanonicallocales": "^2.3.0",
