@@ -49,9 +49,25 @@ export const AmountInput: React.FC<AmountInputProps> = ({
 
   React.useEffect(() => {
     if (request?.receivingWalletDescriptor.currency === "BTC") {
-      setIsSettingAmount(true)
+      if (
+        !request.settlementAmount ||
+        !(
+          (!minAmount ||
+            (minAmount && minAmount?.amount <= request.settlementAmount.amount)) &&
+          (!maxAmount ||
+            (maxAmount && maxAmount.amount >= request.settlementAmount.amount))
+        )
+      ) {
+        setIsSettingAmount(true)
+      }
     }
-  }, [request?.type, request?.receivingWalletDescriptor.currency])
+  }, [
+    request?.type,
+    request?.receivingWalletDescriptor.currency,
+    request.settlementAmount,
+    minAmount,
+    maxAmount,
+  ])
 
   const onSetAmount = (amount: MoneyAmount<WalletOrDisplayCurrency>) => {
     if (
