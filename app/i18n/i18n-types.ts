@@ -2046,7 +2046,7 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * W​h​i​c​h​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​i​s​ ​N​O​T​ ​a​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​B​i​t​c​o​i​n​ ​i​s​ ​c​o​n​s​i​d​e​r​e​d​ ​a​ ​c​e​n​s​o​r​s​h​i​p​-​r​e​s​i​s​t​a​n​t​ ​g​o​o​d
+						 * W​h​i​c​h​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​i​s​ ​t​h​e​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​B​i​t​c​o​i​n​ ​i​s​ ​c​o​n​s​i​d​e​r​e​d​ ​a​ ​c​e​n​s​o​r​s​h​i​p​-​r​e​s​i​s​t​a​n​t​ ​g​o​o​d
 						 */
 						question: string
 						/**
@@ -11094,7 +11094,7 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * Which of the following is NOT a reason that Bitcoin is considered a censorship-resistant good
+						 * Which of the following is the reason that Bitcoin is considered a censorship-resistant good
 						 */
 						question: () => LocalizedString
 						/**
