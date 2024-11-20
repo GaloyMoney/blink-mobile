@@ -65,7 +65,7 @@
         "message": "Okukyusa kutuuse kubuwanguzi"
     },
     "EarnScreen": {
-        "earnSats": "Funa {formattedNumber|sats}",
+        "earnSats": "Funa {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Bitcoin: Kye ki?",
@@ -1982,10 +1982,10 @@
         "getRewardNow": "Ddamu ebibuuzo",
         "keepDigging": "Sigala ng'osima!",
         "phoneNumberNeeded": "Number ye ssimu yetagisa",
-        "quizComplete": "Ebibuuzo biwedde era {omuwendo: ennamba} sats z'ofunye",
+        "quizComplete": "Ebibuuzo biwedde era {formattedNumber | sats} z'ofunye",
         "reviewQuiz": "Wekkaanye ebibuuzo",
         "satAccumulated": "Sats ezikuŋŋaanyiziddwa",
-        "satsEarned": "{formattedNumber|sats}  ezifunidwa",
+        "satsEarned": "{formattedNumber | sats}  ezifunidwa",
         "sectionsCompleted": "Omaze",
         "title": "Kolera Empeera",
         "unlockQuestion": "Okugulawo, ddamu ekibuuzo:",

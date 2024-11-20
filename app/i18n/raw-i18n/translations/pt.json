@@ -65,7 +65,7 @@
         "message": "Conversão bem sucedida"
     },
     "EarnScreen": {
-        "earnSats": "Ganhe {formattedNumber|sats}",
+        "earnSats": "Ganhe {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Bitcoin: O que é isso?",
@@ -1982,10 +1982,10 @@
         "getRewardNow": "Responder quiz",
         "keepDigging": "Continue cavando!",
         "phoneNumberNeeded": "Número de telefone obrigatório",
-        "quizComplete": "Quiz concluído e {amount} sats ganhos",
+        "quizComplete": "Quiz concluído e {formattedNumber | sats} ganhos",
         "reviewQuiz": "Revisar quiz",
         "satAccumulated": "Sats acumulados",
-        "satsEarned": "{formattedNumber|sats} ganhos",
+        "satsEarned": "{formattedNumber | sats} ganhos",
         "sectionsCompleted": "Você concluiu",
         "title": "Ganhar",
         "unlockQuestion": "Para desbloquear, responda a pergunta:",

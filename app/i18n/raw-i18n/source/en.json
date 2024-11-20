@@ -74,7 +74,7 @@
     "EarnScreen": {
         "satoshi": "sat",
         "satoshis": "sats",
-        "earnSats": "Earn {formattedAmount: string}",
+        "earnSats": "Earn {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Bitcoin: What is it?",
@@ -1991,10 +1991,10 @@
         "getRewardNow": "Answer quiz",
         "keepDigging": "Keep digging!",
         "phoneNumberNeeded": "Phone number required",
-        "quizComplete": "Quiz completed and {formattedAmount: string} earned",
+        "quizComplete": "Quiz completed and {formattedNumber | sats} earned",
         "reviewQuiz": "Review quiz",
         "satAccumulated": "Sats accumulated",
-        "satsEarned": "{formattedAmount: string} earned",
+        "satsEarned": "{formattedNumber | sats} earned",
         "sectionsCompleted": "You've completed",
         "title": "Earn",
         "unlockQuestion": "To unlock, answer the question:",

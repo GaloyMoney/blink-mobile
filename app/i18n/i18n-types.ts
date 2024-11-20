@@ -284,10 +284,10 @@ type RootTranslation = {
 		 */
 		satoshis: string
 		/**
-		 * E​a​r​n​ ​{​f​o​r​m​a​t​t​e​d​A​m​o​u​n​t​}
-		 * @param {string} formattedAmount
+		 * E​a​r​n​ ​{​f​o​r​m​a​t​t​e​d​N​u​m​b​e​r​|​s​a​t​s​}
+		 * @param {unknown} formattedNumber
 		 */
-		earnSats: RequiredParams<'formattedAmount'>
+		earnSats: RequiredParams<'formattedNumber|sats'>
 		earnSections: {
 			bitcoinWhatIsIt: {
 				/**
@@ -2046,7 +2046,7 @@ type RootTranslation = {
 							'2': string
 						}
 						/**
-						 * W​h​i​c​h​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​i​s​ ​N​O​T​ ​a​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​B​i​t​c​o​i​n​ ​i​s​ ​c​o​n​s​i​d​e​r​e​d​ ​a​ ​c​e​n​s​o​r​s​h​i​p​-​r​e​s​i​s​t​a​n​t​ ​g​o​o​d
+						 * W​h​i​c​h​ ​o​f​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​i​s​ ​t​h​e​ ​r​e​a​s​o​n​ ​t​h​a​t​ ​B​i​t​c​o​i​n​ ​i​s​ ​c​o​n​s​i​d​e​r​e​d​ ​a​ ​c​e​n​s​o​r​s​h​i​p​-​r​e​s​i​s​t​a​n​t​ ​g​o​o​d
 						 */
 						question: string
 						/**
@@ -6253,10 +6253,10 @@ type RootTranslation = {
 		 */
 		phoneNumberNeeded: string
 		/**
-		 * Q​u​i​z​ ​c​o​m​p​l​e​t​e​d​ ​a​n​d​ ​{​f​o​r​m​a​t​t​e​d​A​m​o​u​n​t​}​ ​e​a​r​n​e​d
-		 * @param {string} formattedAmount
+		 * Q​u​i​z​ ​c​o​m​p​l​e​t​e​d​ ​a​n​d​ ​{​f​o​r​m​a​t​t​e​d​N​u​m​b​e​r​|​s​a​t​s​}​ ​e​a​r​n​e​d
+		 * @param {unknown} formattedNumber
 		 */
-		quizComplete: RequiredParams<'formattedAmount'>
+		quizComplete: RequiredParams<'formattedNumber|sats'>
 		/**
 		 * R​e​v​i​e​w​ ​q​u​i​z
 		 */
@@ -6266,10 +6266,10 @@ type RootTranslation = {
 		 */
 		satAccumulated: string
 		/**
-		 * {​f​o​r​m​a​t​t​e​d​A​m​o​u​n​t​}​ ​e​a​r​n​e​d
-		 * @param {string} formattedAmount
+		 * {​f​o​r​m​a​t​t​e​d​N​u​m​b​e​r​|​s​a​t​s​}​ ​e​a​r​n​e​d
+		 * @param {unknown} formattedNumber
 		 */
-		satsEarned: RequiredParams<'formattedAmount'>
+		satsEarned: RequiredParams<'formattedNumber|sats'>
 		/**
 		 * Y​o​u​'​v​e​ ​c​o​m​p​l​e​t​e​d
 		 */
@@ -9333,9 +9333,9 @@ export type TranslationFunctions = {
 		 */
 		satoshis: () => LocalizedString
 		/**
-		 * Earn {formattedAmount}
+		 * Earn {formattedNumber|sats}
 		 */
-		earnSats: (arg: { formattedAmount: string }) => LocalizedString
+		earnSats: (arg: { formattedNumber: unknown }) => LocalizedString
 		earnSections: {
 			bitcoinWhatIsIt: {
 				/**
@@ -11094,7 +11094,7 @@ export type TranslationFunctions = {
 							'2': () => LocalizedString
 						}
 						/**
-						 * Which of the following is NOT a reason that Bitcoin is considered a censorship-resistant good
+						 * Which of the following is the reason that Bitcoin is considered a censorship-resistant good
 						 */
 						question: () => LocalizedString
 						/**
@@ -15301,9 +15301,9 @@ export type TranslationFunctions = {
 		 */
 		phoneNumberNeeded: () => LocalizedString
 		/**
-		 * Quiz completed and {formattedAmount} earned
+		 * Quiz completed and {formattedNumber|sats} earned
 		 */
-		quizComplete: (arg: { formattedAmount: string }) => LocalizedString
+		quizComplete: (arg: { formattedNumber: unknown }) => LocalizedString
 		/**
 		 * Review quiz
 		 */
@@ -15313,9 +15313,9 @@ export type TranslationFunctions = {
 		 */
 		satAccumulated: () => LocalizedString
 		/**
-		 * {formattedAmount} earned
+		 * {formattedNumber|sats} earned
 		 */
-		satsEarned: (arg: { formattedAmount: string }) => LocalizedString
+		satsEarned: (arg: { formattedNumber: unknown }) => LocalizedString
 		/**
 		 * You've completed
 		 */
@@ -18060,4 +18060,6 @@ export type TranslationFunctions = {
 	}
 }
 
-export type Formatters = {}
+export type Formatters = {
+	sats: (value: unknown) => unknown
+}

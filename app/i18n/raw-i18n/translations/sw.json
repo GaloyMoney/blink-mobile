@@ -65,7 +65,7 @@
         "message": "Ubadilishaji umekamilika"
     },
     "EarnScreen": {
-        "earnSats": "Pata {formattedNumber|sats}",
+        "earnSats": "Pata {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Bitcoin: ni nini?",
@@ -1982,10 +1982,10 @@
         "getRewardNow": "Jibu swali",
         "keepDigging": "Endelea kuchimba!",
         "phoneNumberNeeded": "Nambari ya simu inahitajika",
-        "quizComplete": "Maswali yamekamilika na {amount: number} sats zilizochumwa",
+        "quizComplete": "Maswali yamekamilika na {formattedNumber | sats} zilizochumwa",
         "reviewQuiz": "Kagua swali",
         "satAccumulated": "Sats kusanyiko",
-        "satsEarned": "{formattedNumber|sats} zilizopatikana",
+        "satsEarned": "{formattedNumber | sats} zilizopatikana",
         "sectionsCompleted": "Umekamilisha",
         "title": "Pata",
         "unlockQuestion": "Ili kufungua, jibu swali:",

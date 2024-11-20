@@ -64,7 +64,7 @@
         "message": "Penukaran telah berjaya"
     },
     "EarnScreen": {
-        "earnSats": "Dapat {formattedNumber|sats}",
+        "earnSats": "Dapat {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Apa itu Bitcoin?",
@@ -630,7 +630,7 @@
                             "No. In fact, physical goods often require permission to cross borders and can easily be confiscated. Better luck next time",
                             "Sorry, but the opposite is actually true. The fiat banking system, which is regulated by states, requires human intervention to report and prevent certain uses of monetary goods, making it prone to censorship. Try again!"
                         ],
-                        "question": "Which of the following is NOT a reason that Bitcoin is considered a censorship-resistant good",
+                        "question": "Which of the following is the reason that Bitcoin is considered a censorship-resistant good",
                         "text": "Censorship-resistance is an attribute that has become increasingly important in the digital age, as it refers to the difficulty that external parties, such as corporations or governments, have in preventing an individual from using a particular good.\n\nThis attribute is particularly valuable for individuals living under regimes that enforce capital controls or prohibit certain forms of trade. Bitcoin is often cited as being a censorship-resistant good due to its decentralized, peer-to-peer network, which allows for transactions to be made without human intervention or permission.\n\nIn contrast, the fiat banking system is regulated by states and requires human intervention to report and prevent certain uses of monetary goods, such as capital controls.\n\nGold, although it is not issued by states, can be difficult to transmit at a distance and is therefore more subject to state regulation.\n",
                         "title": "No permission required"
                     }
@@ -1981,7 +1981,7 @@
         "getRewardNow": "Jawab kuiz ",
         "keepDigging": "Teruskan menggali!",
         "phoneNumberNeeded": "No telefon anda diperlukan",
-        "quizComplete": "Selesai kuiz anda dan {jumlah: number} sats telah berjaya diterima",
+        "quizComplete": "Selesai kuiz anda dan {formattedNumber | sats} telah berjaya diterima",
         "reviewQuiz": "Semak jawapan kuiz",
         "satAccumulated": "sats telah dikumpul",
         "satsEarned": "{format nombor dalam |sats} telah diperolehi",

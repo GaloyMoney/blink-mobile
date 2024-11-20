@@ -74,7 +74,7 @@
     "EarnScreen": {
         "satoshi": "sat",
         "satoshis": "sat",
-        "earnSats": "Kapj {formattedAmount: string}-ot",
+        "earnSats": "Kapj {formattedNumber | sats}-ot",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Mi a Bitcoin?",
@@ -1991,10 +1991,10 @@
         "getRewardNow": "Válaszolj a kvízre",
         "keepDigging": "Áss tovább!",
         "phoneNumberNeeded": "Telefonszám szükséges",
-        "quizComplete": "Teljesítetted a kvízt, és ezért {formattedAmount: string} a jutalmad",
+        "quizComplete": "Teljesítetted a kvízt, és ezért {formattedNumber | sats} a jutalmad",
         "reviewQuiz": "Kvíz átnézése",
         "satAccumulated": "Keresett satoshik",
-        "satsEarned": "{formattedAmount: string}-ot kerestél",
+        "satsEarned": "{formattedNumber | sats}-ot kerestél",
         "sectionsCompleted": "Befejezett szakaszok",
         "title": "Kvíz",
         "unlockQuestion": "Feloldáshoz, válaszolj a kérdésre:",
