@@ -74,7 +74,7 @@
     "EarnScreen": {
         "satoshi": "sat",
         "satoshis": "sats",
-        "earnSats": "Câștigați {formattedAmount: string}",
+        "earnSats": "Câștigați {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Bitcoin: Ce este?",
@@ -1991,10 +1991,10 @@
         "getRewardNow": "Răspundeți la test",
         "keepDigging": "Continuați să săpați!",
         "phoneNumberNeeded": "Numărul de telefon e necesar",
-        "quizComplete": "Test finalizat și {formattedAmount: string} câștigați",
+        "quizComplete": "Test finalizat și {formattedNumber | sats} câștigați",
         "reviewQuiz": "Examinați testul",
         "satAccumulated": "Sats acumulați",
-        "satsEarned": "{formattedAmount: string} câștigați",
+        "satsEarned": "{formattedNumber | sats} câștigați",
         "sectionsCompleted": "Ați finalizat",
         "title": "Câștigați",
         "unlockQuestion": "Pentru a debloca, răspundeți la întrebarea:",

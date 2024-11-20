@@ -64,7 +64,7 @@
         "message": "Փոխակերպումը հաջողությամբ է կատարվել"
     },
     "EarnScreen": {
-        "earnSats": "Վաստակել  {formattedNumber|sats}",
+        "earnSats": "Վաստակել  {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Բիթքոյն․ Ի՞նչ է այն։ ",
@@ -1981,10 +1981,10 @@
         "getRewardNow": "Պատասխանել հարցմանը ",
         "keepDigging": "Շարունակեք փնտրտել։ ",
         "phoneNumberNeeded": "Պահանջվում է հետախոսահամար",
-        "quizComplete": "Հարցումն ավարտված է, և {amount: number} սատ եք վաստակել",
+        "quizComplete": "Հարցումն ավարտված է, և {formattedNumber | sats} սատ եք վաստակել",
         "reviewQuiz": "Դիտել հարցումը",
         "satAccumulated": "Սատերը կուտակվել են",
-        "satsEarned": "{formattedNumber|sats} վաստակել եք",
+        "satsEarned": "{formattedNumber | sats} վաստակել եք",
         "sectionsCompleted": "Դուք ավարտել եք",
         "title": "Վաստակել",
         "unlockQuestion": "Բացելու համար՝ պատասխանեք հարցին",

@@ -64,7 +64,7 @@
         "message": "両替が完了しました"
     },
     "EarnScreen": {
-        "earnSats": "{formattedNumber|sats}を獲得する",
+        "earnSats": "{formattedNumber | sats}を獲得する",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "ビットコインって何？",
@@ -1981,10 +1981,10 @@
         "getRewardNow": "クイズに答える",
         "keepDigging": "もっと深堀りして！",
         "phoneNumberNeeded": "電話番号は必須です",
-        "quizComplete": "クイズ完了  {amount: number} sats 獲得",
+        "quizComplete": "クイズ完了  {formattedNumber | sats} 獲得",
         "reviewQuiz": "クイズの復習",
         "satAccumulated": "累計 sats",
-        "satsEarned": "{formattedNumber|sats}を獲得しました",
+        "satsEarned": "{formattedNumber | sats}を獲得しました",
         "sectionsCompleted": "完了しました",
         "title": "獲得する",
         "unlockQuestion": "アンロックするには、質問に答えてください：",

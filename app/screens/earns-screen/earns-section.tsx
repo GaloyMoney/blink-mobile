@@ -228,12 +228,6 @@ export const EarnSection = ({ route }: Props) => {
     navigation.navigate("earnsQuiz", { id })
   }
 
-  const formatAmount = (amount: number): string => {
-    return amount === 1
-      ? `${amount} ${LL.EarnScreen.satoshi()}`
-      : `${amount} ${LL.EarnScreen.satoshis()}`
-  }
-
   const CardItem = ({ item }: { item: QuizQuestionForSectionScreen }) => {
     return (
       <>
@@ -262,10 +256,8 @@ export const EarnSection = ({ route }: Props) => {
               titleStyle={item.completed ? styles.titleStyleFulfilled : styles.titleStyle}
               title={
                 item.completed
-                  ? LL.EarnScreen.satsEarned({
-                      formattedAmount: formatAmount(item.amount),
-                    })
-                  : LL.EarnScreen.earnSats({ formattedAmount: formatAmount(item.amount) })
+                  ? LL.EarnScreen.satsEarned({ formattedNumber: item.amount })
+                  : LL.EarnScreen.earnSats({ formattedNumber: item.amount })
               }
               icon={
                 item.completed ? (

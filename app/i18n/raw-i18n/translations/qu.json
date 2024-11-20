@@ -64,7 +64,7 @@
         "message": "Unanchayninmi kamarichik"
     },
     "EarnScreen": {
-        "earnSats": "Kanaykumanta kawsanki {formattedNumber|sats}",
+        "earnSats": "Kanaykumanta kawsanki {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Bitcoin: Kayqa yachanichu?",
@@ -1981,10 +1981,10 @@
         "getRewardNow": "Quizpiqa yanapaq.",
         "keepDigging": "Kaymantam rantiqataqmi kani!",
         "phoneNumberNeeded": "Telefonopi nisqan kaymi kani",
-        "quizComplete": "Quizpiqa yanapaq, {amount: number} sats kuskan.",
+        "quizComplete": "Quizpiqa yanapaq, {formattedNumber | sats} kuskan.",
         "reviewQuiz": "Quizpiqa riyqanichu.",
         "satAccumulated": "Kuskanchik sats",
-        "satsEarned": "{formattedNumber|sats} kuskan.",
+        "satsEarned": "{formattedNumber | sats} kuskan.",
         "sectionsCompleted": "Ima sumaq kani",
         "title": "Kuskan",
         "unlockQuestion": "Qhipaqaqmi, chaymantam yanapaqmi, chaymantam riyqanichu:",

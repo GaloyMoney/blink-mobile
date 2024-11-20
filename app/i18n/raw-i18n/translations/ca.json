@@ -65,7 +65,7 @@
         "message": "Conversió efectuada amb èxit"
     },
     "EarnScreen": {
-        "earnSats": "Guanya {formattedNumber|sats}",
+        "earnSats": "Guanya {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Bitcoin: Què és? ",
@@ -1982,10 +1982,10 @@
         "getRewardNow": "Contesta el qüestionari",
         "keepDigging": "Continua aprenent!",
         "phoneNumberNeeded": "Número de telèfon necessari",
-        "quizComplete": "Qüestionari completat i {amount: number} sats guanyats",
+        "quizComplete": "Qüestionari completat i {formattedNumber | sats} sats guanyats",
         "reviewQuiz": "Revisa el qüestionari",
         "satAccumulated": "Sats acumulats",
-        "satsEarned": "{formattedNumber|sats} guanyats",
+        "satsEarned": "{formattedNumber | sats} guanyats",
         "sectionsCompleted": "Has completat",
         "title": "Guanya",
         "unlockQuestion": "Per desbloquejar, respon la pregunta:",

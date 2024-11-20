@@ -65,7 +65,7 @@
         "message": "Konvertering vel afsluttet"
     },
     "EarnScreen": {
-        "earnSats": "Optjen {formattedNumber|sats}",
+        "earnSats": "Optjen {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Bitcoin: Hvad er det?",
@@ -1982,10 +1982,10 @@
         "getRewardNow": "Besvar quizzen",
         "keepDigging": "Bliv ved med at grave!",
         "phoneNumberNeeded": "Telefonnummer påkrævet",
-        "quizComplete": "Quizzen er fuldført, og {amount: number} sats optjent.",
+        "quizComplete": "Quizzen er fuldført, og {formattedNumber | sats} sats optjent.",
         "reviewQuiz": "Gennemgå quizzen",
         "satAccumulated": "Sats akkumuleret",
-        "satsEarned": "{formattedNumber|sats} optjent",
+        "satsEarned": "{formattedNumber | sats} optjent",
         "sectionsCompleted": "Du har fuldført",
         "title": "Optjen",
         "unlockQuestion": "For at låse op, besvar spørgsmålet:",

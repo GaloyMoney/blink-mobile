@@ -65,7 +65,7 @@
         "message": "Çevirme başarılı"
     },
     "EarnScreen": {
-        "earnSats": "Kazan {formattedNumber|sats}",
+        "earnSats": "Kazan {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Bitcoin: Nedir?",
@@ -1982,10 +1982,10 @@
         "getRewardNow": "Testi cevapla",
         "keepDigging": "Kurcalamaya devam et!",
         "phoneNumberNeeded": "Telefon numarası gerekli",
-        "quizComplete": "Test tamamlandı ve {amount: number}  Satoshi kazanıldı",
+        "quizComplete": "Test tamamlandı ve {formattedNumber | sats} kazanıldı",
         "reviewQuiz": "Testin üzerinden geç",
         "satAccumulated": "Biriktirilen satsler",
-        "satsEarned": "{formattedNumber|sats} kazanıldı",
+        "satsEarned": "{formattedNumber | sats} kazanıldı",
         "sectionsCompleted": "Tamamladınız",
         "title": "Kazan",
         "unlockQuestion": "Kilidi açmak için soruya cevap ver:",

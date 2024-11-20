@@ -64,7 +64,7 @@
         "message": "Omskakeling suksesvol"
     },
     "EarnScreen": {
-        "earnSats": "Verdien {formattedNumber|sats}",
+        "earnSats": "Verdien {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Bitcoin: Wat is dit?",
@@ -1981,10 +1981,10 @@
         "getRewardNow": "Antwoord vasvra",
         "keepDigging": "Hou aan ondersoek doen!",
         "phoneNumberNeeded": "Selfoonnommer benodig",
-        "quizComplete": "Vasvra voltooi en {amount:number} sats verdien",
+        "quizComplete": "Vasvra voltooi en {formattedNumber | sats} sats verdien",
         "reviewQuiz": "Hersien vasvra",
         "satAccumulated": "Sats bymekaargemaak",
-        "satsEarned": "{formattedNumber|sats} verdien",
+        "satsEarned": "{formattedNumber | sats} verdien",
         "sectionsCompleted": "Jy het dit voltooi",
         "title": "Verdien",
         "unlockQuestion": "Om te ontsluit moet jy die vraag beantwoord:",

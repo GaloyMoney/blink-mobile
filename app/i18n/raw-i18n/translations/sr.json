@@ -64,7 +64,7 @@
         "message": "Конверзија успешна"
     },
     "EarnScreen": {
-        "earnSats": "Заради {formattedNumber|sats}",
+        "earnSats": "Заради {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Биткоин: Шта је то?",
@@ -1981,10 +1981,10 @@
         "getRewardNow": "Одговори на квиз",
         "keepDigging": "Настави са истраживањем!",
         "phoneNumberNeeded": "Број телефона је потребан",
-        "quizComplete": "Квиз је завршен и зарадили сте {amount: number} сата",
+        "quizComplete": "Квиз је завршен и зарадили сте {formattedNumber | sats} сата",
         "reviewQuiz": "Прегледај квиз",
         "satAccumulated": "Сати сакупљени",
-        "satsEarned": "Зарадили сте {formattedNumber|sats}",
+        "satsEarned": "Зарадили сте {formattedNumber | sats}",
         "sectionsCompleted": "Завршили сте",
         "title": "Заради",
         "unlockQuestion": "Да откључате, одговорите на питање:",

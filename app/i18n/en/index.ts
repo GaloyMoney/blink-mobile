@@ -52,7 +52,8 @@ const en: BaseTranslation = {
     skip: "Skip",
     unlock: "Unlock",
     usePin: "Use PIN",
-    confirmLogout: "Are you sure you'd like to log out? This will reset your cache and all local user settings",
+    confirmLogout:
+      "Are you sure you'd like to log out? This will reset your cache and all local user settings",
   },
   PeopleScreen: {
     title: "People",
@@ -84,7 +85,7 @@ const en: BaseTranslation = {
   EarnScreen: {
     satoshi: "sat",
     satoshis: "sats",
-    earnSats: "Earn {formattedAmount: string}",
+    earnSats: "Earn {formattedNumber | sats}",
     earnSections: {
       bitcoinWhatIsIt: {
         title: "Bitcoin: What is it?",
@@ -97,8 +98,7 @@ const en: BaseTranslation = {
               "Nope. At least not one that we know of!",
             ],
             question: "So what exactly is Bitcoin?",
-            text:
-              "Bitcoin is digital money. \n\nIt can be transferred instantly and securely between any two people in the world — without the need for a bank or any other financial company in the middle.",
+            text: "Bitcoin is digital money. \n\nIt can be transferred instantly and securely between any two people in the world — without the need for a bank or any other financial company in the middle.",
             title: "So what exactly is Bitcoin?",
           },
           sat: {
@@ -113,8 +113,7 @@ const en: BaseTranslation = {
               "Ummm.... not quite!",
             ],
             question: 'I just earned a “Sat". What is that?',
-            text:
-              "One “Sat” is the smallest unit of a bitcoin. \n\nWe all know that one US Dollar can be divided into 100 cents. Similarly, one Bitcoin can be divided into 100,000,000 sats. \n\nIn fact, you do not need to own one whole bitcoin in order to use it. You can use bitcoin whether you have 20 sats, 3000 sats — or 100,000,000 sats (which you now know is equal to one bitcoin).",
+            text: "One “Sat” is the smallest unit of a bitcoin. \n\nWe all know that one US Dollar can be divided into 100 cents. Similarly, one Bitcoin can be divided into 100,000,000 sats. \n\nIn fact, you do not need to own one whole bitcoin in order to use it. You can use bitcoin whether you have 20 sats, 3000 sats — or 100,000,000 sats (which you now know is equal to one bitcoin).",
             title: 'I just earned a “Sat". What is that?',
           },
           whereBitcoinExist: {
@@ -125,8 +124,7 @@ const en: BaseTranslation = {
               "Wrong. Please try again.",
             ],
             question: "Where do the bitcoins exist?",
-            text:
-              "Bitcoin is a new form of money. It can be used by anyone, anytime -- anywhere in the world. \n\nIt is not tied to a specific government or region (like US Dollars). There are also no paper bills, metal coins or plastic cards. \n\nEverything is 100% digital. Bitcoin is a network of computers running on the internet. \n\nYour bitcoin is easily managed with software on your smartphone or computer!",
+            text: "Bitcoin is a new form of money. It can be used by anyone, anytime -- anywhere in the world. \n\nIt is not tied to a specific government or region (like US Dollars). There are also no paper bills, metal coins or plastic cards. \n\nEverything is 100% digital. Bitcoin is a network of computers running on the internet. \n\nYour bitcoin is easily managed with software on your smartphone or computer!",
             title: "Where do the bitcoins exist?",
           },
           whoControlsBitcoin: {
@@ -141,8 +139,7 @@ const en: BaseTranslation = {
               "Wrong. There is no company nor government that controls Bitcoin.",
             ],
             question: "Who controls Bitcoin?",
-            text:
-              "Bitcoin is not controlled by any person, company or government. \n\nIt is run by the community of users -- people and companies all around the world -- voluntarily running bitcoin software on their computers and smartphones.",
+            text: "Bitcoin is not controlled by any person, company or government. \n\nIt is run by the community of users -- people and companies all around the world -- voluntarily running bitcoin software on their computers and smartphones.",
             title: "Who controls Bitcoin?",
           },
           copyBitcoin: {
@@ -158,8 +155,7 @@ const en: BaseTranslation = {
             ],
             question:
               "If Bitcoin is digital money, can’t someone just copy it — and create free money?",
-            text:
-              "The value of a bitcoin can never be copied. This is the very reason why Bitcoin is such a powerful new invention!!\n\nMost digital files — such as an iPhone photo, an MP3 song, or a Microsoft Word document — can easily be duplicated and shared. \n\nThe Bitcoin software uniquely prevents the duplication — or “double spending” — of digital money. We will share exactly how this works later on!",
+            text: "The value of a bitcoin can never be copied. This is the very reason why Bitcoin is such a powerful new invention!!\n\nMost digital files — such as an iPhone photo, an MP3 song, or a Microsoft Word document — can easily be duplicated and shared. \n\nThe Bitcoin software uniquely prevents the duplication — or “double spending” — of digital money. We will share exactly how this works later on!",
             title:
               "If Bitcoin is digital money, can’t someone just copy it — and create free money?",
           },
@@ -180,8 +176,7 @@ const en: BaseTranslation = {
               "Nope. In the past you could exchange US dollars for gold. But this is no longer the case.",
             ],
             question: "Why does money have value?",
-            text:
-              "Money requires people to trust. \n\nPeople trust the paper dollar bills in their pocket. They trust the digits in their online bank account. They trust the balance on a store gift card will be redeemable. \n\nHaving money allows people to easy trade it immediately for a good, or a service.",
+            text: "Money requires people to trust. \n\nPeople trust the paper dollar bills in their pocket. They trust the digits in their online bank account. They trust the balance on a store gift card will be redeemable. \n\nHaving money allows people to easy trade it immediately for a good, or a service.",
             title: "Money is a social agreement.",
           },
           coincidenceOfWants: {
@@ -196,8 +191,7 @@ const en: BaseTranslation = {
               "Not quite. We call that a solar eclipse 🌚",
             ],
             question: "Which coincidence does money solve?",
-            text:
-              "Centuries ago, before people had money, they would barter -- or haggle over how to trade one unique item, in exchange for another item or service. \n\nLet’s say you wanted to have a meal at the local restaurant, and offered the owner a broom. The owner might say “no” -- but I will accept three hats instead, if you happen to have them. \n\nYou can imagine how difficult and inefficient a “barter economy” would be !  \n\nBy contrast, with money, you can simply present a $20 bill. And you know that the restaurant owner will readily accept it.",
+            text: "Centuries ago, before people had money, they would barter -- or haggle over how to trade one unique item, in exchange for another item or service. \n\nLet’s say you wanted to have a meal at the local restaurant, and offered the owner a broom. The owner might say “no” -- but I will accept three hats instead, if you happen to have them. \n\nYou can imagine how difficult and inefficient a “barter economy” would be !  \n\nBy contrast, with money, you can simply present a $20 bill. And you know that the restaurant owner will readily accept it.",
             title: "Money solves the “coincidence of wants”...  What is that??",
           },
           moneyEvolution: {
@@ -213,8 +207,7 @@ const en: BaseTranslation = {
             ],
             question:
               "What are some items that have been historically used as a unit of money?",
-            text:
-              "Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency. \n\nStarting in the 1500’s, rare Cowrie shells (found in the ocean) became commonly used in many nations as a form of money.\n\nAnd for millennia, gold has been used as a form of money for countries around the world -- including the United States (until 1971).",
+            text: "Thousands of years ago, society in Micronesia used very large and scarce stones as a form of agreed currency. \n\nStarting in the 1500’s, rare Cowrie shells (found in the ocean) became commonly used in many nations as a form of money.\n\nAnd for millennia, gold has been used as a form of money for countries around the world -- including the United States (until 1971).",
             title: "Money has evolved, since almost the beginning of time.",
           },
           whyStonesShellGold: {
@@ -229,8 +222,7 @@ const en: BaseTranslation = {
               "Not quite. Although these items were surely portable, that alone was not the reason to be used as money.",
             ],
             question: "Why were stones, seashells and gold used as units of money?",
-            text:
-              "Well, these items all had some -- but not all -- of the characteristics of good money. \n\nSo what characteristics make for “good” money? \nScarce: not abundant, nor easy to reproduce or copy \nAccepted: relatively easy for people to verify its authenticity \nDurable: easy to maintain, and does not perish or fall apart\nUniform: readily interchangeable with another item of the same form\nPortable: easy to transport\nDivisible: can be split and shared in smaller pieces",
+            text: "Well, these items all had some -- but not all -- of the characteristics of good money. \n\nSo what characteristics make for “good” money? \nScarce: not abundant, nor easy to reproduce or copy \nAccepted: relatively easy for people to verify its authenticity \nDurable: easy to maintain, and does not perish or fall apart\nUniform: readily interchangeable with another item of the same form\nPortable: easy to transport\nDivisible: can be split and shared in smaller pieces",
             title: "Why were stones, shells and gold commonly used as money in the past?",
           },
           moneyIsImportant: {
@@ -245,8 +237,7 @@ const en: BaseTranslation = {
               "Not quite. Although some people may believe such, this answer does not address the primary purpose of money.",
             ],
             question: "What is the primary reason money is important?",
-            text:
-              "Everybody knows that money matters.\n\nMost people exchange their time and energy -- in the form of work -- to obtain money. People do so, to be able to buy goods and services today -- and in the future.",
+            text: "Everybody knows that money matters.\n\nMost people exchange their time and energy -- in the form of work -- to obtain money. People do so, to be able to buy goods and services today -- and in the future.",
             title: "Money is important to individuals",
           },
           moneyImportantGovernement: {
@@ -261,8 +252,7 @@ const en: BaseTranslation = {
               "No. Whilst some people do create fake dollar bills, it is definitely not legal!",
             ],
             question: "Who can legally print US Dollars, anytime they wish?",
-            text:
-              "Modern-day economies are organized by nation-states: USA, Japan, Switzerland, Brazil, Norway, China, etc. \n\nAccordingly, in most every nation, the government holds the power to issue and control money. \n\nIn the United States, the Central Bank (known as the Federal Reserve, or “Fed”) can print, or create, more US Dollars at any time it wants. \n\nThe “Fed” does not need permission from the President, nor Congress, and certainly not from US citizens.  \n\nImagine if you had the ability to print US Dollars anytime you wanted to -- what would you do??",
+            text: "Modern-day economies are organized by nation-states: USA, Japan, Switzerland, Brazil, Norway, China, etc. \n\nAccordingly, in most every nation, the government holds the power to issue and control money. \n\nIn the United States, the Central Bank (known as the Federal Reserve, or “Fed”) can print, or create, more US Dollars at any time it wants. \n\nThe “Fed” does not need permission from the President, nor Congress, and certainly not from US citizens.  \n\nImagine if you had the ability to print US Dollars anytime you wanted to -- what would you do??",
             title: "Money is also important to governments",
           },
         },
@@ -282,8 +272,7 @@ const en: BaseTranslation = {
               "Nope. Try again!",
             ],
             question: "Who creates fiat money, such as US Dollars or Swiss Francs?",
-            text:
-              "All national currencies in circulation today are called “fiat” money. This includes US Dollars, Japanese Yen, Swiss Francs, and so forth. \n\nThe word “fiat” is latin for “by decree” -- which means “by official order”. \n\nThis means that all fiat money -- including the US Dollar -- is simply created by the order of the national government.",
+            text: "All national currencies in circulation today are called “fiat” money. This includes US Dollars, Japanese Yen, Swiss Francs, and so forth. \n\nThe word “fiat” is latin for “by decree” -- which means “by official order”. \n\nThis means that all fiat money -- including the US Dollar -- is simply created by the order of the national government.",
             title: "Fiat Currency: What is that?",
           },
           whyCareAboutFiatMoney: {
@@ -298,8 +287,7 @@ const en: BaseTranslation = {
               "Wrong. Please try again.",
             ],
             question: "Why should I care about the government controlling fiat money?",
-            text:
-              "As shared in a prior quiz, the US Central Bank is the Federal Reserve, or the “Fed”.\n\nThe Fed can print more dollars at any time -- and does not need permission from the President, nor Congress, and certainly not from US citizens.  \n\nHaving control of money can be very tempting for authorities to abuse -- and often time leads to massive inflation, arbitrary confiscation and corruption. \n\nIn fact, Alan Greenspan, the famous former chairman of The Fed, famously said the US “can pay any debt that it has, because we can always print more to do that”.",
+            text: "As shared in a prior quiz, the US Central Bank is the Federal Reserve, or the “Fed”.\n\nThe Fed can print more dollars at any time -- and does not need permission from the President, nor Congress, and certainly not from US citizens.  \n\nHaving control of money can be very tempting for authorities to abuse -- and often time leads to massive inflation, arbitrary confiscation and corruption. \n\nIn fact, Alan Greenspan, the famous former chairman of The Fed, famously said the US “can pay any debt that it has, because we can always print more to do that”.",
             title: "I trust my government. \nWhy should I care about fiat money?",
           },
           GovernementCanPrintMoney: {
@@ -314,8 +302,7 @@ const en: BaseTranslation = {
               "Incorrect. Although the government may issue new looks for bills, this has nothing to do with increasing the money supply.",
             ],
             question: "What does it mean when the government prints money?",
-            text:
-              "Well, everybody should care! \n\nThe practice of government printing money -- or increasing the supply of dollars -- leads to inflation.\n\nInflation is an increase in the price of goods and services. In other words, the price for something in the future will be more expensive than today.\n\nSo what does inflation mean for citizens? \n\nIn the United Kingdom, the Pound Sterling has lost 99.5% of its value since being introduced over 300 years ago. \n\nIn the United States, the dollar has lost 97% of its value since the end of WWI, about 100 years ago. \n\nThis means a steak that cost $0.30 in 1920... was $3 in 1990… and about $15 today, in the year 2020!",
+            text: "Well, everybody should care! \n\nThe practice of government printing money -- or increasing the supply of dollars -- leads to inflation.\n\nInflation is an increase in the price of goods and services. In other words, the price for something in the future will be more expensive than today.\n\nSo what does inflation mean for citizens? \n\nIn the United Kingdom, the Pound Sterling has lost 99.5% of its value since being introduced over 300 years ago. \n\nIn the United States, the dollar has lost 97% of its value since the end of WWI, about 100 years ago. \n\nThis means a steak that cost $0.30 in 1920... was $3 in 1990… and about $15 today, in the year 2020!",
             title: "Who should care that the government can print unlimited money?",
           },
           FiatLosesValueOverTime: {
@@ -330,8 +317,7 @@ const en: BaseTranslation = {
               "Not quite. Although the design of papers bills may change, this has nothing to do with their value.",
             ],
             question: "What happens to the value of all fiat money over time?",
-            text:
-              "That is correct. \n\nIn the history of the world, there have been 775 fiat currencies created. Most no longer exist, and the average life for any fiat money is only 27 years.\n\nThe British Pound is the oldest fiat currency. It has lost more than 99% of its value since 1694. \n\nThere is no precedent for any fiat money maintaining its value over time. This is inflation. \nIt is effectively a form of theft of your own hard earned money !",
+            text: "That is correct. \n\nIn the history of the world, there have been 775 fiat currencies created. Most no longer exist, and the average life for any fiat money is only 27 years.\n\nThe British Pound is the oldest fiat currency. It has lost more than 99% of its value since 1694. \n\nThere is no precedent for any fiat money maintaining its value over time. This is inflation. \nIt is effectively a form of theft of your own hard earned money !",
             title: "Does this mean that all fiat money loses value over time?",
           },
           OtherIssues: {
@@ -346,8 +332,7 @@ const en: BaseTranslation = {
               "While some may believe this to be so, it is not the answer we are looking for here.",
             ],
             question: "What are some other issues that exist with fiat money?",
-            text:
-              "Yes, there are many other issues that exist with modern fiat money. \n\nFirst, it can be extremely difficult to move money around the world. Often, governments will outright restrict the movement -- and sometimes even confiscate money -- without a valid reason or explanation. And even when you can send money, high transaction fees make it very expensive.\n\nSecond, even in the US, there has been a complete loss of privacy, as the majority of commerce takes places with debit and credit cards, as well as online with other systems such as PayPal and Apple Pay.\n\nEver notice how an ad appears in your social media or Gmail just moments after searching for a certain product or service? This is known as “surveillance capitalism”, and is based on companies selling your personal financial data.",
+            text: "Yes, there are many other issues that exist with modern fiat money. \n\nFirst, it can be extremely difficult to move money around the world. Often, governments will outright restrict the movement -- and sometimes even confiscate money -- without a valid reason or explanation. And even when you can send money, high transaction fees make it very expensive.\n\nSecond, even in the US, there has been a complete loss of privacy, as the majority of commerce takes places with debit and credit cards, as well as online with other systems such as PayPal and Apple Pay.\n\nEver notice how an ad appears in your social media or Gmail just moments after searching for a certain product or service? This is known as “surveillance capitalism”, and is based on companies selling your personal financial data.",
             title: "OK, fiat money loses value over time. Are there other issues?",
           },
         },
@@ -367,8 +352,7 @@ const en: BaseTranslation = {
               "Incorrect. One of the key attributes of bitcoin is that the supply is limited forever.",
             ],
             question: "Is the supply of bitcoin limited forever?",
-            text:
-              "Governments can print fiat money in unlimited quantities. \n\nBy way of contrast, the supply of Bitcoin is fixed — and can never exceed 21 million coins. \n\nA continually increasing supply of fiat money creates inflation. This means that the money you hold today is less valuable in the future. \n\nOne simple example: \nA loaf of bread that cost about 8 cents in 1920. In the year 1990 one loaf cost about $1.00, and today the price is closer to $2.50 ! \n\nThe limited supply of bitcoin has the opposite effect, one of deflation. \n\nThis means that the bitcoin you hold today is designed to be more valuable in the future — because it is scarce.",
+            text: "Governments can print fiat money in unlimited quantities. \n\nBy way of contrast, the supply of Bitcoin is fixed — and can never exceed 21 million coins. \n\nA continually increasing supply of fiat money creates inflation. This means that the money you hold today is less valuable in the future. \n\nOne simple example: \nA loaf of bread that cost about 8 cents in 1920. In the year 1990 one loaf cost about $1.00, and today the price is closer to $2.50 ! \n\nThe limited supply of bitcoin has the opposite effect, one of deflation. \n\nThis means that the bitcoin you hold today is designed to be more valuable in the future — because it is scarce.",
             title: "Special Characteristic #1:\nLimited Supply",
           },
           Decentralized: {
@@ -383,8 +367,7 @@ const en: BaseTranslation = {
               "Incorrect. You already know this is not true!",
             ],
             question: "Is bitcoin centralized?",
-            text:
-              "Fiat money is controlled by banks and governments — which is why people refer to it as a “centralized” currency.\n\nBitcoin is not controlled by any person, government or company — which makes it “decentralized” \n\nNot having banks involved means that nobody can deny you access to bitcoin — because of race, gender, income, credit history, geographical location — or any other factor. \n\nAnybody — anywhere in the world — can access and use Bitcoin anytime you want. All you need is a computer or smartphone, and an internet connection!",
+            text: "Fiat money is controlled by banks and governments — which is why people refer to it as a “centralized” currency.\n\nBitcoin is not controlled by any person, government or company — which makes it “decentralized” \n\nNot having banks involved means that nobody can deny you access to bitcoin — because of race, gender, income, credit history, geographical location — or any other factor. \n\nAnybody — anywhere in the world — can access and use Bitcoin anytime you want. All you need is a computer or smartphone, and an internet connection!",
             title: "Special Characteristic #2: Decentralized",
           },
           NoCounterfeitMoney: {
@@ -399,8 +382,7 @@ const en: BaseTranslation = {
               "Wrong. Although the government can print unlimited dollars, it can not print bitcoin.",
             ],
             question: "Can people counterfeit Bitcoin?",
-            text:
-              "Paper money, checks and credit card transactions can all be counterfeit, or faked. \n\nThe unique software that runs the Bitcoin network eliminates the possibility of duplicating money for counterfeit purposes.  \n\nNew bitcoin can only be issued if there is agreement amongst the participants in the network. People who are voluntarily running bitcoin software on their own computers and smartphones.\n\nThis ensures that it is impossible to counterfeit, or create fake bitcoins.",
+            text: "Paper money, checks and credit card transactions can all be counterfeit, or faked. \n\nThe unique software that runs the Bitcoin network eliminates the possibility of duplicating money for counterfeit purposes.  \n\nNew bitcoin can only be issued if there is agreement amongst the participants in the network. People who are voluntarily running bitcoin software on their own computers and smartphones.\n\nThis ensures that it is impossible to counterfeit, or create fake bitcoins.",
             title: "Special Characteristic #3: \nNo Counterfeit Money",
           },
           HighlyDivisible: {
@@ -415,8 +397,7 @@ const en: BaseTranslation = {
               "Incorrect. Although the smallest unit of US currency is one penny, a bitcoin is divisible by much more than 100x.",
             ],
             question: "What is the smallest amount of Bitcoin one can own, or use?",
-            text:
-              'Old-fashioned fiat money can only be spent in amounts as small as one penny — or two decimal places for one US Dollar ($0.01).\n\nOn the other hand, Bitcoin can be divided 100,000,000 times over. This means that you could spend as little as ₿0.00000001. You will note the "₿" symbol, which is the Bitcoin equivalent of "$". Sometimes you will also see the use of BTC, instead of ₿.\n\nBy way of contrast, Bitcoin can handle very small payments — even those less than one US penny!',
+            text: 'Old-fashioned fiat money can only be spent in amounts as small as one penny — or two decimal places for one US Dollar ($0.01).\n\nOn the other hand, Bitcoin can be divided 100,000,000 times over. This means that you could spend as little as ₿0.00000001. You will note the "₿" symbol, which is the Bitcoin equivalent of "$". Sometimes you will also see the use of BTC, instead of ₿.\n\nBy way of contrast, Bitcoin can handle very small payments — even those less than one US penny!',
             title: "Special Characteristic #4: \nHighly Divisible",
           },
           securePartOne: {
@@ -431,8 +412,7 @@ const en: BaseTranslation = {
               "Icorrect. Although bitcoin is indeed “open source” software — or available to the public for free — is still extremely secure.",
             ],
             question: "Is the Bitcoin network secure?",
-            text:
-              "The bitcoin network is worth well over $100 billion today. Accordingly, the network must be very secure — so that money is never stolen. \n\nBitcoin is known as the world’s first cryptocurrency. \n\nThe “crypto” part of the name comes from cryptography. Simply put, cryptography protects information through very complex math functions. \n\nMost people do not realize — but Bitcoin is actually the most secure computer network in the world ! \n\n(you may have heard about bitcoin “hacks” — which we will debunk in the next quiz)",
+            text: "The bitcoin network is worth well over $100 billion today. Accordingly, the network must be very secure — so that money is never stolen. \n\nBitcoin is known as the world’s first cryptocurrency. \n\nThe “crypto” part of the name comes from cryptography. Simply put, cryptography protects information through very complex math functions. \n\nMost people do not realize — but Bitcoin is actually the most secure computer network in the world ! \n\n(you may have heard about bitcoin “hacks” — which we will debunk in the next quiz)",
             title: "Special Characteristic #5: \nSecure -- Part I",
           },
           securePartTwo: {
@@ -447,8 +427,7 @@ const en: BaseTranslation = {
               "No silly, you know that is not the correct answer.",
             ],
             question: "Has Bitcoin ever been hacked?",
-            text:
-              "To be direct: the bitcoin network itself has never been hacked. Never once.\n\nThen what exactly has been hacked? \n\nCertain digital wallets that did not have proper security in place. \n\nJust like a physical wallet holds fiat currency (in the form of paper bills), digital wallets hold some amount of bitcoin. \n\nIn the physical world, criminals rob banks — and walk away with US Dollars. The fact that someone robbed a bank does not have any relationship as to whether the US Dollar is stable or reliable money. \n\nSimilarly, some computer hackers have stolen bitcoin from insecure digital wallets — the online equivalent of a bank robbery. \n\nHowever, it is important to know that the bitcoin network has never been hacked or compromised !",
+            text: "To be direct: the bitcoin network itself has never been hacked. Never once.\n\nThen what exactly has been hacked? \n\nCertain digital wallets that did not have proper security in place. \n\nJust like a physical wallet holds fiat currency (in the form of paper bills), digital wallets hold some amount of bitcoin. \n\nIn the physical world, criminals rob banks — and walk away with US Dollars. The fact that someone robbed a bank does not have any relationship as to whether the US Dollar is stable or reliable money. \n\nSimilarly, some computer hackers have stolen bitcoin from insecure digital wallets — the online equivalent of a bank robbery. \n\nHowever, it is important to know that the bitcoin network has never been hacked or compromised !",
             title: "Special Characteristic #5: \nSecure -- Part II",
           },
         },
@@ -483,7 +462,8 @@ const en: BaseTranslation = {
               "Sorry, collectibles might be fun to collect, but they had a more practical purpose in ancient societies",
               "Collectibles were not used as frequently as modern currency, so they didn't quite play the same role as a medium of exchange.",
             ],
-            question: "What was the primary role of collectibles in paleolithic societies",
+            question:
+              "What was the primary role of collectibles in paleolithic societies",
             text: "Collectibles served as a precursor to money by allowing trade between different groups and facilitating the transfer of wealth between generations. Although they were not used as frequently as modern money in paleolithic societies, collectibles still served as a store of value and could sometimes even facilitate trade.\n\nPrimitive forms of money, such as collectibles, had a low velocity compared to modern currency and might only be transferred a few times during an individual's lifetime. However, durable collectibles that were passed down through generations had substantial value at each transfer and sometimes made trade possible.\n",
             title: "Primitive forms of money",
           },
@@ -600,7 +580,8 @@ const en: BaseTranslation = {
             question:
               "What is the main reason that gold is considered more fungible than diamonds",
             text: '\n"Fungibility" means that one unit of a currency is interchangeable with another unit of the same currency. This is an important attribute for a good store of value.\n\nGold is a highly fungible store of value, as when melted down, an ounce of gold is essentially indistinguishable from any other. Fiat currencies, on the other hand, may not always be completely fungible, as their issuing institutions may treat different denominations differently.\n\nLike gold, units of bitcoin are fungible, but there are some nuances to it. We\'ll dive into this in a later chapter.\n',
-            title: "One specimen should be interchangeable with another of equal quantity",
+            title:
+              "One specimen should be interchangeable with another of equal quantity",
           },
           verifiability: {
             answers: [
@@ -894,7 +875,8 @@ const en: BaseTranslation = {
               "Oh no, it looks like you've got a case of promissory confusion! Better luck next time",
               "Transporting gold in paper form? That's a bold move.",
             ],
-            question: "What were paper notes used for during the expansion of trade routes",
+            question:
+              "What were paper notes used for during the expansion of trade routes",
             text: "Gold can be made into coins or bars of a specific weight and purity. When trade routes expanded, it became riskier to transport large amounts of gold.\n\nAs a solution, paper notes from trusted banks that could be exchanged for gold were used. In 900 CE, Chinese merchants initiated the use of paper currency to avoid having to carry thousands of coins over long distances. They started trading paper receipts from custodians where they had deposited money or goods.\n\nIn the beginning these paper notes were personally registered, but they soon became a written order to pay the amount to whomever had it in their possession (bearer instrument). These notes can be seen as a predecessor to today's banknotes.\n",
             title: "The Origins of Paper Money Backed by Gold",
           },
@@ -1021,7 +1003,8 @@ const en: BaseTranslation = {
               "Not quite, but a currency that is only accepted by pizza-loving merchants sounds like it could be a delicious way to pay for things",
               "Nope, but a currency made out of precious gems and metals would definitely be shiny and eye-catching.",
             ],
-            question: 'What does the word "fiat" mean when it is used to talk about money',
+            question:
+              'What does the word "fiat" mean when it is used to talk about money',
             text: '"Fiat" is a word that comes from Latin and means "let it be done." When it is used to talk about money, it means that a government is creating a currency by decree alone.\n\nSince the Nixon Shock, fiat money is not backed by gold or silver and neither can it be directly converted for a fixed amount of gold, as it used to be before.\n\nThis means that their value comes from the fact that the government says they are valuable and that people trust that they will be able to use them to buy things.\n\nIn addition, governments often make it a law (legal tender) that merchants have to accept this type of fiat currency and that it is the only type of currency that can be used to pay taxes.\n',
             title: "The Fiat Era",
           },
@@ -1096,7 +1079,8 @@ const en: BaseTranslation = {
               "It seems you got things mixed up. It's actually the other way around. Try again",
               "Sorry, that's not quite right. Bitcoin is likely to increase in value over time due to its strictly fixed supply and growing deman, while inflation decreases the value of fiat currencies quite reliably.",
             ],
-            question: "What is the main difference between digital fiat money and Bitcoin",
+            question:
+              "What is the main difference between digital fiat money and Bitcoin",
             text: "Digital fiat money is a digital version of a product that was designed for the industrial age. It has all of the same problems and limitations as the original product. It is a closed system that is heavily controlled and designed to lose value over time.\n\nBitcoin is a type of digital money that was specifically designed for the digital age. It can be improved and updated, and anyone can see and change the code that it is based on. It benefits from the ideas and creativity of anyone who works on it.\n",
             title: "Purpose-built for the Digital Age",
           },
@@ -1111,7 +1095,8 @@ const en: BaseTranslation = {
               "Haha, sorry but no. While Bitcoin and CBDCs are both digital currencies, they have very different purposes and characteristics. CBDCs are issued and backed by central banks, while Bitcoin is decentralized and not controlled by any government or financial institution",
               "Oh boy, that's a creative answer but unfortunately not quite right. CBDCs are not designed to be decentralized or permissionless like Bitcoin. In fact, they are issued and backed by central banks, and their main purpose is to be the ultimate tool for control in the digital age. Better luck next time!",
             ],
-            question: "What is the main purpose of central bank digital currencies (CBDCs)",
+            question:
+              "What is the main purpose of central bank digital currencies (CBDCs)",
             text: "Central bank digital currencies (CBDCs) are digital versions of traditional currency that are issued and backed by a central bank.\n\nCBDCs are not decentralized or permissionless like Bitcoin, and are instead intended to compete with other forms of digital payment methods for market dominance.\n\nOne of the main reasons for the development of CBDCs is the surveillance and censorship capabilities they provide the issuer.\n\nAdditionally, in an age of negative real interest rates (when the inflation rate is higher than the interest rate), the widespread adoption of CBDCs often goes hand in hand with the phasing out of physical cash, which can lead to the devaluation of the currency in real terms.\n",
             title: "Central Bank Digital Currencies",
           },
@@ -1219,7 +1204,11 @@ const en: BaseTranslation = {
         title: "Bitcoin: How does it work?",
         questions: {
           peer2Peer: {
-            answers: ["The blockchain", "The internet", "A decentralized network of nodes"],
+            answers: [
+              "The blockchain",
+              "The internet",
+              "A decentralized network of nodes",
+            ],
             feedback: [
               "Correct! Satoshi was the first to successfully implement the blockchain - a concept first described in 1991 by Stuart Haber and W. Scott Stornetta. It's a decentralized form of bookkeeping that is resistant to tampering and allows users to make and verify transactions without the need for a central authority",
               "No. The internet is a global network of interconnected computers, but it was not invented by Satoshi and does not solve issues of centralization and double spends. Try again",
@@ -1687,7 +1676,8 @@ const en: BaseTranslation = {
               "Nope, sorry! While mining pools do have a significant amount of hashing power, individual miners are extremely mobile and can trivially direct their hashrate to an honest mining pool",
               "Incorrect. While it is true that mining pools have an incentive to act in their own self-interest, this does not mean that they can disrupt the bitcoin network or censor transactions.",
             ],
-            question: "Can mining pools disrupt the bitcoin network or censor transactions",
+            question:
+              "Can mining pools disrupt the bitcoin network or censor transactions",
             text: 'Some people believe that mining pools, which are groups of miners that work together to increase their chances of finding a block, could potentially disrupt the bitcoin network or censor transactions.\n\nHowever, this concern stems from a lack of understanding of the incentives of miners and their role in the network. In reality, miners have a strong incentive to follow the rules of the network and maintain the integrity of the blockchain, as their own profits depend on it.\n\nAs Jimmy Song said, "A majority of hashing power can\'t: take coins you already possess away, change the rules of bitcoin, or hurt you without hurting themselves."\n',
             title: "Bitcoin Mining Is Centralized",
           },
@@ -1702,7 +1692,8 @@ const en: BaseTranslation = {
               "Uh oh, it looks like you might have fallen for the unit bias trap! Better luck next time",
               "Sorry, consulting a crystal ball might work for predicting the weather, but it's not a reliable way to assess the value of bitcoin. Better luck next time!",
             ],
-            question: "How can you accurately compare the value of bitcoin to other assets",
+            question:
+              "How can you accurately compare the value of bitcoin to other assets",
             text: 'One common misconception about bitcoin is that it is too expensive to purchase.\n\nHowever, this belief is based on unit bias, as it is more accurate to compare the entire market capitalization of bitcoin to other assets rather than just the unit price of a single bitcoin.\n\nIt\'s also worth noting that a single bitcoin can be divided into 100 million smaller units called satoshis. As the saying goes, "you can buy a fraction of a bitcoin!"\n',
             title: "Bitcoin is too expensive",
           },
@@ -1751,7 +1742,8 @@ const en: BaseTranslation = {
             question:
               "What is the main reason that bitcoin is considered valuable despite the fact that its code can be copied by anyone",
             text: 'One argument against the value of bitcoin is that it is not scarce because there are thousands of other cryptocurrencies available and because anyone can copy the code and create their own version.\n\nHowever, this overlooks the fact that bitcoin is more than just a piece of code. It is an open source protocol for transferring value that attracts people and resources due to its transparency and rigorous development process.\n\nAs @BTCSchellingPt noted, "open source is very much a meritocracy. You\'ve got the hive mind building solutions. You get all that scrutiny and that comes back to security. Bitcoin Core is probably one of the most heavily scrutinized code bases in the world."\n\nIn other words, the value of bitcoin lies not only in its code, but also in the community and infrastructure that surrounds it.\n',
-            title: "Bitcoin is not scarce because there are thousands of cryptocurrencies",
+            title:
+              "Bitcoin is not scarce because there are thousands of cryptocurrencies",
           },
         },
       },
@@ -2007,7 +1999,8 @@ const en: BaseTranslation = {
               "Wrong answer! An asymmetric payoff means that the potential for gain or loss is uneven, not equal. Better luck next time",
               "Wrong answer! While a talking llama and mute giraffe might make for an interesting investment, they do not define an asymmetric payoff. Better luck next time.",
             ],
-            question: "What is an asymmetric payoff in the context of investment decisions",
+            question:
+              "What is an asymmetric payoff in the context of investment decisions",
             text: "When we make decisions about investing our money, we try to predict what might happen and how much money we could make or lose. Sometimes, the amount of money we can make or lose is not equal.\n\nFor example, if we invest in something that has a big chance of making us a lot of money, but only a small chance of losing a little bit of money, we might call this an \"asymmetric payoff.\" This means that the potential upside (how much we can make) is much bigger than the potential downside (how much we can lose).\n\nOne example of this is bitcoin. Bitcoin's potential outcomes are similar to an option, meaning it either succeeds or fails. If it experiences a catastrophic event, the risk of losing money is minimized.\n\nHowever, the potential upside is much greater, as bitcoin's total addressable market has the potential to be a primary global store of wealth.\n\nAsymmetry in payoffs, or uneven potential outcomes, only occurs when there is uneven understanding or information about an investment. If everyone fully understood bitcoin, it would already be widely used as a form of currency.\n\nCurrently, not everyone is aware of bitcoin's potential as a superior monetary option, so the potential for it to increase in value depends on the demand for it increasing without a corresponding increase in the supply.\n",
             title: "Asymmetric Payoff",
           },
@@ -2034,10 +2027,10 @@ const en: BaseTranslation = {
     getRewardNow: "Answer quiz",
     keepDigging: "Keep digging!",
     phoneNumberNeeded: "Phone number required",
-    quizComplete: "Quiz completed and {formattedAmount: string} earned",
+    quizComplete: "Quiz completed and {formattedNumber | sats} earned",
     reviewQuiz: "Review quiz",
     satAccumulated: "Sats accumulated",
-    satsEarned: "{formattedAmount: string} earned",
+    satsEarned: "{formattedNumber | sats} earned",
     sectionsCompleted: "You've completed",
     title: "Earn",
     unlockQuestion: "To unlock, answer the question:",
@@ -2069,11 +2062,12 @@ const en: BaseTranslation = {
   },
   MapScreen: {
     navToSettingsTitle: "Location permissions",
-    navToSettingsText: "If you'd like to give Blink location permissions, please navigate to your settings and enable it there",
+    navToSettingsText:
+      "If you'd like to give Blink location permissions, please navigate to your settings and enable it there",
     payBusiness: "Pay this business",
     openSettings: "Open settings",
     title: "Map",
-    error: 'Oops. Something went wrong while getting your location'
+    error: "Oops. Something went wrong while getting your location",
   },
   HomeScreen: {
     receive: "Receive",
@@ -2083,7 +2077,8 @@ const en: BaseTranslation = {
     updateAvailable: "An update is available.\nTap to update now",
     useLightning: "We use the Lightning Network.",
     myAccounts: "My Accounts",
-    walletCountNotTwo: "Wallet count is not 2. Please use the dashboard to see all the wallets and funds of this account"
+    walletCountNotTwo:
+      "Wallet count is not 2. Please use the dashboard to see all the wallets and funds of this account",
   },
   PinScreen: {
     attemptsRemaining: "Incorrect PIN. {attemptsRemaining: number} attempts remaining.",
@@ -2140,8 +2135,7 @@ const en: BaseTranslation = {
     useALightningInvoice: "Use a Lightning Invoice",
     setANote: "Set a Note",
     invoiceAmount: "Invoice Amount",
-    fees:
-      "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats",
+    fees: "{minBankFee: string} sats fees for onchain payment below {minBankFeeThreshold: string} sats",
     regenerateInvoiceButtonTitle: "Regenerate Invoice",
     setUsernameButtonTitle: "Set Username",
     invoiceHasExpired: "Invoice has expired",
@@ -2162,7 +2156,8 @@ const en: BaseTranslation = {
     receiveViaPaycode: "Receive via Paycode",
     receiveViaOnchain: "Receive via Onchain",
     payCodeOrLNURL: "Paycode / LNURL",
-    cantReceiveZeroSats: "You can't receive zero sats. Please enter an amount corresponding to 1 or more sats."
+    cantReceiveZeroSats:
+      "You can't receive zero sats. Please enter an amount corresponding to 1 or more sats.",
   },
   RedeemBitcoinScreen: {
     title: "Redeem Bitcoin",
@@ -2191,7 +2186,8 @@ const en: BaseTranslation = {
     openSettings: "Open Settings",
     unableToOpenSettings: "Unable to open settings",
     invalidContentLnurl: "We found:\n\n{found: string}\n\n is not currently supported",
-    imageLibraryPermissionsNotGranted: "We don't have permissions to access the image library.  Please check app settings for your platform.",
+    imageLibraryPermissionsNotGranted:
+      "We don't have permissions to access the image library.  Please check app settings for your platform.",
   },
   SecurityScreen: {
     biometricDescription: "Unlock with fingerprint or facial recognition.",
@@ -2225,7 +2221,8 @@ const en: BaseTranslation = {
     feeError: "Unable to calculate fee",
     invoiceAlreadyPaid: "This invoice has already been paid",
     somethingWentWrong: "Something went wrong",
-    paymentAlreadyAttempted: "Payment already attempted.\n\nIf you want to send this payment again, start from scratch.",
+    paymentAlreadyAttempted:
+      "Payment already attempted.\n\nIf you want to send this payment again, start from scratch.",
     slideToConfirm: "Slide to Confirm",
     slideConfirming: "Confirming...",
     copiedDestination: "Copied destination to clipboard",
@@ -2271,7 +2268,7 @@ const en: BaseTranslation = {
       confirmButton: "I'm 100% sure",
     },
     clipboardError: "Error getting value from clipboard",
-    pastedClipboardSuccess: "Pasted from clipboard"
+    pastedClipboardSuccess: "Pasted from clipboard",
   },
   SendBitcoinScreen: {
     willBeSentToMempoolBy: "Transaction should be submitted to mempool",
@@ -2302,11 +2299,13 @@ const en: BaseTranslation = {
       "The lnurl server responded with an invoice with an incorrect amount.",
     confirmFeesModal: {
       title: "High fee alert!",
-      content: "Your fee is more than 50% bigger than the amount sent. Are you sure you want to proceed?\n\nTo reduce fees, ask the receiver to accept transaction via Lightning",
+      content:
+        "Your fee is more than 50% bigger than the amount sent. Are you sure you want to proceed?\n\nTo reduce fees, ask the receiver to accept transaction via Lightning",
       confirmButton: "I'm 100% sure",
     },
     copiedDestination: "Copied destination to clipboard",
-    pendingPayment: "The payment has been sent, but hasn't confirmed yet.\n\nIt's possible the payment will not confirm, in which case the funds will be returned to your account.",
+    pendingPayment:
+      "The payment has been sent, but hasn't confirmed yet.\n\nIt's possible the payment will not confirm, in which case the funds will be returned to your account.",
   },
   SettingsScreen: {
     staticQr: "Printable Static QR Code",
@@ -2362,12 +2361,13 @@ const en: BaseTranslation = {
       Price: {
         title: "Price changes",
         description: "Notifications about the price of Bitcoin.",
-      }
-    }
+      },
+    },
   },
   AccountScreen: {
     fundsMoreThan5Dollars: "Your account has more than $5",
-    itsATrialAccount: "Trial accounts have reduced transaction limits and no recovery method. If you lose your phone or uninstall the app, your funds will be unrecoverable.",
+    itsATrialAccount:
+      "Trial accounts have reduced transaction limits and no recovery method. If you lose your phone or uninstall the app, your funds will be unrecoverable.",
     accountBeingDeleted: "Your account is being deleted, please wait...",
     dangerZone: "Danger Zone",
     phoneDeletedSuccessfully: "Phone deleted successfully",
@@ -2394,7 +2394,8 @@ const en: BaseTranslation = {
     unverifiedEmail: "Email (Unverified)",
     email: "Email",
     emailDeletedSuccessfully: "Email deleted successfully",
-    unverifiedEmailAdvice: "Unverified emails can't be used to login. You should re-verify your email address.",
+    unverifiedEmailAdvice:
+      "Unverified emails can't be used to login. You should re-verify your email address.",
     deleteEmailPromptTitle: "Delete email",
     deleteEmailPromptContent:
       "Are you sure you want to delete your email address? you will only be able to log back in with your phone number.",
@@ -2421,7 +2422,7 @@ const en: BaseTranslation = {
     copiedAccountId: "Copied your account ID to clipboard",
     yourAccountId: "Your Account ID",
     accountId: "Account ID",
-    copy: "Copy"
+    copy: "Copy",
   },
   TotpRegistrationInitiateScreen: {
     title: "Two-factor authentication",
@@ -2446,13 +2447,11 @@ const en: BaseTranslation = {
   },
   DefaultWalletScreen: {
     title: "Default Account",
-    info:
-      "Pick which account to set as default for receiving and sending. You can adjust the send and receive account for individual payments in the mobile app. Payments received through the cash register or your Lightning address will always go to the default account.\n\nTo avoid Bitcoin's volatility, choose Stablesats. This allows you to maintain a stable amount of money while still being able to send and receive payments.\n\nYou can change this setting at any time, and it won't affect your current balance.",
+    info: "Pick which account to set as default for receiving and sending. You can adjust the send and receive account for individual payments in the mobile app. Payments received through the cash register or your Lightning address will always go to the default account.\n\nTo avoid Bitcoin's volatility, choose Stablesats. This allows you to maintain a stable amount of money while still being able to send and receive payments.\n\nYou can change this setting at any time, and it won't affect your current balance.",
   },
   ThemeScreen: {
     title: "Theme",
-    info:
-      "Pick your preferred theme for using Blink, or choose to keep it synced with your system settings.",
+    info: "Pick your preferred theme for using Blink, or choose to keep it synced with your system settings.",
     system: "Use System setting",
     light: "Use Light Mode",
     dark: "Use Dark Mode",
@@ -2464,8 +2463,7 @@ const en: BaseTranslation = {
   },
   StablesatsModal: {
     header: "With Stablesats, you now have a USD account added to your wallet!",
-    body:
-      "You can use it to send and receive Bitcoin, and instantly transfer value between your BTC and USD account. Value in the USD account will not fluctuate with the price of Bitcoin. This feature is not compatible with the traditional banking system.",
+    body: "You can use it to send and receive Bitcoin, and instantly transfer value between your BTC and USD account. Value in the USD account will not fluctuate with the price of Bitcoin. This feature is not compatible with the traditional banking system.",
     termsAndConditions: "Read the Terms & Conditions.",
     learnMore: "Learn more about Stablesats",
   },
@@ -2531,8 +2529,7 @@ const en: BaseTranslation = {
     itCannotBeChanged: "It can't be changed later.",
   },
   WelcomeFirstScreen: {
-    bank:
-      "Bitcoin is designed to let you store, send and receive money, without relying on a bank or credit card.",
+    bank: "Bitcoin is designed to let you store, send and receive money, without relying on a bank or credit card.",
     before:
       "Before Bitcoin, people had to rely on banks or credit card providers, to spend, send and receive money.",
     care: "Why should I care?",
@@ -2550,7 +2547,8 @@ const en: BaseTranslation = {
     errorInvalidPhoneNumber:
       "Invalid phone number. Are you sure you entered the right number?",
     errorUnsupportedCountry: "We are unable to support customers in your country.",
-    infoArgentina: "Argentinian phone numbers require adding a 9 to the beginning of the number.",
+    infoArgentina:
+      "Argentinian phone numbers require adding a 9 to the beginning of the number.",
     placeholder: "Phone Number",
     verify: "Click to Verify",
     sms: "Send via SMS",
@@ -2559,7 +2557,8 @@ const en: BaseTranslation = {
   PhoneLoginValidationScreen: {
     errorLoggingIn: "Error logging in. Did you use the right code?",
     errorTooManyAttempts: "Too many attempts. Please try again later.",
-    errorIpNotAllowed: "This IP is from an unsupported country and accounts may not be created from it. If you are in a supported country but using a VPN, try deactivating it.",
+    errorIpNotAllowed:
+      "This IP is from an unsupported country and accounts may not be created from it. If you are in a supported country but using a VPN, try deactivating it.",
     errorPhoneNotAllowed: "Accounts may not be created from this phone number.",
     errorCannotUpgradeToExistingAccount:
       "This phone account already exists. Please log out of your trial account and then log in with your phone number.",
@@ -2850,24 +2849,32 @@ const en: BaseTranslation = {
     learnMore: "Learn more about Adopting Bitcoin at",
     mayChallenge: {
       title: "May Challenge!",
-      description: "Grow your inner circle by 6 for a chance to win a set of Pizzas on your next Bitcoin Meetup.",
-      details: "Want a Bitcoin Pizza Day Party?\n\nExpand your Inner Circle by 6 for a shot at winning a set of pizzas for your next Bitcoin Meetup. The challenge wraps up on May 15th.\n\nShare your circles on social with the hashtag #blinkcircles to participate.\n\nThe prize is $150 for pizzas."
+      description:
+        "Grow your inner circle by 6 for a chance to win a set of Pizzas on your next Bitcoin Meetup.",
+      details:
+        "Want a Bitcoin Pizza Day Party?\n\nExpand your Inner Circle by 6 for a shot at winning a set of pizzas for your next Bitcoin Meetup. The challenge wraps up on May 15th.\n\nShare your circles on social with the hashtag #blinkcircles to participate.\n\nThe prize is $150 for pizzas.",
     },
     juneChallenge: {
       title: "June Challenge!",
-      description: "Expand your Inner Circle by 10 for a chance to win a $1000 privilege ticket to the Adopting Bitcoin El Salvador",
-      details: "Win a privilege ticket to Adopting Bitcoin El Salvador\n\nExpand your Inner Circle by 10 for a chance to win a $1000 privilege ticket to Adopting Bitcoin El Salvador! The ticket includes exclusive access to the main conference, mezzanine with food/drinks/snacks, speakers' dinner, and the Film Festival.\n\nShare your circles on social with the hashtag #blinkcircles to participate.\n\nThis time, there will be two winners!"
-    }
+      description:
+        "Expand your Inner Circle by 10 for a chance to win a $1000 privilege ticket to the Adopting Bitcoin El Salvador",
+      details:
+        "Win a privilege ticket to Adopting Bitcoin El Salvador\n\nExpand your Inner Circle by 10 for a chance to win a $1000 privilege ticket to Adopting Bitcoin El Salvador! The ticket includes exclusive access to the main conference, mezzanine with food/drinks/snacks, speakers' dinner, and the Film Festival.\n\nShare your circles on social with the hashtag #blinkcircles to participate.\n\nThis time, there will be two winners!",
+    },
   },
   FullOnboarding: {
     title: "Full onboarding",
     confirmNameTitle: "Name confirmation",
     firstName: "First name",
     lastName: "Last name",
-    confirmNameContent: "Is the spelling of your name correct?\n\n{firstName: string} {lastName: string}\n\nIt must match the name on your ID.",
-    requirements: "Upgrading your account will increase your limits and give you additional functionality such as transfer to bank accounts in selected countries.\n\nYou will have to provide your name, a governement issued ID and a selfie. We'll start with your name.",
-    success: "Documents has been successfully received and will be processed shortly. you can come back to this page to have an update on the status of your onboarding",
-    error: "There has been an error with the submission of your documents. You can contact the support if the problem persists.",
+    confirmNameContent:
+      "Is the spelling of your name correct?\n\n{firstName: string} {lastName: string}\n\nIt must match the name on your ID.",
+    requirements:
+      "Upgrading your account will increase your limits and give you additional functionality such as transfer to bank accounts in selected countries.\n\nYou will have to provide your name, a governement issued ID and a selfie. We'll start with your name.",
+    success:
+      "Documents has been successfully received and will be processed shortly. you can come back to this page to have an update on the status of your onboarding",
+    error:
+      "There has been an error with the submission of your documents. You can contact the support if the problem persists.",
     status: "Your onboarding status is: ",
     ABANDONED: "Abandoned",
     APPROVED: "Approved",
@@ -2878,13 +2885,13 @@ const en: BaseTranslation = {
   },
   NotificationHistory: {
     title: "Notifications",
-    noNotifications: "You don't have any notifications right now"
+    noNotifications: "You don't have any notifications right now",
   },
   SupportChat: {
     errorSendingMessage: "An error occurred while sending the message",
     confirmChatReset: "Are you sure you want to reset the chat?",
     errorResettingChat: "An error occurred while resetting the chat",
-  }
+  },
 }
 
 export default en

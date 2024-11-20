@@ -64,7 +64,7 @@
         "message": "تم التحويل بنجاح"
     },
     "EarnScreen": {
-        "earnSats": "اجنِ {formattedNumber|sats}",
+        "earnSats": "اجنِ {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "ماهو البيتكوين؟",
@@ -1981,10 +1981,10 @@
         "getRewardNow": "أجب على الإختبار",
         "keepDigging": "أكمل التنقيب!",
         "phoneNumberNeeded": "رقم الهاتف مطلوب",
-        "quizComplete": "اكتمل الاختبار وقد حصلت على {amount: number} ساتوشي",
+        "quizComplete": "اكتمل الاختبار وقد حصلت على {formattedNumber | sats} ساتوشي",
         "reviewQuiz": "مراجعة الإختبار",
         "satAccumulated": "ساتس تم تجميعها",
-        "satsEarned": "{formattedNumber|sats}\nحصلت عليها",
+        "satsEarned": "{formattedNumber | sats}\nحصلت عليها",
         "sectionsCompleted": "لقد أتممت",
         "title": "إكسب",
         "unlockQuestion": "لتفتح القفل، قم بلإجابة عن السؤال:",

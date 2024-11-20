@@ -64,7 +64,7 @@
         "message": "การแลกเปลี่ยนสำเร็จแล้ว"
     },
     "EarnScreen": {
-        "earnSats": "ได้รับ {formattedNumber|sats}",
+        "earnSats": "ได้รับ {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "บิตคอยน์: มันคืออะไร?",
@@ -1981,10 +1981,10 @@
         "getRewardNow": "ตอบคำถาม",
         "keepDigging": "ขุดลงไปให้ลึกกว่านี้!",
         "phoneNumberNeeded": "โปรดระบุหมายเลขโทรศัพท์",
-        "quizComplete": "แบบทดสอบเสร็จสิ้น และคุณได้รับอีก {amount: number} แซต",
+        "quizComplete": "แบบทดสอบเสร็จสิ้น และคุณได้รับอีก {formattedNumber | sats} แซต",
         "reviewQuiz": "รีวิวแบบทดสอบ",
         "satAccumulated": "การรวบรวม sats เสร็จสิ้น",
-        "satsEarned": "ได้รับ {formattedNumber|sats}",
+        "satsEarned": "ได้รับ {formattedNumber | sats}",
         "sectionsCompleted": "คุณทำแบบทดสอบเสร็จสิ้น",
         "title": "รับเงิน",
         "unlockQuestion": "ตอบคำถามเพื่อปลดล็อค:",

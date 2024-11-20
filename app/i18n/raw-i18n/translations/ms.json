@@ -64,7 +64,7 @@
         "message": "Penukaran telah berjaya"
     },
     "EarnScreen": {
-        "earnSats": "Dapat {formattedNumber|sats}",
+        "earnSats": "Dapat {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Apa itu Bitcoin?",
@@ -1981,7 +1981,7 @@
         "getRewardNow": "Jawab kuiz ",
         "keepDigging": "Teruskan menggali!",
         "phoneNumberNeeded": "No telefon anda diperlukan",
-        "quizComplete": "Selesai kuiz anda dan {jumlah: number} sats telah berjaya diterima",
+        "quizComplete": "Selesai kuiz anda dan {formattedNumber | sats} telah berjaya diterima",
         "reviewQuiz": "Semak jawapan kuiz",
         "satAccumulated": "sats telah dikumpul",
         "satsEarned": "{format nombor dalam |sats} telah diperolehi",

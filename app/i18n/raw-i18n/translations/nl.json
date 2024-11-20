@@ -64,7 +64,7 @@
         "message": "Wissel geslaagd"
     },
     "EarnScreen": {
-        "earnSats": "Verdien {formattedNumber|sats}",
+        "earnSats": "Verdien {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Bitcoin: Wat is het?",
@@ -1981,10 +1981,10 @@
         "getRewardNow": "Beantwoord quiz",
         "keepDigging": "Blijf graven!",
         "phoneNumberNeeded": "Telefoonnummer vereist",
-        "quizComplete": "Quiz voltooid en {amount: number} sats verdiend",
+        "quizComplete": "Quiz voltooid en {formattedNumber | sats} verdiend",
         "reviewQuiz": "Bekijk quiz",
         "satAccumulated": "Sats verzameld",
-        "satsEarned": "{formattedNumber|sats} verdiend",
+        "satsEarned": "{formattedNumber | sats} verdiend",
         "sectionsCompleted": "Je hebt voltooid",
         "title": "Verdien",
         "unlockQuestion": "Beantwoord de vraag om te ontgrendelen:",

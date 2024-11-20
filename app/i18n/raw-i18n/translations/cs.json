@@ -64,7 +64,7 @@
         "message": "Úspěšný převod"
     },
     "EarnScreen": {
-        "earnSats": "Získejte {formattedNumber|sats}",
+        "earnSats": "Získejte {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Bitcoin: Co to je?",
@@ -1981,10 +1981,10 @@
         "getRewardNow": "Odpovědět na kvíz",
         "keepDigging": "Chci pokračovat!",
         "phoneNumberNeeded": "Telefonní číslo je vyžadováno",
-        "quizComplete": "Dokončil jste kvíz a získal {amount} satů",
+        "quizComplete": "Dokončil jste kvíz a získal {formattedNumber | sats} satů",
         "reviewQuiz": "Projdi si kvíz",
         "satAccumulated": "Nahromaděné saty",
-        "satsEarned": "{formattedNumber|sats} získáno",
+        "satsEarned": "{formattedNumber | sats} získáno",
         "sectionsCompleted": "Dokončil jste",
         "title": "Získej saty",
         "unlockQuestion": "Pro odemčení odpovězte na otázku:",

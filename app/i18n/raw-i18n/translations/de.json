@@ -64,7 +64,7 @@
         "message": "Das hat geklappt!"
     },
     "EarnScreen": {
-        "earnSats": "Verdiene {formattedNumber|sats}",
+        "earnSats": "Verdiene {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Was ist Bitcoin?",
@@ -1981,10 +1981,10 @@
         "getRewardNow": "Zum Quiz",
         "keepDigging": "Weiter!",
         "phoneNumberNeeded": "Mobilnummer benötigt",
-        "quizComplete": "Quiz abgeschlossen und {amount} Sats verdient",
+        "quizComplete": "Quiz abgeschlossen und {formattedNumber | sats} Sats verdient",
         "reviewQuiz": "Quiz ansehen",
         "satAccumulated": "Sats gesammelt",
-        "satsEarned": "{formattedNumber|sats} verdient",
+        "satsEarned": "{formattedNumber | sats} verdient",
         "sectionsCompleted": "Du bist fertig",
         "title": "Verdienen",
         "unlockQuestion": "Beantworte folgende Frage zum Entsperren:",

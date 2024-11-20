@@ -64,7 +64,7 @@
         "message": "Chuyễn đổi đã thành công"
     },
     "EarnScreen": {
-        "earnSats": "Kiếm được {formattedNumber|sats}",
+        "earnSats": "Kiếm được {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Bitcoin: Nó là gì?",
@@ -1981,10 +1981,10 @@
         "getRewardNow": "Trả lời bài kiểm tra",
         "keepDigging": "Tiếp tục nào!",
         "phoneNumberNeeded": "Số điện thoại là bắt buộc",
-        "quizComplete": "Đã hoàn thành bài kiểm tra và kiếm được {amount: number} sats",
+        "quizComplete": "Đã hoàn thành bài kiểm tra và kiếm được {formattedNumber | sats}",
         "reviewQuiz": "Bài kiểm tra tổng hợp",
         "satAccumulated": "Sats đã tích lũy",
-        "satsEarned": "{formattedNumber|sats} kiếm được",
+        "satsEarned": "{formattedNumber | sats} kiếm được",
         "sectionsCompleted": "Bạn vừa hoàn thành",
         "title": "Kiếm được",
         "unlockQuestion": "Để mở khóa, hãy trả lời câu hỏi:",

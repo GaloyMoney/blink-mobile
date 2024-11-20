@@ -74,7 +74,7 @@
     "EarnScreen": {
         "satoshi": "sat",
         "satoshis": "sats",
-        "earnSats": "Κερδίστε {formattedNumber|sats}",
+        "earnSats": "Κερδίστε {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Bitcoin: Τι είναι αυτό;",
@@ -1991,10 +1991,10 @@
         "getRewardNow": "Απαντήστε στο quiz",
         "keepDigging": "Συνεχίστε να ανακαλύπτετε! ",
         "phoneNumberNeeded": "Απαιτείται ο αριθμός τηλεφώνου",
-        "quizComplete": "Το κουίζ ολοκληρώθηκε και {ποσό: αριθμός} sats κερδήθηκαν",
+        "quizComplete": "Το κουίζ ολοκληρώθηκε και {formattedNumber | sats} κερδήθηκαν",
         "reviewQuiz": "Ανασκόπηση quiz",
         "satAccumulated": "Συσσωρευμένα sats ",
-        "satsEarned": "{formattedNumber|sats} που κερδίσατε",
+        "satsEarned": "{formattedNumber | sats} που κερδίσατε",
         "sectionsCompleted": "Ολοκληρώσατε",
         "title": "Κερδίστε ",
         "unlockQuestion": "Για να ξεκλειδώσετε, απαντήστε στην ερώτηση:",
