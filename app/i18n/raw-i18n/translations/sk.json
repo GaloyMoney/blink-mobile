@@ -1651,7 +1651,7 @@
                             "Nesprávne. Aj keď je pravda, že ťažobné pooly majú motiváciu konať vo vlastnom záujme, neznamená to, že môžu narušiť bitcoinovú sieť alebo cenzurovať transakcie."
                         ],
                         "question": "Môžu ťažobné fondy narušiť bitcoinovú sieť alebo cenzurovať transakcie",
-                        "text": "Niektorí ľudia veria, že ťažobné fondy, čo sú skupiny baníkov, ktorí spolupracujú na zvýšení svojich šancí na nájdenie bloku, by mohli potenciálne narušiť bitcoinovú sieť alebo cenzurovať transakcie.\n\nTáto obava však pramení z nedostatočného pochopenia stimulov baníkov a ich úlohy v sieti. V skutočnosti majú baníci silnú motiváciu dodržiavať pravidlá siete a udržiavať integritu blockchainu, keďže od toho závisia ich vlastné zisky.\n\nAko povedal Jimmy Song: „Väčšina hashovacích síl nemôže: vziať mince, ktoré už vlastníte, zmeniť pravidlá bitcoinu alebo vám ublížiť bez toho, aby si ublížili.“\n",
+                        "text": "Niektorí ľudia veria, že ťažobné fondy, čo sú skupiny ťažiarov, ktorí spolupracujú na zvýšení svojich šancí na nájdenie bloku, by mohli potenciálne narušiť bitcoinovú sieť alebo cenzurovať transakcie.\n\nTáto obava však pramení z nedostatočného pochopenia stimulov baníkov a ich úlohy v sieti. V skutočnosti majú baníci silnú motiváciu dodržiavať pravidlá siete a udržiavať integritu blockchainu, keďže od toho závisia ich vlastné zisky.\n\nAko povedal Jimmy Song: „Väčšina hashovacích síl nemôže: vziať mince, ktoré už vlastníte, zmeniť pravidlá bitcoinu alebo vám ublížiť bez toho, aby si ublížili.“\n",
                         "title": "Ťažba bitcoinov je centralizovaná"
                     },
                     "tooExpensive": {
