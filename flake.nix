@@ -148,6 +148,31 @@
 
             # Fix clang for XCode builds
             export PATH=$(echo $PATH | tr ':' '\n' | grep -v clang | paste -sd ':' -)
+
+            # Check and install Rosetta 2 on macOS to enable emulator support
+            if [[ $(uname) == "Darwin" ]]; then
+              processor_brand=$(/usr/sbin/sysctl -n machdep.cpu.brand_string)
+              if [[ "$processor_brand" == *"Apple"* ]]; then
+                echo "Apple Processor is present..."
+                check_rosetta_status=$(/usr/bin/pgrep oahd)
+                rosetta_folder="/Library/Apple/usr/share/rosetta"
+
+                if [[ -n $check_rosetta_status ]] && [[ -e $rosetta_folder ]]; then
+                  echo "Rosetta is installed... no action needed"
+                else
+                  echo "Rosetta is not installed... installing now - It is needed for running the application in a virtual emulator on your MacOS with Apple Silicon, read more here: https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment"
+                  sudo /usr/sbin/softwareupdate --install-rosetta --agree-to-license
+                  if /usr/bin/pgrep oahd >/dev/null 2>&1 ; then
+                      echo "Rosetta is now installed"
+                  else
+                      echo "Rosetta installation failed"
+                      exit 1
+                  fi
+                fi
+              else
+                echo "Apple Processor is not present... Rosetta is not needed"
+              fi
+            fi
           '';
         };
       }
