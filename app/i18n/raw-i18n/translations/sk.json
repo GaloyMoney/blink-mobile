@@ -1647,7 +1647,7 @@
                         ],
                         "feedback": [
                             "Áno, je to tak. Vedeli ste, že decentralizovaná povaha bitcoinovej siete zaisťuje, že žiadna entita, vrátane ťažobných fondov, nemôže narušiť sieť alebo cenzurovať transakcie?",
-                            "Nie, prepáč! Zatiaľ čo ťažobné fondy majú značné množstvo hashovacej sily, jednotliví baníci sú extrémne mobilní a môžu triviálne nasmerovať svoj hashrate na poctivý ťažobný fond.",
+                            "Nie, prepáč! Zatiaľ čo ťažobné fondy majú značné množstvo hashovacej sily, jednotliví ťažiari sú extrémne mobilní a môžu triviálne nasmerovať svoj hashrate na poctivý ťažobný fond.",
                             "Nesprávne. Aj keď je pravda, že ťažobné pooly majú motiváciu konať vo vlastnom záujme, neznamená to, že môžu narušiť bitcoinovú sieť alebo cenzurovať transakcie."
                         ],
                         "question": "Môžu ťažobné fondy narušiť bitcoinovú sieť alebo cenzurovať transakcie",
