@@ -5,7 +5,7 @@
         "yourLightningAddress": "Vaša Lightning adresa",
         "notAbleToChange": "Po nastavení adresy {bankName: string} ju nebudete môcť zmeniť.",
         "addressNotAvailable": "Táto adresa {bankName: string} je už obsadená.",
-        "somethingWentWrong": "Niečo sa pokazilo. Skúste to prosím nesôr.",
+        "somethingWentWrong": "Niečo sa pokazilo. Skúste to prosím neskôr.",
         "merchantTitle": "Pre obchodníkov",
         "yourCashRegister": "Vaša Lightningová pokladňa",
         "yourPaycode": "Váš platobný kód",
