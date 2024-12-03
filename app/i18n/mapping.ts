@@ -23,6 +23,7 @@ import "@formatjs/intl-relativetimeformat/locale-data/ms"
 import "@formatjs/intl-relativetimeformat/locale-data/pt"
 import "@formatjs/intl-relativetimeformat/locale-data/qu"
 import "@formatjs/intl-relativetimeformat/locale-data/ro"
+import "@formatjs/intl-relativetimeformat/locale-data/sk"
 import "@formatjs/intl-relativetimeformat/locale-data/sr"
 import "@formatjs/intl-relativetimeformat/locale-data/sw"
 import "@formatjs/intl-relativetimeformat/locale-data/th"
@@ -53,6 +54,7 @@ export const LocaleToTranslateLanguageSelector = {
   pt: "Português",
   qu: "Quechua",
   ro: "Română",
+  sk: "Slovensky", 
   sr: "Српски", 
   sw: "KiSwahili", 
   th: "ไทย",
