@@ -104,6 +104,7 @@ export const Unauthed = () => (
       isAtLeastLevelZero: false,
       isAtLeastLevelOne: false,
       isAtLeastLevelTwo: true,
+      isAtLeastLevelThree: false,
       currentLevel: AccountLevel.NonAuth,
     }}
   >
@@ -119,6 +120,7 @@ export const AuthedEmailNotSet = () => (
       isAtLeastLevelZero: true,
       isAtLeastLevelOne: true,
       isAtLeastLevelTwo: true,
+      isAtLeastLevelThree: false,
       currentLevel: AccountLevel.One,
     }}
   >
@@ -134,6 +136,7 @@ export const AuthedEmailSet = () => (
       isAtLeastLevelZero: true,
       isAtLeastLevelOne: true,
       isAtLeastLevelTwo: true,
+      isAtLeastLevelThree: false,
       currentLevel: AccountLevel.One,
     }}
   >

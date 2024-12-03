@@ -14,11 +14,13 @@ const Level = createContext<{
   isAtLeastLevelZero: boolean
   isAtLeastLevelOne: boolean
   isAtLeastLevelTwo: boolean
+  isAtLeastLevelThree: boolean
   currentLevel: AccountLevel
 }>({
   isAtLeastLevelZero: false,
   isAtLeastLevelOne: false,
   isAtLeastLevelTwo: false,
+  isAtLeastLevelThree: false,
   currentLevel: AccountLevel.NonAuth,
 })
 
