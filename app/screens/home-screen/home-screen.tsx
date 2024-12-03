@@ -344,7 +344,8 @@ export const HomeScreen: React.FC = () => {
   if (
     !isIos ||
     dataUnauthed?.globals?.network !== "mainnet" ||
-    dataAuthed?.me?.defaultAccount.level === AccountLevel.Two
+    dataAuthed?.me?.defaultAccount.level === AccountLevel.Two ||
+    dataAuthed?.me?.defaultAccount.level === AccountLevel.Three
   ) {
     buttons.unshift({
       title: LL.ConversionDetailsScreen.title(),
