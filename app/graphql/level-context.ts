@@ -5,6 +5,7 @@ export const AccountLevel = {
   Zero: "ZERO",
   One: "ONE",
   Two: "TWO",
+  Three: "THREE",
 } as const
 
 export type AccountLevel = (typeof AccountLevel)[keyof typeof AccountLevel]
