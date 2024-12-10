@@ -25,7 +25,7 @@ jobs:
 
       - name: Create iOS Simulator
         run: |
-          DEVICE_ID=$(xcrun simctl create "iPhone SE (3rd generation)" com.apple.CoreSimulator.SimDeviceType.iPhone-SE-3rd-generation com.apple.CoreSimulator.SimRuntime.iOS-16-2)
+          DEVICE_ID=$(xcrun simctl create "iPhone SE (3rd generation)" com.apple.CoreSimulator.SimDeviceType.iPhone-SE-3rd-generation com.apple.CoreSimulator.SimRuntime.iOS-18-1)
           echo "DEVICE_ID=$DEVICE_ID" >> $GITHUB_ENV
 
       - name: Boot Simulator
