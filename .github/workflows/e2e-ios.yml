@@ -26,6 +26,34 @@ jobs:
       - name: Set up Docker
         uses: douglascamata/setup-docker-macos-action@v1-alpha
 
+      - name: Cache Node Modules
+        uses: actions/cache@v4
+        id: node-cache
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Cache Pods
+        uses: actions/cache@v4
+        with:
+          path: ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+
+      - name: Cache iOS Build
+        uses: actions/cache@v4
+        with:
+          path: |
+            ios/build
+            ~/Library/Developer/Xcode/DerivedData
+          key: ${{ runner.os }}-ios-build-${{ hashFiles('ios/**/*.pbxproj') }}-${{ hashFiles('ios/**/*.xcconfig') }}
+          restore-keys: |
+            ${{ runner.os }}-ios-build-
+
       - name: Install dependencies
         run: nix develop -c yarn install
 
@@ -46,13 +74,15 @@ jobs:
           # Create directory for PID files
           mkdir -p /tmp/pids
 
+          # Start Tilt in background
+          nix develop -c tilt up -f ./dev/Tiltfile &
+          echo $! > /tmp/pids/tilt.pid
+
           # Start Metro in background
           nix develop -c yarn start &
           echo $! > /tmp/pids/metro.pid
 
-          # Start Tilt in background
-          nix develop -c tilt up -f ./dev/Tiltfile &
-          echo $! > /tmp/pids/tilt.pid
+          sleep 5
 
           # Wait for galoy UI resource to be ready (timeout after 5 minutes)
           nix develop -c tilt wait --for=condition=Ready "uiresource/galoy" --timeout=5m
