@@ -1,0 +1,103 @@
+name: Android E2E Tests
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e-test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v14
+
+      - name: Run the Magic Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@v8
+
+      - name: Install dependencies
+        run: nix develop -c yarn install
+
+      - name: Build E2E tests
+        run: nix develop -c yarn e2e:build android.emu.debug
+
+      - name: Start Metro, Tilt, Emulator, and run tests
+        id: run-tests
+        run: |
+          # Create directory for PID files
+          mkdir -p /tmp/pids
+
+          # Start Metro in background
+          nix develop -c yarn start &
+          echo $! > /tmp/pids/metro.pid
+
+          # Start Tilt in background
+          cd dev && TILT_CI=true nix develop -c tilt up &
+          echo $! > /tmp/pids/tilt.pid
+
+          # Wait for galoy UI resource to be ready (timeout after 5 minutes)
+          nix develop -c tilt wait --for=condition=Ready "uiresource/galoy" --timeout=5m
+
+          # Start emulator in background
+          emulator -avd Pixel_API_34 -gpu swiftshader -wipe-data -no-boot-anim -no-window &
+          echo $! > /tmp/pids/emulator.pid
+
+          # Wait for device to be ready
+          adb wait-for-device
+
+          # Start screen recording
+          adb shell screenrecord --bit-rate 4000000 /sdcard/screenRecord.mp4 &
+          echo $! > /tmp/pids/screenrecord.pid
+
+          # Trigger dev setup and run tests
+          cd dev && nix develop -c tilt trigger dev-setup
+
+          # Run the E2E tests
+          nix develop -c yarn e2e:test android.emu.debug -d --take-screenshots all --record-videos all --record-logs all --artifacts-location android-recordings
+          TEST_EXIT_CODE=$?
+
+          # Pull the screen recording
+          adb pull /sdcard/screenRecord.mp4 android-recordings/
+
+          exit $TEST_EXIT_CODE
+
+      - name: Cleanup Processes
+        if: always()
+        run: |
+          # Function to kill process by PID file
+          kill_process() {
+            local pidfile=$1
+            if [ -f "$pidfile" ]; then
+              PID=$(cat "$pidfile")
+              if ps -p $PID > /dev/null; then
+                echo "Killing process $(basename "$pidfile" .pid) (PID: $PID)"
+                kill $PID || kill -9 $PID
+              fi
+              rm "$pidfile"
+            fi
+          }
+
+          # Kill all processes
+          for pidfile in /tmp/pids/*.pid; do
+            [ -f "$pidfile" ] && kill_process "$pidfile"
+          done
+
+          # Additional cleanup commands just to be thorough
+          pkill -f "node.*metro" || true
+          pkill -f "tilt" || true
+          pkill -f "emulator" || true
+          adb shell pkill -f "screenrecord" || true
+
+      - name: Upload test artifacts
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-artifacts
+          path: |
+            android-recordings/
+            android-recordings/screenRecord.mp4
