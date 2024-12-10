@@ -74,15 +74,19 @@ jobs:
           # Create directory for PID files
           mkdir -p /tmp/pids
 
-          # Start Tilt in background
-          nix develop -c tilt up -f ./dev/Tiltfile &
-          echo $! > /tmp/pids/tilt.pid
-
           # Start Metro in background
           nix develop -c yarn start &
           echo $! > /tmp/pids/metro.pid
 
-          sleep 5
+          # Start Tilt in background
+          nix develop -c tilt up -f ./dev/Tiltfile &
+          echo $! > /tmp/pids/tilt.pid
+
+          # Wait for Tilt to be ready with retries
+          until nix develop -c tilt get uiresource >/dev/null 2>&1; do
+            echo "Waiting for Tilt to be ready..."
+            sleep 5
+          done
 
           # Wait for galoy UI resource to be ready (timeout after 5 minutes)
           nix develop -c tilt wait --for=condition=Ready "uiresource/galoy" --timeout=5m
