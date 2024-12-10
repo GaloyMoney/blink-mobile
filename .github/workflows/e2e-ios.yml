@@ -1,4 +1,4 @@
-name: Android E2E Tests
+name: iOS E2E Tests
 
 on:
   pull_request:
@@ -20,11 +20,22 @@ jobs:
       - name: Run the Magic Nix Cache
         uses: DeterminateSystems/magic-nix-cache-action@v8
 
+      - name: List available simulators
+        run: xcrun simctl list devices available
+
+      - name: Create iOS Simulator
+        run: |
+          DEVICE_ID=$(xcrun simctl create "iPhone SE (3rd generation)" com.apple.CoreSimulator.SimDeviceType.iPhone-SE-3rd-generation com.apple.CoreSimulator.SimRuntime.iOS-16-2)
+          echo "DEVICE_ID=$DEVICE_ID" >> $GITHUB_ENV
+
+      - name: Boot Simulator
+        run: xcrun simctl boot $DEVICE_ID
+
       - name: Install dependencies
         run: nix develop -c yarn install
 
       - name: Build E2E tests
-        run: nix develop -c yarn e2e:build android.emu.debug
+        run: nix develop -c yarn e2e:build ios.sim.debug
 
       - name: Start Metro, Tilt, Emulator, and run tests
         id: run-tests
@@ -37,32 +48,30 @@ jobs:
           echo $! > /tmp/pids/metro.pid
 
           # Start Tilt in background
-          cd dev && TILT_CI=true nix develop -c tilt up &
+          cd dev && nix develop -c tilt up &
           echo $! > /tmp/pids/tilt.pid
 
           # Wait for galoy UI resource to be ready (timeout after 5 minutes)
           nix develop -c tilt wait --for=condition=Ready "uiresource/galoy" --timeout=5m
 
-          # Start emulator in background
-          emulator -avd Pixel_API_34 -gpu swiftshader -wipe-data -no-boot-anim -no-window &
-          echo $! > /tmp/pids/emulator.pid
-
           # Wait for device to be ready
-          adb wait-for-device
+          while ! xcrun simctl list devices | grep "(Booted)"; do
+            sleep 5
+            echo "Waiting for Simulator device to come online..."
+          done
 
           # Start screen recording
-          adb shell screenrecord --bit-rate 4000000 /sdcard/screenRecord.mp4 &
-          echo $! > /tmp/pids/screenrecord.pid
+          rm -rf ios-recordings || true
+          xcrun simctl io booted recordVideo screenRecord.mov &
+          echo $! > /tmp/pids/sim_record.pid
 
           # Trigger dev setup and run tests
           cd dev && nix develop -c tilt trigger dev-setup
+          nix develop -c tilt wait --for=condition=Ready "uiresource/dev-setup" --timeout=5m
 
           # Run the E2E tests
-          nix develop -c yarn e2e:test android.emu.debug -d --take-screenshots all --record-videos all --record-logs all --artifacts-location android-recordings
+          nix develop -c yarn e2e:test ios.sim.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location ios-recordings
           TEST_EXIT_CODE=$?
-
-          # Pull the screen recording
-          adb pull /sdcard/screenRecord.mp4 android-recordings/
 
           exit $TEST_EXIT_CODE
 
@@ -88,10 +97,9 @@ jobs:
           done
 
           # Additional cleanup commands just to be thorough
+          cd dev && nix develop -c tilt down
           pkill -f "node.*metro" || true
           pkill -f "tilt" || true
-          pkill -f "emulator" || true
-          adb shell pkill -f "screenrecord" || true
 
       - name: Upload test artifacts
         if: always()
@@ -99,5 +107,5 @@ jobs:
         with:
           name: test-artifacts
           path: |
-            android-recordings/
-            android-recordings/screenRecord.mp4
+            ios-recordings/
+            ios-recordings/screenRecord.mov
