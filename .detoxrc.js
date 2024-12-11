@@ -16,7 +16,7 @@ module.exports = {
       build:
         "xcodebuild -workspace ios/GaloyApp.xcworkspace -scheme GaloyApp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build " +
         "-parallelizeTargets " +
-        "-maximum-concurrent-compilers 8 " +
+        "-jobs 8 " +
         "ONLY_ACTIVE_ARCH=YES " +
         "COMPILER_INDEX_STORE_ENABLE=NO " +
         "BUILD_LIBRARY_FOR_DISTRIBUTION=NO " +
