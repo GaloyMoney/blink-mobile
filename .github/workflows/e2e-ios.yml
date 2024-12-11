@@ -20,11 +20,14 @@ jobs:
       - name: Run the Magic Nix Cache
         uses: DeterminateSystems/magic-nix-cache-action@v8
 
-      - name: List available simulators
-        run: xcrun simctl list devices available
-
-      - name: Set up Docker
-        uses: douglascamata/setup-docker-macos-action@v1-alpha
+      - name: Set up Docker in background
+        run: |
+          brew install docker docker-compose colima
+          colima start --cpu 4 --memory 8 --disk 60 &
+          while ! docker info > /dev/null 2>&1; do
+            echo "Waiting for Docker to be ready..."
+            sleep 5
+          done
 
       - name: Cache Node Modules
         uses: actions/cache@v4
@@ -137,6 +140,7 @@ jobs:
           nix develop -c tilt down -f ./dev/Tiltfile
           pkill -f "node.*metro" || true
           pkill -f "tilt" || true
+          colima stop || true
 
       - name: Upload test artifacts
         if: always()
