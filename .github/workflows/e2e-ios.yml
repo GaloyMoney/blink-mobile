@@ -30,6 +30,7 @@ jobs:
           done
 
       - name: Cache Node Modules
+        if: always()
         uses: actions/cache@v4
         id: node-cache
         with:
@@ -40,6 +41,7 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Cache Pods
+        if: always()
         uses: actions/cache@v4
         with:
           path: ios/Pods
@@ -48,6 +50,7 @@ jobs:
             ${{ runner.os }}-pods-
 
       - name: Cache iOS Build
+        if: always()
         uses: actions/cache@v4
         with:
           path: |
@@ -58,7 +61,7 @@ jobs:
             ${{ runner.os }}-ios-build-
 
       - name: Install dependencies
-        run: nix develop -c yarn install
+        run: nix develop -c yarn install --frozen-lockfile --prefer-offline
 
       - name: Build E2E tests
         run: nix develop -c yarn e2e:build ios.sim.debug

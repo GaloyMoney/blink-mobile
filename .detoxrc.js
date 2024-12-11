@@ -14,7 +14,18 @@ module.exports = {
       type: "ios.app",
       binaryPath: "ios/build/Build/Products/Debug-iphonesimulator/Blink.app",
       build:
-        "xcodebuild -workspace ios/GaloyApp.xcworkspace -scheme GaloyApp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "xcodebuild -workspace ios/GaloyApp.xcworkspace -scheme GaloyApp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build " +
+        "-parallelizeTargets " +
+        "-maximum-concurrent-compilers 8 " +
+        "ONLY_ACTIVE_ARCH=YES " +
+        "COMPILER_INDEX_STORE_ENABLE=NO " +
+        "BUILD_LIBRARY_FOR_DISTRIBUTION=NO " +
+        "CODE_SIGNING_REQUIRED=NO " +
+        "CODE_SIGN_IDENTITY='' " +
+        "ENABLE_BITCODE=NO " +
+        "GCC_OPTIMIZATION_LEVEL=0 " +
+        "SWIFT_OPTIMIZATION_LEVEL=-Onone " +
+        "-quiet | xcbeautify",
     },
     "android.debug": {
       type: "android.apk",
