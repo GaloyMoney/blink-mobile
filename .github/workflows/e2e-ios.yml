@@ -68,7 +68,7 @@ jobs:
         run: nix develop -c yarn install --frozen-lockfile --prefer-offline
 
       - name: Save Node Modules Cache
-        if: always() # This will run even if previous steps fail
+        if: always()
         uses: actions/cache/save@v4
         with:
           path: |
@@ -102,29 +102,35 @@ jobs:
       - name: Boot Simulator
         run: xcrun simctl boot $DEVICE_ID
 
-      - name: Start Metro, Tilt, Emulator, and run tests
-        id: run-tests
+      - name: Start Metro
         run: |
-          # Create directory for PID files
           mkdir -p /tmp/pids
-
-          # Start Metro in background
           nix develop -c yarn start &
           echo $! > /tmp/pids/metro.pid
 
-          # Start Tilt in background
-          nix develop -c tilt up -f ./dev/Tiltfile > /tmp/logs/tilt.log 2>&1 &
+          # Wait for Metro to be ready
+          while ! lsof -i:8081 >/dev/null 2>&1; do
+            echo "Waiting for Metro to be ready..."
+            sleep 5
+          done
+
+      - name: Start Tilt
+        run: |
+          nix develop -c tilt up -f ./dev/Tiltfile &
           echo $! > /tmp/pids/tilt.pid
 
-          # Wait for Tilt to be ready with retries
+          # Wait for Tilt to be ready
           until nix develop -c tilt get uiresource >/dev/null 2>&1; do
             echo "Waiting for Tilt to be ready..."
             sleep 5
           done
 
-          # Wait for galoy UI resource to be ready (timeout after 5 minutes)
+          # Wait for galoy UI resource to be ready
           nix develop -c tilt wait --for=condition=Ready "uiresource/galoy" --timeout=5m
 
+      - name: Run E2E Tests
+        id: run-tests
+        run: |
           # Wait for device to be ready
           while ! xcrun simctl list devices | grep "(Booted)"; do
             sleep 5
@@ -142,9 +148,6 @@ jobs:
 
           # Run the E2E tests
           nix develop -c yarn e2e:test ios.sim.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location ios-recordings
-          TEST_EXIT_CODE=$?
-
-          exit $TEST_EXIT_CODE
 
       - name: Cleanup Processes
         if: always()
@@ -167,7 +170,7 @@ jobs:
             [ -f "$pidfile" ] && kill_process "$pidfile"
           done
 
-          # Additional cleanup commands just to be thorough
+          # Additional cleanup commands
           nix develop -c tilt down -f ./dev/Tiltfile
           pkill -f "node.*metro" || true
           pkill -f "tilt" || true
