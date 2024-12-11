@@ -113,7 +113,7 @@ jobs:
           echo $! > /tmp/pids/metro.pid
 
           # Start Tilt in background
-          nix develop -c tilt up -f ./dev/Tiltfile &
+          nix develop -c tilt up -f ./dev/Tiltfile > /tmp/logs/tilt.log 2>&1 &
           echo $! > /tmp/pids/tilt.pid
 
           # Wait for Tilt to be ready with retries
