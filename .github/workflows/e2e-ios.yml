@@ -129,7 +129,7 @@ jobs:
           echo $! > /tmp/pids/sim_record.pid
 
           # Run the E2E tests
-          nix develop -c tilt ci ios-e2e-tests
+          nix develop -c tilt ci ios-e2e-tests -f ./dev/Tiltfile
 
       - name: Cleanup Processes
         if: always()

@@ -47,7 +47,7 @@ local_resource(
   labels = ['dev-setup'],
   cmd='bin/dev-setup.sh',
   resource_deps = [
-    "galoy"
+    "galoy",
     "dev-ln-setup"
   ]
 )
