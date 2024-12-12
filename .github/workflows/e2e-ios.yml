@@ -126,7 +126,7 @@ jobs:
           done
 
           # Wait for galoy UI resource to be ready
-          nix develop -c tilt wait --for=condition=Ready "uiresource/galoy" --timeout=5m
+          nix develop -c tilt wait --for=condition=Ready "uiresource/galoy" --timeout=10m
 
       - name: Run E2E Tests
         id: run-tests
