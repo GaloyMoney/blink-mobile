@@ -1,7 +1,7 @@
 local_resource(
-  name='init-onchain',
-  labels = ['dev-setup'],
-  cmd='vendor/galoy-quickstart/bin/init-onchain.sh',
+  name="init-onchain",
+  labels = ["dev-setup"],
+  cmd="vendor/galoy-quickstart/bin/init-onchain.sh",
   resource_deps = [
     "bitcoind",
     "bria",
@@ -13,6 +13,7 @@ local_resource(
   labels = ['dev-setup'],
   cmd='vendor/galoy-quickstart/bin/init-lightning.sh',
   resource_deps = [
+    "init-onchain",
     "lnd1",
     "lnd-outside-1",
   ]
