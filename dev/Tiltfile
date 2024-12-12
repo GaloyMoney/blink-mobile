@@ -65,7 +65,8 @@ local_resource(
 # iOS E2E test
 local_resource(
   name='ios-e2e-tests',
-  labels = ['test'],
+  auto_init = False,
+  labels = ["test"],
   cmd='''
     # Run the tests
     nix develop -c yarn e2e:test ios.sim.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location ./ios-recordings
