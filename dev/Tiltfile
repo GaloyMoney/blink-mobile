@@ -1,24 +1,26 @@
 local_resource(
-  name='init-onchain',
-  labels = ['dev-setup'],
-  cmd='vendor/galoy-quickstart/bin/init-onchain.sh',
+  name="init-onchain",
+  labels = ["dev-setup"],
+  cmd="vendor/galoy-quickstart/bin/init-onchain.sh",
   resource_deps = [
     "bitcoind",
     "bria",
   ]
 )
+
 local_resource(
   name='init-lightning',
   labels = ['dev-setup'],
   cmd='vendor/galoy-quickstart/bin/init-lightning.sh',
   resource_deps = [
+    "init-onchain",
     "lnd1",
     "lnd-outside-1",
   ]
 )
 
 docker_compose('vendor/galoy-quickstart/docker-compose.yml')
-galoy_services = ["apollo-router", "galoy", "trigger", "redis", "mongodb", "mongodb-migrate", "price", "price-history", "price-history-migrate", "price-history-pg", "svix", "svix-pg", "stablesats"]
+galoy_services = ["apollo-router", "galoy", "trigger", "redis", "mongodb", "mongodb-migrate", "price", "price-history", "price-history-migrate", "price-history-pg", "svix", "svix-pg", "stablesats", "notifications", "notifications-pg"]
 auth_services = ["oathkeeper", "kratos", "kratos-pg", "hydra", "hydra-pg", "hydra-migrate"]
 bitcoin_services = ["bitcoind", "bitcoind-signer", "lnd1", "lnd-outside-1", "bria", "bria-pg", "fulcrum"]
 
@@ -46,6 +48,7 @@ local_resource(
   labels = ['dev-setup'],
   cmd='bin/dev-setup.sh',
   resource_deps = [
+    "galoy",
     "dev-ln-setup"
   ]
 )
@@ -57,4 +60,16 @@ local_resource(
   resource_deps = [
     "dev-setup"
   ]
+)
+
+# iOS E2E test
+local_resource(
+  name='ios-e2e-tests',
+  auto_init = False,
+  labels = ["test"],
+  cmd='''
+    # Run the tests
+    nix develop -c yarn e2e:test ios.sim.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location ./ios-recordings
+  ''',
+  resource_deps = ["dev-setup"]
 )
