@@ -126,7 +126,11 @@ jobs:
           done
 
           # Wait for galoy UI resource to be ready
-          nix develop -c tilt wait --for=condition=Ready "uiresource/galoy" --timeout=10m
+          echo "Waiting for Blink API to be ready..."
+          nix develop -c tilt wait --for=condition=Ready "uiresource/galoy" --timeout=20m
+          TEST_EXIT_CODE=$?
+          echo "Exit with code: $TEST_EXIT_CODE"
+          exit $TEST_EXIT_CODE
 
       - name: Run E2E Tests
         id: run-tests
