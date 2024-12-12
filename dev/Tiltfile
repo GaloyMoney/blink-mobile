@@ -7,6 +7,7 @@ local_resource(
     "bria",
   ]
 )
+
 local_resource(
   name='init-lightning',
   labels = ['dev-setup'],
@@ -46,6 +47,7 @@ local_resource(
   labels = ['dev-setup'],
   cmd='bin/dev-setup.sh',
   resource_deps = [
+    "galoy"
     "dev-ln-setup"
   ]
 )
@@ -57,4 +59,15 @@ local_resource(
   resource_deps = [
     "dev-setup"
   ]
+)
+
+# iOS E2E test
+local_resource(
+  name='ios-e2e-tests',
+  labels = ['test'],
+  cmd='''
+    # Run the tests
+    nix develop -c yarn e2e:test ios.sim.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location ./ios-recordings
+  ''',
+  resource_deps = ["dev-setup"]
 )

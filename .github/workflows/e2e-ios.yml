@@ -114,24 +114,6 @@ jobs:
             sleep 5
           done
 
-      - name: Start Tilt
-        run: |
-          nix develop -c tilt up -f ./dev/Tiltfile &
-          echo $! > /tmp/pids/tilt.pid
-
-          # Wait for Tilt to be ready
-          until nix develop -c tilt get uiresource >/dev/null 2>&1; do
-            echo "Waiting for Tilt to be ready..."
-            sleep 5
-          done
-
-          # Wait for galoy UI resource to be ready
-          echo "Waiting for Blink API to be ready..."
-          nix develop -c tilt wait --for=condition=Ready "uiresource/galoy" --timeout=20m
-          TEST_EXIT_CODE=$?
-          echo "Exit with code: $TEST_EXIT_CODE"
-          exit $TEST_EXIT_CODE
-
       - name: Run E2E Tests
         id: run-tests
         run: |
@@ -146,12 +128,8 @@ jobs:
           xcrun simctl io booted recordVideo screenRecord.mov &
           echo $! > /tmp/pids/sim_record.pid
 
-          # Trigger dev setup and run tests
-          nix develop -c tilt trigger dev-setup
-          nix develop -c tilt wait --for=condition=Ready "uiresource/dev-setup" --timeout=5m
-
           # Run the E2E tests
-          nix develop -c yarn e2e:test ios.sim.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location ios-recordings
+          nix develop -c tilt ci ios-e2e-tests
 
       - name: Cleanup Processes
         if: always()
