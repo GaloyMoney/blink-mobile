@@ -76,7 +76,7 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Build E2E tests
-        run: nix develop -c yarn e2e:build ios.sim.debug
+        run: nix develop -c yarn e2e:build ios.sim.debug -i
 
       - name: Save Pods Cache
         if: always()

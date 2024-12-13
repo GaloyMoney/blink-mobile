@@ -104,7 +104,7 @@ local_resource(
   labels = ["test"],
   cmd="""
     # Run the tests
-    nix develop -c yarn e2e:test ios.sim.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location ./ios-recordings
+    nix develop -c yarn e2e:test ios.sim.debug --start -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location ./ios-recordings
   """,
   resource_deps = ["dev-setup"]
 )
