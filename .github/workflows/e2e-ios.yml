@@ -124,8 +124,9 @@ jobs:
           done
 
           # Start screen recording
-          rm -rf ios-recordings || true
-          xcrun simctl io booted recordVideo screenRecord.mov &
+          mkdir -p ios-recordings
+          rm -rf ios-recordings/* || true
+          xcrun simctl io booted recordVideo ios-recordings/screenRecord.mov &
           echo $! > /tmp/pids/sim_record.pid
 
           # Run the E2E tests
