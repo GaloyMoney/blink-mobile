@@ -14,7 +14,10 @@ module.exports = {
       type: "ios.app",
       binaryPath: "ios/build/Build/Products/Debug-iphonesimulator/Blink.app",
       build:
-        "xcodebuild -workspace ios/GaloyApp.xcworkspace -scheme GaloyApp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build " +
+        "xcodebuild -workspace ios/GaloyApp.xcworkspace -scheme GaloyApp " +
+        "-configuration Debug -sdk iphonesimulator " +
+        "-destination 'platform=iOS Simulator,name=iPhone SE (3rd generation)' " +
+        "-derivedDataPath ios/build " +
         "-parallelizeTargets " +
         "-jobs 8 " +
         "ONLY_ACTIVE_ARCH=YES " +
@@ -25,7 +28,7 @@ module.exports = {
         "ENABLE_BITCODE=NO " +
         "GCC_OPTIMIZATION_LEVEL=0 " +
         "SWIFT_OPTIMIZATION_LEVEL=-Onone " +
-        "-quiet | xcbeautify",
+        "-quiet",
     },
     "android.debug": {
       type: "android.apk",
