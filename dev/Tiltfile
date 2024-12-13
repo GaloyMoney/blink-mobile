@@ -1,3 +1,6 @@
+config.define_string_list("test")
+cfg = config.parse()
+
 local_resource(
   name="init-onchain",
   labels = ["dev-setup"],
@@ -9,9 +12,9 @@ local_resource(
 )
 
 local_resource(
-  name='init-lightning',
-  labels = ['dev-setup'],
-  cmd='vendor/galoy-quickstart/bin/init-lightning.sh',
+  name="init-lightning",
+  labels = ["dev-setup"],
+  cmd="vendor/galoy-quickstart/bin/init-lightning.sh",
   resource_deps = [
     "init-onchain",
     "lnd1",
@@ -19,8 +22,8 @@ local_resource(
   ]
 )
 
-docker_compose('vendor/galoy-quickstart/docker-compose.yml')
-galoy_services = ["apollo-router", "galoy", "trigger", "redis", "mongodb", "mongodb-migrate", "price", "price-history", "price-history-migrate", "price-history-pg", "svix", "svix-pg", "stablesats", "notifications", "notifications-pg"]
+docker_compose("vendor/galoy-quickstart/docker-compose.yml")
+galoy_services = ["apollo-router", "redis", "mongodb", "mongodb-migrate", "price", "price-history", "price-history-migrate", "price-history-pg", "svix", "svix-pg", "stablesats", "notifications", "notifications-pg"]
 auth_services = ["oathkeeper", "kratos", "kratos-pg", "hydra", "hydra-pg", "hydra-migrate"]
 bitcoin_services = ["bitcoind", "bitcoind-signer", "lnd1", "lnd-outside-1", "bria", "bria-pg", "fulcrum"]
 
@@ -31,45 +34,77 @@ for service in auth_services:
 for service in bitcoin_services:
     dc_resource(service, labels = ["bitcoin"])
 
-dc_resource('otel-agent', labels = ["otel"])
-dc_resource('quickstart-test', labels = ['quickstart'], auto_init=False)
+dc_resource("galoy", labels = ["galoy"], resource_deps = ["dev-ln-setup"])
+dc_resource("trigger", labels = ["galoy"], resource_deps = ["galoy", "dev-ln-setup"])
+dc_resource("otel-agent", labels = ["otel"])
+dc_resource("quickstart-test", labels = ["quickstart"], auto_init=False)
 
 local_resource(
-  name='dev-ln-setup',
-  labels = ['dev-setup'],
-  cmd='bin/dev-ln-setup.sh',
+  name="dev-ln-setup",
+  labels = ["dev-setup"],
+  cmd="bin/dev-ln-setup.sh",
   resource_deps = galoy_services + [
     "init-lightning"
   ]
 )
 
 local_resource(
-  name='dev-setup',
-  labels = ['dev-setup'],
-  cmd='bin/dev-setup.sh',
+  name="wait-for-galoy",
+  labels = ["dev-setup"],
+  cmd='''
+    GALOY_ENDPOINT=${GALOY_ENDPOINT:-localhost:4455}
+    max_attempts=30
+    attempt=1
+    while [ $attempt -le $max_attempts ]; do
+      response=$(curl -s -X POST http://$GALOY_ENDPOINT/graphql \
+        -H 'Content-Type: application/json' \
+        -d '{"query":"query Globals { globals { network } }"}')
+
+      # Check if response contains "errors" field
+      if echo "$response" | grep -q '"errors":'; then
+        echo "Attempt $attempt/$max_attempts: GraphQL server returned errors:"
+        echo "$response"
+      else
+        echo "GraphQL server is ready at $GALOY_ENDPOINT!"
+        exit 0
+      fi
+
+      echo "Waiting for GraphQL server at $GALOY_ENDPOINT..."
+      sleep 5
+      attempt=$((attempt + 1))
+    done
+    echo "GraphQL server failed to become ready at $GALOY_ENDPOINT"
+    exit 1
+  ''',
+  resource_deps = ["galoy"]
+)
+
+local_resource(
+  name="dev-setup",
+  labels = ["dev-setup"],
+  cmd="bin/dev-setup.sh",
   resource_deps = [
-    "galoy",
-    "dev-ln-setup"
+    "wait-for-galoy",
   ]
 )
 
 local_resource(
-  name='one-block-every-5s',
-  labels = ['dev-setup'],
-  serve_cmd='bin/one-block-every-5s.sh',
+  name="one-block-every-5s",
+  labels = ["dev-setup"],
+  serve_cmd="bin/one-block-every-5s.sh",
   resource_deps = [
-    "dev-setup"
+    "dev-ln-setup"
   ]
 )
 
 # iOS E2E test
 local_resource(
-  name='ios-e2e-tests',
-  auto_init = False,
+  name="ios-e2e-tests",
+  auto_init = "ios-e2e-tests" in cfg.get("test", []),
   labels = ["test"],
-  cmd='''
+  cmd="""
     # Run the tests
     nix develop -c yarn e2e:test ios.sim.debug -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location ./ios-recordings
-  ''',
+  """,
   resource_deps = ["dev-setup"]
 )
