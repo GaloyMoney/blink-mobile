@@ -32,7 +32,7 @@ jobs:
           done
 
           # Start pulling images in background
-          docker-compose -f dev/vendor/galoy-quickstart/docker-compose.yml pull --quiet &
+          docker compose -f dev/vendor/galoy-quickstart/docker-compose.yml pull --include-deps --quiet &
 
       - name: Restore Node Modules Cache
         id: cache-node-restore
