@@ -6,13 +6,10 @@ import { logLogout } from "@app/utils/analytics"
 import { useCallback } from "react"
 import { useUserLogoutMutation } from "@app/graphql/generated"
 import { usePersistentStateContext } from "@app/store/persistent-state"
-import * as Keychain from "react-native-keychain"
 import { disconnectToSDK } from "@app/utils/breez-sdk-liquid"
 import { useAppDispatch } from "@app/store/redux"
 import { resetUserSlice } from "@app/store/redux/slices/userSlice"
 import messaging from "@react-native-firebase/messaging"
-
-const KEYCHAIN_MNEMONIC_KEY = "mnemonic_key"
 
 const useLogout = () => {
   const dispatch = useAppDispatch()
@@ -30,7 +27,6 @@ const useLogout = () => {
         await KeyStoreWrapper.removeIsBiometricsEnabled()
         await KeyStoreWrapper.removePin()
         await KeyStoreWrapper.removePinAttempts()
-        await Keychain.resetInternetCredentials(KEYCHAIN_MNEMONIC_KEY)
         await disconnectToSDK()
         dispatch(resetUserSlice())
 
