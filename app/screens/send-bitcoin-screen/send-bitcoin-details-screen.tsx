@@ -26,7 +26,7 @@ import { getUsdWallet } from "@app/graphql/wallets-utils"
 // hooks
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useLevel } from "@app/graphql/level-context"
-import { useBreez, usePriceConversion } from "@app/hooks"
+import { useActivityIndicator, useBreez, usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { usePersistentStateContext } from "@app/store/persistent-state"
@@ -41,6 +41,7 @@ import { Satoshis } from "lnurl-pay/dist/types/types"
 import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
 import { isValidAmount } from "./payment-details"
 import { requestInvoice, utils } from "lnurl-pay"
+import { fetchBreezFee } from "@app/utils/breez-sdk-liquid"
 
 type Props = {
   route: RouteProp<RootStackParamList, "sendBitcoinDetails">
@@ -56,8 +57,9 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const { currentLevel } = useLevel()
   const { btcWallet } = useBreez()
   const { persistentState } = usePersistentStateContext()
-  const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion()
+  const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion("network-only")
   const { zeroDisplayAmount, formatMoneyAmount } = useDisplayCurrency()
+  const { toggleActivityIndicator } = useActivityIndicator()
 
   const { paymentDestination, flashUserAddress } = route.params
 
@@ -129,6 +131,27 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     defaultWallet,
     zeroDisplayAmount,
   ])
+
+  useEffect(() => {
+    if (paymentDetail?.sendingWalletDescriptor.currency === "BTC") {
+      fetchSendingFee()
+    }
+  }, [paymentDetail])
+
+  const fetchSendingFee = async () => {
+    if (paymentDetail) {
+      toggleActivityIndicator(true)
+      const { fee, err }: { fee: any; err: any } = await fetchBreezFee(
+        paymentDetail?.paymentType,
+        paymentDetail?.destination,
+        paymentDetail?.settlementAmount.amount,
+      )
+      toggleActivityIndicator(false)
+      if (fee === null && err) {
+        setAsyncErrorMessage(`${err?.message} (amount + fee)` || "")
+      }
+    }
+  }
 
   const goToNextScreen =
     (paymentDetail?.sendPaymentMutation ||

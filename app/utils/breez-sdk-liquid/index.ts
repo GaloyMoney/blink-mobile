@@ -153,23 +153,22 @@ export const fetchBreezFee = async (
         destination: invoice,
         amountSat: receiverAmountSat,
       })
-      return response.feesSat
+      return { fee: response.feesSat, err: null }
     } else if (paymentType === "onchain" && !!receiverAmountSat) {
       const response = await preparePayOnchain({
         receiverAmountSat,
       })
-      return response.totalFeesSat
+      return { fee: response.totalFeesSat, err: null }
     } else if ((paymentType === "intraledger" || paymentType === "lnurl") && !!invoice) {
       // const response = await parse(invoice)
       // console.log(">>>>>>>>>>>.", response)
 
-      return null
+      return { fee: null, err: "Failed to get fee" }
     } else {
-      return null
+      return { fee: null, err: "Wrong payment type" }
     }
   } catch (err) {
-    console.log("FETCH BREEZ FEE>>>>>>>>>>>", err)
-    return null
+    return { fee: null, err: err }
   }
 }
 

@@ -141,7 +141,7 @@ export const useSendPayment = (
                   errorsMessage: undefined,
                 }
               } else if (
-                sendPaymentMutation?.name === "_sendPaymentMutation" &&
+                sendPaymentMutation?.name === "sendPaymentMutation" &&
                 paymentRequest.length < 64
               ) {
                 console.log("Starting sendOnchainBreezSDK using destination address")

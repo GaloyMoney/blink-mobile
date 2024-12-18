@@ -50,7 +50,7 @@ export const AmountInput: React.FC<AmountInputProps> = ({
   React.useEffect(() => {
     if (request?.receivingWalletDescriptor.currency === "BTC") {
       if (
-        !request.settlementAmount ||
+        !request?.settlementAmount ||
         !(
           (!minAmount ||
             (minAmount && minAmount?.amount <= request.settlementAmount.amount)) &&
@@ -64,7 +64,7 @@ export const AmountInput: React.FC<AmountInputProps> = ({
   }, [
     request?.type,
     request?.receivingWalletDescriptor.currency,
-    request.settlementAmount,
+    request?.settlementAmount,
     minAmount,
     maxAmount,
   ])

@@ -22,6 +22,7 @@ type Props = {
   usdWalletText: string
   fee: FeeType
   setFee: (fee: FeeType) => void
+  setPaymentError: (val: string) => void
 }
 
 const ConfirmationWalletFee: React.FC<Props> = ({
@@ -30,6 +31,7 @@ const ConfirmationWalletFee: React.FC<Props> = ({
   usdWalletText,
   fee,
   setFee,
+  setPaymentError,
 }) => {
   const { sendingWalletDescriptor, getFee, settlementAmount, paymentType } = paymentDetail
   const { LL } = useI18nContext()
@@ -51,7 +53,7 @@ const ConfirmationWalletFee: React.FC<Props> = ({
     if (sendingWalletDescriptor.currency === "USD") {
       setFee(getLightningFee)
     } else {
-      const fee = await fetchBreezFee(
+      const { fee, err } = await fetchBreezFee(
         paymentType,
         paymentDetail.destination,
         settlementAmount.amount,
@@ -61,11 +63,17 @@ const ConfirmationWalletFee: React.FC<Props> = ({
           status: "set",
           amount: { amount: fee, currency: "BTC", currencyCode: "SATS" },
         })
-      } else {
+      } else if (fee === "null" && err === "null") {
         setFee({
           status: "unset",
           amount: undefined,
         })
+      } else {
+        setFee({
+          status: "error",
+          amount: undefined,
+        })
+        setPaymentError(`Failed to fetch the fee. ${err} (amount + fee)`)
       }
     }
   }

@@ -70,6 +70,8 @@ export type GetFullUriInput = {
   uppercase?: boolean
   prefix?: boolean
   type?: InvoiceType
+  wallet?: WalletCurrency
+  convertMoneyAmount?: ConvertMoneyAmount
 }
 export type ConvertMoneyAmountFn = ConvertMoneyAmount
 

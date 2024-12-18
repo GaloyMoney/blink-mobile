@@ -409,33 +409,47 @@ export const createAmountOnchainPaymentDetails = <T extends WalletCurrency>(
     }
   } else {
     // sendingWalletDescriptor.currency === WalletCurrency.Usd
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    console.log("Destination Specified Amount", destinationSpecifiedAmount)
+    console.log("PARAMS:", {
+      walletId: sendingWalletDescriptor.id,
+      address,
+      amount: settlementAmount.amount,
+    })
     sendPaymentMutation = async (paymentMutations) => {
-      const { data } = await paymentMutations.onChainUsdPaymentSendAsBtcDenominated({
-        variables: {
-          input: {
-            walletId: sendingWalletDescriptor.id,
-            address,
-            amount: unitOfAccountAmount.amount,
+      try {
+        const { data } = await paymentMutations.onChainUsdPaymentSend({
+          variables: {
+            input: {
+              walletId: sendingWalletDescriptor.id,
+              address,
+              amount: settlementAmount.amount,
+            },
           },
-        },
-      })
+        })
 
-      return {
-        status: data?.onChainUsdPaymentSendAsBtcDenominated.status,
-        errors: data?.onChainUsdPaymentSendAsBtcDenominated.errors,
+        console.log("RESPONSE ONCHAIN:", data)
+
+        return {
+          status: data?.onChainUsdPaymentSend.status,
+          errors: data?.onChainUsdPaymentSend.errors,
+        }
+      } catch (err) {
+        console.error("ONCHAIN ERR", err)
       }
+      return { status: undefined, errors: undefined }
     }
 
     getFee = async (getFeeFns) => {
-      const { data } = await getFeeFns.onChainUsdTxFeeAsBtcDenominated({
+      const { data } = await getFeeFns.onChainUsdTxFee({
         variables: {
           walletId: sendingWalletDescriptor.id,
           address,
-          amount: unitOfAccountAmount.amount,
+          amount: settlementAmount.amount,
         },
       })
 
-      const rawAmount = data?.onChainUsdTxFeeAsBtcDenominated.amount
+      const rawAmount = data?.onChainUsdTxFee.amount
       const amount =
         typeof rawAmount === "number"
           ? toWalletAmount({

@@ -87,6 +87,8 @@ export const createPaymentRequest = (
           memo: pr.memo,
           uppercase,
           prefix,
+          wallet: pr.receivingWalletDescriptor.currency,
+          convertMoneyAmount: pr.convertMoneyAmount,
         })
 
       return {
@@ -116,6 +118,8 @@ export const createPaymentRequest = (
           memo: pr.memo,
           uppercase,
           prefix,
+          wallet: pr.receivingWalletDescriptor.currency,
+          convertMoneyAmount: pr.convertMoneyAmount,
         })
 
       return {
@@ -225,6 +229,8 @@ export const createPaymentRequest = (
             input: qrCodeURL,
             uppercase,
             prefix,
+            wallet: pr.receivingWalletDescriptor.currency,
+            convertMoneyAmount: pr.convertMoneyAmount,
           })
 
         info = {

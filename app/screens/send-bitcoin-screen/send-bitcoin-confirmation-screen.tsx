@@ -214,6 +214,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route, navigation }) =
           usdWalletText={usdWalletText}
           fee={fee}
           setFee={setFee}
+          setPaymentError={setPaymentError}
         />
         <ConfirmationError
           paymentError={paymentError}
