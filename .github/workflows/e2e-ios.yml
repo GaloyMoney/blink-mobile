@@ -32,7 +32,8 @@ jobs:
           done
 
           # Start pulling images in background
-          docker compose -f dev/vendor/galoy-quickstart/docker-compose.yml pull --include-deps --quiet &
+          # docker compose -f dev/vendor/galoy-quickstart/docker-compose.yml pull --include-deps --quiet &
+          docker compose -f dev/vendor/galoy-quickstart/docker-compose.yml pull --include-deps
 
       - name: Initialize ci deps
         run: nix develop -c tilt -f ./dev/Tiltfile ci --timeout 0
