@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   e2e-test:
-    runs-on: macos-13
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -23,8 +23,13 @@ jobs:
       - name: Set up Podman and pull images in background
         run: |
           brew install podman podman-compose
-          podman machine init
-          podman machine start
+          # Remove any existing machine and create new one
+          podman machine rm -f podman-machine-default || true
+          podman machine init --cpus 4 --memory 4104 --disk-size 60 --now
+          # podman machine start
+
+          # Verify machine status
+          podman machine ls
           podman version
 
           # Set DOCKER_HOST environment variable
