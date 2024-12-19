@@ -28,7 +28,9 @@ jobs:
           podman version
 
           # Set DOCKER_HOST environment variable
-          echo "DOCKER_HOST=unix://${HOME}/.local/share/containers/podman/machine/podman-machine-default/podman.sock" >> $GITHUB_ENV
+          PODMAN_UID=$(id -u)
+          echo "PODMAN_UID=${PODMAN_UID}" >> $GITHUB_ENV
+          echo "DOCKER_HOST=unix:///run/user/${PODMAN_UID}/podman/podman.sock" >> $GITHUB_ENV
 
           # Wait for Podman to be ready
           while ! podman info > /dev/null 2>&1; do
@@ -43,7 +45,7 @@ jobs:
 
       - name: Initialize ci deps
         env:
-          DOCKER_HOST: "unix://${HOME}/.local/share/containers/podman/machine/podman-machine-default/podman.sock"
+          DOCKER_HOST: "unix:///run/user/${{ env.PODMAN_UID }}/podman/podman.sock"
         run: nix develop -c tilt -f ./dev/Tiltfile ci --timeout 0
 
       - name: Restore Node Modules Cache
@@ -129,7 +131,7 @@ jobs:
       - name: Run E2E Tests
         id: run-tests
         env:
-          DOCKER_HOST: "unix://${HOME}/.local/share/containers/podman/machine/podman-machine-default/podman.sock"
+          DOCKER_HOST: "unix:///run/user/${{ env.PODMAN_UID }}/podman/podman.sock"
         run: |
           # Wait for device to be ready
           while ! xcrun simctl list devices | grep "(Booted)"; do
@@ -168,7 +170,7 @@ jobs:
           done
 
           # Additional cleanup commands
-          DOCKER_HOST="unix://${HOME}/.local/share/containers/podman/machine/podman-machine-default/podman.sock" nix develop -c tilt down -f ./dev/Tiltfile
+          DOCKER_HOST="unix:///run/user/${{ env.PODMAN_UID }}/podman/podman.sock" nix develop -c tilt down -f ./dev/Tiltfile
           pkill -f "node.*metro" || true
           pkill -f "tilt" || true
           podman machine stop || true
