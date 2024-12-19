@@ -38,8 +38,10 @@ jobs:
           done
 
           podman info
+          podman system connection list
 
           # Start pulling images
+          export DOCKER_HOST="unix://${SOCKET_PATH}"
           podman-compose -f dev/vendor/galoy-quickstart/docker-compose.yml pull &
 
       - name: Initialize ci deps
