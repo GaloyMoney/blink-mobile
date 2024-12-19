@@ -24,7 +24,7 @@ jobs:
         run: |
           brew install podman podman-compose
           # Remove any existing machine and create new one
-          podman machine rm -f podman-machine-default || true
+          podman machine rm --force || true
           podman machine init --cpus 4 --memory 4104 --disk-size 60 --now
           # podman machine start
 
@@ -178,7 +178,7 @@ jobs:
           done
 
           # Additional cleanup commands
-          nix develop -c tilt down -f ./dev/Tiltfile
+          # nix develop -c tilt down -f ./dev/Tiltfile
           pkill -f "node.*metro" || true
           pkill -f "tilt" || true
           podman machine stop || true
