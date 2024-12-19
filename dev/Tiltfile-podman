@@ -1,0 +1,168 @@
+# Helper function to get runtime dir path
+def get_runtime_dir():
+    xdg_runtime = os.getenv("XDG_RUNTIME_DIR")
+    if xdg_runtime:
+        return xdg_runtime
+
+    uid = os.getenv("UID", "1000")
+    return "/run/user/" + uid
+
+# Helper function to detect platform
+def get_platform():
+    is_mac = os.getenv("OSTYPE") == "darwin"
+    if not is_mac:
+        return "linux/amd64"
+
+    # Check for Apple Silicon
+    uname_result = str(local('uname -m', quiet=True))
+    is_arm = ('arm64' in uname_result) or ('aarch64' in uname_result)
+    return "linux/arm64" if is_arm else "linux/amd64"
+
+# Detect environment and set the DOCKER_HOST environment variable
+macos_path = os.path.join(os.getenv("HOME", ""), ".local/share/containers/podman/machine/podman-machine-default/podman.sock")
+macos_docker_host = "unix://" + macos_path
+linux_docker_host = "unix://" + get_runtime_dir() + "/podman/podman.sock"
+
+docker_host = macos_docker_host if os.getenv("OSTYPE") == "darwin" else linux_docker_host
+
+# Set environment variables
+os.putenv("DOCKER_HOST", docker_host)
+os.putenv("DOCKER_CONTEXT", "default")
+os.putenv("COMPOSE_DOCKER_CLI_BUILD", "1")
+os.putenv("DOCKER_DEFAULT_PLATFORM", get_platform())
+
+# Print platform information for debugging
+print("Detected DOCKER_HOST: " + docker_host)
+print("Detected platform: " + get_platform())
+
+# Tiltfile configurations
+docker_prune_settings(disable=True)
+
+config.define_string_list("test")
+cfg = config.parse()
+
+# Environment setup for services
+os.putenv("DOCKER_DEFAULT_PLATFORM", "linux/amd64")
+os.putenv("COMPOSE_PROJECT_NAME", "galoy-quickstart")
+
+local_resource(
+    name="init-onchain",
+    labels=["dev-setup"],
+    cmd="vendor/galoy-quickstart/bin/init-onchain.sh",
+    resource_deps=[
+        "bitcoind",
+        "bria",
+    ]
+)
+
+local_resource(
+    name="init-lightning",
+    labels=["dev-setup"],
+    cmd="vendor/galoy-quickstart/bin/init-lightning.sh",
+    resource_deps=[
+        "init-onchain",
+        "lnd1",
+        "lnd-outside-1",
+    ]
+)
+
+# Use standard docker_compose with environment variables configured for Podman
+docker_compose("vendor/galoy-quickstart/docker-compose.yml")
+
+galoy_services = ["apollo-router", "redis", "mongodb", "mongodb-migrate", "price", "price-history", "price-history-migrate", "price-history-pg", "svix", "svix-pg", "stablesats", "notifications", "notifications-pg"]
+auth_services = ["oathkeeper", "kratos", "kratos-pg", "hydra", "hydra-pg", "hydra-migrate"]
+bitcoin_services = ["bitcoind", "bitcoind-signer", "lnd1", "lnd-outside-1", "bria", "bria-pg", "fulcrum"]
+
+for service in galoy_services:
+    dc_resource(service, labels = ["galoy"])
+
+for service in auth_services:
+    dc_resource(service, labels = ["auth"])
+
+for service in bitcoin_services:
+    dc_resource(service, labels = ["bitcoin"])
+
+dc_resource("galoy", labels = ["galoy"], resource_deps = ["dev-ln-setup"])
+dc_resource("trigger", labels = ["galoy"], resource_deps = ["galoy", "dev-ln-setup"])
+dc_resource("otel-agent", labels = ["otel"])
+dc_resource("quickstart-test", labels = ["quickstart"], auto_init=False)
+
+local_resource(
+  name="dev-ln-setup",
+  labels = ["dev-setup"],
+  cmd="bin/dev-ln-setup.sh",
+  resource_deps = galoy_services + [
+    "init-lightning"
+  ]
+)
+
+local_resource(
+  name="wait-for-galoy",
+  labels = ["dev-setup"],
+  cmd='''
+    GALOY_ENDPOINT=${GALOY_ENDPOINT:-localhost:4455}
+    max_attempts=30
+    attempt=1
+    while [ $attempt -le $max_attempts ]; do
+      response=$(curl -s -X POST http://$GALOY_ENDPOINT/graphql \
+        -H 'Content-Type: application/json' \
+        -d '{"query":"query Globals { globals { network } }"}')
+      # Check if response contains "errors" field
+      if echo "$response" | grep -q '"errors":'; then
+        echo "Attempt $attempt/$max_attempts: GraphQL server returned errors:"
+        echo "$response"
+      else
+        echo "GraphQL server is ready at $GALOY_ENDPOINT!"
+        exit 0
+      fi
+      echo "Waiting for GraphQL server at $GALOY_ENDPOINT..."
+      sleep 5
+      attempt=$((attempt + 1))
+    done
+    echo "GraphQL server failed to become ready at $GALOY_ENDPOINT"
+    exit 1
+  ''',
+  resource_deps = ["galoy"]
+)
+
+local_resource(
+  name="dev-setup",
+  labels = ["dev-setup"],
+  cmd="bin/dev-setup.sh",
+  resource_deps = [
+    "wait-for-galoy",
+  ]
+)
+
+local_resource(
+  name="one-block-every-5s",
+  labels = ["dev-setup"],
+  serve_cmd="bin/one-block-every-5s.sh",
+  resource_deps = [
+    "dev-ln-setup"
+  ]
+)
+
+# iOS E2E test
+local_resource(
+  name="ios-e2e-tests",
+  auto_init = "ios-e2e-tests" in cfg.get("test", []),
+  labels = ["test"],
+  cmd="""
+    # Run the tests
+    nix develop -c yarn e2e:test ios.sim.debug --start -d -R 5 --take-screenshots all --record-videos all --record-logs all --artifacts-location ./ios-recordings
+  """,
+  resource_deps = ["dev-setup"]
+)
+
+# Android E2E test
+local_resource(
+  name="android-e2e-tests",
+  auto_init = "android-e2e-tests" in cfg.get("test", []),
+  labels = ["test"],
+  cmd="""
+    # Run the tests
+    nix develop -c yarn e2e:test android.emu.debug --start -d --take-screenshots all --record-videos all --record-logs all --artifacts-location ./android-recordings
+  """,
+  resource_deps = ["dev-setup"]
+)
