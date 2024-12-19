@@ -10,21 +10,17 @@ concurrency:
 
 jobs:
   e2e-test:
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@v14
-
-      - name: Run the Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@v8
 
       - name: Set up Podman and pull images in background
         run: |
           brew install podman podman-compose
+          podman --help
+
           # Remove any existing machine and create new one
-          podman machine rm --force || true
+          podman machine reset --force || true
           podman machine init --cpus 4 --memory 4104 --disk-size 60 --now
           # podman machine start
 
@@ -35,6 +31,7 @@ jobs:
           # Set DOCKER_HOST environment variable
           SOCKET_PATH=$(podman machine inspect --format '{{.ConnectionInfo.PodmanSocket.Path}}')
           echo "DOCKER_HOST=unix://${SOCKET_PATH}" >> $GITHUB_ENV
+          export DOCKER_HOST="unix://${SOCKET_PATH}"
 
           # Wait for Podman to be ready
           while ! podman info > /dev/null 2>&1; do
@@ -46,8 +43,13 @@ jobs:
           podman system connection list
 
           # Start pulling images
-          export DOCKER_HOST="unix://${SOCKET_PATH}"
-          podman-compose -f dev/vendor/galoy-quickstart/docker-compose.yml pull &
+          podman-compose -f dev/vendor/galoy-quickstart/docker-compose.yml pull
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v14
+
+      - name: Run the Magic Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@v8
 
       - name: Initialize ci deps
         env:
