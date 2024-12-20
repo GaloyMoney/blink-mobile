@@ -26,7 +26,7 @@
     "dev:gengql": "yarn node utils/create-gql.ts",
     "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:4000 tcp:4000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081 && adb reverse tcp:4002 tcp:4002 && adb reverse tcp:4455 tcp:4455",
     "patch": "patch-package",
-    "postinstall": "jetify && yarn patch-package && if which pod >/dev/null; then (cd ios; bundle install; bundle exec pod install); fi",
+    "postinstall": "jetify && yarn patch-package && if which pod >/dev/null; then (cd ios; pod install); fi",
     "hack:types-react-native": "rimraf node_modules/@types/react-native/node_modules/@types",
     "prepare": "npm-run-all patch hack:*",
     "client:dev": "yalc add @galoymoney/client",
