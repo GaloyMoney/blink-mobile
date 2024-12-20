@@ -139,8 +139,8 @@ services:
     command: '"kratos migrate sql up -y -e && kratos serve -c /home/ory/kratos.yml --watch-courier --sqa-opt-out"'
     environment:
       DSN: postgres://dbuser:secret@kratos-pg:5432/default?sslmode=disable
-    links:
-      - kratos-pg:kratos-pg
+    depends_on:
+      - kratos-pg
     volumes:
       - ${HOST_PROJECT_PATH:-.}/config/ory:/home/ory
   kratos-pg:
@@ -178,7 +178,7 @@ services:
     environment:
       - MONGO_INITDB_DATABASE=galoy
   lnd1:
-    image: lightninglabs/lnd:v0.18.3-beta
+    image: lightninglabs/lnd:v0.18.4-beta
     ports:
       - "10009:10009"
     volumes:
@@ -198,7 +198,7 @@ services:
         cp /root/.lnd/admin.macaroon /root/.lnd/data/chain/bitcoin/regtest/admin.macaroon
         /bin/lnd
   lnd2:
-    image: lightninglabs/lnd:v0.18.3-beta
+    image: lightninglabs/lnd:v0.18.4-beta
     ports:
       - "10010:10009"
     volumes:
@@ -218,7 +218,7 @@ services:
         cp /root/.lnd/admin.macaroon /root/.lnd/data/chain/bitcoin/regtest/admin.macaroon
         /bin/lnd
   lnd-outside-1:
-    image: lightninglabs/lnd:v0.18.3-beta
+    image: lightninglabs/lnd:v0.18.4-beta
     ports:
       - "10012:10009"
     volumes:
@@ -238,7 +238,7 @@ services:
         /bin/lnd
     depends_on: [bitcoind]
   lnd-outside-2:
-    image: lightninglabs/lnd:v0.18.3-beta
+    image: lightninglabs/lnd:v0.18.4-beta
     ports:
       - "10013:10009"
     volumes:
@@ -340,7 +340,6 @@ services:
       - ${HOST_PROJECT_PATH:-.}/config/otel-agent-config.yaml:/etc/otel-agent-config.yaml
   svix:
     image: svix/svix-server:v1.38
-    platform: linux/amd64
     environment:
       WAIT_FOR: "true"
       SVIX_DB_DSN: postgresql://postgres:postgres@svix-pg/postgres

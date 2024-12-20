@@ -7,7 +7,7 @@ directories:
       - path: galoy-quickstart
         git:
           url: https://github.com/GaloyMoney/blink.git
-          ref: "0.21.16"
+          ref: "0.21.18"
           depth: 1
         includePaths:
           - quickstart/bin/*

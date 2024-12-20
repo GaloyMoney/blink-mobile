@@ -43,7 +43,7 @@ jobs:
           podman system connection list
 
           # Start pulling images
-          podman-compose -f dev/vendor/galoy-quickstart/docker-compose.yml pull
+          podman compose -f dev/vendor/galoy-quickstart/docker-compose.yml pull
 
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v14

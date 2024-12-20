@@ -108,3 +108,16 @@ local_resource(
   """,
   resource_deps = ["dev-setup"]
 )
+
+
+# Android E2E test
+local_resource(
+  name="android-e2e-tests",
+  auto_init = "android-e2e-tests" in cfg.get("test", []),
+  labels = ["test"],
+  cmd="""
+    # Run the tests
+    nix develop -c yarn e2e:test android.emu.debug --start -d --take-screenshots all --record-videos all --record-logs all --artifacts-location ./android-recordings
+  """,
+  resource_deps = ["dev-setup"]
+)
