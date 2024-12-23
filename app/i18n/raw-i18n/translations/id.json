@@ -895,7 +895,7 @@
                             "Maaf, liburan bukanlah hasil yang kita cari di sini. Semoga lebih beruntung lain kali",
                             "Harga bensin mungkin berfluktuasi karena berbagai alasan, tetapi skenario ini tidak ada hubungannya dengan itu. Coba lagi!"
                         ],
-                        "question": "Apa potensi hasil dari bank yang mengeluarkan lebih banyak kertas uang daripada deposito yang mereka miliki",
+                        "question": "Apa potensi akibat dari bank yang mengeluarkan lebih banyak kertas uang daripada deposito yang mereka miliki",
                         "text": "Bank terkadang mengeluarkan lebih banyak kertas uang daripada yang mereka miliki sebagai deposito, yang dapat menyebabkan masalah dalam perekonomian. Jika orang mulai meragukan solvabilitas sebuah bank, mereka mungkin bergegas untuk menarik uang mereka sekaligus sebelum orang lain melakukannya. Ini disebut bank run.\n\nKehilangan deposito secara mendadak dari bank run dapat mengungkapkan bahwa bank menggunakan terlalu banyak leverage melalui Fractional Reserve Banking. Hal ini dapat menyebabkan kurangnya likuiditas dan menghentikan seluruh sistem keuangan.\n",
                         "title": "Masalah Fractional Reserve Banking"
                     },
