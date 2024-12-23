@@ -1403,7 +1403,7 @@
                         "answers": [
                             "Dengan memindahkan bitcoin dari satu sisi saluran ke sisi lainnya setiap kali pembayaran dilakukan",
                             "Dengan menyiarkan setiap transaksi langsung ke blockchain Bitcoin begitu transaksi terjadi",
-                            "Dengan membayar komisi kepada penyedia pembayaran pihak ketiga"
+                            "Dengan membayar komisi kepada penyedia pembayaran pihak ketiga 3rd"
                         ],
                         "feedback": [
                             "Benar! Pikirkan memindahkan bitcoin dalam saluran Lightning seperti memindahkan manik-manik di sempoa. Setiap sisi mencatat berapa banyak yang ada di sisi mereka hingga saatnya untuk menyelesaikan di blockchain Bitcoin. Kerja bagus",
