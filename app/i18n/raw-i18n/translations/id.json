@@ -1210,7 +1210,7 @@
                             "Itu ide yang lucu, tapi tidak, fungsi hash kriptografi justru memastikan kebalikannya. Coba lagi",
                             "Ha! Saya tidak yakin siapa yang memberi tahu Anda bahwa blockchain Bitcoin diciptakan oleh AI, tetapi saya pikir mereka mungkin hanya bercanda. Coba lagi!"
                         ],
-                        "question": "Apa tujuan fungsi hash kriptografi di blockchain Bitcoin",
+                        "question": "Apa fungsi tujuan hash kriptografi di blockchain Bitcoin",
                         "text": "Blockchain Bitcoin adalah database terdistribusi yang menyimpan daftar transaksi Bitcoin yang terus bertambah yang disebut blok.\n\nBlok ditambatkan satu sama lain melalui penggunaan hash kriptografi. Setiap blok berisi hash kriptografi dari blok sebelumnya, serta stempel waktu dan data transaksi. Ini menciptakan rantai blok yang semuanya terhubung bersama, dengan setiap blok dibangun di atas blok sebelumnya.\n\nFungsi hash kriptografi memastikan bahwa setelah sebuah blok ditambahkan ke rantai, blok tersebut tidak dapat diubah atau diganti tanpa mengubah semua blok berikutnya dalam rantai.\n\nIni menciptakan catatan semua transaksi yang tahan terhadap gangguan yang telah terjadi di blockchain, yang dapat digunakan untuk memverifikasi integritas data yang disimpan di rantai.\n",
                         "title": "Apa sebenarnya blockchain itu?"
                     },
