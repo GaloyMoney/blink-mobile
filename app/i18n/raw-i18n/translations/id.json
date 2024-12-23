@@ -1227,7 +1227,7 @@
                         ],
                         "question": "Apa tujuan dari kunci privat dalam transaksi Bitcoin",
                         "text": "Pilar lain dari Bitcoin adalah Kunci Publik Kriptografi yang menggunakan sepasang kunci - kunci publik dan kunci privat - untuk menandatangani transaksi dan memverifikasi kepemilikan alamat Bitcoin.\n\nKunci privat adalah rangkaian karakter panjang yang digunakan untuk mengotorisasi transaksi Bitcoin. Ini sering kali direpresentasikan sebagai kombinasi dari 12 kata (terkadang 24). Hanya dalam urutan yang benar, kata-kata ini menghasilkan kunci privat yang sesuai.\n\nSiapa pun yang mengetahui kunci privat dari sebuah alamat Bitcoin dapat mengontrol Bitcoin di alamat tersebut. Oleh karena itu, penting untuk menyimpannya secara rahasia dan tidak pernah membagikannya kepada siapa pun. Idealnya, kunci privat harus disimpan secara offline agar tidak ada program yang tidak diinginkan dapat mengaksesnya. \n",
-                        "title": "Kriptografi Kunci Publik"
+                        "title": "Kunci Publik Kriptografi"
                     },
                     "publicKey": {
                         "answers": [
