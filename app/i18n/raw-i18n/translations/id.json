@@ -2197,7 +2197,7 @@
             "title": "Anda belum pernah mengirim uang ke alamat ini",
             "body1": "Pastikan penerima memberi Anda alamat {bankName: string},",
             "bold2bold": "bukan nama pengguna dari dompet lain.",
-            "body3": "Jika tidak, uang akan masuk ke Akun {bankName: string} dengan alamat “{lnAddress: string}”.\n\nPeriksa ejaan bagian pertama alamat dengan hati-hati, misalnya jackie dan jack1e adalah dua alamat yang berbeda.",
+            "body3": "Jika tidak, uang akan masuk ke Akun {bankName: string} dengan alamat “{lnAddress: string}”.\n\nPeriksa ejaan bagian pertama alamat dengan hati-hati, misalnya jackie dan jack1e adalah 2 alamat yang berbeda.",
             "warning": "Jika alamat {bankName: string} salah dimasukkan, {bankName: string} tidak dapat membatalkan transaksi.",
             "checkBox": "{lnAddress: string} adalah alamat yang benar.",
             "confirmButton": "Saya 100% yakin"
