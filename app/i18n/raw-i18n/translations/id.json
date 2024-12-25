@@ -2405,7 +2405,7 @@
         "stablesatTransfers": "Transfer Stablesat",
         "internalSend": "Kirim ke Pengguna {bankName: string}",
         "error": "Tidak dapat mengambil batas saat ini",
-        "increaseLimits": "Tingkatkan batas Anda"
+        "increaseLimits": "Tingkatkan batasan Anda"
     },
     "TransactionScreen": {
         "noTransaction": "Tidak ada transaksi untuk ditampilkan",
