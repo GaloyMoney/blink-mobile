@@ -2121,7 +2121,7 @@
         "title": "Tukarkan Bitcoin",
         "usdTitle": "Tukarkan ke USD",
         "error": "Gagal membuat faktur. Silakan hubungi support jika masalah ini berlanjut.",
-        "redeemingError": "Gagal menukarkan Bitcoin. Silakan hubungi dukungan jika masalah ini berlanjut.",
+        "redeemingError": "Gagal menukarkan Bitcoin. Silakan hubungi support jika masalah ini berlanjut.",
         "submissionError": "Gagal mengajukan permintaan penarikan. Silakan hubungi dukungan jika masalah ini berlanjut.",
         "minMaxRange": "Min: {minimumAmount: string}, Maks: {maximumAmount: string}",
         "redeemBitcoin": "Tukarkan Bitcoin",
