@@ -2140,7 +2140,7 @@
         "noCamera": "Kamera tidak ditemukan",
         "openSettings": "Buka Pengaturan",
         "unableToOpenSettings": "Tidak dapat membuka pengaturan",
-        "invalidContentLnurl": "Kami menemukan:\n\n{found: string}\n\nsaat ini tidak didukung",
+        "invalidContentLnurl": "Kami menemukan:\n\n{found: string}\n\nsaat ini tidak mendukung",
         "imageLibraryPermissionsNotGranted": "Kami tidak memiliki izin untuk mengakses pustaka gambar. Silakan periksa pengaturan aplikasi untuk platform Anda."
     },
     "SecurityScreen": {
