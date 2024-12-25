@@ -2178,7 +2178,7 @@
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "{bankName: string} nama pengguna sekarang adalah alamat {bankName: string}.",
-        "usernameNowAddressInfo": "Saat Anda memasukkan nama pengguna {bankName: string}, kami akan menambahkan \"@{lnDomain: string}\" untuk menjadikannya alamat. Misalnya maria@{lnDomain: string}. Nama pengguna Anda sekarang juga merupakan alamat {bankName: string}.\n\nKunjungi halaman alamat {bankName: string} Anda di Pengaturan untuk mempelajari cara menggunakannya atau membagikannya untuk menerima pembayaran.",
+        "usernameNowAddressInfo": "Saat Anda memasukkan nama pengguna {bankName: string}, kami akan menambahkan \"@{lnDomain: string}\" untuk itu (e.g maria@{lnDomain: string})untuk menjadikannya alamat. Misalnya maria@{lnDomain: string}. Nama pengguna Anda sekarang juga merupakan alamat {bankName: string}.\n\nKunjungi halaman alamat {bankName: string} Anda di Pengaturan untuk mempelajari cara menggunakannya atau membagikannya untuk menerima pembayaran.",
         "enterValidDestination": "Silakan masukkan tujuan yang valid",
         "destinationOptions": "Anda dapat mengirim ke alamat {bankName: string}, alamat LN, faktur LN, atau alamat BTC.",
         "expiredInvoice": "Faktur ini telah kedaluwarsa. Silakan buat faktur baru.",
