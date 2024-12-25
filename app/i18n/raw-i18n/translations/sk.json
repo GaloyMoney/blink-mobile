@@ -2287,7 +2287,7 @@
             },
             "Price": {
                 "title": "Zmenu ceny",
-                "description": "Oznámenia o cene bitcoínov."
+                "description": "Oznámenia o cene bitcoinu."
             }
         }
     },
