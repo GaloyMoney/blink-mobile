@@ -2715,7 +2715,7 @@
         "thisMonth": "tento mesiac",
         "outerCircle": "Vonkajší Kruh",
         "peopleWelcomedByYourCircle": "ľudia pozvaní vaším kruhom",
-        "peopleWelcomedByMyCircle": "ľudia privítaní mojim kruhom",
+        "peopleWelcomedByMyCircle": "ľudia pozvaní mojim kruhom",
         "yourSphere": "Vaša Sféra",
         "mySphere": "Moja Sféra",
         "yourRankMessage": "Tento mesiac ste #{thisMonthRank: číslo} a #{allTimeRank: number} za celú dobu!",
