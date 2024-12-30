@@ -41,7 +41,7 @@ export const HomeScreen: React.FC = () => {
   const isAuthed = useIsAuthed()
   const styles = useStyles()
   const { colors } = useTheme().theme
-  const { btcWallet, refreshBreez } = useBreez()
+  const { btcWallet } = useBreez()
   const { nostrSecretKey } = useNostrProfile()
 
   // queries

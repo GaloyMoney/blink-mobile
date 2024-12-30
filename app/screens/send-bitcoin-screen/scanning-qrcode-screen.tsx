@@ -1,24 +1,14 @@
-import { gql } from "@apollo/client"
-import { LNURL_DOMAINS } from "@app/config"
-import {
-  useAccountDefaultWalletLazyQuery,
-  useRealtimePriceQuery,
-  useScanningQrCodeScreenQuery,
-} from "@app/graphql/generated"
-import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { useI18nContext } from "@app/i18n/i18n-react"
-import { logParseDestinationResult } from "@app/utils/analytics"
-import { toastShow } from "@app/utils/toast"
-import Clipboard from "@react-native-clipboard/clipboard"
-import crashlytics from "@react-native-firebase/crashlytics"
-import { useIsFocused, useNavigation } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
-import { Text, makeStyles, useTheme } from "@rneui/themed"
 import * as React from "react"
 import { Alert, Dimensions, Linking, Pressable, StyleSheet, View } from "react-native"
+import { Text, makeStyles, useTheme } from "@rneui/themed"
+import Clipboard from "@react-native-clipboard/clipboard"
+import { StackScreenProps } from "@react-navigation/stack"
+import crashlytics from "@react-native-firebase/crashlytics"
 import { launchImageLibrary } from "react-native-image-picker"
-import Svg, { Circle } from "react-native-svg"
 import Icon from "react-native-vector-icons/Ionicons"
+import Svg, { Circle } from "react-native-svg"
+import RNQRGenerator from "rn-qr-generator"
+import { gql } from "@apollo/client"
 import {
   Camera,
   CameraRuntimeError,
@@ -26,10 +16,26 @@ import {
   useCameraPermission,
   useCodeScanner,
 } from "react-native-vision-camera"
-import RNQRGenerator from "rn-qr-generator"
-import { Screen } from "../../components/screen"
-import { RootStackParamList } from "../../navigation/stack-param-lists"
+
+// utils
+import { toastShow } from "@app/utils/toast"
+import { LNURL_DOMAINS } from "@app/config"
+import { useIsFocused } from "@react-navigation/native"
 import { parseDestination } from "./payment-destination"
+import { logParseDestinationResult } from "@app/utils/analytics"
+import { RootStackParamList } from "../../navigation/stack-param-lists"
+
+// hooks
+import {
+  useAccountDefaultWalletLazyQuery,
+  useRealtimePriceQuery,
+  useScanningQrCodeScreenQuery,
+} from "@app/graphql/generated"
+import { useIsAuthed } from "@app/graphql/is-authed-context"
+import { useI18nContext } from "@app/i18n/i18n-react"
+
+// components
+import { Screen } from "../../components/screen"
 import { DestinationDirection } from "./payment-destination/index.types"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
@@ -57,10 +63,9 @@ gql`
   }
 `
 
-export const ScanningQRCodeScreen: React.FC = () => {
-  const navigation =
-    useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinDestination">>()
+type Props = StackScreenProps<RootStackParamList, "scanningQRCode">
 
+export const ScanningQRCodeScreen: React.FC<Props> = ({ navigation, route }) => {
   // forcing price refresh
   useRealtimePriceQuery({
     fetchPolicy: "network-only",
@@ -119,45 +124,55 @@ export const ScanningQRCodeScreen: React.FC = () => {
         logParseDestinationResult(destination)
 
         if (destination.valid) {
-          if (destination.destinationDirection === DestinationDirection.Send) {
+          if (
+            route.params?.swapAddress &&
+            route.params.amount &&
+            route.params.fee &&
+            destination.validDestination.paymentType === "onchain"
+          ) {
+            navigation.replace("RefundConfirmation", {
+              swapAddress: route.params.swapAddress,
+              amount: route.params.amount,
+              destination: destination.validDestination.address,
+              fee: route.params.fee,
+            })
+          } else if (destination.destinationDirection === DestinationDirection.Send) {
             navigation.replace("sendBitcoinDetails", {
               paymentDestination: destination,
             })
-            return
-          }
-
-          navigation.reset({
-            routes: [
-              {
-                name: "Primary",
-              },
-              {
-                name: "redeemBitcoinDetail",
-                params: {
-                  receiveDestination: destination,
+          } else {
+            navigation.reset({
+              routes: [
+                {
+                  name: "Primary",
                 },
+                {
+                  name: "redeemBitcoinDetail",
+                  params: {
+                    receiveDestination: destination,
+                  },
+                },
+              ],
+            })
+          }
+        } else {
+          Alert.alert(
+            LL.ScanningQRCodeScreen.invalidTitle(),
+            destination.invalidReason === "InvoiceExpired"
+              ? LL.ScanningQRCodeScreen.expiredContent({
+                  found: data.toString(),
+                })
+              : LL.ScanningQRCodeScreen.invalidContent({
+                  found: data.toString(),
+                }),
+            [
+              {
+                text: LL.common.ok(),
+                onPress: () => setPending(false),
               },
             ],
-          })
-          return
+          )
         }
-
-        Alert.alert(
-          LL.ScanningQRCodeScreen.invalidTitle(),
-          destination.invalidReason === "InvoiceExpired"
-            ? LL.ScanningQRCodeScreen.expiredContent({
-                found: data.toString(),
-              })
-            : LL.ScanningQRCodeScreen.invalidContent({
-                found: data.toString(),
-              }),
-          [
-            {
-              text: LL.common.ok(),
-              onPress: () => setPending(false),
-            },
-          ],
-        )
       } catch (err: unknown) {
         if (err instanceof Error) {
           crashlytics().recordError(err)
@@ -208,7 +223,6 @@ export const ScanningQRCodeScreen: React.FC = () => {
         toastShow({
           message: (translations) =>
             translations.ScanningQRCodeScreen.imageLibraryPermissionsNotGranted(),
-          LL,
         })
       }
       if (result.assets && result.assets.length > 0 && result.assets[0].uri) {

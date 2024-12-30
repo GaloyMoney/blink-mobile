@@ -1345,6 +1345,21 @@ const en: BaseTranslation = {
     tapHereUpdate: "Tap here to update now",
     contactSupport: "Contact Support",
   },
+  RefundFlow: {
+    refundListTitle: "Refundable Transactions",
+		destinationTitle: "Destination",
+		confirmationTitle: "Confirmation",
+    pendingTransactions: "Pending Transactions",
+    noRefundables: "No refundable transactions found",
+    view: "View",
+    refund: "Refund",
+    refundTo: "Refund to USD wallet",
+    recommendedFees: "Recommended Fees",
+    fast: "Fast",
+    halfHour: "Half Hour",
+    hour: "Hour",
+    txId: "Transaction ID"
+	}
 }
 
 export default en

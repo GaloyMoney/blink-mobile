@@ -4355,6 +4355,60 @@ type RootTranslation = {
 		 * C​o​n​t​a​c​t​ ​S​u​p​p​o​r​t
 		 */
 		contactSupport: string
+	},
+	RefundFlow: {
+		/**
+		 * Refundable transactions
+		 */
+		refundListTitle: string
+		/**
+		 * Destination
+		 */
+		destinationTitle: string
+		/**
+		 * Confirmation
+		 */
+		confirmationTitle: string
+		/**
+		 * Pending Transactions
+		 */
+		pendingTransactions: string
+		/**
+		 * No refundable transactions found
+		 */
+		noRefundables: string
+		/**
+		 * View
+		 */
+		view: string
+		/**
+		 * Refund
+		 */
+		refund: string
+		/**
+		 * Refund to USD wallet
+		 */
+		refundTo: string
+		/**
+		 * Recommended Fees
+		 */
+		recommendedFees: string
+		/**
+		 * Fast
+		 */
+		fast: string
+		/**
+		 * Half Hour
+		 */
+		halfHour: string
+		/**
+		 * Hour
+		 */
+		hour: string
+		/**
+		 * Transaction ID
+		 */
+		txId: string
 	}
 }
 
@@ -8599,6 +8653,61 @@ export type TranslationFunctions = {
 		 * Contact Support
 		 */
 		contactSupport: () => LocalizedString
+	},
+	RefundFlow: {
+		/**
+		 * Refundable Transactions
+		 */
+		refundListTitle: () => LocalizedString
+		/**
+		 * Destination
+		 */
+		destinationTitle: () => LocalizedString
+		/**
+		 * Confirmation
+		 */
+		confirmationTitle: () => LocalizedString
+		/**
+		 * Pending Transactions
+		 */
+		pendingTransactions: () => LocalizedString
+		/**
+		 * No refundable transactions found
+		 */
+		noRefundables: () => LocalizedString
+		/**
+		 * Refund
+		 */
+		refund: () => LocalizedString
+		/**
+		 * View
+		 */
+		view: () => LocalizedString
+		/**
+		 * Refund to USD wallet
+		 */
+		refundTo: () => LocalizedString
+		/**
+		 * Recommended Fees
+		 */
+		recommendedFees: () => LocalizedString
+		/**
+		 * Fast
+		 */
+		fast: () => LocalizedString
+		/**
+		 * Half Hour
+		 */
+		halfHour: () => LocalizedString
+		/**
+		 * Hour
+		 */
+		hour: () => LocalizedString
+		/**
+		 * Transaction ID
+		 */
+		txId: () => LocalizedString
+		
 	}
 }
 

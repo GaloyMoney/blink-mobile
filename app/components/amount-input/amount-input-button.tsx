@@ -50,7 +50,7 @@ export const AmountInputButton: React.FC<AmountInputButtonProps> = ({
       case disabled:
         colorStyles = {
           backgroundColor: colors.grey5,
-          opacity: 0.5,
+          // opacity: 0.5,
         }
         break
       default:

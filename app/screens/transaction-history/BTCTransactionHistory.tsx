@@ -4,9 +4,11 @@ import { usePriceConversion } from "@app/hooks"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { makeStyles, useTheme } from "@rneui/themed"
 import { BarIndicator } from "react-native-indicators"
+import { StackScreenProps } from "@react-navigation/stack"
 
 // components
 import { Screen } from "@app/components/screen"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 import { BreezTransactionItem } from "@app/components/transaction-item/breez-transaction-item"
 
 // graphql
@@ -14,26 +16,33 @@ import { WalletCurrency } from "@app/graphql/generated"
 import { groupTransactionsByDate } from "@app/graphql/transactions"
 
 // Breez SDK
+import {
+  listRefundables,
+  Payment,
+  RefundableSwap,
+} from "@breeztech/react-native-breez-sdk-liquid"
 import { listPaymentsBreezSDK } from "@app/utils/breez-sdk-liquid"
-import { Payment } from "@breeztech/react-native-breez-sdk-liquid"
 import { formatPaymentsBreezSDK } from "@app/hooks/useBreezPayments"
 
 // types
 import { toBtcMoneyAmount } from "@app/types/amounts"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
 
 // store
 import { usePersistentStateContext } from "@app/store/persistent-state"
+import { loadJson } from "@app/utils/storage"
 
-export const BTCTransactionHistory: React.FC = () => {
-  const {
-    theme: { colors },
-  } = useTheme()
+type Props = StackScreenProps<RootStackParamList, "USDTransactionHistory">
+
+export const BTCTransactionHistory: React.FC<Props> = ({ navigation }) => {
+  const { colors } = useTheme().theme
   const styles = useStyles()
   const { LL } = useI18nContext()
   const { convertMoneyAmount } = usePriceConversion()
 
   const { persistentState, updateState } = usePersistentStateContext()
 
+  const [refundables, setRefundables] = useState<RefundableSwap[]>([])
   const [hasMore, setHasMore] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
   const [fetchingMore, setFetchingMore] = useState(false)
@@ -42,7 +51,18 @@ export const BTCTransactionHistory: React.FC = () => {
 
   useEffect(() => {
     fetchPaymentsBreez(0)
+    fetchRefundables()
   }, [])
+
+  const fetchRefundables = async () => {
+    const refundables = (await listRefundables()) || []
+    const refundedTxs = (await loadJson("refundedTxs")) || []
+    console.log("Refundable and Refunded Transactions>>>>>>>>>>", [
+      ...refundables,
+      ...refundedTxs,
+    ])
+    setRefundables([...refundables, ...refundedTxs])
+  }
 
   const fetchPaymentsBreez = async (offset: number) => {
     setBreezLoading(true)
@@ -164,7 +184,18 @@ export const BTCTransactionHistory: React.FC = () => {
               tintColor={colors.primary}
             />
           }
+          contentContainerStyle={{ paddingBottom: 100 }}
         />
+        {refundables.length > 0 && (
+          <View style={styles.floatingButtonWrapper}>
+            <View style={styles.floatingButton}>
+              <GaloyPrimaryButton
+                title={LL.RefundFlow.pendingTransactions()}
+                onPress={() => navigation.navigate("RefundTransactionList")}
+              />
+            </View>
+          </View>
+        )}
       </Screen>
     )
   }
@@ -189,5 +220,12 @@ const useStyles = makeStyles(({ colors }) => ({
   sectionHeaderText: {
     color: colors.black,
     fontSize: 18,
+  },
+  floatingButtonWrapper: {
+    alignItems: "center",
+  },
+  floatingButton: {
+    position: "absolute",
+    bottom: 20,
   },
 }))
