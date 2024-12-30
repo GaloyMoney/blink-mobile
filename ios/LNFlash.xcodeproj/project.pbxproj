@@ -463,7 +463,7 @@
 				INFOPLIST_FILE = LNFlash/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Flash;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 0.2.6;
 				OTHER_LDFLAGS = (
@@ -497,7 +497,7 @@
 				INFOPLIST_FILE = LNFlash/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Flash;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 0.2.6;
 				OTHER_LDFLAGS = (

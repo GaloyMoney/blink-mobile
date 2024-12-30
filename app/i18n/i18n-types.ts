@@ -1956,6 +1956,10 @@ type RootTranslation = {
 		 * S​e​l​e​c​t​ ​W​a​l​l​e​t
 		 */
 		selectWallet: string
+		/**
+		 * S​e​l​e​c​t​ ​W​a​l​l​e​t
+		 */
+		cantReceiveZeroSats: string
 	}
 	RedeemBitcoinScreen: {
 		/**
@@ -6262,6 +6266,10 @@ export type TranslationFunctions = {
 		 * Select Wallet
 		 */
 		selectWallet: () => LocalizedString
+		/**
+		 * S​e​l​e​c​t​ ​W​a​l​l​e​t
+		 */
+		cantReceiveZeroSats: () => LocalizedString
 	}
 	RedeemBitcoinScreen: {
 		/**

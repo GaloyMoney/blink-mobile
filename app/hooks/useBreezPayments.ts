@@ -1,5 +1,4 @@
 import * as sdk from "@breeztech/react-native-breez-sdk-liquid"
-import { TransactionFragment } from "@app/graphql/generated"
 
 export const formatPaymentsBreezSDK = (
   txid: unknown,
@@ -8,26 +7,26 @@ export const formatPaymentsBreezSDK = (
 ) => {
   const response: sdk.Payment[] = payments
   const responseTx = response.find((tx) => tx.txId === txid)
-  let tx: TransactionFragment = {} as TransactionFragment
+  let tx: any = {}
   if (responseTx) {
     const amountSat = responseTx.amountSat
     // round up to 2 decimal places
     const moneyAmount = (convertedAmount / 100).toString()
-    const transformedData: TransactionFragment = {
-      // Map fields from response to fields of TransactionFragment, e.g.,
+    const transformedData = {
       id: responseTx.txId || "",
       direction: responseTx.paymentType === "receive" ? "RECEIVE" : "SEND",
-      status:
-        (responseTx.status === sdk.PaymentState.PENDING ? "PENDING" : "SUCCESS") ||
-        "FAILURE",
-      memo: responseTx.description,
+      status: responseTx.status.toUpperCase(),
+      memo: responseTx.details.description,
       settlementAmount: amountSat,
       settlementCurrency: "BTC",
       settlementDisplayAmount: moneyAmount,
       settlementDisplayCurrency: "USD",
       settlementVia: {
         __typename: "SettlementViaLn",
-        paymentSecret: responseTx.preimage,
+        paymentSecret:
+          responseTx.details.type === sdk.PaymentDetailsVariant.LIGHTNING
+            ? responseTx.details.preimage
+            : "",
       },
       createdAt: responseTx.timestamp,
       settlementFee: responseTx.feesSat,
@@ -41,7 +40,10 @@ export const formatPaymentsBreezSDK = (
       },
       initiationVia: {
         __typename: "InitiationViaLn",
-        paymentHash: responseTx.bolt11 || "",
+        paymentHash:
+          responseTx.details.type === sdk.PaymentDetailsVariant.LIGHTNING
+            ? responseTx.details.paymentHash || ""
+            : "",
       },
       __typename: "Transaction",
     }

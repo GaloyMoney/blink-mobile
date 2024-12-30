@@ -10,7 +10,7 @@ import { Screen } from "@app/components/screen"
 import { BreezTransactionItem } from "@app/components/transaction-item/breez-transaction-item"
 
 // graphql
-import { TransactionFragment, WalletCurrency } from "@app/graphql/generated"
+import { WalletCurrency } from "@app/graphql/generated"
 import { groupTransactionsByDate } from "@app/graphql/transactions"
 
 // Breez SDK
@@ -38,9 +38,7 @@ export const BTCTransactionHistory: React.FC = () => {
   const [refreshing, setRefreshing] = useState(false)
   const [fetchingMore, setFetchingMore] = useState(false)
   const [breezLoading, setBreezLoading] = useState(false)
-  const [txsList, setTxsList] = useState<TransactionFragment[]>(
-    persistentState.btcTransactions || [],
-  )
+  const [txsList, setTxsList] = useState<any[]>(persistentState.btcTransactions || [])
 
   useEffect(() => {
     fetchPaymentsBreez(0)

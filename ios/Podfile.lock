@@ -4,12 +4,12 @@ PODS:
     - GoogleUtilities/UserDefaults (~> 7.13)
     - PromisesObjC (~> 2.3)
   - boost (1.76.0)
-  - breez_sdk_liquid (0.3.0):
-    - BreezSDKLiquid (= 0.3.0)
+  - breez_sdk_liquid (0.5.1):
+    - BreezSDKLiquid (= 0.5.1)
     - React-Core
-  - breez_sdk_liquidFFI (0.3.0)
-  - BreezSDKLiquid (0.3.0):
-    - breez_sdk_liquidFFI (= 0.3.0)
+  - breez_sdk_liquidFFI (0.5.1)
+  - BreezSDKLiquid (0.5.1):
+    - breez_sdk_liquidFFI (= 0.5.1)
   - BVLinearGradient (2.8.3):
     - React-Core
   - DoubleConversion (1.1.6)
@@ -153,7 +153,7 @@ PODS:
     - nanopb/encode (= 2.30909.1)
   - nanopb/decode (2.30909.1)
   - nanopb/encode (2.30909.1)
-  - OpenSSL-Universal (3.3.1000)
+  - OpenSSL-Universal (3.3.2000)
   - PromisesObjC (2.4.0)
   - PromisesSwift (2.4.0):
     - PromisesObjC (= 2.4.0)
@@ -1040,9 +1040,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AppCheckCore: 9feb4300caa596a36416cde10674dc5bec1e022e
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
-  breez_sdk_liquid: c19bb2739da6c57c4b9605fe4f8f89a03725e376
-  breez_sdk_liquidFFI: c85c235fb8177538d63f7902f86ff994bdc622a6
-  BreezSDKLiquid: 68dca0e9ba38647692f4950468f602ca756b5cd8
+  breez_sdk_liquid: 8528aefaa995706819939f420f869bc1d90bd5c5
+  breez_sdk_liquidFFI: 60003088e92e35cf6fc5a8686883b346023a26d1
+  BreezSDKLiquid: 2895e61f32ed200952104575a56e937b0a787df8
   BVLinearGradient: 880f91a7854faff2df62518f0281afb1c60d49a3
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: 5fbbff1d7734827299274638deb8ba3024f6c597
@@ -1070,7 +1070,7 @@ SPEC CHECKSUMS:
   hermes-engine: 9180d43df05c1ed658a87cc733dc3044cf90c00a
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
-  OpenSSL-Universal: 57f92a826947ee3183556bf5e22d7dff8d55f834
+  OpenSSL-Universal: b60a3702c9fea8b3145549d421fdb018e53ab7b4
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   PromisesSwift: 9d77319bbe72ebf6d872900551f7eeba9bce2851
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
@@ -1161,6 +1161,6 @@ SPEC CHECKSUMS:
   Yoga: 4c3aa327e4a6a23eeacd71f61c81df1bcdf677d5
   ZXingObjC: 8898711ab495761b2dbbdec76d90164a6d7e14c5
 
-PODFILE CHECKSUM: 9e8bcc2e44fb66d8e9088a950dd1fd43100d442b
+PODFILE CHECKSUM: 59de119b61d210af59849d66e2fb77a74d9922c8
 
 COCOAPODS: 1.15.2

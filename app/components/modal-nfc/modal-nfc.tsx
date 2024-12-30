@@ -30,6 +30,7 @@ import {
   LnUrlPayResultVariant,
   lnurlPay,
   parse,
+  prepareLnurlPay,
 } from "@breeztech/react-native-breez-sdk-liquid"
 
 export const ModalNfc: React.FC<{
@@ -180,16 +181,14 @@ export const ModalNfc: React.FC<{
         try {
           const input = await parse(lnurl)
           if (input.type === InputTypeVariant.LN_URL_PAY) {
-            const amountMsat = input.data.minSendable
-            const optionalComment = "<comment>"
-            const optionalPaymentLabel = "<label>"
-            const optionalValidateSuccessActionUrl = true
-            const lnUrlPayResult = await lnurlPay({
+            const prepareResponse = await prepareLnurlPay({
               data: input.data,
-              amountMsat,
-              comment: optionalComment,
-              paymentLabel: optionalPaymentLabel,
-              validateSuccessActionUrl: optionalValidateSuccessActionUrl,
+              amountMsat: input.data.minSendable,
+              validateSuccessActionUrl: true,
+            })
+
+            const lnUrlPayResult = await lnurlPay({
+              prepareResponse,
             })
 
             console.log(lnUrlPayResult)
