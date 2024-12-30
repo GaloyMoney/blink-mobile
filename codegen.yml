@@ -65,3 +65,5 @@ generates:
         EndpointUrl: "string"
         NotificationCategory: "string"
         Lnurl: "string"
+        npub: "string"
+        FractionalCentAmount: "number"
