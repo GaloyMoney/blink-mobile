@@ -160,7 +160,7 @@ export const fetchBreezFee = async (
       const response = await preparePayOnchain({
         amount: { type: PayAmountVariant.RECEIVER, amountSat: receiverAmountSat },
       })
-      return response.totalFeesSat
+      return { fee: response.totalFeesSat, err: null }
     } else if (
       (paymentType === "intraledger" || paymentType === "lnurl") &&
       !!invoice &&
@@ -172,9 +172,9 @@ export const fetchBreezFee = async (
           data: input.data,
           amountMsat: receiverAmountSat * 1000,
         })
-        return prepareResponse.feesSat
+        return { fee: prepareResponse.feesSat, err: null }
       }
-      return null
+      return { fee: null, err: "Wrong payment type" }
     } else {
       return { fee: null, err: "Wrong payment type" }
     }
