@@ -49,24 +49,28 @@ export const ModalNfcFlashcard: React.FC<Props> = ({
       if (!isSupported) {
         showToastMessage(LL.CardScreen.notSupported())
       } else {
-        await nfcManager.start()
-        await nfcManager.requestTechnology(NfcTech.Ndef)
-        const tag = await nfcManager.getTag()
+        while (true) {
+          await nfcManager.start()
+          await nfcManager.requestTechnology(NfcTech.Ndef)
 
-        if (tag && tag.id) {
-          setTagId(tag.id)
-          const ndefRecord = tag?.ndefMessage?.[0]
-          if (!ndefRecord) {
-            showToastMessage(LL.CardScreen.noNDEFMessage())
-          } else {
-            const payload = Ndef.text.decodePayload(new Uint8Array(ndefRecord.payload))
-            if (payload.startsWith("lnurlw")) {
-              await handleSubmit(payload)
-              await nfcManager.cancelTechnologyRequest()
+          const tag = await nfcManager.getTag()
+
+          if (tag && tag.id) {
+            setTagId(tag.id)
+            const ndefRecord = tag?.ndefMessage?.[0]
+            if (!ndefRecord) {
+              showToastMessage(LL.CardScreen.noNDEFMessage())
+            } else {
+              const payload = Ndef.text.decodePayload(new Uint8Array(ndefRecord.payload))
+              if (payload.startsWith("lnurlw")) {
+                await handleSubmit(payload)
+              }
             }
+          } else {
+            showToastMessage(LL.CardScreen.noTag())
           }
-        } else {
-          showToastMessage(LL.CardScreen.noTag())
+          await nfcManager.cancelTechnologyRequest()
+          await nfcManager.unregisterTagEvent()
         }
       }
     } catch (error: any) {
@@ -103,7 +107,6 @@ export const ModalNfcFlashcard: React.FC<Props> = ({
   )
 
   const showToastMessage = async (message: string) => {
-    await dismiss()
     toastShow({
       message,
       type: "error",

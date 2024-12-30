@@ -224,6 +224,7 @@ export const CardScreen = () => {
             <View style={styles.listItemsContainer}>
               {buttons.map((item) => (
                 <GaloyIconButton
+                  key={item.title}
                   name={item.icon}
                   size="large"
                   text={item.title}
