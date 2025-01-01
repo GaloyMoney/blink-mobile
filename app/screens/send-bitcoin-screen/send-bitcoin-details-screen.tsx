@@ -26,7 +26,7 @@ import { getUsdWallet } from "@app/graphql/wallets-utils"
 // hooks
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useLevel } from "@app/graphql/level-context"
-import { useActivityIndicator, useBreez, usePriceConversion } from "@app/hooks"
+import { useBreez, useIbexFee, usePriceConversion } from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { usePersistentStateContext } from "@app/store/persistent-state"
@@ -38,7 +38,7 @@ import { PaymentDetail } from "./payment-details/index.types"
 import { Satoshis } from "lnurl-pay/dist/types/types"
 
 // utils
-import { toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
+import { DisplayCurrency, toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
 import { isValidAmount } from "./payment-details"
 import { requestInvoice, utils } from "lnurl-pay"
 import { fetchBreezFee } from "@app/utils/breez-sdk-liquid"
@@ -58,8 +58,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const { btcWallet } = useBreez()
   const { persistentState } = usePersistentStateContext()
   const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion("network-only")
-  const { zeroDisplayAmount, formatMoneyAmount } = useDisplayCurrency()
-  const { toggleActivityIndicator } = useActivityIndicator()
+  const { zeroDisplayAmount, formatDisplayAndWalletAmount } = useDisplayCurrency()
+  const getIbexFee = useIbexFee()
 
   const { paymentDestination, flashUserAddress } = route.params
 
@@ -132,24 +132,38 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     zeroDisplayAmount,
   ])
 
-  useEffect(() => {
-    if (paymentDetail?.sendingWalletDescriptor.currency === "BTC") {
-      fetchSendingFee()
-    }
-  }, [paymentDetail])
-
-  const fetchSendingFee = async () => {
-    if (paymentDetail) {
-      toggleActivityIndicator(true)
-      const { fee, err }: { fee: any; err: any } = await fetchBreezFee(
-        paymentDetail?.paymentType,
-        paymentDetail?.destination,
-        paymentDetail?.settlementAmount.amount,
-      )
-      toggleActivityIndicator(false)
-      if (fee === null && err) {
-        setAsyncErrorMessage(`${err?.message} (amount + fee)` || "")
+  const fetchSendingFee = async (pd: PaymentDetail<WalletCurrency>) => {
+    if (pd) {
+      if (pd?.sendingWalletDescriptor.currency === "BTC") {
+        const { fee, err }: { fee: any; err: any } = await fetchBreezFee(
+          pd?.paymentType,
+          pd?.destination,
+          pd?.settlementAmount.amount,
+        )
+        if (fee === null && err) {
+          setAsyncErrorMessage(`${err?.message} (amount + fee)` || "")
+          return false
+        }
+      } else {
+        const estimatedFee = await getIbexFee(pd.getFee)
+        if (
+          _convertMoneyAmount &&
+          estimatedFee &&
+          pd.settlementAmount.amount + estimatedFee?.amount > usdBalanceMoneyAmount.amount
+        ) {
+          const amount = formatDisplayAndWalletAmount({
+            displayAmount: _convertMoneyAmount(usdBalanceMoneyAmount, DisplayCurrency),
+            walletAmount: usdBalanceMoneyAmount,
+          })
+          setAsyncErrorMessage(
+            LL.SendBitcoinScreen.amountExceed({
+              balance: amount,
+            }) + "(amount + fee)",
+          )
+          return false
+        }
       }
+      return true
     }
   }
 
@@ -208,7 +222,9 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
         }
       }
 
-      if (paymentDetailForConfirmation.sendPaymentMutation) {
+      const res = await fetchSendingFee(paymentDetailForConfirmation)
+
+      if (res && paymentDetailForConfirmation.sendPaymentMutation) {
         navigation.navigate("sendBitcoinConfirmation", {
           paymentDetail: paymentDetailForConfirmation,
         })
