@@ -26,6 +26,7 @@ import { Screen } from "@app/components/screen"
 import { icons } from "@app/components/atomic/galoy-icon"
 import { ModalNfcFlashcard } from "@app/components/modal-nfc"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
 // utils
 import {
@@ -236,10 +237,11 @@ export const CardScreen = () => {
             <Text style={styles.warningText}>{warningText}</Text>
             <Text style={styles.warningDetails}>{warningDetails}</Text>
             <Text style={styles.tagId}>ID:{cardTag}</Text>
-            <Button
-              style={styles.removeButton}
+            <GaloyPrimaryButton
               title="Remove Flashcard"
               onPress={resetCardHtml}
+              buttonStyle={{ backgroundColor: "#60aa55" }}
+              containerStyle={{ marginTop: 16 }}
             />
           </ScrollView>
         ) : (
@@ -252,15 +254,20 @@ export const CardScreen = () => {
                 {LL.CardScreen.noCardsTitle()}
               </Text>
               <Text style={styles.emptyListText}>{LL.CardScreen.noCardsYet()}</Text>
+              <GaloyPrimaryButton
+                title="Read NFC card"
+                onPress={() => setDisplayReceiveNfc(true)}
+                containerStyle={{ marginTop: 16 }}
+              />
               <View style={styles.emptyListScanIcon}>
                 <Icon name="card" size={96} color={colors.primary} />
               </View>
             </View>
             <Text style={styles.warningDetails}>Want a Flashcard?</Text>
-            <Button
-              style={styles.removeButton}
+            <GaloyPrimaryButton
               title="Find a Flashpoint"
               onPress={() => navigation.navigate("Map")}
+              buttonStyle={{ backgroundColor: "#60aa55" }}
             />
           </View>
         )}
@@ -292,7 +299,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   emptyListText: {
     fontSize: 18,
-    marginTop: 30,
+    marginTop: 10,
     textAlign: "center",
     color: colors.black,
   },
@@ -321,7 +328,7 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   warningDetails: {
     fontSize: 16,
-    marginBottom: 20,
+    marginBottom: 10,
     textAlign: "center",
   },
   tagId: {
@@ -337,11 +344,6 @@ const useStyles = makeStyles(({ colors }) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
-  },
-  removeButton: {
-    marginTop: 16,
-    display: "flex",
-    borderRadius: 12,
   },
   noCard: {
     flex: 1,

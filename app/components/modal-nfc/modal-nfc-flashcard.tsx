@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react"
 import { Pressable, View } from "react-native"
 import Modal from "react-native-modal"
-import nfcManager, { Ndef, NfcTech } from "react-native-nfc-manager"
+import nfcManager, { Ndef, NfcEvents, NfcTech } from "react-native-nfc-manager"
 import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from "react-native-vector-icons/Ionicons"
 import axios from "axios"
@@ -32,9 +32,17 @@ export const ModalNfcFlashcard: React.FC<Props> = ({
   const { colors } = useTheme().theme
   const { LL } = useI18nContext()
 
+  const [isReady, setIsReady] = useState(false)
+
+  useEffect(() => {
+    nfcManager.setEventListener(NfcEvents.SessionClosed, () => {
+      dismiss()
+    })
+  }, [])
+
   useEffect(() => {
     if (isActive) {
-      readNfc()
+      checkNfc()
     }
 
     return () => {
@@ -43,38 +51,44 @@ export const ModalNfcFlashcard: React.FC<Props> = ({
     }
   }, [isActive])
 
+  const checkNfc = async () => {
+    const isSupported = await nfcManager.isSupported()
+    const isEnabled = await nfcManager.isEnabled()
+
+    if (!isSupported) {
+      showToastMessage(LL.CardScreen.notSupported())
+    } else if (!isEnabled) {
+      showToastMessage(LL.CardScreen.notEnabled())
+    } else {
+      setIsReady(true)
+      readNfc()
+    }
+  }
+
   const readNfc = async () => {
     try {
-      const isSupported = await nfcManager.isSupported()
-      if (!isSupported) {
-        showToastMessage(LL.CardScreen.notSupported())
-      } else {
-        while (true) {
-          await nfcManager.start()
-          await nfcManager.requestTechnology(NfcTech.Ndef)
+      await nfcManager.start()
+      await nfcManager.requestTechnology(NfcTech.Ndef)
 
-          const tag = await nfcManager.getTag()
+      const tag = await nfcManager.getTag()
 
-          if (tag && tag.id) {
-            setTagId(tag.id)
-            const ndefRecord = tag?.ndefMessage?.[0]
-            if (!ndefRecord) {
-              showToastMessage(LL.CardScreen.noNDEFMessage())
-            } else {
-              const payload = Ndef.text.decodePayload(new Uint8Array(ndefRecord.payload))
-              if (payload.startsWith("lnurlw")) {
-                await handleSubmit(payload)
-              }
-            }
-          } else {
-            showToastMessage(LL.CardScreen.noTag())
+      if (tag && tag.id) {
+        setTagId(tag.id)
+        const ndefRecord = tag?.ndefMessage?.[0]
+        if (!ndefRecord) {
+          showToastMessage(LL.CardScreen.noNDEFMessage())
+        } else {
+          const payload = Ndef.text.decodePayload(new Uint8Array(ndefRecord.payload))
+          if (payload.startsWith("lnurlw")) {
+            await handleSubmit(payload)
           }
-          await nfcManager.cancelTechnologyRequest()
-          await nfcManager.unregisterTagEvent()
         }
+      } else {
+        showToastMessage(LL.CardScreen.noTag())
       }
-    } catch (error: any) {
-      showToastMessage(LL.CardScreen.notFlashcard())
+      dismiss()
+    } catch (err) {
+      console.log("Read Flash card error: ", err)
     }
   }
 
@@ -113,36 +127,39 @@ export const ModalNfcFlashcard: React.FC<Props> = ({
       position: "top",
     })
   }
-
-  return (
-    <Modal
-      swipeDirection={["down"]}
-      isVisible={isActive && !isIOS}
-      onSwipeComplete={dismiss}
-      onBackdropPress={dismiss}
-      backdropOpacity={0.3}
-      backdropColor={colors.grey3}
-      swipeThreshold={50}
-      propagateSwipe
-      style={styles.modal}
-    >
-      <Pressable style={styles.flex} onPress={dismiss}></Pressable>
-      <SafeAreaView style={styles.modalForeground}>
-        <View style={styles.iconContainer}>
-          <Icon name="remove" size={72} color={colors.grey3} style={styles.icon} />
-        </View>
-        <Text type="h1" bold style={styles.message}>
-          {LL.SettingsScreen.nfcScanNow()}
-        </Text>
-        <View style={styles.scanIconContainer}>
-          <Icon name="scan" size={140} color={colors.grey1} />
-        </View>
-        <View style={styles.buttonContainer}>
-          <GaloySecondaryButton title={LL.common.cancel()} onPress={dismiss} />
-        </View>
-      </SafeAreaView>
-    </Modal>
-  )
+  if (isReady) {
+    return (
+      <Modal
+        swipeDirection={["down"]}
+        isVisible={isActive && !isIOS}
+        onSwipeComplete={dismiss}
+        onBackdropPress={dismiss}
+        backdropOpacity={0.3}
+        backdropColor={colors.grey3}
+        swipeThreshold={50}
+        propagateSwipe
+        style={styles.modal}
+      >
+        <Pressable style={styles.flex} onPress={dismiss}></Pressable>
+        <SafeAreaView style={styles.modalForeground}>
+          <View style={styles.iconContainer}>
+            <Icon name="remove" size={72} color={colors.grey3} style={styles.icon} />
+          </View>
+          <Text type="h1" bold style={styles.message}>
+            {LL.SettingsScreen.nfcScanNow()}
+          </Text>
+          <View style={styles.scanIconContainer}>
+            <Icon name="scan" size={140} color={colors.grey1} />
+          </View>
+          <View style={styles.buttonContainer}>
+            <GaloySecondaryButton title={LL.common.cancel()} onPress={dismiss} />
+          </View>
+        </SafeAreaView>
+      </Modal>
+    )
+  } else {
+    return null
+  }
 }
 
 const useStyles = makeStyles(({ colors }) => ({

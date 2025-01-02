@@ -259,6 +259,10 @@ type RootTranslation = {
 		 */
 		notSupported: string
 		/**
+		 * NFC is not enabled on this device.
+		 */
+		notEnabled: string
+		/**
 		 * No tag found
 		 */
 		noTag: string
@@ -4631,6 +4635,10 @@ export type TranslationFunctions = {
 		 * NFC is not supported on this device.
 		 */
 		notSupported: () => LocalizedString
+		/**
+		 * NFC is not enabled on this device.
+		 */
+		notEnabled: () => LocalizedString
 		/**
 		 * No tag found
 		 */

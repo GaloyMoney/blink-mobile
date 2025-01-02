@@ -77,6 +77,7 @@ const en: BaseTranslation = {
     notFlashcard: "Unsupported NFC card. Please ensure you are using a flashcard.",
     noNDEFMessage: "NDEF message not found. Please ensure you are using a flashcard.",
     notSupported: "NFC is not supported on this device.",
+    notEnabled: "NFC is not enabled on this device.",
     noTag: "No tag found. Please ensure you are using a flashcard."
   },
   ConversionDetailsScreen: {
