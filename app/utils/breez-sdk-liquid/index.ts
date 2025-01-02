@@ -161,7 +161,6 @@ export const fetchBreezFee = async (
         amount: { type: PayAmountVariant.RECEIVER, amountSat: receiverAmountSat },
       })
       return { fee: response.totalFeesSat, err: null }
-      return { fee: response.totalFeesSat, err: null }
     } else if (
       (paymentType === "intraledger" || paymentType === "lnurl") &&
       !!invoice &&
@@ -175,7 +174,6 @@ export const fetchBreezFee = async (
         })
         return { fee: response.feesSat, err: null }
       }
-      return { fee: null, err: "Wrong payment type" }
       return { fee: null, err: "Wrong payment type" }
     } else {
       return { fee: null, err: "Wrong payment type" }
