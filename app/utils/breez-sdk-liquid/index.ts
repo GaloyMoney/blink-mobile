@@ -31,6 +31,7 @@ import {
   ReceivePaymentResponse,
   prepareLnurlPay,
   PayAmountVariant,
+  recommendedFees,
 } from "@breeztech/react-native-breez-sdk-liquid"
 import { API_KEY } from "@env"
 
@@ -133,6 +134,18 @@ const getMnemonic = async (): Promise<string> => {
   }
 }
 
+export const fetchRecommendedFees = async () => {
+  const fees = await recommendedFees()
+  console.log("Recommended fees:", fees)
+  const updatedFees = {
+    ...fees,
+    fastestFee: fees.fastestFee + 3,
+    halfHourFee: fees.halfHourFee + 1,
+  }
+  console.log("Updated recommended fees", updatedFees)
+  return updatedFees
+}
+
 export const fetchBreezLightningLimits = async () => {
   const lightningLimits = await fetchLightningLimits()
   console.log(`LIGHTNING LIMITS:`, lightningLimits)
@@ -149,6 +162,7 @@ export const fetchBreezFee = async (
   paymentType: PaymentType,
   invoice?: string,
   receiverAmountSat?: number,
+  feeRateSatPerVbyte?: number,
 ) => {
   try {
     if (paymentType === "lightning" && !!invoice) {
@@ -156,9 +170,11 @@ export const fetchBreezFee = async (
         destination: invoice,
       })
       return { fee: response.feesSat, err: null }
-    } else if (paymentType === "onchain" && !!receiverAmountSat) {
+    } else if (paymentType === "onchain" && !!receiverAmountSat && !!feeRateSatPerVbyte) {
+      console.log("Fee Rate Sat Per Vbyte:", feeRateSatPerVbyte)
       const response = await preparePayOnchain({
         amount: { type: PayAmountVariant.RECEIVER, amountSat: receiverAmountSat },
+        feeRateSatPerVbyte,
       })
       return { fee: response.totalFeesSat, err: null }
     } else if (
@@ -271,17 +287,13 @@ export const sendPaymentBreezSDK = async (
 export const sendOnchainBreezSDK = async (
   destinationAddress: string,
   amountSat: number,
+  feeRateSatPerVbyte?: number,
 ): Promise<SendPaymentResponse> => {
   try {
     const prepareResponse = await preparePayOnchain({
-      amount: {
-        type: PayAmountVariant.RECEIVER,
-        amountSat,
-      },
+      amount: { type: PayAmountVariant.RECEIVER, amountSat },
+      feeRateSatPerVbyte,
     })
-
-    // Check if the fees are acceptable before proceeding
-    const totalFeesSat = prepareResponse.totalFeesSat
 
     const payOnchainRes = await payOnchain({
       address: destinationAddress,

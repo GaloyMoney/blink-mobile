@@ -53,6 +53,7 @@ export type RootStackParamList = {
   }
   sendBitcoinConfirmation: {
     paymentDetail: PaymentDetail<WalletCurrency>
+    feeRateSatPerVbyte?: number
   }
   conversionDetails: undefined
   conversionConfirmation: {

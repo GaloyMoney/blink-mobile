@@ -38,7 +38,6 @@ import { LNURL_DOMAINS } from "@app/config"
 // types
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { PaymentDetail } from "../send-bitcoin-screen/payment-details"
-import { fetchBreezFee } from "@app/utils/breez-sdk-liquid"
 
 type Props = StackScreenProps<RootStackParamList, "conversionConfirmation">
 

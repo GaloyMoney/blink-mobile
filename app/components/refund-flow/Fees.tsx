@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react"
+import { ViewStyle } from "react-native"
 import { Colors, Text, useTheme } from "@rneui/themed"
 import styled from "styled-components/native"
-import {
-  recommendedFees,
-  RecommendedFees,
-} from "@breeztech/react-native-breez-sdk-liquid"
+import { RecommendedFees } from "@breeztech/react-native-breez-sdk-liquid"
 
 // hooks
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useActivityIndicator } from "@app/hooks"
 
+// utils
+import { fetchRecommendedFees } from "@app/utils/breez-sdk-liquid"
+
 type Props = {
+  wrapperStyle?: ViewStyle
   selectedFeeType?: string
   onSelectFee: (type: string, value?: number) => void
 }
 
-const Fees: React.FC<Props> = ({ selectedFeeType, onSelectFee }) => {
+const Fees: React.FC<Props> = ({ wrapperStyle, selectedFeeType, onSelectFee }) => {
   const { LL } = useI18nContext()
   const { colors } = useTheme().theme
   const { toggleActivityIndicator } = useActivityIndicator()
@@ -28,14 +30,13 @@ const Fees: React.FC<Props> = ({ selectedFeeType, onSelectFee }) => {
 
   const fetchFees = async () => {
     toggleActivityIndicator(true)
-    const fees = await recommendedFees()
-    console.log("Recommended fees:", fees)
-    setFees(fees)
+    const recommendedFees = await fetchRecommendedFees()
+    setFees(recommendedFees)
     toggleActivityIndicator(false)
   }
 
   return (
-    <Wrapper>
+    <Wrapper style={wrapperStyle}>
       <Title>{LL.RefundFlow.recommendedFees()}</Title>
       <ButtonsWrapper>
         <FeeSelect
@@ -77,6 +78,7 @@ export default Fees
 
 const Wrapper = styled.View`
   margin-top: 10px;
+  margin-bottom: 15px;
 `
 
 const ButtonsWrapper = styled.View`

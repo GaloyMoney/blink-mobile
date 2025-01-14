@@ -47,7 +47,7 @@ import { getUsdWallet } from "@app/graphql/wallets-utils"
 type Props = {} & StackScreenProps<RootStackParamList, "sendBitcoinConfirmation">
 
 const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route, navigation }) => {
-  const { paymentDetail } = route.params
+  const { paymentDetail, feeRateSatPerVbyte } = route.params
   const {
     destination,
     paymentType,
@@ -85,7 +85,13 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route, navigation }) =
     loading: sendPaymentLoading,
     sendPayment,
     hasAttemptedSend,
-  } = useSendPayment(sendPaymentMutation, convertedDestination, settlementAmount, note)
+  } = useSendPayment(
+    sendPaymentMutation,
+    convertedDestination,
+    settlementAmount,
+    feeRateSatPerVbyte,
+    note,
+  )
 
   useEffect(() => {
     setWalletText()
@@ -212,6 +218,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route, navigation }) =
           paymentDetail={paymentDetail}
           btcWalletText={btcWalletText}
           usdWalletText={usdWalletText}
+          feeRateSatPerVbyte={feeRateSatPerVbyte}
           fee={fee}
           setFee={setFee}
           setPaymentError={setPaymentError}

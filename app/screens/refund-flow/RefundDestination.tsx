@@ -149,6 +149,5 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   errorMsg: {
     color: colors.error,
-    marginTop: 15,
   },
 }))

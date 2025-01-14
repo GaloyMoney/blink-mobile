@@ -48,6 +48,7 @@ export const useSendPayment = (
   sendPaymentMutation?: SendPaymentMutation | null,
   paymentRequest?: string,
   amountSats?: WalletAmount<WalletCurrency>,
+  feeRateSatPerVbyte?: number,
   memo?: string,
 ): UseSendPaymentResult => {
   const [intraLedgerPaymentSend, { loading: intraLedgerPaymentSendLoading }] =
@@ -148,6 +149,7 @@ export const useSendPayment = (
                 const response = await sendOnchainBreezSDK(
                   paymentRequest,
                   amountSats.amount,
+                  feeRateSatPerVbyte,
                 )
                 console.log("BreezSDK onchain response:", response)
                 return {
