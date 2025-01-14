@@ -43,7 +43,7 @@ const RefundConfirmation: React.FC<Props> = ({ navigation, route }) => {
       const refundResponse = await refund({
         swapAddress: route.params.swapAddress,
         refundAddress: route.params.destination,
-        satPerVbyte: route.params.fee,
+        feeRateSatPerVbyte: route.params.fee,
       })
       console.log("Refund Response>>>>>>>>>>>>>>>", refundResponse)
       if (refundResponse.refundTxId) {

@@ -75,12 +75,21 @@ export const BalanceHeader: React.FC<Props> = ({
         convertMoneyAmount && convertMoneyAmount(usdWalletBalance, DisplayCurrency)
 
       if (usdBalanceInDisplayCurrency && btcBalanceInDisplayCurrency) {
-        const formattedBalance = formatMoneyAmount({
+        let formattedBalance = formatMoneyAmount({
           moneyAmount: addMoneyAmounts({
-            a: walletType === "btc" ? toUsdMoneyAmount(0) : usdBalanceInDisplayCurrency,
-            b: walletType === "usd" ? toBtcMoneyAmount(0) : btcBalanceInDisplayCurrency,
+            a: usdBalanceInDisplayCurrency,
+            b: btcBalanceInDisplayCurrency,
           }),
         })
+        if (!!walletType) {
+          formattedBalance = formatMoneyAmount({
+            moneyAmount:
+              walletType === "usd"
+                ? usdBalanceInDisplayCurrency
+                : btcBalanceInDisplayCurrency,
+          })
+        }
+
         setBalanceInDisplayCurrency(formattedBalance)
 
         updateState((state: any) => {

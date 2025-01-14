@@ -4,7 +4,7 @@ import styled from "styled-components/native"
 import { Text, useTheme } from "@rneui/themed"
 import { StackScreenProps } from "@react-navigation/stack"
 import { listRefundables, RefundableSwap } from "@breeztech/react-native-breez-sdk-liquid"
-import moment from "moment"
+import { Colors } from "@rneui/base"
 
 // hooks
 import { useI18nContext } from "@app/i18n/i18n-react"
@@ -73,13 +73,13 @@ const RefundTransactionsList: React.FC<Props> = ({ navigation }) => {
     })
 
     return (
-      <Item>
+      <Item colors={colors}>
         <ColumnWrapper>
           <Amount>{formattedAmount}</Amount>
           <Time color={colors.grey1}>{outputRelativeDate(item.timestamp, locale)}</Time>
         </ColumnWrapper>
         <BtnWrapper onPress={pressHandler} isRefunded={!!item?.txId}>
-          <BtnText>
+          <BtnText color={colors.white}>
             {!!item?.txId ? LL.RefundFlow.view() : LL.RefundFlow.refund()}
           </BtnText>
         </BtnWrapper>
@@ -119,12 +119,13 @@ const LoadingWrapper = styled.View`
   justify-content: center;
 `
 
-const Item = styled.View`
+const Item = styled.View<{ colors: Colors }>`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: #fff;
   margin-top: 2px;
+  border-bottom-width: 1px;
+  border-bottom-color: ${({ colors }) => colors.grey4};
   padding-horizontal: 20px;
   padding-vertical: 10px;
 `
@@ -146,7 +147,6 @@ const BtnWrapper = styled.TouchableOpacity<{ isRefunded?: boolean }>`
 
 const BtnText = styled(Text)`
   font-size: 16px;
-  color: #fff;
 `
 
 const EmptyWrapper = styled.View`
