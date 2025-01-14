@@ -62,7 +62,6 @@ export const HomeScreen: React.FC = () => {
     fetchPolicy: "network-only",
     nextFetchPolicy: "cache-and-network", // this enables offline mode use-case
   })
-
   const { persistentState, updateState } = usePersistentStateContext()
   const [defaultAccountModalVisible, setDefaultAccountModalVisible] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)

@@ -30,6 +30,7 @@ import { ApiAccessSetting } from "./settings/advanced-api-access"
 import { GenerateReportsSetting } from "./settings/generate-reports"
 import { SettingsGroup } from "./group"
 import { EmailSetting } from "./account/settings/email"
+import { ChatSetting } from "./chat-setting"
 // import { TotpSetting } from "./totp"
 
 gql`
@@ -70,6 +71,7 @@ const items = {
     CurrencySetting,
     ThemeSetting,
   ],
+  chats: [ChatSetting],
   securityAndPrivacy: [
     // TotpSetting,
     OnDeviceSecuritySetting,
@@ -104,6 +106,7 @@ export const SettingsScreen: React.FC = () => {
         {currentLevel === AccountLevel.Two && (
           <SettingsGroup name="Reports" items={items.reports} />
         )}
+        <SettingsGroup name="Chat(beta)" items={items.chats} />
         <SettingsGroup name={LL.SettingsScreen.keysManagement()} items={items.wallet} />
         <SettingsGroup name={LL.common.preferences()} items={items.preferences} />
         <SettingsGroup

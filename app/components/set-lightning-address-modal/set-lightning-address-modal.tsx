@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { View, TextInput } from "react-native"
 import CustomModal from "../custom-modal/custom-modal"
 import { Text, makeStyles, useTheme } from "@rneui/themed"
@@ -16,6 +16,8 @@ import useNostrProfile from "@app/hooks/use-nostr-profile"
 // store
 import { useAppDispatch } from "@app/store/redux"
 import { updateUserData } from "@app/store/redux/slices/userSlice"
+import { getSecretKey, setPreferredRelay } from "@app/utils/nostr"
+import { getPublicKey } from "nostr-tools"
 
 gql`
   mutation userUpdateUsername($input: UserUpdateUsernameInput!) {
@@ -43,10 +45,25 @@ export const SetLightningAddressModal = ({
   isVisible,
   toggleModal,
 }: SetLightningAddressModalProps) => {
+  const {
+    appConfig: {
+      galoyInstance: { lnAddressHostname: lnDomain, relayUrl },
+    },
+  } = useAppConfig()
   const dispatch = useAppDispatch()
   const [error, setError] = useState<SetAddressError | undefined>()
   const [lnAddress, setLnAddress] = useState("")
+  const [nostrPubkey, setNostrPubkey] = useState("")
   const { updateNostrProfile } = useNostrProfile()
+
+  useEffect(() => {
+    async function getNostrPubkey() {
+      let secretKey = await getSecretKey()
+      if (secretKey) setNostrPubkey(getPublicKey(secretKey))
+      else console.warn("NOSTR SECRET KEY NOT FOUND")
+    }
+    getNostrPubkey()
+  }, [])
 
   const onChangeLnAddress = (lightningAddress: string) => {
     setLnAddress(lightningAddress)
@@ -76,9 +93,6 @@ export const SetLightningAddressModal = ({
           })
         }
       }
-      updateNostrProfile({
-        content: { username: lnAddress, lud16: lnAddress, flash_username: lnAddress },
-      })
     },
   })
 
@@ -99,7 +113,14 @@ export const SetLightningAddressModal = ({
 
     console.log("Mutation response:", { data, errors }) // Log full response for debugging
     console.log("User update errors:", data?.userUpdateUsername?.errors) // Log the errors array
-
+    updateNostrProfile({
+      content: {
+        name: lnAddress,
+        username: lnAddress,
+        lud16: `${lnAddress}@${lnDomain}`,
+      },
+    })
+    setPreferredRelay(relayUrl)
     if ((data?.userUpdateUsername?.errors ?? []).length > 0) {
       if (data?.userUpdateUsername?.errors[0]?.code === "USERNAME_ERROR") {
         setError(SetAddressError.ADDRESS_UNAVAILABLE)

@@ -15,6 +15,7 @@ import {
 import { WalletDescriptor } from "@app/types/wallets"
 import _Map from "@app/assets/icons-redesign/map.svg"
 import { RefundableSwap } from "@breeztech/react-native-breez-sdk-liquid"
+import { Event } from "nostr-tools"
 
 export type RootStackParamList = {
   Reconciliation: { from: string; to: string }
@@ -136,9 +137,10 @@ export type RootStackParamList = {
 
 export type ChatStackParamList = {
   chatList: undefined
-  chatDetail: { chat: Chat }
+  chatDetail: { chat: Chat; giftwraps: Event[] }
   sendBitcoinDestination: { username: string }
   transactionDetail: { txid: string }
+  messages: { userPrivateKey: string; groupId: string }
 }
 
 export type ContactStackParamList = {

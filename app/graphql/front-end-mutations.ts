@@ -117,3 +117,17 @@ gql`
     }
   }
 `
+
+gql`
+  mutation userUpdateNpub($input: UserUpdateNpubInput!) {
+    userUpdateNpub(input: $input) {
+      errors {
+        code
+      }
+      user {
+        id
+        npub
+      }
+    }
+  }
+`

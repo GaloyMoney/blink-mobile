@@ -106,18 +106,6 @@ mutation MerchantMapSuggest($input: MerchantMapSuggestInput!) {
   }
 }
 
-mutation UserLogout($input: UserLogoutInput!) {
-  userLogout(input: $input) {
-    success
-    errors {
-      code
-      message
-      __typename
-    }
-    __typename
-  }
-}
-
 mutation accountDelete {
   accountDelete {
     errors {
@@ -129,9 +117,7 @@ mutation accountDelete {
   }
 }
 
-mutation accountDisableNotificationCategory(
-  $input: AccountDisableNotificationCategoryInput!
-) {
+mutation accountDisableNotificationCategory($input: AccountDisableNotificationCategoryInput!) {
   accountDisableNotificationCategory(input: $input) {
     errors {
       message
@@ -153,9 +139,7 @@ mutation accountDisableNotificationCategory(
   }
 }
 
-mutation accountDisableNotificationChannel(
-  $input: AccountDisableNotificationChannelInput!
-) {
+mutation accountDisableNotificationChannel($input: AccountDisableNotificationChannelInput!) {
   accountDisableNotificationChannel(input: $input) {
     errors {
       message
@@ -177,9 +161,7 @@ mutation accountDisableNotificationChannel(
   }
 }
 
-mutation accountEnableNotificationCategory(
-  $input: AccountEnableNotificationCategoryInput!
-) {
+mutation accountEnableNotificationCategory($input: AccountEnableNotificationCategoryInput!) {
   accountEnableNotificationCategory(input: $input) {
     errors {
       message
@@ -201,9 +183,7 @@ mutation accountEnableNotificationCategory(
   }
 }
 
-mutation accountEnableNotificationChannel(
-  $input: AccountEnableNotificationChannelInput!
-) {
+mutation accountEnableNotificationChannel($input: AccountEnableNotificationChannelInput!) {
   accountEnableNotificationChannel(input: $input) {
     errors {
       message
@@ -499,9 +479,7 @@ mutation onChainUsdPaymentSend($input: OnChainUsdPaymentSendInput!) {
   }
 }
 
-mutation onChainUsdPaymentSendAsBtcDenominated(
-  $input: OnChainUsdPaymentSendAsBtcDenominatedInput!
-) {
+mutation onChainUsdPaymentSendAsBtcDenominated($input: OnChainUsdPaymentSendAsBtcDenominatedInput!) {
   onChainUsdPaymentSendAsBtcDenominated(input: $input) {
     errors {
       message
@@ -624,6 +602,18 @@ mutation userLoginUpgrade($input: UserLoginUpgradeInput!) {
     }
     success
     authToken
+    __typename
+  }
+}
+
+mutation userLogout($input: UserLogoutInput!) {
+  userLogout(input: $input) {
+    success
+    errors {
+      code
+      message
+      __typename
+    }
     __typename
   }
 }
@@ -764,6 +754,21 @@ mutation userUpdateLanguage($input: UserUpdateLanguageInput!) {
     user {
       id
       language
+      __typename
+    }
+    __typename
+  }
+}
+
+mutation userUpdateNpub($input: UserUpdateNpubInput!) {
+  userUpdateNpub(input: $input) {
+    errors {
+      code
+      __typename
+    }
+    user {
+      id
+      npub
       __typename
     }
     __typename
@@ -1016,6 +1021,7 @@ query homeAuthed {
       verified
       __typename
     }
+    npub
     defaultAccount {
       id
       level
@@ -1140,22 +1146,14 @@ query onChainTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: Sat
   }
 }
 
-query onChainUsdTxFee(
-  $walletId: WalletId!
-  $address: OnChainAddress!
-  $amount: CentAmount!
-) {
+query onChainUsdTxFee($walletId: WalletId!, $address: OnChainAddress!, $amount: CentAmount!) {
   onChainUsdTxFee(walletId: $walletId, address: $address, amount: $amount) {
     amount
     __typename
   }
 }
 
-query onChainUsdTxFeeAsBtcDenominated(
-  $walletId: WalletId!
-  $address: OnChainAddress!
-  $amount: SatAmount!
-) {
+query onChainUsdTxFeeAsBtcDenominated($walletId: WalletId!, $address: OnChainAddress!, $amount: SatAmount!) {
   onChainUsdTxFeeAsBtcDenominated(
     walletId: $walletId
     address: $address
@@ -1440,13 +1438,7 @@ query totpRegistrationScreen {
   }
 }
 
-query transactionListForContact(
-  $username: Username!
-  $first: Int
-  $after: String
-  $last: Int
-  $before: String
-) {
+query transactionListForContact($username: Username!, $first: Int, $after: String, $last: Int, $before: String) {
   me {
     id
     contactByUsername(username: $username) {
@@ -1460,12 +1452,7 @@ query transactionListForContact(
   }
 }
 
-query transactionListForDefaultAccount(
-  $first: Int
-  $after: String
-  $last: Int
-  $before: String
-) {
+query transactionListForDefaultAccount($first: Int, $after: String, $last: Int, $before: String) {
   me {
     id
     defaultAccount {

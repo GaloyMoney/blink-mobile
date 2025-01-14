@@ -72,6 +72,7 @@ type PersistentState_7 = {
   btcWalletImported?: boolean
   helpTriggered?: boolean
   isAdvanceMode?: boolean
+  chatEnabled?: boolean
 }
 
 type JwtPayload = {

@@ -11,6 +11,7 @@ gql`
         address
         verified
       }
+      npub
 
       defaultAccount {
         id

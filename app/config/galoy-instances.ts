@@ -31,6 +31,7 @@ export type CustomInstance = {
   posUrl: string
   lnAddressHostname: string
   blockExplorer: string
+  relayUrl: string
 }
 
 export type GaloyInstanceInput = StandardInstance | CustomInstance
@@ -44,6 +45,7 @@ export type GaloyInstance = {
   posUrl: string
   lnAddressHostname: string
   blockExplorer: string
+  relayUrl: string
 }
 
 export const resolveGaloyInstanceOrDefault = (
@@ -73,6 +75,7 @@ export const GALOY_INSTANCES: readonly GaloyInstance[] = [
     authUrl: "https://api.flashapp.me",
     posUrl: "https://pay.flashapp.me",
     lnAddressHostname: "flashapp.me",
+    relayUrl: "wss://relay.flashapp.me",
     blockExplorer: "https://mempool.space/tx/",
   },
   {
@@ -84,6 +87,7 @@ export const GALOY_INSTANCES: readonly GaloyInstance[] = [
     posUrl: "http://pay.staging.flashapp.me",
     lnAddressHostname: "staging.flashapp.me",
     blockExplorer: "https://mempool.space/signet/tx/",
+    relayUrl: "wss://relay.test.flashapp.me",
   },
   {
     id: "Test",
@@ -94,6 +98,7 @@ export const GALOY_INSTANCES: readonly GaloyInstance[] = [
     posUrl: "http://pay.test.flashapp.me",
     lnAddressHostname: "test.flashapp.me",
     blockExplorer: "https://mempool.space/signet/tx/",
+    relayUrl: "wss://relay.test.flashapp.me",
   },
   {
     id: "Development",
@@ -104,6 +109,7 @@ export const GALOY_INSTANCES: readonly GaloyInstance[] = [
     posUrl: "http://development.flashapp.me:3000",
     lnAddressHostname: "development.flashapp.me:3000",
     blockExplorer: "https://mempool.space/signet/tx/",
+    relayUrl: "wss://relay.test.flashapp.me",
   },
   {
     id: "Local",
@@ -114,5 +120,6 @@ export const GALOY_INSTANCES: readonly GaloyInstance[] = [
     posUrl: `http://${scriptHostname()}:3000`,
     lnAddressHostname: `${scriptHostname()}:3000`,
     blockExplorer: "https://mempool.space/signet/tx/",
+    relayUrl: "wss://relay.test.flashapp.me",
   },
 ] as const
