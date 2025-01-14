@@ -5,7 +5,7 @@ import { makeStyles, Text, useTheme } from "@rneui/themed"
 
 // hooks
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { usePriceConversion } from "@app/hooks"
+import { useActivityIndicator, usePriceConversion } from "@app/hooks"
 
 // components
 import { Screen } from "@app/components/screen"
@@ -31,6 +31,7 @@ const RefundConfirmation: React.FC<Props> = ({ navigation, route }) => {
   const { colors } = useTheme().theme
   const { LL } = useI18nContext()
   const { convertMoneyAmount } = usePriceConversion()
+  const { toggleActivityIndicator } = useActivityIndicator()
 
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [errorMsg, setErrorMsg] = useState<string>()
@@ -40,6 +41,7 @@ const RefundConfirmation: React.FC<Props> = ({ navigation, route }) => {
 
   const onConfirm = async () => {
     try {
+      toggleActivityIndicator(true)
       const refundResponse = await refund({
         swapAddress: route.params.swapAddress,
         refundAddress: route.params.destination,
@@ -64,6 +66,8 @@ const RefundConfirmation: React.FC<Props> = ({ navigation, route }) => {
       }
     } catch (err) {
       console.log("Refund Error:", err)
+    } finally {
+      toggleActivityIndicator(false)
     }
   }
 
