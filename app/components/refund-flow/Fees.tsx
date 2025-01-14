@@ -88,7 +88,7 @@ const ButtonsWrapper = styled.View`
 
 const Title = styled(Text)`
   font-weight: bold;
-  margin-bottom: 10;
+  margin-bottom: 10px;
 `
 
 const FeeSelect = styled.TouchableOpacity<{ colors: Colors; selected: boolean }>`

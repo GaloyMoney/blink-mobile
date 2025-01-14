@@ -27,7 +27,12 @@ import { getUsdWallet } from "@app/graphql/wallets-utils"
 // hooks
 import { useIsAuthed } from "@app/graphql/is-authed-context"
 import { useLevel } from "@app/graphql/level-context"
-import { useBreez, useIbexFee, usePriceConversion } from "@app/hooks"
+import {
+  useActivityIndicator,
+  useBreez,
+  useIbexFee,
+  usePriceConversion,
+} from "@app/hooks"
 import { useDisplayCurrency } from "@app/hooks/use-display-currency"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { usePersistentStateContext } from "@app/store/persistent-state"
@@ -60,6 +65,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
   const { persistentState } = usePersistentStateContext()
   const { convertMoneyAmount: _convertMoneyAmount } = usePriceConversion("network-only")
   const { zeroDisplayAmount, formatDisplayAndWalletAmount } = useDisplayCurrency()
+  const { toggleActivityIndicator } = useActivityIndicator()
   const getIbexFee = useIbexFee()
 
   const { paymentDestination, flashUserAddress } = route.params
@@ -140,7 +146,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
       if (pd?.sendingWalletDescriptor.currency === "BTC") {
         const { fee, err }: { fee: any; err: any } = await fetchBreezFee(
           pd?.paymentType,
-          pd?.destination,
+          !!flashUserAddress ? flashUserAddress : pd?.destination,
           pd?.settlementAmount.amount,
           selectedFee, // feeRateSatPerVbyte
         )
@@ -175,6 +181,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     (paymentDetail?.sendPaymentMutation ||
       (paymentDetail?.paymentType === "lnurl" && paymentDetail?.unitOfAccountAmount)) &&
     (async () => {
+      toggleActivityIndicator(true)
       let paymentDetailForConfirmation: PaymentDetail<WalletCurrency> = paymentDetail
 
       if (paymentDetail.paymentType === "lnurl") {
@@ -227,10 +234,12 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
       }
 
       const res = await fetchSendingFee(paymentDetailForConfirmation)
+      toggleActivityIndicator(false)
 
       if (res && paymentDetailForConfirmation.sendPaymentMutation) {
         navigation.navigate("sendBitcoinConfirmation", {
           paymentDetail: paymentDetailForConfirmation,
+          flashUserAddress,
           feeRateSatPerVbyte: selectedFee,
         })
       }

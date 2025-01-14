@@ -237,6 +237,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
       keyboardShouldPersistTaps="handled"
     >
       <ConfirmDestinationModal
+        username={route?.params?.username}
         destinationState={destinationState}
         dispatchDestinationStateAction={dispatchDestinationStateAction}
         setFlashUserAddress={(address) => setFlashUserAddress(address)}

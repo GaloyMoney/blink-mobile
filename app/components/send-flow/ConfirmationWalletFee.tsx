@@ -17,6 +17,7 @@ import { testProps } from "@app/utils/testProps"
 import { fetchBreezFee } from "@app/utils/breez-sdk-liquid"
 
 type Props = {
+  flashUserAddress?: string
   paymentDetail: PaymentDetail<WalletCurrency>
   btcWalletText: string
   usdWalletText: string
@@ -27,6 +28,7 @@ type Props = {
 }
 
 const ConfirmationWalletFee: React.FC<Props> = ({
+  flashUserAddress,
   paymentDetail,
   btcWalletText,
   usdWalletText,
@@ -58,7 +60,7 @@ const ConfirmationWalletFee: React.FC<Props> = ({
     } else {
       const { fee, err } = await fetchBreezFee(
         paymentType,
-        paymentDetail.destination,
+        !!flashUserAddress ? flashUserAddress : paymentDetail.destination,
         settlementAmount.amount,
         feeRateSatPerVbyte,
       )
