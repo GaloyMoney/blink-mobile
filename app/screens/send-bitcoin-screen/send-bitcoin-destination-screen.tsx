@@ -41,6 +41,9 @@ import {
   SendBitcoinDestinationState,
 } from "./send-bitcoin-reducer"
 
+// hooks
+import { useAppConfig } from "@app/hooks"
+
 export const defaultDestinationState: SendBitcoinDestinationState = {
   unparsedDestination: "",
   destinationState: DestinationState.Entering,
@@ -54,6 +57,8 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
   const { LL } = useI18nContext()
   const isAuthed = useIsAuthed()
   const styles = usestyles()
+  const { appConfig } = useAppConfig()
+  const { lnAddressHostname: lnDomain } = appConfig.galoyInstance
   const navigation =
     useNavigation<StackNavigationProp<RootStackParamList, "sendBitcoinDestination">>()
 
@@ -184,6 +189,7 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
         destination.destinationDirection === DestinationDirection.Send &&
         destination.validDestination.paymentType === PaymentType.Intraledger
       ) {
+        setFlashUserAddress(destination.validDestination.handle + "@" + lnDomain)
         if (
           !contacts
             .map((contact) => contact.username.toLowerCase())
@@ -237,10 +243,8 @@ const SendBitcoinDestinationScreen: React.FC<Props> = ({ route }) => {
       keyboardShouldPersistTaps="handled"
     >
       <ConfirmDestinationModal
-        username={route?.params?.username}
         destinationState={destinationState}
         dispatchDestinationStateAction={dispatchDestinationStateAction}
-        setFlashUserAddress={(address) => setFlashUserAddress(address)}
       />
       <View style={styles.sendBitcoinDestinationContainer}>
         <DestinationField

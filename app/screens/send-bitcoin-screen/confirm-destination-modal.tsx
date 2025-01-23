@@ -12,17 +12,13 @@ import CustomModal from "@app/components/custom-modal/custom-modal"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 
 export type ConfirmDestinationModalProps = {
-  username?: string
   destinationState: SendBitcoinDestinationState
   dispatchDestinationStateAction: Dispatch<SendBitcoinDestinationAction>
-  setFlashUserAddress: (address: string) => void
 }
 
 export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = ({
-  username,
   destinationState,
   dispatchDestinationStateAction,
-  setFlashUserAddress,
 }) => {
   const styles = useStyles()
   const { colors } = useTheme().theme
@@ -36,19 +32,11 @@ export const ConfirmDestinationModal: React.FC<ConfirmDestinationModalProps> = (
       type: "set-confirmed",
       payload: { unparsedDestination: destinationState.unparsedDestination },
     })
-    if (destinationState.unparsedDestination === username) {
-      setFlashUserAddress(username)
-    } else {
-      setFlashUserAddress(destinationState.unparsedDestination + "@" + lnDomain)
-    }
   }, [destinationState, dispatchDestinationStateAction])
 
   if (destinationState.destinationState !== "requires-confirmation") return null
 
-  let lnAddress = destinationState.confirmationType.username + "@" + lnDomain
-  if (destinationState.unparsedDestination === username) {
-    lnAddress = username
-  }
+  const lnAddress = destinationState.confirmationType.username + "@" + lnDomain
 
   const goBack = () => {
     dispatchDestinationStateAction({

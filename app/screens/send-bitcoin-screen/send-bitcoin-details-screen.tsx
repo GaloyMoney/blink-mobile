@@ -151,7 +151,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           selectedFee, // feeRateSatPerVbyte
         )
         if (fee === null && err) {
-          setAsyncErrorMessage(`${err?.message} (amount + fee)` || "")
+          setAsyncErrorMessage(`${err?.message || err} (amount + fee)` || "")
           return false
         }
       } else {
