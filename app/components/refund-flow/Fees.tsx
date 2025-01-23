@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { ViewStyle } from "react-native"
 import { Colors, Text, useTheme } from "@rneui/themed"
 import styled from "styled-components/native"
@@ -6,34 +6,22 @@ import { RecommendedFees } from "@breeztech/react-native-breez-sdk-liquid"
 
 // hooks
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { useActivityIndicator } from "@app/hooks"
-
-// utils
-import { fetchRecommendedFees } from "@app/utils/breez-sdk-liquid"
 
 type Props = {
   wrapperStyle?: ViewStyle
+  recommendedFees?: RecommendedFees
   selectedFeeType?: string
   onSelectFee: (type: string, value?: number) => void
 }
 
-const Fees: React.FC<Props> = ({ wrapperStyle, selectedFeeType, onSelectFee }) => {
+const Fees: React.FC<Props> = ({
+  wrapperStyle,
+  recommendedFees,
+  selectedFeeType,
+  onSelectFee,
+}) => {
   const { LL } = useI18nContext()
   const { colors } = useTheme().theme
-  const { toggleActivityIndicator } = useActivityIndicator()
-
-  const [fees, setFees] = useState<RecommendedFees>()
-
-  useEffect(() => {
-    fetchFees()
-  }, [])
-
-  const fetchFees = async () => {
-    toggleActivityIndicator(true)
-    const recommendedFees = await fetchRecommendedFees()
-    setFees(recommendedFees)
-    toggleActivityIndicator(false)
-  }
 
   return (
     <Wrapper style={wrapperStyle}>
@@ -43,7 +31,7 @@ const Fees: React.FC<Props> = ({ wrapperStyle, selectedFeeType, onSelectFee }) =
           colors={colors}
           activeOpacity={0.5}
           selected={selectedFeeType === "Fast"}
-          onPress={() => onSelectFee("Fast", fees?.fastestFee)}
+          onPress={() => onSelectFee("Fast", recommendedFees?.fastestFee)}
         >
           <FeeText colors={colors} selected={selectedFeeType === "Fast"}>
             {LL.RefundFlow.fast()}
@@ -53,7 +41,7 @@ const Fees: React.FC<Props> = ({ wrapperStyle, selectedFeeType, onSelectFee }) =
           colors={colors}
           activeOpacity={0.5}
           selected={selectedFeeType === "Half Hour"}
-          onPress={() => onSelectFee("Half Hour", fees?.halfHourFee)}
+          onPress={() => onSelectFee("Half Hour", recommendedFees?.halfHourFee)}
         >
           <FeeText colors={colors} selected={selectedFeeType === "Half Hour"}>
             {LL.RefundFlow.halfHour()}
@@ -63,7 +51,7 @@ const Fees: React.FC<Props> = ({ wrapperStyle, selectedFeeType, onSelectFee }) =
           colors={colors}
           activeOpacity={0.5}
           selected={selectedFeeType === "Hour"}
-          onPress={() => onSelectFee("Hour", fees?.hourFee)}
+          onPress={() => onSelectFee("Hour", recommendedFees?.hourFee)}
         >
           <FeeText colors={colors} selected={selectedFeeType === "Hour"}>
             {LL.RefundFlow.hour()}

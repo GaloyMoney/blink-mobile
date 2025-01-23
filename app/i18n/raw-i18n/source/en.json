@@ -690,6 +690,7 @@
         "lnurlInvoiceIncorrectAmount": "The lnurl server responded with an invoice with an incorrect amount.",
         "lnurlInvoiceIncorrectDescription": "The lnurl server responded with an invoice with an incorrect description hash.",
         "noAmountInvoiceError": "No amount invoice is not supported in BTC wallet",
+        "onchainMinAmountInvoiceError": "The amount you entered is less than the minimum amount required to send an on-chain transaction {amount: number}. Please consider sending this amount via Lightning!",
 		"minAmountInvoiceError": "The amount on the invoice is less than minimum amount",
 		"maxAmountInvoiceError": "The amount on the invoice is greater than maximum amount",
         "minAmountConvertError": "The conversion amount is less than minimum required amount {amount: number}",

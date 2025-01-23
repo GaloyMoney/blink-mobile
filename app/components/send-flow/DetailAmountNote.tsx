@@ -12,6 +12,7 @@ import { AmountInput } from "@app/components/amount-input/amount-input"
 import { NoteInput } from "@app/components/note-input"
 
 // types
+import { RecommendedFees } from "@breeztech/react-native-breez-sdk-liquid"
 import { PaymentDetail } from "@app/screens/send-bitcoin-screen/payment-details"
 import { WalletCurrency } from "@app/graphql/generated"
 import {
@@ -23,11 +24,14 @@ import {
 // utils
 import { testProps } from "../../utils/testProps"
 import {
+  fetchBreezFee,
   fetchBreezLightningLimits,
   fetchBreezOnChainLimits,
 } from "@app/utils/breez-sdk-liquid"
 
 type Props = {
+  recommendedFees?: RecommendedFees
+  selectedFee?: number
   usdWallet: any
   paymentDetail: PaymentDetail<WalletCurrency>
   setPaymentDetail: (val: PaymentDetail<WalletCurrency>) => void
@@ -35,6 +39,8 @@ type Props = {
 }
 
 const DetailAmountNote: React.FC<Props> = ({
+  recommendedFees,
+  selectedFee,
   usdWallet,
   paymentDetail,
   setPaymentDetail,
@@ -50,6 +56,12 @@ const DetailAmountNote: React.FC<Props> = ({
 
   const [minAmount, setMinAmount] = useState<MoneyAmount<WalletCurrency>>()
   const [maxAmount, setMaxAmount] = useState<MoneyAmount<WalletCurrency>>()
+
+  useEffect(() => {
+    if (paymentDetail.isSendingMax && selectedFee) {
+      sendAll()
+    }
+  }, [selectedFee, paymentDetail.isSendingMax])
 
   useEffect(() => {
     fetchBtcMinMaxAmount()
@@ -115,14 +127,23 @@ const DetailAmountNote: React.FC<Props> = ({
         paymentDetail.settlementAmount.amount < minAmount?.amount
       ) {
         const convertedBTCAmount = convertMoneyAmount(minAmount, "DisplayCurrency")
-        setAsyncErrorMessage(
-          LL.SendBitcoinScreen.minAmountInvoiceError({
-            amount: formatDisplayAndWalletAmount({
-              displayAmount: convertedBTCAmount,
-              walletAmount: minAmount,
+        const formattedBTCAmount = formatDisplayAndWalletAmount({
+          displayAmount: convertedBTCAmount,
+          walletAmount: minAmount,
+        })
+        if (paymentDetail.paymentType === "onchain") {
+          setAsyncErrorMessage(
+            LL.SendBitcoinScreen.onchainMinAmountInvoiceError({
+              amount: formattedBTCAmount,
             }),
-          }),
-        )
+          )
+        } else {
+          setAsyncErrorMessage(
+            LL.SendBitcoinScreen.minAmountInvoiceError({
+              amount: formattedBTCAmount,
+            }),
+          )
+        }
       } else if (
         maxAmount &&
         paymentDetail.settlementAmount.amount &&
@@ -189,12 +210,22 @@ const DetailAmountNote: React.FC<Props> = ({
     }
   }
 
-  const sendAll = () => {
+  const sendAll = async () => {
     let moneyAmount: MoneyAmount<WalletCurrency>
 
     if (paymentDetail.sendingWalletDescriptor.currency === WalletCurrency.Btc) {
+      let feeRateSatPerVbyte = selectedFee ? selectedFee : recommendedFees?.fastestFee
+
+      const { fee }: { fee: any; err: any } = await fetchBreezFee(
+        paymentDetail?.paymentType,
+        paymentDetail?.destination,
+        Math.round(btcWallet.balance * 0.9),
+        feeRateSatPerVbyte,
+      )
+      console.log("on-chain fee:", feeRateSatPerVbyte, fee)
+
       moneyAmount = {
-        amount: btcWallet.balance ?? 0,
+        amount: btcWallet.balance - Math.round(fee * 1.005),
         currency: WalletCurrency.Btc,
         currencyCode: "BTC",
       }

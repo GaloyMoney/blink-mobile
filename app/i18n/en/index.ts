@@ -752,6 +752,7 @@ const en: BaseTranslation = {
     lnurlInvoiceIncorrectDescription:
       "The lnurl server responded with an invoice with an incorrect description hash.",
 		noAmountInvoiceError: "No amount invoice is not supported in BTC wallet. Please go back and scan or enter an invoice with an amount added.",
+    onchainMinAmountInvoiceError: "The amount you entered is less than the minimum amount required to send an on-chain transaction {amount: number}. Please consider sending this amount via Lightning!",
 		minAmountInvoiceError: "The amount on the invoice is less than minimum amount {amount: number}",
 		maxAmountInvoiceError: "The amount on the invoice is greater than maximum amount {amount: number}",
 		minAmountConvertError: "The conversion amount is less than minimum required amount {amount: number}",

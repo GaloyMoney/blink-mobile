@@ -42,12 +42,13 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { NavigationProp, RouteProp, useNavigation } from "@react-navigation/native"
 import { PaymentDetail } from "./payment-details/index.types"
 import { Satoshis } from "lnurl-pay/dist/types/types"
+import { RecommendedFees } from "@breeztech/react-native-breez-sdk-liquid"
 
 // utils
 import { DisplayCurrency, toBtcMoneyAmount, toUsdMoneyAmount } from "@app/types/amounts"
 import { isValidAmount } from "./payment-details"
 import { requestInvoice, utils } from "lnurl-pay"
-import { fetchBreezFee } from "@app/utils/breez-sdk-liquid"
+import { fetchBreezFee, fetchRecommendedFees } from "@app/utils/breez-sdk-liquid"
 
 type Props = {
   route: RouteProp<RootStackParamList, "sendBitcoinDetails">
@@ -70,6 +71,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
   const { paymentDestination, flashUserAddress } = route.params
 
+  const [recommendedFees, setRecommendedFees] = useState<RecommendedFees>()
   const [isLoadingLnurl, setIsLoadingLnurl] = useState(false)
   const [paymentDetail, setPaymentDetail] = useState<PaymentDetail<WalletCurrency>>()
   const [asyncErrorMessage, setAsyncErrorMessage] = useState("")
@@ -140,6 +142,24 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
     defaultWallet,
     zeroDisplayAmount,
   ])
+
+  useEffect(() => {
+    if (
+      paymentDetail &&
+      paymentDetail.sendingWalletDescriptor.currency === "BTC" &&
+      paymentDetail.paymentType === "onchain" &&
+      !recommendedFees
+    ) {
+      fetchBreezRecommendedFees()
+    }
+  }, [paymentDetail?.sendingWalletDescriptor, paymentDetail?.paymentType])
+
+  const fetchBreezRecommendedFees = async () => {
+    toggleActivityIndicator(true)
+    const recommendedFees = await fetchRecommendedFees()
+    setRecommendedFees(recommendedFees)
+    toggleActivityIndicator(false)
+  }
 
   const fetchSendingFee = async (pd: PaymentDetail<WalletCurrency>) => {
     if (pd) {
@@ -284,6 +304,8 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           paymentDetail={paymentDetail}
         />
         <DetailAmountNote
+          recommendedFees={recommendedFees}
+          selectedFee={selectedFee}
           usdWallet={usdWallet}
           paymentDetail={paymentDetail}
           setPaymentDetail={setPaymentDetail}
@@ -293,6 +315,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           paymentDetail.paymentType === "onchain" && (
             <Fees
               wrapperStyle={{ marginTop: 0 }}
+              recommendedFees={recommendedFees}
               selectedFeeType={selectedFeeType}
               onSelectFee={onSelectFee}
             />

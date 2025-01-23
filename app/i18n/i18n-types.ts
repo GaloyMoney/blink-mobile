@@ -2402,6 +2402,10 @@ type RootTranslation = {
 		 */
 		noAmountInvoiceError: string
 		/**
+		 * The amount you entered is less than the minimum amount required to send an on-chain transaction. Please consider sending this amount via Lightning! 
+		 */
+		onchainMinAmountInvoiceError: RequiredParams<'amount'>
+		/**
 		 * The amount on the invoice is less than minimum amount
 		 * @param {number} amount
 		 */
@@ -6742,6 +6746,10 @@ export type TranslationFunctions = {
 		 * No amount invoice is not supported in BTC wallet
 		 */
 		noAmountInvoiceError: () => LocalizedString
+		/**
+		 * The amount you entered is less than the minimum amound required to send an on-chain transaction. Please consider sending this amount via Lightning! 
+		 */
+		onchainMinAmountInvoiceError: (arg: { amount: number  | string }) => LocalizedString
 		/**
 		 * The amount on the invoice is less than minimum amount
 		 */

@@ -67,7 +67,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route, navigation }) =
 
   const [usdWalletText, setUsdWalletText] = useState("")
   const [btcWalletText, setBtcWalletText] = useState("")
-  const [isValidAmount, setIsValidAmount] = useState(false)
+  const [isValidAmount, setIsValidAmount] = useState(true)
   const [isAnimating, setIsAnimating] = useState(false)
   const [paymentError, setPaymentError] = useState<string>()
   const [invalidAmountErr, setInvalidAmountErr] = useState<string>()
