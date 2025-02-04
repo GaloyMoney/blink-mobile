@@ -47,6 +47,7 @@ const light = {
   red: "#DC2626",
 
   warning: "#F59E0B",
+  warning9: "#fff1d8",
 }
 
 const dark = {
@@ -98,6 +99,7 @@ const dark = {
   red: "#DC2626",
 
   warning: "#F59E0B",
+  warning9: "#7d591a",
 }
 
 export { light, dark }

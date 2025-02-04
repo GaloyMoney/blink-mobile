@@ -1,18 +1,23 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { TouchableOpacity, View } from "react-native"
 import { makeStyles, Text } from "@rneui/themed"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { Network, parsePaymentDestination } from "@flash/client"
 import { StackScreenProps } from "@react-navigation/stack"
+import { RecommendedFees } from "@breeztech/react-native-breez-sdk-liquid"
 
 // components
 import { Screen } from "@app/components/screen"
 import { DestinationField, Fees } from "@app/components/refund-flow"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
 
+// hooks
+import { useActivityIndicator } from "@app/hooks"
+
 // utils
 import { LNURL_DOMAINS } from "@app/config"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { fetchRecommendedFees } from "@app/utils/breez-sdk-liquid"
 
 // gql
 import {
@@ -28,7 +33,9 @@ const RefundDestination: React.FC<Props> = ({ navigation, route }) => {
   const styles = useStyles()
   const isAuthed = useIsAuthed()
   const { LL } = useI18nContext()
+  const { toggleActivityIndicator } = useActivityIndicator()
 
+  const [recommendedFees, setRecommendedFees] = useState<RecommendedFees>()
   const [selectedFee, setSelectedFee] = useState<number>()
   const [selectedFeeType, setSelectedFeeType] = useState<string>()
   const [destination, setDestination] = useState<string>()
@@ -42,6 +49,19 @@ const RefundDestination: React.FC<Props> = ({ navigation, route }) => {
   })
 
   const usdWallet = getUsdWallet(data?.me?.defaultAccount?.wallets)
+
+  useEffect(() => {
+    if (!recommendedFees) {
+      fetchBreezRecommendedFees()
+    }
+  }, [])
+
+  const fetchBreezRecommendedFees = async () => {
+    toggleActivityIndicator(true)
+    const recommendedFees = await fetchRecommendedFees()
+    setRecommendedFees(recommendedFees)
+    toggleActivityIndicator(false)
+  }
 
   const validateDestination = () => {
     if (!destination) {
@@ -120,7 +140,11 @@ const RefundDestination: React.FC<Props> = ({ navigation, route }) => {
           <Text style={styles.text}>{LL.RefundFlow.refundTo()}</Text>
         </TouchableOpacity>
       )}
-      <Fees selectedFeeType={selectedFeeType} onSelectFee={onSelectFee} />
+      <Fees
+        recommendedFees={recommendedFees}
+        selectedFeeType={selectedFeeType}
+        onSelectFee={onSelectFee}
+      />
       <Text style={styles.errorMsg}>{error}</Text>
       <View style={styles.buttonContainer}>
         <GaloyPrimaryButton

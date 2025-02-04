@@ -28,6 +28,8 @@ declare module "@rneui/themed" {
     primary5: string
     error9: string
 
+    warning9: string
+
     blue5: string
 
     loaderForeground: string

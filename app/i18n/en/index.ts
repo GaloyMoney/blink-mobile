@@ -531,6 +531,8 @@ const en: BaseTranslation = {
     updateAvailable: "An update is available.\nTap to update now",
     useLightning: "We use the Lightning Network.",
     myAccounts: "My Accounts",
+    refundableWarning: "Please complete or refund all pending transactions before uninstalling Flash or pending funds will be lost.",
+    refundables: "Refundables"
   },
   PinScreen: {
     attemptsRemaining: "Incorrect PIN. {attemptsRemaining: number} attempts remaining.",

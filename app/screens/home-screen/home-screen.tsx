@@ -1,14 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react"
-import { RefreshControl, ScrollView, View } from "react-native"
+import { RefreshControl, ScrollView } from "react-native"
 import { makeStyles, useTheme } from "@rneui/themed"
 
 // components
 import { AppUpdate } from "@app/components/app-update/app-update"
 import WalletOverview from "@app/components/wallet-overview/wallet-overview"
-import { GaloyErrorBox } from "@app/components/atomic/galoy-error-box"
 import { SetDefaultAccountModal } from "@app/components/set-default-account-modal"
 import { UnVerifiedSeedModal } from "@app/components/unverified-seed-modal"
 import { Screen } from "../../components/screen"
+import {
+  AccountCreateModal,
+  Buttons,
+  Header,
+  Info,
+  Transactions,
+} from "@app/components/home-screen"
 
 // queries
 import {
@@ -18,7 +24,6 @@ import {
   useRealtimePriceQuery,
 } from "@app/graphql/generated"
 import { useIsAuthed } from "@app/graphql/is-authed-context"
-import { getErrorMessages } from "@app/graphql/utils"
 import { getDefaultWallet } from "@app/graphql/wallets-utils"
 
 // hooks
@@ -29,12 +34,6 @@ import useNostrProfile from "@app/hooks/use-nostr-profile"
 import { useAppDispatch } from "@app/store/redux"
 import { setUserData } from "@app/store/redux/slices/userSlice"
 import { usePersistentStateContext } from "@app/store/persistent-state"
-import {
-  AccountCreateModal,
-  Buttons,
-  Header,
-  Transactions,
-} from "@app/components/home-screen"
 
 export const HomeScreen: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -139,11 +138,7 @@ export const HomeScreen: React.FC = () => {
           pendingBalance={null}
           setIsUnverifiedSeedModalVisible={setIsUnverifiedSeedModalVisible}
         />
-        {error && (
-          <View style={styles.marginButtonContainer}>
-            <GaloyErrorBox errorMessage={getErrorMessages(error)} />
-          </View>
-        )}
+        <Info error={error} />
         <Buttons
           setModalVisible={setModalVisible}
           setDefaultAccountModalVisible={setDefaultAccountModalVisible}
