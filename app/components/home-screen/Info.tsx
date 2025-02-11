@@ -20,6 +20,10 @@ import { GraphQLError } from "graphql"
 import { GraphQlApplicationError } from "@app/graphql/generated"
 import { getErrorMessages } from "@app/graphql/utils"
 
+// utils
+import { usePersistentStateContext } from "@app/store/persistent-state"
+import { breezSDKInitialized } from "@app/utils/breez-sdk-liquid"
+
 type ErrorInput =
   | readonly GraphQLError[]
   | readonly GraphQlApplicationError[]
@@ -35,12 +39,15 @@ const Info: React.FC<Props> = ({ error }) => {
   const { colors, mode } = useTheme().theme
   const { LL } = useI18nContext()
 
+  const { persistentState } = usePersistentStateContext()
   const [refundables, setRefundables] = useState<RefundableSwap[]>([])
 
   const color = mode === "light" ? colors.warning : colors.black
 
   useEffect(() => {
-    fetchRefundables()
+    if (persistentState.isAdvanceMode && breezSDKInitialized) {
+      fetchRefundables()
+    }
   }, [])
 
   const fetchRefundables = async () => {
