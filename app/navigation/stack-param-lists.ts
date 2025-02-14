@@ -1,3 +1,4 @@
+import { LNURLPaySuccessAction } from "lnurl-pay/dist/types/types"
 import { PhoneCodeChannelType, UserContact, WalletCurrency } from "@app/graphql/generated"
 import { EarnSectionType } from "@app/screens/earns-screen/sections"
 import { PhoneLoginInitiateType } from "@app/screens/phone-auth-screen"
@@ -52,6 +53,7 @@ export type RootStackParamList = {
   sendBitcoinCompleted: {
     arrivalAtMempoolEstimate?: number
     status: PaymentSendCompletedStatus
+    successAction?: LNURLPaySuccessAction | null
   }
   language: undefined
   currency: undefined

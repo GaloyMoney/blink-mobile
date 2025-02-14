@@ -381,6 +381,15 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           }
 
           const result = await requestInvoice(requestInvoiceParams)
+
+          setPaymentDetail((prev) => {
+            if (!prev || !prev.setSuccessAction) {
+              return prev
+            }
+
+            return prev.setSuccessAction(result.successAction)
+          })
+
           setIsLoadingLnurl(false)
           const invoice = result.invoice
           const decodedInvoice = decodeInvoiceString(invoice, network as NetworkLibGaloy)
