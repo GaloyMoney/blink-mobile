@@ -405,6 +405,10 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             paymentRequest: invoice,
             paymentRequestAmount: btcAmount,
           })
+
+          paymentDetailForConfirmation =
+            paymentDetailForConfirmation?.setSuccessAction?.(result.successAction) ??
+            paymentDetailForConfirmation
         } catch (error) {
           setIsLoadingLnurl(false)
           if (error instanceof Error) {
