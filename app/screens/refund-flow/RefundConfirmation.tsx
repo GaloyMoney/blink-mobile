@@ -6,6 +6,7 @@ import { makeStyles, Text, useTheme } from "@rneui/themed"
 // hooks
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useActivityIndicator, usePriceConversion } from "@app/hooks"
+import { usePersistentStateContext } from "@app/store/persistent-state"
 
 // components
 import { Screen } from "@app/components/screen"
@@ -23,6 +24,7 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { toBtcMoneyAmount } from "@app/types/amounts"
 import { refund } from "@breeztech/react-native-breez-sdk-liquid"
 import { loadJson, save } from "@app/utils/storage"
+import { PersistentState } from "@app/store/persistent-state/state-migrations"
 
 type Props = StackScreenProps<RootStackParamList, "RefundConfirmation">
 
@@ -32,6 +34,8 @@ const RefundConfirmation: React.FC<Props> = ({ navigation, route }) => {
   const { LL } = useI18nContext()
   const { convertMoneyAmount } = usePriceConversion()
   const { toggleActivityIndicator } = useActivityIndicator()
+
+  const { updateState } = usePersistentStateContext()
 
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [errorMsg, setErrorMsg] = useState<string>()
@@ -49,6 +53,14 @@ const RefundConfirmation: React.FC<Props> = ({ navigation, route }) => {
       })
       console.log("Refund Response>>>>>>>>>>>>>>>", refundResponse)
       if (refundResponse.refundTxId) {
+        updateState((state?: PersistentState) => {
+          if (state)
+            return {
+              ...state,
+              numOfRefundables: state.numOfRefundables - 1,
+            }
+          return undefined
+        })
         setTxId(refundResponse.refundTxId)
         setModalVisible(true)
         const refundedTxs = await loadJson("refundedTxs")

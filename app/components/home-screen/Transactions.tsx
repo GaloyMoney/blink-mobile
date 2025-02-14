@@ -64,15 +64,10 @@ const Transactions: React.FC<Props> = ({
   )
 
   useEffect(() => {
-    if (refreshTriggered && persistentState.isAdvanceMode && breezSDKInitialized) {
+    if (persistentState.isAdvanceMode && breezSDKInitialized) {
       fetchPaymentsBreez()
     }
-  }, [
-    refreshTriggered,
-    breezSDKInitialized,
-    persistentState.isAdvanceMode,
-    persistentState.btcWalletImported,
-  ])
+  }, [refreshTriggered, breezSDKInitialized, persistentState.isAdvanceMode])
 
   useEffect(() => {
     if (!loadingAuthed && !breezTxsLoading) {
@@ -108,11 +103,13 @@ const Transactions: React.FC<Props> = ({
 
   const fetchPaymentsBreez = async () => {
     try {
-      setBreezTxsLoading(true)
-      refreshBreez()
-      const payments = await listPaymentsBreezSDK(0, 3)
-      setBreezTransactions(payments)
-      setBreezTxsLoading(false)
+      if (!breezTxsLoading) {
+        setBreezTxsLoading(true)
+        refreshBreez()
+        const payments = await listPaymentsBreezSDK(0, 3)
+        setBreezTransactions(payments)
+        setBreezTxsLoading(false)
+      }
     } catch (err) {
       console.log("listPaymentsBreezSDK ERROR:", err)
     }

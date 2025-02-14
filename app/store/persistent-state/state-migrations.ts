@@ -73,6 +73,7 @@ type PersistentState_7 = {
   helpTriggered?: boolean
   isAdvanceMode?: boolean
   chatEnabled?: boolean
+  numOfRefundables: number
 }
 
 type JwtPayload = {
@@ -250,6 +251,7 @@ export const defaultPersistentState: PersistentState = {
   hasInitializedBreezSDK: false,
   introVideoCount: 0,
   helpTriggered: false,
+  numOfRefundables: 0,
 }
 
 export const migrateAndGetPersistentState = async (

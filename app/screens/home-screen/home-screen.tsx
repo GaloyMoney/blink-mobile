@@ -138,7 +138,7 @@ export const HomeScreen: React.FC = () => {
           pendingBalance={null}
           setIsUnverifiedSeedModalVisible={setIsUnverifiedSeedModalVisible}
         />
-        <Info error={error} />
+        <Info refreshTriggered={refreshTriggered} error={error} />
         <Buttons
           setModalVisible={setModalVisible}
           setDefaultAccountModalVisible={setDefaultAccountModalVisible}
