@@ -57,7 +57,7 @@
         "bracketSpacing": true,
         "arrowParens": "always",
         "proseWrap": "preserve",
-        "endOfLine": "auto",
+        "endOfLine": "lf",
         "importOrder": ["^@(.*)$", "^[./]", "^[../]"],
         "importOrderSeparation": true
       }
