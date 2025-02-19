@@ -41,6 +41,7 @@ import { ActivityIndicatorProvider } from "./contexts"
 import { BreezProvider } from "./contexts/BreezContext"
 import { ChatContextProvider } from "./screens/nip17-chat/chatContext"
 import { NotificationsProvider } from "./components/notification"
+import { SafeAreaProvider } from "react-native-safe-area-context"
 
 // FIXME should we only load the currently used local?
 // this would help to make the app load faster
@@ -55,39 +56,41 @@ loadAllLocales()
  */
 export const App = () => (
   /* eslint-disable-next-line react-native/no-inline-styles */
-  <GestureHandlerRootView style={{ flex: 1 }}>
-    <PolyfillCrypto />
-    <Provider store={store}>
-      <PersistentStateProvider>
-        <ChatContextProvider>
-          <ActivityIndicatorProvider>
-            <TypesafeI18n locale={detectDefaultLocale()}>
-              <ThemeProvider theme={theme}>
-                <GaloyClient>
-                  <FeatureFlagContextProvider>
-                    <ErrorBoundary FallbackComponent={ErrorScreen}>
-                      <NavigationContainerWrapper>
-                        <RootSiblingParent>
-                          <NotificationsProvider>
-                            <AppStateWrapper />
-                            <PushNotificationComponent />
-                            <BreezProvider>
-                              <RootStack />
-                            </BreezProvider>
-                            <GaloyToast />
-                            <NetworkErrorComponent />
-                          </NotificationsProvider>
-                        </RootSiblingParent>
-                      </NavigationContainerWrapper>
-                    </ErrorBoundary>
-                    <ThemeSyncGraphql />
-                  </FeatureFlagContextProvider>
-                </GaloyClient>
-              </ThemeProvider>
-            </TypesafeI18n>
-          </ActivityIndicatorProvider>
-        </ChatContextProvider>
-      </PersistentStateProvider>
-    </Provider>
-  </GestureHandlerRootView>
+  <SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <PolyfillCrypto />
+      <Provider store={store}>
+        <PersistentStateProvider>
+          <ChatContextProvider>
+            <ActivityIndicatorProvider>
+              <TypesafeI18n locale={detectDefaultLocale()}>
+                <ThemeProvider theme={theme}>
+                  <GaloyClient>
+                    <FeatureFlagContextProvider>
+                      <ErrorBoundary FallbackComponent={ErrorScreen}>
+                        <NavigationContainerWrapper>
+                          <RootSiblingParent>
+                            <NotificationsProvider>
+                              <AppStateWrapper />
+                              <PushNotificationComponent />
+                              <BreezProvider>
+                                <RootStack />
+                              </BreezProvider>
+                              <GaloyToast />
+                              <NetworkErrorComponent />
+                            </NotificationsProvider>
+                          </RootSiblingParent>
+                        </NavigationContainerWrapper>
+                      </ErrorBoundary>
+                      <ThemeSyncGraphql />
+                    </FeatureFlagContextProvider>
+                  </GaloyClient>
+                </ThemeProvider>
+              </TypesafeI18n>
+            </ActivityIndicatorProvider>
+          </ChatContextProvider>
+        </PersistentStateProvider>
+      </Provider>
+    </GestureHandlerRootView>
+  </SafeAreaProvider>
 )
