@@ -7410,6 +7410,10 @@ type RootTranslation = {
 		 */
 		level: RequiredParams<'level'>
 		/**
+		 * switchAccount
+		 */
+		'switchAccount': string
+		/**
 		 * A​c​c​o​u​n​t​ ​L​e​v​e​l
 		 */
 		accountLevel: string
@@ -7578,6 +7582,12 @@ type RootTranslation = {
 		 * C​o​p​y
 		 */
 		copy: string
+	}
+	ProfileScreen: {
+		/**
+		 * A​d​d​ Account
+		 */
+		addAccount: string
 	}
 	TotpRegistrationInitiateScreen: {
 		/**
@@ -16421,6 +16431,10 @@ export type TranslationFunctions = {
 		 */
 		level: (arg: { level: string }) => LocalizedString
 		/**
+		 * Switch Account
+		 */
+		'switchAccount': () => LocalizedString
+		/**
 		 * Account Level
 		 */
 		accountLevel: () => LocalizedString
@@ -16583,6 +16597,12 @@ export type TranslationFunctions = {
 		 * Copy
 		 */
 		copy: () => LocalizedString
+	}
+	ProfileScreen: {
+		/**
+		 * Add Account
+		 */
+		addAccount: () => LocalizedString
 	}
 	TotpRegistrationInitiateScreen: {
 		/**

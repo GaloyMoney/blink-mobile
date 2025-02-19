@@ -4,6 +4,7 @@ export default class KeyStoreWrapper {
   private static readonly IS_BIOMETRICS_ENABLED = "isBiometricsEnabled"
   private static readonly PIN = "PIN"
   private static readonly PIN_ATTEMPTS = "pinAttempts"
+  private static readonly TOKENS = "TOKENS"
 
   public static async getIsBiometricsEnabled(): Promise<boolean> {
     try {
@@ -97,6 +98,58 @@ export default class KeyStoreWrapper {
   public static async removePinAttempts(): Promise<boolean> {
     try {
       await RNSecureKeyStore.remove(KeyStoreWrapper.PIN_ATTEMPTS)
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  public static async setAllTokens(token: string): Promise<boolean> {
+    try {
+      if (!token || token.trim() === "") {
+        return false
+      }
+      const oldTokens = await this.getAllTokens()
+      const combinedToken = [...oldTokens, token]
+
+      await RNSecureKeyStore.set(KeyStoreWrapper.TOKENS, JSON.stringify(combinedToken), {
+        accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
+      })
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  public static async getAllTokens(): Promise<string[]> {
+    try {
+      const tokens = await RNSecureKeyStore.get(KeyStoreWrapper.TOKENS)
+      if (tokens) return JSON.parse(tokens)
+      return []
+    } catch {
+      return []
+    }
+  }
+
+  public static async updateAllTokens(token: string): Promise<boolean> {
+    try {
+      const updatedToken = (await this.getAllTokens()).filter((t) => t !== token)
+      await RNSecureKeyStore.set(
+        KeyStoreWrapper.TOKENS,
+        JSON.stringify([...updatedToken]),
+        {
+          accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
+        },
+      )
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  public static async removeAllTokens(): Promise<boolean> {
+    try {
+      await RNSecureKeyStore.remove(KeyStoreWrapper.TOKENS)
       return true
     } catch {
       return false

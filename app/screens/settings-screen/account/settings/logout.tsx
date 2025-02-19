@@ -8,6 +8,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 
 import { SettingsButton } from "../../button"
 import { useLoginMethods } from "../login-methods-hook"
+import KeyStoreWrapper from "../../../../utils/storage/secureStorage"
 
 export const LogOut = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
@@ -46,6 +47,7 @@ export const LogOut = () => {
 
   const logoutAction = async () => {
     await logout()
+    await KeyStoreWrapper.removeAllTokens()
     navigation.reset({
       index: 0,
       routes: [{ name: "getStarted" }],
