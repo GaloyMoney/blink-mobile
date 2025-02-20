@@ -2993,7 +2993,7 @@ export type OnChainUsdPaymentSendAsBtcDenominatedMutation = { readonly __typenam
 
 export type UsernameQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type UsernameQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null, readonly id?: string | null } | null };
+export type UsernameQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null, readonly id?: string | null, readonly phone?: string | null } | null };
 
 
 export type AccountDeleteMutationVariables = Exact<{ [key: string]: never; }>;
@@ -6759,6 +6759,7 @@ export const UsernameDocument = gql`
   me {
     username
     id
+    phone
   }
 }
     `;

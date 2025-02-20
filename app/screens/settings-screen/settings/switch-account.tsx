@@ -1,17 +1,17 @@
-import { ScrollView } from "react-native-gesture-handler"
-import { Screen } from "@app/components/screen"
-import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import React, { useState, useEffect, useRef } from "react"
+import { View, Button } from "react-native"
+import { ListItem, makeStyles, Icon, Avatar, Text, useTheme } from "@rneui/themed"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { ActivityIndicator, Button, TouchableOpacity, View } from "react-native"
-import { GaloyIcon } from "@app/components/atomic/galoy-icon"
-import { makeStyles, Text, useTheme } from "@rneui/themed"
-import { usePersistentStateContext } from "@app/store/persistent-state"
+import { Screen } from "@app/components/screen"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
+import { usePersistentStateContext } from "@app/store/persistent-state"
+import { SettingsRow } from "../row"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
-import { useApolloClient, gql } from "@apollo/client"
+import { GaloyIcon } from "@app/components/atomic/galoy-icon/galoy-icon"
+import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button/galoy-icon-button"
 import { useUsernameLazyQuery } from "@app/graphql/generated"
-import { useEffect, useRef, useState } from "react"
+import { useApolloClient, gql } from "@apollo/client"
 import KeyStoreWrapper from "../../../utils/storage/secureStorage"
 
 gql`
@@ -27,25 +27,27 @@ type ProfileProps = {
   username: string
   token: string
   selected?: boolean
+  avatarurl?: string
 }
 
-export const ProfileScreen: React.FC = () => {
+export const SwitchAccount: React.FC = () => {
   const styles = useStyles()
   const {
     theme: { colors },
   } = useTheme()
   const { LL } = useI18nContext()
-  const { persistentState } = usePersistentStateContext()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-
+  const { persistentState } = usePersistentStateContext()
   const { galoyAuthToken: curToken } = persistentState
 
-  const [profiles, setProfiles] = useState<ProfileProps[]>([])
   const [fetchUsername, { error, refetch }] = useUsernameLazyQuery({
     fetchPolicy: "no-cache",
   })
+  const [profiles, setProfiles] = useState<ProfileProps[]>([])
+  const [expanded, setExpanded] = useState(false)
   const [loading, setLoading] = useState<boolean>(true)
-  const prevTokenRef = useRef<string>(persistentState.galoyAuthToken) // Previous token state
+
+  const prevTokenRef = useRef<string>(persistentState.galoyAuthToken)
 
   useEffect(() => {
     const fetchUsernames = async () => {
@@ -55,19 +57,16 @@ export const ProfileScreen: React.FC = () => {
       const profiles: ProfileProps[] = []
       const allTokens = await KeyStoreWrapper.getAllTokens()
       let counter = 1
-      for (const token of allTokens) {
+      for await (const token of allTokens) {
         try {
           const { data } = await fetchUsername({
-            context: {
-              headers: {
-                authorization: `Bearer ${token}`,
-              },
-            },
+            context: { headers: { authorization: `Bearer ${token}` } },
           })
+
           if (data && data.me) {
             profiles.push({
               userid: data.me?.id,
-              username: data.me.username ? data.me.username : `Account ${counter++}`,
+              username: data.me.username || data.me.phone || `Account ${counter++}`,
               token,
               selected: token === curToken,
             })
@@ -120,39 +119,40 @@ export const ProfileScreen: React.FC = () => {
     )
   }
 
-  if (loading) {
-    return (
-      <Screen>
-        <View style={styles.loadingWrapper}>
-          <ActivityIndicator animating size="large" color={colors.primary} />
-        </View>
-      </Screen>
-    )
-  }
-
   const handleAddNew = async () => {
-    // navigation.navigate("getStarted")
-    console.log(profiles)
+    navigation.navigate("getStarted")
   }
 
   return (
-    <Screen keyboardShouldPersistTaps="handled">
-      <ScrollView contentContainerStyle={styles.outer}>
-        {profiles.map((profile, index) => {
-          return <Profile key={index} {...profile} />
-        })}
-        <GaloyPrimaryButton onPress={handleAddNew} containerStyle={styles.addNewButton}>
-          <GaloyIcon name="user" size={30} style={styles.icon} />
-          <Text>{LL.ProfileScreen.addNew()}</Text>
-        </GaloyPrimaryButton>
-      </ScrollView>
-    </Screen>
+    <View>
+      <SettingsRow
+        title={LL.AccountScreen.switchAccount()}
+        leftIcon="people"
+        action={() => setExpanded(!expanded)}
+        expanded={expanded}
+        loading={loading}
+      />
+
+      {expanded && (
+        <View>
+          {profiles.map((profile, index) => {
+            return <Profile key={index} {...profile} />
+          })}
+
+          <ListItem bottomDivider onPress={handleAddNew} containerStyle={styles.listItem}>
+            <Icon name="add" size={25} type="ionicon" />
+            <ListItem.Content>
+              <ListItem.Title>{LL.ProfileScreen.addAccount()}</ListItem.Title>
+            </ListItem.Content>
+          </ListItem>
+        </View>
+      )}
+    </View>
   )
 }
 
-const Profile: React.FC<ProfileProps> = ({ username, token, selected }) => {
+const Profile: React.FC<ProfileProps> = ({ username, token, selected, avatarurl }) => {
   const styles = useStyles()
-  const { LL } = useI18nContext()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { updateState } = usePersistentStateContext()
   const client = useApolloClient()
@@ -176,71 +176,43 @@ const Profile: React.FC<ProfileProps> = ({ username, token, selected }) => {
   }
 
   return (
-    <TouchableOpacity onPress={handleProfileSwitch}>
-      <View style={styles.profile}>
-        <View style={styles.iconContainer}>
-          {selected && (
-            <GaloyIcon name="check-circle" size={30} style={styles.checkIcon} />
-          )}
-        </View>
-        <Text>{username}</Text>
-        {!selected && (
-          <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-            <Text style={styles.logoutButtonText}>{LL.ProfileScreen.logout()}</Text>
-          </TouchableOpacity>
-        )}
-      </View>
-      <View style={styles.divider}></View>
-    </TouchableOpacity>
+    <ListItem
+      bottomDivider
+      onPress={handleProfileSwitch}
+      containerStyle={styles.listItem}
+      style={selected && styles.listItemSelected}
+    >
+      {avatarurl ? (
+        <Avatar rounded source={{ uri: avatarurl }} size={44} />
+      ) : (
+        <GaloyIcon name="user" size={30} backgroundColor={styles.iconColor.color} />
+      )}
+      <ListItem.Content>
+        <ListItem.Title>{username}</ListItem.Title>
+      </ListItem.Content>
+
+      <GaloyIconButton
+        name="close"
+        size="medium"
+        onPress={handleLogout}
+        backgroundColor={styles.iconColor.color}
+      />
+    </ListItem>
   )
 }
 
 const useStyles = makeStyles(({ colors }) => ({
-  outer: {
-    marginTop: 4,
-    paddingBottom: 20,
-    display: "flex",
-    flexDirection: "column",
-    rowGap: 12,
+  listItem: {
+    backgroundColor: colors.grey4,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.grey3,
   },
-  iconContainer: {
-    height: 30,
-    width: 30,
-    marginRight: 10,
-    justifyContent: "center",
-    alignItems: "center",
+  listItemSelected: {
+    borderLeftWidth: 5,
+    borderLeftColor: colors.primary,
   },
-  icon: {
-    marginRight: 10,
-  },
-  addNewButton: {
-    marginVertical: 20,
-    marginHorizontal: "auto",
-    width: 150,
-  },
-  divider: {
-    borderWidth: 1,
-    borderColor: colors.grey4,
-  },
-  profile: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 10,
-    marginHorizontal: 10,
-  },
-  checkIcon: {
-    color: colors._green,
-    margin: 10,
-  },
-  logoutButton: {
-    marginLeft: "auto",
-    marginRight: 10,
-  },
-  logoutButtonText: {
-    color: colors.primary,
-    fontSize: 20,
-    fontWeight: "bold",
+  iconColor: {
+    color: colors.grey5,
   },
   errorWrapper: {
     justifyContent: "center",
@@ -253,11 +225,5 @@ const useStyles = makeStyles(({ colors }) => ({
     fontWeight: "bold",
     fontSize: 18,
     marginBottom: 20,
-  },
-  loadingWrapper: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: "50%",
-    marginBottom: "50%",
   },
 }))

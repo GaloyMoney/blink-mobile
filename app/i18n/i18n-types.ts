@@ -7410,9 +7410,9 @@ type RootTranslation = {
 		 */
 		level: RequiredParams<'level'>
 		/**
-		 * switchAccount
+		 * S​w​i​t​c​h​ ​A​c​c​o​u​n​t
 		 */
-		'switchAccount': string
+		switchAccount: string
 		/**
 		 * A​c​c​o​u​n​t​ ​L​e​v​e​l
 		 */
@@ -7585,7 +7585,7 @@ type RootTranslation = {
 	}
 	ProfileScreen: {
 		/**
-		 * A​d​d​ Account
+		 * A​d​d​ ​A​c​c​o​u​n​t
 		 */
 		addAccount: string
 	}
@@ -16433,7 +16433,7 @@ export type TranslationFunctions = {
 		/**
 		 * Switch Account
 		 */
-		'switchAccount': () => LocalizedString
+		switchAccount: () => LocalizedString
 		/**
 		 * Account Level
 		 */

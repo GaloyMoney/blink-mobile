@@ -34,10 +34,6 @@ export const AccountBanner = () => {
 
   if (loading) return <Skeleton style={styles.outer} animation="pulse" />
 
-  const handleSwitchPress = () => {
-    navigation.navigate("profileScreen")
-  }
-
   return (
     <TouchableWithoutFeedback
       onPress={() =>
@@ -54,7 +50,7 @@ export const AccountBanner = () => {
           {isUserLoggedIn ? usernameTitle : LL.SettingsScreen.logInOrCreateAccount()}
         </Text>
         {isUserLoggedIn && (
-          <TouchableOpacity style={styles.switch} onPress={handleSwitchPress}>
+          <TouchableOpacity style={styles.switch}>
             {/* <GaloyIcon name="switch" size={20} color={colors.primary} /> */}
             <Text type="p2" style={{ color: colors.primary }}>
               {LL.AccountScreen.switchAccount()}
