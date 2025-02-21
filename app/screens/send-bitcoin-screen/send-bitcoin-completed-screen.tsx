@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react"
-import { View, Alert, TouchableOpacity } from "react-native"
+import { View, Alert, TouchableOpacity, Linking } from "react-native"
 import InAppReview from "react-native-in-app-review"
 import Clipboard from "@react-native-clipboard/clipboard"
 
@@ -28,6 +28,7 @@ import {
 } from "../transaction-detail-screen/format-time"
 import { SuggestionModal } from "./suggestion-modal"
 import { PaymentSendCompletedStatus } from "./use-send-payment"
+import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 
 type Props = {
   route: RouteProp<RootStackParamList, "sendBitcoinCompleted">
@@ -149,6 +150,41 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
               >
                 <GaloyIcon name={"copy-paste"} size={18} color={colors.primary} />
               </TouchableOpacity>
+            </View>
+          </View>
+        )
+      case "url":
+        return (
+          <View style={styles.successActionContainer}>
+            <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
+
+            <View style={styles.successActionFieldContainer}>
+              <View style={styles.disabledFieldBackground}>
+                <Text style={styles.truncatedText}>{successAction.url}</Text>
+              </View>
+
+              <View style={styles.iconActionsContainer}>
+                <TouchableOpacity
+                  style={styles.iconContainer}
+                  onPress={() =>
+                    copyToClipboard(
+                      successAction.url!,
+                      LL.SendBitcoinScreen.copiedDestination(),
+                    )
+                  }
+                  hitSlop={styles.hitSlopIcon}
+                >
+                  <GaloyIcon name="copy-paste" size={25} color={colors.primary} />
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.iconContainer}
+                  onPress={() => Linking.openURL(successAction.url!)}
+                  hitSlop={styles.hitSlopIcon}
+                >
+                  <GaloyIcon name="link" size={25} color={colors.primary} />
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         )
@@ -280,6 +316,17 @@ const useStyles = makeStyles(({ colors }) => ({
     justifyContent: "center",
     alignItems: "flex-start",
     paddingLeft: 20,
+  },
+  hitSlopIcon: {
+    top: 10,
+    bottom: 10,
+    left: 10,
+    right: 10,
+  },
+  iconActionsContainer: {
+    flexDirection: "column",
+    gap: 12,
+    alignItems: "center",
   },
 }))
 
