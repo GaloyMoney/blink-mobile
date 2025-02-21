@@ -4,7 +4,7 @@
  * If the user isn't logged in, it shows Login or Create Account
  * Later on, this will support switching between accounts
  */
-import { View, TouchableOpacity } from "react-native"
+import { View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
@@ -49,14 +49,6 @@ export const AccountBanner = () => {
         <Text type="p2">
           {isUserLoggedIn ? usernameTitle : LL.SettingsScreen.logInOrCreateAccount()}
         </Text>
-        {isUserLoggedIn && (
-          <TouchableOpacity style={styles.switch}>
-            {/* <GaloyIcon name="switch" size={20} color={colors.primary} /> */}
-            <Text type="p2" style={{ color: colors.primary }}>
-              {LL.AccountScreen.switchAccount()}
-            </Text>
-          </TouchableOpacity>
-        )}
       </View>
     </TouchableWithoutFeedback>
   )
@@ -77,12 +69,5 @@ const useStyles = makeStyles(() => ({
     flexDirection: "row",
     alignItems: "center",
     columnGap: 12,
-  },
-  switch: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    columnGap: 4,
-    marginLeft: "auto",
-  },
+  }
 }))

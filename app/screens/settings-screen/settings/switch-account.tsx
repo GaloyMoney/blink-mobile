@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
-import { View, Button } from "react-native"
+import { Button, ActivityIndicator } from "react-native"
 import { ListItem, makeStyles, Icon, Avatar, Text, useTheme } from "@rneui/themed"
 import { useI18nContext } from "@app/i18n/i18n-react"
-import { Screen } from "@app/components/screen"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { usePersistentStateContext } from "@app/store/persistent-state"
@@ -50,27 +49,34 @@ export const SwitchAccount: React.FC = () => {
   const prevTokenRef = useRef<string>(persistentState.galoyAuthToken)
 
   useEffect(() => {
-    const fetchUsernames = async () => {
+    ;(async () => {
+      if (!expanded) return
       setLoading(true)
+
       // Avoid duplicate account data
       setProfiles([])
       const profiles: ProfileProps[] = []
       const allTokens = await KeyStoreWrapper.getAllTokens()
       let counter = 1
+  
       for await (const token of allTokens) {
         try {
           const { data } = await fetchUsername({
             context: { headers: { authorization: `Bearer ${token}` } },
           })
 
-          if (data && data.me) {
+          if (data?.me) {
             profiles.push({
               userid: data.me?.id,
-              username: data.me.username || data.me.phone || `Account ${counter++}`,
+              username:
+                data.me.username ||
+                data.me.phone ||
+                `${LL.common.blinkUser()} ${counter++}`,
               token,
               selected: token === curToken,
             })
           } else {
+            // Remove token if invalid
             await KeyStoreWrapper.updateAllTokens(token)
           }
         } catch (err) {
@@ -79,9 +85,8 @@ export const SwitchAccount: React.FC = () => {
       }
       setProfiles(profiles)
       setLoading(false)
-    }
-    fetchUsernames()
-  }, [fetchUsername, curToken])
+    })()
+  }, [expanded, curToken, fetchUsername])
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("beforeRemove", (e) => {
@@ -101,53 +106,53 @@ export const SwitchAccount: React.FC = () => {
     prevTokenRef.current = persistentState.galoyAuthToken // Update previous token
   }, [persistentState.galoyAuthToken, navigation])
 
-  if (error) {
-    return (
-      <Screen>
-        <View style={styles.errorWrapper}>
-          <Text adjustsFontSizeToFit style={styles.errorText}>
-            {LL.ProfileScreen.error()}
-          </Text>
-          <Button
-            title="reload"
-            disabled={loading}
-            color={colors.error}
-            onPress={() => refetch()}
-          />
-        </View>
-      </Screen>
-    )
-  }
-
-  const handleAddNew = async () => {
+  const handleAddNew = () => {
     navigation.navigate("getStarted")
   }
 
   return (
-    <View>
+    <>
       <SettingsRow
         title={LL.AccountScreen.switchAccount()}
         leftIcon="people"
         action={() => setExpanded(!expanded)}
         expanded={expanded}
-        loading={loading}
       />
 
-      {expanded && (
-        <View>
-          {profiles.map((profile, index) => {
-            return <Profile key={index} {...profile} />
-          })}
+      {expanded &&
+        (loading ? (
+          <ActivityIndicator size="large" style={styles.loadingIcon} />
+        ) : error ? (
+          <>
+            <Text adjustsFontSizeToFit style={styles.errorText}>
+              {LL.ProfileScreen.error()}
+            </Text>
+            <Button
+              title="reload"
+              disabled={loading}
+              color={colors.error}
+              onPress={() => refetch()}
+            />
+          </>
+        ) : (
+          <>
+            {profiles.map((profile, index) => {
+              return <Profile key={index} {...profile} />
+            })}
 
-          <ListItem bottomDivider onPress={handleAddNew} containerStyle={styles.listItem}>
-            <Icon name="add" size={25} type="ionicon" />
-            <ListItem.Content>
-              <ListItem.Title>{LL.ProfileScreen.addAccount()}</ListItem.Title>
-            </ListItem.Content>
-          </ListItem>
-        </View>
-      )}
-    </View>
+            <ListItem
+              bottomDivider
+              onPress={handleAddNew}
+              containerStyle={styles.listItem}
+            >
+              <Icon name="add" size={25} type="ionicon" />
+              <ListItem.Content>
+                <ListItem.Title>{LL.ProfileScreen.addAccount()}</ListItem.Title>
+              </ListItem.Content>
+            </ListItem>
+          </>
+        ))}
+    </>
   )
 }
 
@@ -158,6 +163,7 @@ const Profile: React.FC<ProfileProps> = ({ username, token, selected, avatarurl 
   const client = useApolloClient()
 
   const handleLogout = async () => {
+    // Remove token
     await KeyStoreWrapper.updateAllTokens(token)
     navigation.goBack()
   }
@@ -191,12 +197,14 @@ const Profile: React.FC<ProfileProps> = ({ username, token, selected, avatarurl 
         <ListItem.Title>{username}</ListItem.Title>
       </ListItem.Content>
 
-      <GaloyIconButton
-        name="close"
-        size="medium"
-        onPress={handleLogout}
-        backgroundColor={styles.iconColor.color}
-      />
+      {!selected ? (
+        <GaloyIconButton
+          name="close"
+          size="medium"
+          onPress={handleLogout}
+          backgroundColor={styles.iconColor.color}
+        />
+      ) : null}
     </ListItem>
   )
 }
@@ -223,7 +231,11 @@ const useStyles = makeStyles(({ colors }) => ({
   errorText: {
     color: colors.error,
     fontWeight: "bold",
-    fontSize: 18,
-    marginBottom: 20,
+    fontSize: 15,
+    margin: 12,
+    textAlign: "center",
+  },
+  loadingIcon: {
+    margin: 15,
   },
 }))

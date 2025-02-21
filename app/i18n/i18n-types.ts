@@ -7588,6 +7588,10 @@ type RootTranslation = {
 		 * A​d​d​ ​A​c​c​o​u​n​t
 		 */
 		addAccount: string
+		/**
+		 * U​n​a​b​l​e​ ​t​o​ ​f​e​t​c​h​ ​p​r​o​f​i​l​e​s​ ​a​t​ ​t​h​i​s​ ​t​i​m​e
+		 */
+		error: string
 	}
 	TotpRegistrationInitiateScreen: {
 		/**
@@ -16603,6 +16607,10 @@ export type TranslationFunctions = {
 		 * Add Account
 		 */
 		addAccount: () => LocalizedString
+		/**
+		 * Unable to fetch profiles at this time
+		 */
+		error: () => LocalizedString
 	}
 	TotpRegistrationInitiateScreen: {
 		/**
