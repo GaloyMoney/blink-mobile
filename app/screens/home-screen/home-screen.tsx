@@ -28,12 +28,13 @@ import { getDefaultWallet } from "@app/graphql/wallets-utils"
 
 // hooks
 import { useBreez } from "@app/hooks"
-import useNostrProfile from "@app/hooks/use-nostr-profile"
 
 // store
 import { useAppDispatch } from "@app/store/redux"
 import { setUserData } from "@app/store/redux/slices/userSlice"
 import { usePersistentStateContext } from "@app/store/persistent-state"
+import { UsernameModal } from "../../components/home-screen/username-modal"
+import WelcomeUserScreen from "../../components/home-screen/welcome-user-screen"
 
 export const HomeScreen: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -41,7 +42,6 @@ export const HomeScreen: React.FC = () => {
   const styles = useStyles()
   const { colors } = useTheme().theme
   const { btcWallet } = useBreez()
-  const { nostrSecretKey } = useNostrProfile()
 
   // queries
   const { data: { hideBalance } = {} } = useHideBalanceQuery()
@@ -67,6 +67,8 @@ export const HomeScreen: React.FC = () => {
   const [isContentVisible, setIsContentVisible] = useState(false)
   const [refreshTriggered, setRefreshTriggered] = useState(false)
   const [isUnverifiedSeedModalVisible, setIsUnverifiedSeedModalVisible] = useState(false)
+  const [usernameModal, setUsernameModal] = useState(false)
+  const [showSplash, setShowSplash] = useState(false)
 
   const isBalanceVisible = hideBalance ?? false
 
@@ -74,6 +76,7 @@ export const HomeScreen: React.FC = () => {
     if (dataAuthed?.me) {
       dispatch(setUserData(dataAuthed.me))
       saveDefaultWallet()
+      if (!dataAuthed?.me?.username) setUsernameModal(true)
     }
   }, [dataAuthed?.me?.username])
 
@@ -106,9 +109,22 @@ export const HomeScreen: React.FC = () => {
       setTimeout(() => setRefreshTriggered(false), 1000)
     }
   }, [isAuthed, refetchAuthed, refetchRealtimePrice])
-
   return (
     <Screen>
+      <UsernameModal
+        isVisible={usernameModal}
+        closeModal={() => {
+          setUsernameModal(false)
+          setTimeout(() => setShowSplash(true), 1000)
+        }}
+      />
+      <WelcomeUserScreen
+        username={dataAuthed?.me?.username || "New User"}
+        visible={showSplash}
+        onComplete={() => {
+          setShowSplash(false)
+        }}
+      />
       <AccountCreateModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
       <UnVerifiedSeedModal
         isVisible={isUnverifiedSeedModalVisible}

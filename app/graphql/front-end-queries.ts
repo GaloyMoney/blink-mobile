@@ -216,4 +216,9 @@ gql`
       }
     }
   }
+  query myUserId {
+    me {
+      id
+    }
+  }
 `
