@@ -383,11 +383,11 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           const result = await requestInvoice(requestInvoiceParams)
 
           setPaymentDetail((prev) => {
-            if (!prev || !prev.setSuccessAction) {
-              return prev
+            if (prev?.setSuccessAction) {
+              return prev.setSuccessAction(result.successAction)
             }
 
-            return prev.setSuccessAction(result.successAction)
+            return prev
           })
 
           setIsLoadingLnurl(false)

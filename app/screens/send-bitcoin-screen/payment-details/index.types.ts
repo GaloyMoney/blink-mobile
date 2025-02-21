@@ -158,15 +158,10 @@ export type PaymentDetailSetAmount<T extends WalletCurrency> =
       destinationSpecifiedAmount: BtcMoneyAmount // the amount that comes from the destination
     }
 
-export type PaymentDetailSetSuccessAction<T extends WalletCurrency> =
-  | {
-      setSuccessAction: SetSuccessAction<T>
-      successAction?: LNURLPaySuccessAction
-    }
-  | {
-      setSuccessAction?: undefined
-      successAction?: undefined
-    }
+export type PaymentDetailSetSuccessAction<T extends WalletCurrency> = {
+  setSuccessAction?: SetSuccessAction<T>
+  successAction?: LNURLPaySuccessAction
+}
 
 // sendPayment and getFee are defined together
 export type PaymentDetailSendPaymentGetFee<T extends WalletCurrency> =

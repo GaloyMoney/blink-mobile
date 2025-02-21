@@ -99,8 +99,8 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
     }
   }, [LL, client, appConfig])
 
-  const FEEDBACK_DELAY = 3000
-  const CALLBACK_DELAY = 3000
+  const FEEDBACK_DELAY = 300000000
+  const CALLBACK_DELAY = 300000000
   useEffect(() => {
     if (!feedbackModalShown) {
       const feedbackTimeout = setTimeout(() => {
@@ -128,9 +128,7 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
   const SuccessActionComponent = () => {
     if (!successAction) return null
 
-    const originalText = successAction.message ?? ""
-    const truncatedText =
-      originalText.slice(0, 300) + (originalText.length > 300 ? "..." : "")
+    const { message } = successAction
 
     switch (successAction.tag) {
       case "message":
@@ -140,15 +138,12 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
 
             <View style={styles.successActionFieldContainer}>
               <View style={styles.disabledFieldBackground}>
-                <Text style={styles.truncatedText}>{truncatedText}</Text>
+                <Text style={styles.truncatedText}>{message ?? ""}</Text>
               </View>
               <TouchableOpacity
                 style={styles.iconContainer}
                 onPress={() =>
-                  copyToClipboard(
-                    originalText ?? "",
-                    LL.SendBitcoinScreen.copiedDestination(),
-                  )
+                  copyToClipboard(message ?? "", LL.SendBitcoinScreen.copiedDestination())
                 }
                 hitSlop={30}
               >

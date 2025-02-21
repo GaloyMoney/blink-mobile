@@ -53,7 +53,7 @@ export type RootStackParamList = {
   sendBitcoinCompleted: {
     arrivalAtMempoolEstimate?: number
     status: PaymentSendCompletedStatus
-    successAction?: LNURLPaySuccessAction | null
+    successAction?: LNURLPaySuccessAction
   }
   language: undefined
   currency: undefined
