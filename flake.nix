@@ -48,7 +48,7 @@
         };
 
         ignoringVulns = x: x // {meta = x.meta // {knownVulnerabilities = [];};};
-        ruby = pkgs."ruby-2.7.7".override {
+        ruby = pkgs."ruby-3.4.2".override {
           openssl = pkgs.openssl_1_1.overrideAttrs ignoringVulns;
         };
 
