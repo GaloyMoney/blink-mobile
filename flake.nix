@@ -147,7 +147,6 @@
             # XCode needs to find this Node binary
             if [[ $(uname) == "Darwin" ]]; then
               echo "export NODE_BINARY=\"$(which node)\"" > ios/.xcode.env.local
-              export SDKROOT=$(xcrun --sdk iphoneos --show-sdk-path)
             fi
 
             # Fix clang for XCode builds
