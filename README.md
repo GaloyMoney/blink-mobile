@@ -33,7 +33,7 @@ For Visual Studio Code users, there is a handy extension that makes it easy to l
 
 ## E2E testing:
 
-see [readme](docs/e2e-testing.md)
+see [readme](docs/e2e-testing.md).
 
 ## Local development with libraries
 
