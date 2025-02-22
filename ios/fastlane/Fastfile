@@ -66,6 +66,7 @@ platform :ios do
       is_key_content_base64: true
     )
 
+    xcodes(version: "15.3", select_for_current_build_only: true)
     upload_to_testflight(
       ipa: "./Blink.ipa",
       changelog: "No changelog"
@@ -81,6 +82,7 @@ platform :ios do
       is_key_content_base64: true
     )
 
+    xcodes(version: "15.3", select_for_current_build_only: true)
     upload_to_testflight(
       app_platform: "ios",
       distribute_only: true,
@@ -103,6 +105,7 @@ platform :ios do
       is_key_content_base64: true
     )
 
+    xcodes(version: "15.3", select_for_current_build_only: true)
     upload_to_app_store(
       platform: "ios",
       skip_binary_upload: true,
@@ -134,7 +137,7 @@ platform :ios do
 
   desc "Build for end to end tests"
   lane :build_e2e do
-    xcode_select("/Applications/Xcode-14.2.app")
+    xcodes(version: "15.3", select_for_current_build_only: true)
     match(type: "appstore", readonly: is_ci)
     gym(scheme: "GaloyApp", include_bitcode: false)
   end
