@@ -30,18 +30,18 @@ lsof -ti:8080,8081 | xargs kill -9 || true
 (nix develop -c yarn start) &
 until lsof -ti:8080,8081; do sleep 1; echo "waiting for metro to come up..." ; done
 
-# iOS Build
-export BUILD_NUMBER=$(cat ${CI_ROOT}/build-number-ios/ios)
-sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $PUBLIC_VERSION;/g" ios/GaloyApp.xcodeproj/project.pbxproj
-
-nix develop -c sh -c 'cd ios && bundle exec fastlane ios build --verbose'
-
 # Android Build
 export BUILD_NUMBER=$(cat ${CI_ROOT}/build-number-android/android)
 sed -i'' -e "s/versionCode .*$/versionCode $BUILD_NUMBER/g" android/app/build.gradle
 
 echo $ANDROID_KEYSTORE | base64 -d > android/app/release.keystore
 nix develop -c sh -c 'cd android && bundle exec fastlane android build --verbose'
+
+# iOS Build
+export BUILD_NUMBER=$(cat ${CI_ROOT}/build-number-ios/ios)
+sed -i'' -e "s/MARKETING_VERSION.*/MARKETING_VERSION = $PUBLIC_VERSION;/g" ios/GaloyApp.xcodeproj/project.pbxproj
+
+nix develop -c sh -c 'cd ios && bundle exec fastlane ios build --verbose'
 
 lsof -ti:8080,8081 | xargs kill -9 || true
 popd
