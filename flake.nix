@@ -47,11 +47,6 @@
           inherit system;
         };
 
-        ignoringVulns = x: x // {meta = x.meta // {knownVulnerabilities = [];};};
-        ruby = pkgs."ruby-3.4.2".override {
-          openssl = pkgs.openssl_1_1.overrideAttrs ignoringVulns;
-        };
-
         nativeBuildInputs = with pkgs;
           [
             nodePackages.node-gyp
