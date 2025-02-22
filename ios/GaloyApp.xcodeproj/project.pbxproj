@@ -196,7 +196,7 @@
 				ORGANIZATIONNAME = "Galoy Inc";
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = AYPCPV46WW;
+						DevelopmentTeam = UL7ND37VAD;
 						LastSwiftMigration = 1140;
 						ProvisioningStyle = Manual;
 					};
@@ -476,7 +476,7 @@
 				CURRENT_PROJECT_VERSION = 731;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = AYPCPV46WW;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = AYPCPV46WW;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = UL7ND37VAD;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = GaloyApp/Info.plist;
@@ -512,7 +512,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 731;
 				DEVELOPMENT_TEAM = AYPCPV46WW;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = AYPCPV46WW;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = UL7ND37VAD;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = GaloyApp/Info.plist;
@@ -565,10 +565,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development: Created via API (YQCPXDKD7Q)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development: Created via API (YQCPXDKD7Q)";
 				COPY_PHASE_STRIP = YES;
 				CXX = "";
-				DEVELOPMENT_TEAM = AYPCPV46WW;
+				DEVELOPMENT_TEAM = UL7ND37VAD;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
@@ -649,10 +650,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Distribution: BBW SA de CV (UL7ND37VAD)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution: BBW SA de CV (UL7ND37VAD)";
 				COPY_PHASE_STRIP = YES;
 				CXX = "";
-				DEVELOPMENT_TEAM = AYPCPV46WW;
+				DEVELOPMENT_TEAM = UL7ND37VAD;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
