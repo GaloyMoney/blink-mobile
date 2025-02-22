@@ -196,7 +196,7 @@
 				ORGANIZATIONNAME = "Galoy Inc";
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = AYPCPV46WW;
+						DevelopmentTeam = UL7ND37VAD;
 						LastSwiftMigration = 1140;
 						ProvisioningStyle = Manual;
 					};
@@ -475,8 +475,8 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 731;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = AYPCPV46WW;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = AYPCPV46WW;
+				DEVELOPMENT_TEAM = UL7ND37VAD;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = UL7ND37VAD;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = GaloyApp/Info.plist;
@@ -511,8 +511,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 731;
-				DEVELOPMENT_TEAM = AYPCPV46WW;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = AYPCPV46WW;
+				DEVELOPMENT_TEAM = UL7ND37VAD;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = UL7ND37VAD;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = GaloyApp/Info.plist;
@@ -568,7 +568,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				CXX = "";
-				DEVELOPMENT_TEAM = AYPCPV46WW;
+				DEVELOPMENT_TEAM = UL7ND37VAD;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
@@ -652,7 +652,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				CXX = "";
-				DEVELOPMENT_TEAM = AYPCPV46WW;
+				DEVELOPMENT_TEAM = UL7ND37VAD;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
