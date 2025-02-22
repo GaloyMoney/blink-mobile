@@ -136,7 +136,10 @@
             XCODE_VERSION="15.3"
             XCODE_BUILD="15E204a" # When updating xcode version, get it by running xcodes installed
             if [[ $(uname) == "Darwin" ]] && [ -z "$CI" ]; then
-              if ! xcodes installed | grep "$XCODE_VERSION ($XCODE_BUILD) (Selected)" -q; then
+              sudo xcodes install $XCODE_VERSION 2>/dev/null
+              sudo xcodes installed
+              sudo xcodes select $XCODE_VERSION
+              if ! sudo xcodes installed | grep "$XCODE_VERSION ($XCODE_BUILD) (Selected)" -q; then
                 echo -e "\e[1;33m================================================\e[0m"
                 echo -e "\e[1;33mXCode $XCODE_VERSION was not found or is not selected\e[0m"
                 echo -e "\e[1;33mYou can install it with \e[0m\e[1;32mxcodes install $XCODE_VERSION\e[0m\e[1;33m and select it with \e[0m\e[1;32mxcodes select $XCODE_VERSION\e[0m\e[1;33m\e[0m"
