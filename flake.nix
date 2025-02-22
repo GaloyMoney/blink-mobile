@@ -78,7 +78,6 @@
             xcodes
             darwin.apple_sdk.frameworks.SystemConfiguration
             pkgs.darwin.apple_sdk.frameworks.CoreFoundation
-            pkgs.libcxx
           ];
       in {
         packages = {
@@ -117,9 +116,6 @@
           ANDROID_SDK_ROOT = "${pkgs.android-sdk}/share/android-sdk";
           JAVA_HOME = pkgs.jdk17.home;
           LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
-          CPATH = lib.optionalString pkgs.stdenv.isDarwin "${pkgs.libcxx.dev}/include";
-          LIBRARY_PATH = lib.optionalString pkgs.stdenv.isDarwin "${pkgs.libcxx}/lib";
-          CXXFLAGS = lib.optionalString pkgs.stdenv.isDarwin "-stdlib=libc++";
 
           shellHook = ''
             export HOST_PROJECT_PATH="$(pwd)"
@@ -150,9 +146,8 @@
 
             # XCode needs to find this Node binary
             if [[ $(uname) == "Darwin" ]]; then
-              export CC="${pkgs.clang}/bin/clang"
-              export CXX="${pkgs.clang}/bin/clang++"
               echo "export NODE_BINARY=\"$(which node)\"" > ios/.xcode.env.local
+              export SDKROOT=$(xcrun --sdk iphoneos --show-sdk-path)
             fi
 
             # Fix clang for XCode builds
