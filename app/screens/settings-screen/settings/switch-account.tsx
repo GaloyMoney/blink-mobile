@@ -1,6 +1,14 @@
 import React, { useState, useEffect, useRef } from "react"
 import { Button, ActivityIndicator } from "react-native"
-import { ListItem, makeStyles, Icon, Avatar, Text, useTheme } from "@rneui/themed"
+import {
+  ListItem,
+  makeStyles,
+  Icon,
+  Avatar,
+  Text,
+  useTheme,
+  Overlay,
+} from "@rneui/themed"
 import { useI18nContext } from "@app/i18n/i18n-react"
 import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -115,8 +123,8 @@ export const SwitchAccount: React.FC = () => {
 
   useEffect(() => {
     if (prevTokenRef.current !== persistentState.galoyAuthToken) {
-      // Navigate back when token is updated and different from the previous token
-      navigation.goBack()
+      // Navigate to home when token is updated and different from the previous token
+      navigation.navigate("Primary")
     }
     prevTokenRef.current = persistentState.galoyAuthToken // Update previous token
   }, [persistentState.galoyAuthToken, navigation])
@@ -136,7 +144,11 @@ export const SwitchAccount: React.FC = () => {
 
       {expanded &&
         (loading ? (
-          <ActivityIndicator size="large" style={styles.loadingIcon} />
+          <ActivityIndicator
+            size="large"
+            style={styles.loadingIcon}
+            color={styles.loadingIconColor.color}
+          />
         ) : error ? (
           <>
             <Text adjustsFontSizeToFit style={styles.errorText}>
@@ -173,7 +185,11 @@ export const SwitchAccount: React.FC = () => {
 
 const Profile: React.FC<ProfileProps> = ({ username, token, selected, avatarurl }) => {
   const styles = useStyles()
+  const { LL } = useI18nContext()
+
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const [logoutLoading, setLogoutLoading] = useState<boolean>(false)
+  const [switchLoading, setSwitchLoading] = useState<boolean>(false)
   const { updateState } = usePersistentStateContext()
   const client = useApolloClient()
   const [userLogoutMutation] = useUserLogoutMutation({
@@ -181,10 +197,13 @@ const Profile: React.FC<ProfileProps> = ({ username, token, selected, avatarurl 
   })
 
   const handleLogout = async () => {
+    setLogoutLoading(true)
     await logOut(token)
+
     // Remove token
     await KeyStoreWrapper.updateAllTokens(token)
-    navigation.goBack()
+    navigation.navigate("Primary")
+    setLogoutLoading(false)
   }
   const logOut = async (deviceToken: string) => {
     try {
@@ -209,6 +228,7 @@ const Profile: React.FC<ProfileProps> = ({ username, token, selected, avatarurl 
   }
 
   const handleProfileSwitch = () => {
+    setSwitchLoading(true)
     updateState((state) => {
       if (state) {
         return {
@@ -219,33 +239,46 @@ const Profile: React.FC<ProfileProps> = ({ username, token, selected, avatarurl 
       return state
     })
     client.clearStore() // clear cache to load fresh data using new token
+    setSwitchLoading(false)
   }
 
   return (
-    <ListItem
-      bottomDivider
-      onPress={handleProfileSwitch}
-      containerStyle={styles.listItem}
-      style={selected && styles.listItemSelected}
-    >
-      {avatarurl ? (
-        <Avatar rounded source={{ uri: avatarurl }} size={44} />
-      ) : (
-        <GaloyIcon name="user" size={30} backgroundColor={styles.iconColor.color} />
-      )}
-      <ListItem.Content>
-        <ListItem.Title>{username}</ListItem.Title>
-      </ListItem.Content>
+    <>
+      <ListItem
+        bottomDivider
+        onPress={handleProfileSwitch}
+        containerStyle={styles.listItem}
+        style={selected && styles.listItemSelected}
+      >
+        {avatarurl ? (
+          <Avatar rounded source={{ uri: avatarurl }} size={44} />
+        ) : (
+          <GaloyIcon name="user" size={30} backgroundColor={styles.iconColor.color} />
+        )}
+        <ListItem.Content>
+          <ListItem.Title>{username}</ListItem.Title>
+        </ListItem.Content>
 
-      {selected === false ? (
-        <GaloyIconButton
-          name="close"
-          size="medium"
-          onPress={handleLogout}
-          backgroundColor={styles.iconColor.color}
-        />
-      ) : null}
-    </ListItem>
+        {selected === false ? (
+          <>
+            {logoutLoading ? (
+              <ActivityIndicator size="large" color={styles.loadingIconColor.color} />
+            ) : (
+              <GaloyIconButton
+                name="close"
+                size="medium"
+                onPress={handleLogout}
+                backgroundColor={styles.iconColor.color}
+              />
+            )}
+          </>
+        ) : null}
+      </ListItem>
+      <Overlay isVisible={switchLoading} overlayStyle={styles.overlayStyle}>
+        <ActivityIndicator size={50} color={styles.loadingIconColor.color} />
+        <Text>{LL.AccountScreen.pleaseWait()}</Text>
+      </Overlay>
+    </>
   )
 }
 
@@ -277,5 +310,12 @@ const useStyles = makeStyles(({ colors }) => ({
   },
   loadingIcon: {
     margin: 15,
+  },
+  loadingIconColor: {
+    color: colors.primary,
+  },
+  overlayStyle: {
+    backgroundColor: "transparent",
+    shadowColor: "transparent",
   },
 }))

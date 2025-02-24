@@ -2376,6 +2376,7 @@ const en: BaseTranslation = {
     loginMethods: "Login Methods",
     level: "Level {level: string}",
     switchAccount: "Switch Account",
+    pleaseWait: "Please Wait.",
     accountLevel: "Account Level",
     upgrade: "Upgrade your account",
     logOutAndDeleteLocalData: "Log out and clear all local data",
