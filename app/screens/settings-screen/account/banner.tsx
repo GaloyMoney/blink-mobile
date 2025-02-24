@@ -19,9 +19,6 @@ import { Text, makeStyles, useTheme, Skeleton } from "@rneui/themed"
 export const AccountBanner = () => {
   const styles = useStyles()
   const { LL } = useI18nContext()
-  const {
-    theme: { colors },
-  } = useTheme()
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
 
@@ -69,5 +66,5 @@ const useStyles = makeStyles(() => ({
     flexDirection: "row",
     alignItems: "center",
     columnGap: 12,
-  }
+  },
 }))

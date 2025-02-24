@@ -58,8 +58,8 @@ export const SwitchAccount: React.FC = () => {
       const profiles: ProfileProps[] = []
       const allTokens = await KeyStoreWrapper.getAllTokens()
       let counter = 1
-  
-      for await (const token of allTokens) {
+
+      for (const token of allTokens) {
         try {
           const { data } = await fetchUsername({
             context: { headers: { authorization: `Bearer ${token}` } },
@@ -68,13 +68,11 @@ export const SwitchAccount: React.FC = () => {
           if (data?.me) {
             profiles.push({
               userid: data.me?.id,
-              username:
-                data.me.username ||
-                data.me.phone ||
-                `${LL.common.blinkUser()} ${counter++}`,
+              username: data.me?.username || data.me?.phone || `Account ${counter}`,
               token,
               selected: token === curToken,
             })
+            counter = counter + 1
           } else {
             // Remove token if invalid
             await KeyStoreWrapper.updateAllTokens(token)
@@ -87,16 +85,6 @@ export const SwitchAccount: React.FC = () => {
       setLoading(false)
     })()
   }, [expanded, curToken, fetchUsername])
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("beforeRemove", (e) => {
-      if (loading) {
-        e.preventDefault()
-      }
-    })
-
-    return unsubscribe
-  }, [navigation, loading])
 
   useEffect(() => {
     if (prevTokenRef.current !== persistentState.galoyAuthToken) {
@@ -197,7 +185,7 @@ const Profile: React.FC<ProfileProps> = ({ username, token, selected, avatarurl 
         <ListItem.Title>{username}</ListItem.Title>
       </ListItem.Content>
 
-      {!selected ? (
+      {selected === false ? (
         <GaloyIconButton
           name="close"
           size="medium"
