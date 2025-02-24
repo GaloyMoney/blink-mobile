@@ -9,7 +9,7 @@ import { SettingsRow } from "../row"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon/galoy-icon"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button/galoy-icon-button"
-import { useUsernameLazyQuery } from "@app/graphql/generated"
+import { UsernameQuery, useUsernameLazyQuery } from "@app/graphql/generated"
 import { useApolloClient, gql } from "@apollo/client"
 import KeyStoreWrapper from "../../../utils/storage/secureStorage"
 
@@ -50,13 +50,11 @@ export const SwitchAccount: React.FC = () => {
 
   useEffect(() => {
     ;(async () => {
-      if (!expanded) return
       setLoading(true)
-
-      // Avoid duplicate account data
+      if (!expanded) return
       setProfiles([])
       const profiles: ProfileProps[] = []
-      const allTokens = await KeyStoreWrapper.getAllTokens()
+      const allTokens = (await KeyStoreWrapper.getAllTokens()).reverse()
       let counter = 1
 
       for (const token of allTokens) {
@@ -66,12 +64,14 @@ export const SwitchAccount: React.FC = () => {
           })
 
           if (data?.me) {
-            profiles.push({
-              userid: data.me?.id,
-              username: data.me?.username || data.me?.phone || `Account ${counter}`,
-              token,
-              selected: token === curToken,
-            })
+            const existingProfileIndex = findExistingProfileIndex(profiles, data)
+
+            if (existingProfileIndex === -1) {
+              profiles.push(createProfile(data, token, counter))
+            } else {
+              // Avoid duplicate account data and clear store
+              await KeyStoreWrapper.updateAllTokens(token)
+            }
             counter = counter + 1
           } else {
             // Remove token if invalid
@@ -85,6 +85,27 @@ export const SwitchAccount: React.FC = () => {
       setLoading(false)
     })()
   }, [expanded, curToken, fetchUsername])
+
+  const findExistingProfileIndex = (
+    profiles: ProfileProps[],
+    userData: UsernameQuery,
+  ) => {
+    return profiles.findIndex(
+      (profile) =>
+        profile.username === userData.me?.username ||
+        profile.username === userData.me?.phone,
+    )
+  }
+
+  const createProfile = (userData: UsernameQuery, token: string, counter: number) => ({
+    userid: userData.me?.id,
+    username:
+      userData.me?.username ||
+      userData.me?.phone ||
+      `${LL.common.blinkUser()} ${counter}`,
+    token,
+    selected: token === curToken,
+  })
 
   useEffect(() => {
     if (prevTokenRef.current !== persistentState.galoyAuthToken) {
