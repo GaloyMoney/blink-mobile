@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react"
 import { View, Image, Alert, ScrollView, ActivityIndicator } from "react-native"
 import { useFocusEffect, useNavigation } from "@react-navigation/native"
-import { Button, makeStyles, Text, useTheme } from "@rneui/themed"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import crashlytics from "@react-native-firebase/crashlytics"
@@ -27,6 +27,7 @@ import { icons } from "@app/components/atomic/galoy-icon"
 import { ModalNfcFlashcard } from "@app/components/modal-nfc"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import { SaveCardModal } from "@app/components/card"
 
 // utils
 import {
@@ -58,8 +59,9 @@ export const CardScreen = () => {
   const { LL } = useI18nContext()
   const { formatMoneyAmount } = useDisplayCurrency()
   const { convertMoneyAmount } = usePriceConversion("network-only")
-  const { persistentState, updateState } = usePersistentStateContext()
+  const { updateState } = usePersistentStateContext()
 
+  const [saveCardVisible, setSaveCardVisible] = useState(false)
   const [displayReceiveNfc, setDisplayReceiveNfc] = useState(false)
   const [cardHtml, setCardHtml] = useState<string | null>(null)
   const [cardTag, setCardTag] = useState<string | null>(null)
@@ -81,26 +83,38 @@ export const CardScreen = () => {
   )
 
   const loadCardHtmlFromStorage = async () => {
-    setLoading(true)
-    const storedCardHtml = await AsyncStorage.getItem(CARD_HTML_STORAGE_KEY)
-    const storedCardTag = await AsyncStorage.getItem(CARD_TAG_STORAGE_KEY)
-    if (storedCardHtml && storedCardTag) {
-      processCardHtml(storedCardHtml)
-      setCardTag(storedCardTag)
-    } else {
-      setDisplayReceiveNfc(true)
+    try {
+      setLoading(true)
+      const storedCardHtml = await AsyncStorage.getItem(CARD_HTML_STORAGE_KEY)
+      const storedCardTag = await AsyncStorage.getItem(CARD_TAG_STORAGE_KEY)
+      setLoading(false)
+      if (storedCardHtml && storedCardTag) {
+        processCardHtml(storedCardHtml)
+        setCardTag(storedCardTag)
+      } else {
+        setDisplayReceiveNfc(true)
+      }
+    } catch (err) {
+      console.log("Get cached card error: ", err)
+      setLoading(false)
     }
-    setLoading(false)
+  }
+
+  const saveCard = async () => {
+    setSaveCardVisible(false)
+    if (cardTag && cardHtml) {
+      await AsyncStorage.setItem(CARD_TAG_STORAGE_KEY, cardTag) // Save cardTag to AsyncStorage
+      await AsyncStorage.setItem(CARD_HTML_STORAGE_KEY, cardHtml) // Save cardHtml to AsyncStorage
+    }
   }
 
   const setTagId = async (tag: string) => {
-    await AsyncStorage.setItem(CARD_TAG_STORAGE_KEY, tag) // Save cardHtml to AsyncStorage
     setCardTag(tag)
   }
 
   const handleCardHtmlUpdate = async (html: string) => {
-    await AsyncStorage.setItem(CARD_HTML_STORAGE_KEY, html) // Save cardHtml to AsyncStorage
     processCardHtml(html)
+    if (!cardHtml) setSaveCardVisible(true)
   }
 
   const processCardHtml = (html: string) => {
@@ -276,6 +290,11 @@ export const CardScreen = () => {
           setIsActive={setDisplayReceiveNfc}
           onCardHtmlUpdate={handleCardHtmlUpdate}
           setTagId={setTagId}
+        />
+        <SaveCardModal
+          isVisible={saveCardVisible}
+          onSave={saveCard}
+          onCancel={() => setSaveCardVisible(false)}
         />
       </Screen>
     )
