@@ -9,9 +9,15 @@ import { SettingsRow } from "../row"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon/galoy-icon"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button/galoy-icon-button"
-import { UsernameQuery, useUsernameLazyQuery } from "@app/graphql/generated"
+import {
+  UsernameQuery,
+  useUserLogoutMutation,
+  useUsernameLazyQuery,
+} from "@app/graphql/generated"
 import { useApolloClient, gql } from "@apollo/client"
 import KeyStoreWrapper from "../../../utils/storage/secureStorage"
+import { logLogout } from "@app/utils/analytics"
+import crashlytics from "@react-native-firebase/crashlytics"
 
 gql`
   query username {
@@ -170,11 +176,36 @@ const Profile: React.FC<ProfileProps> = ({ username, token, selected, avatarurl 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { updateState } = usePersistentStateContext()
   const client = useApolloClient()
+  const [userLogoutMutation] = useUserLogoutMutation({
+    fetchPolicy: "no-cache",
+  })
 
   const handleLogout = async () => {
+    await logOut(token)
     // Remove token
     await KeyStoreWrapper.updateAllTokens(token)
     navigation.goBack()
+  }
+  const logOut = async (deviceToken: string) => {
+    try {
+      logLogout()
+      await Promise.race([
+        userLogoutMutation({
+          variables: { input: { deviceToken } },
+          context: { headers: { authorization: `Bearer ${token}` } },
+        }),
+        new Promise((_, reject) => {
+          setTimeout(() => {
+            reject(new Error("Logout mutation timeout"))
+          }, 2000)
+        }),
+      ])
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        crashlytics().recordError(err)
+        console.debug({ err }, `error logout`)
+      }
+    }
   }
 
   const handleProfileSwitch = () => {
