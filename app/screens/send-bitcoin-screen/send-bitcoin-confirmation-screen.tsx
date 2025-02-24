@@ -155,6 +155,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
                 arrivalAtMempoolEstimate: extraInfo?.arrivalAtMempoolEstimate,
                 status,
                 successAction: paymentDetail?.successAction,
+                preimage: extraInfo?.preimage,
               },
             },
           ]
@@ -201,6 +202,7 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
     LL,
     navigation,
     paymentDetail.paymentType,
+    paymentDetail?.successAction,
     sendPayment,
     setPaymentError,
     sendingWalletDescriptor?.currency,

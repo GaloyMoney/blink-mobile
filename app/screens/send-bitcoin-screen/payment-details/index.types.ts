@@ -89,6 +89,7 @@ export type SendPaymentMutation = (
 
 export type PaymentSendExtraInfo = {
   arrivalAtMempoolEstimate?: number
+  preimage?: string | null
 }
 
 export type SetAmount<T extends WalletCurrency> = (

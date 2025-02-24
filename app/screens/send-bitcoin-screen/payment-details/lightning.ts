@@ -258,6 +258,9 @@ export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
     return {
       status: data?.lnInvoicePaymentSend.status,
       errors: data?.lnInvoicePaymentSend.errors,
+      extraInfo: {
+        preimage: data?.lnInvoicePaymentSend.transaction?.settlementVia.preImage,
+      },
     }
   }
 

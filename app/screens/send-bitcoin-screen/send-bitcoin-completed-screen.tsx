@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from "react"
+import { utils } from "lnurl-pay"
 import { View, Alert, TouchableOpacity, Linking } from "react-native"
 import InAppReview from "react-native-in-app-review"
 import Clipboard from "@react-native-clipboard/clipboard"
@@ -28,7 +29,6 @@ import {
 } from "../transaction-detail-screen/format-time"
 import { SuggestionModal } from "./suggestion-modal"
 import { PaymentSendCompletedStatus } from "./use-send-payment"
-import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button"
 
 type Props = {
   route: RouteProp<RootStackParamList, "sendBitcoinCompleted">
@@ -39,7 +39,12 @@ type Props = {
 type StatusProcessed = "SUCCESS" | "PENDING" | "QUEUED"
 
 const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
-  const { arrivalAtMempoolEstimate, status: statusRaw, successAction } = route.params
+  const {
+    arrivalAtMempoolEstimate,
+    status: statusRaw,
+    successAction,
+    preimage,
+  } = route.params
   const styles = useStyles()
   const {
     theme: { colors },
@@ -130,21 +135,29 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
     if (!successAction) return null
 
     const { message } = successAction
+    let decryptedMessage = null
+
+    if (successAction.tag === "aes" && preimage) {
+      decryptedMessage = utils.decipherAES({
+        successAction,
+        preimage,
+      })
+    }
 
     switch (successAction.tag) {
       case "message":
-        return (
+        return message ? (
           <View style={styles.successActionContainer}>
             <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
 
             <View style={styles.successActionFieldContainer}>
               <View style={styles.disabledFieldBackground}>
-                <Text style={styles.truncatedText}>{message ?? ""}</Text>
+                <Text style={styles.truncatedText}>{message}</Text>
               </View>
               <TouchableOpacity
                 style={styles.iconContainer}
                 onPress={() =>
-                  copyToClipboard(message ?? "", LL.SendBitcoinScreen.copiedDestination())
+                  copyToClipboard(message, LL.SendBitcoinScreen.copiedDestination())
                 }
                 hitSlop={30}
               >
@@ -152,7 +165,7 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
               </TouchableOpacity>
             </View>
           </View>
-        )
+        ) : null
       case "url":
         return (
           <View style={styles.successActionContainer}>
@@ -188,6 +201,30 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
             </View>
           </View>
         )
+      case "aes":
+        return decryptedMessage ? (
+          <View style={styles.successActionContainer}>
+            <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
+
+            <View style={styles.successActionFieldContainer}>
+              <View style={styles.disabledFieldBackground}>
+                <Text style={styles.truncatedText}>{decryptedMessage}</Text>
+              </View>
+              <TouchableOpacity
+                style={styles.iconContainer}
+                onPress={() =>
+                  copyToClipboard(
+                    decryptedMessage,
+                    LL.SendBitcoinScreen.copiedDestination(),
+                  )
+                }
+                hitSlop={30}
+              >
+                <GaloyIcon name={"copy-paste"} size={18} color={colors.primary} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        ) : null
       default:
         return null
     }

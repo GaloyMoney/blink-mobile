@@ -54,6 +54,7 @@ export type RootStackParamList = {
     arrivalAtMempoolEstimate?: number
     status: PaymentSendCompletedStatus
     successAction?: LNURLPaySuccessAction
+    preimage?: string
   }
   language: undefined
   currency: undefined
