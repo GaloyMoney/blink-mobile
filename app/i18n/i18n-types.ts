@@ -7410,6 +7410,10 @@ type RootTranslation = {
 		 */
 		level: RequiredParams<'level'>
 		/**
+		 * s​w​i​t​c​h
+		 */
+		'switch': string
+		/**
 		 * A​c​c​o​u​n​t​ ​L​e​v​e​l
 		 */
 		accountLevel: string
@@ -7578,6 +7582,20 @@ type RootTranslation = {
 		 * C​o​p​y
 		 */
 		copy: string
+	}
+	ProfileScreen: {
+		/**
+		 * A​d​d​ ​n​e​w
+		 */
+		addNew: string
+		/**
+		 * L​o​g​o​u​t
+		 */
+		logout: string
+		/**
+		 * U​n​a​b​l​e​ ​t​o​ ​f​e​t​c​h​ ​p​r​o​f​i​l​e​s​ ​a​t​ ​t​h​i​s​ ​t​i​m​e
+		 */
+		error: string
 	}
 	TotpRegistrationInitiateScreen: {
 		/**
@@ -8397,6 +8415,10 @@ type RootTranslation = {
 		 * P​r​e​i​m​a​g​e​ ​/​ ​P​r​o​o​f​ ​o​f​ ​P​a​y​m​e​n​t
 		 */
 		preimageProofOfPayment: string
+		/**
+		 * P​r​o​f​i​l​e​s
+		 */
+		profile: string
 		/**
 		 * R​a​t​e
 		 */
@@ -16421,6 +16443,10 @@ export type TranslationFunctions = {
 		 */
 		level: (arg: { level: string }) => LocalizedString
 		/**
+		 * switch
+		 */
+		'switch': () => LocalizedString
+		/**
 		 * Account Level
 		 */
 		accountLevel: () => LocalizedString
@@ -16583,6 +16609,20 @@ export type TranslationFunctions = {
 		 * Copy
 		 */
 		copy: () => LocalizedString
+	}
+	ProfileScreen: {
+		/**
+		 * Add new
+		 */
+		addNew: () => LocalizedString
+		/**
+		 * Logout
+		 */
+		logout: () => LocalizedString
+		/**
+		 * Unable to fetch profiles at this time
+		 */
+		error: () => LocalizedString
 	}
 	TotpRegistrationInitiateScreen: {
 		/**
@@ -17387,6 +17427,10 @@ export type TranslationFunctions = {
 		 * Preimage / Proof of Payment
 		 */
 		preimageProofOfPayment: () => LocalizedString
+		/**
+		 * Profiles
+		 */
+		profile: () => LocalizedString
 		/**
 		 * Rate
 		 */
