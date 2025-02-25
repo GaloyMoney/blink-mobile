@@ -68,8 +68,14 @@ export const SwitchAccount: React.FC = () => {
       if (!expanded) return
       setProfiles([])
       const profiles: ProfileProps[] = []
-      const allTokens = (await KeyStoreWrapper.getAllTokens()).reverse()
+      let allTokens = (await KeyStoreWrapper.getAllTokens()).reverse()
       let counter = 1
+
+      // Support old session
+      if (allTokens.length <= 0 && curToken) {
+        await KeyStoreWrapper.setAllTokens(curToken)
+        allTokens = [curToken]
+      }
 
       for (const token of allTokens) {
         try {
