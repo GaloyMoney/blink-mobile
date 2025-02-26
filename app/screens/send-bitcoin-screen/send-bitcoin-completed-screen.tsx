@@ -168,38 +168,45 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
         ) : null
       case "url":
         return (
-          <View style={styles.successActionContainer}>
-            <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
-
-            <View style={styles.successActionFieldContainer}>
-              <View style={styles.disabledFieldBackground}>
-                <Text style={styles.truncatedText}>{successAction.url}</Text>
-              </View>
-
-              <View style={styles.iconActionsContainer}>
-                <TouchableOpacity
-                  style={styles.iconContainer}
-                  onPress={() =>
-                    copyToClipboard(
-                      successAction.url!,
-                      LL.SendBitcoinScreen.copiedDestination(),
-                    )
-                  }
-                  hitSlop={styles.hitSlopIcon}
-                >
-                  <GaloyIcon name="copy-paste" size={25} color={colors.primary} />
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={styles.iconContainer}
-                  onPress={() => Linking.openURL(successAction.url!)}
-                  hitSlop={styles.hitSlopIcon}
-                >
-                  <GaloyIcon name="link" size={25} color={colors.primary} />
-                </TouchableOpacity>
-              </View>
+          <>
+            <View style={styles.successActionContainer}>
+              {successAction?.description && successAction?.description.length > 0 && (
+                <View>
+                  <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
+                  <View style={styles.successActionFieldContainer}>
+                    <View style={styles.disabledFieldBackground}>
+                      <Text style={styles.truncatedText}>
+                        {successAction.description}
+                      </Text>
+                    </View>
+                    <View style={styles.iconActionsContainer}>
+                      <TouchableOpacity
+                        style={styles.iconContainer}
+                        onPress={() =>
+                          copyToClipboard(
+                            successAction.description!,
+                            LL.SendBitcoinScreen.copiedDestination(),
+                          )
+                        }
+                        hitSlop={styles.hitSlopIcon}
+                      >
+                        <GaloyIcon name="copy-paste" size={25} color={colors.primary} />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              )}
+              <TouchableOpacity
+                style={styles.copyUrlButton}
+                onPress={() => Linking.openURL(successAction.url!)}
+                hitSlop={styles.hitSlopIcon}
+              >
+                <Text style={styles.copyUrlButtonText}>
+                  {LL.ScanningQRCodeScreen.openLinkTitle()}
+                </Text>
+              </TouchableOpacity>
             </View>
-          </View>
+          </>
         )
       case "aes":
         return decryptedMessage ? (
@@ -342,6 +349,7 @@ const useStyles = makeStyles(({ colors }) => ({
     alignItems: "center",
     padding: 14,
     minHeight: 60,
+    marginBottom: 12,
   },
   disabledFieldBackground: {
     flex: 1,
@@ -364,6 +372,19 @@ const useStyles = makeStyles(({ colors }) => ({
     flexDirection: "column",
     gap: 12,
     alignItems: "center",
+  },
+  copyUrlButton: {
+    backgroundColor: colors.grey5,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 8,
+  },
+  copyUrlButtonText: {
+    fontSize: 16,
+    textAlign: "center",
   },
 }))
 
