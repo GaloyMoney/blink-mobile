@@ -1,10 +1,13 @@
 import React, { useCallback, useEffect } from "react"
-import { View, Alert } from "react-native"
+import { utils } from "lnurl-pay"
+import { View, Alert, TouchableOpacity, Linking } from "react-native"
 import InAppReview from "react-native-in-app-review"
+import Clipboard from "@react-native-clipboard/clipboard"
 
 import { useApolloClient } from "@apollo/client"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { Screen } from "@app/components/screen"
+import { toastShow } from "@app/utils/toast"
 import {
   SuccessIconAnimation,
   CompletedTextAnimation,
@@ -36,7 +39,12 @@ type Props = {
 type StatusProcessed = "SUCCESS" | "PENDING" | "QUEUED"
 
 const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
-  const { arrivalAtMempoolEstimate, status: statusRaw } = route.params
+  const {
+    arrivalAtMempoolEstimate,
+    status: statusRaw,
+    successAction,
+    preimage,
+  } = route.params
   const styles = useStyles()
   const {
     theme: { colors },
@@ -114,6 +122,121 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
     }
   }, [client, feedbackModalShown, LL, showSuggestionModal, navigation, requestFeedback])
 
+  const copyToClipboard = (text: string, message: string) => {
+    Clipboard.setString(text)
+    toastShow({
+      type: "success",
+      message,
+      LL,
+    })
+  }
+
+  const SuccessActionComponent = () => {
+    if (!successAction) return null
+
+    const { message } = successAction
+    let decryptedMessage = null
+
+    if (successAction.tag === "aes" && preimage) {
+      decryptedMessage = utils.decipherAES({
+        successAction,
+        preimage,
+      })
+    }
+
+    switch (successAction.tag) {
+      case "message":
+        return message ? (
+          <View style={styles.successActionContainer}>
+            <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
+
+            <View style={styles.successActionFieldContainer}>
+              <View style={styles.disabledFieldBackground}>
+                <Text style={styles.truncatedText}>{message}</Text>
+              </View>
+              <TouchableOpacity
+                style={styles.iconContainer}
+                onPress={() =>
+                  copyToClipboard(message, LL.SendBitcoinScreen.copiedDestination())
+                }
+                hitSlop={30}
+              >
+                <GaloyIcon name={"copy-paste"} size={18} color={colors.primary} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        ) : null
+      case "url":
+        return (
+          <>
+            <View style={styles.successActionContainer}>
+              {successAction?.description && successAction?.description.length > 0 && (
+                <View>
+                  <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
+                  <View style={styles.successActionFieldContainer}>
+                    <View style={styles.disabledFieldBackground}>
+                      <Text style={styles.truncatedText}>
+                        {successAction.description}
+                      </Text>
+                    </View>
+                    <View style={styles.iconActionsContainer}>
+                      <TouchableOpacity
+                        style={styles.iconContainer}
+                        onPress={() =>
+                          copyToClipboard(
+                            successAction.description!,
+                            LL.SendBitcoinScreen.copiedDestination(),
+                          )
+                        }
+                        hitSlop={styles.hitSlopIcon}
+                      >
+                        <GaloyIcon name="copy-paste" size={25} color={colors.primary} />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              )}
+              <TouchableOpacity
+                style={styles.copyUrlButton}
+                onPress={() => Linking.openURL(successAction.url!)}
+                hitSlop={styles.hitSlopIcon}
+              >
+                <Text style={styles.copyUrlButtonText}>
+                  {LL.ScanningQRCodeScreen.openLinkTitle()}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </>
+        )
+      case "aes":
+        return decryptedMessage ? (
+          <View style={styles.successActionContainer}>
+            <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
+
+            <View style={styles.successActionFieldContainer}>
+              <View style={styles.disabledFieldBackground}>
+                <Text style={styles.truncatedText}>{decryptedMessage}</Text>
+              </View>
+              <TouchableOpacity
+                style={styles.iconContainer}
+                onPress={() =>
+                  copyToClipboard(
+                    decryptedMessage,
+                    LL.SendBitcoinScreen.copiedDestination(),
+                  )
+                }
+                hitSlop={30}
+              >
+                <GaloyIcon name={"copy-paste"} size={18} color={colors.primary} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        ) : null
+      default:
+        return null
+    }
+  }
+
   const MainIcon = () => {
     switch (status) {
       case "SUCCESS":
@@ -151,6 +274,7 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
             {SuccessText()}
           </Text>
         </CompletedTextAnimation>
+        <SuccessActionComponent />
       </View>
       <SuggestionModal
         navigation={navigation}
@@ -197,6 +321,70 @@ const useStyles = makeStyles(({ colors }) => ({
     backgroundColor: colors.white,
     padding: 20,
     borderRadius: 20,
+  },
+  truncatedText: {
+    fontSize: 14,
+  },
+  fieldTitleText: {
+    fontWeight: "bold",
+    marginBottom: 4,
+  },
+  successActionContainer: {
+    minWidth: "100%",
+    paddingHorizontal: 40,
+    marginTop: 30,
+  },
+  successMessage: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: colors.primary,
+  },
+  successActionFieldContainer: {
+    flexDirection: "row",
+    borderStyle: "solid",
+    overflow: "hidden",
+    backgroundColor: colors.grey5,
+    borderRadius: 10,
+    alignItems: "center",
+    padding: 14,
+    minHeight: 60,
+    marginBottom: 12,
+  },
+  disabledFieldBackground: {
+    flex: 1,
+    opacity: 0.5,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  iconContainer: {
+    justifyContent: "center",
+    alignItems: "flex-start",
+    paddingLeft: 20,
+  },
+  hitSlopIcon: {
+    top: 10,
+    bottom: 10,
+    left: 10,
+    right: 10,
+  },
+  iconActionsContainer: {
+    flexDirection: "column",
+    gap: 12,
+    alignItems: "center",
+  },
+  copyUrlButton: {
+    backgroundColor: colors.grey5,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 8,
+  },
+  copyUrlButtonText: {
+    fontSize: 16,
+    textAlign: "center",
   },
 }))
 

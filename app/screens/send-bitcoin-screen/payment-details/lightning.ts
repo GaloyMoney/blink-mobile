@@ -1,4 +1,7 @@
-import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
+import {
+  LnUrlPayServiceResponse,
+  LNURLPaySuccessAction,
+} from "lnurl-pay/dist/types/types"
 
 import { WalletCurrency } from "@app/graphql/generated"
 import {
@@ -13,6 +16,7 @@ import { PaymentType } from "@galoymoney/client"
 
 import {
   ConvertMoneyAmount,
+  SetSuccessAction,
   SetInvoice,
   GetFee,
   PaymentDetail,
@@ -254,6 +258,9 @@ export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
     return {
       status: data?.lnInvoicePaymentSend.status,
       errors: data?.lnInvoicePaymentSend.errors,
+      extraInfo: {
+        preimage: data?.lnInvoicePaymentSend.transaction?.settlementVia.preImage,
+      },
     }
   }
 
@@ -368,6 +375,7 @@ export type CreateLnurlPaymentDetailsParams<T extends WalletCurrency> = {
   paymentRequest?: string
   paymentRequestAmount?: BtcMoneyAmount
   unitOfAccountAmount: MoneyAmount<WalletOrDisplayCurrency>
+  successAction?: LNURLPaySuccessAction
 } & BaseCreatePaymentDetailsParams<T>
 
 export const createLnurlPaymentDetails = <T extends WalletCurrency>(
@@ -383,6 +391,7 @@ export const createLnurlPaymentDetails = <T extends WalletCurrency>(
     sendingWalletDescriptor,
     destinationSpecifiedMemo,
     senderSpecifiedMemo,
+    successAction,
   } = params
 
   const destinationSpecifiedAmount =
@@ -465,6 +474,13 @@ export const createLnurlPaymentDetails = <T extends WalletCurrency>(
     })
   }
 
+  const setSuccessAction: SetSuccessAction<T> = (newSuccessAction) => {
+    return createLnurlPaymentDetails({
+      ...params,
+      successAction: newSuccessAction,
+    })
+  }
+
   const setSendingWalletDescriptor: SetSendingWalletDescriptor<T> = (
     newSendingWalletDescriptor,
   ) => {
@@ -488,6 +504,8 @@ export const createLnurlPaymentDetails = <T extends WalletCurrency>(
     setInvoice,
     convertMoneyAmount,
     setConvertMoneyAmount,
+    successAction,
+    setSuccessAction,
     ...setAmount,
     ...setMemo,
     ...sendPaymentAndGetFee,
