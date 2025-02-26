@@ -87,14 +87,19 @@ export const SwitchAccount: React.FC = () => {
             const existingProfileIndex = findExistingProfileIndex(profiles, data)
 
             if (existingProfileIndex === -1) {
-              profiles.push(createProfile(data, token, counter))
+              profiles.push({
+                userid: data.me?.id,
+                username: data.me?.username || data.me?.phone || `Blink User ${counter}`,
+                token,
+                selected: token === curToken,
+              })
             } else {
               // Avoid duplicate account data and clear store
               await KeyStoreWrapper.updateAllTokens(token)
             }
             counter = counter + 1
           } else {
-            // Remove token if invalid
+            // Remove invalid token
             await KeyStoreWrapper.updateAllTokens(token)
           }
         } catch (err) {
@@ -116,16 +121,6 @@ export const SwitchAccount: React.FC = () => {
         profile.username === userData.me?.phone,
     )
   }
-
-  const createProfile = (userData: UsernameQuery, token: string, counter: number) => ({
-    userid: userData.me?.id,
-    username:
-      userData.me?.username ||
-      userData.me?.phone ||
-      `${LL.common.blinkUser()} ${counter}`,
-    token,
-    selected: token === curToken,
-  })
 
   useEffect(() => {
     if (prevTokenRef.current !== persistentState.galoyAuthToken) {
