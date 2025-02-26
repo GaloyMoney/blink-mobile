@@ -20,6 +20,8 @@ const successRoute = {
   params: {
     status: "SUCCESS",
     arrivalAtMempoolEstimate: undefined,
+    successAction: undefined,
+    preimage: undefined,
   },
 } as const
 
@@ -37,6 +39,8 @@ const queuedRoute = {
   params: {
     status: "PENDING",
     arrivalAtMempoolEstimate: 10000,
+    successAction: undefined,
+    preimage: undefined,
   },
 } as const
 
@@ -54,6 +58,8 @@ const pendingRoute = {
   params: {
     status: "PENDING",
     arrivalAtMempoolEstimate: undefined,
+    successAction: undefined,
+    preimage: undefined,
   },
 } as const
 
@@ -61,6 +67,87 @@ export const Pending = () => (
   <MockedProvider mocks={[]} cache={createCache()}>
     <IsAuthedContextProvider value={true}>
       <SendBitcoinCompletedScreen route={pendingRoute} />
+    </IsAuthedContextProvider>
+  </MockedProvider>
+)
+
+const successLUD09MessageRoute = {
+  key: "sendBitcoinCompleted",
+  name: "sendBitcoinCompleted",
+  params: {
+    status: "SUCCESS",
+    arrivalAtMempoolEstimate: undefined,
+    successAction: {
+      tag: "message",
+      description: "",
+      url: null,
+      message: "Thanks for your support.",
+      ciphertext: null,
+      iv: null,
+      decipher: () => null,
+    },
+    preimage: undefined,
+  },
+} as const
+
+export const SuccessLUD09Message = () => (
+  <MockedProvider mocks={[]} cache={createCache()}>
+    <IsAuthedContextProvider value={true}>
+      <SendBitcoinCompletedScreen route={successLUD09MessageRoute} />
+    </IsAuthedContextProvider>
+  </MockedProvider>
+)
+
+const successLUD09URLRoute = {
+  key: "sendBitcoinCompleted",
+  name: "sendBitcoinCompleted",
+  params: {
+    status: "SUCCESS",
+    arrivalAtMempoolEstimate: undefined,
+    successAction: {
+      tag: "url",
+      description: null,
+      url: "https://es.blink.sv",
+      message: null,
+      ciphertext: null,
+      iv: null,
+      decipher: () => null,
+    },
+    preimage: undefined,
+  },
+} as const
+
+export const SuccessLUD09URL = () => (
+  <MockedProvider mocks={[]} cache={createCache()}>
+    <IsAuthedContextProvider value={true}>
+      <SendBitcoinCompletedScreen route={successLUD09URLRoute} />
+    </IsAuthedContextProvider>
+  </MockedProvider>
+)
+
+const successLUD09URLWithDescRoute = {
+  key: "sendBitcoinCompleted",
+  name: "sendBitcoinCompleted",
+  params: {
+    status: "SUCCESS",
+    arrivalAtMempoolEstimate: undefined,
+    successAction: {
+      tag: "url",
+      description: "Example URL + description",
+      url: "https://es.blink.sv",
+      message: null,
+      ciphertext: null,
+      iv: null,
+      decipher: () => null,
+    },
+    preimage: undefined,
+  },
+} as const
+
+export const SuccessLUD09URLWithDesc = () => (
+  <MockedProvider mocks={[]} cache={createCache()}>
+    <IsAuthedContextProvider value={true}>
+      <SendBitcoinCompletedScreen route={successLUD09URLWithDescRoute} />
     </IsAuthedContextProvider>
   </MockedProvider>
 )
