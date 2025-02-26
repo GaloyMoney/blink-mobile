@@ -7414,7 +7414,7 @@ type RootTranslation = {
 		 */
 		switchAccount: string
 		/**
-		 * Please Wait.
+		 * P​l​e​a​s​e​ ​W​a​i​t​.
 		 */
 		pleaseWait: string
 		/**
