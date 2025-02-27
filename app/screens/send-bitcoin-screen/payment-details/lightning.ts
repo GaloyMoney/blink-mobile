@@ -254,12 +254,16 @@ export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
         },
       },
     })
+    const { settlementVia } = data?.lnInvoicePaymentSend.transaction || {}
 
     return {
       status: data?.lnInvoicePaymentSend.status,
       errors: data?.lnInvoicePaymentSend.errors,
       extraInfo: {
-        preimage: data?.lnInvoicePaymentSend.transaction?.settlementVia.preImage,
+        preimage:
+          settlementVia?.__typename === "SettlementViaLn"
+            ? settlementVia.preImage
+            : undefined,
       },
     }
   }
