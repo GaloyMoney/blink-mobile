@@ -18,9 +18,9 @@ import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon/galoy-icon"
 import { GaloyIconButton } from "@app/components/atomic/galoy-icon-button/galoy-icon-button"
 import {
-  UsernameQuery,
+  GetUsernamesQuery,
   useUserLogoutMutation,
-  useUsernameLazyQuery,
+  useGetUsernamesLazyQuery,
 } from "@app/graphql/generated"
 import { useApolloClient, gql } from "@apollo/client"
 import KeyStoreWrapper from "@app/utils/storage/secureStorage"
@@ -28,8 +28,10 @@ import { logLogout } from "@app/utils/analytics"
 import crashlytics from "@react-native-firebase/crashlytics"
 
 gql`
-  query username {
+  query getUsernames {
     me {
+      id
+      phone
       username
     }
   }
@@ -53,7 +55,7 @@ export const SwitchAccount: React.FC = () => {
   const { persistentState } = usePersistentStateContext()
   const { galoyAuthToken: curToken } = persistentState
 
-  const [fetchUsername, { error, refetch }] = useUsernameLazyQuery({
+  const [fetchUsername, { error, refetch }] = useGetUsernamesLazyQuery({
     fetchPolicy: "no-cache",
   })
   const [profiles, setProfiles] = useState<ProfileProps[]>([])
@@ -85,7 +87,6 @@ export const SwitchAccount: React.FC = () => {
 
           if (data?.me) {
             const existingProfileIndex = findExistingProfileIndex(profiles, data)
-
             if (existingProfileIndex === -1) {
               profiles.push({
                 userid: data.me?.id,
@@ -113,7 +114,7 @@ export const SwitchAccount: React.FC = () => {
 
   const findExistingProfileIndex = (
     profiles: ProfileProps[],
-    userData: UsernameQuery,
+    userData: GetUsernamesQuery,
   ) => {
     return profiles.findIndex(
       (profile) =>

@@ -2991,11 +2991,6 @@ export type OnChainUsdPaymentSendAsBtcDenominatedMutationVariables = Exact<{
 
 export type OnChainUsdPaymentSendAsBtcDenominatedMutation = { readonly __typename: 'Mutation', readonly onChainUsdPaymentSendAsBtcDenominated: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
 
-export type UsernameQueryVariables = Exact<{ [key: string]: never; }>;
-
-export type UsernameQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly username?: string | null, readonly id?: string | null, readonly phone?: string | null } | null };
-
-
 export type AccountDeleteMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3162,6 +3157,11 @@ export type WalletsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type WalletsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly walletCurrency: WalletCurrency, readonly id: string } | { readonly __typename: 'UsdWallet', readonly walletCurrency: WalletCurrency, readonly id: string }> } } | null };
+
+export type GetUsernamesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUsernamesQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly username?: string | null } | null };
 
 export const TransactionFragmentDoc = gql`
     fragment Transaction on Transaction {
@@ -6754,47 +6754,6 @@ export function useOnChainUsdPaymentSendAsBtcDenominatedMutation(baseOptions?: A
 export type OnChainUsdPaymentSendAsBtcDenominatedMutationHookResult = ReturnType<typeof useOnChainUsdPaymentSendAsBtcDenominatedMutation>;
 export type OnChainUsdPaymentSendAsBtcDenominatedMutationResult = Apollo.MutationResult<OnChainUsdPaymentSendAsBtcDenominatedMutation>;
 export type OnChainUsdPaymentSendAsBtcDenominatedMutationOptions = Apollo.BaseMutationOptions<OnChainUsdPaymentSendAsBtcDenominatedMutation, OnChainUsdPaymentSendAsBtcDenominatedMutationVariables>;
-export const UsernameDocument = gql`
-    query username {
-  me {
-    username
-    id
-    phone
-  }
-}
-    `;
-
-/**
- * __useUsernameQuery__
- *
- * To run a query within a React component, call `useUsernameQuery` and pass it any options that fit your needs.
- * When your component renders, `useUsernameQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useUsernameQuery({
- *   variables: {
- *   },
- * });
- */
-export function useUsernameQuery(baseOptions?: Apollo.QueryHookOptions<UsernameQuery, UsernameQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<UsernameQuery, UsernameQueryVariables>(UsernameDocument, options);
-      }
-export function useUsernameLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UsernameQuery, UsernameQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<UsernameQuery, UsernameQueryVariables>(UsernameDocument, options);
-        }
-export function useUsernameSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<UsernameQuery, UsernameQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<UsernameQuery, UsernameQueryVariables>(UsernameDocument, options);
-        }
-export type UsernameQueryHookResult = ReturnType<typeof useUsernameQuery>;
-export type UsernameLazyQueryHookResult = ReturnType<typeof useUsernameLazyQuery>;
-export type UsernameSuspenseQueryHookResult = ReturnType<typeof useUsernameSuspenseQuery>;
-export type UsernameQueryResult = Apollo.QueryResult<UsernameQuery, UsernameQueryVariables>;
 export const AccountDeleteDocument = gql`
     mutation accountDelete {
   accountDelete {
@@ -8008,6 +7967,47 @@ export type WalletsQueryHookResult = ReturnType<typeof useWalletsQuery>;
 export type WalletsLazyQueryHookResult = ReturnType<typeof useWalletsLazyQuery>;
 export type WalletsSuspenseQueryHookResult = ReturnType<typeof useWalletsSuspenseQuery>;
 export type WalletsQueryResult = Apollo.QueryResult<WalletsQuery, WalletsQueryVariables>;
+export const GetUsernamesDocument = gql`
+    query getUsernames {
+  me {
+    id
+    phone
+    username
+  }
+}
+    `;
+
+/**
+ * __useGetUsernamesQuery__
+ *
+ * To run a query within a React component, call `useGetUsernamesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUsernamesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUsernamesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUsernamesQuery(baseOptions?: Apollo.QueryHookOptions<GetUsernamesQuery, GetUsernamesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUsernamesQuery, GetUsernamesQueryVariables>(GetUsernamesDocument, options);
+      }
+export function useGetUsernamesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUsernamesQuery, GetUsernamesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUsernamesQuery, GetUsernamesQueryVariables>(GetUsernamesDocument, options);
+        }
+export function useGetUsernamesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetUsernamesQuery, GetUsernamesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetUsernamesQuery, GetUsernamesQueryVariables>(GetUsernamesDocument, options);
+        }
+export type GetUsernamesQueryHookResult = ReturnType<typeof useGetUsernamesQuery>;
+export type GetUsernamesLazyQueryHookResult = ReturnType<typeof useGetUsernamesLazyQuery>;
+export type GetUsernamesSuspenseQueryHookResult = ReturnType<typeof useGetUsernamesSuspenseQuery>;
+export type GetUsernamesQueryResult = Apollo.QueryResult<GetUsernamesQuery, GetUsernamesQueryVariables>;
 
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
