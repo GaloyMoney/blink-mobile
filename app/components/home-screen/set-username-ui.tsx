@@ -25,7 +25,7 @@ export const SetUserNameUI = ({
 }: SetUserNameUIProps) => {
   const {
     appConfig: {
-      galoyInstance: { lnAddressHostname, name: bankName },
+      galoyInstance: { name: bankName },
     },
   } = useAppConfig()
   const {
@@ -63,36 +63,17 @@ export const SetUserNameUI = ({
       isVisible={isVisible}
       backdropOpacity={100}
       backdropColor={colors.background}
-      style={{
-        maxHeight: "100%",
-      }}
+      style={styles.modalStyle}
     >
       <KeyboardAvoidingView behavior="position" enabled>
-        <View
-          style={{
-            alignSelf: "center",
-            top: -70,
-          }}
-        >
-          <Text
-            style={{
-              ...styles.hello,
-            }}
-          >
-            {"Hello!"}
-          </Text>
+        <View style={styles.helloContainer}>
+          <Text style={styles.helloText}>{LL.SetAddressModal.helloText()}</Text>
         </View>
         <View style={styles.bodyStyle}>
-          <Text
-            style={{
-              ...styles.textStyle,
-              height: 50,
-              width: "100%",
-            }}
-          >
-            {"What do you want us to call you?"}
+          <Text style={styles.textStyle}>{LL.SetAddressModal.whoAreYou()}</Text>
+          <Text style={styles.subTextStyle}>
+            {LL.SetAddressModal.usernameHint({ bankName })}
           </Text>
-
           <View style={styles.textInputContainerStyle}>
             <TextInput
               autoCorrect={false}
@@ -101,19 +82,13 @@ export const SetUserNameUI = ({
               style={styles.textInputStyle}
               onChangeText={setLnAddress}
               value={lnAddress}
-              placeholder={"eg: satoshi"}
+              placeholder={LL.SetAddressModal.placeholder()}
               placeholderTextColor={colors.grey3}
               keyboardType="default"
             />
           </View>
           {errorMessage && <GaloyErrorBox errorMessage={errorMessage} />}
-          <Button
-            onPress={() => {
-              setLightningAddress()
-            }}
-          >
-            Submit
-          </Button>
+          <Button onPress={setLightningAddress}>{LL.SetAddressModal.save()}</Button>
         </View>
       </KeyboardAvoidingView>
     </Modal>
@@ -121,6 +96,17 @@ export const SetUserNameUI = ({
 }
 
 const useStyles = makeStyles(({ colors }) => ({
+  modalStyle: {
+    maxHeight: "100%",
+  },
+  helloContainer: {
+    alignSelf: "center",
+    top: -70,
+  },
+  helloText: {
+    fontSize: 96,
+    color: colors.primary,
+  },
   bodyStyle: {
     alignItems: "stretch",
     rowGap: 20,
@@ -136,6 +122,13 @@ const useStyles = makeStyles(({ colors }) => ({
     color: colors.primary,
     fontSize: 24,
     marginTop: 20,
+    height: 50,
+    width: "100%",
+  },
+  subTextStyle: {
+    textAlign: "center",
+    fontSize: 13,
+    color: colors.grey1,
   },
   textInputContainerStyle: {
     display: "flex",
@@ -153,12 +146,5 @@ const useStyles = makeStyles(({ colors }) => ({
     fontSize: 18,
     lineHeight: 18,
     color: colors.black,
-  },
-  centerAlign: {
-    textAlign: "center",
-  },
-  hello: {
-    fontSize: 96,
-    color: colors.primary,
   },
 }))

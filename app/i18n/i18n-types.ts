@@ -7747,6 +7747,26 @@ export type TranslationFunctions = {
 	}
 	SetAddressModal: {
 		/**
+		 * Hello!
+		 */
+		helloText: () => LocalizedString
+		/**
+		 * What should we call you?
+		 */
+		whoAreYou: () => LocalizedString
+		/**
+		 * This will be your bankName username
+		 */
+		usernameHint: (arg: { bankName: string }) => LocalizedString
+		/**
+		 * enter your username here
+		 */
+		placeholder: () => LocalizedString
+		/**
+		 * Save
+		 */
+		save: () => LocalizedString
+		/**
 		 * Set {bankName} address
 		 */
 		title: (arg: { bankName: string }) => LocalizedString

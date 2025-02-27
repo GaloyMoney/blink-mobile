@@ -74,12 +74,7 @@ const WelcomeUserScreen: React.FC<WelcomeUserScreenProps> = ({
             <Button
               color={theme.colors.primary}
               onPress={onComplete}
-              style={{
-                elevation: 10,
-                shadowRadius: 2,
-                shadowColor: "black",
-                shadowOpacity: 20,
-              }}
+              style={styles.welcomeButton}
             >
               <Text style={{ color: theme.colors.primary3 }}>Let’s get started 🚀</Text>
             </Button>
@@ -126,5 +121,11 @@ const useStyles = makeStyles((theme) => ({
     shadowOffset: { width: 0, height: 5 }, // Shadow position
     shadowOpacity: 0.3, // Shadow transparency
     shadowRadius: 8, // Shadow blur
+  },
+  welcomeButton: {
+    elevation: 10,
+    shadowRadius: 2,
+    shadowColor: "black",
+    shadowOpacity: 20,
   },
 }))
