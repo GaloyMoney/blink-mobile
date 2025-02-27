@@ -23,7 +23,7 @@ import {
   useUsernameLazyQuery,
 } from "@app/graphql/generated"
 import { useApolloClient, gql } from "@apollo/client"
-import KeyStoreWrapper from "../../../utils/storage/secureStorage"
+import KeyStoreWrapper from "@app/utils/storage/secureStorage"
 import { logLogout } from "@app/utils/analytics"
 import crashlytics from "@react-native-firebase/crashlytics"
 
@@ -71,7 +71,7 @@ export const SwitchAccount: React.FC = () => {
       let allTokens = (await KeyStoreWrapper.getAllTokens()).reverse()
       let counter = 1
 
-      // Support old session
+      // Add session token if not exist
       if (allTokens.length <= 0 && curToken) {
         await KeyStoreWrapper.setAllTokens(curToken)
         allTokens = [curToken]

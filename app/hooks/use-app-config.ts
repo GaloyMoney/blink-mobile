@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react"
 
 import { GaloyInstance, resolveGaloyInstanceOrDefault } from "@app/config"
 import { usePersistentStateContext } from "@app/store/persistent-state"
-import KeyStoreWrapper from "../utils/storage/secureStorage"
+import KeyStoreWrapper from "@app/utils/storage/secureStorage"
 
 export const useAppConfig = () => {
   const { persistentState, updateState } = usePersistentStateContext()
@@ -60,9 +60,8 @@ export const useAppConfig = () => {
     [updateState],
   )
 
-  const setAllToken = async (token: string): Promise<string> => {
+  const setAllToken = async (token: string) => {
     await KeyStoreWrapper.setAllTokens(token)
-    return token
   }
 
   return {
