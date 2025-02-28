@@ -3092,6 +3092,11 @@ export type ExportCsvSettingQueryVariables = Exact<{
 
 export type ExportCsvSettingQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly csvTransactions: string } } | null };
 
+export type GetUsernamesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUsernamesQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly username?: string | null } | null };
+
 export type UserTotpDeleteMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3157,11 +3162,6 @@ export type WalletsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type WalletsQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly id: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly walletCurrency: WalletCurrency, readonly id: string } | { readonly __typename: 'UsdWallet', readonly walletCurrency: WalletCurrency, readonly id: string }> } } | null };
-
-export type GetUsernamesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetUsernamesQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly id: string, readonly phone?: string | null, readonly username?: string | null } | null };
 
 export const TransactionFragmentDoc = gql`
     fragment Transaction on Transaction {
@@ -7492,6 +7492,47 @@ export type ExportCsvSettingQueryHookResult = ReturnType<typeof useExportCsvSett
 export type ExportCsvSettingLazyQueryHookResult = ReturnType<typeof useExportCsvSettingLazyQuery>;
 export type ExportCsvSettingSuspenseQueryHookResult = ReturnType<typeof useExportCsvSettingSuspenseQuery>;
 export type ExportCsvSettingQueryResult = Apollo.QueryResult<ExportCsvSettingQuery, ExportCsvSettingQueryVariables>;
+export const GetUsernamesDocument = gql`
+    query getUsernames {
+  me {
+    id
+    phone
+    username
+  }
+}
+    `;
+
+/**
+ * __useGetUsernamesQuery__
+ *
+ * To run a query within a React component, call `useGetUsernamesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUsernamesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUsernamesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUsernamesQuery(baseOptions?: Apollo.QueryHookOptions<GetUsernamesQuery, GetUsernamesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUsernamesQuery, GetUsernamesQueryVariables>(GetUsernamesDocument, options);
+      }
+export function useGetUsernamesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUsernamesQuery, GetUsernamesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUsernamesQuery, GetUsernamesQueryVariables>(GetUsernamesDocument, options);
+        }
+export function useGetUsernamesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetUsernamesQuery, GetUsernamesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetUsernamesQuery, GetUsernamesQueryVariables>(GetUsernamesDocument, options);
+        }
+export type GetUsernamesQueryHookResult = ReturnType<typeof useGetUsernamesQuery>;
+export type GetUsernamesLazyQueryHookResult = ReturnType<typeof useGetUsernamesLazyQuery>;
+export type GetUsernamesSuspenseQueryHookResult = ReturnType<typeof useGetUsernamesSuspenseQuery>;
+export type GetUsernamesQueryResult = Apollo.QueryResult<GetUsernamesQuery, GetUsernamesQueryVariables>;
 export const UserTotpDeleteDocument = gql`
     mutation userTotpDelete {
   userTotpDelete {
@@ -7967,47 +8008,6 @@ export type WalletsQueryHookResult = ReturnType<typeof useWalletsQuery>;
 export type WalletsLazyQueryHookResult = ReturnType<typeof useWalletsLazyQuery>;
 export type WalletsSuspenseQueryHookResult = ReturnType<typeof useWalletsSuspenseQuery>;
 export type WalletsQueryResult = Apollo.QueryResult<WalletsQuery, WalletsQueryVariables>;
-export const GetUsernamesDocument = gql`
-    query getUsernames {
-  me {
-    id
-    phone
-    username
-  }
-}
-    `;
-
-/**
- * __useGetUsernamesQuery__
- *
- * To run a query within a React component, call `useGetUsernamesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUsernamesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetUsernamesQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetUsernamesQuery(baseOptions?: Apollo.QueryHookOptions<GetUsernamesQuery, GetUsernamesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetUsernamesQuery, GetUsernamesQueryVariables>(GetUsernamesDocument, options);
-      }
-export function useGetUsernamesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUsernamesQuery, GetUsernamesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetUsernamesQuery, GetUsernamesQueryVariables>(GetUsernamesDocument, options);
-        }
-export function useGetUsernamesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetUsernamesQuery, GetUsernamesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetUsernamesQuery, GetUsernamesQueryVariables>(GetUsernamesDocument, options);
-        }
-export type GetUsernamesQueryHookResult = ReturnType<typeof useGetUsernamesQuery>;
-export type GetUsernamesLazyQueryHookResult = ReturnType<typeof useGetUsernamesLazyQuery>;
-export type GetUsernamesSuspenseQueryHookResult = ReturnType<typeof useGetUsernamesSuspenseQuery>;
-export type GetUsernamesQueryResult = Apollo.QueryResult<GetUsernamesQuery, GetUsernamesQueryVariables>;
 
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
