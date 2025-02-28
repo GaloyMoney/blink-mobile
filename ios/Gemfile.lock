@@ -304,7 +304,7 @@ PLATFORMS
 
 DEPENDENCIES
   cocoapods (~> 1.14, >= 1.14.3)
-  fastlane (= 2.220.0)
+  fastlane
   fastlane-plugin-browserstack
 
 BUNDLED WITH
