@@ -78,6 +78,8 @@
             xcodes
             darwin.apple_sdk.frameworks.SystemConfiguration
             pkgs.darwin.apple_sdk.frameworks.CoreFoundation
+            darwin.cctools
+            llvmPackages.clang
           ];
       in {
         packages = {
