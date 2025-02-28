@@ -28,7 +28,7 @@ Once Nix and direnv are set up, follow these steps to set up the galoy-mobile pr
    direnv allow
    ```
 
-   This would download all of the dependencies needed to work with the Galoy Mobile. 
+   This would download all of the dependencies needed to work with the Galoy Mobile.
    This step sets up the NodeJS runtime, Android SDKs and creates the Emulator AVD for you in it's own separate chamber.
    It also builds Ruby which is needed for some dependencies.
    If you're on a Mac, it also lets you know if you're on an unsupported XCode version and gives you instructions on how to switch to a supported one.
@@ -98,8 +98,8 @@ You can download XCode and Simulator blazingly fast and let the CLI do all of th
 Here are the commands that do it:
 
 ```bash
-xcodes install 15.3 # Or whatever version direnv tells you about
-xcodes runtimes install "iOS 17.4" # Or the latest iOS out there
+xcodes install 16.2 # Or whatever version direnv tells you about
+xcodes runtimes install "iOS 18.2" # Or the latest iOS out there
 ```
 
 Xcodes install for the first time prompts you for Apple ID and Password. This is because Apple's license for XCode prohibits distribution of XCode from other servers than their own. And downloads from it can only work if you are authenticated. Hence, to use XCode, you need an Apple ID.
