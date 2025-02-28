@@ -233,7 +233,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  fastlane (= 2.220.0)
+  fastlane
   fastlane-plugin-browserstack
   fastlane-plugin-huawei_appgallery_connect
   fastlane-plugin-increment_version_code
