@@ -152,8 +152,9 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
               <TouchableOpacity
                 style={styles.iconContainer}
                 onPress={() =>
-                  copyToClipboard(message, LL.SendBitcoinScreen.copiedDestination())
+                  copyToClipboard(message, LL.SendBitcoinScreen.copiedSuccessMessage())
                 }
+                accessibilityLabel={LL.SendBitcoinScreen.copySuccessMessage()}
                 hitSlop={30}
               >
                 <GaloyIcon name={"copy-paste"} size={18} color={colors.primary} />
@@ -178,9 +179,10 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
                         onPress={() =>
                           copyToClipboard(
                             description!,
-                            LL.SendBitcoinScreen.copiedDestination(),
+                            LL.SendBitcoinScreen.copiedSuccessMessage(),
                           )
                         }
+                        accessibilityLabel={LL.SendBitcoinScreen.copySuccessMessage()}
                         hitSlop={styles.hitSlopIcon}
                       >
                         <GaloyIcon name="copy-paste" size={25} color={colors.primary} />
@@ -192,6 +194,7 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
               <TouchableOpacity
                 style={styles.copyUrlButton}
                 onPress={() => Linking.openURL(url!)}
+                accessibilityLabel={LL.SendBitcoinScreen.openSuccessUrl()}
                 hitSlop={styles.hitSlopIcon}
               >
                 <Text style={styles.copyUrlButtonText}>
@@ -222,9 +225,10 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
                 onPress={() =>
                   copyToClipboard(
                     decryptedMessage,
-                    LL.SendBitcoinScreen.copiedDestination(),
+                    LL.SendBitcoinScreen.copiedSecretMessage(),
                   )
                 }
+                accessibilityLabel={LL.SendBitcoinScreen.copySecretMessage()}
                 hitSlop={30}
               >
                 <GaloyIcon name={"copy-paste"} size={18} color={colors.primary} />

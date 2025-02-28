@@ -2306,6 +2306,11 @@ const en: BaseTranslation = {
     copiedDestination: "Copied destination to clipboard",
     pendingPayment:
       "The payment has been sent, but hasn't confirmed yet.\n\nIt's possible the payment will not confirm, in which case the funds will be returned to your account.",
+    copySuccessMessage: "Copy success message to clipboard",
+    openSuccessUrl: "Open success URL in browser",
+    copySecretMessage: "Copy secret message to clipboard",
+    copiedSuccessMessage: "Message copied successfully",
+    copiedSecretMessage: "Secret message copied successfully"
   },
   SettingsScreen: {
     staticQr: "Printable Static QR Code",
