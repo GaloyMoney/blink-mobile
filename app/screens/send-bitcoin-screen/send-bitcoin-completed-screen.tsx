@@ -134,17 +134,17 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
   const SuccessActionComponent = () => {
     if (!successAction) return null
 
-    const { message } = successAction
+    const { tag, message, description, url } = successAction
     let decryptedMessage = null
 
-    if (successAction.tag === "aes" && preimage) {
+    if (tag === "aes" && preimage) {
       decryptedMessage = utils.decipherAES({
         successAction,
         preimage,
       })
     }
 
-    switch (successAction.tag) {
+    switch (tag) {
       case "message":
         return message ? (
           <View style={styles.successActionContainer}>
@@ -170,21 +170,19 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
         return (
           <>
             <View style={styles.successActionContainer}>
-              {successAction?.description && successAction?.description.length > 0 && (
+              {description && description.length > 0 && (
                 <View>
                   <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
                   <View style={styles.successActionFieldContainer}>
                     <View style={styles.disabledFieldBackground}>
-                      <Text style={styles.truncatedText}>
-                        {successAction.description}
-                      </Text>
+                      <Text style={styles.truncatedText}>{description}</Text>
                     </View>
                     <View style={styles.iconActionsContainer}>
                       <TouchableOpacity
                         style={styles.iconContainer}
                         onPress={() =>
                           copyToClipboard(
-                            successAction.description!,
+                            description!,
                             LL.SendBitcoinScreen.copiedDestination(),
                           )
                         }
@@ -198,7 +196,7 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
               )}
               <TouchableOpacity
                 style={styles.copyUrlButton}
-                onPress={() => Linking.openURL(successAction.url!)}
+                onPress={() => Linking.openURL(url!)}
                 hitSlop={styles.hitSlopIcon}
               >
                 <Text style={styles.copyUrlButtonText}>

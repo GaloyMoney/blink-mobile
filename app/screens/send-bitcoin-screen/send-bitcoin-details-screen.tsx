@@ -382,13 +382,7 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
 
           const result = await requestInvoice(requestInvoiceParams)
 
-          setPaymentDetail((prev) => {
-            if (prev?.setSuccessAction) {
-              return prev.setSuccessAction(result.successAction)
-            }
-
-            return prev
-          })
+          setPaymentDetail(paymentDetail.setSuccessAction(result.successAction))
 
           setIsLoadingLnurl(false)
           const invoice = result.invoice
@@ -401,14 +395,13 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             return
           }
 
-          paymentDetailForConfirmation = paymentDetail.setInvoice({
-            paymentRequest: invoice,
-            paymentRequestAmount: btcAmount,
-          })
-
-          paymentDetailForConfirmation =
-            paymentDetailForConfirmation?.setSuccessAction?.(result.successAction) ??
-            paymentDetailForConfirmation
+          paymentDetailForConfirmation = {
+            ...paymentDetail.setInvoice({
+              paymentRequest: invoice,
+              paymentRequestAmount: btcAmount,
+            }),
+            successAction: result.successAction,
+          }
         } catch (error) {
           setIsLoadingLnurl(false)
           if (error instanceof Error) {
