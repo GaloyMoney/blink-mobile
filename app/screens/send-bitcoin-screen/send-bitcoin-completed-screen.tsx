@@ -211,6 +211,13 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
           <View style={styles.successActionContainer}>
             <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
 
+            {description && description?.length > 0 && (
+              <View style={styles.successActionFieldContainer}>
+                <View style={styles.disabledFieldBackground}>
+                  <Text style={styles.truncatedText}>{description}</Text>
+                </View>
+              </View>
+            )}
             <View style={styles.successActionFieldContainer}>
               <View style={styles.disabledFieldBackground}>
                 <Text style={styles.truncatedText}>{decryptedMessage}</Text>
