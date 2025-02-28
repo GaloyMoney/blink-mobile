@@ -129,8 +129,8 @@
               echo no | avdmanager create avd --force -n Pixel_API_34 --abi "google_apis_playstore/$ARCH" --package "system-images;android-34;google_apis_playstore;$ARCH" --device 'pixel_6a'
             fi
 
-            XCODE_VERSION="15.3"
-            XCODE_BUILD="15E204a" # When updating xcode version, get it by running xcodes installed
+            XCODE_VERSION="16.2"
+            XCODE_BUILD="16C5032a" # When updating xcode version, get it by running xcodes installed
             if [[ $(uname) == "Darwin" ]] && [ -z "$CI" ]; then
               sudo xcodes install $XCODE_VERSION 2>/dev/null
               sudo xcodes installed
@@ -144,13 +144,15 @@
               fi
             fi
 
+            # Fix clang for XCode builds
+            export PATH=$(echo $PATH | tr ':' '\n' | grep -v clang | paste -sd ':' -)
+
             # XCode needs to find this Node binary
             if [[ $(uname) == "Darwin" ]]; then
               echo "export NODE_BINARY=\"$(which node)\"" > ios/.xcode.env.local
+              export DEVELOPER_DIR="$(xcodes installed | awk '/^[0-9]/ {print $NF}')/Contents/Developer"
+              export PATH="$DEVELOPER_DIR/Toolchains/XcodeDefault.xctoolchain/usr/bin:$DEVELOPER_DIR/usr/bin:$PATH"
             fi
-
-            # Fix clang for XCode builds
-            export PATH=$(echo $PATH | tr ':' '\n' | grep -v clang | paste -sd ':' -)
 
             # Check and install Rosetta 2 on macOS to enable emulator support
             if [[ $(uname) == "Darwin" ]]; then
