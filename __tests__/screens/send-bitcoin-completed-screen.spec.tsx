@@ -9,7 +9,8 @@ import {
   SuccessLUD09Message,
   SuccessLUD09URL,
   SuccessLUD09URLWithDesc,
-} from "../../app/screens/send-bitcoin-screen/send-bitcoin-completed-screen.stories"
+  SuccessLUD10AES,
+} from "@app/screens/send-bitcoin-screen/send-bitcoin-completed-screen.stories"
 import { ContextForScreen } from "./helper"
 import { Linking } from "react-native"
 
@@ -115,5 +116,20 @@ describe("SendBitcoinCompletedScreen", () => {
     fireEvent.press(button)
 
     expect(Linking.openURL).toHaveBeenCalledWith(url)
+  })
+
+  it("render successAction - LUD 10 - message", async () => {
+    const description = "Here is your redeem code"
+    const encryptedMessage = "131313"
+
+    render(
+      <ContextForScreen>
+        <SuccessLUD10AES />
+      </ContextForScreen>,
+    )
+
+    expect(screen.getByText(description)).toBeTruthy()
+    expect(screen.getByText(encryptedMessage)).toBeTruthy()
+    expect(screen.getByText(LL.SendBitcoinScreen.note())).toBeTruthy()
   })
 })
