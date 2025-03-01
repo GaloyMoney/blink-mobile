@@ -7410,6 +7410,14 @@ type RootTranslation = {
 		 */
 		level: RequiredParams<'level'>
 		/**
+		 * S​w​i​t​c​h​ ​A​c​c​o​u​n​t
+		 */
+		switchAccount: string
+		/**
+		 * P​l​e​a​s​e​ ​W​a​i​t​.
+		 */
+		pleaseWait: string
+		/**
 		 * A​c​c​o​u​n​t​ ​L​e​v​e​l
 		 */
 		accountLevel: string
@@ -7578,6 +7586,16 @@ type RootTranslation = {
 		 * C​o​p​y
 		 */
 		copy: string
+	}
+	ProfileScreen: {
+		/**
+		 * A​d​d​ ​A​c​c​o​u​n​t
+		 */
+		addAccount: string
+		/**
+		 * U​n​a​b​l​e​ ​t​o​ ​f​e​t​c​h​ ​p​r​o​f​i​l​e​s​ ​a​t​ ​t​h​i​s​ ​t​i​m​e
+		 */
+		error: string
 	}
 	TotpRegistrationInitiateScreen: {
 		/**
@@ -16421,6 +16439,14 @@ export type TranslationFunctions = {
 		 */
 		level: (arg: { level: string }) => LocalizedString
 		/**
+		 * Switch Account
+		 */
+		switchAccount: () => LocalizedString
+		/**
+		 * Please Wait.
+		 */
+		pleaseWait: () => LocalizedString
+		/**
 		 * Account Level
 		 */
 		accountLevel: () => LocalizedString
@@ -16583,6 +16609,16 @@ export type TranslationFunctions = {
 		 * Copy
 		 */
 		copy: () => LocalizedString
+	}
+	ProfileScreen: {
+		/**
+		 * Add Account
+		 */
+		addAccount: () => LocalizedString
+		/**
+		 * Unable to fetch profiles at this time
+		 */
+		error: () => LocalizedString
 	}
 	TotpRegistrationInitiateScreen: {
 		/**
