@@ -19,10 +19,5 @@
 	</array>
 	<key>com.apple.developer.ubiquity-kvstore-identifier</key>
 	<string>AYPCPV46WW.$(CFBundleIdentifier)</string>
-	<key>keychain-access-groups</key>
-	<array>
-		<string>UL7ND37VAD.$(CFBundleIdentifier)</string>
-		<string>AYPCPV46WW.$(CFBundleIdentifier)</string>
-	</array>
 </dict>
 </plist>
