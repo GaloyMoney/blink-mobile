@@ -7195,6 +7195,26 @@ type RootTranslation = {
 	​I​t​'​s​ ​p​o​s​s​i​b​l​e​ ​t​h​e​ ​p​a​y​m​e​n​t​ ​w​i​l​l​ ​n​o​t​ ​c​o​n​f​i​r​m​,​ ​i​n​ ​w​h​i​c​h​ ​c​a​s​e​ ​t​h​e​ ​f​u​n​d​s​ ​w​i​l​l​ ​b​e​ ​r​e​t​u​r​n​e​d​ ​t​o​ ​y​o​u​r​ ​a​c​c​o​u​n​t​.
 		 */
 		pendingPayment: string
+		/**
+		 * C​o​p​y​ ​s​u​c​c​e​s​s​ ​m​e​s​s​a​g​e​ ​t​o​ ​c​l​i​p​b​o​a​r​d
+		 */
+		copySuccessMessage: string
+		/**
+		 * O​p​e​n​ ​s​u​c​c​e​s​s​ ​U​R​L​ ​i​n​ ​b​r​o​w​s​e​r
+		 */
+		openSuccessUrl: string
+		/**
+		 * C​o​p​y​ ​s​e​c​r​e​t​ ​m​e​s​s​a​g​e​ ​t​o​ ​c​l​i​p​b​o​a​r​d
+		 */
+		copySecretMessage: string
+		/**
+		 * M​e​s​s​a​g​e​ ​c​o​p​i​e​d​ ​s​u​c​c​e​s​s​f​u​l​l​y
+		 */
+		copiedSuccessMessage: string
+		/**
+		 * S​e​c​r​e​t​ ​m​e​s​s​a​g​e​ ​c​o​p​i​e​d​ ​s​u​c​c​e​s​s​f​u​l​l​y
+		 */
+		copiedSecretMessage: string
 	}
 	SettingsScreen: {
 		/**
@@ -16208,6 +16228,26 @@ export type TranslationFunctions = {
 	It's possible the payment will not confirm, in which case the funds will be returned to your account.
 		 */
 		pendingPayment: () => LocalizedString
+		/**
+		 * Copy success message to clipboard
+		 */
+		copySuccessMessage: () => LocalizedString
+		/**
+		 * Open success URL in browser
+		 */
+		openSuccessUrl: () => LocalizedString
+		/**
+		 * Copy secret message to clipboard
+		 */
+		copySecretMessage: () => LocalizedString
+		/**
+		 * Message copied successfully
+		 */
+		copiedSuccessMessage: () => LocalizedString
+		/**
+		 * Secret message copied successfully
+		 */
+		copiedSecretMessage: () => LocalizedString
 	}
 	SettingsScreen: {
 		/**
