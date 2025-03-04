@@ -80,8 +80,6 @@ export const UsernameModal: React.FC<UsernameModalProps> = ({
       },
     })
 
-    console.log("Mutation response:", { data, errors })
-    console.log("User update errors:", data?.userUpdateUsername?.errors) // Log the errors array
     updateNostrProfile({
       content: {
         name: lnAddress,
