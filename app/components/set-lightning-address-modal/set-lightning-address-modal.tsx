@@ -118,6 +118,7 @@ export const SetLightningAddressModal = ({
         name: lnAddress,
         username: lnAddress,
         lud16: `${lnAddress}@${lnDomain}`,
+        nip05: lnAddress,
       },
     })
     setPreferredRelay(relayUrl)

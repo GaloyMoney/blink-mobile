@@ -74,7 +74,7 @@ const useNostrProfile = () => {
       },
     })
     console.log("Updating account npub results", data, errors)
-    console.log("Setting Credentials with", nostrSecret)
+
     await Keychain.setInternetCredentials(
       KEYCHAIN_NOSTRCREDS_KEY,
       KEYCHAIN_NOSTRCREDS_KEY,
