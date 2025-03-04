@@ -49,6 +49,10 @@ const useNostrProfile = () => {
 
   const [userUpdateNpubMutation] = useUserUpdateNpubMutation()
 
+  const deleteNostrKeys = async () => {
+    await Keychain.resetInternetCredentials(KEYCHAIN_NOSTRCREDS_KEY)
+  }
+
   const fetchSecretFromLocalStorage = async () => {
     let credentials = await Keychain.getInternetCredentials(KEYCHAIN_NOSTRCREDS_KEY)
     if (credentials) {
@@ -61,18 +65,21 @@ const useNostrProfile = () => {
   const saveNewNostrKey = async () => {
     let secretKey = generateSecretKey()
     const nostrSecret = nip19.nsecEncode(secretKey)
-    await Keychain.setInternetCredentials(
-      KEYCHAIN_NOSTRCREDS_KEY,
-      KEYCHAIN_NOSTRCREDS_KEY,
-      nostrSecret,
-    )
-    await userUpdateNpubMutation({
+    console.log("Updating account npub")
+    const { data, errors } = await userUpdateNpubMutation({
       variables: {
         input: {
           npub: nip19.npubEncode(getPublicKey(secretKey)),
         },
       },
     })
+    console.log("Updating account npub results", data, errors)
+    console.log("Setting Credentials with", nostrSecret)
+    await Keychain.setInternetCredentials(
+      KEYCHAIN_NOSTRCREDS_KEY,
+      KEYCHAIN_NOSTRCREDS_KEY,
+      nostrSecret,
+    )
     await setPreferredRelay(relayUrl, secretKey)
     return secretKey
   }
@@ -171,6 +178,7 @@ const useNostrProfile = () => {
     fetchNostrUser,
     updateNostrProfile,
     saveNewNostrKey,
+    deleteNostrKeys,
   }
 }
 

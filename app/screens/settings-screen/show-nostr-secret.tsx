@@ -22,14 +22,16 @@ export const ShowNostrSecret: React.FC<ShowNostrSecretProps> = ({
 
   useEffect(() => {
     const initialize = async () => {
+      console.log("Show Nostr Secret initializing with", secretKey)
       if (!secretKey) {
         let secret = await getSecretKey()
         setSecretKey(secret)
+        console.log("New secret Key", secret)
       }
     }
     initialize()
   }, [secretKey])
-  const { saveNewNostrKey } = useNostrProfile()
+  const { saveNewNostrKey, deleteNostrKeys } = useNostrProfile()
   let nostrPubKey = ""
   if (secretKey) {
     nostrPubKey = nip19.npubEncode(getPublicKey(secretKey as Uint8Array))
@@ -118,13 +120,29 @@ export const ShowNostrSecret: React.FC<ShowNostrSecretProps> = ({
               />
             </View>
           </View>
+          <Button
+            onPress={() => {
+              deleteNostrKeys()
+              setSecretKey(null)
+            }}
+          >
+            Delete
+          </Button>
         </View>
       ) : (
-        <Text>
-          {" "}
-          No Nostr Keys Found{" "}
-          <Button onPress={saveNewNostrKey}>Generate Nostr Keys</Button>
-        </Text>
+        <View style={styles.modalBody as ViewStyle}>
+          <Text style={{ margin: 20 }}> No Nostr Keys Found </Text>
+          <Button
+            onPress={async () => {
+              let newSecret = await saveNewNostrKey()
+              console.log("New Nostr Key", newSecret)
+              setSecretKey(newSecret)
+            }}
+            style={{ margin: 20 }}
+          >
+            Generate Nostr Keys
+          </Button>
+        </View>
       )}
     </ReactNativeModal>
   )
