@@ -76,7 +76,7 @@ const formatCurrencyHelper = ({
     maximumFractionDigits: decimalPlaces,
     // FIXME this workaround of using .format and not .formatNumber is
     // because hermes haven't fully implemented Intl.NumberFormat yet
-  }).format(Math.abs(Math.floor(Number(amountInMajorUnits) * 100) / 100))
+  }).format(Math.abs(Number(amountInMajorUnits)))
   return `${isApproximate ? "~ " : ""}${
     isNegative && withSign ? "-" : ""
   }${symbol}${amountStr}${currencyCode ? ` ${currencyCode}` : ""}`

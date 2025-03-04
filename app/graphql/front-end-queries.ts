@@ -222,3 +222,19 @@ gql`
     }
   }
 `
+export const RealtimePrice = gql`
+  query realtimePriceInitial($currency: DisplayCurrency!) {
+    realtimePrice(currency: $currency) {
+      timestamp
+      btcSatPrice {
+        base
+        offset
+      }
+      usdCentPrice {
+        base
+        offset
+      }
+      denominatorCurrency
+    }
+  }
+`
