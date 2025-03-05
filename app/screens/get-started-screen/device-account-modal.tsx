@@ -68,34 +68,9 @@ export const DeviceAccountModal: React.FC<DeviceAccountModalProps> = ({
   const createDeviceAccountAndLogin = async () => {
     try {
       setLoading(true)
-      let credentials = await Keychain.getInternetCredentials(
+      const credentials = await Keychain.getInternetCredentials(
         DEVICE_ACCOUNT_CREDENTIALS_KEY,
       )
-
-      // If not found, try with old team ID
-      if (!credentials) {
-        try {
-          credentials = await Keychain.getInternetCredentials(
-            DEVICE_ACCOUNT_CREDENTIALS_KEY,
-            { accessGroup: "AYPCPV46WW.io.galoy.bitcoinbeach" },
-          )
-          if (credentials) {
-            const migrationResult = await Keychain.setInternetCredentials(
-              DEVICE_ACCOUNT_CREDENTIALS_KEY,
-              credentials.username,
-              credentials.password,
-            )
-            if (!migrationResult) {
-              throw new Error("Error migrating device account credentials")
-            }
-          }
-        } catch (error) {
-          if (error instanceof Error) {
-            crashlytics().recordError(error)
-          }
-          console.error("Credential migration attempt failed:", error)
-        }
-      }
 
       let username: string
       let password: string
