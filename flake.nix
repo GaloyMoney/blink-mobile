@@ -113,6 +113,8 @@
             export HOST_PROJECT_PATH="$(pwd)"
             export COMPOSE_PROJECT_NAME=galoy-quickstart
             export GALOY_QUICKSTART_PATH="dev/vendor/galoy-quickstart"
+            export GEM_HOME=$HOME/.gem/${pkgs.ruby.version}
+            export PATH="$GEM_HOME/bin:$PATH"
 
             # Check if the AVD already exists
             if ! avdmanager list avd -c | grep -q Pixel_API_34; then
