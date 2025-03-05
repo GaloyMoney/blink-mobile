@@ -1,7 +1,7 @@
 export const WHATSAPP_CONTACT_NUMBER = "+50369835117"
 export const CONTACT_EMAIL_ADDRESS = "support@blink.sv"
 export const APP_STORE_LINK =
-  "https://apps.apple.com/app/bitcoin-beach-wallet/id1531383905"
+  "https://apps.apple.com/app/blink-bitcoin-beach-wallet/id1531383905"
 export const PLAY_STORE_LINK =
   "https://play.google.com/store/apps/details?id=com.galoyapp"
 export const PREFIX_LINKING = [

@@ -66,7 +66,7 @@
             # Overlays
             android-sdk
             nodejs
-            pkgs."ruby-3.3.0"
+            ruby
             scrcpy
 
             # Fix for `unf_ext` build issue
