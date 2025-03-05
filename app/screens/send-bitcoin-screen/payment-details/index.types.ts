@@ -1,5 +1,7 @@
-import { LnUrlPayServiceResponse } from "lnurl-pay/dist/types/types"
-
+import {
+  LnUrlPayServiceResponse,
+  LNURLPaySuccessAction,
+} from "lnurl-pay/dist/types/types"
 import {
   GraphQlApplicationError,
   IntraLedgerPaymentSendMutationHookResult,
@@ -87,6 +89,7 @@ export type SendPaymentMutation = (
 
 export type PaymentSendExtraInfo = {
   arrivalAtMempoolEstimate?: number
+  preimage?: string | null
 }
 
 export type SetAmount<T extends WalletCurrency> = (
@@ -100,6 +103,10 @@ export type SetInvoice<T extends WalletCurrency> = (params: {
   paymentRequest: string
   paymentRequestAmount: BtcMoneyAmount
 }) => PaymentDetail<T>
+
+export type SetSuccessAction<T extends WalletCurrency> = (
+  successAction: LNURLPaySuccessAction | undefined,
+) => PaymentDetail<T>
 
 type BasePaymentDetail<T extends WalletCurrency> = {
   memo?: string
@@ -152,6 +159,11 @@ export type PaymentDetailSetAmount<T extends WalletCurrency> =
       destinationSpecifiedAmount: BtcMoneyAmount // the amount that comes from the destination
     }
 
+export type PaymentDetailSetSuccessAction<T extends WalletCurrency> = {
+  setSuccessAction?: SetSuccessAction<T>
+  successAction?: LNURLPaySuccessAction
+}
+
 // sendPayment and getFee are defined together
 export type PaymentDetailSendPaymentGetFee<T extends WalletCurrency> =
   | {
@@ -179,6 +191,7 @@ type LnurlSpecificProperties<T extends WalletCurrency> =
       paymentType: typeof PaymentType.Lnurl
       lnurlParams: LnUrlPayServiceResponse
       setInvoice: SetInvoice<T>
+      setSuccessAction: SetSuccessAction<T>
     }
 
 // combine all rules together with base type
@@ -186,7 +199,8 @@ export type PaymentDetail<T extends WalletCurrency> = BasePaymentDetail<T> &
   LnurlSpecificProperties<T> &
   PaymentDetailSetMemo<T> &
   PaymentDetailSetAmount<T> &
-  PaymentDetailSendPaymentGetFee<T>
+  PaymentDetailSendPaymentGetFee<T> &
+  PaymentDetailSetSuccessAction<T>
 
 export const AmountInvalidReason = {
   InsufficientBalance: "InsufficientBalance",
