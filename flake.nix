@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
     flake-utils.url = "github:numtide/flake-utils";
     android.url = "github:tadfisher/android-nixpkgs";
     ruby-nix.url = "github:bobvanderlinden/nixpkgs-ruby";
@@ -66,7 +66,7 @@
             # Overlays
             android-sdk
             nodejs
-            pkgs."ruby-3.3.0"
+            ruby
             scrcpy
 
             # Fix for `unf_ext` build issue
@@ -76,8 +76,6 @@
             pkgsStable.cocoapods
             watchman
             xcodes
-            darwin.apple_sdk.frameworks.SystemConfiguration
-            pkgs.darwin.apple_sdk.frameworks.CoreFoundation
           ];
       in {
         packages = {
@@ -89,15 +87,9 @@
                 emulator
                 platform-tools
                 platforms-android-34
-                ndk-25-1-8937393
-                ndk-26-1-10909125
+                ndk-25-2-9519653
+                ndk-26-3-11579264
                 cmake-3-22-1
-
-                # Some dependencies we use are on old versions
-                # TODO: Update these obsolete dependencies
-                build-tools-30-0-3
-                build-tools-33-0-1
-                platforms-android-33
               ]
               ++ lib.optionals (system == "aarch64-darwin") [
                 system-images-android-34-google-apis-arm64-v8a
