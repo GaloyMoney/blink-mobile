@@ -51,7 +51,10 @@
           [
             nodePackages.node-gyp
             yarn
-            jdk17
+            jdk21
+            (callPackage gradle-packages.gradle_8 {
+              java = jdk;
+            })
             tilt
             alejandra
             gnumake
@@ -106,7 +109,7 @@
 
           ANDROID_HOME = "${pkgs.android-sdk}/share/android-sdk";
           ANDROID_SDK_ROOT = "${pkgs.android-sdk}/share/android-sdk";
-          JAVA_HOME = pkgs.jdk17.home;
+          JAVA_HOME = pkgs.jdk21.home;
           LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
 
           shellHook = ''
