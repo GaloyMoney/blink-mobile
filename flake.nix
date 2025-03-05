@@ -51,7 +51,10 @@
           [
             nodePackages.node-gyp
             yarn
-            jdk17
+            jdk21
+            (callPackage gradle-packages.gradle_8 {
+              java = jdk;
+            })
             tilt
             alejandra
             gnumake
@@ -82,13 +85,13 @@
           android-sdk = android.sdk.${system} (sdkPkgs:
             with sdkPkgs;
               [
-                build-tools-34-0-0
+                build-tools-35-0-0
                 cmdline-tools-latest
                 emulator
                 platform-tools
                 platforms-android-34
-                ndk-25-2-9519653
-                ndk-26-3-11579264
+                ndk-26-1-10909125
+                ndk-27-0-12077973
                 cmake-3-22-1
               ]
               ++ lib.optionals (system == "aarch64-darwin") [
@@ -106,13 +109,15 @@
 
           ANDROID_HOME = "${pkgs.android-sdk}/share/android-sdk";
           ANDROID_SDK_ROOT = "${pkgs.android-sdk}/share/android-sdk";
-          JAVA_HOME = pkgs.jdk17.home;
+          JAVA_HOME = pkgs.jdk21.home;
           LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
 
           shellHook = ''
             export HOST_PROJECT_PATH="$(pwd)"
             export COMPOSE_PROJECT_NAME=galoy-quickstart
             export GALOY_QUICKSTART_PATH="dev/vendor/galoy-quickstart"
+            export GEM_HOME=$HOME/.gem/${pkgs.ruby.version}
+            export PATH="$GEM_HOME/bin:$PATH"
 
             # Check if the AVD already exists
             if ! avdmanager list avd -c | grep -q Pixel_API_34; then
