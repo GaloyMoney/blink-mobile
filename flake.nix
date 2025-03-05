@@ -85,13 +85,13 @@
           android-sdk = android.sdk.${system} (sdkPkgs:
             with sdkPkgs;
               [
-                build-tools-34-0-0
+                build-tools-35-0-0
                 cmdline-tools-latest
                 emulator
                 platform-tools
                 platforms-android-34
-                ndk-25-2-9519653
-                ndk-26-3-11579264
+                ndk-26-1-10909125
+                ndk-27-0-12077973
                 cmake-3-22-1
               ]
               ++ lib.optionals (system == "aarch64-darwin") [

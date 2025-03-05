@@ -75,6 +75,7 @@
     "@react-native-firebase/crashlytics": "^21.11.0",
     "@react-native-firebase/messaging": "^21.11.0",
     "@react-native-firebase/remote-config": "^21.11.0",
+    "@react-native/gradle-plugin": "^0.78.0",
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/stack": "^6.3.29",
