@@ -76,8 +76,6 @@
             pkgsStable.cocoapods
             watchman
             xcodes
-            darwin.apple_sdk.frameworks.SystemConfiguration
-            pkgs.darwin.apple_sdk.frameworks.CoreFoundation
           ];
       in {
         packages = {
