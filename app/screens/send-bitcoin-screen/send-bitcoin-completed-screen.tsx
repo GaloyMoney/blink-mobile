@@ -1,17 +1,15 @@
 import React, { useCallback, useEffect } from "react"
-import { utils } from "lnurl-pay"
-import { View, Alert, TouchableOpacity, Linking } from "react-native"
+import { View, Alert } from "react-native"
 import InAppReview from "react-native-in-app-review"
-import Clipboard from "@react-native-clipboard/clipboard"
 
 import { useApolloClient } from "@apollo/client"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
 import { Screen } from "@app/components/screen"
-import { toastShow } from "@app/utils/toast"
 import {
   SuccessIconAnimation,
   CompletedTextAnimation,
 } from "@app/components/success-animation"
+import { SuccessActionComponent } from "@app/components/success-action"
 import { setFeedbackModalShown } from "@app/graphql/client-only-query"
 import { useFeedbackModalShownQuery } from "@app/graphql/generated"
 import { useAppConfig } from "@app/hooks"
@@ -117,130 +115,6 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
     }
   }, [client, feedbackModalShown, LL, requestFeedback])
 
-  const copyToClipboard = (text: string, message: string) => {
-    Clipboard.setString(text)
-    toastShow({
-      type: "success",
-      message,
-      LL,
-    })
-  }
-
-  const SuccessActionComponent = () => {
-    if (!successAction) return null
-
-    const { tag, message, description, url } = successAction
-    let decryptedMessage = null
-
-    if (tag === "aes" && preimage) {
-      decryptedMessage = utils.decipherAES({
-        successAction,
-        preimage,
-      })
-    }
-
-    switch (tag) {
-      case "message":
-        return message ? (
-          <View style={styles.successActionContainer}>
-            <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
-
-            <View style={styles.successActionFieldContainer}>
-              <View style={styles.disabledFieldBackground}>
-                <Text style={styles.truncatedText}>{message}</Text>
-              </View>
-              <TouchableOpacity
-                style={styles.iconContainer}
-                onPress={() =>
-                  copyToClipboard(message, LL.SendBitcoinScreen.copiedSuccessMessage())
-                }
-                accessibilityLabel={LL.SendBitcoinScreen.copySuccessMessage()}
-                hitSlop={30}
-              >
-                <GaloyIcon name={"copy-paste"} size={18} color={colors.primary} />
-              </TouchableOpacity>
-            </View>
-          </View>
-        ) : null
-      case "url":
-        return (
-          <>
-            <View style={styles.successActionContainer}>
-              {description && description.length > 0 && (
-                <View>
-                  <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
-                  <View style={styles.successActionFieldContainer}>
-                    <View style={styles.disabledFieldBackground}>
-                      <Text style={styles.truncatedText}>{description}</Text>
-                    </View>
-                    <View style={styles.iconActionsContainer}>
-                      <TouchableOpacity
-                        style={styles.iconContainer}
-                        onPress={() =>
-                          copyToClipboard(
-                            description!,
-                            LL.SendBitcoinScreen.copiedSuccessMessage(),
-                          )
-                        }
-                        accessibilityLabel={LL.SendBitcoinScreen.copySuccessMessage()}
-                        hitSlop={styles.hitSlopIcon}
-                      >
-                        <GaloyIcon name="copy-paste" size={25} color={colors.primary} />
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              )}
-              <TouchableOpacity
-                style={styles.copyUrlButton}
-                onPress={() => Linking.openURL(url!)}
-                accessibilityLabel={LL.SendBitcoinScreen.openSuccessUrl()}
-                hitSlop={styles.hitSlopIcon}
-              >
-                <Text style={styles.copyUrlButtonText}>
-                  {LL.ScanningQRCodeScreen.openLinkTitle()}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </>
-        )
-      case "aes":
-        return decryptedMessage ? (
-          <View style={styles.successActionContainer}>
-            <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
-
-            {description && description?.length > 0 && (
-              <View style={styles.successActionFieldContainer}>
-                <View style={styles.disabledFieldBackground}>
-                  <Text style={styles.truncatedText}>{description}</Text>
-                </View>
-              </View>
-            )}
-            <View style={styles.successActionFieldContainer}>
-              <View style={styles.disabledFieldBackground}>
-                <Text style={styles.truncatedText}>{decryptedMessage}</Text>
-              </View>
-              <TouchableOpacity
-                style={styles.iconContainer}
-                onPress={() =>
-                  copyToClipboard(
-                    decryptedMessage,
-                    LL.SendBitcoinScreen.copiedSecretMessage(),
-                  )
-                }
-                accessibilityLabel={LL.SendBitcoinScreen.copySecretMessage()}
-                hitSlop={30}
-              >
-                <GaloyIcon name={"copy-paste"} size={18} color={colors.primary} />
-              </TouchableOpacity>
-            </View>
-          </View>
-        ) : null
-      default:
-        return null
-    }
-  }
-
   const MainIcon = () => {
     switch (status) {
       case "SUCCESS":
@@ -278,7 +152,7 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
             {SuccessText()}
           </Text>
         </CompletedTextAnimation>
-        <SuccessActionComponent />
+        <SuccessActionComponent successAction={successAction} preimage={preimage} />
       </View>
       <SuggestionModal
         navigation={navigation}
