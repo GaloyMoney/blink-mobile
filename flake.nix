@@ -47,11 +47,6 @@
           inherit system;
         };
 
-        ignoringVulns = x: x // {meta = x.meta // {knownVulnerabilities = [];};};
-        ruby = pkgs."ruby-2.7.7".override {
-          openssl = pkgs.openssl_1_1.overrideAttrs ignoringVulns;
-        };
-
         nativeBuildInputs = with pkgs;
           [
             nodePackages.node-gyp
@@ -71,14 +66,18 @@
             # Overlays
             android-sdk
             nodejs
-            ruby
+            pkgs."ruby-3.3.0"
             scrcpy
+
+            # Fix for `unf_ext` build issue
+            gcc
           ]
           ++ lib.optionals stdenv.isDarwin [
             pkgsStable.cocoapods
             watchman
             xcodes
             darwin.apple_sdk.frameworks.SystemConfiguration
+            pkgs.darwin.apple_sdk.frameworks.CoreFoundation
           ];
       in {
         packages = {
@@ -116,6 +115,7 @@
           ANDROID_HOME = "${pkgs.android-sdk}/share/android-sdk";
           ANDROID_SDK_ROOT = "${pkgs.android-sdk}/share/android-sdk";
           JAVA_HOME = pkgs.jdk17.home;
+          LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
 
           shellHook = ''
             export HOST_PROJECT_PATH="$(pwd)"
@@ -129,10 +129,13 @@
               echo no | avdmanager create avd --force -n Pixel_API_34 --abi "google_apis_playstore/$ARCH" --package "system-images;android-34;google_apis_playstore;$ARCH" --device 'pixel_6a'
             fi
 
-            XCODE_VERSION="15.3"
-            XCODE_BUILD="15E204a" # When updating xcode version, get it by running xcodes installed
+            XCODE_VERSION="16.2"
+            XCODE_BUILD="16C5032a" # When updating xcode version, get it by running xcodes installed
             if [[ $(uname) == "Darwin" ]] && [ -z "$CI" ]; then
-              if ! xcodes installed | grep "$XCODE_VERSION ($XCODE_BUILD) (Selected)" -q; then
+              sudo xcodes install $XCODE_VERSION 2>/dev/null
+              sudo xcodes installed
+              sudo xcodes select $XCODE_VERSION
+              if ! sudo xcodes installed | grep "$XCODE_VERSION ($XCODE_BUILD) (Selected)" -q; then
                 echo -e "\e[1;33m================================================\e[0m"
                 echo -e "\e[1;33mXCode $XCODE_VERSION was not found or is not selected\e[0m"
                 echo -e "\e[1;33mYou can install it with \e[0m\e[1;32mxcodes install $XCODE_VERSION\e[0m\e[1;33m and select it with \e[0m\e[1;32mxcodes select $XCODE_VERSION\e[0m\e[1;33m\e[0m"
@@ -141,13 +144,15 @@
               fi
             fi
 
+            # Fix clang for XCode builds
+            export PATH=$(echo $PATH | tr ':' '\n' | grep -v clang | paste -sd ':' -)
+
             # XCode needs to find this Node binary
             if [[ $(uname) == "Darwin" ]]; then
               echo "export NODE_BINARY=\"$(which node)\"" > ios/.xcode.env.local
+              export DEVELOPER_DIR="$(xcodes installed | awk '/^[0-9]/ {print $NF}')/Contents/Developer"
+              export PATH="$DEVELOPER_DIR/Toolchains/XcodeDefault.xctoolchain/usr/bin:$DEVELOPER_DIR/usr/bin:$PATH"
             fi
-
-            # Fix clang for XCode builds
-            export PATH=$(echo $PATH | tr ':' '\n' | grep -v clang | paste -sd ':' -)
 
             # Check and install Rosetta 2 on macOS to enable emulator support
             if [[ $(uname) == "Darwin" ]]; then

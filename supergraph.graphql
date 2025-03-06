@@ -105,6 +105,7 @@ enum AccountLevel
   @join__type(graph: BLINK)
 {
   ONE @join__enumValue(graph: BLINK)
+  THREE @join__enumValue(graph: BLINK)
   TWO @join__enumValue(graph: BLINK)
   ZERO @join__enumValue(graph: BLINK)
 }
