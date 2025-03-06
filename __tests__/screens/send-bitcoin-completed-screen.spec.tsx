@@ -6,10 +6,7 @@ import {
   Success,
   Queued,
   Pending,
-  SuccessLUD09Message,
-  SuccessLUD09URL,
-  SuccessLUD09URLWithDesc,
-  SuccessLUD10AES,
+  SuccessAction,
 } from "@app/screens/send-bitcoin-screen/send-bitcoin-completed-screen.stories"
 import { ContextForScreen } from "./helper"
 import { Linking } from "react-native"
@@ -67,24 +64,54 @@ describe("SendBitcoinCompletedScreen", () => {
   })
 
   it("render successAction - LUD 09 - message", async () => {
-    const message = "Thanks for your support."
+    const lud09MessageRoute = {
+      key: "sendBitcoinCompleted",
+      name: "sendBitcoinCompleted",
+      params: {
+        status: "SUCCESS",
+        successAction: {
+          tag: "message",
+          description: "",
+          url: null,
+          message: "Thanks for your support.",
+          ciphertext: null,
+          iv: null,
+          decipher: () => null,
+        },
+      },
+    } as const
 
     render(
       <ContextForScreen>
-        <SuccessLUD09Message />
+        <SuccessAction route={lud09MessageRoute} />
       </ContextForScreen>,
     )
 
-    expect(screen.getByText(message)).toBeTruthy()
+    expect(screen.getByText(lud09MessageRoute.params.successAction.message)).toBeTruthy()
     expect(screen.getByText(LL.SendBitcoinScreen.note())).toBeTruthy()
   })
 
   it("render successAction - LUD 09 - URL", async () => {
-    const url = "https://es.blink.sv"
+    const lud09URLRoute = {
+      key: "sendBitcoinCompleted",
+      name: "sendBitcoinCompleted",
+      params: {
+        status: "SUCCESS",
+        successAction: {
+          tag: "url",
+          description: null,
+          url: "https://es.blink.sv",
+          message: null,
+          ciphertext: null,
+          iv: null,
+          decipher: () => null,
+        },
+      },
+    } as const
 
     render(
       <ContextForScreen>
-        <SuccessLUD09URL />
+        <SuccessAction route={lud09URLRoute} />
       </ContextForScreen>,
     )
 
@@ -94,20 +121,36 @@ describe("SendBitcoinCompletedScreen", () => {
 
     fireEvent.press(button)
 
-    expect(Linking.openURL).toHaveBeenCalledWith(url)
+    expect(Linking.openURL).toHaveBeenCalledWith(lud09URLRoute.params.successAction.url)
   })
 
   it("render successAction - LUD 09 - URL with description", async () => {
-    const url = "https://es.blink.sv"
-    const description = "Example URL + description"
+    const lud09URLWithDescRoute = {
+      key: "sendBitcoinCompleted",
+      name: "sendBitcoinCompleted",
+      params: {
+        status: "SUCCESS",
+        successAction: {
+          tag: "url",
+          description: "Example URL + description",
+          url: "https://es.blink.sv",
+          message: null,
+          ciphertext: null,
+          iv: null,
+          decipher: () => null,
+        },
+      },
+    } as const
 
     render(
       <ContextForScreen>
-        <SuccessLUD09URLWithDesc />
+        <SuccessAction route={lud09URLWithDescRoute} />
       </ContextForScreen>,
     )
 
-    expect(screen.getByText(description)).toBeTruthy()
+    expect(
+      screen.getByText(lud09URLWithDescRoute.params.successAction.description),
+    ).toBeTruthy()
 
     const button = screen.getByText(LL.ScanningQRCodeScreen.openLinkTitle())
 
@@ -115,20 +158,38 @@ describe("SendBitcoinCompletedScreen", () => {
 
     fireEvent.press(button)
 
-    expect(Linking.openURL).toHaveBeenCalledWith(url)
+    expect(Linking.openURL).toHaveBeenCalledWith(
+      lud09URLWithDescRoute.params.successAction.url,
+    )
   })
 
   it("render successAction - LUD 10 - message", async () => {
-    const description = "Here is your redeem code"
     const encryptedMessage = "131313"
+    const lud10AESRoute = {
+      key: "sendBitcoinCompleted",
+      name: "sendBitcoinCompleted",
+      params: {
+        status: "SUCCESS",
+        successAction: {
+          tag: "aes",
+          description: "Here is your redeem code",
+          url: null,
+          message: null,
+          ciphertext: "564u3BEMRefWUV1098gJ5w==",
+          iv: "IhkC5ktKB9LG91FvlbN2kg==",
+          decipher: () => null,
+        },
+        preimage: "25004cd52960a3bac983e3f95c432341a7052cef37b9253b0b0b1256d754559b",
+      },
+    } as const
 
     render(
       <ContextForScreen>
-        <SuccessLUD10AES />
+        <SuccessAction route={lud10AESRoute} />
       </ContextForScreen>,
     )
 
-    expect(screen.getByText(description)).toBeTruthy()
+    expect(screen.getByText(lud10AESRoute.params.successAction.description)).toBeTruthy()
     expect(screen.getByText(encryptedMessage)).toBeTruthy()
     expect(screen.getByText(LL.SendBitcoinScreen.note())).toBeTruthy()
   })
