@@ -2,6 +2,8 @@ import * as React from "react"
 
 import { MockedProvider } from "@apollo/client/testing"
 import { Meta } from "@storybook/react"
+import { RootStackParamList } from "@app/navigation/stack-param-lists"
+import { RouteProp } from "@react-navigation/native"
 
 import { StoryScreen } from "../../../.storybook/views"
 import { createCache } from "../../graphql/cache"
@@ -61,6 +63,18 @@ export const Pending = () => (
   <MockedProvider mocks={[]} cache={createCache()}>
     <IsAuthedContextProvider value={true}>
       <SendBitcoinCompletedScreen route={pendingRoute} />
+    </IsAuthedContextProvider>
+  </MockedProvider>
+)
+
+export const SuccessAction = ({
+  route,
+}: {
+  route: RouteProp<RootStackParamList, "sendBitcoinCompleted">
+}) => (
+  <MockedProvider mocks={[]} cache={createCache()}>
+    <IsAuthedContextProvider value={true}>
+      <SendBitcoinCompletedScreen route={route} />0
     </IsAuthedContextProvider>
   </MockedProvider>
 )
