@@ -59,7 +59,7 @@ export const SuccessActionComponent: React.FC<SuccessActionComponentProps> = ({
         </>
       )}
 
-      {tag === SuccessActionTag.AES && decryptedMessage && (
+      {tag === SuccessActionTag.AES && (
         <>
           <Text style={styles.fieldTitleText}>{LL.SendBitcoinScreen.note()}</Text>
           {description && (
@@ -69,11 +69,17 @@ export const SuccessActionComponent: React.FC<SuccessActionComponentProps> = ({
               accessibilityLabel={LL.SendBitcoinScreen.copySuccessMessage()}
             />
           )}
-          <FieldWithCopy
-            text={decryptedMessage}
-            copiedMessage={LL.SendBitcoinScreen.copiedSecretMessage()}
-            accessibilityLabel={LL.SendBitcoinScreen.copySecretMessage()}
-          />
+          {decryptedMessage ? (
+            <FieldWithCopy
+              text={decryptedMessage}
+              copiedMessage={LL.SendBitcoinScreen.copiedSecretMessage()}
+              accessibilityLabel={LL.SendBitcoinScreen.copySecretMessage()}
+            />
+          ) : (
+            <Text style={styles.encryptionPendingText}>
+              {LL.SendBitcoinScreen.pendingDecryptionMessage()}
+            </Text>
+          )}
         </>
       )}
     </View>
@@ -90,6 +96,12 @@ const useStyles = makeStyles(({ colors }) => ({
     fontWeight: "bold",
     marginBottom: 4,
     color: colors.grey1,
+  },
+  encryptionPendingText: {
+    fontSize: 14,
+    color: colors.grey3,
+    textAlign: "center",
+    marginTop: 10,
   },
   hitSlopIcon: {
     top: 10,

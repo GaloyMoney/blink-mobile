@@ -7215,6 +7215,10 @@ type RootTranslation = {
 		 * S​e​c​r​e​t​ ​m​e​s​s​a​g​e​ ​c​o​p​i​e​d​ ​s​u​c​c​e​s​s​f​u​l​l​y
 		 */
 		copiedSecretMessage: string
+		/**
+		 * E​n​c​r​y​p​t​e​d​ ​m​e​s​s​a​g​e​.​ ​W​a​i​t​i​n​g​ ​f​o​r​ ​p​a​y​m​e​n​t​ ​c​o​n​f​i​r​m​a​t​i​o​n​.
+		 */
+		pendingDecryptionMessage: string
 	}
 	SettingsScreen: {
 		/**
@@ -16248,6 +16252,10 @@ export type TranslationFunctions = {
 		 * Secret message copied successfully
 		 */
 		copiedSecretMessage: () => LocalizedString
+		/**
+		 * Encrypted message. Waiting for payment confirmation.
+		 */
+		pendingDecryptionMessage: () => LocalizedString
 	}
 	SettingsScreen: {
 		/**

@@ -2310,7 +2310,8 @@ const en: BaseTranslation = {
     openSuccessUrl: "Open success URL in browser",
     copySecretMessage: "Copy secret message to clipboard",
     copiedSuccessMessage: "Message copied successfully",
-    copiedSecretMessage: "Secret message copied successfully"
+    copiedSecretMessage: "Secret message copied successfully",
+    pendingDecryptionMessage: "Encrypted message. Waiting for payment confirmation.",
   },
   SettingsScreen: {
     staticQr: "Printable Static QR Code",
