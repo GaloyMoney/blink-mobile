@@ -739,6 +739,9 @@ const useOnchainFeeAlert = (
       ? "bc1qk2cpytjea36ry6vga8wwr7297sl3tdkzwzy2cw"
       : "tb1qw508d6qejxtdg4y5r3zarvary0c5xw7kxpjzsx"
 
+  const isOnchainPayment =
+    walletId && paymentDetail && paymentDetail.paymentType === "onchain"
+
   // we need to have an approximate value for the onchain fees
   // by the time the user tap on the next button
   // so we are fetching some fees when the screen loads
@@ -758,19 +761,21 @@ const useOnchainFeeAlert = (
   const [onChainTxFee, setOnChainTxFee] = useState(0)
 
   useEffect(() => {
-    ;(async () => {
-      const result = await getOnChainTxFee()
-      const fees = result.data?.onChainTxFee.amount
+    if (isOnchainPayment) {
+      ;(async () => {
+        const result = await getOnChainTxFee()
+        const fees = result.data?.onChainTxFee.amount
 
-      if (fees) {
-        setOnChainTxFee(fees)
-      } else {
-        console.error("failed to get onchain fees")
-      }
-    })()
-  }, [getOnChainTxFee])
+        if (fees) {
+          setOnChainTxFee(fees)
+        } else {
+          console.error("failed to get onchain fees")
+        }
+      })()
+    }
+  }, [getOnChainTxFee, isOnchainPayment])
 
-  if (!walletId || !paymentDetail || paymentDetail.paymentType !== "onchain") {
+  if (!isOnchainPayment) {
     return false
   }
 
