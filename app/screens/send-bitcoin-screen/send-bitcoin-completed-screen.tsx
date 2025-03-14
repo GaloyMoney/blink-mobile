@@ -9,6 +9,7 @@ import {
   SuccessIconAnimation,
   CompletedTextAnimation,
 } from "@app/components/success-animation"
+import { SuccessActionComponent } from "@app/components/success-action"
 import { setFeedbackModalShown } from "@app/graphql/client-only-query"
 import { useFeedbackModalShownQuery } from "@app/graphql/generated"
 import { useAppConfig } from "@app/hooks"
@@ -36,7 +37,12 @@ type Props = {
 type StatusProcessed = "SUCCESS" | "PENDING" | "QUEUED"
 
 const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
-  const { arrivalAtMempoolEstimate, status: statusRaw } = route.params
+  const {
+    arrivalAtMempoolEstimate,
+    status: statusRaw,
+    successAction,
+    preimage,
+  } = route.params
   const styles = useStyles()
   const {
     theme: { colors },
@@ -98,7 +104,6 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
   }, [LL, client, appConfig])
 
   const FEEDBACK_DELAY = 3000
-  const CALLBACK_DELAY = 3000
   useEffect(() => {
     if (!feedbackModalShown) {
       const feedbackTimeout = setTimeout(() => {
@@ -108,11 +113,7 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
         clearTimeout(feedbackTimeout)
       }
     }
-    if (!showSuggestionModal) {
-      const navigateToHomeTimeout = setTimeout(navigation.popToTop, CALLBACK_DELAY)
-      return () => clearTimeout(navigateToHomeTimeout)
-    }
-  }, [client, feedbackModalShown, LL, showSuggestionModal, navigation, requestFeedback])
+  }, [client, feedbackModalShown, LL, requestFeedback])
 
   const MainIcon = () => {
     switch (status) {
@@ -151,6 +152,7 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
             {SuccessText()}
           </Text>
         </CompletedTextAnimation>
+        <SuccessActionComponent successAction={successAction} preimage={preimage} />
       </View>
       <SuggestionModal
         navigation={navigation}
@@ -197,6 +199,70 @@ const useStyles = makeStyles(({ colors }) => ({
     backgroundColor: colors.white,
     padding: 20,
     borderRadius: 20,
+  },
+  truncatedText: {
+    fontSize: 14,
+  },
+  fieldTitleText: {
+    fontWeight: "bold",
+    marginBottom: 4,
+  },
+  successActionContainer: {
+    minWidth: "100%",
+    paddingHorizontal: 40,
+    marginTop: 30,
+  },
+  successMessage: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: colors.primary,
+  },
+  successActionFieldContainer: {
+    flexDirection: "row",
+    borderStyle: "solid",
+    overflow: "hidden",
+    backgroundColor: colors.grey5,
+    borderRadius: 10,
+    alignItems: "center",
+    padding: 14,
+    minHeight: 60,
+    marginBottom: 12,
+  },
+  disabledFieldBackground: {
+    flex: 1,
+    opacity: 0.5,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  iconContainer: {
+    justifyContent: "center",
+    alignItems: "flex-start",
+    paddingLeft: 20,
+  },
+  hitSlopIcon: {
+    top: 10,
+    bottom: 10,
+    left: 10,
+    right: 10,
+  },
+  iconActionsContainer: {
+    flexDirection: "column",
+    gap: 12,
+    alignItems: "center",
+  },
+  copyUrlButton: {
+    backgroundColor: colors.grey5,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 8,
+  },
+  copyUrlButtonText: {
+    fontSize: 16,
+    textAlign: "center",
   },
 }))
 
