@@ -13,13 +13,13 @@ Detailed setup process of individual components is documented in our central rep
 
 ## Project Setup
 
-Once Nix and direnv are set up, follow these steps to set up the galoy-mobile project:
+Once Nix and direnv are set up, follow these steps to set up the blink-mobile project:
 
-1. **Clone the Repository**: Clone the galoy-mobile repository to your local machine using Git.
+1. **Clone the Repository**: Clone the blink-mobile repository to your local machine using Git.
 
    ```bash
-   git clone git@github.com:GaloyMoney/galoy-mobile.git
-   cd galoy-mobile
+   git clone git@github.com:GaloyMoney/blink-mobile.git
+   cd blink-mobile
    ```
 
 1. **Allow Direnv to run it's contents**:

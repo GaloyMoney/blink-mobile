@@ -92,7 +92,7 @@ const ContactModal: React.FC<Props> = ({
       name: LL.support.mattermost(),
       icon: <Icon name={"chatbubbles-outline"} type="ionicon" color={colors.black} />,
       action: () => {
-        Linking.openURL(`https://chat.galoy.io`)
+        Linking.openURL(`https://chat.blink.sv`)
         toggleModal()
       },
     },
