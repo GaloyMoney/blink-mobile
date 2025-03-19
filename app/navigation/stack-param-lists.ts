@@ -1,4 +1,5 @@
 import { LNURLPaySuccessAction } from "lnurl-pay/dist/types/types"
+import { PaymentType } from "@galoymoney/client"
 import { PhoneCodeChannelType, UserContact, WalletCurrency } from "@app/graphql/generated"
 import { EarnSectionType } from "@app/screens/earns-screen/sections"
 import { PhoneLoginInitiateType } from "@app/screens/phone-auth-screen"
@@ -52,6 +53,7 @@ export type RootStackParamList = {
   conversionSuccess: undefined
   sendBitcoinCompleted: {
     arrivalAtMempoolEstimate?: number
+    paymentType: PaymentType
     status: PaymentSendCompletedStatus
     successAction?: LNURLPaySuccessAction
     preimage?: string
