@@ -104,6 +104,7 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
   }, [LL, client, appConfig])
 
   const FEEDBACK_DELAY = 3000
+  const CALLBACK_DELAY = 3000
   useEffect(() => {
     if (!feedbackModalShown) {
       const feedbackTimeout = setTimeout(() => {
@@ -113,7 +114,11 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
         clearTimeout(feedbackTimeout)
       }
     }
-  }, [client, feedbackModalShown, LL, requestFeedback])
+    if (!showSuggestionModal) {
+      const navigateToHomeTimeout = setTimeout(navigation.popToTop, CALLBACK_DELAY)
+      return () => clearTimeout(navigateToHomeTimeout)
+    }
+  }, [client, feedbackModalShown, LL, showSuggestionModal, navigation, requestFeedback])
 
   const MainIcon = () => {
     switch (status) {
