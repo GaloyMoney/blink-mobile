@@ -1,4 +1,5 @@
 import React from "react"
+import { PaymentType } from "@galoymoney/client"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react-native"
 import { loadLocale } from "@app/i18n/i18n-util.sync"
 import { i18nObject } from "@app/i18n/i18n-util"
@@ -69,6 +70,7 @@ describe("SendBitcoinCompletedScreen", () => {
       name: "sendBitcoinCompleted",
       params: {
         status: "SUCCESS",
+        paymentType: PaymentType.Lnurl,
         successAction: {
           tag: "message",
           description: "",
@@ -97,6 +99,7 @@ describe("SendBitcoinCompletedScreen", () => {
       name: "sendBitcoinCompleted",
       params: {
         status: "SUCCESS",
+        paymentType: PaymentType.Lnurl,
         successAction: {
           tag: "url",
           description: null,
@@ -130,6 +133,7 @@ describe("SendBitcoinCompletedScreen", () => {
       name: "sendBitcoinCompleted",
       params: {
         status: "SUCCESS",
+        paymentType: PaymentType.Lnurl,
         successAction: {
           tag: "url",
           description: "Example URL + description",
@@ -170,6 +174,7 @@ describe("SendBitcoinCompletedScreen", () => {
       name: "sendBitcoinCompleted",
       params: {
         status: "SUCCESS",
+        paymentType: PaymentType.Lnurl,
         successAction: {
           tag: "aes",
           description: "Here is your redeem code",
