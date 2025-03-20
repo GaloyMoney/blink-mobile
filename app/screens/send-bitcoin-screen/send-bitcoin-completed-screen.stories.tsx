@@ -2,7 +2,6 @@ import * as React from "react"
 
 import { MockedProvider } from "@apollo/client/testing"
 import { Meta } from "@storybook/react"
-import { PaymentType } from "@galoymoney/client"
 import { RootStackParamList } from "@app/navigation/stack-param-lists"
 import { RouteProp } from "@react-navigation/native"
 
@@ -23,7 +22,6 @@ const successRoute = {
   params: {
     status: "SUCCESS",
     arrivalAtMempoolEstimate: undefined,
-    paymentType: PaymentType.Intraledger,
   },
 } as const
 
@@ -41,7 +39,6 @@ const queuedRoute = {
   params: {
     status: "PENDING",
     arrivalAtMempoolEstimate: 10000,
-    paymentType: PaymentType.Lnurl,
   },
 } as const
 
@@ -59,7 +56,6 @@ const pendingRoute = {
   params: {
     status: "PENDING",
     arrivalAtMempoolEstimate: undefined,
-    paymentType: PaymentType.Lightning,
   },
 } as const
 
