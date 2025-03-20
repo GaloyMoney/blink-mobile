@@ -73,6 +73,9 @@ gql`
           ... on SettlementViaLn {
             preImage
           }
+          ... on SettlementViaIntraLedger {
+            preImage
+          }
         }
       }
     }

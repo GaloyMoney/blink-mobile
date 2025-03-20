@@ -329,6 +329,10 @@ mutation lnInvoicePaymentSend($input: LnInvoicePaymentInput!) {
           preImage
           __typename
         }
+        ... on SettlementViaIntraLedger {
+          preImage
+          __typename
+        }
         __typename
       }
       __typename
