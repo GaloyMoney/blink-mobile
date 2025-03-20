@@ -154,7 +154,6 @@ const SendBitcoinConfirmationScreen: React.FC<Props> = ({ route }) => {
               params: {
                 arrivalAtMempoolEstimate: extraInfo?.arrivalAtMempoolEstimate,
                 status,
-                paymentType: paymentDetail.paymentType,
                 successAction: paymentDetail?.successAction,
                 preimage: extraInfo?.preimage,
               },

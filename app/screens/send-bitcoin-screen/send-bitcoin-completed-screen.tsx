@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from "react"
 import { View, Alert } from "react-native"
 import InAppReview from "react-native-in-app-review"
-import { PaymentType } from "@galoymoney/client"
 
 import { useApolloClient } from "@apollo/client"
 import { GaloyIcon } from "@app/components/atomic/galoy-icon"
@@ -41,7 +40,6 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
   const {
     arrivalAtMempoolEstimate,
     status: statusRaw,
-    paymentType,
     successAction,
     preimage,
   } = route.params
@@ -116,7 +114,7 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
         clearTimeout(feedbackTimeout)
       }
     }
-    if (paymentType !== PaymentType.Lnurl && !showSuggestionModal) {
+    if (!successAction?.tag && !showSuggestionModal) {
       const navigateToHomeTimeout = setTimeout(navigation.popToTop, CALLBACK_DELAY)
       return () => clearTimeout(navigateToHomeTimeout)
     }
@@ -127,7 +125,7 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
     showSuggestionModal,
     navigation,
     requestFeedback,
-    paymentType,
+    successAction,
   ])
 
   const MainIcon = () => {
