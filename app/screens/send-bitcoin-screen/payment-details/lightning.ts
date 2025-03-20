@@ -261,7 +261,8 @@ export const createAmountLightningPaymentDetails = <T extends WalletCurrency>(
       errors: data?.lnInvoicePaymentSend.errors,
       extraInfo: {
         preimage:
-          settlementVia?.__typename === "SettlementViaLn"
+          settlementVia?.__typename === "SettlementViaLn" ||
+          settlementVia?.__typename === "SettlementViaIntraLedger"
             ? settlementVia.preImage
             : undefined,
       },
