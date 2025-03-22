@@ -2,14 +2,14 @@
     "GaloyAddressScreen": {
         "title": "Rep el pagament utilitzant:",
         "buttonTitle": "Estableix la teva adreça",
-        "yourLightningAddress": "La teva adreça Lightning",
+        "yourAddress": "La teva {bankName} adreça",
         "notAbleToChange": "No podràs canviar la teva {bankName: string} adreça un cop l'hagis configurat.",
         "addressNotAvailable": "Aquesta {bankName} adreça ja està presa.",
         "somethingWentWrong": "Alguna cosa ha anat malament. Si us plau, intenta-ho més tard. ",
         "merchantTitle": "Per als comerciants",
         "yourCashRegister": "La teva caixa registradora Lightning",
         "yourPaycode": "El teu codi de pagament",
-        "copiedLightningAddressToClipboard": "S'ha copiat l'adreça del Lightning al porta-retalls",
+        "copiedAddressToClipboard": "S'ha copiat l'adreça {bankName} al porta-retalls",
         "copiedPaycodeToClipboard": "S'ha copiat el codi de pagament al porta-retalls",
         "copiedCashRegisterLinkToClipboard": "S'ha copiat l'enllaç a la caixa registradora al porta-retalls",
         "howToUseIt": "Com utilitzar-lo?",
@@ -19,13 +19,6 @@
         "howToUseYourAddressExplainer": "Comparteix amb algú que tingui un moneder compatible, com ara:",
         "howToUseYourPaycodeExplainer": "Pots imprimir el teu codi de pagament  (és una factura sense import) i mostrar-lo al teu comerç per rebre pagaments. Les persones poden pagar-te escanejant-lo amb un moneder que tingui activat el  Lightning.\n\nNo obstant, tinguis en compte que alguns moneders no poden escanejar factures sense import:",
         "howToUseYourCashRegisterExplainer": "Permet que les persones recaptin pagaments mitjançant l'enllaç de la caixa registradora, sense accedir al teu moneder.\nPoden crear factures i els pagaments s'enviaran directament al teu moneder {bankName}."
-    },
-    "AcceptTermsAndConditionsScreen": {
-        "title": "Termes i Condicions",
-        "accept": "Acepta",
-        "termsAndConditions": "Veure els Termes i Condicions",
-        "prohibitedCountry": "Veure els països prohibits",
-        "text": "En fer clic a \"Acceptar\", acceptes els nostres Termes i Condicions. També acceptes que no ets resident o ciutadà d'un dels països prohibits."
     },
     "SetAccountModal": {
         "title": "Estableix el teu compte predeterminat",
@@ -72,8 +65,6 @@
         "message": "Conversió efectuada amb èxit"
     },
     "EarnScreen": {
-        "satoshi": "sat",
-        "satoshis": "sats",
         "earnSats": "Guanya {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
@@ -105,7 +96,7 @@
                             "Pot ser… però no és la resposta correcta en aquest context 🙂",
                             "Ummm... no del tot!"
                         ],
-                        "question": "He guanyat un \"Sat\". Què és això?",
+                        "question": "He guanyat un “Sat\". Què és això?",
                         "text": "Un “Sat” és la unitat més petita de bitcoin. \n\nTots sabem que un dòlar pot ser dividid entre 100 cèntims. De forma similar, un Bitcoin es pot dividir entre 100,000,000 sats. \n\nDe fet, no cal tenir un bitcoin sencer per a utilitzar-lo. Pots utilitzar Bitcoin tant si tens 20 sats, 3000 sats — o 100,000,000 sats (que equival a un bitcoin).",
                         "title": "He guanyat un \"Sat\". Què és això?"
                     },
@@ -150,7 +141,7 @@
                             "Saps que això no és cert. Torna-ho a provar.",
                             "Incorrecte. No hi ha cap manera que algú pugui copiar o crear un duplicat, de bitcoin"
                         ],
-                        "question": "Si Bitcoin és diners digitals, algú podria copiar-los — i crear diners gratuïts?",
+                        "question": "Si Bitcoin és diners digitals, algú podria copiar-los —  i crear diners gratuïts?",
                         "text": "El valor d'un bitcoin mai es pot copiar. Aquesta és la veritalbe raó perquè Bitcoin és una potent invenció!!\n\nLa majoria d'arxius digitals — com ara una foto d'Iphone, una canço MP3, o un document de Microsoft Word — poden ser fàcilment duplicats i compartits. \n\nEl programari Bitcoin impedeix la duplicació — o “la doble despesa” — dels diners digitals. Més endavant compartirem com funciona això exactament!",
                         "title": "Si Bitcoin és diners digitals, algú podria copiar-los — i crear diners gratuïts?"
                     }
@@ -640,7 +631,7 @@
                             "No. De fet, els béns físics sovint requereixen permís per creuar fronteres i es poden confiscar fàcilment. Més sort la propera vegada.",
                             "Ho sento, però en realitat és el contrari. El sistema bancari fiduciari, que està regulat pels estats, requereix la intervenció humana per informar i prevenir determinats usos de béns monetaris, el que el fa propens a la censura. Torna-ho a provar!"
                         ],
-                        "question": "Quina de les següents és la raó per la qual Bitcoin es considera un bé resistent a la censura?",
+                        "question": "Quin dels següents NO és un motiu pel qual Bitcoin es consideri un bé resistent a la censura?",
                         "text": "La resistència a la censura és un atribut que s'ha tornat cada vegada més important en l'era digital, ja que fa referència a la dificultat que tenen les parts externes, com les corporacions o els governs, per evitar que un individu faci servir un bé en particular.\n\nAquest atribut és especialment valuós per a les persones que viuen sota règims que imposen controls de capital o prohibeixen certes formes de comerç. Sovint, es cita el Bitcoin com un bé resistents a la censura a causa de la seva xarxa descentralitzada entre iguals, que permet realitzar transaccions sense intervenció humana ni permís.\n\nEn contrast, el sistema bancari de moneda fiduciària està regulat pels estats i requereix intervenció humana per informar i prevenir certes utilitzacions dels béns monetaris, com els controls de capital.\n\nL'or, tot i que no és emès pels estats, pot ser difícil de transmetre a distància i, per tant, està més subjecte a regulació estatal.\n",
                         "title": "No cal permís"
                     }
@@ -1281,7 +1272,7 @@
                             "Es multiplica per un nombre aleatori escollit pel programari bitcoin."
                         ],
                         "feedback": [
-                            "Correcte! Satoshi va determinar la reducció del nou subministrament de bitcoins a la meitat en el primer llançament del programari Bitcoin el 2009 i és pràcticament impossible canviar-ho.",
+                            "Correcte! Satoshi va determinar la reducció del nou subministrament de bitcoins a la meitat en el primer llançament del programari Bitcoin el 2009 i és pràcticament impossible canviar-lo.",
                             "Ho sento, però la recompensa del bloc no es duplica cada quatre anys. Deus estar confonent Bitcoin amb el subministrament de monedes fiduciaries que s'estan expandint a un ritme més ràpid. Torna-ho a provar.",
                             "Molt creatiu, però equivocat. El calendari de subministrament de Bitcoin és qualsevol cosa menys aleatori. La seva predictibilitat proporciona certesa als actors econòmics com res en la història de la humanitat. Torna-ho a provar!"
                         ],
@@ -1991,7 +1982,7 @@
         "getRewardNow": "Contesta el qüestionari",
         "keepDigging": "Continua aprenent!",
         "phoneNumberNeeded": "Número de telèfon necessari",
-        "quizComplete": "Test completat, has guanyat {formattedNumber | sats}",
+        "quizComplete": "Qüestionari completat i {formattedNumber | sats} sats guanyats",
         "reviewQuiz": "Revisa el qüestionari",
         "satAccumulated": "Sats acumulats",
         "satsEarned": "{formattedNumber | sats} guanyats",
@@ -2065,7 +2056,7 @@
         "buyAndSell": "Comprar i vendre Bitcoin"
     },
     "PrimaryScreen": {
-        "title": "Inici"
+        "title": "Casa"
     },
     "ReceiveScreen": {
         "nfc": "NFC",
@@ -2211,7 +2202,7 @@
         "amountExceed": "L'import excedeix el teu saldo {balance}",
         "amountExceedsLimit": "La quantitat supera el teu límit diari restant de {limit: string}",
         "upgradeAccountToIncreaseLimit": "Actualitza el teu compte per incrementar els teus límits",
-        "amountIsRequired": "L'import és necessari",
+        "amountIsRequired": "És necessari l'import",
         "cost": "Cost",
         "destination": "Destinació",
         "destinationIsRequired": "La destinació és necessaria",
@@ -2238,13 +2229,6 @@
         "pendingPayment": "El pagament s'ha enviat, però encara no s'ha confirmat.\n\nÉs possible que el pagament no es confirmi, en aquest cas els fons es retornaran al teu compte."
     },
     "SettingsScreen": {
-        "staticQr": "Codi QR estàtic imprimible",
-        "staticQrCopied": "S'ha copiat l'enllaç del teu codi QR estàtic",
-        "setByOs": "Establert pel sistema operatiu",
-        "apiAcess": "Accès API",
-        "pos": "Punt de venda",
-        "posCopied": "S'ha copiat l'enllaç del teu punt de venda",
-        "setYourLightningAddress": "Configura la teva adreça Lightning",
         "activated": "Activat",
         "addressScreen": "Maneres de cobrar",
         "tapUserName": "Toca per definir el nom d'usuari",
@@ -2292,15 +2276,6 @@
         }
     },
     "AccountScreen": {
-        "fundsMoreThan5Dollars": "El teu compte té més de 5$",
-        "itsATrialAccount": "Els comptes de prova tenen límits de transaccions reduïts i cap mètode de recuperació. Si perds el telèfon o desinstal·les l'aplicació, els teus fons seran irrecuperables.",
-        "accountBeingDeleted": "El teu compte s'està suprimint, si us plau espera...",
-        "dangerZone": "Zona Perillosa",
-        "phoneDeletedSuccessfully": "El telèfon s'ha suprimit correctament",
-        "phoneNumber": "Número de telèfon",
-        "tapToAddPhoneNumber": "Prem per afegir el número de telèfon",
-        "loginMethods": "Mètodes d'inici de sessió",
-        "level": "Nivell {level: string}",
         "accountLevel": "Nivell de compte",
         "upgrade": "Millora el teu compte",
         "logOutAndDeleteLocalData": "Tancar la sessió i borrar totes les dades locals",
@@ -2313,11 +2288,6 @@
         "btcBalanceWarning": "Tens un saldo de {balance: string} bitcoin.",
         "secureYourAccount": "Registra't per protegir el teu compte",
         "tapToAdd": "Prem per afegir",
-        "tapToAddEmail": "Prem per afegir el correu electrònic",
-        "unverifiedEmail": "Correu electrònic (No verificat)",
-        "email": "Correu electrònic",
-        "emailDeletedSuccessfully": "El correu electrònic s'ha suprimit correctament",
-        "unverifiedEmailAdvice": "Els correus electrònics no verificats no es poden utilitzar per iniciar sessió. Hauràs de tornar a verificar l'adreça de correu electrònic.",
         "deleteEmailPromptTitle": "Esborrar correu electrònic",
         "deleteEmailPromptContent": "Estàs segur que vols suprimir la teva adreça de correu electrònic? només podràs tornar a iniciar sessió amb el teu número de telèfon.",
         "deletePhonePromptTitle": "Esborrar telèfon",
@@ -2339,7 +2309,6 @@
         "totpDeleteAlertContent": "Estàs segur que vols suprimir la teva autenticació de dos factors?",
         "copiedAccountId": "S'ha copiat l'identificador del teu compte al porta-retalls",
         "yourAccountId": "La ID del teu compte",
-        "accountId": "ID del compte",
         "copy": "Copiar"
     },
     "TotpRegistrationInitiateScreen": {
@@ -2368,9 +2337,7 @@
         "info": "Tria el teu tema preferit per utilitzar Blink, o mantenir-lo sincronitzat amb la configuració del teu sistema.",
         "system": "Utilitza la configuració del sistema",
         "light": "Utilitza el mode clar",
-        "dark": "Utilitza el mode fosc",
-        "setToDark": "Mode fosc",
-        "setToLight": "Mode Clar"
+        "dark": "Utilitza el mode fosc"
     },
     "Languages": {
         "DEFAULT": "Per defecte (OS)"
@@ -2428,7 +2395,6 @@
     },
     "SetAddressModal": {
         "title": "Estableix la teva adreça {bankName: string} ",
-        "setLightningAddress": "Configura la adreça Lightning",
         "Errors": {
             "tooShort": "L'adreça ha de tenir almenys 3 caràcters",
             "tooLong": "L'adreça pot ser com a màxim de 50 caràcters",
@@ -2510,16 +2476,7 @@
         "success": "El correu electrònic {email: string} s'ha confirmat correctament"
     },
     "common": {
-        "enabled": "Habilitat",
-        "notifications": "Notificacions",
-        "preferences": "Preferències",
-        "onDeviceSecurity": "Seguretat al dispositiu",
-        "securityAndPrivacy": "Seguretat i privacitat",
-        "advanced": "Avançat",
-        "community": "Comunitat",
         "account": "Compte",
-        "trialAccount": "Compte de prova",
-        "blinkUser": "Usuari Blink",
         "transactionLimits": "Límits de transacció",
         "activateWallet": "Activa el moneder",
         "amountRequired": "L'import és necessari",
@@ -2584,7 +2541,7 @@
         "sats": "sats",
         "search": "Busca",
         "security": "Seguretat",
-        "send": "Enviar",
+        "send": "Envia",
         "setAnAmount": "Estableix un import",
         "share": "Comparteix",
         "shareBitcoin": "Comparteix l'adreça Bitcoin",
@@ -2728,16 +2685,30 @@
         "drivingAdoption": "Estic impulsant l'adopció de Bitcoin mitjançant Blink.",
         "connectOnSocial": "Conecta't a les xarxes socials:",
         "fullDetails": "Detalls complets a",
-        "learnMore": "Més informació sobre \"Adopting Bitcoin\" a",
-        "mayChallenge": {
-            "title": "Repte de Maig!",
-            "description": "Fes créixer el teu cercle íntim en 6 per tenir l'oportunitat de guanyar un conjunt de pizzes a la propera Quedada Bitcoin.",
-            "details": "Vols una festa del dia de la Pizza Bitcoin?\n\nAmplia el teu cercle interior en 6 per guanyar un conjunt de pizzes per a la  propera queada de Bitcoin. El repte finalitza el 15 de maig.\n\nComparteix els teus cercles a les xarxes socials amb l'etiqueta #blinkcircles per participar.\n\nEl premi és de 150 dòlars per a les pizzes."
+        "decemberChallenge": {
+            "title": "Desafiament de desembre!",
+            "description": "+10 al cercle intern per a una oportunitat de guanyar $100!",
+            "details": "Fes créixer el teu cercle interior amb 10 persones al desembre per a tenir l'oportunitat de guanyar 100 $!\n\nPer participar, després d'aconseguir fer creixer el teu cercle amb 10 persones aquest mes, comparteix els teus cercles a les xarxes socials i etiqueta #blinkcircles.\n\nL' 1 de gener, es triaran tres persones aleatòriament per rebre 100 $!"
         },
-        "juneChallenge": {
-            "title": "Repte de Juny!",
-            "description": "Amplia el teu cercle interior en 10 per tenir l'oportunitat de guanyar un premi de 1000 dòlars a Adopting Bitcoin El Salvador",
-            "details": "Guanya un premi per \"Adopting Bitcoin El Salvador\"\n\nAmplia el teu cercle interior en 10 per tenir l'oportunitat de guanyar un premi de 1000 dòlars per \"Adopting Bitcoin El Salvador\"! L'entrada inclou accés exclusiu a la conferència principal, amb menjar/begudes/aperitius, sopar de ponents i el Festival de Cinema.\n\nComparteix els teus cercles a les xarxes socials amb l'etiqueta #blinkcircles per participar.\n\nAquesta vegada, hi haurà dos guanyadors!"
+        "januaryChallenge": {
+            "title": "Desafiament de gener!",
+            "description": "+10 cercle exterior al gener per a una oportunitat de guankyar 100 $!",
+            "details": "Fes créixer el teu cercle EXTERIOR en 10 persones al gener per tenir l'oportunitat de guanyar 100 $!\n\nEl teu cercle exterior creix quan les persones del teu cercle interior conviden a altres persones, així que contacta amb ells i recorda'ls que comparteixin Blink amb els seus amics i familiars.\n\nComparteix els teus cercles a les xarxes socials amb #blinkcircles per participar."
+        },
+        "februaryChallenge": {
+            "title": "Desafiament de febrer!",
+            "description": "+3 cercle interior per a tenir l'oportunitat de guanyar un Seedsigner!",
+            "details": "Fes créixer el teu cercle interior en 3 persones al febrer per tenir l'oportunitat de guanyar una cartera de hardware Seedsigner!\n\nRecordatori: els teus cercles creixen quan envies els primers sats a un nou usuari de Blink.\n\nComparteix els teus cercles a les xarxes socials amb #blinkcircles per participar."
+        },
+        "marchChallenge": {
+            "title": "Desafiament de març!",
+            "description": "+3 cercle interior i +3 cercle exterior per tenir l'oportunitat de guanyar 100 dòlars.",
+            "details": "Fes créixer el teu cercle interior en 3 persones i el teu cercle exterior en 3 persones per tenir l'oportunitat de guanyar 100 $!\n\nRecordatori: els teus cercles creixen quan envies a un nou usuari de Blink els seus primers sats.\n\nComparteix els teus cercles a les xarxes socials amb #blinkcircles per participar."
+        },
+        "aprilChallenge": {
+            "title": "Repte d'abril!",
+            "description": "Augmenta el teu cercle interior en 12 persones i el teu cercle exterior en 3 persones per a poder guanyar una cartera Bitbox02.",
+            "details": "Durant el mes del \"halving\", amplia el teu cercle interior en 12 persones i el cercle exterior en 3 persones per poder guanyar una cartera de Bitbox02!\n\nRecorda: els teus circles creixen quan envies a un usuari nou de Blink els seus primers sats.\n\nComparteix els teus cercles a les xarxes socials amb l'etiqueta #blinkcircles per poder participar."
         }
     },
     "FullOnboarding": {
@@ -2756,14 +2727,5 @@
         "ERROR": "Error",
         "PROCESSING": "Processant",
         "REVIEW": "Revisar"
-    },
-    "NotificationHistory": {
-        "title": "Notificacions",
-        "noNotifications": "Ara no tens cap notificació"
-    },
-    "SupportChat": {
-        "errorSendingMessage": "S'ha produït un error en enviar el missatge",
-        "confirmChatReset": "Confirmes que vols restablir el xat?",
-        "errorResettingChat": "S'ha produït un error en restablir el xat"
     }
 }
