@@ -2954,7 +2954,7 @@ export type LnInvoicePaymentSendMutationVariables = Exact<{
 }>;
 
 
-export type LnInvoicePaymentSendMutation = { readonly __typename: 'Mutation', readonly lnInvoicePaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }> } };
+export type LnInvoicePaymentSendMutation = { readonly __typename: 'Mutation', readonly lnInvoicePaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly transaction?: { readonly __typename: 'Transaction', readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly preImage?: string | null } | { readonly __typename: 'SettlementViaLn', readonly preImage?: string | null } | { readonly __typename: 'SettlementViaOnChain' } } | null } };
 
 export type LnNoAmountUsdInvoicePaymentSendMutationVariables = Exact<{
   input: LnNoAmountUsdInvoicePaymentInput;
@@ -6533,6 +6533,16 @@ export const LnInvoicePaymentSendDocument = gql`
       message
     }
     status
+    transaction {
+      settlementVia {
+        ... on SettlementViaLn {
+          preImage
+        }
+        ... on SettlementViaIntraLedger {
+          preImage
+        }
+      }
+    }
   }
 }
     `;

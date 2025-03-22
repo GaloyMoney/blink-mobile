@@ -381,6 +381,9 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
           }
 
           const result = await requestInvoice(requestInvoiceParams)
+
+          setPaymentDetail(paymentDetail.setSuccessAction(result.successAction))
+
           setIsLoadingLnurl(false)
           const invoice = result.invoice
           const decodedInvoice = decodeInvoiceString(invoice, network as NetworkLibGaloy)
@@ -392,10 +395,13 @@ const SendBitcoinDetailsScreen: React.FC<Props> = ({ route }) => {
             return
           }
 
-          paymentDetailForConfirmation = paymentDetail.setInvoice({
-            paymentRequest: invoice,
-            paymentRequestAmount: btcAmount,
-          })
+          paymentDetailForConfirmation = {
+            ...paymentDetail.setInvoice({
+              paymentRequest: invoice,
+              paymentRequestAmount: btcAmount,
+            }),
+            successAction: result.successAction,
+          }
         } catch (error) {
           setIsLoadingLnurl(false)
           if (error instanceof Error) {

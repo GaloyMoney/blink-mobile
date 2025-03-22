@@ -68,6 +68,16 @@ gql`
         message
       }
       status
+      transaction {
+        settlementVia {
+          ... on SettlementViaLn {
+            preImage
+          }
+          ... on SettlementViaIntraLedger {
+            preImage
+          }
+        }
+      }
     }
   }
 

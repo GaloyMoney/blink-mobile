@@ -9,6 +9,7 @@ import {
   SuccessIconAnimation,
   CompletedTextAnimation,
 } from "@app/components/success-animation"
+import { SuccessActionComponent } from "@app/components/success-action"
 import { setFeedbackModalShown } from "@app/graphql/client-only-query"
 import { useFeedbackModalShownQuery } from "@app/graphql/generated"
 import { useAppConfig } from "@app/hooks"
@@ -36,7 +37,12 @@ type Props = {
 type StatusProcessed = "SUCCESS" | "PENDING" | "QUEUED"
 
 const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
-  const { arrivalAtMempoolEstimate, status: statusRaw } = route.params
+  const {
+    arrivalAtMempoolEstimate,
+    status: statusRaw,
+    successAction,
+    preimage,
+  } = route.params
   const styles = useStyles()
   const {
     theme: { colors },
@@ -108,11 +114,19 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
         clearTimeout(feedbackTimeout)
       }
     }
-    if (!showSuggestionModal) {
+    if (!successAction?.tag && !showSuggestionModal) {
       const navigateToHomeTimeout = setTimeout(navigation.popToTop, CALLBACK_DELAY)
       return () => clearTimeout(navigateToHomeTimeout)
     }
-  }, [client, feedbackModalShown, LL, showSuggestionModal, navigation, requestFeedback])
+  }, [
+    client,
+    feedbackModalShown,
+    LL,
+    showSuggestionModal,
+    navigation,
+    requestFeedback,
+    successAction,
+  ])
 
   const MainIcon = () => {
     switch (status) {
@@ -151,6 +165,7 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
             {SuccessText()}
           </Text>
         </CompletedTextAnimation>
+        <SuccessActionComponent successAction={successAction} preimage={preimage} />
       </View>
       <SuggestionModal
         navigation={navigation}
