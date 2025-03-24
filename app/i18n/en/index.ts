@@ -2381,6 +2381,7 @@ const en: BaseTranslation = {
     tapToAddPhoneNumber: "Tap to add phone number",
     loginMethods: "Login Methods",
     level: "Level {level: string}",
+    switch: "switch",
     accountLevel: "Account Level",
     upgrade: "Upgrade your account",
     logOutAndDeleteLocalData: "Log out and clear all local data",
@@ -2429,6 +2430,11 @@ const en: BaseTranslation = {
     yourAccountId: "Your Account ID",
     accountId: "Account ID",
     copy: "Copy",
+  },
+  ProfileScreen: {
+    addNew : "Add new",
+    logout: "Logout",
+    error: "Unable to fetch profiles at this time",
   },
   TotpRegistrationInitiateScreen: {
     title: "Two-factor authentication",
@@ -2686,6 +2692,7 @@ const en: BaseTranslation = {
     phone: "Phone",
     phoneNumber: "Phone Number",
     preimageProofOfPayment: "Preimage / Proof of Payment",
+    profile: "Profiles",
     rate: "Rate",
     reauth: "Your session has expired. Please log in again.",
     restart: "Restart",
