@@ -20,6 +20,13 @@
         "howToUseYourPaycodeExplainer": "Osobola okukuba Paycode yo (mu by’ekikugu, eno ndagiriro ya lnurl-pay) n’ogilaga mu bizinensi yo okufuna ssente. Abantu ssekinnoomu basobola okukusasula nga bagisika ne waleti eriko Laddu.\n\nWabula kimanye nti waleti ezimu tezisobola kusika Paycode nga:",
         "howToUseYourCashRegisterExplainer": "Kkiriza abantu okusolooza ssente nga bayita mu kitabobo eky'okuwandiika ssente, nga tofunye mu walleti yo.\n\nBasobola okukola invoice era okusasula kujja kuweerezebwa butereevu ku {bankName: string} Walleti yo."
     },
+    "AcceptTermsAndConditionsScreen": {
+        "title": "Terms and Conditions",
+        "accept": "Accept",
+        "termsAndConditions": "View Terms and Conditions",
+        "prohibitedCountry": "View prohibited countries",
+        "text": "By clicking 'Accept', you agree to our Terms And Conditions. You also agree that you are not a resident or citizen from one of the prohibited countries."
+    },
     "SetAccountModal": {
         "title": "Kola akawunti esookerwako",
         "description": "Akawunti eno ejja kusooka kulondebwa okusindika n’okufuna ssente. Kisobola okukyusibwa essaawa yonna.",
@@ -65,7 +72,9 @@
         "message": "Okukyusa kutuuse kubuwanguzi"
     },
     "EarnScreen": {
-        "earnSats": "Funa {formattedNumber | sats}",
+        "satoshi": "sat",
+        "satoshis": "sats",
+        "earnSats": "Earn {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Bitcoin: Kye ki?",
@@ -631,7 +640,7 @@
                             "Nedda, mu butuufu, ebintu ebirabika bitera okwetaaga olukusa okusala ensalo era kyangu okuboyebwa. Omukisa omulungi omulundi oguddako",
                             "Bambi, naye mu butuufu ekintu ekikontana n’ekyo. Enkola ya bbanka ya fiat efugirwa amawanga, yeetaaga abantu okuyingira mu nsonga zino okuloopa n’okuziyiza enkozesa ezimu ez’ebintu eby’ensimbi, ekigifuula etera okusengekebwa. Gezaako nate!"
                         ],
-                        "question": "Ku bino wammanga kiriwa SI nsonga lwaki Bitcoin etwalibwa ng’ekintu ekigumira okusengejja",
+                        "question": "Which of the following is the reason that Bitcoin is considered a censorship-resistant good",
                         "text": "Okuziyiza okusengejja ngeri eyeeyongedde okuba enkulu mu mulembe gwa digito, kubanga kitegeeza obuzibu ebibiina eby’ebweru, gamba ng’ebitongole oba gavumenti, bwe birina mu kulemesa omuntu ssekinnoomu okukozesa ekintu ekimu.\n\nEngeri eno ya mugaso nnyo eri abantu ssekinnoomu ababeera wansi w’enfuga ezissa mu nkola enfuga ya kapito oba ezikugira engeri ezimu ez’obusuubuzi. Bitcoin etera okuyogerwako ng’ekintu ekirungi ekiziyiza okusengejja olw’omukutu gwayo ogusaasaanyiziddwa, oguva ku bannaabwe, ogusobozesa okukolagana okukolebwa awatali kuyingirira bantu oba olukusa.\n\nOkwawukanako n’ekyo, enkola ya bbanka ya fiat efugirwa amawanga era yeetaaga okuyingira mu nsonga z’abantu okuloopa n’okuziyiza enkozesa ezimu ez’ebintu eby’ensimbi, gamba ng’okufuga kapito.\n\nZaabu wadde tafulumizibwa masaza, asobola okuba omuzibu okutambuza ng’ali wala n’olwekyo asinga kugoberera mateeka ga gavumenti.\n",
                         "title": "Tekyetaagisa lukusa"
                     }
@@ -1982,10 +1991,10 @@
         "getRewardNow": "Ddamu ebibuuzo",
         "keepDigging": "Sigala ng'osima!",
         "phoneNumberNeeded": "Number ye ssimu yetagisa",
-        "quizComplete": "Ebibuuzo biwedde era {formattedNumber | sats} z'ofunye",
+        "quizComplete": "Quiz completed and {formattedNumber | sats} earned",
         "reviewQuiz": "Wekkaanye ebibuuzo",
         "satAccumulated": "Sats ezikuŋŋaanyiziddwa",
-        "satsEarned": "{formattedNumber | sats}  ezifunidwa",
+        "satsEarned": "{formattedNumber | sats} earned",
         "sectionsCompleted": "Omaze",
         "title": "Kolera Empeera",
         "unlockQuestion": "Okugulawo, ddamu ekibuuzo:",
@@ -2226,7 +2235,13 @@
             "confirmButton": "Nkakasa ebitundu 100%"
         },
         "copiedDestination": "Gy'eziraga wawanduukuluddwa ku lutimbe",
-        "pendingPayment": "Ensasula eno eweerezeddwa, naye tennaba kukakasa.\n\nKisoboka okusasula tekujja kukakasa, mu mbeera eyo ssente zijja kuddizibwa ku akawunti yo."
+        "pendingPayment": "Ensasula eno eweerezeddwa, naye tennaba kukakasa.\n\nKisoboka okusasula tekujja kukakasa, mu mbeera eyo ssente zijja kuddizibwa ku akawunti yo.",
+        "copySuccessMessage": "Copy success message to clipboard",
+        "openSuccessUrl": "Open success URL in browser",
+        "copySecretMessage": "Copy secret message to clipboard",
+        "copiedSuccessMessage": "Message copied successfully",
+        "copiedSecretMessage": "Secret message copied successfully",
+        "pendingDecryptionMessage": "Encrypted message. Waiting for payment confirmation."
     },
     "SettingsScreen": {
         "staticQr": "Koodi ya QR etali ya kukyukakyuka eyinza okwokyebwaamu",
@@ -2480,7 +2495,7 @@
     },
     "EmailRegistrationInitiateScreen": {
         "title": "Yongera email yo",
-        "header": "Yingiza email yo, tukusindikire kodi ekuyamba okugulawo.",
+        "header": "Yingiza email yo, tukusindikire koodi ekuyamba okugulawo.",
         "invalidEmail": "Email etali ntuufu. Okakasa nti oyingiza email entuufu?",
         "send": "Weereza koodi",
         "missingEmailRegistrationId": "ID y'okwewandiisa ku email teriko",
@@ -2719,30 +2734,16 @@
         "drivingAdoption": "Ndi muvuzi w'enkozesa ya Bitcoin nga nkozesa Blink.",
         "connectOnSocial": "Tukwatagane ku mpuliziganyo:",
         "fullDetails": "Ebikwata ku nsonga eno mu bujjuvu ku",
-        "decemberChallenge": {
-            "title": "Ekisoomoza mu mwezi gwa Ntenvu!",
-            "description": "Enkulungo ez'omunda +10 okufuna omukisa ku $100!",
-            "details": "Kuza enkulungo ez'omunda nga ogatta ko abantu 10 mu mwezi gwa Ntenvu okufuna omukisa ku $100!\n\nOkwetabamu, gabana enkulungo zo ku mutimbagano nga omaze okutuuka ku 10 mu mwezi era wandiika #blinkcircles.\n\nNga mu mwezi gwa Gatonnya nga 1, abantu basatu bagenda kulondebwa mu ngeri ey’ekimpatiira okufuna $100!"
+        "learnMore": "Learn more about Adopting Bitcoin at",
+        "mayChallenge": {
+            "title": "May Challenge!",
+            "description": "Grow your inner circle by 6 for a chance to win a set of Pizzas on your next Bitcoin Meetup.",
+            "details": "Want a Bitcoin Pizza Day Party?\n\nExpand your Inner Circle by 6 for a shot at winning a set of pizzas for your next Bitcoin Meetup. The challenge wraps up on May 15th.\n\nShare your circles on social with the hashtag #blinkcircles to participate.\n\nThe prize is $150 for pizzas."
         },
-        "januaryChallenge": {
-            "title": "Ekisoomoza mu mwezi gwa Gatonnya!",
-            "description": "Enkulungo mu mwezi gwa Gatonnya +10 okufuna omukisa ku $100!",
-            "details": "Kuza enkulungo zo EZ'EBWEERU n'abantu 10 mu mwezi gwa Gatonnya okufuna omukisa ku $100!\n\nEnkulungo yo ey’ebweru ekula ng’abantu abali mu nkulungo yo ey’omunda baaniriza abalala, kale jjukiza abo ab'etabye ku mutimbagano okugabana Blink ne mikwano gyabwe n’ab’omu maka gaabwe.\n\nGabana enkulungo zo ku mutimbagano ne #blinkcircles okwetabamu."
-        },
-        "februaryChallenge": {
-            "title": "Ekisoomoza mu mwezi gwa Mukutula Nsanja!",
-            "description": "Enkulungo +3 ez'omunda okufuna omukisa okuwangula waleti ya Seedsigner ekwatibwaako!",
-            "details": "Kuza enkulungo zo ez'omunda ne 3 mu mwezi gwa Mukutula Nsanja ofune omukisa okuwangula waleti ya Seedsigner ekwatibwaako!\n\nOkujjukiza: enkulungo zo zikula nga osindikira omukozesa wa Blink omupya sats ze ezisooka.\n\nGabana circles zo ku mutimbagano ne #blinkcircles okwetabamu."
-        },
-        "marchChallenge": {
-            "title": "Ekisoomoza mu mwezi gwa Mugula Nsigo!",
-            "description": "Enkulungo +3 ez'omunda n'enkulungo +3 ez'ebweru okufuna omukisa okuwangula $100",
-            "details": "Kuza enkulungo yo ey’omunda ku 3 ate enkulungo yo ey’ebweru ku 3 okufuna omukisa gw’okuwangula doola 100!\n\nOkujjukiza: enkulungo zo zikula nga osindikira omukozesa wa Blink omupya sats ze ezisooka.\n\nGabana enkulungo zo ku mutimbagano ne #blinkcircles okwetabamu."
-        },
-        "aprilChallenge": {
-            "title": "Okusomozebwa mu mwezi gwa Kafumuula Mpawu! ",
-            "description": "Kuza enkulungo yo oy'omunda okutuuka ku 12 ne nkulungo yo ey'owabweeru okutuuka ku 3 okufuna omukisa okuwangula waleti ekwatibwako eya Bitbox02.",
-            "details": "Mu mwezi gw’okukendeeza ku kitundu, gaziya enkulungo yo ey’omunda ne 12 ate ennkulungo yo ey’ebweru ne 3 okufuna omukisa okuwangula waleti ya Bitbox02 ekwatibwaako!\n\nOkujjukiza: enkulungo zo zikula nga osindikira omukozesa wa Blink omupya sats ze ezisooka.\n\nGabana enkulungo zo ku mukutu mugatta bantu ne #blinkcircles okwetabamu."
+        "juneChallenge": {
+            "title": "June Challenge!",
+            "description": "Expand your Inner Circle by 10 for a chance to win a $1000 privilege ticket to the Adopting Bitcoin El Salvador",
+            "details": "Win a privilege ticket to Adopting Bitcoin El Salvador\n\nExpand your Inner Circle by 10 for a chance to win a $1000 privilege ticket to Adopting Bitcoin El Salvador! The ticket includes exclusive access to the main conference, mezzanine with food/drinks/snacks, speakers' dinner, and the Film Festival.\n\nShare your circles on social with the hashtag #blinkcircles to participate.\n\nThis time, there will be two winners!"
         }
     },
     "FullOnboarding": {
@@ -2761,5 +2762,14 @@
         "ERROR": "Ekyonoono",
         "PROCESSING": "Okulongoosa",
         "REVIEW": "Okwekkaanya"
+    },
+    "NotificationHistory": {
+        "title": "Okumanyisibwa",
+        "noNotifications": "You don't have any notifications right now"
+    },
+    "SupportChat": {
+        "errorSendingMessage": "An error occurred while sending the message",
+        "confirmChatReset": "Are you sure you want to reset the chat?",
+        "errorResettingChat": "An error occurred while resetting the chat"
     }
 }
