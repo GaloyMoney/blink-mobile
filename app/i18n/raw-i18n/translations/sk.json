@@ -2236,12 +2236,12 @@
         },
         "copiedDestination": "Cieľ bol skopírovaný do schránky",
         "pendingPayment": "Platba bola odoslaná, ale ešte nie je potvrdená.\n\nJe možné, že platba nebude potvrdená, v takom prípade budú prostriedky vrátené na váš účet.",
-        "copySuccessMessage": "Copy success message to clipboard",
-        "openSuccessUrl": "Open success URL in browser",
-        "copySecretMessage": "Copy secret message to clipboard",
-        "copiedSuccessMessage": "Message copied successfully",
-        "copiedSecretMessage": "Secret message copied successfully",
-        "pendingDecryptionMessage": "Encrypted message. Waiting for payment confirmation."
+        "copySuccessMessage": "Skopírovať správu do schránky",
+        "openSuccessUrl": "Otvoriť URL adresu v prehliadači",
+        "copySecretMessage": "Skopírovať tajnú správu do schránky",
+        "copiedSuccessMessage": "Správa bola úspešne skopírovaná",
+        "copiedSecretMessage": "Tajná správa bola úspešne skopírovaná",
+        "pendingDecryptionMessage": "Šifrovaná správa. Čaká sa na potvrdenie platby."
     },
     "SettingsScreen": {
         "staticQr": "Vytlačiteľný statický QR kód",
