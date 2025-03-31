@@ -74,7 +74,7 @@
     "EarnScreen": {
         "satoshi": "sat",
         "satoshis": "sat",
-        "earnSats": "Kapsz {formattedNumber | sats}-t",
+        "earnSats": "Kapsz {formattedNumber | sats}-ot",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Mi a Bitcoin?",
@@ -1994,7 +1994,7 @@
         "quizComplete": "A kvíz végére értél és {formattedNumber | sats}-ot kaptál.",
         "reviewQuiz": "Kvíz átnézése",
         "satAccumulated": "Keresett satoshik",
-        "satsEarned": "{formattedNumber | sats}-t kaptál",
+        "satsEarned": "{formattedNumber | sats}-ot kaptál",
         "sectionsCompleted": "Befejezett szakaszok",
         "title": "Kvíz",
         "unlockQuestion": "Feloldáshoz, válaszolj a kérdésre:",
