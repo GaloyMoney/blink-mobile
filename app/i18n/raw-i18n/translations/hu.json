@@ -1991,7 +1991,7 @@
         "getRewardNow": "Válaszolj a kvízre",
         "keepDigging": "Áss tovább!",
         "phoneNumberNeeded": "Telefonszám szükséges",
-        "quizComplete": "A kvíz végére értél és {formattedNumber | sats}-t kaptál.",
+        "quizComplete": "A kvíz végére értél és {formattedNumber | sats}-ot kaptál.",
         "reviewQuiz": "Kvíz átnézése",
         "satAccumulated": "Keresett satoshik",
         "satsEarned": "{formattedNumber | sats}-t kaptál",
