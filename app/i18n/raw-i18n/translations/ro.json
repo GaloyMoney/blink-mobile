@@ -74,7 +74,7 @@
     "EarnScreen": {
         "satoshi": "sat",
         "satoshis": "sats",
-        "earnSats": "Earn {formattedNumber | sats}",
+        "earnSats": "Câștigați {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Bitcoin: Ce este?",
@@ -311,7 +311,7 @@
                             "Aproape. Deși designul bancnotelor de hârtie se poate schimba, acest lucru nu are nimic de-a face cu valoarea lor."
                         ],
                         "question": "Ce se întâmplă cu valoarea tuturor banilor fiat în timp?",
-                        "text": "That is correct. \n\nIn the history of the world, there have been 775 fiat currencies created. Most no longer exist, and the average life for any fiat money is only 27 years.\n\nThe British Pound is the oldest fiat currency. It has lost more than 99% of its value since 1694. \n\nThere is no precedent for any fiat money maintaining its value over time. This is inflation. \nIt is effectively a form of theft of your own hard earned money !",
+                        "text": "Asta este corect.\n\nÎn istoria lumii, au fost create 775 de monede fiat. Cele mai multe nu mai există, iar durata medie de viață a oricărei monede fiat este de doar 27 de ani.\n\nLira sterlină este cea mai veche monedă fiat. A pierdut mai mult de 99% din valoarea sa din 1694.\n\nNu există precedent pentru ca vreo monedă fiat să-și mențină valoarea în timp. Aceasta este inflația. Este, în esență, o formă de furt al banilor tăi câștigați cu greu!",
                         "title": "Acest lucru înseamnă că toți banii fiat își pierd valoarea în timp?"
                     },
                     "OtherIssues": {
@@ -403,7 +403,7 @@
                         "feedback": [
                             "Corect. De fapt, rețeaua Bitcoin nu a fost niciodată hackuită. Răspundeți la următoarea întrebare pentru a afla mai multe!",
                             "Frumoasă încercare, dar greșită. Rețeaua bitcoin este sigură și securizată – 24 de ore pe zi, 365 de zile pe an.",
-                            "Icorrect. Although bitcoin is indeed “open source” software — or available to the public for free — is still extremely secure."
+                            "Incorect. Deși Bitcoin este într-adevăr un software „open source” — sau disponibil publicului gratuit — este totuși extrem de sigur."
                         ],
                         "question": "Este rețeaua Bitcoin sigură?",
                         "text": "Rețeaua bitcoin valorează astăzi peste 100 de miliarde de dolari. În consecință, rețeaua trebuie să fie foarte sigură – astfel încât banii să nu fie niciodată furați. \n\nBitcoin este cunoscut ca prima criptomonedă din lume. \n\nPartea \"cripto/crypto\" a numelui provine din criptografie. Pur și simplu, criptografia protejează informațiile prin funcții matematice foarte complexe. \n\nMajoritatea oamenilor nu-și dau seama - dar Bitcoin este de fapt cea mai sigură rețea de calculatoare din lume! \n\n(Este posibil să fi auzit despre \"hack-urile\" Bitcoin - pe care le vom dezvălui în următorul test)",
@@ -532,7 +532,7 @@
                         ],
                         "feedback": [
                             "Ai înțeles bine. Rețeaua care securizează moneda este un factor important în determinarea durabilității acesteia, în special pentru monedele digitale precum bitcoin. Știați că bitcoin a afișat un nivel ridicat de \"anti-fragilitate\", în ciuda încercărilor de a-l reglementa și a atacurilor hackerilor? Acest lucru este destul de impresionant pentru o monedă care este încă în stadiile incipiente",
-                            "Nope, sorry! The physical manifestation of the currency is actually not as important as the institution that issues it or the network that secures it. Don't worry though, you're not alone in making this mistake. Even the Ancient Greeks used to mint their coins out of perishable materials like bronze and copper",
+                            "Nu, îmi pare rău! Manifestarea fizică a monedei nu este de fapt atât de importantă cât instituția care o emite sau rețeaua care o securizează. Nu-ți face griji, nu ești singur în a face această greșeală. Chiar și grecii antici obișnuiau să bată monedele din materiale perisabile, cum ar fi bronzul și cuprul.",
                             "Aproape, dar nu chiar! Instituția care emite moneda este de fapt un factor important în determinarea durabilității acesteia. Dar hei, cel puțin nu ești singur în această greșeală. Au existat multe guverne și monede care au venit și au plecat de-a lungul secolelor."
                         ],
                         "question": "Care dintre următoarele este un factor important în determinarea durabilității unui bun depozit de valoare",
@@ -751,7 +751,7 @@
                             "Ne pare rău, dar Bitcoin este încă în proces de a deveni mai larg acceptat ca bani. Mai mult noroc data viitoare!"
                         ],
                         "question": "Care este stadiul actual al evoluției Bitcoin",
-                        "text": "Bitcoin is currently changing from the first stage of being used as money to the second stage. It may take several years for Bitcoin to be used as a way to trade goods and services, like other currencies.\n\nThe process of Bitcoin becoming more widely accepted as money is uncertain, as the same process took a long time for gold and no one alive has seen a good become money in the same way that is happening with Bitcoin. There is not a lot of experience with this process, but developments around the world are very promising and happening faster in the interconnected digital age.\n",
+                        "text": "Bitcoin se află în prezent în tranziție de la prima etapă de utilizare ca monedă la a doua etapă. Ar putea dura câțiva ani ca Bitcoin să fie folosit ca o modalitate de a face schimb de bunuri și servicii, la fel ca alte monede.\n\nProcesul prin care Bitcoin devine mai larg acceptat ca monedă este incert, deoarece același proces a durat mult timp pentru aur, iar nimeni în viață nu a văzut un bun devenind monedă în același mod în care se întâmplă cu Bitcoin. Nu există multă experiență cu acest proces, dar dezvoltările din întreaga lume sunt foarte promițătoare și se desfășoară mai repede în era digitală interconectată.\n",
                         "title": "Bitcoin este în stadiul de monetizare"
                     }
                 }
@@ -778,7 +778,7 @@
                         "answers": [
                             "Pentru a îmbunătăți funcționarea rețelelor mici de barter.",
                             "Pentru a facilita rețelele comerciale la scară largă.",
-                            "To reduce the need for credit."
+                            "Pentru a reduce necesitatea de credit."
                         ],
                         "feedback": [
                             "Felicitări! Este interesant să ne gândim la modul în care banii au evoluat de-a lungul timpului, de la utilizarea lor timpurie ca mijloc de facilitare a comerțului în comunitățile mici până la rolul său actual ca mijloc de schimb în economiile moderne",
@@ -896,7 +896,7 @@
                             "Prețurile gazelor ar putea fluctua din mai multe motive, dar acest scenariu special nu are prea mult de-a face cu asta. Încearcă din nou!"
                         ],
                         "question": "Care este rezultatul potențial al băncilor care emit mai multe bancnote pe suport de hârtie decât depozite deținute",
-                        "text": "Banks sometimes issued more paper notes than they had deposits, which could cause problems in the economy. If people started to doubt the solvency of a bank, they might rush to withdraw their money all at once before others do. This is called a bank run.\n\nThe sudden loss of deposits from the bank run could reveal that the bank was using too much leverage through Fractional Reserve Banking. This could cause a lack of liquidity and bring the whole financial system to a stop.\n",
+                        "text": "Băncile uneori emiteau mai multe bilete de hârtie decât aveau depozite, ceea ce putea cauza probleme în economie. Dacă oamenii începeau să-și pună la îndoială solvabilitatea unei bănci, ar putea să se grăbească să-și retragă banii simultan, înainte ca alții să o facă. Acest fenomen se numește \"run bancar\".\n\nPierderea bruscă a depozitelor din cauza run-ului bancar ar putea dezvălui că banca folosea prea mult efectul de levier prin intermediul sistemului de rezervă fracționară. Acest lucru ar putea cauza o lipsă de lichiditate și ar putea aduce întregul sistem financiar la un stop.\n",
                         "title": "Probleme ale activității bancare cu rezerve fracționare"
                     },
                     "modernCentralBanking": {
@@ -956,7 +956,7 @@
                             "Desigur, acest lucru ar aduce beneficii imense finanțării OMC, dar nu acesta este modul în care este definită sau aleasă moneda de rezervă globală. Încearcă din nou!"
                         ],
                         "question": "Ce este o monedă de rezervă globală",
-                        "text": "A global reserve currency is a type of money that is widely used in international trade and financial transactions. It is the preferred or most in-demand currency for settling transactions, as it is generally stable and widely accepted.\n\nChanges to the global reserve currency can have significant geopolitical implications, as it can affect the balance of power between countries.\n\nThe dominant global reserve currency has typically had a lifespan of several decades, with the US dollar serving as the dominant global reserve currency for much of the 20th century.\n",
+                        "text": "O monedă de rezervă globală este un tip de bani care este utilizat pe scară largă în comerțul internațional și în tranzacțiile financiare. Este moneda preferată sau cea mai solicitată pentru soluționarea tranzacțiilor, deoarece este, în general, stabilă și acceptată pe scară largă.\n\nSchimbările în moneda de rezervă globală pot avea implicații geopolitice semnificative, deoarece pot afecta echilibrul de putere între țări.\n\nMoneda de rezervă globală dominantă a avut, de obicei, o durată de viață de câteva decenii, dolarul american servind ca monedă de rezervă globală dominantă pentru mare parte a secolului 20.\n",
                         "title": "Moneda Rezervei Globale"
                     }
                 }
@@ -1991,10 +1991,10 @@
         "getRewardNow": "Răspundeți la test",
         "keepDigging": "Continuați să săpați!",
         "phoneNumberNeeded": "Numărul de telefon e necesar",
-        "quizComplete": "Quiz completed and {formattedNumber | sats} earned",
+        "quizComplete": "Quiz finalizat și {formattedNumber | sats} câștigați",
         "reviewQuiz": "Examinați testul",
         "satAccumulated": "Sats acumulați",
-        "satsEarned": "{formattedNumber | sats} earned",
+        "satsEarned": "{formattedNumber | sats} câștigați",
         "sectionsCompleted": "Ați finalizat",
         "title": "Câștigați",
         "unlockQuestion": "Pentru a debloca, răspundeți la întrebarea:",
@@ -2236,12 +2236,12 @@
         },
         "copiedDestination": "Destinație copiată în clipboard",
         "pendingPayment": "Plata a fost trimisă, dar nu s-a confirmată încă.\n\nEste posibil ca plata să nu se confirme, caz în care fondurile vor fi returnate în contul dvs.",
-        "copySuccessMessage": "Copy success message to clipboard",
-        "openSuccessUrl": "Open success URL in browser",
-        "copySecretMessage": "Copy secret message to clipboard",
-        "copiedSuccessMessage": "Message copied successfully",
-        "copiedSecretMessage": "Secret message copied successfully",
-        "pendingDecryptionMessage": "Encrypted message. Waiting for payment confirmation."
+        "copySuccessMessage": "Mesajul a fost copiat cu succes.",
+        "openSuccessUrl": "URL-ul a fost copiat cu succes în browser.",
+        "copySecretMessage": "Copiază mesajul secret în clipboard.",
+        "copiedSuccessMessage": "Mesajul a fost copiat cu succes.",
+        "copiedSecretMessage": "Mesajul secret a fost copiat cu succes.",
+        "pendingDecryptionMessage": "Mesaj criptat. Se așteaptă confirmarea plății."
     },
     "SettingsScreen": {
         "staticQr": "Cod QR static imprimabil",
@@ -2734,7 +2734,7 @@
         "drivingAdoption": "Contribui la adoptarea Bitcoin folosind Blink.",
         "connectOnSocial": "Conectați-vă pe rețelele sociale: ",
         "fullDetails": "Toate detaliile",
-        "learnMore": "Learn more about Adopting Bitcoin at",
+        "learnMore": "Află mai multe despre Adoptarea Bitcoin la",
         "mayChallenge": {
             "title": "Provocarea lunii mai!",
             "description": "Crește-ți cercul interior cu 6 pentru șansa de a câștiga un set de pizza la următoarea ta întâlnire Bitcoin.",
