@@ -2113,7 +2113,7 @@
         "btcOnChainAddress": "Adresa Bitcoin Onchain",
         "receiveViaInvoice": "Primește via Lightning",
         "receiveViaPaycode": "Primește via Paycode",
-        "receiveViaOnchain": "Primire via Onchain",
+        "receiveViaOnchain": "Primește via Onchain",
         "payCodeOrLNURL": "Paycode / LNURL",
         "cantReceiveZeroSats": "Nu puteți primi zero sats. Vă rugăm să introduceți o sumă corespunzătoare, de la 1 la mai mulți sats în sus."
     },
