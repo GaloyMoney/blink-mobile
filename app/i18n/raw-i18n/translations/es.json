@@ -2,14 +2,14 @@
     "GaloyAddressScreen": {
         "title": "Recibe pagos usando: ",
         "buttonTitle": "Establece tu dirección ",
-        "yourAddress": "Tu dirección {bankName}",
+        "yourLightningAddress": "Tu dirección Lightning",
         "notAbleToChange": "No podrá cambiar su dirección {bankName: string} después de que esta esté configurada.",
         "addressNotAvailable": "Esta dirección {bankName: string} no está disponible.",
         "somethingWentWrong": "Algo salió mal. Por favor, inténtelo de nuevo más tarde.",
         "merchantTitle": "Para comercios",
-        "yourCashRegister": "Tu Caja Registradora en Lightning",
+        "yourCashRegister": "Tu Caja Registradora Lightning",
         "yourPaycode": "Tu Código de pago",
-        "copiedAddressToClipboard": "Dirección {bankName: string} copiada al portapapeles",
+        "copiedLightningAddressToClipboard": "Dirección de Lightning copiada en el portapapeles",
         "copiedPaycodeToClipboard": "Código de pago copiado al portapapeles",
         "copiedCashRegisterLinkToClipboard": "El link de tu Caja Registradora se ha copiado al portapapeles.",
         "howToUseIt": "¿Cómo usarlo?",
@@ -19,6 +19,13 @@
         "howToUseYourAddressExplainer": "Comparte con alguien que tenga una wallet compatible, como estas:",
         "howToUseYourPaycodeExplainer": "Puedes imprimir tu Paycode o código de pago (una dirección lnurl-pay) y mostrarlo en tu negocio para recibir pagos. Las personas podrán pagarte escaneando en una wallet que integre Lightning.\n\nSin embargo, ten en cuenta que algunas wallets no pueden escanear un código de pago como estas:",
         "howToUseYourCashRegisterExplainer": "Permite que las personas cobren pagos a través del enlace de la Caja Registradora, sin acceder a su billetera.\n\nPueden crear facturas y los pagos se enviarán directamente a su billetera {bankName: string}."
+    },
+    "AcceptTermsAndConditionsScreen": {
+        "title": "Términos y Condiciones",
+        "accept": "Aceptar",
+        "termsAndConditions": "Ver Términos y Condiciones",
+        "prohibitedCountry": "Ver países prohibidos",
+        "text": "Al hacer clic en \"Aceptar\", acepta nuestros Términos y condiciones. También acepta que no es residente ni ciudadano de uno de los países prohibidos."
     },
     "SetAccountModal": {
         "title": "Establece tu cuenta predeterminada",
@@ -39,7 +46,7 @@
         "confirmLogout": "¿Está seguro de que desea cerrar sesión? Esto reiniciará su caché y todas las configuraciones de usuario locales."
     },
     "PeopleScreen": {
-        "title": "Gente",
+        "title": "Personas",
         "copy": "Copiar",
         "noContactsTitle": "No se encontraron contactos",
         "noContactsYet": "Envía o recibe un pago utilizando un nombre de usuario y los contactos se agregarán automáticamente aquí",
@@ -53,7 +60,7 @@
     },
     "ConversionDetailsScreen": {
         "title": "Convertir",
-        "percentageToConvert": "% a convertir"
+        "percentageToConvert": "% para convertir"
     },
     "ConversionConfirmationScreen": {
         "title": "Confirmar conversión",
@@ -65,6 +72,8 @@
         "message": "Conversión exitosa"
     },
     "EarnScreen": {
+        "satoshi": "sat",
+        "satoshis": "Satoshis",
         "earnSats": "Gana {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
@@ -93,7 +102,7 @@
                         ],
                         "feedback": [
                             "¡¡Correcto!! ¡¡Acabas de ganar otros dos Satoshis!!",
-                            "¡Podría ser13<… pero no es la respuesta correcta en este contexto 🙂",
+                            "Podría ser… pero no es la respuesta correcta en este contexto 🙂",
                             "Ummm.... ¡ni cerca!"
                         ],
                         "question": "Acabo de ganar un \"Satoshi\". ¿Qué es eso?",
@@ -109,7 +118,7 @@
                         "feedback": [
                             "¡Correcto! Acabas de ganar otros 5 Satoshis.",
                             "Incorrecto, Bueno... aún no ;)",
-                            "¡Equivocado!, por favor intenta de nuevo"
+                            "Equivocado. Por favor intenta de nuevo."
                         ],
                         "question": "¿De dónde existen los Bitcoins?",
                         "text": "Bitcoin es una nueva forma de dinero. puede ser usado por cualquiera, en cualquier momento y en cualquier lugar del mundo. \n\nNo está atado a ningún gobierno o región en específico (como el dólar estadounidense). tampoco hay papeles escritos, monedas metálicas o tarjetas de plástico. \n\nTodo es 100% digital. Bitcoin es una red de computadoras funcionando en el internet. \n\nTu Bitcoin es fácilmente manejado por software en tu teléfono o computadora",
@@ -408,7 +417,7 @@
                         ],
                         "feedback": [
                             "Esto es correcto. La red de Bitcoin nunca se ha visto comprometida. De cualquier manera, es importante que uses una billetera digital segura para mantener tus Bitcoins personales seguros todo el tiempo.",
-                            "Equivocado, intenta de nuevo.",
+                            "Equivocado. Por favor intenta de nuevo.",
                             "No amiguito, sabes bien que eso no es correcto."
                         ],
                         "question": "¿Bitcoin ha sido alguna vez hackeado?",
@@ -631,7 +640,7 @@
                             "No. De hecho, los bienes físicos a menudo requieren permiso para cruzar fronteras y pueden ser confiscados fácilmente. Mejor suerte la próxima vez",
                             "Lo siento, pero en realidad es todo lo contrario. El sistema bancario fiduciario, que está regulado por los estados, requiere intervención humana para informar e impedir ciertos usos de bienes monetarios, lo que lo hace propenso a la censura. ¡Intenta otra vez!"
                         ],
-                        "question": "¿Cuál de las siguientes NO es una razón por la que Bitcoin se considera un bien resistente a la censura?",
+                        "question": "¿Cuál de las siguientes es la razón por la que Bitcoin se considera un bien resistente a la censura?",
                         "text": "La resistencia a la censura es un atributo que se ha vuelto cada vez más importante en la era digital, ya que se refiere a la dificultad que tienen partes externas, como corporaciones o gobiernos, para impedir que un individuo utilice un bien en particular.\n\nEste atributo es particularmente valioso para las personas que viven bajo regímenes que imponen controles de capital o prohíben ciertas formas de comercio. A menudo se cita a Bitcoin como un bien resistente a la censura debido a su red descentralizada de igual a igual, que permite realizar transacciones sin intervención o permiso humano.\n\nPor el contrario, el sistema bancario fiduciario está regulado por los estados y requiere intervención humana para informar e impedir ciertos usos de bienes monetarios, como los controles de capital.\n\nEl oro, aunque no es emitido por los estados, puede ser difícil de transmitir a distancia y, por lo tanto, está más sujeto a la regulación estatal.\n",
                         "title": "No se requiere permiso"
                     }
@@ -818,7 +827,7 @@
                         ],
                         "feedback": [
                             "¡Eso es todo! **** Es interesante pensar en cómo la dureza del dinero puede cambiar con el tiempo a medida que avanza la tecnología y lo que antes era difícil de producir se vuelve más fácil. ¡Buen trabajo!",
-                            "Lo siento, ¡parece que lo entendiste al revés! Más suerte con tu próxima suposición.",
+                            "Lo siento, ¡parece que lo entendiste al revés! Más suerte con tu próxima respuesta.",
                             "¡Equivocado! La dureza del dinero tiene más que ver con su producción que con su cantidad. ¡Más suerte con tu próxima respuesta!"
                         ],
                         "question": "¿Cuál es la dureza del dinero?",
@@ -838,7 +847,7 @@
                         ],
                         "feedback": [
                             "¡Exactamente! **.** Es interesante pensar en cómo las cualidades de los diferentes materiales, como la durabilidad y la rareza del oro, pueden hacerlos más valiosos y deseables como forma de dinero. ¡Buen trabajo!",
-                            "Lo siento, ¡parece que lo entendiste al revés! Más suerte con tu próxima suposición.",
+                            "Lo siento, ¡parece que lo entendiste al revés! Más suerte con tu próxima respuesta.",
                             "<div></div>"
                         ],
                         "question": "¿Por qué el libre mercado eligió el oro como forma de dinero?",
@@ -1982,10 +1991,10 @@
         "getRewardNow": "Responder al cuestionario",
         "keepDigging": "Sigue nadando",
         "phoneNumberNeeded": "Numero de teléfono requerido",
-        "quizComplete": "Prueba completada, has ganado {formattedNumber | sats}",
+        "quizComplete": "Quiz completado y {formattedNumber | sats} ganados",
         "reviewQuiz": "Cuestionario de repaso",
         "satAccumulated": "Satoshis acumulados",
-        "satsEarned": "‪{formattedNumber | sats}‬ ganados",
+        "satsEarned": "{formattedNumber | sats} ganados",
         "sectionsCompleted": "Has completado",
         "title": "Ganar",
         "unlockQuestion": "Para desbloquear, responda la pregunta:",
@@ -2226,9 +2235,22 @@
             "confirmButton": "Estoy 100% seguro"
         },
         "copiedDestination": "Destino copiado al portapapeles",
-        "pendingPayment": "El pago ha sido enviado, pero aún no se ha confirmado.\n\nEs posible que el pago no se confirme, en cuyo caso los fondos se devolverán a su cuenta.\nBETA"
+        "pendingPayment": "El pago ha sido enviado, pero aún no se ha confirmado.\n\nEs posible que el pago no se confirme, en cuyo caso los fondos se devolverán a su cuenta.\nBETA",
+        "copySuccessMessage": "Copy success message to clipboard",
+        "openSuccessUrl": "Open success URL in browser",
+        "copySecretMessage": "Copy secret message to clipboard",
+        "copiedSuccessMessage": "Message copied successfully",
+        "copiedSecretMessage": "Secret message copied successfully",
+        "pendingDecryptionMessage": "Encrypted message. Waiting for payment confirmation."
     },
     "SettingsScreen": {
+        "staticQr": "Código QR estático imprimible",
+        "staticQrCopied": "Tu enlace de código QR estático se ha copiado",
+        "setByOs": "Establecido por OS",
+        "apiAcess": "Acceso API",
+        "pos": "Punto de venta",
+        "posCopied": "Su enlace de punto de venta ha sido copiado",
+        "setYourLightningAddress": "Establezca su dirección Lightning",
         "activated": "Activada",
         "addressScreen": "Formas de recibir pagos",
         "tapUserName": "Ingrese aquí para configurarlo",
@@ -2276,6 +2298,15 @@
         }
     },
     "AccountScreen": {
+        "fundsMoreThan5Dollars": "Su cuenta tiene más de $5",
+        "itsATrialAccount": "Las cuentas de prueba tienen límites de transacción reducidos y no cuentan con un método de recuperación. Si pierdes tu teléfono o desinstalas la aplicación, tus fondos serán irrecuperables",
+        "accountBeingDeleted": "Su cuenta está siendo eliminada, por favor espere...",
+        "dangerZone": "Zona de peligro",
+        "phoneDeletedSuccessfully": "Teléfono borrado con éxito",
+        "phoneNumber": "Número de teléfono",
+        "tapToAddPhoneNumber": "Pulse para añadir el número",
+        "loginMethods": "Métodos de acceso",
+        "level": "Nivel {nivel: cadena}",
         "accountLevel": "Nivel de cuenta",
         "upgrade": "Actualiza tu cuenta",
         "logOutAndDeleteLocalData": "Cerrar sesión y borrar todos los datos locales",
@@ -2288,6 +2319,11 @@
         "btcBalanceWarning": "Tienes un saldo de bitcoin de {balance: cadena}.",
         "secureYourAccount": "Registrate para asegurar tu cuenta",
         "tapToAdd": "Toca para agregar",
+        "tapToAddEmail": "Pulse para añadir correo",
+        "unverifiedEmail": "Correo electrónico (no verificado)",
+        "email": "Correo electrónico",
+        "emailDeletedSuccessfully": "Correo electrónico eliminado con éxito",
+        "unverifiedEmailAdvice": "Los correos electrónicos no verificados no pueden utilizarse para iniciar sesión. Debes volver a verificar tu dirección de correo electrónico.",
         "deleteEmailPromptTitle": "Eliminar correo electrónico",
         "deleteEmailPromptContent": "¿Está seguro de que desea eliminar su dirección de correo electrónico? \nSolo podrá volver a iniciar sesión con su número de teléfono.",
         "deletePhonePromptTitle": "Eliminar teléfono",
@@ -2296,7 +2332,7 @@
         "addPhoneFirst": "Agregar un teléfono primero",
         "phoneNumberAuthentication": "Número de teléfono (para iniciar sesión)",
         "emailAuthentication": "Correo electrónico (para iniciar sesión)",
-        "removePhone": "Quitar teléfono",
+        "removePhone": "Eliminar teléfono",
         "removeEmail": "Quitar correo electrónico",
         "unverified": "Correo electrónico sin verificación",
         "unverifiedContent": "Proteje tu cuenta verificando tu correo electrónico.",
@@ -2309,6 +2345,7 @@
         "totpDeleteAlertContent": "¿Está seguro de que desea eliminar su autenticación de dos factores?",
         "copiedAccountId": "Copiaste la ID de tu cuenta al portapapeles",
         "yourAccountId": "ID de tu cuenta",
+        "accountId": "ID de cuenta",
         "copy": "Copiar"
     },
     "TotpRegistrationInitiateScreen": {
@@ -2329,7 +2366,7 @@
         "toastMessage": "¡Código secreto copiado al portapapeles!"
     },
     "DefaultWalletScreen": {
-        "title": "Cuenta predeterminada ",
+        "title": "Cuenta predeterminada",
         "info": "Elige qué cuenta establecer como predeterminada para recibir y enviar. Puedes ajustar la cuenta de envío y recepción para pagos individuales en la app móvil. Los pagos recibidos a través de la caja o de su dirección Lightning siempre irán a la cuenta predeterminada.\n\nPara evitar la volatilidad de Bitcoin, elige Stablesats. Esto te permite mantener una cantidad estable de dinero sin dejar de poder enviar y recibir pagos.\n\nPuedes cambiar esta configuración en cualquier momento, y no afectará a tu saldo actual."
     },
     "ThemeScreen": {
@@ -2337,7 +2374,9 @@
         "info": "Elige el tema que más te guste para usar Blink o manténlo sincronizado con la configuración de tu sistema.",
         "system": "Utilizar la configuración del sistema",
         "light": "Utilizar el modo Claro",
-        "dark": "Utilizar el modo Oscuro"
+        "dark": "Utilizar el modo Oscuro",
+        "setToDark": "Modo oscuro.",
+        "setToLight": "Modo Luz"
     },
     "Languages": {
         "DEFAULT": "Predeterminado (OS)"
@@ -2395,6 +2434,7 @@
     },
     "SetAddressModal": {
         "title": "Establece tu dirección de {bankName: string}",
+        "setLightningAddress": "Establecer dirección de Lightning",
         "Errors": {
             "tooShort": "La dirección debe tener al menos 3 caracteres",
             "tooLong": "La dirección debe tener como máximo 50 carácteres",
@@ -2476,10 +2516,19 @@
         "success": "El correo electrónico {email: string} ha sido confirmado con éxito"
     },
     "common": {
+        "enabled": "Activado",
+        "notifications": "Notificaciones ",
+        "preferences": "Preferencias",
+        "onDeviceSecurity": "Seguridad en los dispositivos",
+        "securityAndPrivacy": "Seguridad y privacidad",
+        "advanced": "Avanzado",
+        "community": "Comunidad",
         "account": "Cuenta",
+        "trialAccount": "Cuenta de prueba",
+        "blinkUser": "Usuario de Blink",
         "transactionLimits": "Límites de la transacción",
         "activateWallet": "Activar billetera",
-        "amountRequired": "Se requiere una cantidad",
+        "amountRequired": "Se requiere cantidad",
         "back": "Atrás",
         "backHome": "Atrás",
         "bank": "Banco",
@@ -2505,7 +2554,7 @@
         "error": "Error",
         "fatal": "Fatal",
         "fee": "Cuota",
-        "Fee": "Tarifa",
+        "Fee": "Tarifa de red",
         "fees": "Tarifa",
         "firstName": "Nombre",
         "from": "Desde",
@@ -2685,36 +2734,16 @@
         "drivingAdoption": "Estoy impulsando la adopción de Bitcoin usando Blink.",
         "connectOnSocial": "Conecta en redes sociales:",
         "fullDetails": "Detalles completos en",
-        "learnMore": "Obtén más información sobre Adopting Bitcoin en ",
-        "decemberChallenge": {
-            "title": "¡Reto de diciembre! ",
-            "description": "\"¡+10 amigos a tu círculo interno para tener la oportunidad de ganar $100!\"",
-            "details": "¡Has crecer tu círculo íntimo en 10 personas en diciembre para tener la oportunidad de ganar $100! \n\nPara participar, comparte tus círculos en las redes sociales una vez que hayas llegado a 10 por mes y etiqueta #blinkcircles. \n\n¡El 1 de enero, se elegirán tres personas al azar para recibir $100!"
-        },
-        "januaryChallenge": {
-            "title": "Reto de enero!",
-            "description": "¡+10 a tu circulo exterior en enero por oportunidad de $100!",
-            "details": "¡Has crecer tu círculo exterior en 10 personas en enero para tener la oportunidad de ganar $100! \n\nTu círculo exterior crece cuando las personas de tu círculo interior acogen a otras, así que tiende la mano y recuerda a los que has incorporado que compartan Blink con sus amigos y familiares.\n\nComparte tus círculos en las redes sociales con #blinkcircles para participar."
-        },
-        "februaryChallenge": {
-            "title": "¡Reto de febrero!",
-            "description": "+3 en tu círculo interno para tener la oportunidad de ganar una billetera hardware Seedsigner",
-            "details": "Haz crecer tu círculo interno en 3 personas en enero para tener la oportunidad de ganar una billetera de hardware Seedsigner.\n\nRecordatorio: tus círculos crecen cuando envías los primeros sats a un nuevo usuario de Blink.\n\nComparte tus círculos en redes sociales con #blinkcircles para participar."
-        },
-        "marchChallenge": {
-            "title": "¡Reto de marzo!",
-            "description": "+3 círculo interior y +3 círculo exterior para tener la oportunidad de ganar $100",
-            "details": "Amplía tu círculo interno en 3 personas y tu círculo externo en 3 personas para tener la oportunidad de ganar $100.\n\nRecordatorio: tus círculos crecen cuando envías a un nuevo usuario de Blink sus primeros sats.\n\nComparte tus círculos en redes sociales con #blinkcircles para participar."
-        },
-        "aprilChallenge": {
-            "title": "Reto de abril!",
-            "description": "Amplia en 12 tu círculo interno y en 3 tu círculo externo para tener la oportunidad de ganar una Bitbox02 hardware wallet.",
-            "details": "En el mes del Halving, amplía tu Círculo Interior en 12 y aumenta tu Círculo Exterior en 3 para tener la oportunidad de ganar una Bitbox02 hardware wallet.\n\nRecordatorio: Tus círculos crecen cuando envías a un nuevo usuario de Blink sus primeros sats.\n\nComparte tus círculos en las redes sociales con el hashtag #blinkcircles para participar."
+        "learnMore": "Más información sobre Adopting Bitcoin",
+        "mayChallenge": {
+            "title": "Reto de Mayo!",
+            "description": "Grow your inner circle by 6 for a chance to win a set of Pizzas on your next Bitcoin Meetup.",
+            "details": "Want a Bitcoin Pizza Day Party?\n\nExpand your Inner Circle by 6 for a shot at winning a set of pizzas for your next Bitcoin Meetup. The challenge wraps up on May 15th.\n\nShare your circles on social with the hashtag #blinkcircles to participate.\n\nThe prize is $150 for pizzas."
         },
         "juneChallenge": {
-            "title": "Challenge de Junio!",
-            "description": "¡Amplía tu Círculo Interno en 10 para tener la oportunidad de ganar un boleto privilegio de $1000 para Adopting Bitcoin El Salvador!",
-            "details": "Gana un boleto privilegio para Adopting Bitcoin El Salvador\n\n¡Amplía tu Círculo Interno en 10 para tener la oportunidad de ganar un boleto privilegio de $1000 para Adopting Bitcoin El Salvador! El boleto incluye acceso exclusivo a la conferencia principal, al entrepiso con comida/bebidas/snacks, a la cena de los oradores y al Festival de Cine.\n\nComparte tus círculos en las redes sociales con el hashtag #blinkcircles para participar.\n\n¡Esta vez, habrá dos ganadores!"
+            "title": "Reto de Junio!",
+            "description": "Expand your Inner Circle by 10 for a chance to win a $1000 privilege ticket to the Adopting Bitcoin El Salvador",
+            "details": "Win a privilege ticket to Adopting Bitcoin El Salvador\n\nExpand your Inner Circle by 10 for a chance to win a $1000 privilege ticket to Adopting Bitcoin El Salvador! The ticket includes exclusive access to the main conference, mezzanine with food/drinks/snacks, speakers' dinner, and the Film Festival.\n\nShare your circles on social with the hashtag #blinkcircles to participate.\n\nThis time, there will be two winners!"
         }
     },
     "FullOnboarding": {
@@ -2733,5 +2762,14 @@
         "ERROR": "Error",
         "PROCESSING": "Procesando",
         "REVIEW": "Revisar"
+    },
+    "NotificationHistory": {
+        "title": "Notificaciones ",
+        "noNotifications": "No tienes notificaciones en este momento"
+    },
+    "SupportChat": {
+        "errorSendingMessage": "Se ha producido un error al enviar el mensaje",
+        "confirmChatReset": "¿Seguro que quieres reiniciar el chat?",
+        "errorResettingChat": "Se ha producido un error al restablecer el chat"
     }
 }
