@@ -2111,8 +2111,8 @@
         },
         "invoiceHasBeenPaid": "Factura a fost plătită",
         "btcOnChainAddress": "Adresa Bitcoin Onchain",
-        "receiveViaInvoice": "Primire via Lightning",
-        "receiveViaPaycode": "Primire via Paycode",
+        "receiveViaInvoice": "Primește via Lightning",
+        "receiveViaPaycode": "Primește via Paycode",
         "receiveViaOnchain": "Primire via Onchain",
         "payCodeOrLNURL": "Paycode / LNURL",
         "cantReceiveZeroSats": "Nu puteți primi zero sats. Vă rugăm să introduceți o sumă corespunzătoare, de la 1 la mai mulți sats în sus."
