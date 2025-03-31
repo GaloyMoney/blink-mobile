@@ -2,14 +2,14 @@
     "GaloyAddressScreen": {
         "title": "Pokea malipo kwa kutumia:",
         "buttonTitle": "Weka anwani yako",
-        "yourAddress": "Anwani yako ya {bankName: string}",
+        "yourLightningAddress": "anwani yako ya umeme",
         "notAbleToChange": "Hautakubaliwa kubadilisha anwani yako ya {bankName: string} baada ya kuhifadhiwa",
         "addressNotAvailable": "Hii anwani ya {bankName: string} imechaguliwa na mtumizi mwingine",
         "somethingWentWrong": "Hitilafu. Tafadhali jaribu baadaye. ",
         "merchantTitle": "Kwa wafanyibiashara",
         "yourCashRegister": "Daftari lako la Malipo ya Haraka",
         "yourPaycode": "Msimbo wako wa malipo",
-        "copiedAddressToClipboard": "Anwani ya {bankName: string} imenakiliwa kwenye ubao wa kunakili",
+        "copiedLightningAddressToClipboard": "Imenakili anwani ya Umeme kwenye ubao wa kunakili",
         "copiedPaycodeToClipboard": "Msimbo wako wa malipo umenakiliwa kwenye ubao wa kunakili",
         "copiedCashRegisterLinkToClipboard": "Imekopiwa Kiungo cha Daftari la Malipo kwenye ubao wa kunakili",
         "howToUseIt": "Jinsi ya kuitumia?",
@@ -19,6 +19,13 @@
         "howToUseYourAddressExplainer": "Shiriki na mtu mwenye mkoba unaofaa, kama vile:",
         "howToUseYourPaycodeExplainer": "Unaweza kuchapisha Msimbo wako wa Malipo (kiufundi, hii ni anwani ya lnurl-pay) na kuonyesha katika biashara yako kupokea malipo. Watu wanaweza kukulipa kwa kuscani na mkoba unaoweza kutumia Lightning.\n\nHata hivyo, tambua kuwa baadhi ya mifuko ya pesa haiwezi kuscani Msimbo wa Malipo kama vile:",
         "howToUseYourCashRegisterExplainer": "Ruhusu watu kukusanya malipo kupitia kiungo cha Daftari la Malipo, bila kufikia mkoba wako.\n\nWanaweza kuunda ankara na malipo yatapelekwa moja kwa moja kwenye Mkoba wako wa {bankName: string}."
+    },
+    "AcceptTermsAndConditionsScreen": {
+        "title": "Sheria na Masharti",
+        "accept": "Kubali",
+        "termsAndConditions": "Tazama Sheria na Masharti",
+        "prohibitedCountry": "Tazama nchi zilizopigwa marufuku",
+        "text": "Kwa kubofya 'Kubali', unakubali Sheria na Masharti yetu. Pia unakubali kuwa wewe si mkazi au raia kutoka mojawapo ya nchi zilizopigwa marufuku."
     },
     "SetAccountModal": {
         "title": "Wekeza akaunti ya chaguo",
@@ -36,7 +43,7 @@
         "skip": "Ruka",
         "unlock": "Fungua",
         "usePin": "Tumia pini",
-        "confirmLogout": "Are you sure you'd like to log out? This will reset your cache and all local user settings"
+        "confirmLogout": "Je, una uhakika ungependa kutoka? Hii itaweka upya akiba yako na mipangilio yote ya mtumiaji wa ndani"
     },
     "PeopleScreen": {
         "title": "Watunzi",
@@ -65,7 +72,9 @@
         "message": "Ubadilishaji umekamilika"
     },
     "EarnScreen": {
-        "earnSats": "Pata {formattedNumber | sats}",
+        "satoshi": "sat",
+        "satoshis": "sats",
+        "earnSats": "Earn {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Bitcoin: ni nini?",
@@ -83,7 +92,7 @@
                         ],
                         "question": "Basi  hasa Bitcoin ni nini?",
                         "text": "Bitcoin ni pesa za kidigitali. \n\nZinaweza kutumwa mara moja kisalama kati ya watu wawili popote duniani - bila kutumia benki au kampuni yoyote ya kifedha kati.",
-                        "title": "Basi Bitcoin ni nini hasa?"
+                        "title": "Basi  hasa Bitcoin ni nini?"
                     },
                     "sat": {
                         "answers": [
@@ -96,7 +105,7 @@
                             "Labda...lakini hilo silo jibu sahihi katika muktadha huu 🙂",
                             "Ummm...sivyo hivyo!"
                         ],
-                        "question": "Nimepata \"Sat\". Hiyo ni nini?",
+                        "question": "Nimepata \"Sat\" moja. Hiyo ni nini?",
                         "text": "\"Sat\" moja ni kitengo kidogo zaidi cha Bitcoin. \n\nSote tunajua kwamba Dola moja ya Marekani inaweza kugawanywa katika senti mia moja. Vile vile, Bitcoin moja inaweza kugawanyika katika sat 100,000,000. \n\nHakika, huhitaji kumiliki Bitcoin moja mzima ili kuitumia. Unaweza kutumia Bitcoin kama una sat 20, sat 3000 - ama sat 100,000,000 (ambazo sasa unajua ni sawa na Bitcoin moja)",
                         "title": "Nimepata \"Sat\" moja. Hiyo ni nini?"
                     },
@@ -111,7 +120,7 @@
                             "Si sahihi. Vyema...angalau bado ;)",
                             "Si sahihi. Tafadhali jaribu tena."
                         ],
-                        "question": "Bitcoins zinaishi wapi?",
+                        "question": "Bitcoin zinaishi wapi?",
                         "text": "Bitcoin ni namna mpya ya pesa. Inaweza tumiwa na mtu yeyote, wakati wowote -- pahali popote duniani. \n\nHaijaunganishwa na serikali yoyote au mkoa wowote (kama dola ya Marekani). Hakuna pesa ya karatasi, shilingi za chuma au kadi za plastiki. \n\nKila kitu ni 100% digitali. Bitcoin ni mtandao ya tarakilishi zinazotelekezwa kutumia matandao. \n\nUnaweza simamia bitcoin yako virahisi kutumia programu kwenye simu yako au kwenye tarakilishi.",
                         "title": "Bitcoin zinaishi wapi?"
                     },
@@ -269,7 +278,7 @@
                         "feedback": [
                             " Sahihi. Katika historia nzima, serikali hazijaweza kupinga uchapishaji wa pesa, kwa sababu hawana wajibu wa kugharamikia kulipa pesa hii.",
                             "La, kwa hakikia hivyo sivyo ilivyo.",
-                            "Si sahihi. Tafadhali jaribu tena"
+                            "Si sahihi. Tafadhali jaribu tena."
                         ],
                         "question": "Kwa nini nafaa kujali kuhusu udhibiti wa pesa ya fiat na serikali? ",
                         "text": "Kama tulivyo shiriki katika jaribio la awali, Benki kuu ya Marekani ni Federal Reserve, ama \"Fed\". \n\nFed inaweza kuchapisha dola zaidi wakati wowote -- na haihitaji ruhusa kutoka rais, na kwa hakika si kutoka kwenye wananchi wa Marekani. \n\nKuwa na udhibiti inaweza kuleta ushawishi wenye mamlaka kuutumia vibaya -- na sana sana husababisha mfukumo wa bei, utaifishaji kiholela na rushwa. \n\nKwa kweli, LAan Greenspan, aliyekuwa mweneyekiti maarufu wa Fed, alisema kwamba Marekani \"inaweza lipa deni lolote inayodaiwa, kwa sababu wanaweza kuchapisha pesa kufanya hivyo\".",
@@ -423,7 +432,7 @@
                     "originsOfMoney": {
                         "answers": [
                             "Kuhifadhi na kuhamisha utajiri",
-                            "Kutumika kama aina ya burudani",
+                            "Kutumika kama burudani",
                             "Kutenda kama ishara ya hadhi"
                         ],
                         "feedback": [
@@ -631,7 +640,7 @@
                             "Hapana. Kwa kweli, bidhaa za kimwili mara nyingi zinahitaji idhini kupita mipaka na zinaweza kunyang'anywa kwa urahisi. Bahati nzuri wakati ujao",
                             "Samahani, lakini kinyume chake ni kweli. Mfumo wa benki ya kawaida, ambao unadhibitiwa na serikali, unahitaji kuingilia kati kwa binadamu ili kuripoti na kuzuia matumizi fulani ya bidhaa za fedha, hivyo kuifanya iweze kuzuiwa. Jaribu tena!"
                         ],
-                        "question": "Ni ipi kati ya zifuatazo siyo sababu ya Bitcoin kuchukuliwa kama bidhaa yenye kustahimili kuzuiwa",
+                        "question": "Ni ipi kati ya zifuatazo ni sababu ambayo Bitcoin inachukuliwa kuwa nzuri inayostahimili udhibiti",
                         "text": "Uwezo wa kustahimili kuzuiwa ni sifa ambayo imekuwa muhimu sana katika enzi ya kidijitali, kwani inahusu ugumu ambao vyama vya nje, kama makampuni au serikali, wanapata katika kuzuia mtu binafsi kutumia bidhaa fulani.\n\nSifa hii ni muhimu hasa kwa watu wanaoishi chini ya utawala unaoweka udhibiti wa mtiririko wa fedha au kupiga marufuku aina fulani za biashara. Bitcoin mara nyingi hutajwa kuwa bidhaa yenye kustahimili kuzuiwa kutokana na mtandao wake usio na msimamizi, wa mtu kwa mtu, ambao huruhusu miamala kufanyika bila kuingiliwa au idhini ya binadamu.\n\nKinyume chake, mfumo wa benki ya kawaida unadhibitiwa na serikali na unahitaji kuingilia kati kwa binadamu ili kuripoti na kuzuia matumizi fulani ya bidhaa za fedha, kama vile udhibiti wa mtiririko wa fedha.\n\nDhahabu, ingawa haikutolewa na serikali, inaweza kuwa ngumu kutumwa kwa umbali na kwa hivyo inaweza zaidi kusimamiwa na serikali.\n",
                         "title": "Hakuna Idhini Inayohitajika"
                     }
@@ -773,7 +782,7 @@
                         ],
                         "feedback": [
                             "Hongera! Inavutia kufikiria jinsi pesa ilivyoevuka wakati, kutoka matumizi yake ya awali kama njia ya kurahisisha biashara katika jamii ndogo ndogo hadi jukumu lake la sasa kama chombo cha kubadilishana katika uchumi wa kisasa",
-                            "Samahani, inaonekana ulikosea! Bahati njema na jibu lako la pili",
+                            "Samahani, inaonekana umekosea! Bahati njema na jaribio lako la pili",
                             "Sio sahihi! Mikopo imekuwepo kwa karibu muda mrefu kama pesa, na inaonekana kuwa hapa kubaki. Bahati njema na jibu lako la pili."
                         ],
                         "question": "Kazi kuu ya pesa ilikuwa nini",
@@ -818,7 +827,7 @@
                         ],
                         "feedback": [
                             "Hilo ndilo! **** Inavutia kufikiria jinsi ugumu wa pesa unavyoweza kubadilika kwa muda kulingana na maendeleo ya teknolojia na kitu ambacho zamani kilikuwa kigumu kutengeneza kinavyoweza kuwa rahisi. Kazi nzuri",
-                            "Samahani, inaonekana ulikosea! Bahati njema na jibu lako la pili",
+                            "Samahani, inaonekana umekosea! Bahati njema na jaribio lako la pili",
                             "Sio sahihi! Ugumu wa pesa una zaidi kuhusiana na uzalishaji wake kuliko kiasi chake. Bahati njema na jibu lako la pili."
                         ],
                         "question": "Je, ugumu wa pesa ni upi",
@@ -1982,19 +1991,19 @@
         "getRewardNow": "Jibu swali",
         "keepDigging": "Endelea kuchimba!",
         "phoneNumberNeeded": "Nambari ya simu inahitajika",
-        "quizComplete": "Maswali yamekamilika na {formattedNumber | sats} zilizochumwa",
+        "quizComplete": "Quiz completed and {formattedNumber | sats} earned",
         "reviewQuiz": "Kagua swali",
         "satAccumulated": "Sats kusanyiko",
-        "satsEarned": "{formattedNumber | sats} zilizopatikana",
+        "satsEarned": "{formattedNumber | sats} earned",
         "sectionsCompleted": "Umekamilisha",
         "title": "Pata",
         "unlockQuestion": "Ili kufungua, jibu swali:",
         "youEarned": "Umechuma",
         "registerTitle": "Unahitaji kuboresha akaunti yako",
         "registerContent": "Jiandikishe na namba yako ya simu ili upokee sats",
-        "oneSectionADay": "One section a day!",
-        "availableTomorrow": "Come back tomorrow to continue learning about Bitcoin!",
-        "motivatingBadger": "Dig your way through these lessons and earn as you learn"
+        "oneSectionADay": "Sehemu moja kwa siku!",
+        "availableTomorrow": "Rudi kesho ili kuendelea kujifunza kuhusu Bitcoin!",
+        "motivatingBadger": "Chunguza masomo haya na upate mapato kadri unavyojifunza"
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Ingia / Unda akaunti",
@@ -2015,12 +2024,12 @@
         }
     },
     "MapScreen": {
-        "navToSettingsTitle": "Location permissions",
-        "navToSettingsText": "If you'd like to give Blink location permissions, please navigate to your settings and enable it there",
+        "navToSettingsTitle": "Ruhusa za eneo",
+        "navToSettingsText": "Ikiwa ungependa kutoa ruhusa za eneo la Blink, tafadhali nenda kwenye mipangilio yako na uiwashe hapo",
         "payBusiness": "Lipa biashara hii",
-        "openSettings": "Open settings",
+        "openSettings": "Fungua mipangilio",
         "title": "Ramani",
-        "error": "Oops. Something went wrong while getting your location"
+        "error": "Lo! Hitilafu fulani imetokea wakati wa kupata eneo lako"
     },
     "HomeScreen": {
         "receive": "Pokea",
@@ -2109,9 +2118,9 @@
         "cantReceiveZeroSats": "Hauwezi kupokea sats sifuri. Tafadhali ingiza kiwango kinacholingana na sats 1 au zaidi."
     },
     "RedeemBitcoinScreen": {
-        "title": "Badilisha Bitcoin ",
+        "title": "Badilisha Bitcoin",
         "usdTitle": "Badilisha kwa USD",
-        "error": "Imeshindwa kutoa ankara. Tafadhali wasiliana na usaidizi ikiwa tatizo hili litaendelea.",
+        "error": "Kushindwa kuzalisha bili. Tafadhali wasiliana na msaada ikiwa tatizo hili litadumu.",
         "redeemingError": "Imeshindwa kukomboa Bitcoin. Tafadhali wasiliana na na usaidizi ikiwa tatizo hili litaendelea.",
         "submissionError": "Imeshindwa kuwasilisha ombi la kutoa. Tafadhali wasiliana na usaidizi iwapo tatizo hili litaendelea.",
         "minMaxRange": "Kiwango cha chini: {minimumAmount: string}, Kiwango cha chini: {maximumAmount: string}",
@@ -2123,6 +2132,8 @@
         "invalidContent": "Tulipata:\n\n{found:string} \n\nHii sio anwani halisi ya Bitcoin wala ankara ya Lightning.",
         "expiredContent": "Tulipata:{found: string} Ankara hii imeisha muda wake",
         "invalidTitle": "QR Code batili.",
+        "openLinkTitle": "Fungua Kiungo",
+        "confirmOpenLink": "Je, una uhakika unataka kufungua kiungo hiki?",
         "noQrCode": "Hatukuweza kupata msimbo wa QR kwenye picha",
         "title": "Piga msimbo wa QR",
         "permissionCamera": "Tunahitaji ruhusa ya kutumia kamera yako",
@@ -2148,7 +2159,7 @@
         "confirmPayment": "Thibithisha malipo",
         "confirmPaymentQuestion": "Je, unataka kuthibitisha malipo haya?",
         "destinationLabel": "Kwa:",
-        "feeLabel": "Ada:",
+        "feeLabel": "Ada",
         "memoLabel": "Kidokezo:",
         "paymentFinal": "Malipo hayawezi kubadilishwa",
         "stalePrice": "Bei yako ya Bitcoin ni zee na ilisasishwa mwisho {timePeriod} iliopita. Tafadhali anzisha upya programu yako kabla ya kufanya malipo.",
@@ -2160,10 +2171,10 @@
         "invoiceAlreadyPaid": "Laini ya malipo imekwisha kulipiwa",
         "somethingWentWrong": "Kitu kimeenda vibaya",
         "paymentAlreadyAttempted": "Malipo tayari yamejaribiwa.\n\nIkiwa unataka kutuma malipo haya tena, anza upya.",
-        "slideToConfirm": "Slide to Confirm",
-        "slideConfirming": "Confirming...",
-        "copiedDestination": "Imeiga marudio kwenye ubao wa kunakili",
-        "lightningRecommended": "High fee! We recommend Lightning."
+        "slideToConfirm": "Telezesha kidole ili Kuthibitisha",
+        "slideConfirming": "Inathibitisha...",
+        "copiedDestination": "Imeakiliwa marudio kwenye ubao wa kunakili",
+        "lightningRecommended": "Ada kubwa! Tunapendekeza Umeme."
     },
     "SendBitcoinDestinationScreen": {
         "usernameNowAddress": "{bankName: string} majina ya watumiaji sasa ni anwani za {bankName: string} ",
@@ -2200,7 +2211,7 @@
         "amountExceed": "Kiasi kimepitisha baki yako ya {balance: string}",
         "amountExceedsLimit": "Kiasi kinazidi kikomo chako cha kila siku kilichobaki cha {limit: string}",
         "upgradeAccountToIncreaseLimit": "Boresha akaunti yako ili kuongeza kikomo chako",
-        "amountIsRequired": "Kiasi inahitajika",
+        "amountIsRequired": "Kiasi kinahitajika",
         "cost": "Gharama",
         "destination": "Mpokeaji",
         "destinationIsRequired": "Mpokeaji anahitajika",
@@ -2224,9 +2235,22 @@
             "confirmButton": "Nina uhakika 100%"
         },
         "copiedDestination": "Imeakiliwa marudio kwenye ubao wa kunakili",
-        "pendingPayment": "The payment has been sent, but hasn't confirmed yet.\n\nIt's possible the payment will not confirm, in which case the funds will be returned to your account."
+        "pendingPayment": "Ada kubwa! Tunapendekeza Umeme.\n\nInawezekana malipo hayatathibitisha, katika hali ambayo pesa zitarejeshwa kwenye akaunti yako.",
+        "copySuccessMessage": "Copy success message to clipboard",
+        "openSuccessUrl": "Open success URL in browser",
+        "copySecretMessage": "Copy secret message to clipboard",
+        "copiedSuccessMessage": "Message copied successfully",
+        "copiedSecretMessage": "Secret message copied successfully",
+        "pendingDecryptionMessage": "Encrypted message. Waiting for payment confirmation."
     },
     "SettingsScreen": {
+        "staticQr": "Msimbo Tuli wa QR unaoweza kuchapishwa",
+        "staticQrCopied": "Kiungo chako tuli cha msimbo wa QR kimenakiliwa",
+        "setByOs": "Imewekwa na OS",
+        "apiAcess": "Ufikiaji wa API",
+        "pos": "Sehemu ya Uuzaji",
+        "posCopied": "Kiungo chako cha mauzo kimenakiliwa",
+        "setYourLightningAddress": "Weka Anwani yako ya Umeme",
         "activated": "Imewezeshwa",
         "addressScreen": "Njia za kupokea malipo",
         "tapUserName": "Guza ili kuandikisha jina la mtumiaji",
@@ -2264,18 +2288,27 @@
                 "description": "Arifa zinazohusiana na kutuma na kupokea malipo."
             },
             "Marketing": {
-                "title": "Features and updates",
-                "description": "Notifications about new features and updates."
+                "title": "Vipengele na sasisho",
+                "description": "Arifa kuhusu vipengele vipya na masasisho."
             },
             "Price": {
-                "title": "Price changes",
-                "description": "Notifications about the price of Bitcoin."
+                "title": "Mabadiliko ya bei",
+                "description": "Arifa kuhusu bei ya Bitcoin."
             }
         }
     },
     "AccountScreen": {
+        "fundsMoreThan5Dollars": "Akaunti yako ina zaidi ya $5",
+        "itsATrialAccount": "Akaunti za majaribio zimepunguza vikomo vya ununuzi na hakuna njia ya kurejesha. Ukipoteza simu yako au ukiondoa programu, pesa zako hazitarejeshwa.",
+        "accountBeingDeleted": "Akaunti yako inafutwa, tafadhali subiri...",
+        "dangerZone": "Eneo la Hatari",
+        "phoneDeletedSuccessfully": "Simu imefutwa",
+        "phoneNumber": "Nambari ya Simu",
+        "tapToAddPhoneNumber": "Gusa ili kuongeza nambari ya simu",
+        "loginMethods": "Mbinu za Kuingia",
+        "level": "Kiwango {level: string}",
         "accountLevel": "Kiwango cha Akaunti",
-        "upgrade": "Pandisha hadhi ya akaunti yako",
+        "upgrade": "Boresha akaunti yako",
         "logOutAndDeleteLocalData": "Toka nje na futa data zote za kwenye kifaa chako",
         "IUnderstand": "Naelewa. Tafadhali nitoke.",
         "logoutAlertTitle": "Una uhakika unataka kutoka nje na kufuta data zote za kwenye kifaa chako?",
@@ -2286,6 +2319,11 @@
         "btcBalanceWarning": "Una salio la bitcoin ya {balance: string}.",
         "secureYourAccount": "Jisajili ili kusimamia akaunti yako",
         "tapToAdd": "Bonyeza kwa kuongeza",
+        "tapToAddEmail": "Gusa ili kuongeza barua pepe",
+        "unverifiedEmail": "Barua pepe (Haijathibitishwa)",
+        "email": "Barua pepe",
+        "emailDeletedSuccessfully": "Barua pepe imefutwa",
+        "unverifiedEmailAdvice": "Barua pepe ambazo hazijathibitishwa haziwezi kutumika kuingia. Unapaswa kuthibitisha tena anwani yako ya barua pepe.",
         "deleteEmailPromptTitle": "Futa barua pepe",
         "deleteEmailPromptContent": "Una uhakika unataka kufuta anwani yako ya barua pepe? utaweza kuingia tena kwa kutumia namba yako ya simu pekee.",
         "deletePhonePromptTitle": "Futa namba ya simu",
@@ -2307,6 +2345,7 @@
         "totpDeleteAlertContent": "Una uhakika unataka kufuta uthibitishaji wako wa hatua mbili?",
         "copiedAccountId": "Imeakiliwa ID ya akaunti yako kwenye ubao wa kunakili",
         "yourAccountId": "ID ya Akaunti Yako",
+        "accountId": "Kitambulisho cha Akaunti",
         "copy": "Nakili"
     },
     "TotpRegistrationInitiateScreen": {
@@ -2335,7 +2374,9 @@
         "info": "Chagua mandhari yako inayopendelewa kwa kutumia Blink, au chagua kuendana na mipangilio ya mfumo wako.",
         "system": "Tumia Mipangilio ya Mfumo",
         "light": "Tumia Mfumo Mwanga",
-        "dark": "Tumia Mfumo Mzito"
+        "dark": "Tumia Mfumo Mzito",
+        "setToDark": "Njia ya Giza",
+        "setToLight": "Hali Nuru"
     },
     "Languages": {
         "DEFAULT": "Chaguo msingi (OS)"
@@ -2353,7 +2394,7 @@
         "paid": "Imelipwa kutoka/kuelekea",
         "received": "Ulipokea",
         "spent": "Umetumia",
-        "sending": "Sending",
+        "sending": "Inatuma",
         "receivingAccount": "Akaunti ya Kupokelea",
         "sendingAccount": "Akaunti ya Kutuma",
         "txNotBroadcast": "Muamala wako umeorodheshwa. Unapaswa kuonekana kwenye mempool {countdown: string}.",
@@ -2380,7 +2421,7 @@
     },
     "TransferScreen": {
         "title": "Hamisha",
-        "percentageToConvert": "% ya kubadilisha"
+        "percentageToConvert": "Asilimia ya kubadilishwa."
     },
     "UpgradeAccountModal": {
         "title": "Boresha akaunti yako",
@@ -2393,6 +2434,7 @@
     },
     "SetAddressModal": {
         "title": "Weka anwani ya {bankName: string}",
+        "setLightningAddress": "Weka anwani ya umeme",
         "Errors": {
             "tooShort": "Anwani lazima iwe na herufi angalau 3",
             "tooLong": "Anwani lazima iwe na herufi si zaidi ya 50",
@@ -2474,7 +2516,16 @@
         "success": "Barua pepe {email: string} imethibitishwa kwa mafanikio"
     },
     "common": {
+        "enabled": "Imewashwa",
+        "notifications": "Arifa",
+        "preferences": "Mapendeleo",
+        "onDeviceSecurity": "Usalama Kwenye Kifaa",
+        "securityAndPrivacy": "Usalama na Faragha",
+        "advanced": "Iliotangulia",
+        "community": "Jumuiya",
         "account": "Akaunti",
+        "trialAccount": "Akaunti ya Jaribio",
+        "blinkUser": "Mtumizi wa Blink",
         "transactionLimits": "Upeo wa Malipo",
         "activateWallet": "Wezesha Pochi",
         "amountRequired": "Kiasi kinahitajika",
@@ -2499,8 +2550,8 @@
         "date": "Tarehe",
         "description": "Maelezo",
         "domain": "Kikoa",
-        "email": "Anwani ya barua pepe",
-        "error": "Kosa",
+        "email": "Barua pepe",
+        "error": "Hitilafu",
         "fatal": "Mbaya",
         "fee": "ada",
         "Fee": "Ada",
@@ -2517,12 +2568,12 @@
         "later": "Baadaye",
         "loggedOut": "Umetolewa kwenye programu",
         "logout": "Toka Nje",
-        "lightning": "Lightning",
+        "lightning": "Umeme",
         "minutes": "dakika",
         "errorAuthToken": "Tokeni ya kuthibitisha haipo",
         "needWallet": "Ingia au tengeneza akaunti ili ufikie mfuko wako wa fedha",
         "next": "Ifuatayo",
-        "No": "La",
+        "No": "Hapana",
         "note": "Dokezo",
         "notification": "Taarifa",
         "ok": "Sawa",
@@ -2531,7 +2582,7 @@
         "onchain": "Onchain",
         "paymentRequest": "Ombi la Malipo",
         "phone": "Simu",
-        "phoneNumber": "Nambari ya simu",
+        "phoneNumber": "Nambari ya Simu",
         "preimageProofOfPayment": "Maelezo ya Awali / Uthibitisho wa Malipo",
         "rate": "Kiwango",
         "reauth": "Kipindi chako kimekwisha. Tafadhali ingia programu tena.",
@@ -2541,7 +2592,7 @@
         "security": "Usalama",
         "send": "Tuma",
         "setAnAmount": "Weka kiasi",
-        "share": "Sambaza",
+        "share": "Shiriki",
         "shareBitcoin": "Sambaza anwani ya Bitcoin",
         "shareLightning": "Sambaza ankara ya Lightning",
         "soon": "Inakuja hivi karibuni!",
@@ -2552,7 +2603,7 @@
         "total": "Jumla",
         "transactions": "Malipo",
         "transactionsError": "Kosa katika kupakua malipo",
-        "tryAgain": "Jaribu tena",
+        "tryAgain": "Jaribu Tena",
         "type": "Aina",
         "usdAccount": "Akaunti ya USD",
         "username": "Jina la mtumiaji",
@@ -2599,6 +2650,7 @@
         "faq": "Maswali yanayoulizwa mara kwa mara",
         "enjoyingApp": "Unafurahia programu?",
         "statusPage": "Ukurasa wa Hali",
+        "chatbot": "Gumzo",
         "telegram": "Telegram",
         "mattermost": "Mattermost",
         "thankYouText": "Asante kwa maoni, ungependa kupendekeza uboreshaji?",
@@ -2682,30 +2734,16 @@
         "drivingAdoption": "Nachochea kupokelewa kwa Bitcoin kutumia Blink.",
         "connectOnSocial": "unganisha kwenye mitandao ya kijamii: ",
         "fullDetails": "Maelezo kamili kwenye ",
-        "decemberChallenge": {
-            "title": "Mtihani wa Desemba!",
-            "description": "+10 mduara wa ndani kwa nafasi ya $100!",
-            "details": "Kuza mduara wako wa ndani na watu 10 mwezi wa Desemba kwa nafasi ya $100!\n\nKushiriki, weka mduara wako kwenye mitandao ya kijamii mara tu ukifikia 10 kwa mwezi na tagi #blinkcircles.\n\nTarehe 1 Januari, watu watatu watateuliwa kwa nasibu kupokea $100!"
+        "learnMore": "Learn more about Adopting Bitcoin at",
+        "mayChallenge": {
+            "title": "Mei Changamoto!",
+            "description": "Kuza mduara wako wa ndani kwa 6 ili kupata nafasi ya kujishindia seti ya Pizza kwenye Bitcoin Meetup yako ijayo.",
+            "details": "Je! Unataka Karamu ya Siku ya Pizza ya Bitcoin?\n\nPanua Mduara wako wa Ndani kwa 6 ili ujishindie seti ya pizzas kwa Bitcoin Meetup yako ijayo. Changamoto hiyo itakamilika Mei 15.\n\nShiriki miduara yako kwenye mitandao ya kijamii na hashtag #blinkcircles ili kushiriki.\n\nZawadi ni $150 kwa pizzas."
         },
-        "januaryChallenge": {
-            "title": "January Challenge!",
-            "description": "+10 outer circle in January for a chance at $100!",
-            "details": "Grow your OUTER circle by 10 in January for a chance at $100!\n\nYour outer circle grows when people in your inner circle welcome others, so reach out and remind those you onboarded to share Blink with their friends and family.\n\nShare your circles on social with #blinkcircles to participate."
-        },
-        "februaryChallenge": {
-            "title": "February Challenge!",
-            "description": "+3 inner circle for a chance to win a Seedsigner hardware wallet!",
-            "details": "Grow your inner circle by 3 in February for a chance to win a Seedsigner hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
-        },
-        "marchChallenge": {
-            "title": "March Challenge!",
-            "description": "+3 inner circle and +3 outer circle for a chance to win $100",
-            "details": "Grow your inner circle by 3 and your outer circle by 3 for a chance at winning $100!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
-        },
-        "aprilChallenge": {
-            "title": "April Challenge!",
-            "description": "Grow your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet.",
-            "details": "During the halving month, expand your inner circle by 12 and your outer circle by 3 for a chance to win a Bitbox02 hardware wallet!\n\nReminder: your circles grow when you send a new Blink user their first sats.\n\nShare your circles on social with #blinkcircles to participate."
+        "juneChallenge": {
+            "title": "Juni Changamoto!",
+            "description": "Panua Mduara wako wa Ndani kwa 10 ili kupata nafasi ya kujishindia tikiti ya mapendeleo ya $1000 kwa Kupitisha Bitcoin El Salvador.",
+            "details": "Shinda tikiti ya fursa ya Kupitisha Bitcoin El Salvador\n\nPanua Mduara wako wa Ndani kwa 10 ili kupata nafasi ya kujishindia tikiti ya mapendeleo ya $1000 ya Kupitisha Bitcoin El Salvador! Tikiti inajumuisha ufikiaji wa kipekee kwa mkutano mkuu, mezzanine na chakula/vinywaji/vitafunio, chakula cha jioni cha wasemaji, na Tamasha la Filamu.\n\nShiriki miduara yako kwenye mitandao ya kijamii na hashtag #blinkcircles ili kushiriki.\n\nWakati huu, kutakuwa na washindi wawili!"
         }
     },
     "FullOnboarding": {
@@ -2724,5 +2762,14 @@
         "ERROR": "Hitilafu",
         "PROCESSING": "Inaprosesa",
         "REVIEW": "Mapitio"
+    },
+    "NotificationHistory": {
+        "title": "Arifa",
+        "noNotifications": "Huna arifa zozote kwa sasa"
+    },
+    "SupportChat": {
+        "errorSendingMessage": "Hitilafu ilitokea wakati wa kutuma ujumbe",
+        "confirmChatReset": "Je, una uhakika unataka kuweka upya gumzo?",
+        "errorResettingChat": "Hitilafu ilitokea wakati wa kuweka upya gumzo"
     }
 }
