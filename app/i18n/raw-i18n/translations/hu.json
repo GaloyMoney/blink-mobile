@@ -74,7 +74,7 @@
     "EarnScreen": {
         "satoshi": "sat",
         "satoshis": "sat",
-        "earnSats": "Kapj {formattedNumber | sats}-ot",
+        "earnSats": "Kapsz {formattedNumber | sats}-ot",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Mi a Bitcoin?",
@@ -640,7 +640,7 @@
                             "Nem. Valójában a fizikai termékek ország határon való átvitele gyakran jóváhagyást, engedélyt igényelnek, és könnyen elkobozhatóak. Legközelebb jobb szerencsét!",
                             "Nem, épp ellenkezőleg. A fiat bankrendszer keretein belül, az állami szabályozásoknak eleget téve emberi beavatkozással monetáris javak bizonyos felhasználását jelenthetik illetve meg is akadályozhatják, tehát a cenzúrát elősegíti. Próbáld újra!"
                         ],
-                        "question": "Miért cenzúra-biztos, a Bitcoin",
+                        "question": "Mi az oka annak, hogy a Bitcoin cenzúrarezisztensnek mondható?",
                         "text": "A cenzúrázással szembeni ellenállás egy olyan tulajdonság, ami egyre fontosabbá vált a digitális korban, mivel arra utal, hogy milyen nehéz külső feleknek, például cégeknek vagy kormányoknak, megakadályozni hogy egy egyén egy bizonyos terméket használjon.\n\nEz a tulajdonság különösen értékes azoknak az egyéneknek, akik olyan rezsim alatt élnek, ahol tőkekontrollt vezettek be, vagy bizonyos kereskedelmi formákat tiltanak. A Bitcoin a cenzúrázással szemben ellenálló tulajdonságának a gyakran említett oka a decentralizált, peer-to-peer hálózata, amely lehetővé teszi a tranzakciók emberi beavatkozás vagy engedély nélkül történő lebonyolítását.\n\nEllenben a fiat bankrendszer állami szabályozás alatt áll és emberi beavatkozást igényel bizonyos pénzügyi eszközök használatának bejelentéséhez és megakadályozásának, például tőkekontroll esetén.\n\nAz aranyat, bár nem államok által kibocsátott, nehezen szállítható tulajdonsága miatt, az állami szabályozás inkább érinti.\n",
                         "title": "Nincs szükség engedélyre"
                     }
@@ -1991,10 +1991,10 @@
         "getRewardNow": "Válaszolj a kvízre",
         "keepDigging": "Áss tovább!",
         "phoneNumberNeeded": "Telefonszám szükséges",
-        "quizComplete": "Teljesítetted a kvízt, és ezért {formattedNumber | sats} a jutalmad",
+        "quizComplete": "A kvíz végére értél és {formattedNumber | sats}-ot kaptál.",
         "reviewQuiz": "Kvíz átnézése",
         "satAccumulated": "Keresett satoshik",
-        "satsEarned": "{formattedNumber | sats}-ot kerestél",
+        "satsEarned": "{formattedNumber | sats}-ot kaptál",
         "sectionsCompleted": "Befejezett szakaszok",
         "title": "Kvíz",
         "unlockQuestion": "Feloldáshoz, válaszolj a kérdésre:",
@@ -2235,7 +2235,13 @@
             "confirmButton": "Biztos vagyok benne."
         },
         "copiedDestination": "Címzett a vágólapra másolva.",
-        "pendingPayment": "A fizetés elküldve, de még nem érkezett visszaigazolás.\n\n Visszaigazolás hiányában a pénz visszakerül a számládra."
+        "pendingPayment": "A fizetés elküldve, de még nem érkezett visszaigazolás.\n\n Visszaigazolás hiányában a pénz visszakerül a számládra.",
+        "copySuccessMessage": "Másold az üzenetet a vágólapra",
+        "openSuccessUrl": "Nyisd meg az URL-t a böngészőben",
+        "copySecretMessage": "Másold a titkos üzenetet a vágólapra",
+        "copiedSuccessMessage": "Az üzenet sikeresen másolva",
+        "copiedSecretMessage": "A titkos üzenet sikeresen másolva",
+        "pendingDecryptionMessage": "Titkosított üzenet. Fizetés megerősítésre vár"
     },
     "SettingsScreen": {
         "staticQr": "Nyomtatható statikus QR-kód",
@@ -2728,7 +2734,7 @@
         "drivingAdoption": "Terjesztem a Bitcoint a Blinken keresztül.",
         "connectOnSocial": "Kapcsolódj közösségi médián: ",
         "fullDetails": "Részletek itt ",
-        "learnMore": "Több információ az Adopting Bitcoinról itt:",
+        "learnMore": "Több információ az Adopting Bitcoinról:",
         "mayChallenge": {
             "title": "Májusi Kihívás!",
             "description": "Növeld a belső körödet 6-tal, hogy esélyed legyen megnyerni egy pizzakészletet a következő Bitcoin Találkozódra.",

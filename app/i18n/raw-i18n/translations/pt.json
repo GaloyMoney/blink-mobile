@@ -20,6 +20,13 @@
         "howToUseYourPaycodeExplainer": "Você pode imprimir seu código de pagamento (tecnicamente, este é um endereço lnurl-pay) e exibi-lo em sua empresa para receber pagamentos. Os indivíduos podem pagá-lo digitalizando-o com uma carteira habilitada para Lightning.\n\nNo entanto, esteja ciente de que algumas carteiras não podem escanear um código de pagamento, como:",
         "howToUseYourCashRegisterExplainer": "Permita que as pessoas recebam pagamentos por meio do link da caixa registradora sem acessar sua carteira.\n\nEles podem criar faturas e os pagamentos serão enviados diretamente para sua Carteira {bankName: string}."
     },
+    "AcceptTermsAndConditionsScreen": {
+        "title": "Termos e condições",
+        "accept": "Aceitar",
+        "termsAndConditions": "Ver termos e condições",
+        "prohibitedCountry": "Ver países proibidos",
+        "text": "Ao clicar em \"Aceitar\", você concorda com nossos temos e condições. Você também concorda que não é residente ou cidadão de nenhum dos países proibidos."
+    },
     "SetAccountModal": {
         "title": "Defina sua conta padrão",
         "description": "Essa conta será selecionada inicialmente para envio e recebimento de pagamentos. Você pode alterá-la a qualquer momento.",
@@ -53,7 +60,7 @@
     },
     "ConversionDetailsScreen": {
         "title": "Converter",
-        "percentageToConvert": "% de conversão"
+        "percentageToConvert": "% para converter"
     },
     "ConversionConfirmationScreen": {
         "title": "Revisar conversão",
@@ -65,7 +72,9 @@
         "message": "Conversão bem sucedida"
     },
     "EarnScreen": {
-        "earnSats": "Ganhe {formattedNumber | sats}",
+        "satoshi": "sat",
+        "satoshis": "sats",
+        "earnSats": "Earn {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Bitcoin: O que é isso?",
@@ -408,7 +417,7 @@
                         ],
                         "feedback": [
                             "Isso está correto. A rede bitcoin nunca foi comprometida. No entanto, é importante fazer você usar uma carteira digital segura (como Galoy!) para manter seus bitcoins pessoais seguros o tempo todo.",
-                            "Errado. Tente novamente.",
+                            "Errado. Por favor, tente novamente.",
                             "Não bobo, você sabe que não é a resposta correta."
                         ],
                         "question": "O Bitcoin já foi hackeado?",
@@ -631,7 +640,7 @@
                             "Não. Na verdade, bens físicos frequentemente requerem permissão para atravessar fronteiras e podem ser facilmente confiscados. Boa sorte da próxima vez.",
                             "Desculpe, mas o oposto é, na verdade, verdadeiro. O sistema bancário fiduciário, que é regulado pelos estados, requer intervenção humana para relatar e prevenir certos usos de bens monetários, tornando-o propenso à censura. Tente novamente!"
                         ],
-                        "question": "Qual dos seguintes NÃO é um motivo pelo qual o Bitcoin é considerado um bem resistente à censura?",
+                        "question": "Which of the following is the reason that Bitcoin is considered a censorship-resistant good",
                         "text": "A censura-resistência é um atributo que se tornou cada vez mais importante na era digital, pois se refere à dificuldade que partes externas, como corporações ou governos, têm em impedir que um indivíduo use um determinado bem.\n\nEsse atributo é particularmente valioso para indivíduos que vivem sob regimes que impõem controles de capital ou proíbem certas formas de comércio. O Bitcoin é frequentemente citado como um bem resistente à censura devido à sua rede descentralizada, ponto a ponto, que permite que as transações sejam feitas sem intervenção ou permissão humana.\n\nEm contraste, o sistema bancário fiduciário é regulado pelos estados e requer intervenção humana para relatar e impedir certos usos de bens monetários, como controles de capital.\n\nO ouro, embora não seja emitido pelos estados, pode ser difícil de transmitir a distância e, portanto, está mais sujeito à regulamentação estatal.\n",
                         "title": "Nenhuma permissão necessária"
                     }
@@ -1982,10 +1991,10 @@
         "getRewardNow": "Responder quiz",
         "keepDigging": "Continue cavando!",
         "phoneNumberNeeded": "Número de telefone obrigatório",
-        "quizComplete": "Quiz concluído e {formattedNumber | sats} ganhos",
+        "quizComplete": "Quiz completed and {formattedNumber | sats} earned",
         "reviewQuiz": "Revisar quiz",
         "satAccumulated": "Sats acumulados",
-        "satsEarned": "{formattedNumber | sats} ganhos",
+        "satsEarned": "{formattedNumber | sats} earned",
         "sectionsCompleted": "Você concluiu",
         "title": "Ganhar",
         "unlockQuestion": "Para desbloquear, responda a pergunta:",
@@ -2202,7 +2211,7 @@
         "amountExceed": "O valor excede seu saldo de {balance}",
         "amountExceedsLimit": "O valor excede seu limite diário restante de {limit: string}",
         "upgradeAccountToIncreaseLimit": "Atualize a sua conta para aumentar o seu limite",
-        "amountIsRequired": "Quantidade é obrigatória",
+        "amountIsRequired": "O valor é obrigatório",
         "cost": "Custo",
         "destination": "Destino",
         "destinationIsRequired": "Destino é obrigatório",
@@ -2226,7 +2235,13 @@
             "confirmButton": "Tenho 100% de certeza"
         },
         "copiedDestination": "Copiado destino para a área de transferência",
-        "pendingPayment": "O pagamento foi enviado, mas ainda não foi confirmado.\n\nÉ possível que o pagamento não seja confirmado, caso em que os fundos serão devolvidos à sua conta."
+        "pendingPayment": "O pagamento foi enviado, mas ainda não foi confirmado.\n\nÉ possível que o pagamento não seja confirmado, caso em que os fundos serão devolvidos à sua conta.",
+        "copySuccessMessage": "Copy success message to clipboard",
+        "openSuccessUrl": "Open success URL in browser",
+        "copySecretMessage": "Copy secret message to clipboard",
+        "copiedSuccessMessage": "Message copied successfully",
+        "copiedSecretMessage": "Secret message copied successfully",
+        "pendingDecryptionMessage": "Encrypted message. Waiting for payment confirmation."
     },
     "SettingsScreen": {
         "staticQr": "QR Code estático imprimível",
@@ -2539,7 +2554,7 @@
         "error": "Erro",
         "fatal": "Fatal",
         "fee": "taxa",
-        "Fee": "Taxa",
+        "Fee": "Taxa:",
         "fees": "Taxas",
         "firstName": "Primeiro Nome",
         "from": "De",
@@ -2719,35 +2734,16 @@
         "drivingAdoption": "Estou impulsionando a adoção do Bitcoin usando a Blink.",
         "connectOnSocial": "Conecte-se nas redes sociais.",
         "fullDetails": "Mais detalhes em",
-        "decemberChallenge": {
-            "title": "Desafio de dezembro!",
-            "description": "+10 círculo interno para uma chance de $100!",
-            "details": "Cresça o seu círculo interno em 10 pessoas em dezembro para ter a chance de ganhar $100!\n\nPara participar, compartilhe seus círculos nas redes sociais assim que atingir 10 para o mês e marque #blinkcircles.\n\nEm 1º de janeiro, três pessoas serão escolhidas aleatoriamente para receber $100!"
-        },
-        "januaryChallenge": {
-            "title": "Desafio de janeiro!",
-            "description": "+10 círculo externo em janeiro para uma chance de $100!",
-            "details": "Cresça o seu círculo EXTERNO em 10 em janeiro para ter uma chance de ganhar $100!\n\nSeu círculo externo cresce quando as pessoas do seu círculo interno recebem outras, então entre em contato e lembre aqueles que você trouxe a bordo para compartilhar o Blink com seus amigos e familiares.\n\nCompartilhe seus círculos nas redes sociais com #blinkcircles para participar."
-        },
-        "februaryChallenge": {
-            "title": "Desafio de fevereiro!",
-            "description": "+3 círculo interno para ter a chance de ganhar uma carteira de hardware Seedsigner!",
-            "details": "Cresça o seu círculo interno em 3 pessoas em fevereiro para ter a chance de ganhar uma carteira de hardware Seedsigner!\n\nLembrete: seus círculos crescem quando você envia sats para um novo usuário do Blink.\n\nCompartilhe seus círculos nas redes sociais com #blinkcircles para participar."
-        },
-        "marchChallenge": {
-            "title": "Desafio de março!",
-            "description": "+3 círculo interno e +3 círculo externo para ter a chance de ganhar $100",
-            "details": "Aumente seu círculo interno em 3 e seu círculo externo em 3 para ter a chance de ganhar $100!\n\nLembrete: seus círculos crescem quando você envia sats para um novo usuário do Blink.\n\nCompartilhe seus círculos nas redes sociais com #blinkcircles para participar."
-        },
-        "aprilChallenge": {
-            "title": "Desafio de Abril",
-            "description": "Cresça seu círculo interno em 12 e seu círculo externo em 3 para ter a chance de ganhar uma hardware wallet BitBox02",
-            "details": "Durante o mês do halving, cresça seu círculo interno em 12 e seu círculo externo em 3 para ter a chance de ganhar uma hardware wallet Bitbox02!\n\nLembrete: seus círculos aumentam quando você envia a um novo usuário da Blink seus primeiros sats.\n\nCompartilhe seus círculos nas redes sociais com a hashtag #blinkcircles para participar."
-        },
+        "learnMore": "Learn more about Adopting Bitcoin at",
         "mayChallenge": {
             "title": "Desafio de Maio",
             "description": "Aumente seu círculo em 6 para ter a chance de ganhar um conjunto de pizzas no seu próximo encontro bitcoiner.",
             "details": "Quer uma festa do Bitcoin Pizza Day?\n\nExpanda seu Círculo Interno em 6 para ter a chance de ganhar um conjunto de pizzas em seu próximo Encontro Bitcoiner. O desafio termina no dia 15 de maio.\n\nCompartilhe seus círculos nas redes sociais com a hashtag #blinkcircles para participar.\n\nO prêmio é de $150 para pizzas."
+        },
+        "juneChallenge": {
+            "title": "June Challenge!",
+            "description": "Expand your Inner Circle by 10 for a chance to win a $1000 privilege ticket to the Adopting Bitcoin El Salvador",
+            "details": "Win a privilege ticket to Adopting Bitcoin El Salvador\n\nExpand your Inner Circle by 10 for a chance to win a $1000 privilege ticket to Adopting Bitcoin El Salvador! The ticket includes exclusive access to the main conference, mezzanine with food/drinks/snacks, speakers' dinner, and the Film Festival.\n\nShare your circles on social with the hashtag #blinkcircles to participate.\n\nThis time, there will be two winners!"
         }
     },
     "FullOnboarding": {
@@ -2766,5 +2762,14 @@
         "ERROR": "Erro",
         "PROCESSING": "Processando",
         "REVIEW": "Análise"
+    },
+    "NotificationHistory": {
+        "title": "Notificações",
+        "noNotifications": "Você não possui notificações no momento"
+    },
+    "SupportChat": {
+        "errorSendingMessage": "An error occurred while sending the message",
+        "confirmChatReset": "Are you sure you want to reset the chat?",
+        "errorResettingChat": "An error occurred while resetting the chat"
     }
 }

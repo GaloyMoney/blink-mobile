@@ -2,7 +2,7 @@
     "GaloyAddressScreen": {
         "title": "Şunu kullanarak ödeme alın:",
         "buttonTitle": "Adresinizi belirleyin",
-        "yourLightningAddress": "Senin Lightning adresin",
+        "yourLightningAddress": "Lightning Adresin",
         "notAbleToChange": "Adresin ayarlandıktan sonra {bankName: string} bir daha değiştirilemeyecek.",
         "addressNotAvailable": "Bu {bankName: string} adres zaten alınmış.",
         "somethingWentWrong": "Bir hata oluştu. Lütfen tekrar deneyin.",
@@ -19,6 +19,13 @@
         "howToUseYourAddressExplainer": "Şunun gibi bir uyumlu cüzdan kullanan biri ile paylaş:",
         "howToUseYourPaycodeExplainer": "Ödeme Kodu'nu (teknik olarak, bu bir lnurl-ödeme adresi) çıktısını alıp işyerinizde herhangi bir yere asarak ödeme kabul edebilirsiniz. Müşterileriniz Lightning kullanan cüzdanları ile bu kodu taratip size ödeme yapabilir\n\nAncak şunun gibi bazı cüzdanlarda Ödeme Kodu'nu taratamayacağının farkında oldun:",
         "howToUseYourCashRegisterExplainer": "İnsanların Yazar Kasa bağlantısı ile ödeme alabilmesine izin verin.\n\nBöylece doğrudan senin {bankName: string} cüzdanına gönderilecek faturalar ve ödemeler oluşturabilirler."
+    },
+    "AcceptTermsAndConditionsScreen": {
+        "title": "Hizmet ve Şartlar",
+        "accept": "Kabul Et",
+        "termsAndConditions": "Hizmet ve Şartları Görüntüle",
+        "prohibitedCountry": "Yasaklı ülkeleri görüntüle",
+        "text": "'Kabul Et' seçeneğine tıklayarak Hüküm ve Koşullarımızı kabul etmiş olursunuz. Ayrıca, yasaklı ülkelerden birinde ikamet etmediğinizi veya vatandaşı olmadığınızı da kabul edersiniz."
     },
     "SetAccountModal": {
         "title": "Varsayılan hesap olarak ayarla",
@@ -53,7 +60,7 @@
     },
     "ConversionDetailsScreen": {
         "title": "Çevir",
-        "percentageToConvert": "Çevirmek için % seç"
+        "percentageToConvert": "Dönüştürülecek %"
     },
     "ConversionConfirmationScreen": {
         "title": "Çevirmeyi incele",
@@ -65,7 +72,9 @@
         "message": "Çevirme başarılı"
     },
     "EarnScreen": {
-        "earnSats": "Kazan {formattedNumber | sats}",
+        "satoshi": "sat",
+        "satoshis": "sats",
+        "earnSats": "Earn {formattedNumber | sats}",
         "earnSections": {
             "bitcoinWhatIsIt": {
                 "title": "Bitcoin: Nedir?",
@@ -96,7 +105,7 @@
                             "Belki... ama bu içerik için doğru cevap bu değil 🙂",
                             "Hmmm.... tam değil!"
                         ],
-                        "question": "Bir “Sat\" kazandım. “Sat\" nedir?",
+                        "question": "Bir 'Sat' kazadım. 'Sat' nedir?",
                         "text": "Bir “Sat” en küçük Bitcoin birimidir.\n\nHepimiz bir Amerikan Dolar'ının 100 cente bölünebildiğini biliyoruz. Benzer bir şekilde, bir Bitcoin de 100.000.000 sat'e bölünebilir.\n\nHatta, Bitcoin'i kullanmak için bir tam Bitcoin'iniz olmasına gerek yok. 20 sat, 3000 sat ya da 100.000.000 sat (biliyorsunuz ki bu bir Bitcoin yapar) gibi miktarlarla da kullanabilirsiniz.",
                         "title": "Bir 'Sat' kazadım. 'Sat' nedir?"
                     },
@@ -269,7 +278,7 @@
                         "feedback": [
                             "Doğru. Tarih boyunca hükümetler, geri ödeme zorunluğu olmadan kolayca para basma yetiksine sahip olma lüksünden vazgeçemedi.",
                             "Hayır, bu kesinlikle doğru değil.",
-                            "Yanlış, tekrardan deneyiniz."
+                            "Yanlış, Lütfen tekrar deneyiniz."
                         ],
                         "question": "Neden itibari paraların hükümetler tarafından kontrol ediliyor olmasını önemsemeliyim?",
                         "text": "ABD Merkez Bankası Federal Rezerv ya da \"Fed \" olarak adlandırılır\n\nFed istediği zaman daha fazla dolar basabilir -- ve bunun için ne Başkan'dan ne Kongre'den ne de ABD vatandaşlarından izin alması gerekmez\n\nParanın kontrolünü elinde bulundurmak, yetkililer için suiistimale çok açık olabilir ve çoğu zaman büyük enflasyona, keyfi müsaderelere ve yolsuzluğa yol açar.\n\nAslında, Fed'in ünlü eski başkanı Alan Greenspan, ABD'nin \"sahip olduğu her borcu ödeyebileceğini, çünkü bunu yapmak için her zaman daha fazla basabileceğini\" söylemiştir.",
@@ -408,7 +417,7 @@
                         ],
                         "feedback": [
                             "Bu doğru. Bitcoin ağı hiçbir zaman tehlikeye atılmamıştır. Ancak, kişisel bitcoinlerinizi her zaman güvende tutmak için kullandığınız dijital cüzdanların güvenli olmasına dikkat edin.",
-                            "Yanlış, tekrardan deneyiniz.",
+                            "Yanlış, Lütfen tekrar deneyiniz.",
                             "Hayır saçmalama, bunun doğru cevap olmadığını biliyorsun."
                         ],
                         "question": "Bitcoin hiç hacklendi mi?",
@@ -631,7 +640,7 @@
                             "Hayır. Aslında, fiziksel malların sınırlardan geçmesi genellikle izin gerektirir ve kolayca el konulabilir. Bir dahaki sefere iyi şanslar",
                             "Üzgünüm ama aslında tam tersi doğrudur. Devletler tarafından düzenlenen itibari bankacılık sistemi, parasal malların belirli kullanımlarını bildirmek ve önlemek için insan müdahalesi gerektirir, bu da onu engellemelere açık hale getirir. Tekrar deneyin!"
                         ],
-                        "question": "Aşağıdakilerden hangisi Bitcoin'in engellemelere karşı dirençli bir mal olarak kabul edilmesinin bir nedeni DEĞİLDİR?",
+                        "question": "Which of the following is the reason that Bitcoin is considered a censorship-resistant good",
                         "text": "Engellemelere karşı direnç, şirketler veya hükümetler gibi dış tarafların bir bireyin belirli bir malı kullanmasını engellemeyemedikleri için, dijital çağda giderek daha önemli hale gelen bir özelliktir.\n\nBu özellik, sermaye kontrolleri uygulayan veya belirli ticaret biçimlerini yasaklayan rejimler altında yaşayan bireyler için özellikle değerlidir. Bitcoin, işlemlerin insan müdahalesi veya izni olmadan yapılmasına olanak tanıyan merkezi olmayan, eşler arası ağı nedeniyle genellikle sansüre dirençli bir mal olarak gösterilir.\n\nBunun aksine, itibari bankacılık sistemi devletler tarafından düzenlenir ve sermaye kontrolleri gibi parasal malların belirli kullanımlarını bildirmek ve önlemek için insan müdahalesi gerektirir.\n\nAltın, devletler tarafından ihraç edilmemesine rağmen, uzaktan iletilmesi zor olabilir ve bu nedenle daha fazla devlet düzenlemesine tabidir.\n",
                         "title": "İzin gerekmiyor"
                     }
@@ -1982,10 +1991,10 @@
         "getRewardNow": "Testi cevapla",
         "keepDigging": "Kurcalamaya devam et!",
         "phoneNumberNeeded": "Telefon numarası gerekli",
-        "quizComplete": "Test tamamlandı ve {formattedNumber | sats} kazanıldı",
+        "quizComplete": "Quiz completed and {formattedNumber | sats} earned",
         "reviewQuiz": "Testin üzerinden geç",
         "satAccumulated": "Biriktirilen satsler",
-        "satsEarned": "{formattedNumber | sats} kazanıldı",
+        "satsEarned": "{formattedNumber | sats} earned",
         "sectionsCompleted": "Tamamladınız",
         "title": "Kazan",
         "unlockQuestion": "Kilidi açmak için soruya cevap ver:",
@@ -2115,7 +2124,7 @@
         "redeemingError": "Bitcoin paraya çevrilemedi. Bu sorun devam ederse lütfen destek ekibiyle iletişime geçin.",
         "submissionError": "Para çekme talebi gönderilemedi. Bu sorun devam ederse lütfen destek ekibiyle iletişime geçin.",
         "minMaxRange": "En az: {minimumAmount: string}, En fazla: {maximumAmount: string}",
-        "redeemBitcoin": "Bitcoin al",
+        "redeemBitcoin": "Bitcoin olarak kullan",
         "amountToRedeemFrom": "{domain: string}'den toplanacak miktar",
         "redeemAmountFrom": "{domain: string}'den [amountToRedeem: string} kadar topla"
     },
@@ -2226,7 +2235,13 @@
             "confirmButton": "%100 eminim"
         },
         "copiedDestination": "Hedefi panoya kopyalama",
-        "pendingPayment": "Ödeme gönderildi, ancak henüz onaylanmadı.\n\nÖdemenin onaylanmaması mümkündür, bu durumda para hesabınıza iade edilecektir."
+        "pendingPayment": "Ödeme gönderildi, ancak henüz onaylanmadı.\n\nÖdemenin onaylanmaması mümkündür, bu durumda para hesabınıza iade edilecektir.",
+        "copySuccessMessage": "Copy success message to clipboard",
+        "openSuccessUrl": "Open success URL in browser",
+        "copySecretMessage": "Copy secret message to clipboard",
+        "copiedSuccessMessage": "Message copied successfully",
+        "copiedSecretMessage": "Secret message copied successfully",
+        "pendingDecryptionMessage": "Encrypted message. Waiting for payment confirmation."
     },
     "SettingsScreen": {
         "staticQr": "Basılabilir Statik QR Kodu",
@@ -2293,7 +2308,7 @@
         "loginMethods": "Giriş Yöntemleri",
         "level": "Seviye {level: string}",
         "accountLevel": "Hesap Seviyesi",
-        "upgrade": "Hesabını güncelle",
+        "upgrade": "Hesabınızı güncelleyin",
         "logOutAndDeleteLocalData": "Çıkış yap ve yerel tüm dosyaları sil",
         "IUnderstand": "Anladım. Lütfen çıkış yapmama izin ver.",
         "logoutAlertTitle": "Çıkış yapmak ve tüm yerel dosyaları silmek istediğinize emin misiniz?",
@@ -2442,14 +2457,14 @@
         "header": "Telefon numaranızı girdiğinizde sizinle bir giriş kodu paylaşacağız.",
         "headerVerify": "İnsan olduğunuzu onaylayın",
         "errorRequestingCaptcha": "İnsan olup olmadığınızı doğrularken bir sıkıntı yaşandı, lütfen daha sonra tekrar deneyin.",
-        "errorRequestingCode": "Telefon kodu istenirken bir sorun oluştu, lütfen daha sonra tekrar deneyin.",
-        "errorInvalidPhoneNumber": "Geçersiz telefon numarası. Doğru numarayı girdiğinizden emin misiniz?",
-        "errorUnsupportedCountry": "Ülkenizdeki müşterilerimize destek veremiyoruz.",
+        "errorRequestingCode": "Telefon kodu istenirken bir sıkıntı yaşandı. Lütfen tekrar deneyin.",
+        "errorInvalidPhoneNumber": "Geçersiz telefon numarası. Doğru numarayı girdiğine emin misiniz?",
+        "errorUnsupportedCountry": "Bölgenizdeki müşterilerimize destek sağlayamıyoruz.",
         "infoArgentina": "Arjantin telefon numaraları için numaranın başına 9 eklenmesi gerekmektedir.",
         "placeholder": "Telefon Numarası",
         "verify": "Tıklayarak onaylayın",
         "sms": "SMS ile gönder",
-        "whatsapp": "WhatsApp üzerinden gönder"
+        "whatsapp": "WhatsApp ile gönder"
     },
     "PhoneLoginValidationScreen": {
         "errorLoggingIn": "Giriş yaparken hata oldu. Doğru kodu kullandığınıza emin misiniz?",
@@ -2480,8 +2495,8 @@
     },
     "EmailRegistrationInitiateScreen": {
         "title": "E-postanızı ekleyin",
-        "header": "E-posta adresinizi girin ve size bir giriş kodu gönderelim.",
-        "invalidEmail": "Geçersiz e-posta adresi. Doğru e-postayı yazdığınıza emin misiniz?",
+        "header": "E-posta adresinizi girin, size bir erişim kodu gönderelim.",
+        "invalidEmail": "Geçersiz e-posta adresi. Doğru e-postayı girdiğinizden emin misiniz?",
         "send": "Kod gönder",
         "missingEmailRegistrationId": "E-posta kayıt kimliği eksik",
         "placeholder": "hal@finney.org"
@@ -2513,7 +2528,7 @@
         "blinkUser": "Blink Kullanıcısı",
         "transactionLimits": "İşlem Limitleri",
         "activateWallet": "Cüzdanı aktive et",
-        "amountRequired": "Miktar girmeniz gerekli",
+        "amountRequired": "Miktar girilmesi gerekli",
         "back": "Geri",
         "backHome": "Anasayfaya dön",
         "bank": "Banka",
@@ -2524,7 +2539,7 @@
         "bitcoin": "Bitcoin",
         "bitcoinPrice": "Bitcoin fiyatı",
         "btcAccount": "Bitcoin Hesabı",
-        "cancel": "İptal et",
+        "cancel": "İptal",
         "close": "Kapat",
         "confirm": "Onayla",
         "convert": "Çevir",
@@ -2539,7 +2554,7 @@
         "error": "Hata",
         "fatal": "Önemli hata",
         "fee": "ücret",
-        "Fee": "Ücret",
+        "Fee": "Ücret:",
         "fees": "Ücretler",
         "firstName": "İsim",
         "from": "Tarafından",
@@ -2567,7 +2582,7 @@
         "onchain": "Onchain",
         "paymentRequest": "Ödeme Talebi",
         "phone": "Telefon",
-        "phoneNumber": "Telefon numarası",
+        "phoneNumber": "Telefon Numarası",
         "preimageProofOfPayment": "Ön Görüntü / Ödeme Kanıtı",
         "rate": "Puanla",
         "reauth": "Oturumunuz kapandı. Lütfen tekrar giriş yapın.",
@@ -2719,30 +2734,16 @@
         "drivingAdoption": "Blink'i kullanarak Bitcoin'i yaygınlaştırıyorum.",
         "connectOnSocial": "Sosyal medyadan bağlan:",
         "fullDetails": "Tüm detaylar şurada",
-        "decemberChallenge": {
-            "title": "Aralık Meydan Okuması!",
-            "description": "100 dolar kazanma şansı için +10 iç çember!",
-            "details": "Aralık ayında 100 $ kazanma şansı için yakın çevrenizi 10 kişi genişletin!\n\nKatılmak için, ay boyunca 10'a ulaştığınızda çemberlerinizi sosyal medyada paylaşın ve #blinkcircles etiketini ekleyin.\n\n1 Ocak'ta rastgele seçilecek üç kişi 100$ kazanacak!"
+        "learnMore": "Learn more about Adopting Bitcoin at",
+        "mayChallenge": {
+            "title": "Mayıs Meydan Okuması!",
+            "description": "Bir sonraki Bitcoin Buluşmanızda bir dizi Pizza kazanma şansı için yakın çevrenizi 6'ya kadar büyütün.",
+            "details": "Bitcoin Pizza Günü Partisi ister misiniz?\n\nBir sonraki Bitcoin Buluşmanızda bir dizi pizza kazanma şansı için Yakın Çevrenizi 6'ya genişletin. Yarışma 15 Mayıs'ta sona eriyor.\n\nKatılmak için çevrelerinizi #blinkcircles hashtag'i ile sosyal medyada paylaşın.\n\nÖdül, pizzalar için 150$'dır."
         },
-        "januaryChallenge": {
-            "title": "Ocak Meydan Okuması!",
-            "description": "100$ kazanma şansı için Ocak ayında +10 dış çember!",
-            "details": "Ocak ayında 100 $ kazanma şansı için DIŞ çemberinizi 10 büyütün!\n\nİç çevrenizdeki insanlar başkalarını hoş karşıladığında dış çevreniz büyür, bu yüzden onlara ulaşın ve Blink'i arkadaşlarıyla ve aileleriyle paylaşmalarını hatırlatın.\n\nKatılmak için çemberlerinizi #blinkcircles etiketiyle sosyal medyada paylaşın."
-        },
-        "februaryChallenge": {
-            "title": "Şubat Meydan Okuması!",
-            "description": "Seedsigner soğuk cüzdanı kazanmak için iç çevrenize 3 kişi katın!",
-            "details": "Seedsigner soğuk cüzdanı kazanma şansı için Şubat ayında yakın çevrenizi 3 kişi büyütün!\n\nHatırlatma: Yeni bir Blink kullanıcısına ilk satlerini gönderdiğinizde çemberleriniz büyür.\n\nKatılmak için çevrelerinizi #blinkcircles etiketiyle sosyal medyada paylaşın."
-        },
-        "marchChallenge": {
-            "title": "Mart Meydan Okuması!",
-            "description": "100 $ kazanma şansı için +3 yakın çevre ve +3 uzak çevre",
-            "details": "$100 kazanma şansı için yakın çevrenizi 3 ve uzak çevrenizi 3 büyütün!\n\nHatırlatma: Yeni bir Blink kullanıcısına ilk atışlarını gönderdiğinizde çevreniz genişler.\n\nKatılmak için çevrelerinizi #blinkcircles etiketiyle sosyal medyada paylaşın."
-        },
-        "aprilChallenge": {
-            "title": "Nisan Meydan Okuması!",
-            "description": "Bitbox02 donanım cüzdanı kazanma şansı için yakın çevrenizi 12 ve uzak çevrenizi 3 kişi ile genişletin.",
-            "details": "Yarılanma ayı boyunca, bir Bitbox02 donanım cüzdanı kazanma şansı için yakın çevrenizi 12 ve uzak çevrenizi 3 kişiyle genişletin!\n\nHatırlatma: Yeni bir Blink kullanıcısına ilk satlerini gönderdiğinizde çevreniz genişler.\n\nKatılmak için çevrelerinizi #blinkcircles etiketiyle sosyal medyada paylaşın."
+        "juneChallenge": {
+            "title": "June Challenge!",
+            "description": "Expand your Inner Circle by 10 for a chance to win a $1000 privilege ticket to the Adopting Bitcoin El Salvador",
+            "details": "Win a privilege ticket to Adopting Bitcoin El Salvador\n\nExpand your Inner Circle by 10 for a chance to win a $1000 privilege ticket to Adopting Bitcoin El Salvador! The ticket includes exclusive access to the main conference, mezzanine with food/drinks/snacks, speakers' dinner, and the Film Festival.\n\nShare your circles on social with the hashtag #blinkcircles to participate.\n\nThis time, there will be two winners!"
         }
     },
     "FullOnboarding": {
@@ -2761,5 +2762,14 @@
         "ERROR": "Hata",
         "PROCESSING": "İşleniyor",
         "REVIEW": "Değerlendirme"
+    },
+    "NotificationHistory": {
+        "title": "Bildirimler",
+        "noNotifications": "Şu anda herhangi bir bildiriminiz yok"
+    },
+    "SupportChat": {
+        "errorSendingMessage": "An error occurred while sending the message",
+        "confirmChatReset": "Are you sure you want to reset the chat?",
+        "errorResettingChat": "An error occurred while resetting the chat"
     }
 }

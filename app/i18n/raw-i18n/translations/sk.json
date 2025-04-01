@@ -726,17 +726,17 @@
                     },
                     "partlyMonetized": {
                         "answers": [
-                            "Tovar, ktorý ešte nie je široko používaný ako účtovná jednotka.",
+                            "Statok, ktorý ešte nie je široko používaný ako účtovná jednotka.",
                             "Mena, ktorá je akceptovaná iba v niektorých krajinách.",
                             "Tovar, ktorý sa používa ako výmenový prostriedok, ale nie na uchovávanie hodnoty alebo meranie hodnoty tovarov."
                         ],
                         "feedback": [
-                            "Gratulujem! Vybral si správnu odpoveď. Čiastočne monetizovaný tovar je taký, ktorý ešte nie je široko akceptovaný ako účtovná jednotka, čo znamená, že sa bežne nepoužíva ako štandardný spôsob merania hodnoty iných tovarov. To môže zahŕňať napríklad zlato, ktoré sa často používa na uchovávanie hodnoty, ale nie je typicky používané na každodenné transakcie.",
+                            "Gratulujem! Vybral si správnu odpoveď. Čiastočne monetizovaný statok je taký, ktorý ešte nie je široko akceptovaný ako účtovná jednotka, čo znamená, že sa bežne nepoužíva ako štandardný spôsob merania hodnoty iných tovarov. To môže zahŕňať napríklad zlato, ktoré sa často používa na uchovávanie hodnoty, ale nie je typicky používané na každodenné transakcie.",
                             "To je kreatívna odpoveď, ale bohužiaľ nie úplne správna. Skús to znova, prajem viac šťastia nabudúce.",
                             "Nie celkom správne, ale blízko! Pokračuj v premýšľaní."
                         ],
                         "question": "Čo znamená pojem \"čiastočne monetizovaný\"?",
-                        "text": "Tovary, ktoré nie sú široko akceptované ako účtovná jednotka, môžu byť považované za \"čiastočne monetizované\", pretože sa používajú na niektoré účely súvisiace s peniazmi, ale nie na všetky.\n\nZlato je príkladom čiastočne monetizovaného tovaru, ktorý sa používa na uchovávanie hodnoty, ale nie je široko používaný ako výmenový prostriedok alebo účtovná jednotka. V niektorých krajinách sa rôzne tovary môžu používať na rôzne účely súvisiace s peniazmi, ako napríklad jeden tovar na výmenový prostriedok a iný na uchovávanie hodnoty alebo účtovnú jednotku.\n\nDolár je príkladom tovaru, ktorý je v Spojených štátoch široko používaný na všetky tri účely peňazí, zatiaľ čo peso bolo príkladom tovaru, ktorý sa používal ako výmenový prostriedok v Argentíne, ale nebolo dobrým uchovávateľom hodnoty kvôli jeho volatilite a pravidelnej strate kúpnej sily.\n",
+                        "text": "Statky, ktoré nie sú široko akceptované ako účtovná jednotka, môžu byť považované za \"čiastočne monetizované\", pretože sa používajú na niektoré účely súvisiace s peniazmi, ale nie na všetky.\n\nZlato je príkladom čiastočne monetizovaného tovaru, ktorý sa používa na uchovávanie hodnoty, ale nie je široko používaný ako výmenový prostriedok alebo účtovná jednotka. V niektorých krajinách sa rôzne statky môžu používať na rôzne účely súvisiace s peniazmi, ako napríklad jeden tovar na výmenový prostriedok a iný na uchovávanie hodnoty alebo účtovnú jednotku.\n\nDolár je príkladom tovaru, ktorý je v Spojených štátoch široko používaný na všetky tri účely peňazí, zatiaľ čo peso bolo príkladom tovaru, ktorý sa používal ako výmenový prostriedok v Argentíne, ale nebolo dobrým uchovávateľom hodnoty kvôli jeho volatilite a pravidelnej strate kúpnej sily.\n",
                         "title": "Čiastočná monetizácia"
                     },
                     "monetizationStage": {
@@ -1161,7 +1161,7 @@
                             "Prepáčte, nie je to celkom správne. Zatiaľ čo tretie strany môžu byť užitočné pri uľahčovaní transakcií, dôvera v týchto sprostredkovateľov bola jedným z problémov, ktoré chcel Satoshi Nakamoto vyriešiť vytvorením bitcoinu. Možno to skúste znova s ​​inou odpoveďou."
                         ],
                         "question": "Prečo Satoshi Nakamoto vytvoril Bitcoin",
-                        "text": "Je jasné, prečo Satoshi Nakamoto vytvoril Bitcoin, keď preskúmame prvý blok bitcoinového blockchainu, nazývaný blok Genesis.\n\nTento blok vytvoril Satoshi, keď spustil Bitcoin v roku 2009 a obsahuje odkaz na banky, ktoré dostali záchranné balíky po globálnej finančnej kríze 2008/09.\n\n\"The Times 3. januára 2009 kancelárka na pokraji druhej pomoci pre banky\"\n\nTáto kríza, pri ktorej bola vážne narušená dôvera v tradičné finančné systémy, inšpirovala Satoshiho k vytvoreniu digitálnej formy peňazí, ktorá si nevyžaduje dôveryhodné tretie strany pre transakcie a nemôže byť znehodnotená centrálnym orgánom vydávajúcim viac jednotiek.\n",
+                        "text": "Je jasné, prečo Satoshi Nakamoto vytvoril Bitcoin, keď preskúmame prvý blok bitcoinového blockchainu, nazývaný blok Genesis.\n\nTento blok vytvoril Satoshi, keď spustil Bitcoin v roku 2009 a obsahuje odkaz na banky, ktoré dostali záchranné balíky po globálnej finančnej kríze 2008/09.\n\n\"The Times 3. januára 2009 Kancelár (minister financií) je na pokraji druhého záchranného balíka pre banky.\"\n\nTáto kríza, pri ktorej bola vážne narušená dôvera v tradičné finančné systémy, inšpirovala Satoshiho k vytvoreniu digitálnej formy peňazí, ktorá si nevyžaduje dôveryhodné tretie strany pre transakcie a nemôže byť znehodnotená centrálnym orgánom vydávajúcim viac jednotiek.\n",
                         "title": "Genesis Blok"
                     },
                     "cypherpunks": {
@@ -1996,14 +1996,14 @@
         "satAccumulated": "Nahromadené sats",
         "satsEarned": "{formattedNumber | sats} zarobené",
         "sectionsCompleted": "Dokončili ste",
-        "title": "Zarobte",
+        "title": "Získajte saty",
         "unlockQuestion": "Na odomknutie odpovedzte na otázku:",
-        "youEarned": "Zarobili ste",
+        "youEarned": "Získali ste",
         "registerTitle": "Potrebujete upgradovať účet",
         "registerContent": "Zaregistrujte sa pomocou svojho telefónneho čísla, aby ste mohli prijímať sat",
         "oneSectionADay": "Jedna sekcia denne!",
         "availableTomorrow": "Vráťte sa zajtra a pokračujte v učení o bitcoinoch!",
-        "motivatingBadger": "Prekopajte sa týmito lekciami a zarábajte, keď sa budete učiť"
+        "motivatingBadger": "Prekopte sa týmito lekciami a zarábajte počas učenia sa"
     },
     "GetStartedScreen": {
         "logInCreateAccount": "Prihlásiť sa / vytvoriť účet",
@@ -2235,7 +2235,13 @@
             "confirmButton": "Som si 100% istý."
         },
         "copiedDestination": "Cieľ bol skopírovaný do schránky",
-        "pendingPayment": "Platba bola odoslaná, ale ešte nie je potvrdená.\n\nJe možné, že platba nebude potvrdená, v takom prípade budú prostriedky vrátené na váš účet."
+        "pendingPayment": "Platba bola odoslaná, ale ešte nie je potvrdená.\n\nJe možné, že platba nebude potvrdená, v takom prípade budú prostriedky vrátené na váš účet.",
+        "copySuccessMessage": "Skopírovať správu do schránky",
+        "openSuccessUrl": "Otvoriť URL adresu v prehliadači",
+        "copySecretMessage": "Skopírovať tajnú správu do schránky",
+        "copiedSuccessMessage": "Správa bola úspešne skopírovaná",
+        "copiedSecretMessage": "Tajná správa bola úspešne skopírovaná",
+        "pendingDecryptionMessage": "Šifrovaná správa. Čaká sa na potvrdenie platby."
     },
     "SettingsScreen": {
         "staticQr": "Vytlačiteľný statický QR kód",
@@ -2287,7 +2293,7 @@
             },
             "Price": {
                 "title": "Zmenu ceny",
-                "description": "Oznámenia o cene bitcoínov."
+                "description": "Oznámenia o cene bitcoinu."
             }
         }
     },
@@ -2593,7 +2599,7 @@
         "submit": "Odoslať",
         "success": "Úspech!",
         "stablesatsUsd": "Stablesats USD",
-        "to": "Komu",
+        "to": "Príjemca",
         "total": "Celkovo",
         "transactions": "Transakcie",
         "transactionsError": "Chyba pri načítaní transakcií",
@@ -2703,7 +2709,7 @@
             "your": "Vaše",
             "grow": "rastú, keď pošlete novému používateľovi Blinku jeho prvé saty!"
         },
-        "circlesGrowingKeepGoing": "Vaše kruhy sa rozrastajú, keď vítate ľudí v Blink - pokračujte!",
+        "circlesGrowingKeepGoing": "Vaše kruhy sa rozrastajú, keď pozývate ľudí do Blinku - pokračujte!",
         "points": "body",
         "innerCircleGrow": "Váš vnútorný kruh porastie, keď pošlete používateľovi Blinku jeho prvé saty!",
         "calculatingYourCircles": "Výpočet kruhov...",
@@ -2714,8 +2720,8 @@
         "peopleIWelcomed": "ľudia privítaní mnou",
         "thisMonth": "tento mesiac",
         "outerCircle": "Vonkajší Kruh",
-        "peopleWelcomedByYourCircle": "ľudia privítaní vaším kruhom",
-        "peopleWelcomedByMyCircle": "ľudia privítaní mojim kruhom",
+        "peopleWelcomedByYourCircle": "ľudia pozvaní vaším kruhom",
+        "peopleWelcomedByMyCircle": "ľudia pozvaní mojim kruhom",
         "yourSphere": "Vaša Sféra",
         "mySphere": "Moja Sféra",
         "yourRankMessage": "Tento mesiac ste #{thisMonthRank: číslo} a #{allTimeRank: number} za celú dobu!",
