@@ -27,6 +27,9 @@ import {
 } from "../transaction-detail-screen/format-time"
 import { SuggestionModal } from "./suggestion-modal"
 import { PaymentSendCompletedStatus } from "./use-send-payment"
+import { GaloyPrimaryButton } from "@app/components/atomic/galoy-primary-button"
+import LogoLightMode from "@app/assets/logo/blink-logo-light.svg"
+import LogoDarkMode from "@app/assets/logo/app-logo-dark.svg"
 
 type Props = {
   route: RouteProp<RootStackParamList, "sendBitcoinCompleted">
@@ -42,10 +45,11 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
     status: statusRaw,
     successAction,
     preimage,
+    formatAmount,
   } = route.params
   const styles = useStyles()
   const {
-    theme: { colors },
+    theme: { mode, colors },
   } = useTheme()
 
   const status = processStatus({ arrivalAtMempoolEstimate, status: statusRaw })
@@ -155,18 +159,34 @@ const SendBitcoinCompletedScreen: React.FC<Props> = ({ route }) => {
         return LL.SendBitcoinScreen.pendingPayment()
     }
   }
+  const Logo = mode === "dark" ? LogoDarkMode : LogoLightMode
 
   return (
     <Screen preset="scroll" style={styles.contentContainer}>
+      <View style={styles.logoContainer}>
+        <Logo height={75} />
+      </View>
       <View style={styles.Container}>
         <SuccessIconAnimation>{MainIcon()}</SuccessIconAnimation>
         <CompletedTextAnimation>
-          <Text {...testProps("Success Text")} style={styles.completedText} type="h2">
-            {SuccessText()}
-          </Text>
+          {formatAmount ? (
+            <Text type="h2" style={styles.completedText}>
+              {decodeURIComponent(formatAmount)}
+            </Text>
+          ) : (
+            <Text {...testProps("Success Text")} style={styles.completedText} type="h2">
+              {SuccessText()}
+            </Text>
+          )}
         </CompletedTextAnimation>
         <SuccessActionComponent successAction={successAction} preimage={preimage} />
       </View>
+      <GaloyPrimaryButton
+        style={styles.view}
+        onPress={() => navigation.navigate("Primary")}
+      >
+        {LL.HomeScreen.title()}
+      </GaloyPrimaryButton>
       <SuggestionModal
         navigation={navigation}
         showSuggestionModal={showSuggestionModal}
@@ -212,6 +232,13 @@ const useStyles = makeStyles(({ colors }) => ({
     backgroundColor: colors.white,
     padding: 20,
     borderRadius: 20,
+  },
+  logoContainer: {
+    top: 20,
+    alignSelf: "center",
+    width: "50%",
+    height: "100%",
+    position: "absolute",
   },
 }))
 
