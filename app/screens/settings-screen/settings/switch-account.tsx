@@ -39,7 +39,7 @@ gql`
 
 type ProfileProps = {
   userid?: string | null
-  username: string
+  identifier: string
   token: string
   selected?: boolean
   avatarurl?: string
@@ -53,7 +53,7 @@ export const SwitchAccount: React.FC = () => {
   const { LL } = useI18nContext()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { persistentState } = usePersistentStateContext()
-  const { galoyAuthToken: curToken } = persistentState
+  const { galoyAuthToken: currentToken } = persistentState
 
   const [fetchUsername, { error, refetch }] = useGetUsernamesLazyQuery({
     fetchPolicy: "no-cache",
@@ -70,38 +70,41 @@ export const SwitchAccount: React.FC = () => {
       if (!expanded) return
       setProfiles([])
       const profiles: ProfileProps[] = []
-      let allTokens = (await KeyStoreWrapper.getAllTokens()).reverse()
+      let sessionTokens = (await KeyStoreWrapper.getSessionTokens()).reverse()
       let counter = 1
 
       // Add session token if not exist
-      if (allTokens.length <= 0 && curToken) {
-        await KeyStoreWrapper.setAllTokens(curToken)
-        allTokens = [curToken]
+      if (sessionTokens.length <= 0 && currentToken) {
+        await KeyStoreWrapper.saveSessionToken(currentToken)
+        sessionTokens = [currentToken]
       }
 
-      for (const token of allTokens) {
+      for (const token of sessionTokens) {
         try {
           const { data } = await fetchUsername({
             context: { headers: { authorization: `Bearer ${token}` } },
           })
 
-          if (data?.me) {
-            const existingProfileIndex = findExistingProfileIndex(profiles, data)
-            if (existingProfileIndex === -1) {
-              profiles.push({
-                userid: data.me?.id,
-                username: data.me?.username || data.me?.phone || `Blink User ${counter}`,
-                token,
-                selected: token === curToken,
-              })
-            } else {
-              // Avoid duplicate account data and clear store
-              await KeyStoreWrapper.updateAllTokens(token)
-            }
+          const existingProfileIndex = findExistingProfileIndex(profiles, data)
+          if (data?.me && existingProfileIndex === -1) {
+            profiles.push({
+              userid: data.me?.id,
+              identifier: data.me?.username || data.me?.phone || `Blink User ${counter}`,
+              token,
+              selected: token === currentToken,
+            })
+
             counter = counter + 1
-          } else {
+          }
+
+          if (existingProfileIndex !== -1) {
+            // Avoid duplicate account data and clear store
+            await KeyStoreWrapper.removeTokenFromSession(token)
+          }
+
+          if (!data?.me) {
             // Remove invalid token
-            await KeyStoreWrapper.updateAllTokens(token)
+            await KeyStoreWrapper.removeTokenFromSession(token)
           }
         } catch (err) {
           console.error(`Failed to fetch username for token ${token}`, err)
@@ -110,16 +113,16 @@ export const SwitchAccount: React.FC = () => {
       setProfiles(profiles)
       setLoading(false)
     })()
-  }, [expanded, curToken, fetchUsername])
+  }, [expanded, currentToken, fetchUsername])
 
   const findExistingProfileIndex = (
     profiles: ProfileProps[],
-    userData: GetUsernamesQuery,
+    userData?: GetUsernamesQuery,
   ) => {
     return profiles.findIndex(
       (profile) =>
-        profile.username === userData.me?.username ||
-        profile.username === userData.me?.phone,
+        profile.identifier === userData?.me?.username ||
+        profile.identifier === userData?.me?.phone,
     )
   }
 
@@ -185,7 +188,7 @@ export const SwitchAccount: React.FC = () => {
   )
 }
 
-const Profile: React.FC<ProfileProps> = ({ username, token, selected, avatarurl }) => {
+const Profile: React.FC<ProfileProps> = ({ identifier, token, selected, avatarurl }) => {
   const styles = useStyles()
   const { LL } = useI18nContext()
 
@@ -203,7 +206,7 @@ const Profile: React.FC<ProfileProps> = ({ username, token, selected, avatarurl 
     await logOut(token)
 
     // Remove token
-    await KeyStoreWrapper.updateAllTokens(token)
+    await KeyStoreWrapper.removeTokenFromSession(token)
     navigation.navigate("Primary")
     setLogoutLoading(false)
   }
@@ -258,7 +261,7 @@ const Profile: React.FC<ProfileProps> = ({ username, token, selected, avatarurl 
           <GaloyIcon name="user" size={30} backgroundColor={styles.iconColor.color} />
         )}
         <ListItem.Content>
-          <ListItem.Title>{username}</ListItem.Title>
+          <ListItem.Title>{identifier}</ListItem.Title>
         </ListItem.Content>
 
         {selected === false ? (

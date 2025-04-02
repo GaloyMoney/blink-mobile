@@ -104,12 +104,12 @@ export default class KeyStoreWrapper {
     }
   }
 
-  public static async setAllTokens(token: string): Promise<boolean> {
+  public static async saveSessionToken(token: string): Promise<boolean> {
     try {
       if (!token || token.trim() === "") {
         return false
       }
-      const oldTokens = await this.getAllTokens()
+      const oldTokens = await this.getSessionTokens()
       const combinedToken = [...oldTokens, token]
 
       await RNSecureKeyStore.set(KeyStoreWrapper.TOKENS, JSON.stringify(combinedToken), {
@@ -121,7 +121,7 @@ export default class KeyStoreWrapper {
     }
   }
 
-  public static async getAllTokens(): Promise<string[]> {
+  public static async getSessionTokens(): Promise<string[]> {
     try {
       const tokens = await RNSecureKeyStore.get(KeyStoreWrapper.TOKENS)
       if (tokens) return JSON.parse(tokens)
@@ -131,9 +131,9 @@ export default class KeyStoreWrapper {
     }
   }
 
-  public static async updateAllTokens(token: string): Promise<boolean> {
+  public static async removeTokenFromSession(token: string): Promise<boolean> {
     try {
-      const updatedToken = (await this.getAllTokens()).filter((t) => t !== token)
+      const updatedToken = (await this.getSessionTokens()).filter((t) => t !== token)
       await RNSecureKeyStore.set(
         KeyStoreWrapper.TOKENS,
         JSON.stringify([...updatedToken]),
@@ -147,7 +147,7 @@ export default class KeyStoreWrapper {
     }
   }
 
-  public static async removeAllTokens(): Promise<boolean> {
+  public static async removeAllSessionTokens(): Promise<boolean> {
     try {
       await RNSecureKeyStore.remove(KeyStoreWrapper.TOKENS)
       return true

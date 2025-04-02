@@ -31,7 +31,7 @@ export const useAppConfig = () => {
 
   const saveToken = useCallback(
     async (token: string) => {
-      await setAllToken(token)
+      await saveSessionToken(token)
       updateState((state) => {
         if (state)
           return {
@@ -46,7 +46,7 @@ export const useAppConfig = () => {
 
   const saveTokenAndInstance = useCallback(
     async ({ token, instance }: { token: string; instance: GaloyInstance }) => {
-      await setAllToken(token)
+      await saveSessionToken(token)
       updateState((state) => {
         if (state)
           return {
@@ -60,8 +60,8 @@ export const useAppConfig = () => {
     [updateState],
   )
 
-  const setAllToken = async (token: string) => {
-    await KeyStoreWrapper.setAllTokens(token)
+  const saveSessionToken = async (token: string) => {
+    await KeyStoreWrapper.saveSessionToken(token)
   }
 
   return {
