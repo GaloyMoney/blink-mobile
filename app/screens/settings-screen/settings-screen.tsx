@@ -1,5 +1,5 @@
 import { ScrollView } from "react-native-gesture-handler"
-import { useEffect } from "react"
+import React, { useEffect } from "react"
 import { TouchableOpacity } from "react-native"
 
 import { useNavigation } from "@react-navigation/native"
