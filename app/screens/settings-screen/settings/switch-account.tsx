@@ -150,6 +150,7 @@ export const SwitchAccount: React.FC = () => {
       {expanded &&
         (loading ? (
           <ActivityIndicator
+            testID="loading-indicator"
             size="large"
             style={styles.loadingIcon}
             color={styles.loadingIconColor.color}

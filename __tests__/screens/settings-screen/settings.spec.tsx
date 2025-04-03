@@ -9,7 +9,8 @@ import mocks from "@app/graphql/mocks"
 import { ContextForScreen } from "../helper"
 
 jest.mock("@app/utils/storage/secureStorage", () => ({
-  KeyStoreWrapper: {
+  __esModule: true,
+  default: {
     getSessionTokens: jest.fn().mockResolvedValue(["mock-token-1"]),
     saveSessionToken: jest.fn(),
     removeTokenFromSession: jest.fn(),
@@ -35,12 +36,7 @@ const mocksWithUsername = [
   },
 ]
 
-/**
- * TODO: FIX this suit test
- */
-
-// eslint-disable-next-line jest/no-disabled-tests
-describe.skip("Settings", () => {
+describe("Settings", () => {
   let LL: ReturnType<typeof i18nObject>
 
   beforeEach(() => {
@@ -59,7 +55,7 @@ describe.skip("Settings", () => {
     fireEvent.press(switchBtn)
 
     // The spinner should be displayed
-    expect(screen.getByTestId("ActivityIndicator")).toBeTruthy()
+    expect(screen.getByTestId("loading-indicator")).toBeTruthy()
 
     await waitFor(() => {
       expect(screen.getByText("test1")).toBeTruthy()
